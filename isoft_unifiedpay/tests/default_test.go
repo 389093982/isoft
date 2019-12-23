@@ -1,7 +1,7 @@
 package test
 
 import (
-	_ "isoft_unifiedpay/routers"
+	_ "isoft/isoft_unifiedpay/routers"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"

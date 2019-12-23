@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"isoft_unifiedpay/controllers"
+	"isoft/isoft_unifiedpay/controllers"
 )
 
 //统一使用默认MainController

@@ -9,7 +9,7 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
-	"isoft_unifiedpay/models"
+	"isoft/isoft_unifiedpay/models"
 	"strconv"
 	"strings"
 	"time"

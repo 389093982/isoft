@@ -6,8 +6,8 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
-	"isoft_unifiedpay/common/chiperutil"
-	"isoft_unifiedpay/models"
+	"isoft/isoft_unifiedpay/common/chiperutil"
+	"isoft/isoft_unifiedpay/models"
 	"net/url"
 )
 
