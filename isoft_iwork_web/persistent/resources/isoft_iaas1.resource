@@ -1,0 +1,13 @@
+<Resource>
+	<Id>1</Id>
+	<ResourceName>isoft_iaas1</ResourceName>
+	<ResourceType>db</ResourceType>
+	<ResourceUrl>isoft_iaas1</ResourceUrl>
+	<ResourceDsn>root:lingchuang2020@tcp(193.112.162.61:3306)/isoft_iaas1</ResourceDsn>
+	<ResourceUsername>root</ResourceUsername>
+	<ResourcePassword>0</ResourcePassword>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2019-12-01T13:53:56+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2019-12-01T13:53:56+08:00</LastUpdatedTime>
+</Resource>
