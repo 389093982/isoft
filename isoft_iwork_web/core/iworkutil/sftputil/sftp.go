@@ -2,7 +2,7 @@ package sftputil
 
 import (
 	"github.com/pkg/sftp"
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/fileutils"
 	"os"
 	"path"
 	"path/filepath"

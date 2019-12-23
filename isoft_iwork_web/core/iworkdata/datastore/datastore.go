@@ -2,7 +2,7 @@ package datastore
 
 import (
 	"fmt"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"

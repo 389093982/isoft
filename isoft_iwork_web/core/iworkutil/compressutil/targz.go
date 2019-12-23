@@ -4,7 +4,7 @@ import (
 	"archive/tar"
 	"compress/gzip"
 	"io"
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/fileutils"
 	"os"
 	"strings"
 )

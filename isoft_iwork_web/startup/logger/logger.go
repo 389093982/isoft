@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"isoft/isoft/common/apppath"
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/apppath"
+	"isoft/isoft_utils/common/fileutils"
 	"os"
 )
 

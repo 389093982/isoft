@@ -2,7 +2,7 @@ package hashutil
 
 import (
 	"fmt"
-	"isoft/isoft/common/osutil"
+	"isoft/isoft_utils/common/osutil"
 	"testing"
 )
 

@@ -3,7 +3,7 @@ package iworkfunc
 import (
 	"errors"
 	"fmt"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/stringutil"
 	"regexp"
 	"strings"
 	"sync"

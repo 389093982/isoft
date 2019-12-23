@@ -3,7 +3,7 @@ package iworkfunc
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/stringutil"
 	"reflect"
 	"strings"
 )

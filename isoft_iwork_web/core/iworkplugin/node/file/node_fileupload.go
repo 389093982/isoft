@@ -1,8 +1,8 @@
 package file
 
 import (
-	"isoft/isoft/common/hashutil"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/hashutil"
+	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"

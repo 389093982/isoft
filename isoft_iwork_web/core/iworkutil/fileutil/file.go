@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/fileutils"
 	"os"
 	"path/filepath"
 	"strings"

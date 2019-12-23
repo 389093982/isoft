@@ -1,5 +1,5 @@
 package pool
 
-import "isoft/isoft/common/di"
+import "isoft/isoft_utils/common/di"
 
 var Container = di.NewContainer()

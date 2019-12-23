@@ -1,6 +1,6 @@
 package sql
 
-import "isoft/isoft/common/stringutil"
+import "isoft/isoft_utils/common/stringutil"
 
 func parseNamingSql(sqlStr string) (string, []string) {
 	namings := stringutil.GetSubStringWithRegexp(sqlStr, ":[a-zA-Z0-9_]+")

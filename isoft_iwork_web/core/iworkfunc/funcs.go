@@ -3,8 +3,8 @@ package iworkfunc
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"isoft/isoft/common/chiperutil"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/chiperutil"
+	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"math/rand"
 	"net/url"

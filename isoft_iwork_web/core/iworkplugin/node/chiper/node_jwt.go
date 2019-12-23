@@ -1,7 +1,7 @@
 package chiper
 
 import (
-	"isoft/isoft/common/chiperutil"
+	"isoft/isoft_utils/common/chiperutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
 	"isoft/isoft_iwork_web/core/iworkmodels"

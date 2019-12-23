@@ -1,7 +1,7 @@
 package http
 
 import (
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"

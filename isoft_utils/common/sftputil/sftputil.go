@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/pkg/sftp"
 	"golang.org/x/crypto/ssh"
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/fileutils"
 	"os"
 	"path"
 	"path/filepath"

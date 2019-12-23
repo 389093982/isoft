@@ -3,7 +3,7 @@ package framework
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"isoft/isoft/common/stringutil"
+	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/block"

@@ -1,7 +1,7 @@
 package os
 
 import (
-	"isoft/isoft/common/fileutils"
+	"isoft/isoft_utils/common/fileutils"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
