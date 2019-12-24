@@ -5,8 +5,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
-	"isoft/isoft_utils/common/chiperutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/chiperutil"
 	"net/url"
 )
 
@@ -17,7 +17,7 @@ func init() {
 	dbuser := beego.AppConfig.String("db.user")
 	dbpass := beego.AppConfig.String("db.pass")
 	timezone := beego.AppConfig.String("db.timezone")
-	aesChiperKey := beego.AppConfig.String("isoft_utils.aes.cipher.key")
+	aesChiperKey := beego.AppConfig.String("isoft.aes.cipher.key")
 	// 对数据库密码进行解密
 	dbport = chiperutil.AesDecryptToStr(dbport, aesChiperKey)
 	dbuser = chiperutil.AesDecryptToStr(dbuser, aesChiperKey)
