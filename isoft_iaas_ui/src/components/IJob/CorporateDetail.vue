@@ -1,5 +1,20 @@
 <template>
   <div>
+    <Modal
+      v-model="showModal"
+      :width="500"
+      :title="modalTitle"
+      :footer-hide="true"
+      :transfer="false"
+      :mask-closable="false"
+      :styles="{top: '50px'}">
+      <div>
+        <Tag v-for="modalChoice in modalChoices">
+          <span @click="choiceItem(modalChoice)">{{modalChoice}}</span>
+        </Tag>
+      </div>
+    </Modal>
+
     <div class="isoft_bg_white isoft_pd10">
       <p class="clear">
         <label for="corporate_name">公司名称：</label>
@@ -13,25 +28,31 @@
       </p>
       <p class="clear">
         <label for="corporate_logo">公司 logo：</label>
-        <input id="corporate_logo" readonly="readonly"
+        <input id="corporate_logo" readonly="readonly" @focus="handleFocus('corporate_logo')"
                class="input" v-if="editMode" v-model="formInline.corporate_logo" placeholder="请您上传公司 logo"/>
         <span v-else>{{formInline.corporate_logo}}</span>
       </p>
       <p class="clear">
         <label for="corporate_size">公司规模：</label>
-        <input id="corporate_size" readonly="readonly"
+        <input id="corporate_size" readonly="readonly" @focus="handleFocus('corporate_size')"
                class="input" v-if="editMode" v-model="formInline.corporate_size" placeholder="请您输入公司规模"/>
         <span v-else>{{formInline.corporate_size}}</span>
       </p>
       <p class="clear">
         <label for="job_type">招聘类型：</label>
-        <input id="job_type" readonly="readonly"
+        <input id="job_type" readonly="readonly" @focus="handleFocus('job_type')"
                class="input" v-if="editMode" v-model="formInline.job_type" placeholder="请您选择招聘类型"/>
         <span v-else>{{formInline.job_type}}</span>
       </p>
       <p class="clear">
+        <label for="job_type_detail">详细类型：</label>
+        <input id="job_type_detail"
+               class="input" v-if="editMode" v-model="formInline.job_type_detail" placeholder="请您输入招聘岗位详细类型"/>
+        <span v-else>{{formInline.job_type_detail}}</span>
+      </p>
+      <p class="clear">
         <label for="salary_range">薪酬范围：</label>
-        <input id="salary_range" readonly="readonly"
+        <input id="salary_range" readonly="readonly" @focus="handleFocus('salary_range')"
                class="input" v-if="editMode" v-model="formInline.salary_range"  placeholder="请您选择薪酬范围"/>
         <span v-else>{{formInline.salary_range}}</span>
       </p>
@@ -56,31 +77,83 @@
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
       <p class="clear">
+        <label for="corporate_welfare">公司福利：</label>
+        <input id="corporate_welfare" class="input" v-if="editMode" v-model="formInline.corporate_welfare" placeholder="请您输入公司福利"/>
+        <span v-else>{{formInline.corporate_welfare}}</span>
+      </p>
+
+      <p class="clear">
         <label for="corporate_address">公司地址：</label>
         <input id="corporate_address" class="input" v-if="editMode" v-model="formInline.corporate_address" placeholder="请您选择公司地址"/>
         <span v-else>{{formInline.corporate_address}}</span>
       </p>
+    </div>
+
+    <div class="isoft_bg_white isoft_pd10 isoft_top10">
+      <p>招聘岗位<a style="margin-left: 20px;">新增</a></p>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Employer",
+    name: "CorporateDetail",
     data(){
       return {
+        options:{
+          'corporate_size':{
+            modalTitle:'选择公司规模',
+            modalChoices:['1-10人','10-20人','20-50人','50-100人','100-500人','500-2000人','2000以上'],
+          },
+          'job_type':{
+            modalTitle:'选择招聘类型',
+            modalChoices:['前端工程师','后端工程师','研发经理','软件工程师','安卓开发工程师','架构负责人'],
+          }
+        },
+        showModal:false,
+        modalTitle:'',
+        modalItemName:'',
+        modalChoices:[],
         editMode:false,
         formInline: {
           corporate_name: null,
           corporate_site: null,
           corporate_logo: null,
           corporate_size: null,
-          salary_range: null,
           job_type: null,
+          job_type_detail: null,
+          salary_range: null,
           corporate_desc: null,
           job_desc: null,
+          corporate_welfare:'',
           corporate_address: null,
         },
+      }
+    },
+    methods:{
+      noRepeatAppend(str, s){
+        if(str == null){
+          return s;
+        } else if (str.indexOf(s) > 0){
+          return str;
+        }else {
+          return str + "," + s;
+        }
+
+      },
+      handleFocus:function (name) {
+        this.showModal = true;
+        this.modalItemName = name;
+        this.modalTitle = this.options[name].modalTitle;
+        this.modalChoices = this.options[name].modalChoices;
+      },
+      choiceItem:function (item) {
+        if (this.modalItemName === 'corporate_size') {
+          this.formInline.corporate_size = item;
+        } else if(this.modalItemName === 'job_type') {
+          this.formInline.job_type = this.noRepeatAppend(this.formInline.job_type, item);
+        }
+        this.showModal = false;
       }
     }
   }

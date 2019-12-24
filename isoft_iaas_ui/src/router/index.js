@@ -49,7 +49,7 @@ const AdvManage = () => import("@/components/Advertisement/Manage");
 
 const JobList = () => import("@/components/IJob/JobList");
 const Employee = () => import("@/components/IJob/Employee");
-const Employer = () => import("@/components/IJob/Employer");
+const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
 
 import {joinArray} from "../tools"
 
@@ -150,7 +150,7 @@ const IJob = [{
   children: [
     {path: 'jobList',component: JobList},
     {path: 'employee',component: Employee},
-    {path: 'employer',component: Employer},
+    {path: 'corporate_detail',component: CorporateDetail},
   ]
 }];
 

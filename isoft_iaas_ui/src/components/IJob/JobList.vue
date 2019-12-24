@@ -14,7 +14,7 @@
         <Col span="12">搜索职位:{{jobNameSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 40px;">
           <Button @click="$router.push({path:'/job/employee'})">我要求职</Button>
-          <Button @click="$router.push({path:'/job/employer'})">我要招聘</Button>
+          <Button @click="$router.push({path:'/job/corporate_detail'})">我要招聘</Button>
         </Col>
       </Row>
     </div>
