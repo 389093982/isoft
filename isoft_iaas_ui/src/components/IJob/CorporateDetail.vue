@@ -99,6 +99,7 @@
 
 <script>
   import {EditCorporateDetail,QueryCorporateDetail} from "../../api"
+  import {checkEmpty} from "../../tools"
 
   export default {
     name: "CorporateDetail",
@@ -112,6 +113,10 @@
           'job_type':{
             modalTitle:'选择招聘类型',
             modalChoices:['前端工程师','后端工程师','研发经理','软件工程师','安卓开发工程师','架构负责人'],
+          },
+          'salary_range':{
+            modalTitle:'薪酬范围',
+            modalChoices:['1k-5k','5k-10k','10k-15k','15k-20k','20k-50k','50k-100k','100k+'],
           }
         },
         showModal:false,
@@ -121,23 +126,23 @@
         editMode:false,
         formInline: {
           id:-1,
-          corporate_name: null,
-          corporate_site: null,
-          corporate_logo: null,
-          corporate_size: null,
-          job_type: null,
-          job_type_detail: null,
-          salary_range: null,
-          corporate_desc: null,
-          job_desc: null,
+          corporate_name: '',
+          corporate_site: '',
+          corporate_logo: '',
+          corporate_size: '',
+          job_type: '',
+          job_type_detail: '',
+          salary_range: '',
+          corporate_desc: '',
+          job_desc: '',
           corporate_welfare:'',
-          corporate_address: null,
+          corporate_address: '',
         },
       }
     },
     methods:{
       noRepeatAppend(str, s){
-        if(str == null){
+        if(checkEmpty(str)){
           return s;
         } else if (str.indexOf(s) >= 0){
           return str;
@@ -157,6 +162,8 @@
           this.formInline.corporate_size = item;
         } else if(this.modalItemName === 'job_type') {
           this.formInline.job_type = this.noRepeatAppend(this.formInline.job_type, item);
+        } else if(this.modalItemName === 'salary_range') {
+          this.formInline.salary_range = this.noRepeatAppend(this.formInline.salary_range, item);
         }
         this.showModal = false;
       },
