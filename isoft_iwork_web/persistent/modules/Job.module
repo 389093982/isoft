@@ -1,0 +1,9 @@
+<Module>
+	<Id>16</Id>
+	<ModuleName>Job</ModuleName>
+	<ModuleDesc>招聘模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2019-12-24T22:15:43+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2019-12-24T22:15:43+08:00</LastUpdatedTime>
+</Module>
