@@ -87,6 +87,8 @@
         <input id="corporate_address" class="input" v-if="editMode" v-model="formInline.corporate_address" placeholder="请您选择公司地址"/>
         <span v-else>{{formInline.corporate_address}}</span>
       </p>
+
+      <Button type="success" @click="handleSubmit">提交</Button>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
@@ -96,6 +98,8 @@
 </template>
 
 <script>
+  import {EditCorporateDetail,QueryCorporateDetail} from "../../api"
+
   export default {
     name: "CorporateDetail",
     data(){
@@ -116,6 +120,7 @@
         modalChoices:[],
         editMode:false,
         formInline: {
+          id:-1,
           corporate_name: null,
           corporate_site: null,
           corporate_logo: null,
@@ -134,7 +139,7 @@
       noRepeatAppend(str, s){
         if(str == null){
           return s;
-        } else if (str.indexOf(s) > 0){
+        } else if (str.indexOf(s) >= 0){
           return str;
         }else {
           return str + "," + s;
@@ -154,7 +159,51 @@
           this.formInline.job_type = this.noRepeatAppend(this.formInline.job_type, item);
         }
         this.showModal = false;
+      },
+      handleSubmit:async function () {
+        const result = await EditCorporateDetail(
+          this.formInline.id,
+          this.formInline.corporate_name,
+          this.formInline.corporate_site,
+          this.formInline.corporate_logo,
+          this.formInline.corporate_size,
+          this.formInline.job_type,
+          this.formInline.job_type_detail,
+          this.formInline.salary_range,
+          this.formInline.corporate_desc,
+          this.formInline.job_desc,
+          this.formInline.corporate_welfare,
+          this.formInline.corporate_address
+        );
+        if(result.status == "SUCCESS"){
+          this.$Message.success("保存成功！");
+          // 根据返回的主键 id 进行查询
+          this.refreshCorporateDetail();
+          this.editMode = false;
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
+      },
+      refreshCorporateDetail:async function () {
+        const result = await QueryCorporateDetail();
+        if(result.status == "SUCCESS" && result.corporate_detail){
+          this.formInline.id = result.corporate_detail.id;
+          this.formInline.corporate_name = result.corporate_detail.corporate_name;
+          this.formInline.corporate_site = result.corporate_detail.corporate_site;
+          this.formInline.corporate_logo = result.corporate_detail.corporate_logo;
+          this.formInline.corporate_size = result.corporate_detail.corporate_size;
+          this.formInline.job_type = result.corporate_detail.job_type;
+          this.formInline.job_type_detail = result.corporate_detail.job_type_detail;
+          this.formInline.salary_range = result.corporate_detail.salary_range;
+          this.formInline.corporate_desc = result.corporate_detail.corporate_desc;
+          this.formInline.job_desc = result.corporate_detail.job_desc;
+          this.formInline.corporate_welfare = result.corporate_detail.corporate_welfare;
+          this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
+        }
       }
+    },
+    mounted(){
+      this.refreshCorporateDetail();
     }
   }
 </script>
