@@ -30,7 +30,7 @@
             </RadioGroup>
           </Row><br>
           <Row>
-            <a style="color: #ff6600">支付金额:  </a><a style="font-size: 20px ;color: #ff6900">{{payMoney}}</a>元
+            <a style="color: #ff6600">支付金额:  </a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>元
           </Row><br>
         </div>
         <div class="qrcode">
@@ -50,7 +50,6 @@
       return {
         openingTime: ' 1个月 / ¥60 ',
         payType:'微信支付',
-        payMoney:'60',
       }
     },
     computed:{

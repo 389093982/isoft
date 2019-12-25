@@ -5,6 +5,7 @@ github.com/astaxie/beego/config
 github.com/astaxie/beego/context
 github.com/astaxie/beego/context/param
 github.com/astaxie/beego/grace
+github.com/astaxie/beego/httplib
 github.com/astaxie/beego/logs
 github.com/astaxie/beego/orm
 github.com/astaxie/beego/plugins/cors
