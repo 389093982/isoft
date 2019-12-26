@@ -62,7 +62,14 @@
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p>招聘岗位<a style="margin-left: 20px;">新增</a></p>
+      <p>招聘岗位<a @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})" style="margin-left: 20px;">新增</a></p>
+      <p v-if="jobDetails.length > 0" v-for="(jobDetail,index) in jobDetails">
+        工作名称：{{jobDetail.job_name}}
+        工作年限：{{jobDetail.job_age}}
+        工作地点：{{jobDetail.job_address}}
+        薪酬范围：{{jobDetail.salary_range}}
+        <Button @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
+      </p>
     </div>
   </div>
 </template>
@@ -89,6 +96,7 @@
           corporate_welfare:'',
           corporate_address: '',
         },
+        jobDetails:[],
       }
     },
     methods:{
@@ -107,6 +115,8 @@
           this.formInline.job_desc = result.corporate_detail.job_desc;
           this.formInline.corporate_welfare = result.corporate_detail.corporate_welfare;
           this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
+
+          this.jobDetails = result.job_details;
         }
       },
       getSplitArray(str, defaultVal){

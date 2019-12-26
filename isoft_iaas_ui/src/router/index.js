@@ -51,6 +51,7 @@ const JobList = () => import("@/components/IJob/JobList");
 const Employee = () => import("@/components/IJob/Employee");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
 const EditCorporate = () => import("@/components/IJob/EditCorporate");
+const EditJob = () => import("@/components/IJob/EditJob");
 
 import {joinArray} from "../tools"
 
@@ -153,6 +154,7 @@ const IJob = [{
     {path: 'employee',component: Employee},
     {path: 'corporate_detail',component: CorporateDetail},
     {path: 'corporate_edit',component: EditCorporate},
+    {path: 'job_edit',component: EditJob},
   ]
 }];
 

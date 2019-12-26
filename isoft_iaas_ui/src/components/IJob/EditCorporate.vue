@@ -75,11 +75,10 @@
         <input id="corporate_address" class="input" v-model="formInline.corporate_address" placeholder="请您选择公司地址"/>
       </p>
 
-      <Button type="success" @click="handleSubmit">提交</Button>
-    </div>
-
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p>招聘岗位<a style="margin-left: 20px;">新增</a></p>
+      <p class="isoft_top10">
+        <Button type="success" @click="handleSubmit">提交</Button>
+        <Button type="success" @click="handleReturn">返回</Button>
+      </p>
     </div>
   </div>
 </template>
@@ -152,6 +151,9 @@
           this.formInline.salary_range = this.noRepeatAppend(this.formInline.salary_range, item);
         }
         this.showModal = false;
+      },
+      handleReturn:function(){
+        this.$router.push({path:'/job/corporate_detail'});
       },
       handleSubmit:async function () {
         const result = await EditCorporateDetail(
