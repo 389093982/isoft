@@ -15,7 +15,9 @@
             <span>公司名称：{{formInline.corporate_name}}</span>
           </p>
           <p class="clear">
-            <span>公司主页：{{formInline.corporate_site}}</span>
+            <span>公司主页：
+              <a :href="formInline.corporate_site" target="_blank">{{formInline.corporate_site}}</a>
+            </span>
           </p>
           <p class="clear">
             <span>公司规模：{{formInline.corporate_size}}</span>
@@ -37,7 +39,7 @@
           </p>
         </Col>
       </Row>
-      <Button style="position: relative;float: right;right: 10px;bottom: 35px;" @click="$router.push({path:'/job/corporate_edit'})">编辑模式</Button>
+      <Button style="position: relative;float: right;right: 10px;bottom: 35px;" @click="$router.push({path:'/job/corporate_edit'})">前去编辑</Button>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
@@ -62,14 +64,26 @@
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p>招聘岗位<a @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})" style="margin-left: 20px;">新增</a></p>
-      <p v-if="jobDetails.length > 0" v-for="(jobDetail,index) in jobDetails">
-        工作名称：{{jobDetail.job_name}}
-        工作年限：{{jobDetail.job_age}}
-        工作地点：{{jobDetail.job_address}}
-        薪酬范围：{{jobDetail.salary_range}}
-        <Button @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-      </p>
+      <p>招聘岗位</p>
+      <div v-if="jobDetails.length > 0">
+        <Row>
+          <Col span="5">工作名称</Col>
+          <Col span="5">工作年限</Col>
+          <Col span="5">工作地点</Col>
+          <Col span="5">薪酬范围</Col>
+          <Col span="4">操作</Col>
+        </Row>
+        <Row v-for="(jobDetail,index) in jobDetails">
+          <Col span="5">{{jobDetail.job_name}}</Col>
+          <Col span="5">{{jobDetail.job_age}}</Col>
+          <Col span="5">{{jobDetail.job_address}}</Col>
+          <Col span="5">{{jobDetail.salary_range}}</Col>
+          <Col span="4">
+            <Button size="small" @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
+            <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
+          </Col>
+        </Row>
+      </div>
     </div>
   </div>
 </template>

@@ -54,12 +54,12 @@
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
       <p class="clear">
         <label for="corporate_desc">公司简介：</label>
-        <textarea rows="5" id="corporate_desc"
+        <textarea rows="8" id="corporate_desc"
                   class="input" v-model="formInline.corporate_desc" placeholder="请您输入公司简介"/>
       </p>
       <p class="clear">
         <label for="job_desc">职位简介：</label>
-        <textarea rows="5" id="job_desc"
+        <textarea rows="8" id="job_desc"
                   class="input" v-model="formInline.job_desc" placeholder="请您输入职位简介"/>
       </p>
     </div>
@@ -75,7 +75,7 @@
         <input id="corporate_address" class="input" v-model="formInline.corporate_address" placeholder="请您选择公司地址"/>
       </p>
 
-      <p class="isoft_top10">
+      <p class="isoft_top10" style="text-align: center;">
         <Button type="success" @click="handleSubmit">提交</Button>
         <Button type="success" @click="handleReturn">返回</Button>
       </p>
@@ -214,7 +214,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 3px 3px;
-    width: 450px;
+    width: 850px;
     font-size: 14px;
     font-family: 'Microsoft Yahei', 'PingFangSC', sans-serif;
   }

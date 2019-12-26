@@ -18,7 +18,7 @@
         <input id="salary_range" class="input" v-model="formInline.salary_range" placeholder="请您输入薪酬范围"/>
       </p>
 
-      <p class="isoft_top10">
+      <p class="isoft_top10" style="text-align: center;">
         <Button type="success" @click="handleSubmit">提交</Button>
         <Button type="success" @click="handleReturn">返回</Button>
       </p>
@@ -99,7 +99,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 3px 3px;
-    width: 450px;
+    width: 850px;
     font-size: 14px;
     font-family: 'Microsoft Yahei', 'PingFangSC', sans-serif;
   }
