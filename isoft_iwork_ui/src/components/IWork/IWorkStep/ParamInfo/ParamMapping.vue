@@ -14,12 +14,13 @@
             <td>
               <Icon type="md-arrow-round-up" @click="toggleLocation(index, -1)"/>
               <Icon type="md-arrow-round-down" @click="toggleLocation(index, 1)"/>
+             <Icon type="ios-settings-outline" @click="toggleShowMoreInfo(index)"/>
               <Button type="error" size="small" @click="handleDelete(paramMapping.paramMappingName)" style="margin-left: 6px">删除</Button>
               <ParamMappingAdd @handleSubmit="paramMappingAdd"/>
             </td>
           </tr>
           <tr>
-            <td colspan="3" v-if="workStepType == 'work_start'" style="padding: 2px 0 8px 0;">
+            <td colspan="3" v-if="workStepType == 'work_start' && showMoreInfoIndex == index" style="padding: 2px 0 8px 0;">
                <Checkbox v-model="paramMapping.paramMappingCleanXss">CleanXss</Checkbox>
                <Checkbox v-model="paramMapping.paramMappingSafePageNo">SafePageNo</Checkbox>
                <Checkbox v-model="paramMapping.paramMappingSafePageSize">SafePageSize</Checkbox>
@@ -47,7 +48,16 @@
         default:[],
       }
     },
+    data(){
+      return {
+        showMoreInfoIndex:-1,
+      }
+    },
     methods:{
+      toggleShowMoreInfo:function(index){
+        // 相等则取消,不相等则展开
+        this.showMoreInfoIndex = this.showMoreInfoIndex == index ? -1 : index;
+      },
       toggleLocation:function(index, direction){
         let index1 = index;
         let index2 = index + direction;

@@ -146,8 +146,10 @@
           this.$store.dispatch('commitSetCurrent',{"current_work_id":result.step.work_id, "current_work_step_id":result.step.work_step_id});
           // 异步请求加载完成之后才显示模态对话框
           this.showFormModal = true;
-          // 刷新校验结果
-          this.$refs.paramInputEdit.refreshWorkValidateDetail();
+          if(this.$refs.paramInputEdit){
+            // 刷新校验结果
+            this.$refs.paramInputEdit.refreshWorkValidateDetail();
+          }
         }else{
           // 加载失败
           this.$Message.error('加载失败!');
