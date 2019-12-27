@@ -127,6 +127,18 @@ export const GetRandomAdvertisement = (limit) => ajax(BASE_URL+'/iwork/httpservi
 
 export const EditAdvertisement = (id,advertisement_label,linked_type,linked_refer,linked_img) => ajax(BASE_URL+'/iwork/httpservice/EditAdvertisement',{id,advertisement_label,linked_type,linked_refer,linked_img},'GET');
 
+export const EditCorporateDetail = (id,corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
+    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address) =>
+  ajax(BASE_URL+'/iwork/httpservice/EditCorporateDetail',{id,corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
+    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address},'GET');
+
+export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, salary_range) =>
+  ajax(BASE_URL+'/iwork/httpservice/EditJobDetail',{id, corporate_id, job_name, job_age, job_address, salary_range},'GET');
+
+export const QueryCorporateDetail = () => ajax(BASE_URL+'/iwork/httpservice/QueryCorporateDetail',{},'GET');
+
+export const QueryJobById = (id) => ajax(BASE_URL+'/iwork/httpservice/QueryJobById',{id},'GET');
+
 //作文分享-查询title
 export const queryArticleTitleList = (offset,current_page) => ajax(BASE_URL+'iwork/httpservice/queryArticleTitleList',{offset,current_page},'POST');
 //作文分享-保存作文

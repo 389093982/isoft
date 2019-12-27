@@ -4,7 +4,7 @@
 		<WorkName>getUserInfoFromRequest</WorkName>
 		<WorkDesc>refactor worksub</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName></ModuleName>
+		<ModuleName>SSO</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
