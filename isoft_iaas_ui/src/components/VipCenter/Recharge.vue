@@ -30,11 +30,11 @@
             </RadioGroup>
           </Row><br>
           <Row>
-            <a style="color: #ff6600">支付金额:  </a><a style="font-size: 20px ;color: #ff6900">{{payMoney}}</a>元
+            <a style="color: #ff6600">支付金额:  </a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>元
           </Row><br>
         </div>
         <div class="qrcode">
-          (这里生成二维码)
+          <vue-qr :logoSrc="imageUrl" :text="getPayUrl" :size="180"></vue-qr>
         </div>
       </div>
     </div>
@@ -43,19 +43,31 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
-
+  import vueQr from 'vue-qr'
 	export default {
 		name: "Recharge",
+    components: {vueQr},
     data(){
       return {
         openingTime: ' 1个月 / ¥60 ',
         payType:'微信支付',
-        payMoney:'60',
+        payUrl:'test',
+        imageUrl: require("../../../static/images/vip.png"),
+      }
+    },
+    created:{
+		  initPayUrl:function () {
+		    let payMoney = this.openingTime.trim().split('¥')[1];
+        this.payUrl = 'https:weixin.pay'+payMoney;
       }
     },
     computed:{
 		  loginUserName:function () {
         return GetLoginUserName();
+      },
+      getPayUrl:function () {
+        let payMoney = this.openingTime.trim().split('¥')[1];
+        return 'https:weixin.pay'+payMoney;
       }
     },
     methods:{
@@ -79,6 +91,6 @@
   }
   .qrcode{
     float: right;
-    width: 55%;
+    width: 58%;
   }
 </style>
