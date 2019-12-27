@@ -284,26 +284,22 @@ func (this *WorkController) GetMetaInfo() {
 }
 
 func GetRunLogRecordCount(works []models.Work) interface{} {
-	m := make(map[int64]map[string]int64)
-	var sm = new(sync.Map)
-	var wg sync.WaitGroup
-	wg.Add(len(works))
+	m := make(map[int64]map[string]int64, len(works))
+	ch := make(chan int64, len(works))
+	var lock sync.RWMutex
 	for _, work := range works {
 		go func(work models.Work) {
 			errorCount, _ := models.QueryRunLogRecordCount(work.Id, "ERROR")
 			allCount, _ := models.QueryRunLogRecordCount(work.Id, "")
-			// 此处使用 map 会有并发问题 fatal error: concurrent map writes,故使用 sync.Map
-			sm.Store(work.Id, map[string]int64{"errorCount": errorCount, "allCount": allCount})
-			wg.Done()
+			lock.Lock()
+			defer lock.Unlock()
+			m[work.Id] = map[string]int64{"errorCount": errorCount, "allCount": allCount}
+			ch <- work.Id
 		}(work)
 	}
-	wg.Wait()
-
-	sm.Range(func(key, value interface{}) bool {
-		m[key.(int64)] = value.(map[string]int64)
-		return true
-	})
-
+	for i := 0; i < len(works); i++ {
+		<-ch
+	}
 	return m
 }
 
