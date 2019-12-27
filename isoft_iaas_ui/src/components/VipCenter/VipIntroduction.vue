@@ -4,7 +4,7 @@
       <div style="font-size: 30px;padding: 70px 20px 30px 38%">
         <span style="color: #ff6600">会员尊享，学而不止</span>
       </div>
-      <div style="font-size: 30px;padding: 70px 54% 30px 46%">
+      <div style="font-size: 30px;padding: 10px 54% 30px 46%">
         <Button shape="circle" size="large" @click="toRecharge()" style="color: #ff6600;font-size: 20px;">
           开通会员
         </Button>
