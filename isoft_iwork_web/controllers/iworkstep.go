@@ -46,6 +46,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 }
 
 func (this *WorkController) WorkStepList() {
+	defer this.ServeJSON()
 	jsonMap := make(map[string]interface{})
 	work_id, _ := this.GetInt64("work_id")
 	serviceArgs := map[string]interface{}{"work_id": work_id}
@@ -61,7 +62,6 @@ func (this *WorkController) WorkStepList() {
 		jsonMap["errorMsg"] = err.Error()
 	}
 	this.Data["json"] = jsonMap
-	this.ServeJSON()
 }
 
 func (this *WorkController) CopyWorkStepByWorkStepId() {

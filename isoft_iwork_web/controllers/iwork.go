@@ -289,12 +289,12 @@ func GetRunLogRecordCount(works []models.Work) interface{} {
 	var lock sync.RWMutex
 	for _, work := range works {
 		go func(work models.Work) {
+			defer func() { ch <- work.Id }()
 			errorCount, _ := models.QueryRunLogRecordCount(work.Id, "ERROR")
 			allCount, _ := models.QueryRunLogRecordCount(work.Id, "")
 			lock.Lock()
 			defer lock.Unlock()
 			m[work.Id] = map[string]int64{"errorCount": errorCount, "allCount": allCount}
-			ch <- work.Id
 		}(work)
 	}
 	for i := 0; i < len(works); i++ {
