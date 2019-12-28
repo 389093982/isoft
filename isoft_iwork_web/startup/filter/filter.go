@@ -26,7 +26,7 @@ func FilterFunc(ctx *context.Context) {
 		fs := v.([]models.Filters)
 		if intercept(fs, workCache, ctx) {
 			if workCache, err := iworkcache.GetWorkCacheWithName(filterWorkName); err == nil {
-				mapData := controllers.ParseParam(ctx, workCache.Steps)
+				mapData := controllers.ParseParam(ctx, workCache.Steps[0])
 				mapData[iworkconst.HTTP_REQUEST_OBJECT] = ctx.Request // 传递 request 对象
 				trackingId, receiver := iworkrun.RunOneWork(workCache.WorkId, &entry.Dispatcher{TmpDataMap: mapData})
 				// 将执行过的所有 filter_trackingId 记录到 ctx 中去
