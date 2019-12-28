@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	"html"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
@@ -15,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkplugin/params"
 	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/pageutil"
 	"sort"
 	"strings"
 )
@@ -84,14 +84,14 @@ func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *models.Wor
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *models.WorkStep) {
-	// work_start 节点并且 dispatcher 非空时替换成父流程参数
+	// 当前节点类型是 work_start 节点并且 dispatcher 非空时,将父流程继承的参数进行合并
 	if workStep.WorkStepType == iworkconst.NODE_TYPE_WORK_START && this.Dispatcher != nil && len(this.Dispatcher.TmpDataMap) > 0 {
 		tmpDataMap := make(map[string]interface{})
 		paramInputSchema := GetCacheParamInputSchema(workStep)
 		for _, item := range paramInputSchema.ParamInputSchemaItems {
 			if item.ParamName != iworkconst.HTTP_REQUEST_OBJECT {
-				// 从父流程或者调度者中获取值,即从 Dispatcher 中获取值
-				this.fillParamFromDispatcher(item, tmpDataMap)
+				// 合并父流程(调度者)传递过来的参数
+				this.mergeParamFromDispatcher(item, tmpDataMap)
 			}
 		}
 		this.TmpDataMap = tmpDataMap
@@ -112,7 +112,8 @@ func (this *BaseNode) getParamMapping(item iworkmodels.ParamInputSchemaItem) *iw
 	return nil
 }
 
-func (this *BaseNode) fillParamFromDispatcher(item iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
+// 合并父流程(调度者)传递过来的参数
+func (this *BaseNode) mergeParamFromDispatcher(item iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
 	paramMapping := this.getParamMapping(item)
 	paramValue := this.Dispatcher.TmpDataMap[item.ParamName]
 	tmpDataMap[item.ParamName] = paramValue

@@ -3,27 +3,33 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego/context"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkrun"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/runtimecfg"
+	"isoft/isoft_utils/common/stringutil"
 	"path"
 	"time"
 )
+
+func GenerateErrorMap(err interface{}) map[string]interface{} {
+	return map[string]interface{}{
+		"status":   "ERROR",
+		"errorMsg": errorutil.ToError(err).Error(),
+	}
+}
 
 // 示例地址: http://localhost:8086/api/iwork/httpservice/test_iblog_table_migrate?author0=admin1234567
 func (this *WorkController) PublishSerivce() {
 	defer func() {
 		if err := recover(); err != nil {
-			this.Data["json"] = &map[string]interface{}{
-				"status":   "ERROR",
-				"errorMsg": err.(error).Error(),
-			}
+			this.Data["json"] = GenerateErrorMap(err)
+			// 此处不用 defer 是为了性能
 			this.ServeJSON()
 		}
 	}()
@@ -36,6 +42,7 @@ func (this *WorkController) PublishSerivce() {
 		this.ResponseUploadFile(receiver)
 		this.Data["json"] = &receiver.TmpDataMap
 	} else {
+		// 没有 receiver,即没有返回 trackingId,一定代表执行失败(panic)
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", iworkconst.TRACKING_ID: trackingId, "errorMsg": "Empty Response"}
 	}
 	this.ServeJSON()
@@ -44,10 +51,13 @@ func (this *WorkController) PublishSerivce() {
 // 运行 work 或者从缓存中获取 receiver
 func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.WorkCache) (receiver *entry.Receiver, trackingId string) {
 	// 获取请求参数
-	mapData := ParseParam(this.Ctx, workCache.Steps)
-	chacheKey := fmt.Sprintf("%v%v", workCache.WorkId, mapData)
-	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request // 传递 request 对象
+	mapData := ParseParam(this.Ctx, workCache.Steps[0])
+	// 传递 request 对象
+	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request
+	// 传递文件上传对象
 	mapData[iworkconst.HTTP_REQUEST_IFILE_UPLOAD] = this
+
+	chacheKey := fmt.Sprintf("%v%v", workCache.WorkId, mapData)
 
 	if workCache.Work.CacheResult && memory.CacheEngine != nil && memory.CacheEngine.IsExist(chacheKey) {
 		receiver = memory.CacheEngine.Get(chacheKey).(*entry.Receiver)
@@ -55,6 +65,7 @@ func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.Wor
 	}
 	trackingId, receiver = iworkrun.RunOneWork(workCache.WorkId, &entry.Dispatcher{TmpDataMap: mapData})
 	if workCache.Work.CacheResult && memory.CacheEngine != nil {
+		// 将影响数据进行进行缓存,需要放置并发(理论上需要加锁)
 		memory.CacheEngine.Put(chacheKey, receiver, 60*10*time.Second)
 	}
 	return receiver, trackingId
@@ -80,16 +91,13 @@ func checkError(err error) {
 	}
 }
 
-func ParseParam(ctx *context.Context, steps []models.WorkStep) map[string]interface{} {
-	mapData := map[string]interface{}{}
-	for _, step := range steps {
-		if step.WorkStepType == iworkconst.NODE_TYPE_WORK_START {
-			inputSchema := node.GetCacheParamInputSchema(&step)
-			for _, item := range inputSchema.ParamInputSchemaItems {
-				// 默认参数类型都当成 string 类型
-				mapData[item.ParamName] = ctx.Input.Query(item.ParamName) // 传递参数允许为空串
-			}
-			break
+func ParseParam(ctx *context.Context, step models.WorkStep) map[string]interface{} {
+	mapData := make(map[string]interface{}, 0)
+	if step.WorkStepType == iworkconst.NODE_TYPE_WORK_START {
+		inputSchema := node.GetCacheParamInputSchema(&step)
+		for _, item := range inputSchema.ParamInputSchemaItems {
+			// 默认参数类型都当成 string 类型
+			mapData[item.ParamName] = ctx.Input.Query(item.ParamName) // 传递参数允许为空串
 		}
 	}
 	return mapData

@@ -46,22 +46,21 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 }
 
 func (this *WorkController) WorkStepList() {
+	defer this.ServeJSON()
 	jsonMap := make(map[string]interface{})
 	work_id, _ := this.GetInt64("work_id")
-	serviceArgs := map[string]interface{}{"work_id": work_id}
 	if workCache, err := iworkcache.GetWorkCache(work_id); err == nil {
 		jsonMap["usedMap"] = workCache.Usage.UsedMap
 	}
-	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, service.WorkStepListService); err == nil {
+	if worksteps, err := models.QueryWorkStep(map[string]interface{}{"work_id": work_id}, orm.NewOrm()); err == nil {
 		jsonMap["status"] = "SUCCESS"
-		jsonMap["worksteps"] = result["worksteps"]
+		jsonMap["worksteps"] = worksteps
 		jsonMap["runLogRecordCount"] = GetRunLogRecordCount([]models.Work{{Id: work_id}})
 	} else {
 		jsonMap["status"] = "ERROR"
 		jsonMap["errorMsg"] = err.Error()
 	}
 	this.Data["json"] = jsonMap
-	this.ServeJSON()
 }
 
 func (this *WorkController) CopyWorkStepByWorkStepId() {

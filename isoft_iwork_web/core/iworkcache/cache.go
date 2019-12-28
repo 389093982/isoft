@@ -142,6 +142,7 @@ type WorkCache struct {
 	Usage               *Usage                                  `xml:"-"` // 引值计算,节点引用值统计
 	err                 error                                   `xml:"-"`
 	ParamMappings       []iworkmodels.ParamMapping              `xml:"-"`
+	PISPreParseResult   map[int64]interface{}                   `xml:"-"` // ParamInputSchema 词法分析预处理结果
 }
 
 func (this *WorkCache) RenderToString() (s string) {
@@ -180,6 +181,8 @@ func (this *WorkCache) FlushCache() {
 		parser := pool.Container.GetSingleton("parser")
 		paramInputSchema := parser.(IParamSchemaCacheParser).GetCacheParamInputSchema(&workStep)
 		this.ParamInputSchemaMap[workStep.WorkStepId] = paramInputSchema
+		// PIS 预处理
+		this.evalPISPreParseResult(workStep, paramInputSchema)
 	}
 	// 缓存 subWorkName
 	this.SubWorkNameMap = make(map[int64]string, 0)
@@ -194,6 +197,12 @@ func (this *WorkCache) FlushCache() {
 	this.cacheReferUsage()
 
 	this.evalParamMapping()
+}
+
+func (this *WorkCache) evalPISPreParseResult(workStep models.WorkStep, paramInputSchema *iworkmodels.ParamInputSchema) {
+	//iworkfunc.SplitWithLexerAnalysis()
+
+	// TODO: 需要继续完善
 }
 
 func (this *WorkCache) evalParamMapping() {

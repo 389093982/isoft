@@ -25,6 +25,7 @@ type PisItemDataParser struct {
 }
 
 func (this *PisItemDataParser) FillPisItemDataToTmp() {
+	// 对必要的参数进行非空判断
 	this.checkEmpty()
 	this.FillPisItemDataToPureTmp()
 	this.FillPisItemDataToNPureTmp()
@@ -44,14 +45,15 @@ func (this *PisItemDataParser) checkEmpty() {
 func (this *PisItemDataParser) FillPisItemDataToNPureTmp() {
 	// tmpDataMap 存储解析值
 	if this.Item.PureText {
+		// 表示为纯文本则放入字符串,不再解析
 		this.TmpDataMap[this.Item.ParamName] = this.Item.ParamValue
+		return
+	}
+	// 判断当前参数是否是 repeat 参数
+	if !this.Item.Repeatable {
+		this.TmpDataMap[this.Item.ParamName] = this.ParseAndGetParamVaule(this.Item.ParamName, this.Item.ParamValue) // 输入数据存临时
 	} else {
-		// 判断当前参数是否是 repeat 参数
-		if !this.Item.Repeatable {
-			this.TmpDataMap[this.Item.ParamName] = this.ParseAndGetParamVaule(this.Item.ParamName, this.Item.ParamValue) // 输入数据存临时
-		} else {
-			this.ForeachFillPisItemDataToTmp()
-		}
+		this.ForeachFillPisItemDataToTmp()
 	}
 }
 
@@ -77,8 +79,8 @@ func (this *PisItemDataParser) ForeachFillPisItemDataToTmp() {
 	}
 }
 
-// 解析 paramVaule 并从 dataStore 中获取实际值
-// 可能的情况有多种：单值 interface{}, 多值 []interface{}, 对象值 map[string]interface{}
+// 解析 paramVaule 并赋值,数据来源于前置节点(从 dataStore 中获取实际值)
+// 解析结果可能的情况有多种：单值 interface{}, 多值 []interface{}, 对象值 map[string]interface{}
 func (this *PisItemDataParser) ParseAndGetParamVaule(paramName, paramVaule string, replaceMap ...map[string]interface{}) interface{} {
 	// 将 paramValue 解析成对象值 []*OobjectAttrs
 	objectAttrs := this.parseToObjectAttrs(paramVaule)
@@ -116,6 +118,7 @@ func (this *PisItemDataParser) parseToObjectAttr(index int, paramValue string) *
 	return &ObjectAttr{index: index, attrName: attrName, attrPureValue: attrPureValue}
 }
 
+// 属性对象
 type ObjectAttr struct {
 	index          int
 	attrName       string      // 对象属性名
@@ -123,11 +126,13 @@ type ObjectAttr struct {
 	attrParseValue interface{} // 对象属性解析值
 }
 
-// 将 paramVaule 转行成 对象值 map[string]interface{}, 即 []*ObjectAttr
+// 将 paramVaule 转行成 []*ObjectAttr
 func (this *PisItemDataParser) parseToObjectAttrs(paramVaule string) []*ObjectAttr {
 	objectAttrs := make([]*ObjectAttr, 0)
 	// 对转义字符 \, \; \( \) 等进行编码
 	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
+	// 进行词法分析,获取多个值
+	// TODO：(词法分析可以预处理)
 	multiVals, err := iworkfunc.SplitWithLexerAnalysis(paramVaule)
 	if err != nil {
 		panic(err)
