@@ -182,24 +182,6 @@ func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error
 	return nil
 }
 
-func WorkStepList(condArr map[string]interface{}, o orm.Ormer) (result map[string]interface{}, err error) {
-	result = make(map[string]interface{}, 0)
-	worksteps, err := models.QueryWorkStep(condArr, o)
-	if err != nil {
-		return nil, err
-	}
-	result["worksteps"] = worksteps
-	return
-}
-
-func WorkStepListService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
-	result = make(map[string]interface{}, 0)
-	condArr := make(map[string]interface{})
-	condArr["work_id"] = serviceArgs["work_id"].(int64)
-	o := serviceArgs["o"].(orm.Ormer)
-	return WorkStepList(condArr, o)
-}
-
 func AddWorkStepService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
