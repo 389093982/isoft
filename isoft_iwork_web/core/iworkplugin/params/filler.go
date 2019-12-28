@@ -7,7 +7,8 @@ import (
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 func FillParamInputSchemaDataToTmp(pis *iworkmodels.ParamInputSchema, dataStore *datastore.DataStore) map[string]interface{} {
-	// 存储节点中间数据
+	// 存储节点中间数据, tmpDataMap 是解析后的值, pureTextTmpDataMap 是解析前的值
+	// TODO：pureTextTmpDataMap 最好能预解析,以降低性能,估计此处性能损耗不大
 	tmpDataMap, pureTextTmpDataMap := make(map[string]interface{}), make(map[string]string)
 	for _, item := range pis.ParamInputSchemaItems {
 		fillParamInputSchemaItemDataToTmp(pureTextTmpDataMap, tmpDataMap, item, dataStore)
