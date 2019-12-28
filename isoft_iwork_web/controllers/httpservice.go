@@ -52,9 +52,12 @@ func (this *WorkController) PublishSerivce() {
 func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.WorkCache) (receiver *entry.Receiver, trackingId string) {
 	// 获取请求参数
 	mapData := ParseParam(this.Ctx, workCache.Steps[0])
-	chacheKey := fmt.Sprintf("%v%v", workCache.WorkId, mapData)
-	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request // 传递 request 对象
+	// 传递 request 对象
+	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request
+	// 传递文件上传对象
 	mapData[iworkconst.HTTP_REQUEST_IFILE_UPLOAD] = this
+
+	chacheKey := fmt.Sprintf("%v%v", workCache.WorkId, mapData)
 
 	if workCache.Work.CacheResult && memory.CacheEngine != nil && memory.CacheEngine.IsExist(chacheKey) {
 		receiver = memory.CacheEngine.Get(chacheKey).(*entry.Receiver)
@@ -62,6 +65,7 @@ func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.Wor
 	}
 	trackingId, receiver = iworkrun.RunOneWork(workCache.WorkId, &entry.Dispatcher{TmpDataMap: mapData})
 	if workCache.Work.CacheResult && memory.CacheEngine != nil {
+		// 将影响数据进行进行缓存,需要放置并发(理论上需要加锁)
 		memory.CacheEngine.Put(chacheKey, receiver, 60*10*time.Second)
 	}
 	return receiver, trackingId

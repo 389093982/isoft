@@ -53,29 +53,10 @@ func parseToError(err interface{}) error {
 func (this *WorkStepFactory) Execute(trackingId string) {
 	defer func() {
 		if err := recover(); err != nil {
-			insensitiveErrorFlag := false
-			if _err, ok := err.(*interfaces.InsensitiveError); ok {
-				insensitiveErrorFlag = true
-				err = _err.Error
-			}
-			wsError := interfaces.WorkStepError{
-				Err:          parseToError(err),
-				WorkStepName: this.WorkStep.WorkStepName,
-			}
-			insensitiveErrorMsg := wsError.Error()
-			if !insensitiveErrorFlag {
-				insensitiveErrorMsg = "InternalError"
-			}
-			// 将错误写入 Error 中去
-			this.DataStore.CacheDatas("Error", map[string]interface{}{
-				"isError":             true,
-				"isNoError":           false,
-				"errorMsg":            wsError.Error(),
-				"insensitiveErrorMsg": insensitiveErrorMsg,
-			})
-			panic(wsError) // 对已经进行包装,异常不吞掉,继续抛出
+			this.handleAndPanicInsensitiveError(err)
 		}
 	}()
+
 	proxy := this.getProxy()
 	// 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 	proxy.FillParamInputSchemaDataToTmp(this.WorkStep)
@@ -83,9 +64,37 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 	proxy.FillPureTextParamInputSchemaDataToTmp(this.WorkStep)
 	// 执行任务
 	proxy.Execute(trackingId)
+
+	// 如果有返回值,则返回 Receiver(只有 work_end 节点才有返回值)
 	if receiver := proxy.GetReceiver(); receiver != nil {
 		this.Receiver = receiver
 	}
+}
+
+// 将捕获到的 err 继续抛出,但是做了一层脱敏处理
+func (this *WorkStepFactory) handleAndPanicInsensitiveError(err interface{}) {
+	insensitiveErrorFlag := false
+	if _err, ok := err.(*interfaces.InsensitiveError); ok {
+		insensitiveErrorFlag = true
+		err = _err.Error
+	}
+	wsError := interfaces.WorkStepError{
+		Err:          parseToError(err),
+		WorkStepName: this.WorkStep.WorkStepName,
+	}
+	insensitiveErrorMsg := wsError.Error()
+	if !insensitiveErrorFlag {
+		insensitiveErrorMsg = "InternalError"
+	}
+	// 将错误写入 Error 中去
+	this.DataStore.CacheDatas("Error", map[string]interface{}{
+		"isError":             true,
+		"isNoError":           false,
+		"errorMsg":            wsError.Error(),
+		"insensitiveErrorMsg": insensitiveErrorMsg,
+	})
+	// 对已经进行包装,异常不吞掉,继续抛出
+	panic(wsError)
 }
 
 func GetIWorkStep(workStepType string) interfaces.IWorkStep {

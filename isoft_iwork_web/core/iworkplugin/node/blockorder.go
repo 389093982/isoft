@@ -1,15 +1,14 @@
 package node
 
 import (
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
-	"isoft/isoft_iwork_web/core/iworkdata/block"
 	"isoft/isoft_iwork_web/core/iworkdata/datastore"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworklog"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 )
 
@@ -50,28 +49,21 @@ func (this *BlockStepOrdersRunner) Run() (receiver *entry.Receiver) {
 	defer func() {
 		if err := recover(); err != nil {
 			this.recordLog(err)
-			// 重置 parentStepId,并执行 end 节点
-			this.ParentStepId = iworkconst.PARENT_STEP_ID_FOR_START_END
-			receiver = this.runDetail(true)
+			panic(err)
 		}
 	}()
 	return this.runDetail()
 }
 
-func (this *BlockStepOrdersRunner) runDetail(runEnd ...bool) (receiver *entry.Receiver) {
-	if len(runEnd) > 0 { // end 节点异常暂不抛出
-		defer func() {
-			if err := recover(); err != nil {
-				this.recordLog(err)
-			}
-		}()
-	}
+func (this *BlockStepOrdersRunner) runDetail() (receiver *entry.Receiver) {
 	// 存储前置步骤 afterJudgeInterrupt 属性
 	afterJudgeInterrupt := false
 	for _, blockStep := range this.WorkCache.BlockStepOrdersMap[this.ParentStepId] {
-		if this.skippable(blockStep, runEnd...) {
+		// empty 节点就没必要执行了,后面计划不支持 empty 节点
+		if blockStep.Step.WorkStepType == "empty" {
 			continue
 		}
+
 		args := &interfaces.RunOneStepArgs{
 			TrackingId: this.TrackingId,
 			Logwriter:  this.LogWriter,
@@ -80,8 +72,10 @@ func (this *BlockStepOrdersRunner) runDetail(runEnd ...bool) (receiver *entry.Re
 			Dispatcher: this.Dispatcher,
 			WorkCache:  this.WorkCache,
 		}
-		if blockStep.Step.WorkStepType == "if" { // 遇到 if 必定可以执行
+		// 遇到 if 必定可以执行
+		if blockStep.Step.WorkStepType == "if" {
 			receiver = this.RunOneStep(args)
+			// 支持完成后当前 blockStep 会获得 AfterJudgeInterrupt 属性
 			afterJudgeInterrupt = blockStep.AfterJudgeInterrupt
 		} else if stringutil.CheckContains(blockStep.Step.WorkStepType, []string{"elif", "else"}) { // 遇到 elif 和 else
 			if !afterJudgeInterrupt {
@@ -90,19 +84,8 @@ func (this *BlockStepOrdersRunner) runDetail(runEnd ...bool) (receiver *entry.Re
 			}
 		} else { // 非 if、elif、else 节点必定执行
 			receiver = this.RunOneStep(args)
-			afterJudgeInterrupt = false
+			afterJudgeInterrupt = false // 不阻断后续步骤执行
 		}
 	}
 	return receiver
-}
-
-// 当前 blockStep 是否可以跳过
-func (this *BlockStepOrdersRunner) skippable(blockStep *block.BlockStep, runEnd ...bool) bool {
-	if len(runEnd) > 0 && runEnd[0] == true && blockStep.Step.WorkStepType != "work_end" { // 不满足 runEnd 条件
-		return true
-	}
-	if blockStep.Step.WorkStepType == "empty" {
-		return true
-	}
-	return false
 }
