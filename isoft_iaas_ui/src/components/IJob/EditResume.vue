@@ -40,6 +40,34 @@
         <textarea rows="8" id="other_characters" class="input" v-model="formInline.personal_skills"
                   placeholder="请您输入其它优势"></textarea>
       </p>
+      <p class="clear">
+        <label for="education">学历：</label>
+        <input id="education" class="input" v-model="formInline.education" placeholder="请您输入学历"/>
+      </p>
+      <p class="clear">
+        <label for="employment_status">就业状态：</label>
+        <input id="employment_status" class="input" v-model="formInline.employment_status" placeholder="请您输入就业状态"/>
+      </p>
+      <p class="clear">
+        <label for="graduate_school">毕业学校：</label>
+        <input id="graduate_school" class="input" v-model="formInline.graduate_school" placeholder="请您输入毕业学校"/>
+      </p>
+      <p class="clear">
+        <label for="expectant_salary">期望薪资：</label>
+        <input id="expectant_salary" class="input" v-model="formInline.expectant_salary" placeholder="请您输入期望薪资"/>
+      </p>
+      <p class="clear">
+        <label for="job_area">期望地点：</label>
+        <input id="job_area" class="input" v-model="formInline.job_area" placeholder="请您输入期望地点"/>
+      </p>
+      <p class="clear">
+        <label for="current_situation">当前状况：</label>
+        <input id="current_situation" class="input" v-model="formInline.current_situation" placeholder="请您输入当前状况"/>
+      </p>
+      <p class="clear">
+        <label for="personal_hobbies">个人爱好：</label>
+        <input id="personal_hobbies" class="input" v-model="formInline.personal_hobbies" placeholder="请您输入个人爱好"/>
+      </p>
 
       <p class="isoft_top10" style="text-align: center;">
         <Button type="success" @click="handleSubmit">提交</Button>

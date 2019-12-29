@@ -63,8 +63,7 @@
 </template>
 
 <script>
-  import {oneOf} from "../../../tools"
-  import {swapArray} from "../../../tools"
+  import {oneOf, swapArray} from "../../../tools"
 
   export default {
     name: "QuickTable",
@@ -89,8 +88,8 @@
         checkTableColumns:[],
         customSqls:[],
         // default line 默认线路
-        appendSqlElements:["select"],
-        hotSqlElements:["select", "(", ")","count(*) as count","where","from","where 1=0"],
+        appendSqlElements: [],
+        hotSqlElements: ["select", "update", "set", "insert into", "values", "(", ")", "count(*) as count", "where", "from", "where 1=0"],
       }
     },
     methods:{

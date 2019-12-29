@@ -103,6 +103,22 @@ func TrimEmptyLines(str string) string {
 	return strings.Join(lines, "\n")
 }
 
+func GetFormatSlice(sli []string, f func(s string) string) []string {
+	newSli := make([]string, len(sli))
+	for index, sl := range sli {
+		newSli[index] = f(sl)
+	}
+	return newSli
+}
+
+func GetRepeatSlice(s string, len int) []string {
+	sli := make([]string, len)
+	for i := 0; i < len; i++ {
+		sli[i] = s
+	}
+	return sli
+}
+
 func ReplaceAllString(str, expr, replacement string) (string, error) {
 	reg, err := regexp.Compile(expr)
 	if err != nil {
