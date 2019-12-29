@@ -12,9 +12,9 @@
               默认值：<Input style="width: 150px;" size="small" type="text" v-model="paramMapping.paramMappingDefault"/>
             </td>
             <td>
-              <Icon type="md-arrow-round-up" @click="toggleLocation(index, -1)"/>
-              <Icon type="md-arrow-round-down" @click="toggleLocation(index, 1)"/>
-             <Icon type="ios-settings-outline" @click="toggleShowMoreInfo(index)"/>
+              <Icon :size="15" type="md-arrow-round-up" @click="toggleLocation(index, -1)"/>
+              <Icon :size="15" type="md-arrow-round-down" @click="toggleLocation(index, 1)"/>
+              <Icon :size="15" type="ios-settings-outline" @click="toggleShowMoreInfo(index)"/>
               <Button type="error" size="small" @click="handleDelete(paramMapping.paramMappingName)" style="margin-left: 6px">删除</Button>
               <ParamMappingAdd @handleSubmit="paramMappingAdd"/>
             </td>

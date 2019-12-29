@@ -107,7 +107,12 @@
     methods: {
       handleSubmit: async function () {
         const result = await EditResume(this.formInline);
-        alert(result);
+        if (result.status == "SUCCESS") {
+          this.$Message.success("保存成功！");
+          this.$router.push({path: '/job/resume_manage'});
+        } else {
+          this.$Message.error("保存失败!");
+        }
       }
     }
   }

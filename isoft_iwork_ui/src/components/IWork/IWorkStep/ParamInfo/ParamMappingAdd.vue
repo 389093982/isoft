@@ -1,6 +1,7 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" btn-size="small" modal-title="新增" :modal-width="500">
-    <Input style="margin-bottom: 20px;" v-model.trim="paramMappingName" placeholder="请输入新增的字段名称"></Input>
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" btn-size="small" modal-title="新增" :modal-width="600">
+    <Input type="textarea" :rows="5" style="margin-bottom: 20px;" v-model.trim="paramMappingName"
+           placeholder="请输入新增的字段名称"></Input>
     <div>
       <div style="margin-top: 20px;margin-bottom: 10px;">推荐字段：</div>
       <CheckboxGroup v-model="choosed_recommend_fields">
