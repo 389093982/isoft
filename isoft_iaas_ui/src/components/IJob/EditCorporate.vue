@@ -55,12 +55,12 @@
       <p class="clear">
         <label for="corporate_desc">公司简介：</label>
         <textarea rows="8" id="corporate_desc"
-                  class="input" v-model="formInline.corporate_desc" placeholder="请您输入公司简介"></textarea>
+                  class="input" v-model="formInline.corporate_desc" placeholder="请您输入公司简介"/>
       </p>
       <p class="clear">
         <label for="job_desc">职位简介：</label>
         <textarea rows="8" id="job_desc"
-                  class="input" v-model="formInline.job_desc" placeholder="请您输入职位简介"></textarea>
+                  class="input" v-model="formInline.job_desc" placeholder="请您输入职位简介"/>
       </p>
     </div>
 

@@ -63,8 +63,10 @@
         let ProductDesc = '学习网站会员';
         let TransAmount = payMoney*100;
         let TransCurrCode = 'CNY';
-        let code_url = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
-        this.payUrl = code_url;
+        let orderResult = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+        this.$Message.success(orderResult);
+        let orderRestltJson = JSON.parse(orderResult);
+        this.payUrl = orderRestltJson[0].code_url;
       }
     },
     computed:{
@@ -77,8 +79,10 @@
         let ProductDesc = '学习网站会员';
         let TransAmount = payMoney*100;
         let TransCurrCode = 'CNY';
-        let code_url = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
-        return code_url;
+        let orderResult = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+        this.$Message.success(orderResult);
+        let orderRestltJson = JSON.parse(orderResult);
+        return orderRestltJson[0].code_url;
       }
     },
     methods:{

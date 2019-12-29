@@ -131,8 +131,9 @@ func (this *MainController) WeChatPay(){
 		}
 	}
 
-	orderResult := map[string]interface{}{"code_url":code_url}
-	this.Data["json"] = orderResult
+	orderResultMap := make(map[string]interface{})
+	orderResultMap["code_url"] = code_url
+	this.Data["json"] = orderResultMap
 	this.ServeJSON()
 }
 
