@@ -7,25 +7,15 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft_unifiedpay/models"
-	"strconv"
-	"strings"
 	"time"
+	"strconv"
 	"github.com/astaxie/beego/httplib"
 	"crypto/tls"
+	"strings"
 )
 
-//支付下单-控制器
-func (this *MainController) Pay() {
-	go this.WeChatPay()
-}
-
-//支付结果异步通知-控制器
-func (this *MainController) PayNotifyResult() {
-	go this.WeChatPayNofify()
-}
-
 //支付下单-具体处理方法
-func (this *MainController) WeChatPay(){
+func (this *MainController) Pay() {
 	code_url := "下单失败" //支付二维码，默认显示‘下单失败’
 	o := orm.NewOrm()
 	//界面接收的参数
@@ -137,8 +127,9 @@ func (this *MainController) WeChatPay(){
 	this.ServeJSON()
 }
 
+
 //支付结果异步通知-具体处理方法
-func (this *MainController) WeChatPayNofify() {
+func (this *MainController) PayNotifyResult() {
 	//获取支付结果异步通知
 	logs.Info("支付结果异步通知上来了...")
 	reqBody := this.Ctx.Input.RequestBody
@@ -195,3 +186,4 @@ func (this *MainController) WeChatPayNofify() {
 		logs.Info(fmt.Sprintf("返回状态码失败，失败原因:%v", reqXml.Return_msg))
 	}
 }
+
