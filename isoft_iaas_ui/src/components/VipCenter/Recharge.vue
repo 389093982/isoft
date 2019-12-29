@@ -43,6 +43,7 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
+  import {pay} from '../../api'
   import vueQr from 'vue-qr'
 	export default {
 		name: "Recharge",
@@ -56,18 +57,28 @@
       }
     },
     created:{
-		  initPayUrl:function () {
+		  initPayUrl:async function () {
 		    let payMoney = this.openingTime.trim().split('¥')[1];
-        this.payUrl = 'https:weixin.pay'+payMoney;
+        let ProductId = '待定';
+        let ProductDesc = '学习网站会员';
+        let TransAmount = payMoney*100;
+        let TransCurrCode = 'CNY';
+        let code_url = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+        this.payUrl = code_url;
       }
     },
     computed:{
 		  loginUserName:function () {
         return GetLoginUserName();
       },
-      getPayUrl:function () {
+      getPayUrl:async function () {
         let payMoney = this.openingTime.trim().split('¥')[1];
-        return 'https:weixin.pay'+payMoney;
+        let ProductId = '待定';
+        let ProductDesc = '学习网站会员';
+        let TransAmount = payMoney*100;
+        let TransCurrCode = 'CNY';
+        let code_url = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+        return code_url;
       }
     },
     methods:{
