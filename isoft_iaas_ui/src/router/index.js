@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import ArticleList from "../components/ShareArticle/ArticleList"
+import ArticleEdit from "../components/ShareArticle/ArticleEdit"
+import ShareArticlePlace from "../components/ShareArticle/ShareArticlePlace"
+import SharingHall from "../components/ShareArticle/SharingHall"
+import {joinArray} from "../tools"
 
 // es6 import 异步语法,使用异步组件加载机制减少耗时操作
 const Login = () => import("@/components/SSO/Login/Login");
@@ -39,21 +44,16 @@ const PayConfirm = () => import("@/components/IGood/PayConfirm");
 const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const Recharge = () => import("@/components/VipCenter/Recharge");
-import ArticleList from "../components/ShareArticle/ArticleList"
-import ArticleEdit from "../components/ShareArticle/ArticleEdit"
-import ShareArticlePlace from "../components/ShareArticle/ShareArticlePlace"
-import SharingHall from "../components/ShareArticle/SharingHall"
 
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 
 const JobList = () => import("@/components/IJob/JobList");
-const Employee = () => import("@/components/IJob/Employee");
+const ResumeManage = () => import("@/components/IJob/ResumeManage");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
 const EditCorporate = () => import("@/components/IJob/EditCorporate");
 const EditJob = () => import("@/components/IJob/EditJob");
-
-import {joinArray} from "../tools"
+const EditResume = () => import("@/components/IJob/EditResume");
 
 Vue.use(Router);
 
@@ -151,10 +151,11 @@ const IJob = [{
   component: ILayout,
   children: [
     {path: 'jobList',component: JobList},
-    {path: 'employee',component: Employee},
+    {path: 'resume_manage', component: ResumeManage},
     {path: 'corporate_detail',component: CorporateDetail},
     {path: 'corporate_edit',component: EditCorporate},
     {path: 'job_edit',component: EditJob},
+    {path: 'resume_edit', component: EditResume},
   ]
 }];
 

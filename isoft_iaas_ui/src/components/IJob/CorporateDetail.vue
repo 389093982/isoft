@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10">
+    <div class="isoft_bg_white isoft_pd20">
       <Row>
         <Col span="4">
           <div class="bookImg">
@@ -42,7 +42,7 @@
       <Button style="position: relative;float: right;right: 10px;bottom: 35px;" @click="$router.push({path:'/job/corporate_edit'})">前去编辑</Button>
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
+    <div class="isoft_bg_white isoft_pd20 isoft_top10">
       <p class="clear">
         <span>公司简介：{{formInline.corporate_desc}}</span>
       </p>
@@ -59,21 +59,19 @@
       <p class="clear">
         <span>公司地址：{{formInline.corporate_address}}</span>
       </p>
-
-
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p>招聘岗位</p>
+    <div class="isoft_bg_white isoft_pd20 isoft_top10">
+      <p style="border-bottom: 1px solid #f0f0f0;">招聘岗位</p>
       <div v-if="jobDetails.length > 0">
-        <Row>
+        <Row style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
           <Col span="5">工作名称</Col>
           <Col span="5">工作年限</Col>
           <Col span="5">工作地点</Col>
           <Col span="5">薪酬范围</Col>
           <Col span="4">操作</Col>
         </Row>
-        <Row v-for="(jobDetail,index) in jobDetails">
+        <Row v-for="(jobDetail,index) in jobDetails" style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
           <Col span="5">{{jobDetail.job_name}}</Col>
           <Col span="5">{{jobDetail.job_age}}</Col>
           <Col span="5">{{jobDetail.job_address}}</Col>
@@ -83,6 +81,10 @@
             <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
           </Col>
         </Row>
+
+        <div class="isoft_top10" style="text-align: center;">
+          <IBeautifulLink>查看更多职位</IBeautifulLink>
+        </div>
       </div>
     </div>
   </div>
