@@ -25,19 +25,21 @@ var funcCallersMap sync.Map
 
 // 将结果存储到 sync.Map 中去
 func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
+	// 先从缓存中获取
 	if callers, ok := funcCallersMap.Load(expression); ok {
 		return callers.([]*FuncCaller), nil
 	}
-	callers, err := ParseAndCacheFuncCallers(expression)
-	if err != nil {
-		return nil, err
+	// 缓存中没有则实时解析获取
+	callers, err := ParseFuncCallers(expression)
+	if err == nil {
+		// 存入缓存
+		funcCallersMap.Store(expression, callers)
 	}
-	funcCallersMap.Store(expression, callers)
-	return ParseToFuncCallers(expression)
+	return callers, err
 }
 
 // 返回 uuid 和 funcCaller
-func ParseAndCacheFuncCallers(expression string) ([]*FuncCaller, error) {
+func ParseFuncCallers(expression string) ([]*FuncCaller, error) {
 	callers := make([]*FuncCaller, 0)
 	for {
 		if isUUIDFuncVar(expression) {
@@ -66,7 +68,6 @@ func ParseAndCacheFuncCallers(expression string) ([]*FuncCaller, error) {
 			callers = append(callers, caller)
 			expression = _expression
 		}
-
 	}
 	return callers, nil
 }
@@ -107,6 +108,7 @@ func lexerAt(lexers []string, index int) int {
 	return -1
 }
 
+// 对字符串进行词法分析
 func analysisLexer(s string) (metas []string, lexers []string, err error) {
 	metas, lexers = make([]string, 0), make([]string, 0)
 	// 不断地进行词法解析,直到解析完或者报错
