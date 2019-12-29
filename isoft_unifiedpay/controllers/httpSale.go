@@ -1,33 +1,22 @@
 package controllers
 
 import (
-	"crypto/tls"
 	"encoding/xml"
-	"errors"
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft_unifiedpay/models"
-	"strconv"
-	"strings"
 	"time"
+	"strconv"
+	"github.com/astaxie/beego/httplib"
+	"crypto/tls"
+	"strings"
 )
 
-//支付下单-控制器
-func (this *MainController) Pay() {
-	go this.WeChatPay()
-}
-
-//支付结果异步通知-控制器
-func (this *MainController) PayNotifyResult() {
-	go this.WeChatPayNofify()
-}
-
 //支付下单-具体处理方法
-func (this *MainController) WeChatPay() (string, error) {
-	code_url := "" //支付二维码
+func (this *MainController) Pay() {
+	code_url := "下单失败" //支付二维码，默认显示‘下单失败’
 	o := orm.NewOrm()
 	//界面接收的参数
 	productId := this.GetString("ProductId")
@@ -60,84 +49,87 @@ func (this *MainController) WeChatPay() (string, error) {
 	e := order.Pay(o, order)
 	if e != nil {
 		logs.Error(e)
-		return code_url, e
 	} else {
 		logs.Info(fmt.Sprintf("订单%v入库成功!", order.OrderId))
-	}
+		//发送微信下单请求
+		logs.Info("发送微信下单请求...")
+		req := httplib.Post(beego.AppConfig.String("WeChatPay_ReqUrl"))
+		req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+		req.SetTimeout(60*time.Second, 60*time.Second)
 
-	//发送微信下单请求
-	logs.Info("发送微信下单请求...")
-	req := httplib.Post(beego.AppConfig.String("WeChatPay_ReqUrl"))
-	req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-	req.SetTimeout(60*time.Second, 60*time.Second)
+		//组织xml报文
+		reqXml := NativeRequestXml{}
+		reqXml.Appid = beego.AppConfig.String("WeChatPay_Appid")
+		reqXml.Mch_id = order.MerchantNo
+		reqXml.Out_trade_no = order.OrderId
+		reqXml.Trade_type = beego.AppConfig.String("WeChatPay_TradeType")
+		reqXml.Fee_type = order.TransCurrCode
+		reqXml.Total_fee = strconv.Itoa(int(order.TransAmount))
+		reqXml.Body = order.ProductDesc
+		reqXml.Spbill_create_ip = beego.AppConfig.String("WeChatPay_SpbillCreateIp")
+		reqXml.Notify_url = beego.AppConfig.String("WeChatPay_NotifyUrl")
+		reqXml.Nonce_str = "1add1a30ac87aa2db72f57a2375d8fec"
+		reqXml.Sign = "0CB01533B8C1EF103065174F50BCA001"
 
-	//组织xml报文
-	reqXml := NativeRequestXml{}
-	reqXml.Appid = beego.AppConfig.String("WeChatPay_Appid")
-	reqXml.Mch_id = order.MerchantNo
-	reqXml.Out_trade_no = order.OrderId
-	reqXml.Trade_type = beego.AppConfig.String("WeChatPay_TradeType")
-	reqXml.Fee_type = order.TransCurrCode
-	reqXml.Total_fee = strconv.Itoa(int(order.TransAmount))
-	reqXml.Body = order.ProductDesc
-	reqXml.Spbill_create_ip = beego.AppConfig.String("WeChatPay_SpbillCreateIp")
-	reqXml.Notify_url = beego.AppConfig.String("WeChatPay_NotifyUrl")
-	reqXml.Nonce_str = "1add1a30ac87aa2db72f57a2375d8fec"
-	reqXml.Sign = "0CB01533B8C1EF103065174F50BCA001"
+		//设置xml报文体
+		reqXmlStr, e := xml.Marshal(reqXml)
+		logs.Info("设置xml报文体:%v", string(reqXmlStr))
+		req.XMLBody(string(reqXmlStr))
 
-	//设置xml报文体
-	reqXmlStr, e := xml.Marshal(reqXml)
-	logs.Info("设置xml报文体:%v", string(reqXmlStr))
-	req.XMLBody(string(reqXmlStr))
-
-	//获取返回消息、转为结构体
-	logs.Info("接收返回报文...")
-	resXmlStr, e := req.String()
-	logs.Info(fmt.Sprintf("收到报文:%v", resXmlStr))
-	resXml := NativeResponseXml{}
-	e = xml.Unmarshal([]byte(resXmlStr), &resXml)
-	if e != nil {
-		return code_url, errors.New(fmt.Sprintf("转换返回报文为结构体失败,失败原因:%v", e.Error()))
-	} else {
-		logs.Info("转换返回报文为结构体成功")
-	}
-
-	//开始解析结构体
-	logs.Info("开始解析结构体...")
-	if resXml.Return_code == "SUCCESS" {
-		//通信成功，则不管用户后面是否支付成功，数据都入库
-		if resXml.Result_code == "SUCCESS" {
-			//下单成功
-			orderSuccess := models.Order{}
-			orderSuccess.OrderId = order.OrderId
-			o.Read(&orderSuccess, "OrderId")
-			orderSuccess.OrderResultCode = resXml.Result_code
-			orderSuccess.OrderResultDesc = "下单成功"
-			orderSuccess.CodeUrl = resXml.Code_url
-			o.Update(&orderSuccess)
-			//这里设置真正的支付二维码
-			code_url = resXml.Code_url
+		//获取返回消息、转为结构体
+		logs.Info("接收返回报文...")
+		resXmlStr, e := req.String()
+		logs.Info(fmt.Sprintf("收到报文:%v", resXmlStr))
+		resXml := NativeResponseXml{}
+		e = xml.Unmarshal([]byte(resXmlStr), &resXml)
+		if e != nil {
+			logs.Info(fmt.Sprintf("转换返回报文为结构体失败,失败原因:%v", e.Error()))
 		} else {
-			//下单失败
-			orderFail := models.Order{}
-			orderFail.OrderId = order.OrderId
-			o.Read(&orderFail, "OrderId")
-			orderFail.OrderResultCode = resXml.Result_code
-			orderFail.OrderResultDesc = "下单失败"
-			orderFail.OrderErrCode = resXml.Err_code
-			orderFail.OrderErrCodeDes = resXml.Err_code_des
-			o.Update(&orderFail)
-			return code_url, errors.New(fmt.Sprintf("下单失败,失败原因:%v", resXml.Err_code_des))
+			logs.Info("转换返回报文为结构体成功")
+			//开始解析结构体
+			logs.Info("开始解析结构体...")
+			if resXml.Return_code == "SUCCESS" {
+				//通信成功，则不管用户后面是否支付成功，数据都入库
+				if resXml.Result_code == "SUCCESS" {
+					//下单成功
+					logs.Info("下单成功")
+					orderSuccess := models.Order{}
+					orderSuccess.OrderId = order.OrderId
+					o.Read(&orderSuccess, "OrderId")
+					orderSuccess.OrderResultCode = resXml.Result_code
+					orderSuccess.OrderResultDesc = "下单成功"
+					orderSuccess.CodeUrl = resXml.Code_url
+					o.Update(&orderSuccess)
+					//这里设置真正的支付二维码
+					code_url = resXml.Code_url
+				} else {
+					//下单失败
+					logs.Info("下单失败")
+					orderFail := models.Order{}
+					orderFail.OrderId = order.OrderId
+					o.Read(&orderFail, "OrderId")
+					orderFail.OrderResultCode = resXml.Result_code
+					orderFail.OrderResultDesc = "下单失败"
+					orderFail.OrderErrCode = resXml.Err_code
+					orderFail.OrderErrCodeDes = resXml.Err_code_des
+					o.Update(&orderFail)
+					logs.Info(fmt.Sprintf("下单失败,失败原因:%v", resXml.Err_code_des))
+				}
+			} else {
+				logs.Info(fmt.Sprintf("通信标识:FAIL,失败原因:%v", resXml.Return_msg))
+			}
 		}
-	} else {
-		return code_url, errors.New(fmt.Sprintf("通信标识:FAIL,失败原因:%v", resXml.Return_msg))
 	}
 
-	return code_url, nil
+	orderResultMap := make(map[string]interface{})
+	orderResultMap["code_url"] = code_url
+	this.Data["json"] = orderResultMap
+	this.ServeJSON()
 }
 
+
 //支付结果异步通知-具体处理方法
-func (this *MainController) WeChatPayNofify() {
+func (this *MainController) PayNotifyResult() {
 	//获取支付结果异步通知
 	logs.Info("支付结果异步通知上来了...")
 	reqBody := this.Ctx.Input.RequestBody
@@ -194,3 +186,4 @@ func (this *MainController) WeChatPayNofify() {
 		logs.Info(fmt.Sprintf("返回状态码失败，失败原因:%v", reqXml.Return_msg))
 	}
 }
+

@@ -4,7 +4,8 @@
  */
 import ajax from './ajax'
 
-const BASE_URL = '/api'
+const BASE_URL = '/api';
+const WECHAT_PAY = '/wechatPayApi';
 
 // 编辑或者新增博客分类
 export const BlogCatalogEdit = (catalog_name, catalog_desc) => ajax(BASE_URL+'/iwork/httpservice/BlogCatalogEdit',{catalog_name, catalog_desc},'POST');
@@ -147,6 +148,8 @@ export const queryArticleTitleList = (offset,current_page) => ajax(BASE_URL+'iwo
 export const saveArticle = (title,content) => ajax(BASE_URL+'iwork/httpservice/saveArticle',{title,content},'POST');
 //作文分享-发布作文
 export const publishArticle = (title,content) => ajax(BASE_URL+'iwork/httpservice/publishArticle',{title,content},'POST');
+//会员中心-初始下单
+export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WECHAT_PAY+'/Pay',{ProductId,ProductDesc,TransAmount,TransCurrCode},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/#/sso/login/";

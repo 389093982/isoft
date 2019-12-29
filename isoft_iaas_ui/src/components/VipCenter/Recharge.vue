@@ -34,7 +34,7 @@
           </Row><br>
         </div>
         <div class="qrcode">
-          <vue-qr :logoSrc="imageUrl" :text="getPayUrl" :size="180"></vue-qr>
+          <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
         </div>
       </div>
     </div>
@@ -43,6 +43,7 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
+  import {pay} from '../../api'
   import vueQr from 'vue-qr'
 	export default {
 		name: "Recharge",
@@ -55,24 +56,37 @@
         imageUrl: require("../../../static/images/vip.png"),
       }
     },
-    created:{
-		  initPayUrl:function () {
-		    let payMoney = this.openingTime.trim().split('¥')[1];
-        this.payUrl = 'https:weixin.pay'+payMoney;
-      }
+    created: async function(){
+      let payMoney = this.openingTime.trim().split('¥')[1];
+      let ProductId = '待定';
+      let ProductDesc = '学习网站会员';
+      let TransAmount = payMoney*100;
+      let TransCurrCode = 'CNY';
+      let orderResult = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+      this.payUrl = orderResult.code_url;
     },
     computed:{
 		  loginUserName:function () {
         return GetLoginUserName();
       },
-      getPayUrl:function () {
-        let payMoney = this.openingTime.trim().split('¥')[1];
-        return 'https:weixin.pay'+payMoney;
+    },
+    watch:{
+      openingTime:function () {
+        this.getPayUrl()
       }
     },
     methods:{
       prePage:function () {
         window.location.href = "#/vipcenter/vipIntroduction/";
+      },
+      getPayUrl:async function () {
+        let payMoney = this.openingTime.trim().split('¥')[1];
+        let ProductId = '待定';
+        let ProductDesc = '学习网站会员';
+        let TransAmount = payMoney*100;
+        let TransCurrCode = 'CNY';
+        let orderResult = await pay(ProductId,ProductDesc,TransAmount,TransCurrCode);
+        this.payUrl = orderResult.code_url;
       }
     },
 	}

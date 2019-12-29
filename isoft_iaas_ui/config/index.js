@@ -17,7 +17,15 @@ module.exports = {
         pathRewrite: {// 路径重写
           '^/api': '/api'
         }
-      }
+      },
+      '/wechatPayApi': { // 匹配所有以 '/wechatPayApi'开头的请求路径
+        target: 'http://localhost:8081', // 代理目标的基础路径
+        changeOrigin: true, // 支持跨域
+        pathRewrite: {// 路径重写
+          '^/wechatPayApi': '/wechatPayApi'
+        }
+      },
+
     },
 
     // Various Dev Server settings
