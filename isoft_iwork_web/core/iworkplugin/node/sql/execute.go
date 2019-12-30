@@ -93,3 +93,16 @@ func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
 	return []string{}
 }
+
+func (this *SQLExecuteNode) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+	var namingStr string
+	for index, item := range items {
+		if item.ParamName == iworkconst.STRING_PREFIX+"sql" {
+			_, namings := parseNamingSql(item.ParamValue)
+			namingStr = strings.Join(namings, ",")
+		}
+		if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" {
+			items[index].ParamNamings = namingStr
+		}
+	}
+}

@@ -30,6 +30,7 @@ func BuildDynamicInput(step models.WorkStep, o orm.Ormer) {
 			newInputSchemaItems[index].PureText = item.PureText
 		}
 	}
+	parser.BuildParamNamingRelation(newInputSchemaItems)
 	paramInputSchema := &iworkmodels.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
 	step.WorkStepInput = paramInputSchema.RenderToJson()
 	if _, err := models.InsertOrUpdateWorkStep(&step, o); err != nil {

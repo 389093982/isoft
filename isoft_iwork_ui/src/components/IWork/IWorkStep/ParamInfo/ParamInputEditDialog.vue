@@ -51,7 +51,10 @@
           <Scroll height="350">
             <table style="width: 100%;">
               <tr v-for="(val,index) in multiVals">
-                <td style="width: 10%;">参数 {{index}}</td>
+                <td style="width: 10%;">
+                  <p>参数 {{index}} </p>
+                  <p v-if="ParamNamings && index < ParamNamings.length" style="color:green;">{{ParamNamings[index]}}</p>
+                </td>
                 <td><Input type="textarea" :value="val" :readonly="true"/></td>
               </tr>
             </table>
@@ -84,12 +87,10 @@
 </template>
 
 <script>
-  import {LoadPreNodeOutput} from "../../../../api"
+  import {LoadPreNodeOutput, ParseToMultiValue} from "../../../../api"
   import ISimpleBtnTriggerModal from "../../../Common/modal/ISimpleBtnTriggerModal"
-  import {ParseToMultiValue} from "../../../../api"
-  import {getMatchArrForString} from "../../../../tools"
+  import {checkEmpty, getMatchArrForString, strSplit} from "../../../../tools"
   import ParamInputEditDataSource from "./ParamInputEditDataSource"
-  import {checkEmpty} from "../../../../tools"
 
   export default {
     name: "ParamInputEditDialog",
@@ -108,6 +109,7 @@
         pureText:false,
         oldInputTextData:'',
         inputTextData:'',
+        ParamNamings: [],
         showMultiVals:false,  // 默认非多值视图
         multiVals:[],         // 存储多值列表
         paramIndex:1,
@@ -189,6 +191,7 @@
         this.pureText = item.PureText;
         // 文本输入框设置历史值
         this.inputTextData = item.ParamValue;
+        this.ParamNamings = strSplit(item.ParamNamings, ",");
         this.showMultiVals = false;
         this.clearDirty();
         if (refreshOutput == true){

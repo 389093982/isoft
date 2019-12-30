@@ -22,6 +22,7 @@ type ParamInputSchemaItem struct {
 	ParamChoices []string `xml:"paramChoices"`
 	PureText     bool     `xml:"pureText"`
 	ParamValue   string   `xml:"paramValue"`
+	ParamNamings string   `xml:"paramNamings"`
 }
 
 type ParamInputSchema struct {

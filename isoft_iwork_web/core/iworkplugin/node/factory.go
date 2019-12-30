@@ -163,6 +163,10 @@ func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *iworkmodels.ParamOut
 	return &iworkmodels.ParamOutputSchema{}
 }
 
+func (this *WorkStepFactory) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+	this.getProxy().BuildParamNamingRelation(items)
+}
+
 func (this *WorkStepFactory) ValidateCustom() (checkResult []string) {
 	return this.getProxy().ValidateCustom()
 }

@@ -41,6 +41,10 @@ func (this *BaseNode) FilterParamInputSchemaItem(pis *iworkmodels.ParamInputSche
 	return nil
 }
 
+func (this *BaseNode) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+	fmt.Println("execute default BuildParamNamingRelation method...")
+}
+
 func (this *BaseNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	fmt.Println("execute default GetDefaultParamInputSchema method...")
 	return &iworkmodels.ParamInputSchema{}
