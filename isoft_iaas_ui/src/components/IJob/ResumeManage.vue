@@ -14,8 +14,8 @@
       </span>
       <Row>
         <Col span="12">
-          <p>姓名:{{resume.sex}}</p>
-          <p>年龄:{{resume.sex}}</p>
+          <p>姓名:{{resume.user_name}}</p>
+          <p>年龄:{{resume.age}}</p>
           <p>性别:{{resume.sex}}</p>
           <p>学历:{{resume.education}}</p>
           <p>就业状态:{{resume.employment_status}}</p>
