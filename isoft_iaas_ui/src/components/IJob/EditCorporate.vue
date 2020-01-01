@@ -1,110 +1,76 @@
 <template>
   <div>
-    <Modal
-      v-model="showModal"
-      :width="500"
-      :title="modalTitle"
-      :footer-hide="true"
-      :transfer="false"
-      :mask-closable="false"
-      :styles="{top: '50px'}">
-      <div>
-        <Tag v-for="modalChoice in modalChoices">
-          <span @click="choiceItem(modalChoice)">{{modalChoice}}</span>
-        </Tag>
-      </div>
-    </Modal>
-
     <div class="isoft_bg_white isoft_pd10">
-      <p class="clear">
-        <label for="corporate_name">公司名称：</label>
-        <input id="corporate_name" class="input" v-model="formInline.corporate_name" placeholder="请您输入公司名称"/>
-      </p>
-      <p class="clear">
-        <label for="corporate_site">公司主页：</label>
-        <input id="corporate_site" class="input" v-model="formInline.corporate_site" placeholder="请您输入公司主页"/>
-      </p>
-      <p class="clear">
-        <label for="corporate_logo">公司 logo：</label>
-        <input id="corporate_logo" readonly="readonly" @focus="handleFocus('corporate_logo')"
-               class="input" v-model="formInline.corporate_logo" placeholder="请您上传公司 logo"/>
-      </p>
-      <p class="clear">
-        <label for="corporate_size">公司规模：</label>
-        <input id="corporate_size" readonly="readonly" @focus="handleFocus('corporate_size')"
-               class="input" v-model="formInline.corporate_size" placeholder="请您输入公司规模"/>
-      </p>
-      <p class="clear">
-        <label for="job_type">招聘类型：</label>
-        <input id="job_type" readonly="readonly" @focus="handleFocus('job_type')"
-               class="input" v-model="formInline.job_type" placeholder="请您选择招聘类型"/>
-      </p>
-      <p class="clear">
-        <label for="job_type_detail">详细类型：</label>
-        <input id="job_type_detail"
-               class="input" v-model="formInline.job_type_detail" placeholder="请您输入招聘岗位详细类型"/>
-      </p>
-      <p class="clear">
-        <label for="salary_range">薪酬范围：</label>
-        <input id="salary_range" readonly="readonly" @focus="handleFocus('salary_range')"
-               class="input" v-model="formInline.salary_range"  placeholder="请您选择薪酬范围"/>
-      </p>
-    </div>
-
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p class="clear">
-        <label for="corporate_desc">公司简介：</label>
-        <textarea rows="8" id="corporate_desc"
-                  class="input" v-model="formInline.corporate_desc" placeholder="请您输入公司简介"/>
-      </p>
-      <p class="clear">
-        <label for="job_desc">职位简介：</label>
-        <textarea rows="8" id="job_desc"
-                  class="input" v-model="formInline.job_desc" placeholder="请您输入职位简介"/>
-      </p>
-    </div>
-
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p class="clear">
-        <label for="corporate_welfare">公司福利：</label>
-        <input id="corporate_welfare" class="input" v-model="formInline.corporate_welfare" placeholder="请您输入公司福利"/>
-      </p>
-
-      <p class="clear">
-        <label for="corporate_address">公司地址：</label>
-        <input id="corporate_address" class="input" v-model="formInline.corporate_address" placeholder="请您选择公司地址"/>
-      </p>
-
-      <p class="isoft_top10" style="text-align: center;">
-        <Button type="success" @click="handleSubmit">提交</Button>
-        <Button type="success" @click="handleReturn">返回</Button>
-      </p>
+      <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
+        <FormItem label="公司名称" prop="corporate_name">
+          <Input v-model.trim="formInline.corporate_name" placeholder="请您输入公司名称"></Input>
+        </FormItem>
+        <FormItem label="公司主页" prop="corporate_site">
+          <Input v-model.trim="formInline.corporate_site" placeholder="请您输入公司主页"></Input>
+        </FormItem>
+        <FormItem label="公司 logo" prop="corporate_logo">
+          <Input v-model.trim="formInline.corporate_logo" placeholder="请您上传公司 logo"></Input>
+        </FormItem>
+        <FormItem label="公司规模" prop="corporate_size">
+          <Select v-model="formInline.corporate_size">
+            <Option v-for="(corporateSize, index) in corporateSizes" :value="corporateSize" :key="corporateSize">
+              {{corporateSize}}
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem label="招聘类型" prop="job_type">
+          <Select v-model="formInline.job_type">
+            <Option v-for="(jobType, index) in jobTypes" :value="jobType" :key="jobType">
+              {{jobType}}
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem label="详细类型" prop="job_type_detail">
+          <Input v-model.trim="formInline.job_type_detail" placeholder="请您输入招聘岗位详细类型"></Input>
+        </FormItem>
+        <FormItem label="薪酬范围" prop="salary_range">
+          <Select v-model="formInline.salary_range">
+            <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
+              {{salaryRange}}
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem label="公司简介" prop="corporate_desc">
+          <Input type="textarea" :rows="8" v-model.trim="formInline.corporate_desc" placeholder="请您输入公司简介"></Input>
+        </FormItem>
+        <FormItem label="职位简介" prop="job_desc">
+          <Input type="textarea" :rows="8" v-model.trim="formInline.job_desc" placeholder="请您输入职位简介"></Input>
+        </FormItem>
+        <FormItem label="公司福利" prop="corporate_welfare">
+          <Input v-model.trim="formInline.corporate_welfare" placeholder="请您输入公司福利"></Input>
+        </FormItem>
+        <FormItem label="公司地址" prop="corporate_address">
+          <Input readonly="readonly" v-model.trim="formInline.corporate_address" placeholder="请您选择公司地址"
+                 @on-focus="handleFocus('areaChooser')"></Input>
+          <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
+          <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
+        </FormItem>
+      </Form>
     </div>
   </div>
 </template>
 
 <script>
   import {EditCorporateDetail, QueryCorporateDetail} from "../../api"
-  import {checkEmpty} from "../../tools"
+  import {checkEmpty, strSplit} from "../../tools"
+  import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
     name: "EditCorporate",
+    components: {IAreaChooser},
     data(){
       return {
-        options:{
-          'corporate_size':{
-            modalTitle:'选择公司规模',
-            modalChoices:['1-10人','10-20人','20-50人','50-100人','100-500人','500-2000人','2000以上'],
-          },
-          'job_type':{
-            modalTitle:'选择招聘类型',
-            modalChoices:['前端工程师','后端工程师','研发经理','软件工程师','安卓开发工程师','架构负责人'],
-          },
-          'salary_range':{
-            modalTitle:'薪酬范围',
-            modalChoices:['1k-5k','5k-10k','10k-15k','15k-20k','20k-50k','50k-100k','100k+'],
-          }
-        },
+        salaryRanges: this.GLOBAL.salaryRanges,
+        corporateSizes: this.GLOBAL.corporateSizes,
+        jobTypes: this.GLOBAL.jobTypes,
         showModal:false,
         modalTitle:'',
         modalItemName:'',
@@ -123,59 +89,54 @@
           corporate_welfare:'',
           corporate_address: '',
         },
+        ruleValidate: {}
       }
     },
     methods:{
-      noRepeatAppend(str, s){
-        if(checkEmpty(str)){
-          return s;
-        } else if (str.indexOf(s) >= 0){
-          return str;
-        }else {
-          return str + "," + s;
+      handleAreaSubmit: function (province, city, area) {
+        if (checkEmpty(city)) {
+          this.formInline.corporate_address = province;
+        } else if (checkEmpty(area)) {
+          this.formInline.corporate_address = province + '-' + city;
+        } else {
+          this.formInline.corporate_address = province + '-' + city + '-' + area;
         }
-
       },
-      handleFocus:function (name) {
-        this.showModal = true;
-        this.modalItemName = name;
-        this.modalTitle = this.options[name].modalTitle;
-        this.modalChoices = this.options[name].modalChoices;
-      },
-      choiceItem:function (item) {
-        if (this.modalItemName === 'corporate_size') {
-          this.formInline.corporate_size = item;
-        } else if(this.modalItemName === 'job_type') {
-          this.formInline.job_type = this.noRepeatAppend(this.formInline.job_type, item);
-        } else if(this.modalItemName === 'salary_range') {
-          this.formInline.salary_range = this.noRepeatAppend(this.formInline.salary_range, item);
+      handleFocus: function (name) {
+        if (name === "areaChooser") {
+          let arr = strSplit(this.formInline.corporate_address, "-");
+          // 暂时不做回显
+          this.$refs.areaChooser.showModal();
         }
-        this.showModal = false;
       },
       handleReturn:function(){
         this.$router.push({path:'/job/corporate_detail'});
       },
-      handleSubmit:async function () {
-        const result = await EditCorporateDetail(
-          this.formInline.id,
-          this.formInline.corporate_name,
-          this.formInline.corporate_site,
-          this.formInline.corporate_logo,
-          this.formInline.corporate_size,
-          this.formInline.job_type,
-          this.formInline.job_type_detail,
-          this.formInline.salary_range,
-          this.formInline.corporate_desc,
-          this.formInline.job_desc,
-          this.formInline.corporate_welfare,
-          this.formInline.corporate_address
-        );
-        if(result.status == "SUCCESS"){
-          this.$Message.success("保存成功！");
-          this.$router.push({path:'/job/corporate_detail'});
-        }else{
-          this.$Message.error(result.errorMsg);
-        }
+      handleSubmit: function (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            const result = await EditCorporateDetail(
+              this.formInline.id,
+              this.formInline.corporate_name,
+              this.formInline.corporate_site,
+              this.formInline.corporate_logo,
+              this.formInline.corporate_size,
+              this.formInline.job_type,
+              this.formInline.job_type_detail,
+              this.formInline.salary_range,
+              this.formInline.corporate_desc,
+              this.formInline.job_desc,
+              this.formInline.corporate_welfare,
+              this.formInline.corporate_address
+            );
+            if (result.status == "SUCCESS") {
+              this.$Message.success("保存成功！");
+              this.$router.push({path: '/job/corporate_detail'});
+            } else {
+              this.$Message.error(result.errorMsg);
+            }
+          }
+        })
       },
       refreshCorporateDetail:async function () {
         const result = await QueryCorporateDetail();
@@ -202,27 +163,5 @@
 </script>
 
 <style scoped>
-  p{
-    margin-top: 5px;
-  }
-  label{
-    width: 100px;
-    float: left;
-  }
-  input,textarea{
-    outline-style: none;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 3px 3px;
-    width: 850px;
-    font-size: 14px;
-    font-family: 'Microsoft Yahei', 'PingFangSC', sans-serif;
-  }
-  /* 设置输入框点击发光效果 */
-  input:focus,textarea:focus{
-    border-color: #66afe9;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-  }
+
 </style>

@@ -1,32 +1,40 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
-        <FormItem label="职位名称" prop="job_name">
-          <Input v-model.trim="formInline.job_name" placeholder="请您输入职位名称"></Input>
-        </FormItem>
-        <FormItem label="工作年限" prop="job_age">
-          <Select v-model="formInline.job_age">
-            <Option v-for="(jobAge, index) in jobAges" :value="jobAge" :key="jobAge">{{jobAge}}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="工作地点" prop="job_address">
-          <Input readonly="readonly" v-model.trim="formInline.job_address" placeholder="请您输入工作地点"
-                 @on-focus="handleFocus('areaChooser')"></Input>
-          <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
-        </FormItem>
-        <FormItem label="薪酬范围" prop="salary_range">
-          <Select v-model="formInline.salary_range">
-            <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
-              {{salaryRange}}
-            </Option>
-          </Select>
-        </FormItem>
-        <FormItem>
-          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
-          <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
-        </FormItem>
-      </Form>
+      <Row :gutter="10">
+        <Col span="16">
+          <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
+            <FormItem label="职位名称" prop="job_name">
+              <Input v-model.trim="formInline.job_name" placeholder="请您输入职位名称"></Input>
+            </FormItem>
+            <FormItem label="工作年限" prop="job_age">
+              <Select v-model="formInline.job_age">
+                <Option v-for="(jobAge, index) in jobAges" :value="jobAge" :key="jobAge">{{jobAge}}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="工作地点" prop="job_address">
+              <Input readonly="readonly" v-model.trim="formInline.job_address" placeholder="请您选择工作地点"
+                     @on-focus="handleFocus('areaChooser')"></Input>
+              <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
+            </FormItem>
+            <FormItem label="薪酬范围" prop="salary_range">
+              <Select v-model="formInline.salary_range">
+                <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
+                  {{salaryRange}}
+                </Option>
+              </Select>
+            </FormItem>
+            <FormItem>
+              <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
+              <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
+            </FormItem>
+          </Form>
+        </Col>
+        <Col span="8">
+          热门岗位推荐 xxxxx
+        </Col>
+      </Row>
+
     </div>
   </div>
 </template>

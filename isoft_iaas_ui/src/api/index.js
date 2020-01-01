@@ -141,7 +141,10 @@ export const QueryCorporateDetail = () => ajax(BASE_URL+'/iwork/httpservice/Quer
 export const QueryJobById = (id) => ajax(BASE_URL+'/iwork/httpservice/QueryJobById',{id},'GET');
 
 export const EditResume = (params) => ajax(BASE_URL + '/iwork/httpservice/EditResume', params, "POST");
+
 export const QueryResume = (params) => ajax(BASE_URL + '/iwork/httpservice/QueryResume', params, "POST");
+
+export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice/FilterPageJobList', params, "POST");
 
 //作文分享-查询title
 export const queryArticleTitleList = (offset,current_page) => ajax(BASE_URL+'iwork/httpservice/queryArticleTitleList',{offset,current_page},'POST');
