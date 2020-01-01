@@ -1,38 +1,55 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <p class="clear">
-        <label for="job_name">职位名称：</label>
-        <input id="job_name" class="input" v-model="formInline.job_name" placeholder="请您输入职位名称"/>
-      </p>
-      <p class="clear">
-        <label for="job_age">工作年限：</label>
-        <input id="job_age" class="input" v-model="formInline.job_age" placeholder="请您输入工作年限"/>
-      </p>
-      <p class="clear">
-        <label for="job_address">工作地点：</label>
-        <input id="job_address" class="input" v-model="formInline.job_address" placeholder="请您输入工作地点"/>
-      </p>
-      <p class="clear">
-        <label for="salary_range">薪酬范围：</label>
-        <input id="salary_range" class="input" v-model="formInline.salary_range" placeholder="请您输入薪酬范围"/>
-      </p>
-
-      <p class="isoft_top10" style="text-align: center;">
-        <Button type="success" @click="handleSubmit">提交</Button>
-        <Button type="success" @click="handleReturn">返回</Button>
-      </p>
+      <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
+        <FormItem label="职位名称" prop="job_name">
+          <Input v-model.trim="formInline.job_name" placeholder="请您输入职位名称"></Input>
+        </FormItem>
+        <FormItem label="工作年限" prop="job_age">
+          <Select v-model="formInline.job_age">
+            <Option v-for="(jobAge, index) in jobAges" :value="jobAge" :key="jobAge">{{jobAge}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="工作地点" prop="job_address">
+          <Input readonly="readonly" v-model.trim="formInline.job_address" placeholder="请您输入工作地点"
+                 @on-focus="handleFocus('areaChooser')"></Input>
+          <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
+        </FormItem>
+        <FormItem label="薪酬范围" prop="salary_range">
+          <Select v-model="formInline.salary_range">
+            <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
+              {{salaryRange}}
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
+          <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
+        </FormItem>
+      </Form>
     </div>
   </div>
 </template>
 
 <script>
-  import {EditJobDetail,QueryJobById} from "../../api"
+  import {EditJobDetail, QueryJobById} from "../../api"
+  import {checkEmpty, strSplit} from "../../tools";
+  import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
     name: "EditJob",
+    components: {IAreaChooser},
     data(){
+      const _validateJobName = (rule, value, callback) => {
+        if (value.length < 5) {
+          callback(new Error('职位名称太短!'));
+        } else {
+          callback();
+        }
+      };
       return {
+        jobAges: this.GLOBAL.jobAges,
+        salaryRanges: this.GLOBAL.salaryRanges,
         formInline: {
           id:-1,
           corporate_id:-1,
@@ -41,27 +58,62 @@
           job_address: '',
           salary_range: '',
         },
+        ruleValidate: {
+          job_name: [
+            {required: true, message: '职位名称不能为空!', trigger: 'blur'},
+            {validator: _validateJobName, trigger: 'blur'}
+          ],
+          job_age: [
+            {required: true, message: '工作年限不能为空!', trigger: 'blur'},
+          ],
+          job_address: [
+            {required: true, message: '工作地点不能为空!', trigger: 'blur'},
+          ],
+          salary_range: [
+            {required: true, message: '薪酬范围不能为空!', trigger: 'blur'},
+          ],
+        }
       }
     },
     methods:{
+      handleAreaSubmit: function (province, city, area) {
+        if (checkEmpty(city)) {
+          this.formInline.job_address = province;
+        } else if (checkEmpty(area)) {
+          this.formInline.job_address = province + '-' + city;
+        } else {
+          this.formInline.job_address = province + '-' + city + '-' + area;
+        }
+      },
+      handleFocus: function (name) {
+        if (name === "areaChooser") {
+          let arr = strSplit(this.formInline.job_address, "-");
+          // 暂时不做回显
+          this.$refs.areaChooser.showModal();
+        }
+      },
       handleReturn:function(){
         this.$router.push({path:'/job/corporate_detail'});
       },
-      handleSubmit:async function () {
-        const result = await EditJobDetail(
-          this.formInline.id,
-          this.formInline.corporate_id,
-          this.formInline.job_name,
-          this.formInline.job_age,
-          this.formInline.job_address,
-          this.formInline.salary_range
-        );
-        if(result.status == "SUCCESS"){
-          this.$Message.success("保存成功！");
-          this.$router.push({path:'/job/corporate_detail'});
-        }else{
-          this.$Message.error(result.errorMsg);
-        }
+      handleSubmit: async function (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            const result = await EditJobDetail(
+              this.formInline.id,
+              this.formInline.corporate_id,
+              this.formInline.job_name,
+              this.formInline.job_age,
+              this.formInline.job_address,
+              this.formInline.salary_range
+            );
+            if (result.status == "SUCCESS") {
+              this.$Message.success("保存成功！");
+              this.$router.push({path: '/job/corporate_detail'});
+            } else {
+              this.$Message.error(result.errorMsg);
+            }
+          }
+        })
       },
       refreshJobDetail:async function (id) {
         const result = await QueryJobById(id);
@@ -87,27 +139,5 @@
 </script>
 
 <style scoped>
-  p{
-    margin-top: 5px;
-  }
-  label{
-    width: 100px;
-    float: left;
-  }
-  input,textarea{
-    outline-style: none;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 3px 3px;
-    width: 850px;
-    font-size: 14px;
-    font-family: 'Microsoft Yahei', 'PingFangSC', sans-serif;
-  }
-  /* 设置输入框点击发光效果 */
-  input:focus,textarea:focus{
-    border-color: #66afe9;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-  }
+
 </style>

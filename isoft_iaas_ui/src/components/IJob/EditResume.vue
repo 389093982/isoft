@@ -69,7 +69,7 @@
           <Input type="textarea" :rows="8" v-model.trim="formInline.personal_hobbies" placeholder="请您输入个人爱好"></Input>
         </FormItem>
         <FormItem>
-          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">Submit</Button>
+          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">保存简历</Button>
         </FormItem>
       </Form>
     </div>
