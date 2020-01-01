@@ -2,11 +2,21 @@
   <div>
     <div class="isoft_bg_white isoft_pd10">
       <Row :gutter="10">
-        <Col span="9"><Input v-model="jobInfoSearch" placeholder="输入职位或者公司关键词搜索您感兴趣的职位"/></Col>
-        <Col span="6"><Input v-model="jobPlaceSearch" placeholder="北京、上海、广州、深圳"/></Col>
-        <Col span="6"><Input v-model="jobSalaySearch" placeholder="薪酬范围"/></Col>
-        <Col span="3">
+        <Col span="8"><Input v-model="jobInfoSearch" placeholder="输入职位或者公司关键词搜索您感兴趣的职位"/></Col>
+        <Col span="6">
+          <Input v-model="jobPlaceSearch" placeholder="北京、上海、广州、深圳" @on-focus="handleFocus('areaChooser')"/>
+          <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
+        </Col>
+        <Col span="6">
+          <Select v-model="jobSalaySearch">
+            <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
+              {{salaryRange}}
+            </Option>
+          </Select>
+        </Col>
+        <Col span="4">
           <Button type="success" @click="refreshJobList">搜索职位</Button>
+          <Button type="default">清空</Button>
         </Col>
       </Row>
     </div>
@@ -14,7 +24,7 @@
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
       <Row>
         <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
-        <Col span="12" style="text-align: right;padding-right: 40px;">
+        <Col span="12" style="text-align: right;padding-right: 25px;">
           <Button @click="$router.push({path:'/job/resume_manage'})">简历管理</Button>
           <Button @click="$router.push({path:'/job/corporate_detail'})">发布招聘</Button>
         </Col>
@@ -47,11 +57,15 @@
 
 <script>
   import {FilterPageJobList} from "../../api"
+  import {checkEmpty, strSplit} from "../../tools";
+  import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
     name: "JobList",
+    components: {IAreaChooser},
     data(){
       return {
+        salaryRanges: this.GLOBAL.salaryRanges,
         jobInfoSearch: '',
         jobPlaceSearch:'',
         jobSalaySearch:'',
@@ -65,6 +79,22 @@
       }
     },
     methods: {
+      handleAreaSubmit: function (province, city, area) {
+        if (checkEmpty(city)) {
+          this.jobPlaceSearch = province;
+        } else if (checkEmpty(area)) {
+          this.jobPlaceSearch = province + '-' + city;
+        } else {
+          this.jobPlaceSearch = province + '-' + city + '-' + area;
+        }
+      },
+      handleFocus: function (name) {
+        if (name === "areaChooser") {
+          let arr = strSplit(this.jobPlaceSearch, "-");
+          // 暂时不做回显
+          this.$refs.areaChooser.showModal();
+        }
+      },
       handleChange(page) {
         this.current_page = page;
         this.refreshJobList();
@@ -76,6 +106,8 @@
       refreshJobList: async function () {
         const result = await FilterPageJobList({
           jobInfoSearch: this.jobInfoSearch,
+          jobPlaceSearch: this.jobPlaceSearch,
+          jobSalaySearch: this.jobSalaySearch,
           offset: this.offset,
           current_page: this.current_page
         });
