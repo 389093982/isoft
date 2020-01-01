@@ -51,7 +51,9 @@
       </p>
       <p class="clear">
         <label for="job_area">期望地点：</label>
-        <input id="job_area" class="input" v-model="formInline.job_area" placeholder="请您输入期望地点"/>
+        <input readonly="readonly" id="job_area" @focus="handleFocus('areaChooser')"
+               class="input" v-model="formInline.job_area" placeholder="请您输入期望地点"/>
+        <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
       </p>
       <p class="clear">
         <label for="current_situation">当前状况：</label>
@@ -87,9 +89,12 @@
 
 <script>
   import {EditResume, QueryResume} from "../../api"
+  import IAreaChooser from "../Common/IAreaChooser"
+  import {checkEmpty, strSplit} from "../../tools";
 
   export default {
     name: "EditResume",
+    components: {IAreaChooser},
     data() {
       return {
         formInline: {
@@ -116,6 +121,13 @@
       }
     },
     methods: {
+      handleFocus: function (name) {
+        if (name === "areaChooser") {
+          let arr = strSplit(this.formInline.job_area, "-");
+          // 暂时不做回显
+          this.$refs.areaChooser.showModal();
+        }
+      },
       handleSubmit: async function () {
         const result = await EditResume(this.formInline);
         if (result.status == "SUCCESS") {
@@ -129,6 +141,15 @@
         const result = await QueryResume();
         if (result.status == "SUCCESS") {
           this.formInline = result.resume;
+        }
+      },
+      handleAreaSubmit: function (province, city, area) {
+        if (checkEmpty(city)) {
+          this.formInline.job_area = province;
+        } else if (checkEmpty(area)) {
+          this.formInline.job_area = province + '-' + city;
+        } else {
+          this.formInline.job_area = province + '-' + city + '-' + area;
         }
       }
     },

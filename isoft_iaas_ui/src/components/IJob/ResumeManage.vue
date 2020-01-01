@@ -25,10 +25,10 @@
         <Col span="12">
           <p>参加工作时间:{{resume.job_start_time}}</p>
           <p>联系方式：QQ 微信xxx {{resume.contact}}</p>
-          <p>邮箱xxx:{{resume.email}}</p>
+          <p>邮箱:{{resume.email}}</p>
           <p>出生年月:{{resume.birthday}}</p>
           <p>期望薪资:{{resume.expectant_salary}}</p>
-          <p>工作地区:{{resume.job_area}}</p>
+          <p>期望地点:{{resume.job_area}}</p>
         </Col>
       </Row>
       <p class="isoft_text_rows">个人技能:{{resume.personal_skills}}</p>
