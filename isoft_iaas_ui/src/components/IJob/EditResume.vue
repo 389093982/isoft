@@ -11,13 +11,17 @@
               <Input v-model.trim="formInline.user_name" placeholder="请您输入姓名"></Input>
             </FormItem>
             <FormItem label="年龄" prop="age">
-              <Input v-model.trim="formInline.age" placeholder="请您输入年龄"></Input>
+              <InputNumber :max="100" :min="1" v-model="formInline.age" style="width: 100%;"></InputNumber>
             </FormItem>
             <FormItem label="性别" prop="sex">
-              <Input v-model.trim="formInline.sex" placeholder="请选择性别"></Input>
+              <Select v-model="formInline.sex">
+                <Option value="男" key="1">男</Option>
+                <Option value="女" key="2">女</Option>
+              </Select>
             </FormItem>
             <FormItem label="参加工作时间" prop="job_start_time">
-              <Input v-model.trim="formInline.job_start_time" placeholder="请您输入参加工作时间"></Input>
+              <DatePicker v-model="formInline.job_start_time" type="date" placeholder="请选择参加工作时间"
+                          format="yyyy-MM-dd" style="width: 100%;"></DatePicker>
             </FormItem>
             <FormItem label="联系方式" prop="contact">
               <Input v-model.trim="formInline.contact" placeholder="请您输入联系方式"></Input>
