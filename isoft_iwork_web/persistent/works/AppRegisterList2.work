@@ -27,6 +27,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>current_page</paramName>
@@ -35,6 +36,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>search</paramName>
@@ -43,6 +45,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;offset&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;current_page&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;search&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -93,6 +96,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>select * from app_register order by last_updated_time desc</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_columnNames?</paramName>
@@ -101,6 +105,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_metadata_sql?</paramName>
@@ -109,6 +114,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -117,6 +123,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_current_page?</paramName>
@@ -125,6 +132,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.current_page;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_page_size?</paramName>
@@ -133,6 +141,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.offset;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -141,6 +150,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;app_address&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;app_address&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;created_by&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;created_by&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;created_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;created_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;last_updated_by&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;last_updated_by&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;last_updated_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;last_updated_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;pages&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;totalpages&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;firstpage&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;lastpage&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;currpage&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;pagesize&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;complex_paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;totalcount&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -291,6 +301,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>ifThenElse($Error.isNoError,$Global.SUCCESS,$Global.ERROR);&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>errorMsg</paramName>
@@ -299,6 +310,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$Error.isNoError;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>appRegisters</paramName>
@@ -307,6 +319,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$sql_query_appRegistList.rows;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>paginator</paramName>
@@ -315,6 +328,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$sql_query_appRegistList.complex_paginator;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;appRegisters&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;paginator&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>

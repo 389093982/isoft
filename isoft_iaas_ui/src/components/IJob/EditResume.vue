@@ -32,12 +32,12 @@
       </p>
       <p class="clear">
         <label for="project_experiences">项目经验：</label>
-        <textarea rows="8" id="project_experiences" class="input" v-model="formInline.personal_skills"
+        <textarea rows="8" id="project_experiences" class="input" v-model="formInline.project_experiences"
                   placeholder="请您输入项目经验"></textarea>
       </p>
       <p class="clear">
         <label for="other_characters">其它优势：</label>
-        <textarea rows="8" id="other_characters" class="input" v-model="formInline.personal_skills"
+        <textarea rows="8" id="other_characters" class="input" v-model="formInline.other_characters"
                   placeholder="请您输入其它优势"></textarea>
       </p>
       <p class="clear">
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-  import {EditResume} from "../../api"
+  import {EditResume, QueryResume} from "../../api"
 
   export default {
     name: "EditResume",
@@ -113,7 +113,16 @@
         } else {
           this.$Message.error("保存失败!");
         }
+      },
+      refreshQueryResume: async function () {
+        const result = await QueryResume();
+        if (result.status == "SUCCESS") {
+          this.formInline = result.resume;
+        }
       }
+    },
+    mounted() {
+      this.refreshQueryResume();
     }
   }
 </script>

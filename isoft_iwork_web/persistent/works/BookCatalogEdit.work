@@ -27,6 +27,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>catalog_name</paramName>
@@ -35,6 +36,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>id</paramName>
@@ -43,6 +45,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;book_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;catalog_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -93,6 +96,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>int64Gt($start.id,0);&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -133,6 +137,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_sql</paramName>
@@ -141,6 +146,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>update book_catalog set catalog_name = ? where id = ?</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -149,6 +155,7 @@
 		<foreachRefer>iter_batch_data?</foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.catalog_name;&#xA;$start.id;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -157,6 +164,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_affected&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_lastInsertId&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -227,6 +235,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_sql</paramName>
@@ -235,6 +244,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>insert into book_catalog(book_id, catalog_name, created_by,created_time,last_updated_by,last_updated_time) values(?,?,&#39;SYSTEM&#39;,now(),&#39;SYSTEM&#39;,now())</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -243,6 +253,7 @@
 		<foreachRefer>iter_batch_data?</foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.book_id;&#xA;$start.catalog_name;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -251,6 +262,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_affected&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_lastInsertId&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -296,6 +308,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>ifThenElse($Error.isNoError,$Global.SUCCESS,$Global.ERROR);&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>errorMsg</paramName>
@@ -304,6 +317,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$Error.insensitiveErrorMsg;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>

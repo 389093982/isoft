@@ -27,6 +27,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>passwd</paramName>
@@ -35,6 +36,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>verifyCode</paramName>
@@ -43,6 +45,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;passwd&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;verifyCode&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -93,6 +96,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>select user_name from user where user_name = ?</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_columnNames?</paramName>
@@ -101,6 +105,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_metadata_sql?</paramName>
@@ -109,6 +114,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -117,6 +123,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.username;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_current_page?</paramName>
@@ -125,6 +132,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_page_size?</paramName>
@@ -133,6 +141,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_panic_no_datacounts?</paramName>
@@ -141,6 +150,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>用户不存在，请确认！</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -149,6 +159,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -209,6 +220,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>select user_name from user where user_name = ? and verify_code = ? and verify_code_expired &gt; now()&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_columnNames?</paramName>
@@ -217,6 +229,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_metadata_sql?</paramName>
@@ -225,6 +238,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -233,6 +247,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$start.username;&#xA;$start.verifyCode;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_current_page?</paramName>
@@ -241,6 +256,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>number_page_size?</paramName>
@@ -249,6 +265,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_panic_no_datacounts?</paramName>
@@ -257,6 +274,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>验证码无效或已过期！</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -265,6 +283,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -325,6 +344,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_sql</paramName>
@@ -333,6 +353,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>update user set pass_wd = ? where user_name = ? and verify_code = ? and verify_code_expired &gt; now()</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>multi_sql_binding?</paramName>
@@ -341,6 +362,7 @@
 		<foreachRefer>iter_batch_data?</foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>AesEncrypt($start.passwd, $Global.EncryptPwdKey);&#xA;$start.username;&#xA;$start.verifyCode;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_panic_no_affected?</paramName>
@@ -349,6 +371,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue></paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>str_db_conn</paramName>
@@ -357,6 +380,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$RESOURCE.isoft_iaas;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_affected&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_lastInsertId&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
@@ -402,6 +426,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>ifThenElse($Error.isNoError,$Global.SUCCESS,$Global.ERROR);&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
 		<paramName>errorMsg</paramName>
@@ -410,6 +435,7 @@
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$Error.insensitiveErrorMsg;&#xA;</paramValue>
+		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
 		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
