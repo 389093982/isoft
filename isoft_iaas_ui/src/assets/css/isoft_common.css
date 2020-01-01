@@ -45,6 +45,11 @@
   font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
 }
 
+.isoft_text_rows {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
 
 
 .isoft_inline_ellipsis{

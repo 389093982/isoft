@@ -6,7 +6,15 @@
         <input id="head_img" class="input" v-model="formInline.head_img" placeholder="请上传个人头像"/>
       </p>
       <p class="clear">
-        <label for="sex">公司名称：</label>
+        <label for="user_name">姓名：</label>
+        <input id="user_name" class="input" v-model="formInline.user_name" placeholder="请您输入姓名"/>
+      </p>
+      <p class="clear">
+        <label for="age">年龄：</label>
+        <input id="age" class="input" v-model="formInline.age" placeholder="请您输入年龄"/>
+      </p>
+      <p class="clear">
+        <label for="sex">性别：</label>
         <input id="sex" class="input" v-model="formInline.sex" placeholder="请选择性别"/>
       </p>
       <p class="clear">
@@ -24,21 +32,6 @@
       <p class="clear">
         <label for="birthday">出生年月：</label>
         <input id="birthday" class="input" v-model="formInline.birthday" placeholder="请您输入出生年月"/>
-      </p>
-      <p class="clear">
-        <label for="personal_skills">个人技能：</label>
-        <textarea rows="8" id="personal_skills" class="input" v-model="formInline.personal_skills"
-                  placeholder="请您输入个人技能"></textarea>
-      </p>
-      <p class="clear">
-        <label for="project_experiences">项目经验：</label>
-        <textarea rows="8" id="project_experiences" class="input" v-model="formInline.project_experiences"
-                  placeholder="请您输入项目经验"></textarea>
-      </p>
-      <p class="clear">
-        <label for="other_characters">其它优势：</label>
-        <textarea rows="8" id="other_characters" class="input" v-model="formInline.other_characters"
-                  placeholder="请您输入其它优势"></textarea>
       </p>
       <p class="clear">
         <label for="education">学历：</label>
@@ -65,8 +58,24 @@
         <input id="current_situation" class="input" v-model="formInline.current_situation" placeholder="请您输入当前状况"/>
       </p>
       <p class="clear">
+        <label for="personal_skills">个人技能：</label>
+        <textarea rows="8" id="personal_skills" class="input" v-model="formInline.personal_skills"
+                  placeholder="请您输入个人技能"></textarea>
+      </p>
+      <p class="clear">
+        <label for="project_experiences">项目经验：</label>
+        <textarea rows="8" id="project_experiences" class="input" v-model="formInline.project_experiences"
+                  placeholder="请您输入项目经验"></textarea>
+      </p>
+      <p class="clear">
+        <label for="other_characters">其它优势：</label>
+        <textarea rows="8" id="other_characters" class="input" v-model="formInline.other_characters"
+                  placeholder="请您输入其它优势"></textarea>
+      </p>
+      <p class="clear">
         <label for="personal_hobbies">个人爱好：</label>
-        <input id="personal_hobbies" class="input" v-model="formInline.personal_hobbies" placeholder="请您输入个人爱好"/>
+        <textarea rows="8" id="personal_hobbies" class="input" v-model="formInline.personal_hobbies"
+                  placeholder="请您输入个人爱好"/>
       </p>
 
       <p class="isoft_top10" style="text-align: center;">
@@ -86,6 +95,8 @@
         formInline: {
           id: -1,
           head_img: '',
+          user_name: '',
+          age: '',
           sex: '',
           job_start_time: '',
           contact: '',

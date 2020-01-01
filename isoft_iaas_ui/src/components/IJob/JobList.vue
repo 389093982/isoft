@@ -13,8 +13,8 @@
       <Row>
         <Col span="12">搜索职位:{{jobNameSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 40px;">
-          <Button @click="$router.push({path:'/job/resume_manage'})">我要求职</Button>
-          <Button @click="$router.push({path:'/job/corporate_detail'})">我要招聘</Button>
+          <Button @click="$router.push({path:'/job/resume_manage'})">简历管理</Button>
+          <Button @click="$router.push({path:'/job/corporate_detail'})">发布招聘</Button>
         </Col>
       </Row>
     </div>
