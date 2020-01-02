@@ -4,7 +4,7 @@
       <a @click="prePage()" style="color: #ff6600"><Icon type="ios-undo-outline"  style="font-size: 40px"/>会员中心</a>
     </div>
 
-    <div class="demo-split">
+    <div class="demo-split" style="padding-top: 20px;">
       <div class="demo-split-pane">
         <div >
           <img class="vipLogo" src="../../../static/images/vipCenter/vipLogo.png" height="41" width="41"/>
@@ -45,7 +45,8 @@
   import {GetLoginUserName} from "../../tools"
   import {pay} from '../../api'
   import vueQr from 'vue-qr'
-	export default {
+
+  export default {
 		name: "Recharge",
     components: {vueQr},
     data(){

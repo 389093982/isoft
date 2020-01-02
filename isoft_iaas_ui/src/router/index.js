@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ArticleList from "../components/ShareArticle/ArticleList"
-import ArticleEdit from "../components/ShareArticle/ArticleEdit"
-import ShareArticlePlace from "../components/ShareArticle/ShareArticlePlace"
-import SharingHall from "../components/ShareArticle/SharingHall"
 import {joinArray} from "../tools"
 
 // es6 import 异步语法,使用异步组件加载机制减少耗时操作
@@ -190,16 +186,6 @@ const IGoodReouter = [{
   ]
 }];
 
-const ShareArticleReouter = [{
-  path:'/shareArticle',component: ILayout,
-  children: [
-    {path: 'shareArticlePlace', component: ShareArticlePlace},
-    {path: 'articleList',component: ArticleList},
-    {path: 'articleEdit',component: ArticleEdit},
-    {path: 'sharingHall',component: SharingHall},
-  ]
-}];
-
 const VipCenterReouter = [{
   path:'/vipcenter',component: ILayout,
   children: [
@@ -218,7 +204,6 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, ILearningRouters);
   allRouters = joinArray(allRouters, ISSOReouter);
   allRouters = joinArray(allRouters, ICMSReouter);
-  allRouters = joinArray(allRouters, ShareArticleReouter);
   allRouters = joinArray(allRouters, VipCenterReouter);
   allRouters = joinArray(allRouters, getRootRouters());
   return allRouters;

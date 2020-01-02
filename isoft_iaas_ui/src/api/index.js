@@ -146,12 +146,6 @@ export const QueryResume = (params) => ajax(BASE_URL + '/iwork/httpservice/Query
 
 export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice/FilterPageJobList', params, "POST");
 
-//作文分享-查询title
-export const queryArticleTitleList = (offset,current_page) => ajax(BASE_URL+'iwork/httpservice/queryArticleTitleList',{offset,current_page},'POST');
-//作文分享-保存作文
-export const saveArticle = (title,content) => ajax(BASE_URL+'iwork/httpservice/saveArticle',{title,content},'POST');
-//作文分享-发布作文
-export const publishArticle = (title,content) => ajax(BASE_URL+'iwork/httpservice/publishArticle',{title,content},'POST');
 //会员中心-初始下单
 export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WECHAT_PAY+'/Pay',{ProductId,ProductDesc,TransAmount,TransCurrCode},'POST');
 

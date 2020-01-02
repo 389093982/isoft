@@ -42,12 +42,9 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="9">
-          <IBeautifulLink @onclick="$router.push({path:'/shareArticle/shareArticlePlace'})">作文分享</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="10">
           <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
         </MenuItem>
-        <MenuItem name="11">
+        <MenuItem name="10">
           <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">会员中心</IBeautifulLink>
         </MenuItem>
       </div>
@@ -58,7 +55,7 @@
 </template>
 
 <script>
-  import {getCookie, delCookie, CheckHasLogin} from '../../tools/index'
+  import {CheckHasLogin, delCookie, getCookie} from '../../tools/index'
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import LevelTwoHeader from "./LevelTwoHeader";
