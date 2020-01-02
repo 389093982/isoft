@@ -65,3 +65,5 @@ Go实现接口访问速率限制: 参考 https://studygolang.com/articles/9138
 
 packr 打包功能
 golang im
+
+iwork 框架支持 bool 类型

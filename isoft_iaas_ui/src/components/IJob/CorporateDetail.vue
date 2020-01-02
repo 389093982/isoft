@@ -11,74 +11,80 @@
           </div>
         </Col>
         <Col span="20">
-          <p class="clear">
+          <p>
             <span>公司名称：{{formInline.corporate_name}}</span>
           </p>
-          <p class="clear">
+          <p>
             <span>公司主页：
               <a :href="formInline.corporate_site" target="_blank">{{formInline.corporate_site}}</a>
             </span>
           </p>
-          <p class="clear">
+          <p>
             <span>公司规模：{{formInline.corporate_size}}</span>
           </p>
-          <p class="clear">
+          <p>
             <span>招聘类型：
               <Tag v-for="(jobTypeTag, index) in jobTypeTags">{{jobTypeTag}}</Tag>
             </span>
           </p>
-          <p class="clear">
+          <p>
             <span>详细类型：
               <Tag v-for="(jobTypeDetail, index) in jobTypeDetails">{{jobTypeDetail}}</Tag>
             </span>
           </p>
-          <p class="clear">
+          <p>
             <span>薪酬范围：
                <Tag v-for="(salaryRange, index) in salaryRanges">{{salaryRange}}</Tag>
             </span>
           </p>
         </Col>
       </Row>
-      <Button style="position: relative;float: right;right: 10px;bottom: 35px;" @click="$router.push({path:'/job/corporate_edit'})">前去编辑</Button>
+      <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
+              v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
+      </Button>
     </div>
 
     <div class="isoft_bg_white isoft_pd20 isoft_top10">
-      <p class="clear">
-        <span>公司简介：{{formInline.corporate_desc}}</span>
-      </p>
-      <p class="clear">
-        <span>职位简介：{{formInline.job_desc}}</span>
-      </p>
+      <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
+        公司简介：{{formInline.corporate_desc}}
+      </div>
+      <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
+        职位简介：{{formInline.job_desc}}
+      </div>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <p class="clear">
-        <span>公司福利：{{formInline.corporate_welfare}}</span>
-      </p>
-
-      <p class="clear">
-        <span>公司地址：{{formInline.corporate_address}}</span>
-      </p>
+      <div>
+        公司福利：{{formInline.corporate_welfare}}
+      </div>
+      <div>
+        公司地址：{{formInline.corporate_address}}
+      </div>
     </div>
 
     <div class="isoft_bg_white isoft_pd20 isoft_top10">
       <p style="border-bottom: 1px solid #f0f0f0;">招聘岗位</p>
       <div v-if="jobDetails.length > 0">
         <Row style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
-          <Col span="5">工作名称</Col>
-          <Col span="5">工作年限</Col>
-          <Col span="5">工作地点</Col>
-          <Col span="5">薪酬范围</Col>
+          <Col span="4">工作名称</Col>
+          <Col span="4">工作年限</Col>
+          <Col span="6">工作地点</Col>
+          <Col span="4">薪酬范围</Col>
           <Col span="4">操作</Col>
         </Row>
         <Row v-for="(jobDetail,index) in jobDetails" style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
-          <Col span="5">{{jobDetail.job_name}}</Col>
-          <Col span="5">{{jobDetail.job_age}}</Col>
-          <Col span="5">{{jobDetail.job_address}}</Col>
-          <Col span="5">{{jobDetail.salary_range}}</Col>
+          <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_name}}</Col>
+          <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_age}}</Col>
+          <Col span="6">{{jobDetail.job_address}}</Col>
           <Col span="4">
-            <Button size="small" @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-            <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
+            <span style="font-size: 16px;color: #393;">{{jobDetail.salary_range}}</span>
+          </Col>
+          <Col span="4">
+            <span v-if="editable == 'true'">
+              <Button size="small"
+                      @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
+              <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
+            </span>
           </Col>
         </Row>
 
@@ -113,11 +119,13 @@
           corporate_address: '',
         },
         jobDetails:[],
+        editable: 'false',
       }
     },
     methods:{
       refreshCorporateDetail:async function () {
-        const result = await QueryCorporateDetail();
+        let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
+        const result = await QueryCorporateDetail({'id': id});
         if(result.status == "SUCCESS" && result.corporate_detail){
           this.formInline.id = result.corporate_detail.id;
           this.formInline.corporate_name = result.corporate_detail.corporate_name;
@@ -133,6 +141,7 @@
           this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
 
           this.jobDetails = result.job_details;
+          this.editable = result.editable;
         }
       },
       getSplitArray(str, defaultVal){

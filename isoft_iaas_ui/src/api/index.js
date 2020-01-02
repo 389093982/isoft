@@ -136,7 +136,7 @@ export const EditCorporateDetail = (id,corporate_name, corporate_site, corporate
 export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, salary_range) =>
   ajax(BASE_URL+'/iwork/httpservice/EditJobDetail',{id, corporate_id, job_name, job_age, job_address, salary_range},'GET');
 
-export const QueryCorporateDetail = () => ajax(BASE_URL+'/iwork/httpservice/QueryCorporateDetail',{},'GET');
+export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/QueryCorporateDetail', params, 'GET');
 
 export const QueryJobById = (id) => ajax(BASE_URL+'/iwork/httpservice/QueryJobById',{id},'GET');
 

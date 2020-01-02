@@ -122,6 +122,9 @@ func (this *BlockParser) BuildParentRelation(blockSteps []*BlockStep, blockStep 
 
 // 判断前置 step 在块范围内是否是可访问的
 func CheckBlockAccessble(currentBlockStep *BlockStep, checkStepId int64) bool {
+	if currentBlockStep.Step.WorkStepType == "work_end" { // end 节点可以访问任何前置节点输出
+		return true
+	}
 	for {
 		// 从兄弟节点中查找
 		for _, siblingBlockStep := range currentBlockStep.SiblingBlockSteps {
