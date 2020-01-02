@@ -26,7 +26,7 @@
         <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
           <Button @click="$router.push({path:'/job/resume_manage'})">简历管理</Button>
-          <Button @click="$router.push({path:'/job/corporate_detail'})">发布招聘</Button>
+          <Button @click="toEditCorporateDetail">发布招聘</Button>
         </Col>
       </Row>
 
@@ -59,7 +59,7 @@
 
 <script>
   import {FilterPageJobList} from "../../api"
-  import {checkEmpty, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog, strSplit} from "../../tools";
   import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
@@ -125,6 +125,9 @@
       },
       showJobDetail: function (job) {
         this.$router.push({path: '/job/corporate_detail', query: {'corporate_id': job.corporate_id}});
+      },
+      toEditCorporateDetail: function () {
+        CheckHasLoginConfirmDialog(this, '/job/corporate_detail');
       }
     },
     mounted() {
