@@ -5,14 +5,17 @@
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;">
-            <Col span="2">
+            <Col span="6">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">全部书单</IBeautifulLink>
             </Col>
-            <Col span="2">
+            <Col span="6">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">热门书单</IBeautifulLink>
             </Col>
-            <Col span="2">
+            <Col span="6">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">我的书单</IBeautifulLink>
+            </Col>
+            <Col span="6">
+              <IBeautifulLink v-if="mine" @onclick="showBookEditModal">新增书单</IBeautifulLink>
             </Col>
           </Row>
 
@@ -47,9 +50,6 @@
                 </div>
               </li>
             </ul>
-            <div style="text-align: right;margin: 20px 100px 50px 0;">
-              <Button v-if="mine" @click="showBookEditModal">新增书单</Button>
-            </div>
           </div>
 
           <ISimpleConfirmModal ref="bookEditModal" modal-title="新增/编辑 Book" :modal-width="600" :footer-hide="true">
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import {BookList,BookEdit,UpdateBookIcon,DeleteBookById} from "../../api"
+  import {BookEdit, BookList, DeleteBookById, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
