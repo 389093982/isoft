@@ -29,6 +29,11 @@
           <IBeautifulLink>上一篇</IBeautifulLink>
           <IBeautifulLink>下一篇</IBeautifulLink>
         </div>
+
+        <div style="margin-top: 20px;">
+          <!-- 随机广告部分 -->
+          <RandomAdmt2/>
+        </div>
       </Col>
     </Row>
 
@@ -41,10 +46,11 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
+  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
 
   export default {
     name: "BookArticleDetail",
-    components: {HorizontalLinks, IBeautifulLink,IShowMarkdown},
+    components: {RandomAdmt2, HorizontalLinks, IBeautifulLink, IShowMarkdown},
     data(){
       return {
         bookArticles:[],

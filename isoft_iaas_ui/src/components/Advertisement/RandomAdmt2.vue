@@ -1,13 +1,18 @@
 <template>
   <div v-if="advertisements && advertisements.length > 0" style="margin-top: 5px;">
-    <Row :gutter="10">
-      <Col span="12" v-for="(advertisement, index) in advertisements" style="height: 80px;margin-bottom: 10px;">
+    <div style="text-align:right;font-size: 12px;">
+      热门广告推荐 &nbsp;&nbsp;&nbsp;
+      <a @click="$router.push({path:'/advertisement/manage'})">我也要发布广告</a>
+    </div>
+    <div class="clear">
+      <div v-for="(advertisement, index) in advertisements"
+           style="width: 120px;height: 120px;float: left;margin-right: 2px;">
         <a target="_blank" :href="advertisement.linked_refer" :title="advertisement.advertisement_label">
           <img :src="advertisement.linked_img" width="120px;" height="80px;"/>
           <div class="advertisement_label">{{advertisement.advertisement_label}}</div>
         </a>
-      </Col>
-    </Row>
+      </div>
+    </div>
   </div>
 </template>
 
