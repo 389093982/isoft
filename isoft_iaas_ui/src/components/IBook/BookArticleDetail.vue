@@ -5,10 +5,13 @@
         <div>
           <Button @click="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">管理我的书单</Button>
           <Scroll height="430" style="margin-top: 5px;">
-            <p v-for="bookCatalog in bookCatalogs">
+            <div v-for="bookCatalog in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
               <Icon type="ios-paper-outline"/>
-              <IBeautifulLink @onclick="showDetail(bookCatalog.id)">{{bookCatalog.catalog_name | filterLimitFunc}}</IBeautifulLink>
-            </p>
+              <span @click="showDetail(bookCatalog.id)">
+                <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
+                {{bookCatalog.catalog_name | filterCatalogName}}
+              </span>
+            </div>
           </Scroll>
         </div>
       </Col>
@@ -34,7 +37,7 @@
 </template>
 
 <script>
-  import {BookArticleList,BookCatalogList,ShowBookArticleDetail} from "../../api";
+  import {BookArticleList, BookCatalogList, ShowBookArticleDetail} from "../../api";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
@@ -81,13 +84,9 @@
         this.refreshBookCatalogList(this.$route.query.book_id);
       }
     },
-    filters:{
-      // 内容超长则显示部分
-      filterLimitFunc:function (value) {
-        if(value && value.length > 30) {
-          value= value.substring(0,30) + '...';
-        }
-        return value;
+    filters: {
+      filterCatalogName: function (value) {
+        return value.slice(value.indexOf("-") + 1);
       },
     }
   }

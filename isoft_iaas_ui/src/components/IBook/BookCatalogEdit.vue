@@ -29,8 +29,9 @@
             <dl>
               <dt><span style="color: green;font-weight: bold;">{{$route.query.book_name}}</span></dt>
               <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="bookCatalog in bookCatalogs">
-                &nbsp;&nbsp;&nbsp;<Icon type="ios-paper-outline"/>
-                <span class="isoft_hover_red" @click="editBookArticle(bookCatalog.id)"
+                &nbsp;&nbsp;&nbsp;
+                <Icon type="ios-paper-outline"/>
+                <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
                       @dblclick="editBookCatalog(bookCatalog.id)">
                   <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
                   {{bookCatalog.catalog_name | filterCatalogName}}
