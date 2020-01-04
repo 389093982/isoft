@@ -7,7 +7,8 @@
     <div class="clear">
       <div v-for="(advertisement, index) in advertisements"
            style="width: 120px;height: 120px;float: left;margin-right: 2px;">
-        <a target="_blank" :href="advertisement.linked_refer" :title="advertisement.advertisement_label">
+        <a @click="redirectAdvertisement(advertisement.id, advertisement.linked_refer)"
+           :title="advertisement.advertisement_label">
           <img :src="advertisement.linked_img" width="120px;" height="80px;"/>
           <div class="advertisement_label">{{advertisement.advertisement_label}}</div>
         </a>
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-  import {GetRandomAdvertisement} from "../../api"
+  import {GetRandomAdvertisement, RecordAdvstAccessLog} from "../../api"
 
   export default {
     name: "RandomAdmt2",
@@ -27,6 +28,11 @@
       }
     },
     methods:{
+      redirectAdvertisement: function (id, linked_refer) {
+        // 广告统计
+        RecordAdvstAccessLog({id: id});
+        window.open(linked_refer, "about:blank")
+      },
       refreshRandomAdvertisement:async function(){
         var _this = this;
         const result = await GetRandomAdvertisement(4);
