@@ -14,9 +14,9 @@
               <span v-else-if="search_type==='_personal'">我的分享</span>
               <span v-else>{{search_type}}</span>
             </Col>
-            <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_all')">全部分类</a></Col>
-            <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_hot')">热门博客</a></Col>
-            <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_personal')">我的博客</a></Col>
+            <Col span="3" offset="8" style="text-align: center;"><a @click="chooseItem('_all')">全部分类</a></Col>
+            <Col span="3" style="text-align: center;"><a @click="chooseItem('_hot')">热门博客</a></Col>
+            <Col span="3" style="text-align: center;"><a @click="chooseItem('_personal')">我的博客</a></Col>
             <Col span="3" style="text-align: center;"><router-link to="/iblog/mine/blog_edit">我也要发布</router-link></Col>
           </Row>
 

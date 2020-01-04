@@ -4,24 +4,48 @@
       <Col span="18" style="padding: 0 8px 0 0;">
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
-          <Row style="padding: 15px 10px 10px 25px;">
-            <Col span="6">
+          <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
+            <Col span="2">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">全部书单</IBeautifulLink>
             </Col>
-            <Col span="6">
+            <Col span="2">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">热门书单</IBeautifulLink>
             </Col>
-            <Col span="6">
+            <Col span="2">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">我的书单</IBeautifulLink>
-            </Col>
-            <Col span="6">
-              <IBeautifulLink v-if="mine" @onclick="showBookEditModal">新增书单</IBeautifulLink>
             </Col>
           </Row>
 
           <div style="min-height: 450px;">
-            <ul style="overflow:hidden">
-              <li v-for="book in books" style="float: left;list-style: none;">
+            <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;">
+              <Col span="18">
+                <div class="bookName">{{book.book_name}}</div>
+                <div>
+                  作者：{{book.created_by}}
+                  创建时间：
+                  <Time :time="book.created_time" type="date"/>
+                  修改时间：
+                  <Time :time="book.last_updated_time" type="date"/>
+                  修改次数：???
+                </div>
+                <div style="font-size: 14px;color: #333333;">
+                  {{book.book_desc}}
+                </div>
+                <div v-if="mine" style="margin: 10px;float: right;">
+                  <IFileUpload size="small" :auto-hide-modal="true"
+                               :extra-data="book.id" @uploadComplete="uploadComplete"
+                               action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
+                  <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
+                  <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
+                  <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_edit',
+                                 query:{book_id:book.id,book_name:book.book_name}})">编辑
+                  </IBeautifulLink>
+                  <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">我的书单
+                  </IBeautifulLink>
+                </div>
+
+              </Col>
+              <Col span="4">
                 <div class="bookImg">
                   <router-link :to="{path:'/iblog/book_detail',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
@@ -29,31 +53,12 @@
                     <p style="font-size: 12px;">{{book.book_name | filterLimitFunc}}</p>
                   </router-link>
                 </div>
-                <div class="bookOper" v-if="mine" style="margin-top: 10px;padding-left: 30px;">
-                  <Row :gutter="10">
-                    <Col span="12">
-                      <IFileUpload btn-size="small" :auto-hide-modal="true"
-                                   :extra-data="book.id" @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
-                    </Col>
-                    <Col span="12">
-                      <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
-                    </Col>
-                  </Row>
-                  <Row :gutter="10">
-                    <Col span="12">
-                      <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                    </Col>
-                    <Col span="12">
-                      <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_edit',query:{book_id:book.id,book_name:book.book_name}})">编辑</IBeautifulLink>
-                    </Col>
-                  </Row>
-                </div>
-              </li>
-            </ul>
+              </Col>
+            </Row>
           </div>
 
           <ISimpleConfirmModal ref="bookEditModal" modal-title="新增/编辑 Book" :modal-width="600" :footer-hide="true">
-            <IKeyValueForm ref="bookEditForm" form-key-label="book_name" form-value-label="book_desc"
+            <IKeyValueForm ref="bookEditForm" form-key-label="图书名称" form-value-label="图书描述"
                            form-key-placeholder="请输入书名" form-value-placeholder="请输入描述"
                            @handleSubmit="editBook">
             </IKeyValueForm>
@@ -157,12 +162,19 @@
 <style scoped>
   /* 引入公共样式库 */
 
+  .bookName {
+    cursor: pointer;
+    color: #474747;
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  .bookName:hover {
+    color: #ffae02;
+  }
 
   a{
     color: black;
-  }
-  li{
-    float: left;
   }
   .bookImg{
     padding: 10px 9px 0;
