@@ -2,11 +2,17 @@
   <Row :gutter="10">
     <Col span="6">
       <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
-        <Button size="small" @click="editBookCatalog">新建目录</Button>
+        <Button size="small" @click="editBookCatalog" long>新建目录</Button>
 
         <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
+          <div style="margin: 15px 30px 30px 30px;">
+            <p>目录命名规范示例：1-一级目录</p>
+            <p>目录命名规范示例：1.1-二级目录</p>
+            <p>目录命名规范示例：1.1.1-三级目录</p>
+            <p>目录不能超过三级</p>
+          </div>
           <!-- 表单信息 -->
-          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
             <FormItem label="目录名称" prop="catalogName">
               <Input v-model.trim="formValidate.catalogName" placeholder="请输入目录名称"></Input>
             </FormItem>
@@ -42,15 +48,23 @@
 
 <script>
   import BookArticleEdit from "./BookArticleEdit";
-  import {BookArticleList,BookCatalogEdit,BookCatalogList,ShowBookCatalogDetail} from "../../api";
+  import {BookCatalogEdit, BookCatalogList, ShowBookCatalogDetail} from "../../api";
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal";
+  import {validatePatternForString} from "../../tools";
 
   export default {
     name: "BookCatalogEdit",
     components: {ISimpleConfirmModal, IBeautifulCard,IBeautifulLink,BookArticleEdit},
     data(){
+      const _validateCatalogName = (rule, value, callback) => {
+        if (!validatePatternForString(/^[1-9][0-9]{0,}(\.[1-9][0-9]{0,}){0,2}-.*$/, value)) {
+          callback(new Error('目录名称命名不符合规范!'));
+        } else {
+          callback();
+        }
+      };
       return {
         bookCatalogs:[],
         formValidate: {
@@ -59,7 +73,8 @@
         },
         ruleValidate: {
           catalogName: [
-            { required: true, message: 'catalogName 不能为空!', trigger: 'blur' }
+            {required: true, message: '目录名称不能为空!', trigger: 'blur'},
+            {validator: _validateCatalogName, trigger: 'blur'}
           ],
         },
       }

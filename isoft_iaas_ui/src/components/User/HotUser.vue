@@ -10,7 +10,7 @@
             <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">{{user.user_name}}</IBeautifulLink>
           </Col>
           <Col span="10" class="small_font_size">
-            用户积分数：{{user.user_points}}
+            积分：{{user.user_points}}
           </Col>
         </Row>
       </div>
