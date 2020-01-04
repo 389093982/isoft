@@ -4,7 +4,7 @@
 		<WorkName>GetAllCourseSubType2</WorkName>
 		<WorkDesc>GetAllCourseSubType2</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName></ModuleName>
+		<ModuleName>Course</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
