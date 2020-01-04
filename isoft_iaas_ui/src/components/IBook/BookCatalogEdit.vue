@@ -9,7 +9,7 @@
             <p>目录命名规范示例：1-一级目录</p>
             <p>目录命名规范示例：1.1-二级目录</p>
             <p>目录命名规范示例：1.1.1-三级目录</p>
-            <p>目录不能超过三级</p>
+            <p>目录不能超过三级,目录级别不能以 0 开头</p>
           </div>
           <!-- 表单信息 -->
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
@@ -17,20 +17,24 @@
               <Input v-model.trim="formValidate.catalogName" placeholder="请输入目录名称"></Input>
             </FormItem>
             <FormItem>
-              <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-              <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+              <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+              <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
             </FormItem>
           </Form>
         </ISimpleConfirmModal>
 
         <div style="margin-top: 5px;min-height: 250px;">
           <div v-if="bookCatalogs && bookCatalogs.length > 0">
+            <span style="font-size: 12px;color: green;">提示：双击目录可以进行编辑</span>
             <dl>
               <dt><span style="color: green;font-weight: bold;">{{$route.query.book_name}}</span></dt>
               <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="bookCatalog in bookCatalogs">
-                <Icon type="ios-paper-outline"/>
-                <span class="isoft_hover_red" @click="editBookArticle(bookCatalog.id)">{{bookCatalog.catalog_name | filterCatalogName}}</span>
-                <a class="catalogEditIcon" style="margin-left: 5px;" @click="editBookCatalog(bookCatalog.id)"><Icon type="md-create"/></a>
+                &nbsp;&nbsp;&nbsp;<Icon type="ios-paper-outline"/>
+                <span class="isoft_hover_red" @click="editBookArticle(bookCatalog.id)"
+                      @dblclick="editBookCatalog(bookCatalog.id)">
+                  <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
+                  {{bookCatalog.catalog_name | filterCatalogName}}
+                </span>
               </dd>
             </dl>
           </div>
@@ -66,6 +70,7 @@
         }
       };
       return {
+        timer: null,
         bookCatalogs:[],
         formValidate: {
           id:-1,
@@ -91,7 +96,8 @@
             var grade_3 = 0;                            // 三级目录
             if (gradeArr.length > 1) {
               grade_2 = parseInt(gradeArr[1]);
-            } else if (gradeArr.length > 2) {
+            }
+            if (gradeArr.length > 2) {
               grade_3 = parseInt(gradeArr[2]);
             }
             const result = await BookCatalogEdit({
@@ -115,7 +121,25 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
+      // vue中对同一元素添加单击和双击事件,并解决之间的冲突
+      // 把单击事件写在延时器里面晚一点执行,并如果是双击的话清除这个延时器也就清除了单击事件
+      editBookArticle: function (bookCatalogId) {
+        var _this = this;
+        var timers = this.timer;
+        if (timers) {
+          window.clearTimeout(timers);
+          this.timer = null;
+        }
+        this.timer = window.setTimeout(function () {
+          _this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
+        }, 300);
+      },
       editBookCatalog: async function(bookCatalogId){
+        var timers = this.timer;
+        if (timers) {
+          window.clearTimeout(timers);
+          this.timer = null;
+        }
         if(bookCatalogId > 0){
           const result = await ShowBookCatalogDetail(bookCatalogId);
           if(result.status == "SUCCESS"){
@@ -127,9 +151,6 @@
           this.$refs.bookCatalogEditModal.showModal();
         }
 
-      },
-      editBookArticle:function (bookCatalogId){
-        this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
       },
       refreshBookCatalogList:async function(){
         const result = await BookCatalogList(this.$route.query.book_id);
@@ -156,11 +177,4 @@
 
 <style scoped>
 
-
-  dd .catalogEditIcon{
-    display: none;
-  }
-  dd:hover .catalogEditIcon{
-    display: inline;
-  }
 </style>
