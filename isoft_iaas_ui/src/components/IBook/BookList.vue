@@ -26,12 +26,9 @@
                   {{book.book_name}}
                 </div>
                 <div>
-                  作者：{{book.created_by}}
-                  创建时间：
-                  <Time :time="book.created_time" type="date"/>
-                  修改时间：
-                  <Time :time="book.last_updated_time" type="date"/>
-                  修改次数：???
+                  <span>作者：{{book.created_by}}</span>
+                  创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
+                  修改时间：<span style="color: red;"><Time :time="book.last_updated_time" type="date"/></span>
                 </div>
                 <div style="font-size: 14px;color: #333333;">
                   {{book.book_desc}}
