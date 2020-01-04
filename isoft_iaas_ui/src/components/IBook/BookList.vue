@@ -6,13 +6,16 @@
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
             <Col span="2">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">全部书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('_all')">全部书单</IBeautifulLink>
             </Col>
             <Col span="2">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">热门书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('_hot')">热门书单</IBeautifulLink>
             </Col>
             <Col span="2">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">我的书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('mine')">我的书单</IBeautifulLink>
+            </Col>
+            <Col span="2">
+              <IBeautifulLink @onclick="showBookEditModal">新增书单</IBeautifulLink>
             </Col>
           </Row>
 
@@ -39,10 +42,11 @@
                                action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
                   <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_edit',
+                  <IBeautifulLink @onclick="$router.push({path:'/iblog/book_edit',
                                  query:{book_id:book.id,book_name:book.book_name}})">编辑
                   </IBeautifulLink>
-                  <IBeautifulLink @onclick="$router.push({path:'/iblog/mine/book_list',query:{type:'mine'}})">我的书单
+                  <IBeautifulLink @onclick="refreshBookList('mine')">
+                    我的书单
                   </IBeautifulLink>
                 </div>
 
@@ -85,6 +89,7 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import {GetLoginUserName} from "../../tools";
 
   export default {
     name: "BookList",
@@ -134,16 +139,27 @@
         this.$refs.bookEditForm.handleReset('formValidate');
         this.$refs.bookEditModal.showModal();
       },
-      refreshBookList:async function () {
-        this.mine = this.$route.query.type == 'mine';
-        const result = await BookList();
+      refreshBookList: async function (type) {
+        var search_type = type;
+        var search_user_name = '';
+        if (type == 'mine') {
+          search_user_name = GetLoginUserName();
+          this.mine = 'mine';
+        } else {
+          this.mine = '';
+        }
+
+        const result = await BookList({
+          search_type: search_type,
+          search_user_name: search_user_name,
+        });
         if(result.status == "SUCCESS"){
           this.books = result.books;
         }
       }
     },
     mounted(){
-      this.refreshBookList();
+      this.refreshBookList('_all');
     },
     watch:{
       // 监听路由是否变化

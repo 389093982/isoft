@@ -71,9 +71,9 @@ const IBlogRouter = {
     {path: 'book_list',component: BookList},
     {path: 'book_detail',component: BookArticleDetail},
     {path: 'blog_detail',component: BlogArticleDetail},
-    {path: 'mine/blog_edit',component: BlogArticleEdit},
-    {path: 'mine/book_edit',component: BookCatalogEdit},
-    {path: 'mine/book_list',component: BookList},
+    {path: 'blog_edit', component: BlogArticleEdit},
+    {path: 'book_edit', component: BookCatalogEdit},
+    {path: 'book_list', component: BookList},
   ]
 };
 

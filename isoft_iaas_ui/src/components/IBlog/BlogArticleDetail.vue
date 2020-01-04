@@ -11,7 +11,8 @@
         <Col span="3">阅读次数 {{blog.views}}</Col>
         <Col span="3">编辑次数 {{blog.edits}}
           <Button type="success" size="small" v-if="editable"
-            @click="$router.push({ path: '/iblog/mine/blog_edit', query: { id: blog.id }})">编辑</Button>
+                  @click="$router.push({ path: '/iblog/blog_edit', query: { id: blog.id }})">编辑
+          </Button>
         </Col>
       </Row>
     </div>
@@ -28,7 +29,7 @@
   import {ShowBlogArticleDetail} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin,GetLoginUserName} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName} from "../../tools"
 
   export default {
     name: "BlogArticleDetail",
