@@ -5,7 +5,7 @@
         <Button size="small" @click="editBookCatalog" long>新建目录</Button>
 
         <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
-          <div style="margin: 15px 30px 30px 30px;">
+          <div style="margin: 15px 30px;">
             <p>目录命名规范示例：1-一级目录</p>
             <p>目录命名规范示例：1.1-二级目录</p>
             <p>目录命名规范示例：1.1.1-三级目录</p>
@@ -29,7 +29,7 @@
               <dt><span style="color: green;font-weight: bold;">{{$route.query.book_name}}</span></dt>
               <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="bookCatalog in bookCatalogs">
                 <Icon type="ios-paper-outline"/>
-                <span class="isoft_hover_red" @click="editBookArticle(bookCatalog.id)">{{bookCatalog.catalog_name}}</span>
+                <span class="isoft_hover_red" @click="editBookArticle(bookCatalog.id)">{{bookCatalog.catalog_name | filterCatalogName}}</span>
                 <a class="catalogEditIcon" style="margin-left: 5px;" @click="editBookCatalog(bookCatalog.id)"><Icon type="md-create"/></a>
               </dd>
             </dl>
@@ -52,7 +52,7 @@
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal";
-  import {validatePatternForString} from "../../tools";
+  import {strSplit, validatePatternForString} from "../../tools";
 
   export default {
     name: "BookCatalogEdit",
@@ -83,7 +83,26 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await BookCatalogEdit(parseInt(this.$route.query.book_id), this.formValidate.id, this.formValidate.catalogName);
+            // 分割得到所有的目录
+            let grades = this.formValidate.catalogName.slice(0, this.formValidate.catalogName.indexOf("-"));
+            let gradeArr = strSplit(grades, ".");
+            var grade_1 = parseInt(gradeArr[0]);    // 一级目录
+            var grade_2 = 0;                            // 二级目录
+            var grade_3 = 0;                            // 三级目录
+            if (gradeArr.length > 1) {
+              grade_2 = parseInt(gradeArr[1]);
+            } else if (gradeArr.length > 2) {
+              grade_3 = parseInt(gradeArr[2]);
+            }
+            const result = await BookCatalogEdit({
+              book_id: parseInt(this.$route.query.book_id),
+              id: this.formValidate.id,
+              catalog_name: this.formValidate.catalogName,
+              grades: grades,
+              grade_1: grade_1,
+              grade_2: grade_2,
+              grade_3: grade_3,
+            });
             if(result.status == "SUCCESS"){
               this.$Message.success("编辑成功!");
               this.$refs.bookCatalogEditModal.hideModal();
@@ -127,6 +146,11 @@
     mounted(){
       this.refreshBookCatalogList();
     },
+    filters: {
+      filterCatalogName: function (value) {
+        return value.slice(value.indexOf("-") + 1);
+      },
+    }
   }
 </script>
 
