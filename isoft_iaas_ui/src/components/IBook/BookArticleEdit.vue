@@ -6,10 +6,12 @@
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
       <FormItem prop="content">
         <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
+                      :editable="formValidate.book_catalog_id > 0"
                       :toolbars="toolbars" :ishljs = "true" style="z-index: 1;min-height: 500px;"/>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+        <span style="color: red;" v-if="formValidate.book_catalog_id <= 0">未选择目录禁止编辑</span>
         <Button type="error" v-if="formValidate.article_id > 0"
                 style="margin-left: 8px" @click="handleDelete('formValidate')">删除该条目</Button>
       </FormItem>
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-  import {ShowBookArticleDetail,BookArticleEdit} from "../../api"
+  import {BookArticleEdit, ShowBookArticleDetail} from "../../api"
 
   export default {
     name: "BookArticleEdit",
@@ -99,6 +101,10 @@
         }
       },
       handleSubmit: function(name) {
+        if (this.formValidate.book_catalog_id <= 0) {
+          this.$Message.error('请先选择目录再进行编辑！');
+          return;
+        }
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
