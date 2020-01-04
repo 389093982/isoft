@@ -22,7 +22,7 @@
           <div style="min-height: 450px;">
             <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
               <Col span="18">
-                <div class="bookName" @click="$router.push({path:'/iblog/book_detail',query:{book_id:book.id}})">
+                <div class="bookName" @click="$router.push({path:'/ibook/book_detail',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </div>
                 <div>
@@ -42,7 +42,7 @@
                                action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
                   <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink @onclick="$router.push({path:'/iblog/book_edit',
+                  <IBeautifulLink @onclick="$router.push({path:'/ibook/book_edit',
                                  query:{book_id:book.id,book_name:book.book_name}})">编辑
                   </IBeautifulLink>
                   <IBeautifulLink @onclick="refreshBookList('mine')">
@@ -53,7 +53,7 @@
               </Col>
               <Col span="4">
                 <div class="bookImg">
-                  <router-link :to="{path:'/iblog/book_detail',query:{book_id:book.id}}">
+                  <router-link :to="{path:'/ibook/book_detail',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../assets/default.png" height="160px" width="140px"/>
                     <p style="font-size: 12px;">{{book.book_name | filterLimitFunc}}</p>
@@ -159,7 +159,8 @@
       }
     },
     mounted(){
-      this.refreshBookList('_all');
+      let type = this.$route.query.type ? this.$route.query.type : '_all';
+      this.refreshBookList(type);
     },
     watch:{
       // 监听路由是否变化

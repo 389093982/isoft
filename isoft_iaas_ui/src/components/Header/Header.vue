@@ -9,7 +9,7 @@
         <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
       </MenuItem>
         <MenuItem name="3">
-          <IBeautifulLink @onclick="$router.push({path:'/iblog/book_list'})">热门书单</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
         </MenuItem>
         <MenuItem name="4">
           <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>

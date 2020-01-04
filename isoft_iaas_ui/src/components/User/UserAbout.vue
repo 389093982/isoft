@@ -58,14 +58,33 @@
             </Col>
           </Row>
         </TabPane>
-        <TabPane label="作者博文">作者博文</TabPane>
+        <TabPane label="作者书单">
+          <Row>
+            <Col span="8">图书名称</Col>
+            <Col span="8">课程类型</Col>
+            <Col span="8">课程子类型</Col>
+          </Row>
+          <Row v-for="(book,index) in books">
+            <Row>
+              <Col span="8" class="isoft_inline_ellipsis">
+                <IBeautifulLink @onclick="$router.push({path:'/ibook/book_detail',query:{book_id:book.id}})">
+                  {{book.book_name}}
+                </IBeautifulLink>
+              </Col>
+              <Col span="8" class="isoft_inline_ellipsis">{{book.book_desc}}</Col>
+              <Col span="8">
+                <Time :time="book.last_updated_time" :interval="1" style="color:red;"/>
+              </Col>
+            </Row>
+          </Row>
+        </TabPane>
       </Tabs>
     </div>
   </div>
 </template>
 
 <script>
-  import {GetCourseListByUserName, GetUserDetail, queryPageBlog} from "../../api"
+  import {BookList, GetCourseListByUserName, GetUserDetail, queryPageBlog} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
 
   export default {
@@ -79,6 +98,8 @@
     },
     data(){
       return {
+        // 当前 userName 的书单列表
+        books: [],
         // 当前 userName 的博客列表
         blogs: [],
         // 当前 userName 的课程列表
@@ -89,6 +110,7 @@
     },
     methods:{
       refreshUserInfo:function () {
+        this.refreshBookList();
         this.refreshBlogList();
         this.refreshCourseList();
         this.refreshUserDetail();
@@ -97,6 +119,15 @@
         const result = await GetUserDetail(this.userName);
         if(result.status == "SUCCESS"){
           this.user_small_icon = result.user.small_icon;
+        }
+      },
+      refreshBookList: async function () {
+        const result = await BookList({
+          search_type: '',
+          search_user_name: this.userName,
+        });
+        if (result.status == "SUCCESS") {
+          this.books = result.books;
         }
       },
       refreshBlogList: async function () {

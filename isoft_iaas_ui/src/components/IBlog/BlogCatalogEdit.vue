@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 20px;">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70">
       <FormItem label="分类名称" prop="catalog_name">
           <Input v-model="formValidate.catalog_name" placeholder="Enter catalog name..."/>
       </FormItem>

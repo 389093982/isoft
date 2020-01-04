@@ -68,10 +68,18 @@ const IBlogRouter = {
   children: [
     {path: 'blog_index',component: IBlog},
     {path: 'blog_list',component: BlogList},
-    {path: 'book_list',component: BookList},
-    {path: 'book_detail',component: BookArticleDetail},
     {path: 'blog_detail',component: BlogArticleDetail},
     {path: 'blog_edit', component: BlogArticleEdit},
+  ]
+};
+
+const IBookRouter = {
+  path: '/ibook',
+  component: ILayout,
+  // 二级路由的配置
+  children: [
+    {path: 'book_list', component: BookList},
+    {path: 'book_detail', component: BookArticleDetail},
     {path: 'book_edit', component: BookCatalogEdit},
     {path: 'book_list', component: BookList},
   ]
@@ -110,7 +118,7 @@ const ILearningRouter = {
   ]
 };
 
-const ILearningRouters = [IBlogRouter, ILearningRouter];
+const ILearningRouters = [IBlogRouter, IBookRouter, ILearningRouter];
 
 const ISSOReouter = [{
   path: '/sso',
