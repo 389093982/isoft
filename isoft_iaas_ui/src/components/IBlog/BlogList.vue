@@ -131,7 +131,11 @@
       },
       refreshBlogList:async function () {
         var search_type = this.search_type;
-        const result = await queryPageBlog(this.offset,this.current_page, search_type);
+        const result = await queryPageBlog({
+          offset: this.offset,
+          current_page: this.current_page,
+          search_type: search_type,
+        });
         if(result.status=="SUCCESS"){
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;

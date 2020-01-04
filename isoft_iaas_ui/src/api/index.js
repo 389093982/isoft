@@ -22,7 +22,7 @@ export const BlogArticleEdit = (article_id, bookId, blog_title, short_desc, key_
 export const ArticleDelete = (article_id) => ajax(BASE_URL+'/iwork/httpservice/ArticleDelete',{article_id},'POST');
 
 // 热门博客分页列表
-export const queryPageBlog = (offset,current_page, search_type) => ajax(BASE_URL+'/iwork/httpservice/queryPageBlog',{offset,current_page, search_type},'GET');
+export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/queryPageBlog', params, 'GET');
 
 export const BookEdit = (book_id, book_name, book_desc) => ajax(BASE_URL+'/iwork/httpservice/BookEdit',{book_id, book_name, book_desc},'POST');
 export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL+'/iwork/httpservice/UpdateBookIcon',{book_id, book_img},'POST');

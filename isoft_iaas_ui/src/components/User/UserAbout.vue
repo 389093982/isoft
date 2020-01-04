@@ -6,6 +6,34 @@
 
     <div style="margin-top: 5px;">
       <Tabs :animated="false">
+        <TabPane label="作者博文">
+          <Row>
+            <Col span="6">标题</Col>
+            <Col span="6">分类</Col>
+            <Col span="6">简介</Col>
+            <Col span="6">时间</Col>
+          </Row>
+          <Row v-for="(blog,index) in blogs">
+            <Col span="6" class="isoft_inline_ellipsis">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
+                {{blog.blog_title}}
+              </IBeautifulLink>
+            </Col>
+            <Col span="6" class="isoft_inline_ellipsis">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
+                {{blog.catalog_name}}
+              </IBeautifulLink>
+            </Col>
+            <Col span="6" class="isoft_inline_ellipsis">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
+                {{blog.short_desc}}
+              </IBeautifulLink>
+            </Col>
+            <Col span="6" class="isoft_inline_ellipsis">
+              <Time :time="blog.last_updated_time" :interval="1" style="color:red;"/>
+            </Col>
+          </Row>
+        </TabPane>
         <TabPane label="作者课程">
           <Row>
             <Col span="8">课程名称</Col>
@@ -13,24 +41,23 @@
             <Col span="8">课程子类型</Col>
           </Row>
           <Row v-for="course in courses" :gutter="10">
-            <Col span="8">
+            <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
-                {{course.course_name | filterLimitFunc}}
+                {{course.course_name}}
               </IBeautifulLink>
             </Col>
-            <Col span="8">
+            <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({ path:'/ilearning/course_search', query: { search: course.course_type }})">
-                {{course.course_type | filterLimitFunc}}
+                {{course.course_type}}
               </IBeautifulLink>
             </Col>
-            <Col span="8">
+            <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({ path: '/ilearning/course_search', query: { search: course.course_sub_type }})">
-                {{course.course_sub_type | filterLimitFunc}}
+                {{course.course_sub_type}}
               </IBeautifulLink>
             </Col>
           </Row>
         </TabPane>
-        <TabPane label="作者博文">作者博文</TabPane>
         <TabPane label="作者博文">作者博文</TabPane>
       </Tabs>
     </div>
@@ -38,7 +65,7 @@
 </template>
 
 <script>
-  import {GetCourseListByUserName,GetUserDetail} from "../../api"
+  import {GetCourseListByUserName, GetUserDetail, queryPageBlog} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
 
   export default {
@@ -52,6 +79,8 @@
     },
     data(){
       return {
+        // 当前 userName 的博客列表
+        blogs: [],
         // 当前 userName 的课程列表
         courses:[],
         // 当前 user 对应头像信息
@@ -60,6 +89,7 @@
     },
     methods:{
       refreshUserInfo:function () {
+        this.refreshBlogList();
         this.refreshCourseList();
         this.refreshUserDetail();
       },
@@ -67,6 +97,16 @@
         const result = await GetUserDetail(this.userName);
         if(result.status == "SUCCESS"){
           this.user_small_icon = result.user.small_icon;
+        }
+      },
+      refreshBlogList: async function () {
+        const result = await queryPageBlog({
+          offset: 20,
+          current_page: 1,
+          search_user_name: this.userName,
+        });
+        if (result.status == "SUCCESS") {
+          this.blogs = result.blogs;
         }
       },
       refreshCourseList:async function () {
@@ -78,15 +118,6 @@
     },
     watch:{
       "userName": "refreshUserInfo"      // 如果 userName 有变化,会再次执行该方法
-    },
-    filters:{
-      // 内容超长则显示部分
-      filterLimitFunc:function (value) {
-        if(value && value.length > 12) {
-          value= value.substring(0,12) + '...';
-        }
-        return value;
-      },
     },
     mounted(){
       this.refreshUserInfo();

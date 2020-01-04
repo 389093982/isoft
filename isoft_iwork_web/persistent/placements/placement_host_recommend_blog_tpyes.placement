@@ -133,18 +133,18 @@
 	<Elements>
 		<Id>355</Id>
 		<Placement>placement_host_recommend_blog_tpyes</Placement>
-		<ElementName>656756fsddsf</ElementName>
-		<ElementLabel>ghfffgfdfgf</ElementLabel>
-		<Content></Content>
-		<LinkedRefer></LinkedRefer>
+		<ElementName>element_play</ElementName>
+		<ElementLabel>人生苦短，你还在玩</ElementLabel>
+		<Content>这会又郁闷了</Content>
+		<LinkedRefer>人生苦短，你还在玩</LinkedRefer>
 		<ImgPath></ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
 		<MdContent></MdContent>
 		<CreatedBy>SYSTEM</CreatedBy>
-		<CreatedTime>2019-12-17T22:52:40+08:00</CreatedTime>
+		<CreatedTime>2020-01-04T16:25:44+08:00</CreatedTime>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-		<LastUpdatedTime>2019-12-17T22:52:40+08:00</LastUpdatedTime>
+		<LastUpdatedTime>2020-01-04T16:25:44+08:00</LastUpdatedTime>
 	</Elements>
 </PlacementElementMppaer>

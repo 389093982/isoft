@@ -6,10 +6,10 @@
           <Col span="4">
             <img width="30" height="30" :src="user.small_icon" @error="defImg()">
           </Col>
-          <Col span="10" class="isoft_inline_ellipsis">
+          <Col span="12" class="isoft_inline_ellipsis">
             <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">{{user.user_name}}</IBeautifulLink>
           </Col>
-          <Col span="10" class="small_font_size">
+          <Col span="8" class="small_font_size">
             积分：{{user.user_points}}
           </Col>
         </Row>
