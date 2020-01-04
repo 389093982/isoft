@@ -17,9 +17,11 @@
             </Row>
             <Row v-for="(advertisement,index) in advertisements">
               <!-- 加空格是防止没有内容而不占空间 -->
-              <Col span="4">{{advertisement.advertisement_label}}&nbsp;</Col>
-              <Col span="4">{{advertisement.linked_type}}&nbsp;</Col>
-              <Col span="4">{{advertisement.linked_refer}}&nbsp;</Col>
+              <Col span="4">
+                <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})">{{advertisement.advertisement_label}}</a>
+              </Col>
+              <Col span="4">{{advertisement.linked_type}}</Col>
+              <Col span="4">{{advertisement.linked_refer}}</Col>
               <Col span="4" class="isoft_inline_ellipsis">
                 <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;
               </Col>
