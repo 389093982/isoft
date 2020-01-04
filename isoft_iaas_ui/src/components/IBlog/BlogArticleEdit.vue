@@ -1,10 +1,12 @@
 <template>
-  <Row>
+  <Row :gutter="10">
     <Col span="6">
-      <CatalogList style="margin-top: 20px;"/>
+      <div class="isoft_bg_white isoft_pd10" style="min-height: 560px;">
+        <CatalogList/>
+      </div>
     </Col>
     <Col span="18">
-      <div style="padding: 30px;">
+      <div class="isoft_bg_white isoft_pd10">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
           <Row>
             <Col span="12">
@@ -28,11 +30,13 @@
               <FormItem label="文章分类" prop="catalog_name">
                 <Select v-model="formValidate.catalog_name" filterable>
                   <!-- 热门分类 -->
-                  <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.title"
-                          :key="'__hot__' + index + hotCatalogItem.title">热门分类： {{ hotCatalogItem.title }}</Option>
+                  <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
+                          :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}
+                  </Option>
                   <!-- 我的分类 -->
                   <Option v-for="(mycatalog, index) in mycatalogs" :value="mycatalog.catalog_name"
-                          :key="'__mine__' + index + mycatalog.catalog_name">我的分类：{{ mycatalog.catalog_name }}</Option>
+                          :key="'__mine__' + index">我的分类：{{ mycatalog.catalog_name }}
+                  </Option>
                 </Select>
               </FormItem>
             </Col>
@@ -56,7 +60,13 @@
 </template>
 
 <script>
-  import {GetMyCatalogs,BlogArticleEdit,ArticleDelete,ShowBlogArticleDetail,FilterElementByPlacement} from "../../api"
+  import {
+    ArticleDelete,
+    BlogArticleEdit,
+    FilterElementByPlacement,
+    GetMyCatalogs,
+    ShowBlogArticleDetail
+  } from "../../api"
   import axios from 'axios'
   import CatalogList from "./CatalogList";
 

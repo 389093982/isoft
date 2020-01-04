@@ -39,6 +39,8 @@
             <MenuItem name="8-1" @click.native="cancelUser">前往登录</MenuItem>
             <MenuItem name="8-2" @click.native="cancelUser">切换账号</MenuItem>
             <MenuItem name="8-3" @click.native="cancelUser">注销</MenuItem>
+            <MenuItem name="8-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
+            </MenuItem>
           </MenuGroup>
         </Submenu>
         <MenuItem name="9">
