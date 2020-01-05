@@ -96,22 +96,5 @@
 </script>
 
 <style scoped>
-  @keyframes isoft_flash {
-    0% {
-      opacity: 0.3;
-    }
-    30% {
-      opacity: 0.4;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
 
-  .box:hover .box_img {
-    animation: isoft_flash 1s linear 1;
-  }
 </style>

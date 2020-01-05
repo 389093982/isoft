@@ -17,7 +17,7 @@
       <p style="font-size: 24px;font-weight: 300;">您查找的文件为：{{resource.resource_name}}</p>
       <p class="isoft_top10">{{resource.resource_desc}}</p>
       <p style="cursor:pointer;text-align: right;"
-         @click="">
+         @click="downloadResource(resource)">
         立即下载
       </p>
     </div>
@@ -35,6 +35,12 @@
       }
     },
     methods: {
+      downloadResource: function (resource) {
+        var link = document.createElement('a');
+        link.setAttribute("download", "");
+        link.href = resource.resource_path;
+        link.click();
+      },
       refreshResourceInfo: async function (id) {
         const result = await GetResourceInfo({id: id});
         if (result.status == "SUCCESS") {
