@@ -70,12 +70,14 @@
           if (valid) {
             const result = await EditResource({
               id: this.formInline.id,
-              resource_name: this.resource_name.resource_name,
+              resource_name: this.formInline.resource_name,
               resource_desc: this.formInline.resource_desc,
               resource_path: this.formInline.resource_path,
             });
             if (result.status == "SUCCESS") {
-              alert(JSON.stringify(result));
+              this.$router.push({path: '/office/officeList'});
+            } else {
+              this.$Message.error("保存失败!");
             }
           }
         })

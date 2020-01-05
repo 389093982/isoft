@@ -71,7 +71,7 @@
     },
     methods:{
       toRecharge:function () {
-        CheckHasLoginConfirmDialog(this, "/vipcenter/recharge/");
+        CheckHasLoginConfirmDialog(this, {path: "/vipcenter/recharge/"});
       }
     },
   }

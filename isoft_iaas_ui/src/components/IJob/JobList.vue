@@ -127,7 +127,7 @@
         this.$router.push({path: '/job/corporate_detail', query: {'corporate_id': job.corporate_id}});
       },
       toEditCorporateDetail: function () {
-        CheckHasLoginConfirmDialog(this, '/job/corporate_detail');
+        CheckHasLoginConfirmDialog(this, {path: '/job/corporate_detail'});
       }
     },
     mounted() {

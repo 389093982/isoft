@@ -1,5 +1,5 @@
 import cronValidate from "./cron"
-import {checkSSOLogin,checkHasLogin,getLoginUserName,checkNotLogin,checkAdminLogin} from "./sso"
+import {checkAdminLogin, checkHasLogin, checkNotLogin, checkSSOLogin, getLoginUserName} from "./sso"
 import Storage from "./storage"
 
 export const _store = new Storage();
@@ -177,7 +177,7 @@ export function handleSpecial(data){
   return data;
 }
 
-export function CheckHasLoginConfirmDialog(node, successpath){
+export function CheckHasLoginConfirmDialog(node, pushObj) {
   var _this = node;
   if(!CheckHasLogin()){
     _this.$Modal.confirm({
@@ -188,6 +188,6 @@ export function CheckHasLoginConfirmDialog(node, successpath){
       },
     });
   }else{
-    _this.$router.push({path:successpath});
+    _this.$router.push(pushObj);
   }
 }

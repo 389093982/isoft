@@ -151,6 +151,8 @@ export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WEC
 
 // 资源列表模块
 export const EditResource = (params) => ajax(BASE_URL + '/iwork/httpservice/EditResource', params, "POST");
+export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpservice/FilterPageResourceList', params, "POST");
+export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/GetResourceInfo', params, "POST");
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
