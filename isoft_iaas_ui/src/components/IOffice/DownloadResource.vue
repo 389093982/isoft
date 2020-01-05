@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import {GetResourceInfo} from "../../api"
+  import {DownloadResourceFile, GetResourceInfo} from "../../api"
 
   export default {
     name: "DownloadResource",
@@ -36,10 +36,7 @@
     },
     methods: {
       downloadResource: function (resource) {
-        var link = document.createElement('a');
-        link.setAttribute("download", "");
-        link.href = resource.resource_path;
-        link.click();
+        DownloadResourceFile({id: resource.id});
       },
       refreshResourceInfo: async function (id) {
         const result = await GetResourceInfo({id: id});

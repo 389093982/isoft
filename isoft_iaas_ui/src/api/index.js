@@ -2,7 +2,7 @@
 包含n个接口请求函数的模块
 函数的返回值: promise对象
  */
-import ajax from './ajax'
+import {ajax, download} from './ajax'
 
 const BASE_URL = '/api';
 const WECHAT_PAY = '/wechatPayApi';
@@ -153,6 +153,7 @@ export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WEC
 export const EditResource = (params) => ajax(BASE_URL + '/iwork/httpservice/EditResource', params, "POST");
 export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpservice/FilterPageResourceList', params, "POST");
 export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/GetResourceInfo', params, "POST");
+export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/DownloadResourceFile', params, "GET");
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理

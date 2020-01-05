@@ -23,7 +23,7 @@ import (
 
 type WorkController struct {
 	beego.Controller
-	interfaces.IFileUpload
+	interfaces.IFileUploadDownload
 }
 
 func (this *WorkController) BuildIWorkDL() {

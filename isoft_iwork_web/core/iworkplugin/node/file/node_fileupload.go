@@ -1,14 +1,14 @@
 package file
 
 import (
-	"isoft/isoft_utils/common/hashutil"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/hashutil"
+	"isoft/isoft_utils/common/stringutil"
 	"path"
 	"strings"
 )
@@ -19,7 +19,7 @@ type DoReceiveFileNode struct {
 }
 
 func (this *DoReceiveFileNode) Execute(trackingId string) {
-	fileUpload := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_IFILE_UPLOAD].(interfaces.IFileUpload)
+	fileUpload := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST].(interfaces.IFileUploadDownload)
 	suffixStr := this.TmpDataMap[iworkconst.STRING_PREFIX+"suffixs"].(string)
 	// fileServerAddr := "http://localhost:8086/api/files/"
 	fileServerAddr := this.TmpDataMap[iworkconst.STRING_PREFIX+"fileServerAddr"].(string)

@@ -27,7 +27,7 @@ axios.interceptors.response.use(
   }
 );
 
-export default function ajax (url, data={}, type='GET') {
+export const ajax = function (url, data = {}, type = 'GET') {
   return new Promise(function (resolve, reject) {
     // 执行异步ajax请求
     let promise
@@ -56,4 +56,17 @@ export default function ajax (url, data={}, type='GET') {
       reject(error)
     })
   })
+}
+
+export const download = function (url, data = {}, type = 'GET') {
+  let dataStr = '' //数据拼接字符串
+  Object.keys(data).forEach(key => {
+    dataStr += key + '=' + data[key] + '&'
+  })
+  if (dataStr !== '') {
+    dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
+    url = url + '?' + dataStr
+  }
+  // 发送get请求
+  window.location.href = url;
 }

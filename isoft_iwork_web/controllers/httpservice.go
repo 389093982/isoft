@@ -49,7 +49,9 @@ func (this *WorkController) PublishSerivce() {
 		// 没有 receiver,即没有返回 trackingId,一定代表执行失败(panic)
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", iworkconst.TRACKING_ID: trackingId, "errorMsg": "Empty Response"}
 	}
-	this.ServeJSON()
+	if this.Ctx.Request.Header.Get("isDoDownloadFileNode") == "" {
+		this.ServeJSON()
+	}
 }
 
 // 运行 work 或者从缓存中获取 receiver
@@ -59,7 +61,7 @@ func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.Wor
 	// 传递 request 对象
 	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request
 	// 传递文件上传对象
-	mapData[iworkconst.HTTP_REQUEST_IFILE_UPLOAD] = this
+	mapData[iworkconst.HTTP_REQUEST] = this
 
 	chacheKey := fmt.Sprintf("%v%v", workCache.WorkId, mapData)
 
@@ -107,6 +109,18 @@ func ParseParam(ctx *context.Context, step models.WorkStep) map[string]interface
 	return mapData
 }
 
+func (this *WorkController) GetWriter() http.ResponseWriter {
+	return this.Ctx.ResponseWriter
+}
+
+func (this *WorkController) WriteRequestHeader(key, value string) {
+	this.Ctx.Request.Header.Add(key, value)
+}
+
+func (this *WorkController) WriteResponseHeader(key, value string) {
+	this.Ctx.Output.Header(key, value)
+}
+
 func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, tempFilePath string) {
 	// 判断是否是文件上传
 	f, h, err := this.GetFile("file")
@@ -134,9 +148,9 @@ func (this *WorkController) DownloadTest() {
 	buff := make([]byte, 1024*50)
 	for {
 		len, err := bufReader.Read(buff)
+		bufWriter.Write(buff[:len])
 		if err == io.EOF {
 			break
 		}
-		bufWriter.Write(buff[:len])
 	}
 }
