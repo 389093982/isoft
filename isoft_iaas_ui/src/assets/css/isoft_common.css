@@ -13,8 +13,16 @@
   margin-top: 10px;
 }
 
+.isoft_top5 {
+  margin-top: 5px;
+}
+
 .isoft_pd10 {
   padding: 10px;
+}
+
+.isoft_border_bottom {
+  border-bottom: 1px solid #dfdfdf;
 }
 
 .isoft_pd20 {
@@ -62,6 +70,12 @@
   font-size: 12px;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
+
+.isoft_font_white {
+  color: #fff;
+}
+
+
 
 .isoft_hover_red:hover{
   cursor: pointer;

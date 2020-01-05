@@ -46,8 +46,21 @@
         <MenuItem name="9">
           <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
         </MenuItem>
-        <MenuItem name="10">
-          <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">会员中心</IBeautifulLink>
+        <Submenu name="10">
+          <template slot="title">
+            会员中心
+          </template>
+          <MenuGroup title="账号管理">
+            <MenuItem name="10-1">
+              <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">开通会员</IBeautifulLink>
+            </MenuItem>
+            <MenuItem name="10-2">
+              <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipInterest'})">会员权益</IBeautifulLink>
+            </MenuItem>
+          </MenuGroup>
+        </Submenu>
+        <MenuItem name="11">
+          <IBeautifulLink @onclick="$router.push({path:'/office/officeList'})">办公专区</IBeautifulLink>
         </MenuItem>
       </div>
     </Menu>
