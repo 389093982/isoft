@@ -6,3 +6,23 @@ https://studygolang.com/
 
 博客园：https://home.cnblogs.com/
 zwx310100 => zwx310100
+
+百度贴吧tieba.baidu.com
+18255005137 => zppz113268
+
+天涯社区tianya.cn
+eryue2020 => Eryue123456
+
+CSDN博客:https://blog.csdn.net/
+18255005137 => zppz18255005137
+
+新浪微博：https://weibo.com/
+18255005137 => zppz18255005137
+
+知乎：https://www.zhihu.com/signin?next=%2F
+18255005137 => eryue2020
+
+领英：https://www.linkedin.com/
+18255005137 => zppz18255005137
+
+
