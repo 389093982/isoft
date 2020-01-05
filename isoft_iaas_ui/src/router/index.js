@@ -54,6 +54,7 @@ const EditJob = () => import("@/components/IJob/EditJob");
 const EditResume = () => import("@/components/IJob/EditResume");
 
 const OfficeList = () => import("@/components/IOffice/OfficeList");
+const UploadResource = () => import("@/components/IOffice/UploadResource");
 
 Vue.use(Router);
 
@@ -204,6 +205,7 @@ const OfficeRouter = [{
   path: '/office', component: ILayout,
   children: [
     {path: 'officeList', component: OfficeList},
+    {path: 'uploadResource', component: UploadResource},
   ]
 }];
 

@@ -6,7 +6,10 @@
         <p class="isoft_font_white" style="margin-top: 5px;">
           2万精品简历模板内容，每日更新10+涵盖科技、简约、商务等风格精品简历模板，为互联网、行政、设计等领域从业者打造。
         </p>
-        <p class="isoft_font_white" style="text-align: right;">上传资源赚钱</p>
+        <p class="isoft_font_white" style="cursor:pointer;text-align: right;"
+           @click="$router.push({path:'/office/uploadResource'})">
+          上传资源赚钱
+        </p>
       </div>
 
       <div class="isoft_pd10">

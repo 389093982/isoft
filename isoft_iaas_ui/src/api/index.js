@@ -149,6 +149,10 @@ export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice
 //会员中心-初始下单
 export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WECHAT_PAY+'/Pay',{ProductId,ProductDesc,TransAmount,TransCurrCode},'POST');
 
+// 资源列表模块
+export const EditResource = (params) => ajax(BASE_URL + '/iwork/httpservice/EditResource', params, "POST");
+
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/#/sso/login/";
 
