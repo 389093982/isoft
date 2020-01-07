@@ -49,9 +49,7 @@ func (this *WorkController) PublishSerivce() {
 		// 没有 receiver,即没有返回 trackingId,一定代表执行失败(panic)
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", iworkconst.TRACKING_ID: trackingId, "errorMsg": "Empty Response"}
 	}
-	if this.Ctx.Request.Header.Get("isDoDownloadFileNode") == "" {
-		this.ServeJSON()
-	}
+	this.ServeJSON()
 }
 
 // 运行 work 或者从缓存中获取 receiver
@@ -115,10 +113,6 @@ func (this *WorkController) GetWriter() http.ResponseWriter {
 
 func (this *WorkController) WriteRequestHeader(key, value string) {
 	this.Ctx.Request.Header.Add(key, value)
-}
-
-func (this *WorkController) WriteResponseHeader(key, value string) {
-	this.Ctx.Output.Header(key, value)
 }
 
 func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, tempFilePath string) {

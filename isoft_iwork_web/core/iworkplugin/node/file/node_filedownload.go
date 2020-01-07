@@ -28,7 +28,6 @@ func (this *DoDownloadFileNode) Execute(trackingId string) {
 	fileDownload := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST].(interfaces.IFileUploadDownload)
 	// 设置附件响应头
 	fileDownload.WriteResponseHeader("Content-Disposition", "attachment; filename="+url.PathEscape(filename))
-	fileDownload.WriteRequestHeader("isDoDownloadFileNode", "isDoDownloadFileNode")
 	// 发送网络请求读取资源
 	resp, _ := http.Get(urlStr)
 	// 缓冲读
