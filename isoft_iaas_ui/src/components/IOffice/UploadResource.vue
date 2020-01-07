@@ -8,13 +8,13 @@
         <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径"
                @on-focus="handleFocus"/>
         <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
-                     action="/api/iwork/httpservice/fileUpload" uploadLabel="上传"/>
+                     :action="fileUploadUrl" uploadLabel="上传"/>
       </FormItem>
       <FormItem label="文件名称" prop="resource_name">
         <Input readonly="readonly" v-model.trim="formInline.resource_name" placeholder="请您选择文件名称"></Input>
       </FormItem>
       <FormItem label="描述信息" prop="resource_desc">
-        <Input v-model.trim="formInline.resource_desc" placeholder="请您输入描述信息"></Input>
+        <Input type="textarea" :rows="3" v-model.trim="formInline.resource_desc" placeholder="请您输入描述信息"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
@@ -25,13 +25,14 @@
 
 <script>
   import IFileUpload from "../Common/file/IFileUpload"
-  import {EditResource} from "../../api"
+  import {EditResource, fileUploadUrl} from "../../api"
 
   export default {
     name: "UploadResource",
     components: {IFileUpload},
     data() {
       return {
+        fileUploadUrl: fileUploadUrl,
         formInline: {
           id: -1,
           resource_type: '',

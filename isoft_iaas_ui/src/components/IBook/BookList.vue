@@ -36,7 +36,7 @@
                 <div v-if="mine" style="margin: 10px;float: right;">
                   <IFileUpload size="small" :auto-hide-modal="true"
                                :extra-data="book.id" @uploadComplete="uploadComplete"
-                               action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
+                               :action="fileUploadUrl" uploadLabel="换张图片"/>
                   <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
                   <IBeautifulLink @onclick="$router.push({path:'/ibook/book_edit',
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-  import {BookEdit, BookList, DeleteBookById, UpdateBookIcon} from "../../api"
+  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -95,6 +95,7 @@
       IndexCarousel, HotUser, IBeautifulLink, IKeyValueForm, IBeautifulCard,ISimpleConfirmModal,IFileUpload},
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         books:[],
         mine:false,
       }

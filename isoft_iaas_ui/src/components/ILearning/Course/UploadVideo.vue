@@ -25,7 +25,7 @@
 
          <IFileUpload ref="fileUpload" btn-size="small" :auto-hide-modal="true" :multiple="false"
                       :file-suffixs="['mp4']" :extra-data="{'id':course.id, 'video_number':uploadVideoNum}"
-                      @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="上传视频"/>
+                      @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传视频"/>
         <span v-if="uploadVideoNum > 0" style="color: green;">*当前更新第{{uploadVideoNum}}集</span>
         <span v-else style="color: red;">请选择更新集数</span>
       </div>
@@ -37,7 +37,7 @@
 
 <script>
   import IFileUpload from "../../Common/file/IFileUpload";
-  import {UploadVideo,ShowCourseDetail} from "../../../api"
+  import {fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
   import {handleSpecial} from "../../../tools";
 
   export default {
@@ -47,6 +47,7 @@
     props:["course"],
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         isLoading:true,
         showDialog:false,
         // 当前更新视频集数

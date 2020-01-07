@@ -30,36 +30,31 @@
         </p>
       </div>
 
-      <p class="isoft_font12" style="padding:15px;font-weight: 600;">
+      <p class="isoft_font14" style="padding:15px;font-weight: 600;">
         大家都在寻找适合自己的作品，我们为您
         <span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>
         以下作品：
       </p>
     </div>
 
-    <div class="isoft_bg_white isoft_top10">
-      <Row>
-        <Col class="box" span="8" v-for="(resource,index) in resources" style="padding: 5px;">
-          <div
-            style="min-height: 180px;background: linear-gradient(to right, rgba(0,243,47,0.2), rgba(0,243,47,0.05));padding: 10px;">
-            <div style="display:flex;">
-              <div class="box_img">
-                <img v-if="resource.resource_path" :src="resource.resource_path" height="160px" width="120px"/>
-                <img v-else src="../../assets/default.png" height="160px" width="120px"/>
-              </div>
-              <div class="box_info" style="word-wrap: break-word;overflow:hidden;margin-left: 5px;">
-                <p style="font-size: 16px;font-weight: 400;color: #666;">{{resource.resource_name}}</p>
-                <p class="hovered hvr-grow hoverLinkColor" style="font-size: 12px;font-weight: 400;">
-                  {{resource.resource_desc}}</p>
-              </div>
-            </div>
-            <div style="text-align: right;">
-              <Icon style="color: #ff7e00;cursor: pointer;" :size="20" type="md-download"
-                    @click="downloadResource(resource)"/>
-            </div>
-          </div>
-        </Col>
-      </Row>
+    <div class="isoft_bg_white isoft_top10 isoft_pd20">
+      <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
+        <h4>{{resource.resource_name}}</h4>
+        <p>介绍：{{resource.resource_desc}}</p>
+        <p>
+          <Row class="isoft_font12">
+            <Col span="4"><span>下载所需积分：<span style="color:red;">{{resource.points}}</span> </span></Col>
+            <Col span="4">上传时间：<span style="color:red;"><Time :time="resource.last_updated_time" :interval="1"/></span>
+            </Col>
+            <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
+            <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
+            <Col span="8">
+              <IBeautifulLink>内容真实 (10)</IBeautifulLink>&nbsp;&nbsp;&nbsp;
+              <IBeautifulLink>内容不真实 (10)</IBeautifulLink>
+            </Col>
+          </Row>
+        </p>
+      </div>
     </div>
   </div>
 </template>

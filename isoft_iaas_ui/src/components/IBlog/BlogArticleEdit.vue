@@ -63,6 +63,7 @@
   import {
     ArticleDelete,
     BlogArticleEdit,
+    fileUploadUrl,
     FilterElementByPlacement,
     GetMyCatalogs,
     ShowBlogArticleDetail
@@ -146,7 +147,7 @@
         var formdata = new FormData();
         formdata.append('file', $file);
         axios({
-          url: '/api/iwork/httpservice/fileUpload',
+          url: fileUploadUrl,
           method: 'post',
           data: formdata,
           headers: { 'Content-Type': 'multipart/form-data' },

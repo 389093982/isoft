@@ -10,7 +10,7 @@
           </p>
           <p>
             <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true"
-                         @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="换张图片"/>
+                         @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
           </p>
         </Col>
         <Col span="16">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import {GetCourseListByUserName,EndUpdate,UpdateCourseIcon} from "../../../api"
+  import {EndUpdate, fileUploadUrl, GetCourseListByUserName, UpdateCourseIcon} from "../../../api"
   import UploadVideo from "../Course/UploadVideo"
   import {getCookie, handleSpecial} from "../../../tools"
   import CourseMeta from "../Course/CourseMeta";
@@ -44,6 +44,7 @@
     components:{IFileUpload,CourseMeta,UploadVideo},
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         isLoading:true,
         // 我的课程
         myCourses:null,

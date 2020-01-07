@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import {BookArticleEdit, ShowBookArticleDetail} from "../../api"
+  import {BookArticleEdit, fileUploadUrl, ShowBookArticleDetail} from "../../api"
 
   export default {
     name: "BookArticleEdit",
@@ -69,7 +69,7 @@
         var formdata = new FormData();
         formdata.append('file', $file);
         axios({
-          url: '/api/iwork/httpservice/fileUpload',
+          url: fileUploadUrl,
           method: 'post',
           data: formdata,
           headers: { 'Content-Type': 'multipart/form-data' },

@@ -8,7 +8,7 @@
         <Col span="6" style="top:-100px;">
           <img width="150" height="150" v-if="user.small_icon" :src="user.small_icon" @error="defImg()">
           <p style="margin: 0 0 0 40px;" v-if="$route.query.username == 'mine'">
-            <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="上传头像"/>
+            <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
           </p>
         </Col>
         <Col span="12" style="padding-top: 30px;">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import {GetUserDetail, UpdateUserIcon} from "../../api"
+  import {fileUploadUrl, GetUserDetail, UpdateUserIcon} from "../../api"
   import HotUser from "./HotUser"
   import {GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -49,6 +49,7 @@
     components: {UserAbout, HotUser,IFileUpload},
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         user:null,
         defaultImg: require('../../assets/default.png'),
       }

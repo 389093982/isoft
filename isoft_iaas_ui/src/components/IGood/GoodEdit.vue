@@ -28,7 +28,7 @@
               </span>
             </Scroll>
             <IFileUpload ref="fileUpload" :auto-hide-modal="true" btn-size="small"
-                         @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="上传图片"/>
+                         @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传图片"/>
           </FormItem>
 
           <FormItem>
@@ -47,7 +47,7 @@
 
 <script>
   import IFileUpload from "../Common/file/IFileUpload";
-  import {GoodEdit,GetGoodDetail} from "../../api"
+  import {fileUploadUrl, GetGoodDetail, GoodEdit} from "../../api"
   import {GetLoginUserName} from "../../tools"
 
   export default {
@@ -55,6 +55,7 @@
     components:{IFileUpload},
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         formValidate: {
           good_id:-1,
           good_name: '',

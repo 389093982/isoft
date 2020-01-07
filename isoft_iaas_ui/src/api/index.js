@@ -155,6 +155,8 @@ export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpse
 export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/GetResourceInfo', params, "POST");
 export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/DownloadResourceFile', params, "GET");
 
+export const fileUploadUrl = BASE_URL + "/iwork/httpservice/fileUpload"
+
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/#/sso/login/";
