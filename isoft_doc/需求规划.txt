@@ -60,11 +60,13 @@ Go实现接口访问速率限制: 参考 https://studygolang.com/articles/9138
 占位符名称、元素名称唯一性控制
 广告系统开发
 7天不重复的 ip 计数
-分享qq空间、百度等功能开发  https://blog.csdn.net/wengek/article/details/79126833
+分享qq空间、百度等功能开发
+https://blog.csdn.net/wengek/article/details/79126833 --不太好用
+https://github.com/1006008051/vshare
 
 
 packr 打包功能
-golang im
+golang im -> https://github.com/alberliu/gim
 
 iwork 框架支持 bool 类型
 
@@ -72,3 +74,8 @@ iwork 框架支持 bool 类型
 协同广告系统
 
 活动系统
+
+social.js
+
+
+客户至上，互为客户、相对客户

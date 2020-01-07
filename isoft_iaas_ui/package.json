@@ -26,6 +26,7 @@
     "showdown": "^1.8.6",
     "v-distpicker": "^1.2.2",
     "videojs-contrib-hls": "^5.14.1",
+    "vshare": "^2.0.0",
     "vue": "^2.5.2",
     "vue-qr": "^2.2.1",
     "vue-router": "^3.0.1",
