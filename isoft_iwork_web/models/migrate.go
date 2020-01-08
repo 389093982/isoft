@@ -25,8 +25,8 @@ type SqlMigrateLog struct {
 	TrackingDetail string `json:"tracking_detail" orm:"type(text)"`
 }
 
-func InsertSqlMigrateLog(sml *SqlMigrateLog) (id int64, err error) {
-	_, err = orm.NewOrm().Insert(sml)
+func InsertMultiSqlMigrateLog(logs []*SqlMigrateLog) (id int64, err error) {
+	_, err = orm.NewOrm().InsertMulti(len(logs), &logs)
 	return
 }
 

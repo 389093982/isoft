@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/utils/pagination"
 	"github.com/pkg/errors"
-	"isoft/isoft_utils/common/hashutil"
-	"isoft/isoft_utils/common/pageutil"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/migrateutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/hashutil"
+	"isoft/isoft_utils/common/pageutil"
+	"isoft/isoft_utils/common/stringutil"
 	"regexp"
 	"strings"
 	"time"
@@ -21,7 +21,6 @@ var (
 )
 
 func (this *WorkController) GetLastMigrateLogs() {
-	defer this.ServeJSON()
 	trackingId := this.GetString("trackingId")
 	logs, _ := models.QueryAllSqlMigrateLog(trackingId)
 	if len(logs) > 0 && strings.Contains(logs[len(logs)-1].TrackingDetail, "__OVER__") {
@@ -29,6 +28,7 @@ func (this *WorkController) GetLastMigrateLogs() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "logs": logs}
 	}
+	this.ServeJSON()
 }
 
 func (this *WorkController) ExecuteMigrate() {

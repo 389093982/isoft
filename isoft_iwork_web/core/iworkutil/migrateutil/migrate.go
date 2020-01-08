@@ -5,11 +5,11 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
-	"isoft/isoft_utils/common/hashutil"
 	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/hashutil"
 	"strconv"
 	"strings"
 	"time"
@@ -21,6 +21,7 @@ type MigrateExecutor struct {
 	TrackingId string
 	ForceClean bool
 	migrates   []models.SqlMigrate
+	Logs       chan *models.SqlMigrateLog
 }
 
 func (this *MigrateExecutor) ping() (err error) {
@@ -160,14 +161,29 @@ func (this *MigrateExecutor) checkExecuted(migrate_name, migrate_hash string) bo
 	return false
 }
 
-func (this *MigrateExecutor) InsertSqlMigrateLog(migrate_name, detail string, status bool) {
-	log := &models.SqlMigrateLog{
+func (this *MigrateExecutor) InsertSqlMigrateLogs() {
+	caches := make([]*models.SqlMigrateLog, 0)
+	for log := range this.Logs {
+		caches = append(caches, log)
+		if len(caches) == 10 {
+			// 批量插入
+			models.InsertMultiSqlMigrateLog(caches)
+			// 清空
+			caches = caches[0:0]
+		}
+	}
+	if len(caches) > 0 { // 不足 10 个再批量写入一次
+		models.InsertMultiSqlMigrateLog(caches)
+	}
+}
+
+func (this *MigrateExecutor) RenderLog(migrate_name, detail string, status bool) *models.SqlMigrateLog {
+	return &models.SqlMigrateLog{
 		TrackingId:     this.TrackingId,
 		MigrateName:    migrate_name,
 		Status:         status,
 		TrackingDetail: fmt.Sprintf("%s [%s]", detail, time.Now().Format("2006-01-02 15:04:05")),
 	}
-	models.InsertSqlMigrateLog(log)
 }
 
 func (this *MigrateExecutor) migrateOne(migrate models.SqlMigrate) error {
@@ -175,7 +191,7 @@ func (this *MigrateExecutor) migrateOne(migrate models.SqlMigrate) error {
 	// 已经执行过则忽略
 	if this.checkExecuted(migrate.MigrateName, hash) {
 		detail := fmt.Sprintf(`%s was migrated and skip it...`, migrate.MigrateName)
-		this.InsertSqlMigrateLog(migrate.MigrateName, detail, true)
+		this.Logs <- this.RenderLog(migrate.MigrateName, detail, true)
 		return nil
 	}
 	// 每次迁移都有可能有多个执行 sql
@@ -189,10 +205,10 @@ func (this *MigrateExecutor) migrateOne(migrate models.SqlMigrate) error {
 		if _, err := this.ExecSQL(executeSql); err != nil {
 			tx.Rollback()
 			detail := fmt.Sprintf("[%s] - [%s] - [%s] : %s", strconv.FormatInt(migrate.Id, 10), migrate.MigrateName, executeSql, err.Error())
-			this.InsertSqlMigrateLog(migrate.MigrateName, detail, false)
+			this.Logs <- this.RenderLog(migrate.MigrateName, detail, false)
 
 			detail = fmt.Sprintf(`%s was migrated failed and rollback ...`, migrate.MigrateName)
-			this.InsertSqlMigrateLog(migrate.MigrateName, detail, false)
+			this.Logs <- this.RenderLog(migrate.MigrateName, detail, false)
 			return err
 		}
 	}
@@ -200,7 +216,7 @@ func (this *MigrateExecutor) migrateOne(migrate models.SqlMigrate) error {
 	err = this.insertOrUpdateMigrateVersion(migrate.MigrateName, hash, true)
 	tx.Commit()
 	detail := fmt.Sprintf(`%s was migrated success ...`, migrate.MigrateName)
-	this.InsertSqlMigrateLog(migrate.MigrateName, detail, true)
+	this.Logs <- this.RenderLog(migrate.MigrateName, detail, true)
 	return nil
 }
 
@@ -209,16 +225,22 @@ func MigrateToDB(trackingId, dsn string, forceClean bool) (err error) {
 		Dsn:        dsn,
 		TrackingId: trackingId,
 		ForceClean: forceClean,
+		Logs:       make(chan *models.SqlMigrateLog, 10),
 	}
-	defer executor.InsertSqlMigrateLog("", "__OVER__", true)
+	go executor.InsertSqlMigrateLogs()
+	defer func() {
+		executor.Logs <- executor.RenderLog("", "__OVER__", true)
+		close(executor.Logs)
+	}()
 	defer func() {
 		if err := recover(); err != nil {
 			detail := errorutil.ToError(err).Error()
-			executor.InsertSqlMigrateLog("", detail, false)
+			executor.Logs <- executor.RenderLog("", detail, false)
 		}
 	}()
 
 	if err = executor.ping(); err == nil {
+		// 加载所有的迁移资源文件
 		executor.loadAllMigrate()
 		executor.initial()
 		executor.checkHistory()
