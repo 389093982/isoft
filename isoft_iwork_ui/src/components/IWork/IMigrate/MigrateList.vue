@@ -22,9 +22,15 @@
       <TabPane label="预览" name="views">
         <Scroll height="450">
           <div v-for="migrate in migrates" style="border-bottom: 1px solid green;padding: 10px;">
-            {{migrate.id}} ~~ <span v-html="renderBr(migrate.migrate_sql)"></span>
+            <Row>
+              <Col span="1"><span style="color:red;">{{migrate.id}}</span></Col>
+              <Col span="23"><span v-html="renderBr(migrate.migrate_sql)"></span></Col>
+            </Row>
           </div>
         </Scroll>
+      </TabPane>
+      <TabPane label="常用语句" name="cy">
+        待开发
       </TabPane>
       <TabPane label="执行日志" name="log">
         <Scroll height="450">
@@ -39,7 +45,7 @@
 </template>
 
 <script>
-  import {FilterPageSqlMigrate,ExecuteMigrate,GetLastMigrateLogs,ToggleSqlMigrateEffective} from "../../../api"
+  import {ExecuteMigrate, FilterPageSqlMigrate, GetLastMigrateLogs, ToggleSqlMigrateEffective} from "../../../api"
 
   export default {
     name: "MigrateList",
@@ -157,7 +163,6 @@
           if(result.over == true){
             clearInterval(this.timer);
           }
-          this.refreshMigrateList();
         }
       },
       executeMigrate: async function (forceClean) {
