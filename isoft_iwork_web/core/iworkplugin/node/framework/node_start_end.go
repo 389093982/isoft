@@ -19,7 +19,7 @@ type WorkStartNode struct {
 func (this *WorkStartNode) Execute(trackingId string) {
 	fillInfo := make([]string, 0)
 	for key, value := range this.TmpDataMap {
-		fillInfo = append(fillInfo, fmt.Sprintf("fill param for %s:%s", key, value))
+		fillInfo = append(fillInfo, fmt.Sprintf("fill param for %s:%v", key, value))
 	}
 	this.LogWriter.Write(trackingId, "", iworkconst.LOG_LEVEL_INFO, strings.Join(fillInfo, "<br/>"))
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点

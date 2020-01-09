@@ -100,10 +100,10 @@ func GetAllWorkCache() []*WorkCache {
 	for _, work := range works {
 		m.Add(1)
 		go func(work models.Work) {
+			defer m.Done()
 			if _, ok := workCacheMap.Load(work.Id); !ok {
 				UpdateWorkCache(work.Id)
 			}
-			defer m.Done()
 		}(work)
 	}
 	m.Wait()

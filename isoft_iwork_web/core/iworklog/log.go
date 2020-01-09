@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"time"
 )
 
@@ -43,10 +44,12 @@ func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail 
 }
 
 func (this *CacheLoggerWriter) flush() {
-	caches := this.caches // 使用临时变量进行参数传递
-	startup.RunLogPool.JobQueue <- func() {
-		if _, err := models.InsertMultiRunLogDetail(caches); err != nil {
-			fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@" + err.Error())
+	if sysconfig.SYSCONFIG_LOGWIRTER_ENABLE {
+		caches := this.caches // 使用临时变量进行参数传递
+		startup.RunLogPool.JobQueue <- func() {
+			if _, err := models.InsertMultiRunLogDetail(caches); err != nil {
+				fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@" + err.Error())
+			}
 		}
 	}
 }

@@ -23,7 +23,7 @@ func FilterFunc(ctx *context.Context) {
 	// TODO 是否有序？
 	memory.FilterMap.Range(func(k, v interface{}) bool {
 		filterWorkName := k.(string)
-		fs := v.([]models.Filters)
+		fs := v.([]*models.Filters)
 		if intercept(fs, workCache, ctx) {
 			if workCache, err := iworkcache.GetWorkCacheWithName(filterWorkName); err == nil {
 				mapData := controllers.ParseParam(ctx, workCache.Steps[0])
@@ -50,7 +50,7 @@ func FilterFunc(ctx *context.Context) {
 	})
 }
 
-func intercept(fs []models.Filters, workCache *iworkcache.WorkCache, ctx *context.Context) bool {
+func intercept(fs []*models.Filters, workCache *iworkcache.WorkCache, ctx *context.Context) bool {
 	// fs 有两条记录,一条简单过滤器配置,一条复杂过滤器配置
 	for _, filter := range fs {
 		if filter.WorkName != "" {

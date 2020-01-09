@@ -270,7 +270,7 @@ func (this *SimpleParser) parseParamVauleWithPrefixNode() interface{} {
 func (this *SimpleParser) parseParamVauleFromResource() interface{} {
 	resource_name := strings.TrimPrefix(this.paramVaule, "$RESOURCE.")
 	if resource, ok := memory.ResourceMap.Load(resource_name); ok {
-		resource := resource.(models.Resource)
+		resource := resource.(*models.Resource)
 		if resource.ResourceType == "db" {
 			return resource.ResourceDsn
 		} else if resource.ResourceType == "sftp" || resource.ResourceType == "ssh" {
@@ -286,7 +286,7 @@ func (this *SimpleParser) parseParamVauleFromResource() interface{} {
 func (this *SimpleParser) parseParamVauleFromGlobalVar() interface{} {
 	gvName := strings.TrimPrefix(this.paramVaule, "$Global.")
 	if gv, ok := memory.GlobalVarMap.Load(gvName); ok {
-		return gv.(models.GlobalVar).Value
+		return gv.(*models.GlobalVar).Value
 	} else {
 		panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))
 	}

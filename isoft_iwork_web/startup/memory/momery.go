@@ -17,25 +17,25 @@ func FlushAll() {
 
 func FlushMemoryFilter() {
 	filters, _ := models.QueryAllFilters()
-	for _, filter := range filters {
+	for index, _ := range filters {
 		// 不存在则初始化并添加
 		// 存在则获取后添加
-		if fs, ok := FilterMap.LoadOrStore(filter.FilterWorkName, []models.Filters{filter}); ok {
-			FilterMap.Store(filter.FilterWorkName, append(fs.([]models.Filters), filter))
+		if fs, ok := FilterMap.LoadOrStore(filters[index].FilterWorkName, []*models.Filters{&filters[index]}); ok {
+			FilterMap.Store(filters[index].FilterWorkName, append(fs.([]*models.Filters), &filters[index]))
 		}
 	}
 }
 
 func FlushMemoryGlobalVar() {
 	globalVars := models.QueryAllGlobalVar()
-	for _, globalVar := range globalVars {
-		GlobalVarMap.Store(globalVar.Name, globalVar)
+	for index, _ := range globalVars {
+		GlobalVarMap.Store(globalVars[index].Name, &globalVars[index])
 	}
 }
 
 func FlushMemoryResource() {
 	resources := models.QueryAllResource()
-	for _, resource := range resources {
-		ResourceMap.Store(resource.ResourceName, resource)
+	for index, _ := range resources {
+		ResourceMap.Store(resources[index].ResourceName, &resources[index])
 	}
 }

@@ -51,7 +51,7 @@ func (this *ParamVauleParser) GetStaticParamValue() interface{} {
 		resource_name = strings.TrimSpace(resource_name)
 
 		if resource, ok := memory.ResourceMap.Load(resource_name); ok {
-			_resource := resource.(models.Resource)
+			_resource := resource.(*models.Resource)
 			if _resource.ResourceType == "db" {
 				return _resource.ResourceDsn
 			} else if _resource.ResourceType == "sftp" || _resource.ResourceType == "ssh" {
