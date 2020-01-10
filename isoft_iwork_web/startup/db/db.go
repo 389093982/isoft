@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_utils/common/chiperutil"
 	"net/url"
+	"time"
 )
 
 func init() {
@@ -34,7 +35,7 @@ func init() {
 	orm.SetMaxIdleConns("default", 100) // SetMaxIdleConns用于设置闲置的连接数
 	orm.SetMaxOpenConns("default", 200) // SetMaxOpenConns用于设置最大打开的连接数,默认值为0表示不限制
 	db, _ := orm.GetDB("default")
-	db.SetConnMaxLifetime(100)
+	db.SetConnMaxLifetime(30 * time.Second)
 
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
