@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkpool"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
+	"isoft/isoft_utils/common/stringutil"
 	"net/http"
 	"time"
 )
@@ -18,8 +19,13 @@ import (
 // dispatcher 为父流程或者调用者传递下来的参数
 func RunOneWork(work_id int64, dispatcher *entry.Dispatcher) (trackingId string, receiver *entry.Receiver) {
 	// 缓冲日志写入对象
-	logwriter := createNewLoggerWriter(dispatcher)
-	defer logwriter.Close()
+	logwriter, newCreate := createNewLoggerWriter(dispatcher)
+	defer func() {
+		logwriter.Close()
+		if newCreate {
+			iworkpool.CacheLoggerWriterPool.Put(logwriter)
+		}
+	}()
 
 	workCache, err := iworkcache.GetWorkCache(work_id)
 	// 为当前流程创建新的 trackingId, 前提条件 cacheContext.Work 一定存在
@@ -74,30 +80,33 @@ func recordStartAndEndWorkLog(trackingId string, logwriter *iworklog.CacheLogger
 }
 
 func recordStartEndLog(trackingId string, logwriter *iworklog.CacheLoggerWriter, workCache *iworkcache.WorkCache, pattern string) {
-	msg := fmt.Sprintf("~~~~~~~~~~%s execute work:%s~~~~~~~~~~", pattern, workCache.Work.WorkName)
+	msg := stringutil.Join("~~~~~~~~~~", pattern, " execute work:", workCache.Work.WorkName, "~~~~~~~~~~")
 	logwriter.Write(trackingId, "", iworkconst.LOG_LEVEL_INFO, msg)
 
 }
 
-func createNewLoggerWriter(dispatcher *entry.Dispatcher) *iworklog.CacheLoggerWriter {
-	var logwriter *iworklog.CacheLoggerWriter
+func createNewLoggerWriter(dispatcher *entry.Dispatcher) (*iworklog.CacheLoggerWriter, bool) {
+	var (
+		logwriter *iworklog.CacheLoggerWriter
+		newCreate bool
+	)
 	// 调度者不为空时代表有父级流程
 	if dispatcher != nil && dispatcher.TmpDataMap != nil && dispatcher.TmpDataMap["logwriter"] != nil {
 		logwriter = dispatcher.TmpDataMap["logwriter"].(*iworklog.CacheLoggerWriter)
 	} else {
-		logwriter = iworkpool.CacheLoggerWriterPool.Get().(*iworklog.CacheLoggerWriter)
-		logwriter.Reset()
+		newCreate = true
+		logwriter = iworkpool.CacheLoggerWriterPool.Get().(*iworklog.CacheLoggerWriter).Reset()
 	}
-	return logwriter
+	return logwriter, newCreate
 }
 
 func recordStartAndEndStepLog(args *interfaces.RunOneStepArgs) func() {
 	// 记录开始执行日志
-	startLogStr := fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", args.BlockStep.Step.WorkStepName)
+	startLogStr := stringutil.Join("start execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>", args.BlockStep.Step.WorkStepName, "<span>]]")
 	args.Logwriter.Write(args.TrackingId, "", iworkconst.LOG_LEVEL_INFO, startLogStr)
 	return func() {
 		// 记录结束执行日志
-		endLogStr := fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", args.BlockStep.Step.WorkStepName)
+		endLogStr := stringutil.Join("end execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", args.BlockStep.Step.WorkStepName, "<span>]]")
 		defer args.Logwriter.Write(args.TrackingId, "", iworkconst.LOG_LEVEL_INFO, endLogStr)
 	}
 }

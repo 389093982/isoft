@@ -16,9 +16,10 @@ type CacheLoggerWriter struct {
 	logOrder int64
 }
 
-func (this *CacheLoggerWriter) Reset() {
+func (this *CacheLoggerWriter) Reset() *CacheLoggerWriter {
 	this.cleanCaches()
 	this.logOrder = 0
+	return this
 }
 
 func (this *CacheLoggerWriter) cleanCaches() {

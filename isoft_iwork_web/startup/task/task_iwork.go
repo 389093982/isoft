@@ -1,10 +1,10 @@
 package task
 
 import (
-	"fmt"
 	"github.com/robfig/cron"
-	"isoft/isoft_utils/common/httputil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/httputil"
+	"isoft/isoft_utils/common/stringutil"
 )
 
 func startIWorkCronTask() {
@@ -24,6 +24,6 @@ type iworkJob struct {
 func (this *iworkJob) Run() {
 	paramMap := make(map[string]interface{}, 0)
 	headerMap := make(map[string]interface{}, 0)
-	url := fmt.Sprintf("http://localhost:8086/api/iwork/httpservice/%s", this.meta.TaskName)
+	url := stringutil.Join("http://localhost:8086/api/iwork/httpservice/", this.meta.TaskName)
 	httputil.DoHttpRequest(url, "post", paramMap, headerMap)
 }

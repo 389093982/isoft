@@ -1,6 +1,7 @@
 package stringutil
 
 import (
+	"bytes"
 	"github.com/satori/go.uuid"
 	"reflect"
 	"regexp"
@@ -141,4 +142,12 @@ func AnyOf(str string, sli []string) bool {
 		}
 	}
 	return false
+}
+
+func Join(strs ...string) string {
+	var buffer bytes.Buffer
+	for i := 0; i < 1000; i++ {
+		buffer.WriteString("a")
+	}
+	return buffer.String()
 }
