@@ -2,25 +2,19 @@ package main
 
 import (
 	"github.com/gorilla/websocket"
+	"isoft/isoft_im/models"
 	"log"
 	"net/http"
 )
 
 var clients = make(map[*websocket.Conn]bool) // connected clients
-var broadcast = make(chan Message)           // broadcast channel
+var broadcast = make(chan models.Message)    // broadcast channel
 
 // Upgrader 指定用于将 HTTP 连接升级到 WebSocket连接
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
-}
-
-// 定义 Message 对象
-type Message struct {
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Message  string `json:"message"`
 }
 
 func main() {
@@ -36,6 +30,7 @@ func main() {
 	}
 }
 
+// 一次 websocket 长连接断开后需要进行 Close  操作
 func handleConnections(w http.ResponseWriter, r *http.Request) {
 	// 将初始 GET 请求升级到 websocket
 	ws, err := upgrader.Upgrade(w, r, nil)
@@ -48,10 +43,11 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	// 注册我们的新客户
 	clients[ws] = true
 	for {
-		var msg Message
+		var msg models.Message
 		// 以JSON形式读入新消息并将其映射到消息对象
 		err := ws.ReadJSON(&msg)
 		if err != nil {
+			// 断开连接时读取会返回错误,需要删除连接
 			log.Printf("error: %v", err)
 			delete(clients, ws)
 			break
@@ -71,6 +67,7 @@ func handleMessages() {
 			if err != nil {
 				log.Printf("error: %v", err)
 				client.Close()
+				// 当发送消息失败,证明连接已经断开,所以从连接池中移除连接
 				delete(clients, client)
 			}
 		}
