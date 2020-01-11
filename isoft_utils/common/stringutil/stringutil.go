@@ -146,8 +146,8 @@ func AnyOf(str string, sli []string) bool {
 
 func Join(strs ...string) string {
 	var buffer bytes.Buffer
-	for i := 0; i < 1000; i++ {
-		buffer.WriteString("a")
+	for _, s := range strs {
+		buffer.WriteString(s)
 	}
 	return buffer.String()
 }

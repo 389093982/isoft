@@ -111,8 +111,8 @@ func (this *WorkController) GetWriter() http.ResponseWriter {
 	return this.Ctx.ResponseWriter
 }
 
-func (this *WorkController) WriteRequestHeader(key, value string) {
-	this.Ctx.Request.Header.Add(key, value)
+func (this *WorkController) WriteResponseHeader(key, value string) {
+	this.Ctx.ResponseWriter.Header().Add(key, value)
 }
 
 func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, tempFilePath string) {

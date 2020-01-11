@@ -106,7 +106,7 @@ func recordStartAndEndStepLog(args *interfaces.RunOneStepArgs) func() {
 	args.Logwriter.Write(args.TrackingId, "", iworkconst.LOG_LEVEL_INFO, startLogStr)
 	return func() {
 		// 记录结束执行日志
-		endLogStr := stringutil.Join("end execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", args.BlockStep.Step.WorkStepName, "<span>]]")
+		endLogStr := stringutil.Join("end execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>", args.BlockStep.Step.WorkStepName, "<span>]]")
 		defer args.Logwriter.Write(args.TrackingId, "", iworkconst.LOG_LEVEL_INFO, endLogStr)
 	}
 }
