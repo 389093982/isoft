@@ -13,6 +13,7 @@ import (
 	"isoft/isoft_iwork_web/startup/runtimecfg"
 	_ "isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_iwork_web/startup/task"
+	_ "net/http/pprof"
 )
 
 func main() {

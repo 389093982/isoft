@@ -19,6 +19,12 @@ func init() {
 
 	// 通用代理路由
 	beego.Router("/api/iwork/proxyCall", &controllers.WorkController{}, "get,post:ProxyCall")
+
+	// golang pprot访问debug/pprof报404 page not found的解决办法
+	// 引入 _ "net/http/pprof",init函数会添加pprof的路由信息,而如果http注册了其他路由,导致http.HandleFunc失效,也就会造成了404的问题
+	beego.Router("/debug/pprof", &controllers.ProfController{})
+	beego.Router("/debug/pprof/:app([\\w]+)", &controllers.ProfController{})
+
 	loadloadIWorkerRouterDetail()
 }
 
