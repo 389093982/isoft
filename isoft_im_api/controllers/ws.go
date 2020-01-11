@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/gorilla/websocket"
@@ -8,6 +9,8 @@ import (
 	"isoft/isoft_im_api/models"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 type WSController struct {
@@ -78,12 +81,25 @@ func loopReadMessage(ws *websocket.Conn) {
 // 3、识别消息,根据消息做出响应
 func broadcastMsgWrapper(msg *models.Message) *models.Message {
 	if msg == nil {
-		return getCommonQuestion()
+		return getCommonQuestions()
+	} else if strings.HasPrefix(msg.Message, "common_question:") {
+		return getCommonQuestionResponse(msg)
 	}
 	return msg
 }
 
-func getCommonQuestion() *models.Message {
+func getCommonQuestionResponse(msg *models.Message) *models.Message {
+	id, _ := strconv.ParseInt(strings.TrimPrefix(msg.Message, "common_question:"), 10, 64)
+	question, _ := models.QueryCommonQuestionById(id)
+	questions, _ := models.GetAllCommonQuestion()
+	msg = &models.Message{
+		Username: "",
+		Message:  fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s", question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
+	}
+	return msg
+}
+
+func getCommonQuestions() *models.Message {
 	questions, _ := models.GetAllCommonQuestion()
 	msg := &models.Message{
 		Username: "",

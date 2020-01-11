@@ -31,6 +31,20 @@
       }
     },
     methods: {
+      handleMessageEvent: function () {
+        var _this = this;
+        var common_questions = document.getElementsByClassName('common_question');
+        if (common_questions != null && common_questions.length > 0) {
+          for (var i = 0; i < common_questions.length; i++) {
+            let common_questionNode = common_questions[i];
+            let common_question = common_questionNode.attributes["data"].nodeValue;
+            common_questionNode.onclick = function () {
+              _this.newMsg = common_question;
+              _this.send();
+            }
+          }
+        }
+      },
       send: function () {
         if (!checkEmpty(this.newMsg)) {
           this.ws.send(
@@ -42,18 +56,17 @@
           this.newMsg = '111111111'; // Reset newMsg
         }
       },
-
       join: function () {
         // 补充校验 username
         this.joined = true;
       },
     },
     created: function () {
-      var self = this;
+      var _this = this;
       this.ws = new WebSocket('ws://127.0.0.1:8000/ws');
       this.ws.addEventListener('message', function (e) {
         var msg = JSON.parse(e.data);
-        self.chatContent += '<div class="chip">'
+        _this.chatContent += '<div class="chip">'
           + '<img style="border-radius: 15px;width:30px;height:30px;" src="https://upload.jianshu.io/users/upload_avatars/9988193/fc26c109-1ae6-4327-a298-2def343e9cd8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp">' // Avatar
           + msg.username
           + '</div>'
@@ -61,6 +74,10 @@
         // 自动滚动至底部
         var element = document.getElementById('chat-messages');
         element.scrollTop = element.scrollHeight;
+
+        setTimeout(function () {
+          _this.handleMessageEvent();
+        }, 1000);
       });
     },
   }
@@ -69,7 +86,7 @@
 <style scoped>
   #chat-messages {
     min-height: 10vh;
-    height: 60vh;
+    height: 70vh;
     width: 100%;
     overflow-y: scroll;
   }
