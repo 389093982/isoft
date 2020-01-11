@@ -16,8 +16,13 @@ type CacheLoggerWriter struct {
 	logOrder int64
 }
 
+func (this *CacheLoggerWriter) Reset() {
+	this.cleanCaches()
+	this.logOrder = 0
+}
+
 func (this *CacheLoggerWriter) cleanCaches() {
-	this.caches = make([]*models.RunLogDetail, 0)
+	this.caches = this.caches[0:0]
 }
 
 func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail string) {

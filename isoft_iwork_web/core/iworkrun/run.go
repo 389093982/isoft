@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworklog"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
+	"isoft/isoft_iwork_web/core/iworkpool"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"net/http"
 	"time"
@@ -84,7 +85,8 @@ func createNewLoggerWriter(dispatcher *entry.Dispatcher) *iworklog.CacheLoggerWr
 	if dispatcher != nil && dispatcher.TmpDataMap != nil && dispatcher.TmpDataMap["logwriter"] != nil {
 		logwriter = dispatcher.TmpDataMap["logwriter"].(*iworklog.CacheLoggerWriter)
 	} else {
-		logwriter = new(iworklog.CacheLoggerWriter)
+		logwriter = iworkpool.CacheLoggerWriterPool.Get().(*iworklog.CacheLoggerWriter)
+		logwriter.Reset()
 	}
 	return logwriter
 }
