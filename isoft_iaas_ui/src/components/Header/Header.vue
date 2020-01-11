@@ -28,6 +28,7 @@
             <MenuItem name="7-1">全部菜单项</MenuItem>
             <MenuItem name="7-2">精选内容</MenuItem>
             <MenuItem name="7-3">更多内容</MenuItem>
+            <MenuItem name="7-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
           </MenuGroup>
         </Submenu>
         <Submenu name="8">

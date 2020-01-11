@@ -57,6 +57,8 @@ const OfficeList = () => import("@/components/IOffice/OfficeList");
 const UploadResource = () => import("@/components/IOffice/UploadResource");
 const DownloadResource = () => import("@/components/IOffice/DownloadResource");
 
+const ChatRom = () => import("@/components/Chat/ChatRom");
+
 Vue.use(Router);
 
 function getRootRouters () {
@@ -156,6 +158,15 @@ const IUserReouter = [{
   ]
 }];
 
+
+const IChat = [{
+  path: '/chat',
+  component: ILayout,
+  children: [
+    {path: 'chatRom', component: ChatRom},
+  ]
+}];
+
 const IJob = [{
   path: '/job',
   component: ILayout,
@@ -222,6 +233,7 @@ const VipCenterReouter = [{
 
 function getAllRouters() {
   let allRouters = [];
+  allRouters = joinArray(allRouters, IChat);
   allRouters = joinArray(allRouters, IJob);
   allRouters = joinArray(allRouters, IAdvertisement);
   allRouters = joinArray(allRouters, IFoundReouter);

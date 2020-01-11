@@ -17,30 +17,12 @@ github.com/astaxie/beego/utils/pagination
 github.com/dgrijalva/jwt-go
 # github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
-# github.com/gobuffalo/envy v1.7.1
-github.com/gobuffalo/envy
-# github.com/gobuffalo/logger v1.0.1
-github.com/gobuffalo/logger
-# github.com/gobuffalo/packd v0.3.0
-github.com/gobuffalo/packd
-github.com/gobuffalo/packd/internal/takeon/github.com/markbates/errx
-# github.com/gobuffalo/packr/v2 v2.7.1
-github.com/gobuffalo/packr/v2
-github.com/gobuffalo/packr/v2/file
-github.com/gobuffalo/packr/v2/file/resolver
-github.com/gobuffalo/packr/v2/file/resolver/encoding/hex
-github.com/gobuffalo/packr/v2/internal/takeon/github.com/karrick/godirwalk
-github.com/gobuffalo/packr/v2/internal/takeon/github.com/markbates/errx
-github.com/gobuffalo/packr/v2/internal/takeon/github.com/markbates/oncer
-github.com/gobuffalo/packr/v2/internal/takeon/github.com/markbates/safe
-github.com/gobuffalo/packr/v2/jam/parser
-github.com/gobuffalo/packr/v2/plog
 # github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c
 github.com/gopherjs/gopherjs/js
+# github.com/gorilla/websocket v1.4.1
+github.com/gorilla/websocket
 # github.com/ivpusic/grpool v1.0.0
 github.com/ivpusic/grpool
-# github.com/joho/godotenv v1.3.0
-github.com/joho/godotenv
 # github.com/jtolds/gls v4.2.1+incompatible
 github.com/jtolds/gls
 # github.com/konsorten/go-windows-terminal-sequences v1.0.2
@@ -59,13 +41,9 @@ github.com/pkg/sftp
 github.com/rifflock/lfshook
 # github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967
 github.com/robfig/cron
-# github.com/rogpeppe/go-internal v1.4.0
-github.com/rogpeppe/go-internal/modfile
-github.com/rogpeppe/go-internal/module
-github.com/rogpeppe/go-internal/semver
 # github.com/satori/go.uuid v1.2.0
 github.com/satori/go.uuid
-# github.com/sirupsen/logrus v1.4.2
+# github.com/sirupsen/logrus v1.4.1
 github.com/sirupsen/logrus
 # github.com/smartystreets/assertions v0.0.0-20180820201707-7c9eb446e3cf
 github.com/smartystreets/assertions
@@ -75,7 +53,7 @@ github.com/smartystreets/assertions/internal/oglematchers
 github.com/smartystreets/goconvey/convey
 github.com/smartystreets/goconvey/convey/gotest
 github.com/smartystreets/goconvey/convey/reporting
-# golang.org/x/crypto v0.0.0-20190621222207-cc06ce4a13d4
+# golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
 golang.org/x/crypto/bcrypt
@@ -87,13 +65,11 @@ golang.org/x/crypto/internal/chacha20
 golang.org/x/crypto/internal/subtle
 golang.org/x/crypto/poly1305
 golang.org/x/crypto/ssh
-golang.org/x/crypto/ssh/terminal
-# golang.org/x/net v0.0.0-20190620200207-3b0461eec859
+# golang.org/x/net v0.0.0-20190424112056-4829fb13d2c6
 golang.org/x/net/idna
-# golang.org/x/sys v0.0.0-20190515120540-06a5c4944438
+# golang.org/x/sys v0.0.0-20190426135247-a129542de9ae
 golang.org/x/sys/cpu
 golang.org/x/sys/unix
-golang.org/x/sys/windows
 # golang.org/x/text v0.3.2
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
