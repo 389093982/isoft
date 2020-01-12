@@ -58,7 +58,9 @@ func (c *WSController) Get() {
 // 循环读取消息,直到断开连接为止
 func loopReadMessage(ws *websocket.Conn) {
 	// 第一次建立连接广播常见问题提示
-	broadcast <- broadcastMsgWrapper(nil)
+	for _, wrapperMsg := range broadcastMsgWrappers(nil) {
+		broadcast <- wrapperMsg
+	}
 	for {
 		var msg models.Message
 		// 以JSON形式读入新消息并将其映射到消息对象
@@ -71,7 +73,9 @@ func loopReadMessage(ws *websocket.Conn) {
 			break
 		}
 		// 将新收到的消息发送到广播频道
-		broadcast <- broadcastMsgWrapper(&msg)
+		for _, wrapperMsg := range broadcastMsgWrappers(&msg) {
+			broadcast <- wrapperMsg
+		}
 		logs.Info("广播一条消息！")
 	}
 }
@@ -80,7 +84,7 @@ func loopReadMessage(ws *websocket.Conn) {
 // 1、消息不需要处理,直接转发给其它用户
 // 2、不识别消息,默认返回常见问题提示
 // 3、识别消息,根据消息做出响应
-func broadcastMsgWrapper(msg *models.Message) *models.Message {
+func broadcastMsgWrappers(msg *models.Message) (msgs []*models.Message) {
 	if msg == nil {
 		return getCommonQuestions()
 	} else if strings.HasPrefix(msg.Message, "common_question:") {
@@ -88,10 +92,11 @@ func broadcastMsgWrapper(msg *models.Message) *models.Message {
 	} else if strings.HasPrefix(msg.Message, "translate:") {
 		return getTranslateResponse(msg)
 	}
-	return msg
+	msgs = append(msgs, msg)
+	return msgs
 }
 
-func getTranslateResponse(msg *models.Message) *models.Message {
+func getTranslateResponse(msg *models.Message) (msgs []*models.Message) {
 	s := strings.TrimPrefix(msg.Message, "translate:")
 	var message string
 	if ts, err := core.YDTranslate(s); err == nil {
@@ -99,14 +104,16 @@ func getTranslateResponse(msg *models.Message) *models.Message {
 	} else {
 		message = fmt.Sprintf("<span style='color:red;'>%s</span><br/>", "Translate error!")
 	}
-	msg = &models.Message{
+	msg1 := &models.Message{
 		Username: "",
 		Message:  message,
 	}
-	return msg
+	msgs = append(msgs, msg)
+	msgs = append(msgs, msg1)
+	return msgs
 }
 
-func getCommonQuestionResponse(msg *models.Message) *models.Message {
+func getCommonQuestionResponse(msg *models.Message) (msgs []*models.Message) {
 	id, _ := strconv.ParseInt(strings.TrimPrefix(msg.Message, "common_question:"), 10, 64)
 	question, _ := models.QueryCommonQuestionById(id)
 	questions, _ := models.GetAllCommonQuestion()
@@ -115,14 +122,16 @@ func getCommonQuestionResponse(msg *models.Message) *models.Message {
 		Message: fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s",
 			question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
 	}
-	return msg
+	msgs = append(msgs, msg)
+	return msgs
 }
 
-func getCommonQuestions() *models.Message {
+func getCommonQuestions() (msgs []*models.Message) {
 	questions, _ := models.GetAllCommonQuestion()
 	msg := &models.Message{
 		Username: "",
 		Message:  models.RenderCommonQuestionsToHtml(questions),
 	}
-	return msg
+	msgs = append(msgs, msg)
+	return msgs
 }
