@@ -1,6 +1,8 @@
 <template>
   <div class="isoft_bg_white">
-    <div id="chat-messages" style="padding: 30px;" v-html="chatContent"></div>
+    <div style="padding: 5px;">
+      <div id="chat-messages" style="padding: 20px;border: 1px solid #d7dde4;" v-html="chatContent"></div>
+    </div>
     <!-- 未加入聊天室 -->
     <div v-if="!joined" class="isoft_top10" style="text-align: right;padding: 5px;">
       <Input type="text" style="width: 200px;" v-model.trim="username" placeholder="请输入用户名"/>
@@ -10,6 +12,16 @@
     <!-- 已加入聊天室 -->
     <div v-if="joined" class="isoft_top10" style="text-align: right;padding: 5px;">
       <Input type="text" style="width: 500px;" v-model.trim="new_msg" @keyup.enter="send" placeholder="请输入发送的内容"/>
+      <Dropdown>
+        <Button type="default">
+          更多
+          <Icon type="ios-arrow-down"></Icon>
+        </Button>
+        <DropdownMenu slot="list" @on-click="translate">
+          <DropdownItem @click.native="translate('ZH_CN2EN')">翻译英文</DropdownItem>
+          <DropdownItem @click.native="translate('EN2ZH_CN')">翻译中文</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
       <Button type="success" @click="send">发送</Button>
     </div>
   </div>
@@ -24,6 +36,7 @@
       return {
         ws: null, // Our websocket
         new_msg: '', // Holds new messages to be sent to the server
+        message_extra: '',
         message_type: 0,
         chatContent: '', // A running list of chat messages displayed on the screen
         email: null, // Email address used for grabbing an avatar
@@ -32,6 +45,11 @@
       }
     },
     methods: {
+      translate: function (translate_type) {
+        this.message_type = 3;
+        this.message_extra = "type=" + translate_type;
+        this.send();
+      },
       handleMessageEvent: function () {
         var _this = this;
         var common_questions = document.getElementsByClassName('common_question');
@@ -54,10 +72,13 @@
                 username: this.username,
               message: this.new_msg,
               message_type: this.message_type,
+              message_extra: this.message_extra,
               }
             ));
-          this.new_msg = '111111111'; // Reset new_msg
+          // 重置
           this.message_type = 0;
+          this.new_msg = "";
+          this.message_extra = "";
         }
       },
       join: function () {

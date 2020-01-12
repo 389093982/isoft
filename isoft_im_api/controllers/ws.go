@@ -97,7 +97,7 @@ func broadcastMsgWrappers(msg *models.Message) (msgs []*models.Message) {
 
 func getTranslateResponse(msg *models.Message) (msgs []*models.Message) {
 	var message string
-	if ts, err := core.YDTranslate(msg.Message); err == nil {
+	if ts, err := core.YDTranslate(msg.Message, core.GetTranslateType(msg.MessageExtra)); err == nil {
 		message = fmt.Sprintf("<span style='color:green;'>%s</span><br/>", ts)
 	} else {
 		message = fmt.Sprintf("<span style='color:red;'>%s</span><br/>", "Translate error!")
@@ -120,7 +120,7 @@ func getCommonQuestionResponse(msg *models.Message) (msgs []*models.Message) {
 		Username: "",
 		Message: fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s",
 			question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
-		MessageType: models.MESSAGE_TYPE_TRANSLATE_RESPONSE,
+		MessageType: models.MESSAGE_TYPE_COMMON_QUESTION_RESPONSE,
 	}
 	msgs = append(msgs, msg)
 	return msgs

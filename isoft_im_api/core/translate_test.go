@@ -6,5 +6,5 @@ import (
 )
 
 func Test_translate(t *testing.T) {
-	fmt.Println(111)
+	fmt.Println(YDTranslate("你在哪儿", "AUTO"))
 }

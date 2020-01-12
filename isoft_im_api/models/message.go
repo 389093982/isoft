@@ -10,7 +10,8 @@ var (
 
 // 定义 Message 对象
 type Message struct {
-	Username    string `json:"username"`
-	Message     string `json:"message"`
-	MessageType int64  `json:"message_type"`
+	Username     string `json:"username"`
+	Message      string `json:"message"`
+	MessageType  int64  `json:"message_type"`
+	MessageExtra string `json:"message_extra"`
 }
