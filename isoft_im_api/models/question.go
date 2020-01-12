@@ -19,7 +19,7 @@ type CommonQuestion struct {
 func RenderCommonQuestionsToHtml(questions []CommonQuestion) string {
 	msg := "智能客服<span style='color:red;'>小 Y</span> 为您解答,请问您需要咨询什么问题？<br/>"
 	for index, question := range questions {
-		msg += fmt.Sprintf("<a class='common_question' data='common_question:%d'>%d: %s</a><br/>", question.Id, index+1, question.QuestionName)
+		msg += fmt.Sprintf("<a class='common_question' data='%d'>%d: %s</a><br/>", question.Id, index+1, question.QuestionName)
 	}
 	return msg
 }

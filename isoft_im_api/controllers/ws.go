@@ -11,7 +11,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 type WSController struct {
@@ -87,9 +86,9 @@ func loopReadMessage(ws *websocket.Conn) {
 func broadcastMsgWrappers(msg *models.Message) (msgs []*models.Message) {
 	if msg == nil {
 		return getCommonQuestions()
-	} else if strings.HasPrefix(msg.Message, "common_question:") {
+	} else if msg.MessageType == models.MESSAGE_TYPE_COMMON_QUESTION {
 		return getCommonQuestionResponse(msg)
-	} else if strings.HasPrefix(msg.Message, "translate:") {
+	} else if msg.MessageType == models.MESSAGE_TYPE_TRANSLATE {
 		return getTranslateResponse(msg)
 	}
 	msgs = append(msgs, msg)
@@ -97,16 +96,16 @@ func broadcastMsgWrappers(msg *models.Message) (msgs []*models.Message) {
 }
 
 func getTranslateResponse(msg *models.Message) (msgs []*models.Message) {
-	s := strings.TrimPrefix(msg.Message, "translate:")
 	var message string
-	if ts, err := core.YDTranslate(s); err == nil {
+	if ts, err := core.YDTranslate(msg.Message); err == nil {
 		message = fmt.Sprintf("<span style='color:green;'>%s</span><br/>", ts)
 	} else {
 		message = fmt.Sprintf("<span style='color:red;'>%s</span><br/>", "Translate error!")
 	}
 	msg1 := &models.Message{
-		Username: "",
-		Message:  message,
+		Username:    "",
+		Message:     message,
+		MessageType: models.MESSAGE_TYPE_TRANSLATE_RESPONSE,
 	}
 	msgs = append(msgs, msg)
 	msgs = append(msgs, msg1)
@@ -114,13 +113,14 @@ func getTranslateResponse(msg *models.Message) (msgs []*models.Message) {
 }
 
 func getCommonQuestionResponse(msg *models.Message) (msgs []*models.Message) {
-	id, _ := strconv.ParseInt(strings.TrimPrefix(msg.Message, "common_question:"), 10, 64)
+	id, _ := strconv.ParseInt(msg.Message, 10, 64)
 	question, _ := models.QueryCommonQuestionById(id)
 	questions, _ := models.GetAllCommonQuestion()
 	msg = &models.Message{
 		Username: "",
 		Message: fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s",
 			question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
+		MessageType: models.MESSAGE_TYPE_TRANSLATE_RESPONSE,
 	}
 	msgs = append(msgs, msg)
 	return msgs

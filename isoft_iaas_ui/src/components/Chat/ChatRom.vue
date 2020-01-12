@@ -9,7 +9,7 @@
 
     <!-- 已加入聊天室 -->
     <div v-if="joined" class="isoft_top10" style="text-align: right;padding: 5px;">
-      <Input type="text" style="width: 500px;" v-model.trim="newMsg" @keyup.enter="send" placeholder="请输入发送的内容"/>
+      <Input type="text" style="width: 500px;" v-model.trim="new_msg" @keyup.enter="send" placeholder="请输入发送的内容"/>
       <Button type="success" @click="send">发送</Button>
     </div>
   </div>
@@ -23,7 +23,8 @@
     data() {
       return {
         ws: null, // Our websocket
-        newMsg: '', // Holds new messages to be sent to the server
+        new_msg: '', // Holds new messages to be sent to the server
+        message_type: 0,
         chatContent: '', // A running list of chat messages displayed on the screen
         email: null, // Email address used for grabbing an avatar
         username: null, // Our username
@@ -39,21 +40,24 @@
             let common_questionNode = common_questions[i];
             let common_question = common_questionNode.attributes["data"].nodeValue;
             common_questionNode.onclick = function () {
-              _this.newMsg = common_question;
+              _this.new_msg = common_question;
+              _this.message_type = 1;
               _this.send();
             }
           }
         }
       },
       send: function () {
-        if (!checkEmpty(this.newMsg)) {
+        if (!checkEmpty(this.new_msg)) {
           this.ws.send(
             JSON.stringify({
                 username: this.username,
-                message: this.newMsg,
+              message: this.new_msg,
+              message_type: this.message_type,
               }
             ));
-          this.newMsg = '111111111'; // Reset newMsg
+          this.new_msg = '111111111'; // Reset new_msg
+          this.message_type = 0;
         }
       },
       join: function () {
