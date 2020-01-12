@@ -55,9 +55,11 @@ func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]
 func setHeaderParameter(req *http.Request, headerMap map[string]interface{}) {
 	// 设置默认请求头
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	// 添加或者覆盖默认请求头
-	for paramName, paramValue := range headerMap {
-		req.Header.Set(getStandardName(paramName), paramValue.(string))
+	if headerMap != nil {
+		// 添加或者覆盖默认请求头
+		for paramName, paramValue := range headerMap {
+			req.Header.Set(getStandardName(paramName), paramValue.(string))
+		}
 	}
 }
 

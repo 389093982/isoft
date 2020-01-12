@@ -9,7 +9,7 @@
 
     <!-- 已加入聊天室 -->
     <div v-if="joined" class="isoft_top10" style="text-align: right;padding: 5px;">
-      <Input type="text" style="width: 200px;" v-model.trim="newMsg" @keyup.enter="send" placeholder="请输入发送的内容"/>
+      <Input type="text" style="width: 500px;" v-model.trim="newMsg" @keyup.enter="send" placeholder="请输入发送的内容"/>
       <Button type="success" @click="send">发送</Button>
     </div>
   </div>

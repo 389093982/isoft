@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/gorilla/websocket"
 	"isoft/isoft_im_api/auth"
+	"isoft/isoft_im_api/core"
 	"isoft/isoft_im_api/models"
 	"log"
 	"net/http"
@@ -84,6 +85,23 @@ func broadcastMsgWrapper(msg *models.Message) *models.Message {
 		return getCommonQuestions()
 	} else if strings.HasPrefix(msg.Message, "common_question:") {
 		return getCommonQuestionResponse(msg)
+	} else if strings.HasPrefix(msg.Message, "translate:") {
+		return getTranslateResponse(msg)
+	}
+	return msg
+}
+
+func getTranslateResponse(msg *models.Message) *models.Message {
+	s := strings.TrimPrefix(msg.Message, "translate:")
+	var message string
+	if ts, err := core.YDTranslate(s); err == nil {
+		message = fmt.Sprintf("<span style='color:green;'>%s</span><br/>", ts)
+	} else {
+		message = fmt.Sprintf("<span style='color:red;'>%s</span><br/>", "Translate error!")
+	}
+	msg = &models.Message{
+		Username: "",
+		Message:  message,
 	}
 	return msg
 }
@@ -94,7 +112,8 @@ func getCommonQuestionResponse(msg *models.Message) *models.Message {
 	questions, _ := models.GetAllCommonQuestion()
 	msg = &models.Message{
 		Username: "",
-		Message:  fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s", question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
+		Message: fmt.Sprintf("<span style='color:green;'>%s</span><br/>%s",
+			question.QuestionAnswer, models.RenderCommonQuestionsToHtml(questions)),
 	}
 	return msg
 }
