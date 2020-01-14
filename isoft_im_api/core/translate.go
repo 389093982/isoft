@@ -52,7 +52,9 @@ func YDTranslate(s string, translateType string) (rs string, err error) {
 		rs, err = "", err1
 	}
 	if len(ydResult.TranslateResult) > 0 {
-		rs, err = ydResult.TranslateResult[0][0].Tgt, nil
+		for _, item := range ydResult.TranslateResult[0] {
+			rs += item.Tgt
+		}
 	}
 	return
 }
