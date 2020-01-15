@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var DefaultInvalidError = errors.New("invalid error")
+
 func FormatInternalError(err interface{}) string {
 	return fmt.Sprintf("<span style='color:red;'>internal error:%s</span>", ToError(err).Error())
 }
@@ -42,7 +44,7 @@ func ToError(err interface{}) error {
 	} else if _err, ok := err.(string); ok {
 		return errors.New(_err)
 	}
-	return errors.New("invalid error")
+	return DefaultInvalidError
 }
 
 // 比直接recover()捕获的panic信息更加详尽

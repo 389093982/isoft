@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworklog"
 	"isoft/isoft_iwork_web/core/iworkmodels"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iwork_web/models"
 	"reflect"
@@ -39,15 +40,6 @@ type WorkStepFactory struct {
 	O                orm.Ormer
 	LogWriter        *iworklog.CacheLoggerWriter
 	WorkCache        *iworkcache.WorkCache
-}
-
-func parseToError(err interface{}) error {
-	if _err, ok := err.(error); ok {
-		return _err
-	} else if _err, ok := err.(string); ok {
-		return errors.New(_err)
-	}
-	return errors.New("error...")
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
@@ -79,7 +71,7 @@ func (this *WorkStepFactory) handleAndPanicInsensitiveError(err interface{}) {
 		err = _err.Error
 	}
 	wsError := interfaces.WorkStepError{
-		Err:          parseToError(err),
+		Err:          errorutil.ToError(err),
 		WorkStepName: this.WorkStep.WorkStepName,
 	}
 	insensitiveErrorMsg := wsError.Error()
