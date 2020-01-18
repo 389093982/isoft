@@ -19,7 +19,7 @@ import (
 // iworkmodels.ParamInputSchemaItem 解析类
 type PisItemDataParser struct {
 	DataStore          *datastore.DataStore
-	Item               iworkmodels.ParamInputSchemaItem
+	Item               *iworkmodels.ParamInputSchemaItem
 	PureTextTmpDataMap map[string]string
 	TmpDataMap         map[string]interface{}
 }

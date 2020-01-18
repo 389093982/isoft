@@ -40,13 +40,13 @@ func (this *AssignVarNode) getAssignNodeName() string {
 }
 
 func (this *AssignVarNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	assignNodeName := this.getAssignNodeName()
 	for _, step := range this.BaseNode.WorkCache.Steps {
 		if step.WorkStepName == assignNodeName {
 			if paramOutputSchema, err := iworkmodels.ParseToParamOutputSchema(step.WorkStepOutput); err == nil {
 				for _, item := range paramOutputSchema.ParamOutputSchemaItems {
-					items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: item.ParamName + "?"})
+					items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: item.ParamName + "?"})
 				}
 			}
 			break

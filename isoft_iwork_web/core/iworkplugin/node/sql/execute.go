@@ -94,7 +94,7 @@ func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
 	return []string{}
 }
 
-func (this *SQLExecuteNode) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+func (this *SQLExecuteNode) BuildParamNamingRelation(items []*iworkmodels.ParamInputSchemaItem) {
 	var namingStr string
 	for index, item := range items {
 		if item.ParamName == iworkconst.STRING_PREFIX+"sql" {

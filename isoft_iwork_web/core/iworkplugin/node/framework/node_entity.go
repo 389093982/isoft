@@ -43,12 +43,12 @@ func (this *EntityParserNode) Execute(trackingId string) {
 func (this *EntityParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []iworkmodels.ParamMapping
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
 		// paramMapping 存放实体类定义 $Entity
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.STRING_PREFIX+"%s_entity", paramMapping)})
+		items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.STRING_PREFIX+"%s_entity", paramMapping)})
 		// paramMapping_data 存放实体类数据
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.COMPLEX_PREFIX+"%s_data", paramMapping)})
+		items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.COMPLEX_PREFIX+"%s_data", paramMapping)})
 	}
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }

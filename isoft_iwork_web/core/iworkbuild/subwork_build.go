@@ -24,7 +24,7 @@ func BuildAutoCreateSubWork(step models.WorkStep, o orm.Ormer, insertStartEndWor
 			workSubNameRef := strings.TrimSpace(item.ParamValue)
 			if !strings.HasPrefix(workSubNameRef, "$WORK.") {
 				// 修改值并同步到数据库
-				paramInputSchema.ParamInputSchemaItems[index] = iworkmodels.ParamInputSchemaItem{
+				paramInputSchema.ParamInputSchemaItems[index] = &iworkmodels.ParamInputSchemaItem{
 					ParamName:  item.ParamName,
 					ParamValue: strings.Join([]string{"$WORK.", workSubNameRef}, ""),
 				}

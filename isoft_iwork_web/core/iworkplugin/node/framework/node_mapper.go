@@ -20,9 +20,9 @@ func (this *MapperNode) Execute(trackingId string) {
 func (this *MapperNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []iworkmodels.ParamMapping
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: paramMapping.ParamMappingName})
+		items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: paramMapping.ParamMappingName})
 	}
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }

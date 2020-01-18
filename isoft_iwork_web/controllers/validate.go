@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkdata/block"
 	"isoft/isoft_iwork_web/core/iworkmodels"
@@ -14,6 +13,7 @@ import (
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/service"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_utils/common/stringutil"
 	"strconv"
 	"strings"
 	"sync"
@@ -230,7 +230,7 @@ func checkVariableRelationShip(step *models.WorkStep, checkResultCh chan string)
 	return
 }
 
-func checkVariableRelationShipDetail(item iworkmodels.ParamInputSchemaItem, work_id, work_step_id int64, checkResultCh chan string) {
+func checkVariableRelationShipDetail(item *iworkmodels.ParamInputSchemaItem, work_id, work_step_id int64, checkResultCh chan string) {
 	// 根据正则找到关联的节点名和字段名
 	refers := iworkutil.GetRelativeValueWithReg(item.ParamValue)
 	if len(refers) > 0 {

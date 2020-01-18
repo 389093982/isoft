@@ -64,7 +64,7 @@ func (this *ParamSchemaParser) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 	return this.ParamSchemaParser.GetDefaultParamInputSchema()
 }
 
-func (this *ParamSchemaParser) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+func (this *ParamSchemaParser) BuildParamNamingRelation(items []*iworkmodels.ParamInputSchemaItem) {
 	this.ParamSchemaParser.BuildParamNamingRelation(items)
 }
 

@@ -32,7 +32,7 @@ func CheckEmpty(step *models.WorkStep, paramSchemaParser interfaces.IParamSchema
 }
 
 // 对输入参数做非空校验
-func CheckEmptyForItem(item iworkmodels.ParamInputSchemaItem) (ok bool, checkResult []string) {
+func CheckEmptyForItem(item *iworkmodels.ParamInputSchemaItem) (ok bool, checkResult []string) {
 	if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == "" {
 		checkResult = append(checkResult, fmt.Sprintf("Empty paramValue for %s was found!", item.ParamName))
 	}

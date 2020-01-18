@@ -17,7 +17,7 @@ type IParamSchemaParser interface {
 	GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema
 	GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema
 	GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema
-	BuildParamNamingRelation(item []iworkmodels.ParamInputSchemaItem)
+	BuildParamNamingRelation(item []*iworkmodels.ParamInputSchemaItem)
 }
 
 type IParamSchemaCacheParser interface {

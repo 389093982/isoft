@@ -35,13 +35,13 @@ type BaseNode struct {
 func (this *BaseNode) FilterParamInputSchemaItem(pis *iworkmodels.ParamInputSchema, paramName string) *iworkmodels.ParamInputSchemaItem {
 	for index, item := range pis.ParamInputSchemaItems {
 		if item.ParamName == paramName {
-			return &pis.ParamInputSchemaItems[index]
+			return pis.ParamInputSchemaItems[index]
 		}
 	}
 	return nil
 }
 
-func (this *BaseNode) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+func (this *BaseNode) BuildParamNamingRelation(items []*iworkmodels.ParamInputSchemaItem) {
 	fmt.Println("execute default BuildParamNamingRelation method...")
 }
 
@@ -105,7 +105,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *models.WorkStep) {
 	}
 }
 
-func (this *BaseNode) getParamMapping(item iworkmodels.ParamInputSchemaItem) *iworkmodels.ParamMapping {
+func (this *BaseNode) getParamMapping(item *iworkmodels.ParamInputSchemaItem) *iworkmodels.ParamMapping {
 	if this.WorkCache.ParamMappings != nil {
 		for _, paramMapping := range this.WorkCache.ParamMappings {
 			if paramMapping.ParamMappingName == item.ParamName {
@@ -117,7 +117,7 @@ func (this *BaseNode) getParamMapping(item iworkmodels.ParamInputSchemaItem) *iw
 }
 
 // 合并父流程(调度者)传递过来的参数
-func (this *BaseNode) mergeParamFromDispatcher(item iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
+func (this *BaseNode) mergeParamFromDispatcher(item *iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
 	paramMapping := this.getParamMapping(item)
 	paramValue := this.Dispatcher.TmpDataMap[item.ParamName]
 	tmpDataMap[item.ParamName] = paramValue
@@ -159,14 +159,14 @@ func (this *BaseNode) BPIS1(paramMap map[int][]string, choicesMap ...map[string]
 func (this *BaseNode) buildParamInputSchemaWithDefaultMap(paramMap map[int][]string, choicesMap ...map[string][]string) *iworkmodels.ParamInputSchema {
 	keys := datatypeutil.GetMapKeySlice(paramMap, []int{}).([]int)
 	sort.Ints(keys)
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	for _, key := range keys {
 		_paramMap := paramMap[key]
 		// 前两位分别是名称和描述
 		paramName := _paramMap[0]
 		paramDesc := _paramMap[1]
-		item := iworkmodels.ParamInputSchemaItem{ParamName: paramName, ParamDesc: paramDesc}
-		this.fillParamChoicesAttr(&item, paramName, choicesMap...)
+		item := &iworkmodels.ParamInputSchemaItem{ParamName: paramName, ParamDesc: paramDesc}
+		this.fillParamChoicesAttr(item, paramName, choicesMap...)
 		// 后面字段为 extra 字段
 		for _, paramExtra := range _paramMap[1:] {
 			if strings.HasPrefix(paramExtra, "repeatable__") {

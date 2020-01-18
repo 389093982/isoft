@@ -155,7 +155,7 @@ func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *iworkmodels.ParamOut
 	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *WorkStepFactory) BuildParamNamingRelation(items []iworkmodels.ParamInputSchemaItem) {
+func (this *WorkStepFactory) BuildParamNamingRelation(items []*iworkmodels.ParamInputSchemaItem) {
 	this.getProxy().BuildParamNamingRelation(items)
 }
 

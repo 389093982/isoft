@@ -61,7 +61,7 @@ func (this *WorkSubNode) getOrmer() orm.Ormer {
 
 // 获取动态输入值
 func (this *WorkSubNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	// 获取子流程信息
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
@@ -76,7 +76,7 @@ func (this *WorkSubNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSch
 				// 子流程起始节点输入参数
 				subItems := this.ParamSchemaCacheParser.GetCacheParamInputSchema(&subStep)
 				for _, subItem := range subItems.ParamInputSchemaItems {
-					items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: subItem.ParamName})
+					items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: subItem.ParamName})
 				}
 			}
 		}
@@ -157,8 +157,8 @@ func (this *WorkSubNode) ValidateCustom() (checkResult []string) {
 
 func PrepareEmptyInputForWorkSub(subWorkName string) *iworkmodels.ParamInputSchema {
 	return &iworkmodels.ParamInputSchema{
-		ParamInputSchemaItems: []iworkmodels.ParamInputSchemaItem{
-			iworkmodels.ParamInputSchemaItem{
+		ParamInputSchemaItems: []*iworkmodels.ParamInputSchemaItem{
+			&iworkmodels.ParamInputSchemaItem{
 				ParamName:  iworkconst.STRING_PREFIX + "work_sub",
 				ParamValue: fmt.Sprintf("$WORK.%s;", subWorkName),
 			},

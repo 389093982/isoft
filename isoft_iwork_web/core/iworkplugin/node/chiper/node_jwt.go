@@ -1,12 +1,12 @@
 package chiper
 
 import (
-	"isoft/isoft_utils/common/chiperutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/chiperutil"
 	"strconv"
 	"strings"
 )
@@ -45,11 +45,11 @@ func (this *CreateJWTNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputS
 }
 
 func (this *CreateJWTNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	items := make([]iworkmodels.ParamInputSchemaItem, 0)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
 	claims := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
 	claimArr := strings.Split(claims, ",")
 	for _, claim := range claimArr {
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: iworkconst.STRING_PREFIX + strings.TrimSpace(claim)})
+		items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: iworkconst.STRING_PREFIX + strings.TrimSpace(claim)})
 	}
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }

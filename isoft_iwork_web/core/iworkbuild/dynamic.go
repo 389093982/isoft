@@ -38,10 +38,10 @@ func BuildDynamicInput(step models.WorkStep, o orm.Ormer) {
 	}
 }
 
-func CheckAndGetItemByParamName(items []iworkmodels.ParamInputSchemaItem, paramName string) (bool, *iworkmodels.ParamInputSchemaItem) {
+func CheckAndGetItemByParamName(items []*iworkmodels.ParamInputSchemaItem, paramName string) (bool, *iworkmodels.ParamInputSchemaItem) {
 	for _, _item := range items {
 		if _item.ParamName == paramName {
-			return true, &_item
+			return true, _item
 		}
 	}
 	return false, nil

@@ -26,8 +26,8 @@ type ParamInputSchemaItem struct {
 }
 
 type ParamInputSchema struct {
-	XMLName               xml.Name               `xml:"paramInputSchema" json:"-"`
-	ParamInputSchemaItems []ParamInputSchemaItem `xml:"paramInputSchemaItem"`
+	XMLName               xml.Name                `xml:"paramInputSchema" json:"-"`
+	ParamInputSchemaItems []*ParamInputSchemaItem `xml:"paramInputSchemaItem"`
 }
 
 func (this *ParamInputSchema) RenderToJson() string {
