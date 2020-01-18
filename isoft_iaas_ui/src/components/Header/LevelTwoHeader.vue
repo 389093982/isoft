@@ -25,6 +25,14 @@
               <span class="linearTransitionBox linearTransitionBorderBottom" @click="$router.push({path:'/ifound/activity_list'})">
                 聚活动
               </span>
+              <span class="linearTransitionBox linearTransitionBorderBottom"
+                    @click="$router.push({path:'/ifound/activity_list'})">
+                商业合作
+              </span>
+              <span class="linearTransitionBox linearTransitionBorderBottom"
+                    @click="$router.push({path:'/communicate/ask_expert'})">
+                求问专家
+              </span>
               <span class="linearTransitionBox linearTransitionBorderBottom">AAAAAAAA</span>
               <span class="linearTransitionBox linearTransitionBorderBottom">AAAAAAAA</span>
               <span class="linearTransitionBox linearTransitionBorderBottom">AAAAAAAA</span>

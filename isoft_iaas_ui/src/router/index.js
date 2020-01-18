@@ -58,6 +58,8 @@ const UploadResource = () => import("@/components/IOffice/UploadResource");
 const DownloadResource = () => import("@/components/IOffice/DownloadResource");
 
 const ChatRom = () => import("@/components/Chat/ChatRom");
+const AskExpert = () => import("@/components/Communicate/AskExpert");
+const AskAnswer = () => import("@/components/Communicate/AskAnswer");
 
 Vue.use(Router);
 
@@ -167,6 +169,15 @@ const IChat = [{
   ]
 }];
 
+const ICommunicate = [{
+  path: '/communicate',
+  component: ILayout,
+  children: [
+    {path: 'ask_expert', component: AskExpert},
+    {path: 'ask_answer', component: AskAnswer},
+  ]
+}];
+
 const IJob = [{
   path: '/job',
   component: ILayout,
@@ -233,6 +244,7 @@ const VipCenterReouter = [{
 
 function getAllRouters() {
   let allRouters = [];
+  allRouters = joinArray(allRouters, ICommunicate);
   allRouters = joinArray(allRouters, IChat);
   allRouters = joinArray(allRouters, IJob);
   allRouters = joinArray(allRouters, IAdvertisement);
