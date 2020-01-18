@@ -143,12 +143,11 @@ type WorkCache struct {
 	Usage               *Usage                                  `xml:"-"` // 引值计算,节点引用值统计
 	err                 error                                   `xml:"-"`
 	ParamMappings       []iworkmodels.ParamMapping              `xml:"-"`
-	PISPreParseResult   map[int64]interface{}                   `xml:"-"` // ParamInputSchema 词法分析预处理结果
-	writeLock           sync.Mutex
-	MultiVals           map[string][]string                `xml:"-"`
-	MultiValError       map[string]error                   `xml:"-"`
-	FuncCallerMap       map[string][]*iworkfunc.FuncCaller `xml:"-"`
-	FuncCallerErrMap    map[string]error                   `xml:"-"`
+	writeLock           sync.Mutex                              `xml:"-"`
+	MultiVals           map[string][]string                     `xml:"-"`
+	MultiValError       map[string]error                        `xml:"-"`
+	FuncCallerMap       map[string][]*iworkfunc.FuncCaller      `xml:"-"`
+	FuncCallerErrMap    map[string]error                        `xml:"-"`
 }
 
 func (this *WorkCache) RenderToString() (s string) {
