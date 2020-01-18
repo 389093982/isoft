@@ -87,8 +87,9 @@
 </template>
 
 <script>
-  import {FilterPageWorks,DeleteOrCopyWorkById,RunWork,EditWork,GetAllModules,GetMetaInfo} from "../../../api"
+  import {DeleteOrCopyWorkById, EditWork, FilterPageWorks, GetAllModules, GetMetaInfo, RunWork} from "../../../api"
   import {checkEmpty, validateCommonPatternForString} from "../../../tools/index"
+
   const ISimpleLeftRightRow = () => import("@/components/Common/layout/ISimpleLeftRightRow");
   const ISimpleSearch = () => import("@/components/Common/search/ISimpleSearch");
   const ISimpleConfirmModal = () => import("@/components/Common/modal/ISimpleConfirmModal");
@@ -145,7 +146,7 @@
           {
             title: 'error/total',
             key: 'error/total',
-            width: 100,
+            width: 130,
             render: (h, params) => {
               return h('div', [
                 h('span', {

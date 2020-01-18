@@ -146,16 +146,26 @@ func (this *PisItemDataParser) parseToObjectAttrs(paramVaule string) []*ObjectAt
 	return objectAttrs
 }
 
-func (this *PisItemDataParser) parseParamVaule(paramName, paramVaule string, replaceMap ...map[string]interface{}) interface{} {
+// 从缓存中获取 FuncCallers
+func (this *PisItemDataParser) ParseToFuncCallersWithCache(paramValue string) ([]*iworkfunc.FuncCaller, error) {
+	callers, ok1 := this.DataStore.WC.FuncCallerMap[paramValue]
+	err, ok2 := this.DataStore.WC.FuncCallerErrMap[paramValue]
+	if ok1 || ok2 {
+		return callers, err
+	}
+	this.DataStore.WC.ParseToFuncCallers(paramValue)
+	return this.ParseToFuncCallersWithCache(paramValue)
+}
+
+func (this *PisItemDataParser) parseParamVaule(paramName, paramValue string, replaceMap ...map[string]interface{}) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
 			str := "<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>"
-			panic(fmt.Sprintf(str, paramVaule, err.(error).Error()))
+			panic(fmt.Sprintf(str, paramValue, err.(error).Error()))
 		}
 	}()
-	// 对单个 paramVaule 进行特殊字符编码
-	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
-	callers, err := iworkfunc.ParseToFuncCallers(paramVaule)
+
+	callers, err := this.ParseToFuncCallersWithCache(paramValue)
 	if err != nil {
 		panic(err)
 	}
@@ -163,7 +173,7 @@ func (this *PisItemDataParser) parseParamVaule(paramName, paramVaule string, rep
 		// 是直接参数,不需要函数进行特殊处理
 		parser := &SimpleParser{
 			paramName:  paramName,
-			paramVaule: paramVaule,
+			paramVaule: paramValue,
 			DataStore:  this.DataStore,
 		}
 		return parser.parseParamValue(replaceMap...)

@@ -2,12 +2,12 @@ package datastore
 
 import (
 	"fmt"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworklog"
 	"isoft/isoft_iwork_web/startup/sysconfig"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 )
 
@@ -18,7 +18,7 @@ type DataNodeStore struct {
 // 当前流程数据存储仓库,只在当前流程有效,父子流程之间通信使用 Dispatcher 和 Receiver
 type DataStore struct {
 	TrackingId       string
-	wc               *iworkcache.WorkCache
+	WC               *iworkcache.WorkCache
 	logwriter        *iworklog.CacheLoggerWriter
 	DataNodeStoreMap map[string]*DataNodeStore
 	TxManger         interface{} // 事务管理器
@@ -48,7 +48,7 @@ func (this *DataStore) isReferUsage(nodeName, paramName string) bool {
 	if nodeName == "start" || nodeName == "end" {
 		return true
 	}
-	for _, usages := range this.wc.Usage.UsageMap {
+	for _, usages := range this.WC.Usage.UsageMap {
 		for _, usage := range usages {
 			if usage == fmt.Sprintf(`$%s.%s`, nodeName, paramName) {
 				return true
@@ -86,7 +86,7 @@ func InitDataStore(trackingId string, logwriter *iworklog.CacheLoggerWriter, wc 
 	dataStore := &DataStore{
 		TrackingId:       trackingId,
 		logwriter:        logwriter,
-		wc:               wc,
+		WC:               wc,
 		DataNodeStoreMap: make(map[string]*DataNodeStore, 0),
 		TxManger:         getTxManager(dispatcher, tx),
 	}

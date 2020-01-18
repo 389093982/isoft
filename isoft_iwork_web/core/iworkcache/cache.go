@@ -8,6 +8,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/block"
+	"isoft/isoft_iwork_web/core/iworkfunc"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkutil"
 	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
@@ -143,6 +144,9 @@ type WorkCache struct {
 	err                 error                                   `xml:"-"`
 	ParamMappings       []iworkmodels.ParamMapping              `xml:"-"`
 	PISPreParseResult   map[int64]interface{}                   `xml:"-"` // ParamInputSchema 词法分析预处理结果
+	funcCallerWriteLock sync.Mutex
+	FuncCallerMap       map[string][]*iworkfunc.FuncCaller `xml:"-"`
+	FuncCallerErrMap    map[string]error                   `xml:"-"`
 }
 
 func (this *WorkCache) RenderToString() (s string) {
@@ -181,8 +185,6 @@ func (this *WorkCache) FlushCache() {
 		parser := pool.Container.GetSingleton("parser")
 		paramInputSchema := parser.(IParamSchemaCacheParser).GetCacheParamInputSchema(&workStep)
 		this.ParamInputSchemaMap[workStep.WorkStepId] = paramInputSchema
-		// PIS 预处理
-		this.evalPISPreParseResult(workStep, paramInputSchema)
 	}
 	// 缓存 subWorkName
 	this.SubWorkNameMap = make(map[int64]string, 0)
@@ -197,12 +199,6 @@ func (this *WorkCache) FlushCache() {
 	this.cacheReferUsage()
 
 	this.evalParamMapping()
-}
-
-func (this *WorkCache) evalPISPreParseResult(workStep models.WorkStep, paramInputSchema *iworkmodels.ParamInputSchema) {
-	//iworkfunc.SplitWithLexerAnalysis()
-
-	// TODO: 需要继续完善
 }
 
 func (this *WorkCache) evalParamMapping() {
@@ -276,4 +272,28 @@ func (this *WorkCache) getWorkSubName(workStep *models.WorkStep) (string, error)
 		return workSubName, nil
 	}
 	return "", err
+}
+
+func (this *WorkCache) ParseToFuncCallers(paramValue string) {
+	defer func() {
+		if err := recover(); err != nil {
+			this.FuncCallerErrMap[paramValue] = err.(error)
+		}
+	}()
+	// 对单个 paramVaule 进行特殊字符编码
+	paramValue = iworkfunc.EncodeSpecialForParamVaule(paramValue)
+	callers, err := iworkfunc.ParseToFuncCallers(paramValue)
+	this.funcCallerWriteLock.Lock()
+	defer this.funcCallerWriteLock.Unlock()
+	if err != nil {
+		if this.FuncCallerErrMap == nil {
+			this.FuncCallerErrMap = make(map[string]error, 0)
+		}
+		this.FuncCallerErrMap[paramValue] = err
+	} else {
+		if this.FuncCallerMap == nil {
+			this.FuncCallerMap = make(map[string][]*iworkfunc.FuncCaller, 0)
+		}
+		this.FuncCallerMap[paramValue] = callers
+	}
 }
