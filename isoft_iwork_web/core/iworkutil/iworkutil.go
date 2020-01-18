@@ -2,9 +2,9 @@ package iworkutil
 
 import (
 	"encoding/base64"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 )
 
@@ -63,4 +63,16 @@ func GetParamValueForEntity(paramValue string) string {
 	//	return entity.EntityFieldStr
 	//}
 	return ""
+}
+
+// 去除不合理的字符
+func TrimParamValue(paramValue string) string {
+	// 先进行初次的 trim
+	paramValue = strings.TrimSpace(paramValue)
+	// 去除前后的 \n
+	paramValue = strings.TrimPrefix(paramValue, "\n")
+	paramValue = strings.TrimSuffix(paramValue, "\n")
+	// 再进行二次 trim
+	paramValue = strings.TrimSpace(paramValue)
+	return paramValue
 }

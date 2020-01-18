@@ -126,19 +126,26 @@ type ObjectAttr struct {
 	attrParseValue interface{} // 对象属性解析值
 }
 
+// 从缓存中获取 FuncCallers
+func (this *PisItemDataParser) GetMultiValsWithCache(paramValue string) ([]string, error) {
+	multiVals, ok1 := this.DataStore.WC.MultiVals[paramValue]
+	err, ok2 := this.DataStore.WC.MultiValError[paramValue]
+	if ok1 || ok2 {
+		return multiVals, err
+	}
+	this.DataStore.WC.ParseToMultiVals(paramValue)
+	return this.GetMultiValsWithCache(paramValue)
+}
+
 // 将 paramVaule 转行成 []*ObjectAttr
 func (this *PisItemDataParser) parseToObjectAttrs(paramVaule string) []*ObjectAttr {
 	objectAttrs := make([]*ObjectAttr, 0)
-	// 对转义字符 \, \; \( \) 等进行编码
-	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
-	// 进行词法分析,获取多个值
-	// TODO：(词法分析可以预处理)
-	multiVals, err := iworkfunc.SplitWithLexerAnalysis(paramVaule)
+	multiVals, err := this.GetMultiValsWithCache(paramVaule)
 	if err != nil {
 		panic(err)
 	}
 	for index, value := range multiVals {
-		if _value := this.trim(value); strings.TrimSpace(_value) != "" {
+		if _value := iworkutil.TrimParamValue(value); strings.TrimSpace(_value) != "" {
 			objectAttr := this.parseToObjectAttr(index, strings.TrimSpace(_value))
 			objectAttrs = append(objectAttrs, objectAttr)
 		}
@@ -215,18 +222,6 @@ func (this *PisItemDataParser) getCallerArgs(caller *iworkfunc.FuncCaller,
 		}
 	}
 	return args
-}
-
-// 去除不合理的字符
-func (this *PisItemDataParser) trim(paramValue string) string {
-	// 先进行初次的 trim
-	paramValue = strings.TrimSpace(paramValue)
-	// 去除前后的 \n
-	paramValue = strings.TrimPrefix(paramValue, "\n")
-	paramValue = strings.TrimSuffix(paramValue, "\n")
-	// 再进行二次 trim
-	paramValue = strings.TrimSpace(paramValue)
-	return paramValue
 }
 
 type SimpleParser struct {

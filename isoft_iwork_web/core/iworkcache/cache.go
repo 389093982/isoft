@@ -144,7 +144,9 @@ type WorkCache struct {
 	err                 error                                   `xml:"-"`
 	ParamMappings       []iworkmodels.ParamMapping              `xml:"-"`
 	PISPreParseResult   map[int64]interface{}                   `xml:"-"` // ParamInputSchema 词法分析预处理结果
-	funcCallerWriteLock sync.Mutex
+	writeLock           sync.Mutex
+	MultiVals           map[string][]string                `xml:"-"`
+	MultiValError       map[string]error                   `xml:"-"`
 	FuncCallerMap       map[string][]*iworkfunc.FuncCaller `xml:"-"`
 	FuncCallerErrMap    map[string]error                   `xml:"-"`
 }
@@ -283,8 +285,8 @@ func (this *WorkCache) ParseToFuncCallers(paramValue string) {
 	// 对单个 paramVaule 进行特殊字符编码
 	paramValue = iworkfunc.EncodeSpecialForParamVaule(paramValue)
 	callers, err := iworkfunc.ParseToFuncCallers(paramValue)
-	this.funcCallerWriteLock.Lock()
-	defer this.funcCallerWriteLock.Unlock()
+	this.writeLock.Lock()
+	defer this.writeLock.Unlock()
 	if err != nil {
 		if this.FuncCallerErrMap == nil {
 			this.FuncCallerErrMap = make(map[string]error, 0)
@@ -295,5 +297,30 @@ func (this *WorkCache) ParseToFuncCallers(paramValue string) {
 			this.FuncCallerMap = make(map[string][]*iworkfunc.FuncCaller, 0)
 		}
 		this.FuncCallerMap[paramValue] = callers
+	}
+}
+
+func (this *WorkCache) ParseToMultiVals(paramValue string) {
+	defer func() {
+		if err := recover(); err != nil {
+			this.MultiValError[paramValue] = err.(error)
+		}
+	}()
+	// 对转义字符 \, \; \( \) 等进行编码
+	paramValue = iworkfunc.EncodeSpecialForParamVaule(paramValue)
+	// 进行词法分析,获取多个值
+	multiVals, err := iworkfunc.SplitWithLexerAnalysis(paramValue)
+	this.writeLock.Lock()
+	defer this.writeLock.Unlock()
+	if err != nil {
+		if this.MultiValError == nil {
+			this.MultiValError = make(map[string]error, 0)
+		}
+		this.MultiValError[paramValue] = err
+	} else {
+		if this.MultiVals == nil {
+			this.MultiVals = make(map[string][]string, 0)
+		}
+		this.MultiVals[paramValue] = multiVals
 	}
 }
