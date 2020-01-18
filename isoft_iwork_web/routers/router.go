@@ -119,7 +119,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/filterElementByPlacement", wc, wc.FilterElementByPlacement, "get,post:FilterElementByPlacement")
 
 	registRouter("/api/iwork/import", wc, wc.Import, "get,post:Import")
-	registRouter("/api/iwork/DownloadTest", wc, wc.DownloadTest, "get,post:DownloadTest")
 }
 
 func registRouter(rootpath string, c beego.ControllerInterface, callFunc func(), mappingMethods ...string) *beego.App {

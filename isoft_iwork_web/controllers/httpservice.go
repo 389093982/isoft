@@ -1,10 +1,8 @@
 package controllers
 
 import (
-	"bufio"
 	"fmt"
 	"github.com/astaxie/beego/context"
-	"io"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
@@ -16,7 +14,6 @@ import (
 	"isoft/isoft_iwork_web/startup/runtimecfg"
 	"isoft/isoft_utils/common/stringutil"
 	"net/http"
-	"net/url"
 	"path"
 	"time"
 )
@@ -132,19 +129,4 @@ func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, 
 	err = this.SaveToFile("file", tempFilePath)
 	checkError(err)
 	return tempFileName, fileName, tempFilePath
-}
-
-func (this *WorkController) DownloadTest() {
-	this.Ctx.Output.Header("Content-Disposition", "attachment; filename="+url.PathEscape("helloworld.jpg"))
-	resp, _ := http.Get("https://preview.qiantucdn.com/58pic/35/41/76/15f58PICy07bea2Ife9bF_PIC2018.jpg!qt324new_nowater")
-	bufReader := bufio.NewReader(resp.Body)
-	bufWriter := bufio.NewWriter(this.Ctx.ResponseWriter)
-	buff := make([]byte, 1024*50)
-	for {
-		len, err := bufReader.Read(buff)
-		bufWriter.Write(buff[:len])
-		if err == io.EOF {
-			break
-		}
-	}
 }
