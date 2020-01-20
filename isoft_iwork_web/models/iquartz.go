@@ -8,6 +8,7 @@ import (
 
 type CronMeta struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	TaskName        string    `json:"task_name"` // 任务名称
 	TaskType        string    `json:"task_type"` // 任务类型
 	CronStr         string    `json:"cron_str"`
@@ -39,7 +40,7 @@ func QueryCronMetaByName(taskName string) (meta CronMeta, err error) {
 	return
 }
 
-func QueryCronMeta(condArr map[string]string, page int, offset int) (metas []CronMeta, counts int64, err error) {
+func QueryCronMeta(app_id int64, condArr map[string]string, page int, offset int) (metas []CronMeta, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("cron_meta")
 	var cond = orm.NewCondition()
@@ -47,6 +48,9 @@ func QueryCronMeta(condArr map[string]string, page int, offset int) (metas []Cro
 		subCond := orm.NewCondition()
 		subCond = cond.And("task_name__contains", search).Or("task_type__contains", search)
 		cond = cond.AndCond(subCond)
+	}
+	if app_id > 0 {
+		cond = cond.And("app_id", app_id)
 	}
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()

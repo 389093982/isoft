@@ -44,11 +44,11 @@ func LoadWorkInfo() *iworkmodels.ParamOutputSchema {
 	return pos
 }
 
-func LoadGlobalVarInfo() *iworkmodels.ParamOutputSchema {
+func LoadGlobalVarInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
-	globalVars := models.QueryAllGlobalVar()
+	globalVars := models.QueryAllGlobalVar(app_id)
 	for _, globalVar := range globalVars {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: globalVar.Name,
@@ -88,7 +88,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$Error"))
 
 	// 加载 globalVar 参数
-	pos = LoadGlobalVarInfo()
+	pos = LoadGlobalVarInfo(app_id)
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$Global"))
 
 	// 加载前置步骤输出

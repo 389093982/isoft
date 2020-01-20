@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/pageutil"
 	"time"
 )
 
@@ -32,7 +32,9 @@ func (this *WorkController) EditQuartz() {
 }
 
 func (this *WorkController) AddQuartz() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	var meta models.CronMeta
+	meta.AppId = app_id
 	meta.TaskName = this.Input().Get("task_name")
 	meta.TaskType = this.Input().Get("task_type")
 	meta.CronStr = this.Input().Get("cron_str")
@@ -50,13 +52,14 @@ func (this *WorkController) AddQuartz() {
 }
 
 func (this *WorkController) FilterPageQuartz() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	if search := this.GetString("search"); search != "" {
 		condArr["search"] = search
 	}
-	quartzs, count, err := models.QueryCronMeta(condArr, current_page, offset)
+	quartzs, count, err := models.QueryCronMeta(app_id, condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "quartzs": quartzs,

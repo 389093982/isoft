@@ -81,7 +81,7 @@ func persistentFiltersToFile() {
 }
 
 func persistentGlobalVarsToFile() {
-	globalVars := models.QueryAllGlobalVar()
+	globalVars := models.QueryAllGlobalVar(-1)
 	for _, globalVar := range globalVars {
 		filepath := path.Join(persistentDirPath, "globalVars", fmt.Sprintf(`%s.globalVar`, globalVar.Name))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(globalVar)), false)

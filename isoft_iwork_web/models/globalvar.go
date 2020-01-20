@@ -8,6 +8,7 @@ import (
 
 type GlobalVar struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	Name            string    `json:"name" orm:"unique"`
 	Value           string    `json:"value" orm:"type(text)"`
 	Type            int       `json:"type"` // 类型：0 表示不可删除
@@ -40,16 +41,23 @@ func InsertOrUpdateGlobalVar(globalVar *GlobalVar, o orm.Ormer) (id int64, err e
 	return
 }
 
-func QueryAllGlobalVar() (globalVars []GlobalVar) {
+func QueryAllGlobalVar(app_id int64) (globalVars []GlobalVar) {
 	o := orm.NewOrm()
-	o.QueryTable("global_var").All(&globalVars)
+	qs := o.QueryTable("global_var")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	qs.All(&globalVars)
 	return
 }
 
-func QueryGlobalVar(condArr map[string]string, page int, offset int, o orm.Ormer) (globalVars []GlobalVar, counts int64, err error) {
+func QueryGlobalVar(app_id int64, condArr map[string]string, page int, offset int, o orm.Ormer) (globalVars []GlobalVar, counts int64, err error) {
 	qs := o.QueryTable("global_var")
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		qs = qs.Filter("name__contains", search)
+	}
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
 	}
 	counts, _ = qs.Count()
 	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)

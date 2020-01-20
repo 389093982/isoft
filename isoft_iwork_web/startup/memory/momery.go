@@ -10,7 +10,7 @@ var ResourceMap sync.Map
 var FilterMap sync.Map
 
 func FlushAll() {
-	FlushMemoryGlobalVar()
+	FlushMemoryGlobalVar(-1)
 	FlushMemoryResource(-1)
 	FlushMemoryFilter(-1)
 }
@@ -26,8 +26,8 @@ func FlushMemoryFilter(app_id int64) {
 	}
 }
 
-func FlushMemoryGlobalVar() {
-	globalVars := models.QueryAllGlobalVar()
+func FlushMemoryGlobalVar(app_id int64) {
+	globalVars := models.QueryAllGlobalVar(app_id)
 	for index, _ := range globalVars {
 		GlobalVarMap.Store(globalVars[index].Name, &globalVars[index])
 	}
