@@ -7,6 +7,7 @@ import (
 
 type AuditTask struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	TaskName        string    `json:"task_name"`
 	TaskDesc        string    `json:"task_desc" orm:"type(text)"`
 	TaskDetail      string    `json:"task_detail" orm:"type(text)"`
@@ -44,9 +45,12 @@ func QueryAuditTaskByTaskName(task_name string, o orm.Ormer) (task AuditTask, er
 	return
 }
 
-func QueryPageAuditTask(page int, offset int, o orm.Ormer) (tasks []AuditTask, counts int64, err error) {
+func QueryPageAuditTask(app_id int64, page int, offset int, o orm.Ormer) (tasks []AuditTask, counts int64, err error) {
 	qs := o.QueryTable("audit_task")
 	counts, _ = qs.Count()
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
 	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
 	qs.All(&tasks)
 	return

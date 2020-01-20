@@ -17,10 +17,12 @@ import (
 )
 
 func (this *WorkController) EditAuditTask() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	id, err := this.GetInt64("id", -1)
 	taskName := this.GetString("task_name")
 	taskDesc := this.GetString("task_desc")
 	task := &models.AuditTask{
+		AppId:           app_id,
 		TaskName:        taskName,
 		TaskDesc:        taskDesc,
 		CreatedBy:       "SYSTEM",
@@ -41,9 +43,10 @@ func (this *WorkController) EditAuditTask() {
 }
 
 func (this *WorkController) QueryPageAuditTask() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	tasks, count, err := models.QueryPageAuditTask(current_page, offset, orm.NewOrm())
+	tasks, count, err := models.QueryPageAuditTask(app_id, current_page, offset, orm.NewOrm())
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "tasks": tasks,
