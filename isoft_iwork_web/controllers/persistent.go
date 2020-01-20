@@ -97,7 +97,7 @@ func persistentQuartzsToFile() {
 }
 
 func persistentResourcesToFile() {
-	resources := models.QueryAllResource()
+	resources := models.QueryAllResource(-1)
 	for _, resource := range resources {
 		filepath := path.Join(persistentDirPath, "resources", fmt.Sprintf(`%s.resource`, resource.ResourceName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(resource)), false)
@@ -105,7 +105,7 @@ func persistentResourcesToFile() {
 }
 
 func persistentMigratesToFile() {
-	migrates, _ := models.QueryAllSqlMigrate()
+	migrates, _ := models.QueryAllSqlMigrate(-1)
 	for _, migrate := range migrates {
 		filepath := path.Join(persistentDirPath, "migrates", fmt.Sprintf(`%s`, migrate.MigrateName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(migrate)), false)

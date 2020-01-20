@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_utils/common/jsonutil"
-	"isoft/isoft_utils/common/pageutil"
-	"isoft/isoft_utils/common/xmlutil"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/jsonutil"
+	"isoft/isoft_utils/common/pageutil"
+	"isoft/isoft_utils/common/xmlutil"
 	"strings"
 	"time"
 )
@@ -55,13 +55,14 @@ func (this *WorkController) QueryPageAuditTask() {
 }
 
 func (this *WorkController) GetAuditHandleData() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	taskName := this.GetString("task_name")
 	current_page, _ := this.GetInt64("current_page")
 	offset, _ := this.GetInt64("offset")
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
-	resource, _ := models.QueryResourceByName(taskDetail.ResourceName)
+	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
 	_, rowDatas0, err1 := sqlutil.QuerySql(strings.Replace(taskDetail.QuerySql, "*", "count(*) as totalcount", -1),
 		[]interface{}{}, resource.ResourceDsn)
 	_, rowDatas, err2 := sqlutil.QuerySql(fmt.Sprintf(`%s limit ?,?`, taskDetail.QuerySql), []interface{}{(current_page - 1) * offset, offset}, resource.ResourceDsn)
@@ -97,10 +98,11 @@ func (this *WorkController) EditAuditTaskTarget() {
 }
 
 func (this *WorkController) EditAuditTaskSource() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	taskName := this.GetString("task_name")
 	resourceName := this.GetString("resource_name")
 	querySql := this.GetString("query_sql")
-	resource, _ := models.QueryResourceByName(resourceName)
+	resource, _ := models.QueryResourceByName(app_id, resourceName)
 	colNames := sqlutil.GetMetaDatas(querySql, resource.ResourceDsn)
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
@@ -133,12 +135,13 @@ func (this *WorkController) QueryTaskDetail() {
 }
 
 func (this *WorkController) ExecuteAuditTask() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	taskName := this.GetString("task_name")
 	sql_str := this.GetString("sql_str")
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
-	resource, _ := models.QueryResourceByName(taskDetail.ResourceName)
+	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
 	_, affected, err := sqlutil.ExecuteSql(sql_str, nil, resource.ResourceDsn)
 	if err == nil && affected > 0 {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

@@ -7,6 +7,7 @@ import (
 
 type SqlMigrate struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	MigrateName     string    `json:"migrate_name"`
 	MigrateSql      string    `json:"migrate_sql" orm:"type(text)"`
 	MigrateHash     string    `json:"migrate_hash"`
@@ -36,9 +37,13 @@ func QueryAllSqlMigrateLog(trackingId string) (logs []SqlMigrateLog, err error) 
 	return
 }
 
-func QueryAllSqlMigrate() (migrates []SqlMigrate, err error) {
+func QueryAllSqlMigrate(app_id int64) (migrates []SqlMigrate, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("sql_migrate").Filter("effective", true).OrderBy("id").All(&migrates)
+	qs := o.QueryTable("sql_migrate").Filter("effective", true)
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.OrderBy("id").All(&migrates)
 	return
 }
 
@@ -48,9 +53,12 @@ func QuerySqlMigrateInfo(id int64) (migrate SqlMigrate, err error) {
 	return
 }
 
-func QuerySqlMigrate(current_page, offset int) (migrates []SqlMigrate, counts int64, err error) {
+func QuerySqlMigrate(app_id int64, current_page, offset int) (migrates []SqlMigrate, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("sql_migrate")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
 	counts, _ = qs.Count()
 	qs = qs.OrderBy("-id").Limit(offset, (current_page-1)*offset)
 	_, err = qs.All(&migrates)

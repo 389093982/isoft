@@ -62,9 +62,12 @@ func QueryResource(app_id int64, condArr map[string]string, page int, offset int
 	return
 }
 
-func QueryAllResource(resource_type ...string) (resources []Resource) {
+func QueryAllResource(app_id int64, resource_type ...string) (resources []Resource) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("resource")
+	if app_id > 0 { // app_id <= 0 查询全部
+		qs = qs.Filter("app_id", app_id)
+	}
 	if len(resource_type) > 0 {
 		qs = qs.Filter("resource_type", resource_type[0])
 	}
@@ -72,9 +75,13 @@ func QueryAllResource(resource_type ...string) (resources []Resource) {
 	return
 }
 
-func QueryResourceByName(resource_name string) (resource Resource, err error) {
+func QueryResourceByName(app_id int64, resource_name string) (resource Resource, err error) {
 	o := orm.NewOrm()
-	err = o.QueryTable("resource").Filter("resource_name", resource_name).One(&resource)
+	qs := o.QueryTable("resource").Filter("resource_name", resource_name)
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	err = qs.One(&resource)
 	return
 }
 

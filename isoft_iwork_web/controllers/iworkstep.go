@@ -138,9 +138,10 @@ func (this *WorkController) ChangeWorkStepOrder() {
 }
 
 func (this *WorkController) LoadPreNodeOutput() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
+	serviceArgs := map[string]interface{}{"app_id": app_id, "work_id": work_id, "work_step_id": work_step_id}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, service.LoadPreNodeOutputService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "prePosTreeNodeArr": result["prePosTreeNodeArr"]}
 	} else {

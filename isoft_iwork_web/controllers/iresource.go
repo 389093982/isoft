@@ -26,7 +26,7 @@ func (this *WorkController) EditResource() {
 	resource.LastUpdatedBy = "SYSTEM"
 	resource.LastUpdatedTime = time.Now()
 	if _, err := models.InsertOrUpdateResource(&resource); err == nil {
-		flushMemoryResource()
+		flushMemoryResource(resource.AppId)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
@@ -46,8 +46,9 @@ func (this *WorkController) GetResourceById() {
 }
 
 func (this *WorkController) GetAllResource() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	resource_type := this.GetString("resource_type")
-	resources := models.QueryAllResource(resource_type)
+	resources := models.QueryAllResource(app_id, resource_type)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "resources": resources}
 	this.ServeJSON()
 }
@@ -72,10 +73,11 @@ func (this *WorkController) FilterPageResource() {
 }
 
 func (this *WorkController) DeleteResource() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	id, _ := this.GetInt64("id")
 	err := models.DeleteResource(id)
 	if err == nil {
-		flushMemoryResource()
+		flushMemoryResource(app_id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
@@ -115,6 +117,6 @@ func (this *WorkController) ValidateResource() {
 	this.ServeJSON()
 }
 
-func flushMemoryResource() {
-	memory.FlushMemoryResource()
+func flushMemoryResource(app_id int64) {
+	memory.FlushMemoryResource(app_id)
 }

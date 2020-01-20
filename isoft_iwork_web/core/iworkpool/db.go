@@ -18,7 +18,7 @@ func init() {
 func LoadAndCachePool() {
 	models.RegisterOpenConnFunc(OpenDBConn)
 	// 初始化所有数据库连接
-	resources := models.QueryAllResource("db")
+	resources := models.QueryAllResource(-1, "db")
 	for _, resource := range resources {
 		OpenDBConn("mysql", resource.ResourceDsn)
 	}

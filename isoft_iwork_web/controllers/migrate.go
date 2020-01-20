@@ -32,11 +32,12 @@ func (this *WorkController) GetLastMigrateLogs() {
 }
 
 func (this *WorkController) ExecuteMigrate() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	resource_name := this.GetString("resource_name")
 	forceClean, _ := this.GetBool("forceClean", false)
-	resource, _ := models.QueryResourceByName(resource_name)
+	resource, _ := models.QueryResourceByName(app_id, resource_name)
 	trackingId := stringutil.RandomUUID()
-	go migrateutil.MigrateToDB(trackingId, resource.ResourceDsn, forceClean)
+	go migrateutil.MigrateToDB(app_id, trackingId, resource.ResourceDsn, forceClean)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "trackingId": trackingId}
 	this.ServeJSON()
 }
@@ -75,6 +76,7 @@ func (this *WorkController) EditSqlMigrate() {
 		migrate.CreatedTime = time.Now()
 		migrate.Effective = true
 	}
+	migrate.AppId, _ = this.GetInt64("app_id", -1)
 	migrate.LastUpdatedBy = "SYSTEM"
 	migrate.LastUpdatedTime = time.Now()
 	migrate.MigrateName = migrate_name
@@ -88,11 +90,12 @@ func (this *WorkController) EditSqlMigrate() {
 }
 
 func (this *WorkController) FilterPageSqlMigrate() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	migrates, count, err := models.QuerySqlMigrate(current_page, offset)
+	migrates, count, err := models.QuerySqlMigrate(app_id, current_page, offset)
 	if err == nil {
-		resources := models.QueryAllResource("db")
+		resources := models.QueryAllResource(app_id, "db")
 		paginator := pagination.SetPaginator(this.Ctx, offset, count)
 		this.Data["json"] = &map[string]interface{}{
 			"status":    "SUCCESS",

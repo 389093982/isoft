@@ -18,11 +18,11 @@ import (
 	"time"
 )
 
-func LoadResourceInfo() *iworkmodels.ParamOutputSchema {
+func LoadResourceInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
-	resources := models.QueryAllResource()
+	resources := models.QueryAllResource(app_id)
 	for _, resource := range resources {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: resource.ResourceName,
@@ -71,12 +71,13 @@ func LoadErrorInfo() *iworkmodels.ParamOutputSchema {
 // 加载前置节点输出参数
 func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	result = make(map[string]interface{}, 0)
+	app_id := serviceArgs["app_id"].(int64)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
 	prePosTreeNodeArr := make([]*iworkmodels.TreeNode, 0)
 	// 加载 resource 参数
-	pos := LoadResourceInfo()
+	pos := LoadResourceInfo(app_id)
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
 	// 加载 work 参
 	pos = LoadWorkInfo()

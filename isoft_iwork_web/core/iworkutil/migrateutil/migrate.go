@@ -138,8 +138,8 @@ func (this *MigrateExecutor) insertOrUpdateMigrateVersion(migrate_name, migrate_
 	return nil
 }
 
-func (this *MigrateExecutor) loadAllMigrate() {
-	this.migrates, _ = models.QueryAllSqlMigrate()
+func (this *MigrateExecutor) loadAllMigrate(app_id int64) {
+	this.migrates, _ = models.QueryAllSqlMigrate(app_id)
 }
 
 func (this *MigrateExecutor) migrate() {
@@ -220,7 +220,7 @@ func (this *MigrateExecutor) migrateOne(migrate models.SqlMigrate) error {
 	return nil
 }
 
-func MigrateToDB(trackingId, dsn string, forceClean bool) (err error) {
+func MigrateToDB(app_id int64, trackingId, dsn string, forceClean bool) (err error) {
 	executor := &MigrateExecutor{
 		Dsn:        dsn,
 		TrackingId: trackingId,
@@ -241,7 +241,7 @@ func MigrateToDB(trackingId, dsn string, forceClean bool) (err error) {
 
 	if err = executor.ping(); err == nil {
 		// 加载所有的迁移资源文件
-		executor.loadAllMigrate()
+		executor.loadAllMigrate(app_id)
 		executor.initial()
 		executor.checkHistory()
 		executor.migrate()
