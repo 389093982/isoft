@@ -8,6 +8,7 @@ import (
 
 type Module struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	ModuleName      string    `json:"module_name" orm:"unique"`
 	ModuleDesc      string    `json:"module_desc" orm:"type(text)"`
 	CreatedBy       string    `json:"created_by"`
@@ -22,11 +23,12 @@ func QueryAllModules() (modules []Module, err error) {
 	return
 }
 
-func QueryPageModuleList(condArr map[string]string, page int, offset int, o orm.Ormer) (modules []Module, counts int64, err error) {
+func QueryPageModuleList(app_id int64, condArr map[string]string, page int, offset int, o orm.Ormer) (modules []Module, counts int64, err error) {
 	qs := o.QueryTable("module")
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		qs = qs.Filter("module_name__contains", search)
 	}
+	qs = qs.Filter("app_id", app_id)
 	counts, _ = qs.Count()
 	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
 	qs.All(&modules)
