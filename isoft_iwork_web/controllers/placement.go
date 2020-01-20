@@ -3,16 +3,17 @@ package controllers
 import (
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/pageutil"
 	"time"
 )
 
 func (this *WorkController) FilterPagePlacement() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	condArr := map[string]string{"search": this.GetString("search")}
-	placements, count, err := models.QueryPagePlacement(condArr, current_page, offset, orm.NewOrm())
+	placements, count, err := models.QueryPagePlacement(app_id, condArr, current_page, offset, orm.NewOrm())
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "placements": placements,
@@ -25,6 +26,7 @@ func (this *WorkController) FilterPagePlacement() {
 
 func (this *WorkController) EditPlacement() {
 	id, _ := this.GetInt64("id", 0)
+	app_id, _ := this.GetInt64("app_id", -1)
 	placement_name := this.GetString("placement_name")
 	placement_desc := this.GetString("placement_desc")
 	placement_label := this.GetString("placement_label")
@@ -33,6 +35,7 @@ func (this *WorkController) EditPlacement() {
 
 	placement := &models.Placement{
 		Id:              id,
+		AppId:           app_id,
 		PlacementName:   placement_name,
 		PlacementDesc:   placement_desc,
 		PlacementLabel:  placement_label,

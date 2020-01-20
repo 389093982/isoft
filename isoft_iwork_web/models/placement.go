@@ -15,6 +15,7 @@ type PlacementElementMppaer struct {
 
 type Placement struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	PlacementName   string    `json:"placement_name"`
 	PlacementLabel  string    `json:"placement_label"`
 	PlacementType   string    `json:"placement_type"`
@@ -44,13 +45,16 @@ type Element struct {
 	LastUpdatedTime    time.Time `json:"last_updated_time" orm:"auto_now_add;type(datetime)"`
 }
 
-func QueryPagePlacement(condArr map[string]string, page int, offset int, o orm.Ormer) (placements []Placement, counts int64, err error) {
+func QueryPagePlacement(app_id int64, condArr map[string]string, page int, offset int, o orm.Ormer) (placements []Placement, counts int64, err error) {
 	qs := o.QueryTable("placement")
 	var cond = orm.NewCondition()
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		subCond := orm.NewCondition()
 		subCond = cond.And("placement_name__contains", search).Or("placement_label__contains", search).Or("placement_desc__contains", search)
 		cond = cond.AndCond(subCond)
+	}
+	if app_id > 0 {
+		cond = cond.And("app_id", app_id)
 	}
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()
