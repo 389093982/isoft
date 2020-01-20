@@ -9,7 +9,7 @@
         <Input v-model.trim="formValidate.app_name" placeholder="请输入 app_name"></Input>
       </FormItem>
       <FormItem label="app_desc" prop="app_desc">
-        <Input v-model.trim="formValidate.app_desc" placeholder="请输入 app_desc"></Input>
+        <Input type="textarea" :rows="3" v-model.trim="formValidate.app_desc" placeholder="请输入 app_desc"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>

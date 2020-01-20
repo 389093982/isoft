@@ -33,3 +33,9 @@ func QueryPageAppIdList(condArr map[string]string, page int, offset int) (appIds
 	qs.All(&appIds)
 	return
 }
+
+func DeleteAppById(id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("app_id").Filter("id", id).Delete()
+	return err
+}

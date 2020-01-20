@@ -11,7 +11,7 @@
 
 <script>
   import {formatDate} from "../../../tools/index"
-  import {QueryPageAppIdList} from "../../../api"
+  import {DeleteAppid, QueryPageAppIdList} from "../../../api"
   import AppidEdit from "./AppidEdit"
 
   export default {
@@ -58,7 +58,22 @@
             width: 280,
             fixed: 'right',
             render: (h, params) => {
-              return h('div', []);
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteAppid(this.appids[params.index]['id']);
+                    }
+                  }
+                }, '删除'),
+              ]);
             }
           }
         ],
@@ -77,6 +92,12 @@
         const result = await QueryPageAppIdList(this.offset, this.current_page, this.search);
         if (result.status == "SUCCESS") {
           this.appids = result.appids;
+        }
+      },
+      deleteAppid: async function (id) {
+        const result = await DeleteAppid({id: id});
+        if (result.status == "SUCCESS") {
+          this.refreshAppIdList();
         }
       }
     },

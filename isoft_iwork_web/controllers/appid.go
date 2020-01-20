@@ -41,3 +41,14 @@ func (this *WorkController) QueryPageAppIdList() {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) DeleteAppid() {
+	appid, _ := this.GetInt64("id", -1)
+	err := models.DeleteAppById(appid)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
