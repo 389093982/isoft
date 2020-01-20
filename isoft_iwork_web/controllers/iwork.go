@@ -240,10 +240,10 @@ func (this *WorkController) Download() {
 
 func (this *WorkController) GetAllFiltersAndWorks() {
 	app_id, _ := this.GetInt64("app_id", -1)
-	filterWorks, _ := models.GetAllFilterWorks()
+	filterWorks, _ := models.GetAllFilterWorks(app_id)
 	modules, _ := models.QueryAllModules(app_id)
-	works, _ := models.QueryAllWorks()
-	filters, _ := models.QueryAllFilters()
+	works, _ := models.QueryAllWorks(app_id)
+	filters, _ := models.QueryAllFilters(app_id)
 	this.Data["json"] = &map[string]interface{}{
 		"status":      "SUCCESS",
 		"filterWorks": filterWorks,

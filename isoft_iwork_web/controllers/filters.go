@@ -8,6 +8,7 @@ import (
 )
 
 func (this *WorkController) SaveFilters() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	filter_id, _ := this.GetInt64("filter_id", -1)
 	filterWork, _ := models.QueryWorkById(filter_id, orm.NewOrm())
 	filters := make([]*models.Filters, 0)
@@ -15,7 +16,7 @@ func (this *WorkController) SaveFilters() {
 	filters = this.appendComplexWorkName(filters, filterWork)
 	_, err := models.InsertMultiFilters(filter_id, filters)
 	if err == nil {
-		flushMemoryFilter()
+		flushMemoryFilter(app_id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
@@ -52,6 +53,6 @@ func (this *WorkController) appendComplexWorkName(filters []*models.Filters, fil
 	return filters
 }
 
-func flushMemoryFilter() {
-	memory.FlushMemoryFilter()
+func flushMemoryFilter(app_id int64) {
+	memory.FlushMemoryFilter(app_id)
 }

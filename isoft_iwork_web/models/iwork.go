@@ -67,9 +67,13 @@ func QueryParentWorks(work_id int64, o orm.Ormer) (workSteps []WorkStep, works [
 }
 
 // 只查 work,不查 filter
-func QueryAllWorks() (works []Work, err error) {
+func QueryAllWorks(app_id int64) (works []Work, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("work").Filter("work_type", "work").All(&works)
+	qs := o.QueryTable("work")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.Filter("work_type", "work").All(&works)
 	return
 }
 
@@ -121,8 +125,12 @@ func UpdateModuleName(moduleName, newModuleName string) error {
 	return err
 }
 
-func GetAllFilterWorks() (works []Work, err error) {
+func GetAllFilterWorks(app_id int64) (works []Work, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("work").Filter("work_type", "filter").All(&works)
+	qs := o.QueryTable("work")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.Filter("work_type", "filter").All(&works)
 	return
 }

@@ -7,6 +7,7 @@ import (
 
 type Filters struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	FilterWorkId    int64     `json:"filter_work_id"`
 	FilterWorkName  string    `json:"filter_work_name"`
 	WorkName        string    `json:"work_name" orm:"type(text);default('')"`
@@ -24,9 +25,13 @@ func InsertMultiFilters(filter_id int64, filters []*Filters) (num int64, err err
 	return
 }
 
-func QueryAllFilters() (filters []Filters, err error) {
+func QueryAllFilters(app_id int64) (filters []Filters, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("filters").All(&filters)
+	qs := o.QueryTable("filters")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.All(&filters)
 	return
 }
 

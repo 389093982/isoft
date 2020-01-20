@@ -73,7 +73,7 @@ func persistentModulesToFile() {
 }
 
 func persistentFiltersToFile() {
-	filters, _ := models.QueryAllFilters()
+	filters, _ := models.QueryAllFilters(-1)
 	for _, filter := range filters {
 		filepath := path.Join(persistentDirPath, "filters", fmt.Sprintf(`%s.filter`, filter.FilterWorkName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(filter)), false)

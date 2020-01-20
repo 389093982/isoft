@@ -12,11 +12,11 @@ var FilterMap sync.Map
 func FlushAll() {
 	FlushMemoryGlobalVar()
 	FlushMemoryResource(-1)
-	FlushMemoryFilter()
+	FlushMemoryFilter(-1)
 }
 
-func FlushMemoryFilter() {
-	filters, _ := models.QueryAllFilters()
+func FlushMemoryFilter(app_id int64) {
+	filters, _ := models.QueryAllFilters(app_id)
 	for index, _ := range filters {
 		// 不存在则初始化并添加
 		// 存在则获取后添加
