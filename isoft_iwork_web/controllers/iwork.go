@@ -107,6 +107,7 @@ func (this *WorkController) EditWork() {
 	if err == nil && work_id > 0 {
 		work.Id = work_id
 	}
+	work.AppId, _ = this.GetInt64("app_id", -1)
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
 	work.WorkType = this.GetString("work_type")
@@ -132,13 +133,14 @@ func (this *WorkController) EditWork() {
 }
 
 func (this *WorkController) FilterPageWorks() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	condArr["search"] = this.GetString("search")
 	condArr["search_work_type"] = this.GetString("search_work_type")
 	condArr["search_module"] = this.GetString("search_module")
-	serviceArgs := map[string]interface{}{"condArr": condArr, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
+	serviceArgs := map[string]interface{}{"app_id": app_id, "condArr": condArr, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, service.FilterPageWorkService); err == nil {
 		this.Data["json"] = &map[string]interface{}{
 			"status":            "SUCCESS",
@@ -237,8 +239,9 @@ func (this *WorkController) Download() {
 }
 
 func (this *WorkController) GetAllFiltersAndWorks() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	filterWorks, _ := models.GetAllFilterWorks()
-	modules, _ := models.QueryAllModules()
+	modules, _ := models.QueryAllModules(app_id)
 	works, _ := models.QueryAllWorks()
 	filters, _ := models.QueryAllFilters()
 	this.Data["json"] = &map[string]interface{}{

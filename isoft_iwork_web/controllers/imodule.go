@@ -61,7 +61,8 @@ func (this *WorkController) DeleteModuleById() {
 }
 
 func (this *WorkController) GetAllModules() {
-	moudles, err := models.QueryAllModules()
+	app_id, _ := this.GetInt64("app_id", -1)
+	moudles, err := models.QueryAllModules(app_id)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "moudles": moudles}
 	} else {

@@ -5,11 +5,11 @@ import (
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkrun"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/pageutil"
 	"strings"
 	"time"
 )
@@ -73,9 +73,10 @@ func FilterPageWorkService(serviceArgs map[string]interface{}) (result map[strin
 	condArr := serviceArgs["condArr"].(map[string]string)
 	offset := serviceArgs["offset"].(int)
 	current_page := serviceArgs["current_page"].(int)
+	app_id := serviceArgs["app_id"].(int64)
 	ctx := serviceArgs["ctx"].(*context.Context)
 	o := serviceArgs["o"].(orm.Ormer)
-	works, count, err := models.QueryWork(condArr, current_page, offset, o)
+	works, count, err := models.QueryWork(app_id, condArr, current_page, offset, o)
 	if err != nil {
 		return nil, err
 	}

@@ -8,6 +8,7 @@ import (
 
 type Work struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	WorkName        string    `json:"work_name" orm:"unique"`
 	WorkDesc        string    `json:"work_desc" orm:"type(text);default('')"`
 	WorkType        string    `json:"work_type"`
@@ -78,7 +79,7 @@ func QueryAllFilterAndWorks() (works []Work, err error) {
 	return
 }
 
-func QueryWork(condArr map[string]string, page int, offset int, o orm.Ormer) (works []Work, counts int64, err error) {
+func QueryWork(app_id int64, condArr map[string]string, page int, offset int, o orm.Ormer) (works []Work, counts int64, err error) {
 	qs := o.QueryTable("work")
 	var cond = orm.NewCondition()
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
@@ -96,7 +97,9 @@ func QueryWork(condArr map[string]string, page int, offset int, o orm.Ormer) (wo
 	if searchModule, ok := condArr["search_module"]; ok && searchModule != "" && searchModule != "all" {
 		cond = cond.And("module_name", searchModule)
 	}
-
+	if app_id > 0 {
+		cond = cond.And("app_id", app_id)
+	}
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()
 	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)

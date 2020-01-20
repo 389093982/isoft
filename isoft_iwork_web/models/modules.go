@@ -17,9 +17,13 @@ type Module struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-func QueryAllModules() (modules []Module, err error) {
+func QueryAllModules(app_id int64) (modules []Module, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("module").All(&modules)
+	qs := o.QueryTable("module")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.All(&modules)
 	return
 }
 

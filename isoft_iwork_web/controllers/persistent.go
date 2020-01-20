@@ -65,7 +65,7 @@ func persistentAuditTasksToFile() {
 }
 
 func persistentModulesToFile() {
-	modules, _ := models.QueryAllModules()
+	modules, _ := models.QueryAllModules(-1)
 	for _, module := range modules {
 		filepath := path.Join(persistentDirPath, "modules", fmt.Sprintf(`%s.module`, module.ModuleName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(module)), false)
