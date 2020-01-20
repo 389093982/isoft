@@ -50,12 +50,13 @@ func RunWork(serviceArgs map[string]interface{}) error {
 
 func FilterPageLogRecord(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	result = make(map[string]interface{}, 0)
+	app_id := serviceArgs["app_id"].(int64)
 	work_id := serviceArgs["work_id"].(int64)
 	offset := serviceArgs["offset"].(int)
 	current_page := serviceArgs["current_page"].(int)
 	logLevel := serviceArgs["logLevel"].(string)
 	ctx := serviceArgs["ctx"].(*context.Context)
-	runLogRecords, count, err := models.QueryRunLogRecord(work_id, logLevel, current_page, offset)
+	runLogRecords, count, err := models.QueryRunLogRecord(app_id, work_id, logLevel, current_page, offset)
 	if err != nil {
 		return nil, err
 	}

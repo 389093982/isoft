@@ -72,11 +72,12 @@ func (this *WorkController) GetLastRunLogDetail() {
 }
 
 func (this *WorkController) FilterPageLogRecord() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	work_id, _ := this.GetInt64("work_id")
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	logLevel := this.GetString("logLevel")
-	serviceArgs := map[string]interface{}{"work_id": work_id, "logLevel": logLevel, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
+	serviceArgs := map[string]interface{}{"app_id": app_id, "work_id": work_id, "logLevel": logLevel, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, service.FilterPageLogRecord); err == nil {
 		this.Data["json"] = &map[string]interface{}{
 			"status":        "SUCCESS",

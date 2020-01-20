@@ -7,6 +7,7 @@ import (
 
 type RunLogRecord struct {
 	Id              int64     `json:"id"`
+	AppId           int64     `json:"app_id"`
 	TrackingId      string    `json:"tracking_id"`
 	WorkId          int64     `json:"work_id"`
 	WorkName        string    `json:"work_name"`
@@ -63,12 +64,15 @@ func QueryRunLogRecordCount(workId int64, log_level string) (count int64, err er
 	return
 }
 
-func QueryRunLogRecord(work_id int64, logLevel string, page int, offset int) (runLogRecords []RunLogRecord, counts int64, err error) {
+func QueryRunLogRecord(app_id int64, work_id int64, logLevel string, page int, offset int) (runLogRecords []RunLogRecord, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("run_log_record")
 	if work_id > 0 {
 		work, _ := QueryWorkById(work_id, o)
 		qs = qs.Filter("work_name", work.WorkName)
+	}
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
 	}
 	if logLevel != "" {
 		qs = qs.Filter("log_level", logLevel)
