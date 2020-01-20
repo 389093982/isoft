@@ -47,6 +47,7 @@ func init() {
 func registerModel() {
 	orm.RegisterModel(new(models.CronMeta))
 	orm.RegisterModel(new(models.Resource))
+	orm.RegisterModel(new(models.AppId))
 	orm.RegisterModel(new(models.Work))
 	orm.RegisterModel(new(models.WorkStep))
 	orm.RegisterModel(new(models.RunLogRecord))

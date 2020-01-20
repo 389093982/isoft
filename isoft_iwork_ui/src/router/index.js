@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import AuditTaskList from "../components/IWork/Audit/AuditTaskList"
+import AuditDetail from "../components/IWork/Audit/AuditDetail"
 
 // es6 import 异步语法,使用异步组件加载机制减少耗时操作
 const WorkList = () => import("@/components/IWork/IWork/WorkList");
@@ -9,6 +11,7 @@ const WorkHistoryList = () => import("@/components/IWork/IHistory/WorkHistoryLis
 const RunLogDetail = () => import("@/components/IWork/IRunLog/RunLogDetail");
 const IWorkLayout = () => import("@/components/ILayout/IWorkLayout");
 const QuartzList = () => import("@/components/IWork/IQuartz/QuartzList");
+const AppidList = () => import("@/components/IWork/Appid/AppidList");
 const ResourceList = () => import("@/components/IWork/IResource/ResourceList");
 const MigrateList = () => import("@/components/IWork/IMigrate/MigrateList");
 const EditMigrate = () => import("@/components/IWork/IMigrate/EditMigrate");
@@ -19,8 +22,6 @@ const File = () => import("@/components/IWork/IFile/File");
 const DashBoard = () => import("@/components/IWork/IDashBoard/DashBoard");
 const IModuleList = () => import("@/components/IWork/IModule/IModuleList");
 const IFilterList = () => import("@/components/IWork/IFilter/IFilterList");
-import AuditTaskList from "../components/IWork/Audit/AuditTaskList"
-import AuditDetail from "../components/IWork/Audit/AuditDetail"
 
 const Element = () => import("@/components/IWork/IPlacement/Element");
 const EditElement = () => import("@/components/IWork/IPlacement/EditElement");
@@ -40,6 +41,7 @@ const IWorkRouter = [
     children: [
       {path: 'moduleList',component: IModuleList},
       {path: 'quartzList',component: QuartzList},
+      {path: 'appidList', component: AppidList},
       {path: 'resourceList',component: ResourceList},
       {path: 'workList',component: WorkList},
       {path: 'filterList',component: IFilterList},

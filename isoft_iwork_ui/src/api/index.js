@@ -15,6 +15,13 @@ export const EditQuartz = (task_name, operate) => ajax(BASE_URL+"/iwork/editQuar
 // 添加 quartz 记录
 export const AddQuartz = (task_name,task_type,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,cron_str},'POST');
 
+export const EditAppid = (params) => ajax(BASE_URL + "/iwork/editAppid", params, 'POST');
+export const QueryPageAppIdList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/queryPageAppIdList", {
+  offset,
+  current_page,
+  search
+}, 'POST');
+
 // resource 分页查询
 export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageResource", {offset,current_page,search},'POST');
 

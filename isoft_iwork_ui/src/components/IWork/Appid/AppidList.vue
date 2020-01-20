@@ -1,0 +1,91 @@
+<template>
+  <div>
+    <AppidEdit ref="appid_edit" @handleSuccess="refreshAppIdList"/>
+
+    <Table border :columns="columns1" :data="appids" size="small"></Table>
+    <Page :total="total" :page-size="offset" show-total show-sizer
+          :styles="{'text-align': 'center','margin-top': '10px'}"
+          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+  </div>
+</template>
+
+<script>
+  import {formatDate} from "../../../tools/index"
+  import {QueryPageAppIdList} from "../../../api"
+  import AppidEdit from "./AppidEdit"
+
+  export default {
+    name: "AppidList",
+    components: {AppidEdit},
+    data() {
+      return {
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
+        appids: [],
+        columns1: [
+          {
+            title: 'app_name',
+            key: 'app_name',
+            width: 130,
+          },
+          {
+            title: 'app_desc',
+            key: 'app_desc',
+            width: 350,
+          },
+          {
+            title: 'last_updated_by',
+            key: 'last_updated_by',
+            width: 150,
+          },
+          {
+            title: 'last_updated_time',
+            key: 'last_updated_time',
+            width: 150,
+            render: (h, params) => {
+              return h('div',
+                formatDate(new Date(params.row.last_updated_time), 'yyyy-MM-dd hh:mm')
+              )
+            }
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            width: 280,
+            fixed: 'right',
+            render: (h, params) => {
+              return h('div', []);
+            }
+          }
+        ],
+      }
+    },
+    methods: {
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshAppIdList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshAppIdList();
+      },
+      refreshAppIdList: async function () {
+        const result = await QueryPageAppIdList(this.offset, this.current_page, this.search);
+        if (result.status == "SUCCESS") {
+          this.appids = result.appids;
+        }
+      }
+    },
+    mounted() {
+      this.refreshAppIdList();
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

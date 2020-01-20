@@ -33,6 +33,10 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/addQuartz", wc, wc.AddQuartz, "get,post:AddQuartz")
 	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
 	registRouter("/api/iwork/editQuartz", wc, wc.EditQuartz, "get,post:EditQuartz")
+
+	registRouter("/api/iwork/editAppid", wc, wc.EditAppid, "get,post:EditAppid")
+	registRouter("/api/iwork/queryPageAppIdList", wc, wc.QueryPageAppIdList, "get,post:QueryPageAppIdList")
+
 	registRouter("/api/iwork/editResource", wc, wc.EditResource, "get,post:EditResource")
 	registRouter("/api/iwork/filterPageResource", wc, wc.FilterPageResource, "get,post:FilterPageResource")
 	registRouter("/api/iwork/deleteResource", wc, wc.DeleteResource, "get,post:DeleteResource")
