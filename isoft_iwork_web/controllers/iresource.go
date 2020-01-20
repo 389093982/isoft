@@ -2,18 +2,19 @@ package controllers
 
 import (
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/core/iworkpool"
 	"isoft/isoft_iwork_web/core/iworkutil/sftputil"
 	"isoft/isoft_iwork_web/core/iworkutil/sshutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_utils/common/pageutil"
 	"time"
 )
 
 func (this *WorkController) EditResource() {
 	var resource models.Resource
 	resource.Id, _ = this.GetInt64("resource_id", -1)
+	resource.AppId, _ = this.GetInt64("app_id", -1)
 	resource.ResourceName = this.GetString("resource_name")
 	resource.ResourceType = this.GetString("resource_type")
 	resource.ResourceUrl = this.GetString("resource_url")
@@ -53,12 +54,13 @@ func (this *WorkController) GetAllResource() {
 
 func (this *WorkController) FilterPageResource() {
 	condArr := make(map[string]string)
+	app_id, _ := this.GetInt64("app_id", -1)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	if search := this.GetString("search"); search != "" {
 		condArr["search"] = search
 	}
-	resources, count, err := models.QueryResource(condArr, current_page, offset)
+	resources, count, err := models.QueryResource(app_id, condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "resources": resources,

@@ -19,6 +19,7 @@ func RegisterOpenConnFunc(f func(driverName, dataSourceName string) (err error))
 
 type Resource struct {
 	Id               int64     `json:"id"`
+	AppId            int64     `json:"app_id"`
 	ResourceName     string    `json:"resource_name"`
 	ResourceType     string    `json:"resource_type"`
 	ResourceUrl      string    `json:"resource_url"`
@@ -44,7 +45,7 @@ func InsertOrUpdateResource(resource *Resource) (id int64, err error) {
 	return
 }
 
-func QueryResource(condArr map[string]string, page int, offset int) (resources []Resource, counts int64, err error) {
+func QueryResource(app_id int64, condArr map[string]string, page int, offset int) (resources []Resource, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("resource")
 	var cond = orm.NewCondition()
@@ -53,6 +54,7 @@ func QueryResource(condArr map[string]string, page int, offset int) (resources [
 		subCond = cond.And("resource_name__contains", search).Or("resource_type__contains", search).Or("resource_url__contains", search)
 		cond = cond.AndCond(subCond)
 	}
+	cond = cond.And("app_id", app_id)
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)

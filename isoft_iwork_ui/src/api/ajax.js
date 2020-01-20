@@ -5,7 +5,19 @@ ajax请求函数模块
 import axios from 'axios'
 import Qs from 'qs'
 
+function wrapAppId(data) {
+  let appId = localStorage.getItem("appId");
+  if (appId != null && appId != undefined) {
+    let _appId = JSON.parse(appId);
+    data.app_id = _appId.id;
+  }
+  return data;
+}
+
 export default function ajax (url, data={}, type='GET') {
+
+  data = wrapAppId(data);
+
   return new Promise(function (resolve, reject) {
     // 执行异步ajax请求
     let promise
