@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppidEdit ref="appid_edit" @handleSuccess="refreshAppIdList"/>
+    <AppidEdit ref="appid_edit" @handleSuccess="refreshAppIdList" style="margin-bottom: 5px;"/>
 
     <Table border :columns="columns1" :data="appids" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer
@@ -73,6 +73,20 @@
                     }
                   }
                 }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.chooseAppid(this.appids[params.index]);
+                    }
+                  }
+                }, '选择'),
               ]);
             }
           }
@@ -99,6 +113,10 @@
         if (result.status == "SUCCESS") {
           this.refreshAppIdList();
         }
+      },
+      chooseAppid: function (appId) {
+        localStorage.setItem("appId", JSON.stringify(appId));
+        this.$router.go(0);     // 强制刷新页面
       }
     },
     mounted() {

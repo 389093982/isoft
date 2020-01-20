@@ -4,19 +4,32 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-
 // 引用全局静态数据
-import global_ from './components/GlobalData'     //引用文件
-Vue.prototype.GLOBAL = global_                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
-
+import global_ from './components/GlobalData' //引用文件
 // 使用 iview
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-Vue.use(iView);
-
 // 使用 vue-markdown
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
+router.beforeEach((to, from, next) => {
+  if (to.path.indexOf("/iwork/appidList") >= 0) {
+    next();
+    return;
+  }
+  let appId = localStorage.getItem("appId");
+  if (appId == null || appId == undefined) {
+    alert("请先选择 AppID");
+    next("/iwork/appidList");
+  } else {
+    next();
+  }
+})
+
+Vue.prototype.GLOBAL = global_                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
+Vue.use(iView);
+
 Vue.use(mavonEditor)
 
 Vue.config.productionTip = false

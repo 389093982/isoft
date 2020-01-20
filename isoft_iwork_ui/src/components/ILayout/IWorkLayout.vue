@@ -25,6 +25,10 @@
               <Icon type="ios-paper"></Icon>
               <span @click="importProject">导入项目</span>
             </MenuItem>
+            <MenuItem name="5">
+              <Icon type="ios-paper"></Icon>
+              <span @click="toggleAppid">切换 AppID <span v-if="appId">{{appId.app_name}}</span></span>
+            </MenuItem>
           </div>
         </Menu>
       </Header>
@@ -135,6 +139,7 @@
     name: "IWorkLayout",
     data(){
       return {
+        appId: null,
       }
     },
     methods:{
@@ -149,6 +154,16 @@
         if(result.status == "SUCCESS"){
           this.$Message.success("导入成功!");
         }
+      },
+      toggleAppid: function () {
+        this.$router.push({path: "/iwork/appidList"});
+      }
+    },
+    mounted() {
+      let appId = localStorage.getItem("appId");
+      if (this.appId == null && appId != null && appId != undefined) {
+        this.appId = JSON.parse(appId);
+        this.$Message.success("已选择 AppID " + this.appId.app_name);
       }
     }
   }
@@ -173,7 +188,7 @@
     left: 20px;
   }
   .layout-nav{
-    width: 620px;
+    width: 920px;
     margin: 0 auto;
     margin-right: 20px;
   }
