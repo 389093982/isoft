@@ -202,9 +202,6 @@ func flushOneWorkCache(work_id int64, work_name string) {
 		if err = iworkcache.UpdateWorkCache(work.Id); err != nil {
 			break
 		}
-		if workCache, err := iworkcache.LoadWorkCache(work.Id); err == nil {
-			go saveHistory(workCache)
-		}
 	}
 }
 
@@ -213,9 +210,6 @@ func flushAllWorkCache() {
 	for _, work := range works {
 		if err := iworkcache.UpdateWorkCache(work.Id); err != nil {
 			break
-		}
-		if workCache, err := iworkcache.LoadWorkCache(work.Id); err == nil {
-			go saveHistory(workCache)
 		}
 	}
 }

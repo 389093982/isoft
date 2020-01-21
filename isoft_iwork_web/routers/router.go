@@ -45,8 +45,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getAllResource", wc, wc.GetAllResource, "get,post:GetAllResource")
 	registRouter("/api/iwork/getResourceById", wc, wc.GetResourceById, "get,post:GetResourceById")
 
-	registRouter("/api/iwork/filterPageWorkHistory", wc, wc.FilterPageWorkHistory, "get,post:FilterPageWorkHistory")
-	registRouter("/api/iwork/restoreFromWorkHistory", wc, wc.RestoreFromWorkHistory, "get,post:RestoreFromWorkHistory")
 	registRouter("/api/iwork/filterPageWorks", wc, wc.FilterPageWorks, "get,post:FilterPageWorks")
 	registRouter("/api/iwork/editWork", wc, wc.EditWork, "get,post:EditWork")
 	registRouter("/api/iwork/deleteOrCopyWorkById", wc, wc.DeleteOrCopyWorkById, "get,post:DeleteOrCopyWorkById")

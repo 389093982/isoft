@@ -54,7 +54,6 @@ func registerModel() {
 	orm.RegisterModel(new(models.RunLogDetail))
 	orm.RegisterModel(new(models.ValidateLogRecord))
 	orm.RegisterModel(new(models.ValidateLogDetail))
-	orm.RegisterModel(new(models.WorkHistory))
 	orm.RegisterModel(new(models.SqlMigrate))
 	orm.RegisterModel(new(models.SqlMigrateLog))
 	orm.RegisterModel(new(models.GlobalVar))
