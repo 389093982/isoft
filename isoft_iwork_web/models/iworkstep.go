@@ -148,8 +148,8 @@ func QueryAllPreStepInfo(work_id int64, work_step_id int64, o orm.Ormer) (steps 
 	return
 }
 
-func QueryAllWorkStepByWorkName(work_name string, o orm.Ormer) (steps []WorkStep, err error) {
-	work, err := QueryWorkByName(work_name, o)
+func QueryAllWorkStepByWorkName(app_id int64, work_name string, o orm.Ormer) (steps []WorkStep, err error) {
+	work, err := QueryWorkByName(app_id, work_name, o)
 	if err != nil {
 		return nil, err
 	}

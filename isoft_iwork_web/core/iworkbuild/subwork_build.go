@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func BuildAutoCreateSubWork(step models.WorkStep, o orm.Ormer, insertStartEndWorkStepNodeFunc func(work_id int64, o orm.Ormer) error) {
+func BuildAutoCreateSubWork(app_id int64, step models.WorkStep, o orm.Ormer, insertStartEndWorkStepNodeFunc func(work_id int64, o orm.Ormer) error) {
 	if step.WorkStepType != iworkconst.NODE_TYPE_WORK_SUB {
 		return
 	}
@@ -35,11 +35,11 @@ func BuildAutoCreateSubWork(step models.WorkStep, o orm.Ormer, insertStartEndWor
 				workSubNameRef = strings.TrimSuffix(workSubNameRef, ";")
 			}
 			// 自动创建子流程
-			createOrUpdateSubWork(workSubNameRef, o, insertStartEndWorkStepNodeFunc)
+			createOrUpdateSubWork(app_id, workSubNameRef, o, insertStartEndWorkStepNodeFunc)
 			workSubNameRef = iworkutil.GetSingleRelativeValueWithReg(workSubNameRef) // 去除多余的 ; 等字符
 			workSubName := strings.Replace(workSubNameRef, "$WORK.", "", -1)         // 去除前缀和多余的其它字符
 			// 维护 work 的 WorkSubId 属性
-			subWork, _ := models.QueryWorkByName(workSubName, o)
+			subWork, _ := models.QueryWorkByName(app_id, workSubName, o)
 			step.WorkSubId = subWork.Id
 			break
 		}
@@ -47,11 +47,12 @@ func BuildAutoCreateSubWork(step models.WorkStep, o orm.Ormer, insertStartEndWor
 	models.InsertOrUpdateWorkStep(&step, o)
 }
 
-func createOrUpdateSubWork(work_name string, o orm.Ormer, insertStartEndWorkStepNodeFunc func(work_id int64, o orm.Ormer) error) error {
-	if _, err := models.QueryWorkByName(work_name, orm.NewOrm()); err != nil {
+func createOrUpdateSubWork(app_id int64, work_name string, o orm.Ormer, insertStartEndWorkStepNodeFunc func(work_id int64, o orm.Ormer) error) error {
+	if _, err := models.QueryWorkByName(app_id, work_name, orm.NewOrm()); err != nil {
 		// 不存在 work 则直接创建
 		work := &models.Work{
 			WorkName:        work_name,
+			AppId:           app_id,
 			WorkDesc:        fmt.Sprintf("自动创建子流程:%s", work_name),
 			CreatedBy:       "SYSTEM",
 			CreatedTime:     time.Now(),

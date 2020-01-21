@@ -25,7 +25,7 @@ func GenerateErrorMap(err interface{}) map[string]interface{} {
 	}
 }
 
-// 示例地址: http://localhost:8086/api/iwork/httpservice/test_iblog_table_migrate?author0=admin1234567
+// 示例地址: http://localhost:8086/api/iwork/httpservice/isoft_iaas_api/test_iblog_table_migrate?author0=admin1234567
 func (this *WorkController) PublishSerivce() {
 	defer func() {
 		if err := recover(); err != nil {
@@ -34,8 +34,10 @@ func (this *WorkController) PublishSerivce() {
 			this.ServeJSON()
 		}
 	}()
+	app_name := this.Ctx.Input.Param(":app_name")
 	work_name := this.Ctx.Input.Param(":work_name")
-	workCache, err := iworkcache.GetWorkCacheWithName(work_name)
+	appId, _ := iworkcache.GetAppIdWithCache(-1, app_name)
+	workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, work_name)
 	checkError(err)
 	receiver, trackingId := this.getReceiverFromRunOrMemory(workCache)
 	if receiver != nil {

@@ -73,11 +73,11 @@ func LoadWorkCache(work_id int64) (*WorkCache, error) {
 	}
 }
 
-func GetWorkCacheWithName(work_name string) (*WorkCache, error) {
+func GetWorkCacheWithName(app_id int64, work_name string) (*WorkCache, error) {
 	if cache, ok := workCacheMap.Load(work_name); ok {
 		return cache.(*WorkCache), nil
 	}
-	work, err := models.QueryWorkByName(work_name, orm.NewOrm())
+	work, err := models.QueryWorkByName(app_id, work_name, orm.NewOrm())
 	if err != nil {
 		return nil, err
 	}
@@ -321,5 +321,29 @@ func (this *WorkCache) ParseToMultiVals(paramValue string) {
 			this.MultiVals = make(map[string][]string, 0)
 		}
 		this.MultiVals[paramValue] = multiVals
+	}
+}
+
+var appIdCacheMap sync.Map
+var appNameCacheMap sync.Map
+
+func GetAppIdWithCache(app_id int64, app_name string) (*models.AppId, error) {
+	if app_id > 0 {
+		if cache, ok := appIdCacheMap.Load(app_id); ok {
+			return cache.(*models.AppId), nil
+		}
+	}
+	if app_name != "" {
+		if cache, ok := appNameCacheMap.Load(app_name); ok {
+			return cache.(*models.AppId), nil
+		}
+	}
+	appId, err := models.GetAppId(app_id, app_name)
+	if err == nil {
+		appIdCacheMap.Store(appId.Id, &appId)
+		appNameCacheMap.Store(appId.AppName, &appId)
+		return &appId, nil
+	} else {
+		return nil, err
 	}
 }

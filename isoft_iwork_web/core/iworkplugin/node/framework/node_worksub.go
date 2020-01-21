@@ -26,7 +26,7 @@ func (this *WorkSubNode) Execute(trackingId string) {
 	// 获取子流程流程名称
 	workSubName := this.WorkCache.SubWorkNameMap[this.WorkStep.WorkStepId]
 	// 运行子流程
-	if workSubCache, err := iworkcache.GetWorkCacheWithName(workSubName); err == nil {
+	if workSubCache, err := iworkcache.GetWorkCacheWithName(this.WorkCache.Work.AppId, workSubName); err == nil {
 		this.RunOnceSubWork(workSubCache.WorkId, trackingId, this.TmpDataMap, this.DataStore)
 	} else {
 		panic(errors.Wrap(err, fmt.Sprintf("Load subWork failed for %s", workSubName)))
@@ -66,7 +66,7 @@ func (this *WorkSubNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSch
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := models.QueryAllWorkStepByWorkName(workSubName, this.getOrmer())
+		subSteps, err := models.QueryAllWorkStepByWorkName(this.WorkCache.Work.AppId, workSubName, this.getOrmer())
 		if err != nil {
 			panic(err)
 		}
@@ -100,7 +100,7 @@ func (this *WorkSubNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputS
 	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := models.QueryAllWorkStepByWorkName(workSubName, this.O)
+		subSteps, err := models.QueryAllWorkStepByWorkName(this.WorkCache.Work.AppId, workSubName, this.O)
 		if err != nil {
 			panic(err)
 		}
@@ -128,7 +128,7 @@ func (this *WorkSubNode) ValidateCustom() (checkResult []string) {
 		checkResult = append(checkResult, fmt.Sprintf("Empty workSubName was found!"))
 		return
 	}
-	work, err := models.QueryWorkByName(workSubName, orm.NewOrm())
+	work, err := models.QueryWorkByName(this.WorkCache.Work.AppId, workSubName, orm.NewOrm())
 	if err != nil {
 		checkResult = append(checkResult, fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
 		return

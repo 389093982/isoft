@@ -59,7 +59,7 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/loadPreNodeOutput", wc, wc.LoadPreNodeOutput, "get,post:LoadPreNodeOutput")
 	registRouter("/api/iwork/filterPageLogRecord", wc, wc.FilterPageLogRecord, "get,post:FilterPageLogRecord")
 	registRouter("/api/iwork/getLastRunLogDetail", wc, wc.GetLastRunLogDetail, "get,post:GetLastRunLogDetail")
-	registRouter("/api/iwork/httpservice/:work_name", wc, wc.PublishSerivce, "get,post:PublishSerivce")
+	registRouter("/api/iwork/httpservice/:app_name/:work_name", wc, wc.PublishSerivce, "get,post:PublishSerivce")
 	registRouter("/api/iwork/getRelativeWork", wc, wc.GetRelativeWork, "get,post:GetRelativeWork")
 	registRouter("/api/iwork/buildIWorkDL", wc, wc.BuildIWorkDL, "get,post:BuildIWorkDL")
 	registRouter("/api/iwork/validateWork", wc, wc.ValidateWork, "get,post:ValidateWork")

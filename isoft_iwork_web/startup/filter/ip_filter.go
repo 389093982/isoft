@@ -22,7 +22,7 @@ func IPFilterFunc(ctx *context.Context) {
 }
 
 func checkWhite(url string) bool {
-	return strings.HasPrefix(url, "/api/iwork/httpservice/")
+	return strings.HasPrefix(url, "/api/iwork/httpservice/isoft_iaas_api/")
 }
 
 func checkIp(ip string) bool {

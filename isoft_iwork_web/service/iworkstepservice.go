@@ -515,9 +515,10 @@ func BuildParentWork(work_id int64, step models.WorkStep, o orm.Ormer) {
 
 // 构建动态值,每次 build 之前需要重读 step 信息
 func BuildDynamic(work_id int64, work_step_id int64, step models.WorkStep, o orm.Ormer) {
+	work, _ := models.QueryWorkById(work_id, o)
 	step, _ = models.QueryWorkStepInfo(work_id, work_step_id, o)
 	// 自动创建子流程
-	iworkbuild.BuildAutoCreateSubWork(step, o, InsertStartEndWorkStepNode)
+	iworkbuild.BuildAutoCreateSubWork(work.AppId, step, o, InsertStartEndWorkStepNode)
 	step, _ = models.QueryWorkStepInfo(work_id, work_step_id, o)
 	// 构建动态输入值
 	iworkbuild.BuildDynamicInput(step, o)

@@ -108,7 +108,8 @@ func (this *WorkController) EditWork() {
 	if err == nil && work_id > 0 {
 		work.Id = work_id
 	}
-	work.AppId, _ = this.GetInt64("app_id", -1)
+	app_id, _ := this.GetInt64("app_id", -1)
+	work.AppId = app_id
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
 	work.WorkType = this.GetString("work_type")
@@ -123,7 +124,7 @@ func (this *WorkController) EditWork() {
 	} else {
 		serviceArgs := map[string]interface{}{"work": work}
 		if err := service.ExecuteWithTx(serviceArgs, service.EditWorkService); err == nil {
-			work, _ := models.QueryWorkByName(work.WorkName, orm.NewOrm())
+			work, _ := models.QueryWorkByName(app_id, work.WorkName, orm.NewOrm())
 			flushCache(work.Id)
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		} else {
@@ -159,11 +160,12 @@ func (this *WorkController) DeleteOrCopyWorkById() {
 	defer this.ServeJSON()
 	var err error
 	id, _ := this.GetInt64("id")
+	app_id, _ := this.GetInt64("app_id", -1)
 	operate := this.GetString("operate")
 	work, _ := models.QueryWorkById(id, orm.NewOrm())
 	if operate == "copy" {
 		o := orm.NewOrm()
-		steps, _ := models.QueryAllWorkStepByWorkName(work.WorkName, o)
+		steps, _ := models.QueryAllWorkStepByWorkName(app_id, work.WorkName, o)
 		work.Id = 0
 		work.WorkName = work.WorkName + "_copy"
 		id, err = models.InsertOrUpdateWork(&work, o)
@@ -251,6 +253,7 @@ func (this *WorkController) GetAllFiltersAndWorks() {
 
 func (this *WorkController) QueryWorkDetail() {
 	workId, _ := this.GetInt64("work_id", -1)
+	app_id, _ := this.GetInt64("app_id", -1)
 	workName := this.GetString("work_name", "")
 	var (
 		work models.Work
@@ -259,7 +262,7 @@ func (this *WorkController) QueryWorkDetail() {
 	if workId > 0 {
 		work, err = models.QueryWorkById(workId, orm.NewOrm())
 	} else if workName != "" {
-		work, err = models.QueryWorkByName(workName, orm.NewOrm())
+		work, err = models.QueryWorkByName(app_id, workName, orm.NewOrm())
 	}
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "work": work}

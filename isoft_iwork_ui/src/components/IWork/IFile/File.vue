@@ -1,6 +1,7 @@
 <template>
   <div>
-    <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="文件上传测试"/>
+    <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete"
+                 action="/api/iwork/httpservice/isoft_iaas_api/fileUpload" uploadLabel="文件上传测试"/>
 
     <Input :readonly="true" v-model.trim="uploadFilePath" readonly placeholder="上传文件路径"style="width: 300px;"></Input>
 

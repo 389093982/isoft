@@ -39,3 +39,16 @@ func DeleteAppById(id int64) error {
 	_, err := o.QueryTable("app_id").Filter("id", id).Delete()
 	return err
 }
+
+func GetAppId(app_id int64, app_name string) (appId AppId, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("app_id")
+	if app_id > 0 {
+		qs = qs.Filter("id", app_id)
+	}
+	if app_name != "" {
+		qs = qs.Filter("app_name", app_name)
+	}
+	err = qs.One(&appId)
+	return
+}

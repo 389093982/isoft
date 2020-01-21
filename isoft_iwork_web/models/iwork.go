@@ -30,8 +30,8 @@ func QueryWorkById(work_id int64, o orm.Ormer) (work Work, err error) {
 	return
 }
 
-func QueryWorkByName(work_name string, o orm.Ormer) (work Work, err error) {
-	err = o.QueryTable("work").Filter("work_name", work_name).One(&work)
+func QueryWorkByName(app_id int64, work_name string, o orm.Ormer) (work Work, err error) {
+	err = o.QueryTable("work").Filter("app_id", app_id).Filter("work_name", work_name).One(&work)
 	return
 }
 

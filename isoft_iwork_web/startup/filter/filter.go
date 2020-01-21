@@ -15,8 +15,10 @@ import (
 )
 
 func FilterFunc(ctx *context.Context) {
+	app_name := ctx.Input.Param(":app_name")
 	work_name := ctx.Input.Param(":work_name")
-	workCache, err := iworkcache.GetWorkCacheWithName(work_name)
+	appId, _ := iworkcache.GetAppIdWithCache(-1, app_name)
+	workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, work_name)
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +27,7 @@ func FilterFunc(ctx *context.Context) {
 		filterWorkName := k.(string)
 		fs := v.([]*models.Filters)
 		if intercept(fs, workCache, ctx) {
-			if workCache, err := iworkcache.GetWorkCacheWithName(filterWorkName); err == nil {
+			if workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, filterWorkName); err == nil {
 				mapData := controllers.ParseParam(ctx, workCache.Steps[0])
 				mapData[iworkconst.HTTP_REQUEST_OBJECT] = ctx.Request // 传递 request 对象
 				trackingId, receiver := iworkrun.RunOneWork(workCache.WorkId, &entry.Dispatcher{TmpDataMap: mapData})

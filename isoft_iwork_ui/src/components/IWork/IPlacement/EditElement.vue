@@ -43,7 +43,8 @@
           </FormItem>
           <FormItem prop="imgpath" v-show="checkShow('imgpath')" label="图片">
             <Input type="text" readonly="readonly" v-model="formInline.imgpath" placeholder="imgpath" style="width: 80%;"/>
-            <IFileUpload @uploadComplete="uploadComplete" action="/api/iwork/httpservice/fileUpload" uploadLabel="上传"/>
+            <IFileUpload @uploadComplete="uploadComplete" action="/api/iwork/httpservice/isoft_iaas_api/fileUpload"
+                         uploadLabel="上传"/>
           </FormItem>
           <div class="remark" v-show="showRemark && checkShow('linked_refer')">备注：linked_refer:链接地址、链接关键词等</div>
           <FormItem prop="linked_refer" v-show="checkShow('linked_refer')" label="链接信息">
@@ -71,8 +72,8 @@
   import Placement from "./Placement"
   import Element from "./Element"
   import IFileUpload from "../../Common/file/IFileUpload"
-  import {EditElement,FilterElementByPlacement,QueryElementById,QueryPlacementByName} from "../../../api"
-  import {checkEmpty,oneOf} from "../../../tools"
+  import {EditElement, FilterElementByPlacement, QueryElementById, QueryPlacementByName} from "../../../api"
+  import {checkEmpty, oneOf} from "../../../tools"
 
   export default {
     name: "EditElement",
