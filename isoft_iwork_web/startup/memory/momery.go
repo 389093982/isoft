@@ -20,8 +20,8 @@ func FlushMemoryFilter(app_id int64) {
 	for index, _ := range filters {
 		// 不存在则初始化并添加
 		// 存在则获取后添加
-		if fs, ok := FilterMap.LoadOrStore(filters[index].FilterWorkName, []*models.Filters{&filters[index]}); ok {
-			FilterMap.Store(filters[index].FilterWorkName, append(fs.([]*models.Filters), &filters[index]))
+		if fs, ok := FilterMap.LoadOrStore(string(filters[index].AppId)+"_"+filters[index].FilterWorkName, []*models.Filters{&filters[index]}); ok {
+			FilterMap.Store(string(filters[index].AppId)+"_"+filters[index].FilterWorkName, append(fs.([]*models.Filters), &filters[index]))
 		}
 	}
 }
@@ -29,13 +29,13 @@ func FlushMemoryFilter(app_id int64) {
 func FlushMemoryGlobalVar(app_id int64) {
 	globalVars := models.QueryAllGlobalVar(app_id)
 	for index, _ := range globalVars {
-		GlobalVarMap.Store(globalVars[index].Name, &globalVars[index])
+		GlobalVarMap.Store(string(globalVars[index].AppId)+"_"+globalVars[index].Name, &globalVars[index])
 	}
 }
 
 func FlushMemoryResource(app_id int64) {
 	resources := models.QueryAllResource(app_id)
 	for index, _ := range resources {
-		ResourceMap.Store(resources[index].ResourceName, &resources[index])
+		ResourceMap.Store(string(resources[index].AppId)+"_"+resources[index].ResourceName, &resources[index])
 	}
 }

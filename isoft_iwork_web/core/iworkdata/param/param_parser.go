@@ -42,7 +42,7 @@ func (this *ParamVauleParser) removeUnsupportChars() {
 	this.ParamValue = strings.Replace(this.ParamValue, "\n", "", -1)
 }
 
-func (this *ParamVauleParser) GetStaticParamValue() interface{} {
+func (this *ParamVauleParser) GetStaticParamValue(app_id int64) interface{} {
 	this.removeUnsupportChars()
 	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
 		resource_name := strings.TrimSpace(this.ParamValue)
@@ -50,7 +50,7 @@ func (this *ParamVauleParser) GetStaticParamValue() interface{} {
 		resource_name = strings.Replace(resource_name, ";", "", -1)
 		resource_name = strings.TrimSpace(resource_name)
 
-		if resource, ok := memory.ResourceMap.Load(resource_name); ok {
+		if resource, ok := memory.ResourceMap.Load(string(app_id) + "_" + resource_name); ok {
 			_resource := resource.(*models.Resource)
 			if _resource.ResourceType == "db" {
 				return _resource.ResourceDsn
@@ -89,17 +89,17 @@ func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
 }
 
 //根据步骤和参数名称获取静态参数值
-func GetStaticParamValueWithStep(paramName string, step *models.WorkStep) interface{} {
+func GetStaticParamValueWithStep(app_id int64, paramName string, step *models.WorkStep) interface{} {
 	paramNameParser := &ParamNameParser{
 		ParamName: paramName,
 		Step:      step,
 	}
-	return GetStaticParamValue(paramNameParser.ParseAndGetRelativeParamValue())
+	return GetStaticParamValue(app_id, paramNameParser.ParseAndGetRelativeParamValue())
 }
 
-func GetStaticParamValue(paramValue string) interface{} {
+func GetStaticParamValue(app_id int64, paramValue string) interface{} {
 	paramValueParser := &ParamVauleParser{
 		ParamValue: paramValue,
 	}
-	return paramValueParser.GetStaticParamValue()
+	return paramValueParser.GetStaticParamValue(app_id)
 }

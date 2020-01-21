@@ -34,7 +34,7 @@ func (this *AssignVarNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputS
 }
 
 func (this *AssignVarNode) getAssignNodeName() string {
-	assign_node := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"assign_node", this.WorkStep).(string)
+	assign_node := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"assign_node", this.WorkStep).(string)
 	assign_node_name := assign_node[strings.LastIndex(assign_node, "$")+1 : strings.LastIndex(assign_node, ";")]
 	return assign_node_name
 }

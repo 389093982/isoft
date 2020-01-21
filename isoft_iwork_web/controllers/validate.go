@@ -109,7 +109,7 @@ func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models
 	wg.Add(len(steps))
 	for _, step := range steps {
 		go func(step models.WorkStep) {
-			validateStep(&step, logCh, &wg)
+			validateStep(work, &step, logCh, &wg)
 		}(step)
 	}
 	wg.Wait()
@@ -147,7 +147,7 @@ func parseToValidateLogDetail(step *models.WorkStep, err interface{}) *models.Va
 }
 
 // 校验单个 step,并将校验不通过的信息放入 logCh 中
-func validateStep(step *models.WorkStep, logCh chan *models.ValidateLogDetail, stepWg *sync.WaitGroup) {
+func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.ValidateLogDetail, stepWg *sync.WaitGroup) {
 	defer stepWg.Done()
 	defer func() {
 		if err := recover(); err != nil {
@@ -155,7 +155,7 @@ func validateStep(step *models.WorkStep, logCh chan *models.ValidateLogDetail, s
 		}
 	}()
 
-	for _, checkResult := range getCheckResultsForStep(step) {
+	for _, checkResult := range getCheckResultsForStep(work, step) {
 		var paramName, checkResultMsg string
 		checkResultMap := make(map[string]string)
 		if err := json.Unmarshal([]byte(checkResult), &checkResultMap); err == nil {
@@ -175,7 +175,7 @@ func validateStep(step *models.WorkStep, logCh chan *models.ValidateLogDetail, s
 	}
 }
 
-func getCheckResultsForStep(step *models.WorkStep) (checkResult []string) {
+func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResult []string) {
 	checkResult = make([]string, 0)
 	checkResultCh := make(chan string, 10)
 	wg := new(sync.WaitGroup)
@@ -189,7 +189,7 @@ func getCheckResultsForStep(step *models.WorkStep) (checkResult []string) {
 	}()
 	go func() {
 		defer wg.Done()
-		checkVariableRelationShip(step, checkResultCh)
+		checkVariableRelationShip(work, step, checkResultCh)
 	}()
 	go func() {
 		defer wg.Done()
@@ -217,7 +217,7 @@ func CheckCustom(step *models.WorkStep) (checkResult []string) {
 }
 
 // 校验变量的引用关系
-func checkVariableRelationShip(step *models.WorkStep, checkResultCh chan string) {
+func checkVariableRelationShip(work *models.Work, step *models.WorkStep, checkResultCh chan string) {
 	defer func() {
 		if err := recover(); err != nil {
 			checkResultCh <- errorutil.ToError(err).Error()
@@ -225,12 +225,12 @@ func checkVariableRelationShip(step *models.WorkStep, checkResultCh chan string)
 	}()
 	inputSchema := node.GetCacheParamInputSchema(step)
 	for _, item := range inputSchema.ParamInputSchemaItems {
-		checkVariableRelationShipDetail(item, step.WorkId, step.WorkStepId, checkResultCh)
+		checkVariableRelationShipDetail(work.AppId, item, step.WorkId, step.WorkStepId, checkResultCh)
 	}
 	return
 }
 
-func checkVariableRelationShipDetail(item *iworkmodels.ParamInputSchemaItem, work_id, work_step_id int64, checkResultCh chan string) {
+func checkVariableRelationShipDetail(app_id int64, item *iworkmodels.ParamInputSchemaItem, work_id, work_step_id int64, checkResultCh chan string) {
 	// 根据正则找到关联的节点名和字段名
 	refers := iworkutil.GetRelativeValueWithReg(item.ParamValue)
 	if len(refers) > 0 {
@@ -242,7 +242,7 @@ func checkVariableRelationShipDetail(item *iworkmodels.ParamInputSchemaItem, wor
 				continue
 			}
 			if referNodeName == "Global" {
-				checkVariableRelationShipForGlobal(item.ParamName, referFiledName, checkResultCh)
+				checkVariableRelationShipForGlobal(app_id, item.ParamName, referFiledName, checkResultCh)
 			} else {
 				checkVariableRelationShipForNode(item.ParamName, referNodeName, referFiledName, preStepNodeNames, checkResultCh, work_id)
 			}
@@ -280,8 +280,8 @@ func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 	return result
 }
 
-func checkVariableRelationShipForGlobal(paramName, referFiledName string, checkResultCh chan string) {
-	if _, ok := memory.GlobalVarMap.Load(referFiledName); !ok {
+func checkVariableRelationShipForGlobal(app_id int64, paramName, referFiledName string, checkResultCh chan string) {
+	if _, ok := memory.GlobalVarMap.Load(string(app_id) + "_" + referFiledName); !ok {
 		bytes, _ := json.Marshal(&map[string]string{
 			"paramName":      paramName,
 			"checkResultMsg": fmt.Sprintf("Invalid referFiledName relationship for %s was found!", referFiledName),

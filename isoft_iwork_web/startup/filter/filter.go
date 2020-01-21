@@ -24,7 +24,7 @@ func FilterFunc(ctx *context.Context) {
 	}
 	// TODO 是否有序？
 	memory.FilterMap.Range(func(k, v interface{}) bool {
-		filterWorkName := k.(string)
+		filterWorkName := strings.TrimPrefix(k.(string), string(appId.Id)+"_")
 		fs := v.([]*models.Filters)
 		if intercept(fs, workCache, ctx) {
 			if workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, filterWorkName); err == nil {

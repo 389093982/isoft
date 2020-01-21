@@ -1,12 +1,12 @@
 package http
 
 import (
-	"isoft/isoft_utils/common/httputil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/httputil"
 	"net/http"
 	"strings"
 )
@@ -18,14 +18,14 @@ type HttpRequestParserNode struct {
 
 func (this *HttpRequestParserNode) Execute(trackingId string) {
 	request := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_OBJECT].(*http.Request)
-	headers := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
+	headers := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
 	headerSlice := strings.Split(headers, ",")
 	paramMap := make(map[string]interface{}, 0)
 	for _, header := range headerSlice {
 		headerVal := request.Header.Get(header)
 		paramMap["header_"+header] = headerVal
 	}
-	cookies := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
+	cookies := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
 	cookieSlice := strings.Split(cookies, ",")
 	for _, cookie := range cookieSlice {
 		if cookieVal, err := request.Cookie(cookie); err == nil {
@@ -51,8 +51,8 @@ func (this *HttpRequestParserNode) GetDefaultParamOutputSchema() *iworkmodels.Pa
 
 func (this *HttpRequestParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	headers := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
-	cookies := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
+	headers := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
+	cookies := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
 	pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, parseToItems(headers, "header_")...)
 	pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, parseToItems(cookies, "cookie_")...)
 	return pos

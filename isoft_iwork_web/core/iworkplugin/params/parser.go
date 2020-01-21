@@ -290,7 +290,7 @@ func (this *SimpleParser) parseParamVauleFromResource() interface{} {
 // 尽量从缓存中获取
 func (this *SimpleParser) parseParamVauleFromGlobalVar() interface{} {
 	gvName := strings.TrimPrefix(this.paramVaule, "$Global.")
-	if gv, ok := memory.GlobalVarMap.Load(gvName); ok {
+	if gv, ok := memory.GlobalVarMap.Load(string(this.DataStore.WC.Work.AppId) + "_" + gvName); ok {
 		return gv.(*models.GlobalVar).Value
 	} else {
 		panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))

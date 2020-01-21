@@ -3,7 +3,6 @@ package sql
 import (
 	"errors"
 	"fmt"
-	"isoft/isoft_utils/common/pageutil"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
@@ -14,6 +13,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iwork_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/pageutil"
 	"reflect"
 	"strings"
 )
@@ -110,10 +110,10 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutput
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	// 输出 metadata
-	pos, _ := getMetaDataQuietlyForQuery(this.WorkStep)
+	pos, _ := getMetaDataQuietlyForQuery(this.WorkCache.Work.AppId, this.WorkStep)
 	// 输出分页信息
-	current_page := param.GetStaticParamValueWithStep(iworkconst.NUMBER_PREFIX+"current_page?", this.WorkStep).(string)
-	page_size := param.GetStaticParamValueWithStep(iworkconst.NUMBER_PREFIX+"page_size?", this.WorkStep).(string)
+	current_page := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.NUMBER_PREFIX+"current_page?", this.WorkStep).(string)
+	page_size := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.NUMBER_PREFIX+"page_size?", this.WorkStep).(string)
 	if current_page != "" && page_size != "" {
 		items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: iworkconst.COMPLEX_PREFIX + "paginator"})
@@ -129,30 +129,30 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutput
 }
 
 func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkCache.Work.AppId, this.WorkStep)
 	//validateSqlBindingParamCount(this.WorkStep)
 	//validateTotalSqlBindingParamCount(this.WorkStep)
 	return
 }
 
-func validateTotalSqlBindingParamCount(step *models.WorkStep) {
-	total_sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"total_sql?", step).(string)
-	sql_binding := param.GetStaticParamValueWithStep(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
+func validateTotalSqlBindingParamCount(app_id int64, step *models.WorkStep) {
+	total_sql := param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"total_sql?", step).(string)
+	sql_binding := param.GetStaticParamValueWithStep(app_id, iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(total_sql, "?")+2 != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
 	}
 }
 
-func validateSqlBindingParamCount(step *models.WorkStep) {
-	sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"sql", step).(string)
-	sql_binding := param.GetStaticParamValueWithStep(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
+func validateSqlBindingParamCount(app_id int64, step *models.WorkStep) {
+	sql := param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"sql", step).(string)
+	sql_binding := param.GetStaticParamValueWithStep(app_id, iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(sql, "?") != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
 	}
 }
 
-func validateAndGetDataStoreName(step *models.WorkStep) string {
-	dataSourceName := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"db_conn", step).(string)
+func validateAndGetDataStoreName(app_id int64, step *models.WorkStep) string {
+	dataSourceName := param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"db_conn", step).(string)
 	if strings.TrimSpace(dataSourceName) == "" {
 		panic("Invalid param for db_conn! Can't resolve it!")
 	}
@@ -178,18 +178,18 @@ func renderMetaData(columnNames []string) *iworkmodels.ParamOutputSchema {
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func getMetaDataQuietlyForQuery(step *models.WorkStep) (*iworkmodels.ParamOutputSchema, []string) {
+func getMetaDataQuietlyForQuery(app_id int64, step *models.WorkStep) (*iworkmodels.ParamOutputSchema, []string) {
 	var columnNames, namings []string
-	columnNamesStr := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"columnNames?", step).(string)
+	columnNamesStr := param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"columnNames?", step).(string)
 	if columnNamesStr != "" {
 		columnNames = strings.Split(columnNamesStr, ",")
 	} else {
-		metadataSql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"metadata_sql?", step).(string)
+		metadataSql := param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"metadata_sql?", step).(string)
 		if strings.TrimSpace(metadataSql) == "" {
-			metadataSql = param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"sql", step).(string)
+			metadataSql = param.GetStaticParamValueWithStep(app_id, iworkconst.STRING_PREFIX+"sql", step).(string)
 		}
 		metadataSql, namings = parseNamingSql(metadataSql)
-		dataSourceName := validateAndGetDataStoreName(step)
+		dataSourceName := validateAndGetDataStoreName(app_id, step)
 		columnNames = sqlutil.GetMetaDatas(metadataSql, dataSourceName)
 	}
 	return renderMetaData(columnNames), namings

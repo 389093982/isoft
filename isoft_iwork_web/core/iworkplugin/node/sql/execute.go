@@ -90,7 +90,7 @@ func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutp
 }
 
 func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkCache.Work.AppId, this.WorkStep)
 	return []string{}
 }
 

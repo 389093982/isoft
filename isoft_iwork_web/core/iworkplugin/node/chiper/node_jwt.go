@@ -46,7 +46,7 @@ func (this *CreateJWTNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputS
 
 func (this *CreateJWTNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
-	claims := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
+	claims := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
 	claimArr := strings.Split(claims, ",")
 	for _, claim := range claimArr {
 		items = append(items, &iworkmodels.ParamInputSchemaItem{ParamName: iworkconst.STRING_PREFIX + strings.TrimSpace(claim)})
@@ -84,7 +84,7 @@ func (this *ParseJWTNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 
 func (this *ParseJWTNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	_claimsMap := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
+	_claimsMap := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
 	claimArr := strings.Split(_claimsMap, ",")
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	for _, claim := range claimArr {

@@ -27,7 +27,7 @@ func (this *DefineVarNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputS
 
 func (this *DefineVarNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	define_vars := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"define_vars", this.WorkStep).(string)
+	define_vars := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"define_vars", this.WorkStep).(string)
 	if define_vars != "" {
 		items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 		for _, define_var := range strings.Split(define_vars, ",") {

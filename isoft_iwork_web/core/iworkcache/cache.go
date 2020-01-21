@@ -61,7 +61,7 @@ func UpdateWorkCache(work_id int64) (err error) {
 	cache := &WorkCache{WorkId: work_id}
 	cache.FlushCache()
 	workCacheMap.Store(work_id, cache)
-	workCacheMap.Store(cache.Work.WorkName, cache)
+	workCacheMap.Store(string(cache.Work.AppId)+"_"+cache.Work.WorkName, cache)
 	return
 }
 
@@ -74,7 +74,7 @@ func LoadWorkCache(work_id int64) (*WorkCache, error) {
 }
 
 func GetWorkCacheWithName(app_id int64, work_name string) (*WorkCache, error) {
-	if cache, ok := workCacheMap.Load(work_name); ok {
+	if cache, ok := workCacheMap.Load(string(app_id) + "_" + work_name); ok {
 		return cache.(*WorkCache), nil
 	}
 	work, err := models.QueryWorkByName(app_id, work_name, orm.NewOrm())

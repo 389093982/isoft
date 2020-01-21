@@ -56,7 +56,7 @@ func (this *DoReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamO
 
 func (this *DoReceiveFileNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	calHash := param.GetStaticParamValueWithStep(iworkconst.BOOL_PREFIX+"calHash?", this.WorkStep).(string)
+	calHash := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.BOOL_PREFIX+"calHash?", this.WorkStep).(string)
 	if calHash == "true" || calHash == "`true`" {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: "hash",
