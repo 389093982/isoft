@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	beego.InsertFilter("/api/iwork/httpservice/isoft_iaas_api/*", beego.BeforeExec, filter.FilterFunc)
+	beego.InsertFilter("/api/iwork/httpservice/*", beego.BeforeExec, filter.FilterFunc)
 	beego.InsertFilter("/*", beego.BeforeExec, filter.IPFilterFunc)
 
 	memory.FlushAll()

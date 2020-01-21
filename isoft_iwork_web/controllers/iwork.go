@@ -177,7 +177,7 @@ func (this *WorkController) DeleteOrCopyWorkById() {
 	} else {
 		serviceArgs := map[string]interface{}{"id": id}
 		if err = service.ExecuteWithTx(serviceArgs, service.DeleteWorkByIdService); err == nil {
-			flushOneWorkCache(id, work.WorkName)
+			flushOneWorkCache(id)
 		}
 	}
 	if err == nil {
@@ -187,7 +187,7 @@ func (this *WorkController) DeleteOrCopyWorkById() {
 	}
 }
 
-func flushOneWorkCache(work_id int64, work_name string) {
+func flushOneWorkCache(work_id int64) {
 	works := make([]models.Work, 0)
 	work, err := models.QueryWorkById(work_id, orm.NewOrm())
 	if err != nil && errors.As(err, &orm.ErrNoRows) {
@@ -218,7 +218,7 @@ func flushAllWorkCache(app_id int64) {
 
 func flushCache(app_id int64, workId ...int64) (err error) {
 	if len(workId) > 0 {
-		flushOneWorkCache(workId[0], "")
+		flushOneWorkCache(workId[0])
 	} else {
 		flushAllWorkCache(app_id)
 	}

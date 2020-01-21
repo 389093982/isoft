@@ -43,6 +43,10 @@ func FlushMemoryResource(app_id int64) {
 var appIdCacheMap sync.Map
 var appNameCacheMap sync.Map
 
+func ReloadAppId(app_id int64) {
+	GetAppIdWithCache(app_id, "")
+}
+
 func GetAppIdWithCache(app_id int64, app_name string) (*models.AppId, error) {
 	if app_id > 0 {
 		if cache, ok := appIdCacheMap.Load(app_id); ok {

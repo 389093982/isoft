@@ -13,7 +13,7 @@ func init() {
 }
 
 func IPFilterFunc(ctx *context.Context) {
-	if checkWhite(ctx.Request.URL.String()) {
+	if isWhiteUrl(ctx.Request.URL.String()) {
 		return
 	}
 	if !checkIp(ctx.Input.IP()) {
@@ -21,8 +21,8 @@ func IPFilterFunc(ctx *context.Context) {
 	}
 }
 
-func checkWhite(url string) bool {
-	return strings.HasPrefix(url, "/api/iwork/httpservice/isoft_iaas_api/")
+func isWhiteUrl(url string) bool {
+	return strings.HasPrefix(url, "/api/iwork/httpservice/")
 }
 
 func checkIp(ip string) bool {
