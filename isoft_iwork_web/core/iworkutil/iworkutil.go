@@ -52,7 +52,7 @@ func DecodeBase64String(encodeString string) (bytes []byte) {
 	return
 }
 
-func GetParamValueForEntity(paramValue string) string {
+func GetParamValueForEntity(app_id int64, paramValue string) string {
 	//paramValue = strings.TrimSpace(paramValue)
 	//paramValue = strings.Replace(paramValue, ";", "", -1)
 	//if !strings.HasPrefix(paramValue, "$Entity.") {

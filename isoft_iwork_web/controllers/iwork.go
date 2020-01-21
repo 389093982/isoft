@@ -125,7 +125,7 @@ func (this *WorkController) EditWork() {
 		serviceArgs := map[string]interface{}{"work": work}
 		if err := service.ExecuteWithTx(serviceArgs, service.EditWorkService); err == nil {
 			work, _ := models.QueryWorkByName(app_id, work.WorkName, orm.NewOrm())
-			flushCache(work.Id)
+			flushCache(app_id, work.Id)
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		} else {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
@@ -207,8 +207,8 @@ func flushOneWorkCache(work_id int64, work_name string) {
 	}
 }
 
-func flushAllWorkCache() {
-	works := models.QueryAllWorkInfo(orm.NewOrm())
+func flushAllWorkCache(app_id int64) {
+	works := models.QueryAllWorkInfo(app_id, orm.NewOrm())
 	for _, work := range works {
 		if err := iworkcache.UpdateWorkCache(work.Id); err != nil {
 			break
@@ -216,11 +216,11 @@ func flushAllWorkCache() {
 	}
 }
 
-func flushCache(workId ...int64) (err error) {
+func flushCache(app_id int64, workId ...int64) (err error) {
 	if len(workId) > 0 {
 		flushOneWorkCache(workId[0], "")
 	} else {
-		flushAllWorkCache()
+		flushAllWorkCache(app_id)
 	}
 	return
 }

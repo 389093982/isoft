@@ -59,7 +59,7 @@ func (this *EntityParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOu
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		if !strings.HasSuffix(item.ParamName, "_data") { // _data 需要排除
 			// 从用户输入值中提取实体类字段详细信息
-			if entityFieldStr := iworkutil.GetParamValueForEntity(item.ParamValue); strings.TrimSpace(entityFieldStr) != "" {
+			if entityFieldStr := iworkutil.GetParamValueForEntity(this.WorkCache.Work.AppId, item.ParamValue); strings.TrimSpace(entityFieldStr) != "" {
 				for _, entityField := range strings.Split(entityFieldStr, ",") {
 					// 每个字段放入 items 中
 					items = append(items, iworkmodels.ParamOutputSchemaItem{

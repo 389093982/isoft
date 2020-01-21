@@ -20,8 +20,12 @@ type Work struct {
 	LastUpdatedTime time.Time `xml:"-" json:"last_updated_time"`
 }
 
-func QueryAllWorkInfo(o orm.Ormer) (works []Work) {
-	o.QueryTable("work").OrderBy("id").All(&works)
+func QueryAllWorkInfo(app_id int64, o orm.Ormer) (works []Work) {
+	qs := o.QueryTable("work")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	qs.OrderBy("id").All(&works)
 	return
 }
 

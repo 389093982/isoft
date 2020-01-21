@@ -230,7 +230,7 @@ type SimpleParser struct {
 	DataStore  *datastore.DataStore
 }
 
-func (this *SimpleParser) parseParamVauleWithReplaceProviderNode(replaceMap ...map[string]interface{}) interface{} {
+func (this *SimpleParser) parseParamVauleWithReplaceProviderNode(app_id int64, replaceMap ...map[string]interface{}) interface{} {
 	for replaceProviderNodeName, replaceProviderData := range replaceMap[0] {
 		replaceProviderNodeName = strings.ReplaceAll(replaceProviderNodeName, ";", "")
 		if strings.HasPrefix(this.paramVaule, replaceProviderNodeName) {
@@ -243,7 +243,7 @@ func (this *SimpleParser) parseParamVauleWithReplaceProviderNode(replaceMap ...m
 }
 
 // paramValue 来源于前置节点
-func (this *SimpleParser) parseParamVauleWithPrefixNode() interface{} {
+func (this *SimpleParser) parseParamVauleWithPrefixNode(app_id int64) interface{} {
 	// 格式校验
 	if !strings.HasPrefix(this.paramVaule, "$") {
 		panic(errors.New(fmt.Sprintf("%s ~ %s is not start with $", this.paramName, this.paramVaule)))
@@ -272,9 +272,9 @@ func (this *SimpleParser) parseParamVauleWithPrefixNode() interface{} {
 }
 
 // 尽量从缓存中获取
-func (this *SimpleParser) parseParamVauleFromResource() interface{} {
+func (this *SimpleParser) parseParamVauleFromResource(app_id int64) interface{} {
 	resource_name := strings.TrimPrefix(this.paramVaule, "$RESOURCE.")
-	if resource, ok := memory.ResourceMap.Load(resource_name); ok {
+	if resource, ok := memory.ResourceMap.Load(string(app_id) + "_" + resource_name); ok {
 		resource := resource.(*models.Resource)
 		if resource.ResourceType == "db" {
 			return resource.ResourceDsn
@@ -288,9 +288,9 @@ func (this *SimpleParser) parseParamVauleFromResource() interface{} {
 }
 
 // 尽量从缓存中获取
-func (this *SimpleParser) parseParamVauleFromGlobalVar() interface{} {
+func (this *SimpleParser) parseParamVauleFromGlobalVar(app_id int64) interface{} {
 	gvName := strings.TrimPrefix(this.paramVaule, "$Global.")
-	if gv, ok := memory.GlobalVarMap.Load(string(this.DataStore.WC.Work.AppId) + "_" + gvName); ok {
+	if gv, ok := memory.GlobalVarMap.Load(string(app_id) + "_" + gvName); ok {
 		return gv.(*models.GlobalVar).Value
 	} else {
 		panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))
@@ -299,23 +299,24 @@ func (this *SimpleParser) parseParamVauleFromGlobalVar() interface{} {
 
 // 是直接参数,不需要函数进行特殊处理
 func (this *SimpleParser) parseParamValue(replaceMap ...map[string]interface{}) interface{} {
+	app_id := this.DataStore.WC.Work.AppId
 	this.paramVaule = iworkfunc.DncodeSpecialForParamVaule(this.paramVaule)
 	// 变量
 	if strings.HasPrefix(strings.ToUpper(this.paramVaule), "$GLOBAL.") {
-		return this.parseParamVauleFromGlobalVar()
+		return this.parseParamVauleFromGlobalVar(app_id)
 	} else if strings.HasPrefix(strings.ToUpper(this.paramVaule), "$RESOURCE.") {
-		return this.parseParamVauleFromResource()
+		return this.parseParamVauleFromResource(app_id)
 	} else if strings.HasPrefix(strings.ToUpper(this.paramVaule), "$WORK.") {
 		return iworkutil.GetWorkSubNameFromParamValue(this.paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(this.paramVaule), "$ENTITY.") {
-		return iworkutil.GetParamValueForEntity(this.paramVaule)
+		return iworkutil.GetParamValueForEntity(app_id, this.paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(this.paramVaule), "$") {
 		if len(replaceMap) > 0 {
-			if paramVaule := this.parseParamVauleWithReplaceProviderNode(replaceMap...); paramVaule != nil {
+			if paramVaule := this.parseParamVauleWithReplaceProviderNode(app_id, replaceMap...); paramVaule != nil {
 				return paramVaule
 			}
 		}
-		return this.parseParamVauleWithPrefixNode()
+		return this.parseParamVauleWithPrefixNode(app_id)
 	} else if strings.HasPrefix(this.paramVaule, "`") && strings.HasSuffix(this.paramVaule, "`") {
 		// 字符串
 		return this.paramVaule[1 : len(this.paramVaule)-1]

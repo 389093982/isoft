@@ -31,11 +31,11 @@ func LoadResourceInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	return pos
 }
 
-func LoadWorkInfo() *iworkmodels.ParamOutputSchema {
+func LoadWorkInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
-	works := models.QueryAllWorkInfo(orm.NewOrm())
+	works := models.QueryAllWorkInfo(app_id, orm.NewOrm())
 	for _, work := range works {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: work.WorkName,
@@ -57,7 +57,7 @@ func LoadGlobalVarInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	return pos
 }
 
-func LoadErrorInfo() *iworkmodels.ParamOutputSchema {
+func LoadErrorInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
@@ -80,11 +80,11 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	pos := LoadResourceInfo(app_id)
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
 	// 加载 work 参
-	pos = LoadWorkInfo()
+	pos = LoadWorkInfo(app_id)
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$WORK"))
 
 	// 加载 error 参数
-	pos = LoadErrorInfo()
+	pos = LoadErrorInfo(app_id)
 	prePosTreeNodeArr = append(prePosTreeNodeArr, pos.RenderToTreeNodes("$Error"))
 
 	// 加载 globalVar 参数

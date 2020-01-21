@@ -12,6 +12,7 @@ import (
 
 func (this *WorkController) AddWorkStep() {
 	serviceArgs := make(map[string]interface{}, 0)
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	serviceArgs["work_id"] = work_id
 	serviceArgs["work_step_id"], _ = this.GetInt64("work_step_id")
@@ -21,11 +22,12 @@ func (this *WorkController) AddWorkStep() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
 func (this *WorkController) EditWorkStepBaseInfo() {
+	app_id, _ := this.GetInt64("app_id", -1)
 	work_id, _ := this.GetInt64("work_id", -1)
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	serviceArgs := map[string]interface{}{
@@ -41,7 +43,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
@@ -64,6 +66,7 @@ func (this *WorkController) WorkStepList() {
 }
 
 func (this *WorkController) CopyWorkStepByWorkStepId() {
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
@@ -72,11 +75,12 @@ func (this *WorkController) CopyWorkStepByWorkStepId() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
 func (this *WorkController) DeleteWorkStepByWorkStepId() {
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
@@ -85,7 +89,7 @@ func (this *WorkController) DeleteWorkStepByWorkStepId() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
@@ -124,6 +128,7 @@ func (this *WorkController) GetAllWorkStepInfo() {
 }
 
 func (this *WorkController) ChangeWorkStepOrder() {
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	_type := this.GetString("type")
@@ -133,7 +138,7 @@ func (this *WorkController) ChangeWorkStepOrder() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
@@ -152,6 +157,7 @@ func (this *WorkController) LoadPreNodeOutput() {
 
 func (this *WorkController) RefactorWorkStepInfo() {
 	serviceArgs := make(map[string]interface{}, 0)
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	serviceArgs["work_id"] = work_id
 	serviceArgs["refactor_worksub_name"] = this.GetString("refactor_worksub_name")
@@ -161,12 +167,13 @@ func (this *WorkController) RefactorWorkStepInfo() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
 func (this *WorkController) BatchChangeIndent() {
 	serviceArgs := make(map[string]interface{}, 0)
+	app_id, _ := this.GetInt64("app_id")
 	work_id, _ := this.GetInt64("work_id")
 	serviceArgs["work_id"] = work_id
 	serviceArgs["mod"] = this.GetString("mod")
@@ -176,11 +183,12 @@ func (this *WorkController) BatchChangeIndent() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(work_id)
+	flushCache(app_id, work_id)
 	this.ServeJSON()
 }
 
 func (this *WorkController) EditWorkStepParamInfo() {
+	app_id, _ := this.GetInt64("app_id")
 	workId, _ := this.GetInt64("work_id")
 	workStepId, _ := this.GetInt64("work_step_id", -1)
 	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
@@ -208,7 +216,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	flushCache(workId)
+	flushCache(app_id, workId)
 	this.ServeJSON()
 }
 
