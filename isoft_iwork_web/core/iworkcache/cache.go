@@ -323,27 +323,3 @@ func (this *WorkCache) ParseToMultiVals(paramValue string) {
 		this.MultiVals[paramValue] = multiVals
 	}
 }
-
-var appIdCacheMap sync.Map
-var appNameCacheMap sync.Map
-
-func GetAppIdWithCache(app_id int64, app_name string) (*models.AppId, error) {
-	if app_id > 0 {
-		if cache, ok := appIdCacheMap.Load(app_id); ok {
-			return cache.(*models.AppId), nil
-		}
-	}
-	if app_name != "" {
-		if cache, ok := appNameCacheMap.Load(app_name); ok {
-			return cache.(*models.AppId), nil
-		}
-	}
-	appId, err := models.GetAppId(app_id, app_name)
-	if err == nil {
-		appIdCacheMap.Store(appId.Id, &appId)
-		appNameCacheMap.Store(appId.AppName, &appId)
-		return &appId, nil
-	} else {
-		return nil, err
-	}
-}

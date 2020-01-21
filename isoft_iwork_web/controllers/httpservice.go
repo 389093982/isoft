@@ -36,7 +36,7 @@ func (this *WorkController) PublishSerivce() {
 	}()
 	app_name := this.Ctx.Input.Param(":app_name")
 	work_name := this.Ctx.Input.Param(":work_name")
-	appId, _ := iworkcache.GetAppIdWithCache(-1, app_name)
+	appId, _ := memory.GetAppIdWithCache(-1, app_name)
 	workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, work_name)
 	checkError(err)
 	receiver, trackingId := this.getReceiverFromRunOrMemory(workCache)

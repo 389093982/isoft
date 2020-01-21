@@ -17,7 +17,7 @@ import (
 func FilterFunc(ctx *context.Context) {
 	app_name := ctx.Input.Param(":app_name")
 	work_name := ctx.Input.Param(":work_name")
-	appId, _ := iworkcache.GetAppIdWithCache(-1, app_name)
+	appId, _ := memory.GetAppIdWithCache(-1, app_name)
 	workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, work_name)
 	if err != nil {
 		panic(err)
