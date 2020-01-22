@@ -19,6 +19,7 @@ func (this *WorkController) EditAppid() {
 	appid.LastUpdatedTime = time.Now()
 	if _, err := models.InsertOrUpdateAppId(&appid); err == nil {
 		memory.ReloadAppId(appid.Id)
+		memory.FlushMemoryGlobalVar(appid.Id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

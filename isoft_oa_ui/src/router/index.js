@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const RequireList = () => import("@/components/Require/RequireList");
+const RequireEdit = () => import("@/components/Require/RequireEdit");
 const OAItem = () => import("@/components/OAItem");
 const ILayout = () => import("@/components/ILayout/ILayout");
 
@@ -24,6 +25,7 @@ const OARouter = [{
   children: [
     {path: 'index', component: OAItem},
     {path: 'requireList', component: RequireList},
+    {path: 'requireEdit', component: RequireEdit},
   ]
 }];
 

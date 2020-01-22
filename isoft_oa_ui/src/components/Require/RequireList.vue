@@ -1,5 +1,7 @@
 <template>
   <div style="padding: 50px;">
+    <Button @click="$router.push({path:'/oa/requireEdit'})">新增需求</Button>
+
     <Row style="padding: 15px 0px;border-bottom: 1px solid #d7dde4;">
       <Col span="4">需求名称</Col>
       <Col span="4">需求详情</Col>

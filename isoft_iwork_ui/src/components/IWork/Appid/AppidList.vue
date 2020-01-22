@@ -1,6 +1,8 @@
 <template>
   <div>
-    <AppidEdit ref="appid_edit" @handleSuccess="refreshAppIdList" style="margin-bottom: 5px;"/>
+    <div style="margin-bottom: 5px;">
+      <AppidEdit ref="appid_edit" @handleSuccess="refreshAppIdList"/>
+    </div>
 
     <Table border :columns="columns1" :data="appids" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer
@@ -59,6 +61,20 @@
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$refs.appid_edit.initData(this.appids[params.index]);
+                    }
+                  }
+                }, '编辑'),
                 h('Button', {
                   props: {
                     type: 'error',

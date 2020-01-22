@@ -67,6 +67,10 @@
       handleReset(name) {
         this.$refs[name].resetFields();
       },
+      initData(appId) {
+        this.formValidate = appId;
+        this.$refs.triggerModal.triggerClick();
+      }
     }
   }
 </script>

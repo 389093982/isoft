@@ -24,9 +24,6 @@ func main() {
 	iworkpool.LoadAndCachePool()
 	regist.RegistNodes()
 	task.RegisterCronTask()
-
-	task.InitialData() // 初始化数据
-
 	beego.SetStaticPath("/api/files", runtimecfg.FileSavePath)
 
 	beego.Run()
