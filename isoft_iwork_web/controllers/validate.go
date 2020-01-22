@@ -30,7 +30,8 @@ func (this *WorkController) LoadValidateResult() {
 	}()
 	serviceArgs := make(map[string]interface{}, 0)
 	work_id, _ := this.GetInt64("work_id", -1)
-	validateWorks(work_id) // 触发校验
+	app_id, _ := this.GetInt64("app_id", -1)
+	validateWorks(app_id, work_id) // 触发校验
 	serviceArgs["work_id"] = work_id
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, service.LoadValidateResultService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "details": result["details"]}
@@ -42,18 +43,19 @@ func (this *WorkController) LoadValidateResult() {
 
 func (this *WorkController) ValidateWork() {
 	workId, _ := this.GetInt64("work_id", -1)
-	validateWorks(workId) // 校验全部或者只校验单个 workId
+	app_id, _ := this.GetInt64("app_id", -1)
+	validateWorks(app_id, workId) // 校验全部或者只校验单个 workId
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }
 
-func validateWorks(workId int64) {
+func validateWorks(app_id, workId int64) {
 	completeFlag := make(chan int) // 校验并记录日志完成标识
 	trackingId := stringutil.RandomUUID()
 	// 记录校验耗费时间
 	defer recordCostTimeLog(trackingId, time.Now())
 	// 待校验的所有 work 信息
-	workMap := prepareValiateWorks(workId)
+	workMap := prepareValiateWorks(app_id, workId)
 	// 记录日志
 	recordValidateLogRecord(trackingId, workId)
 	logCh := make(chan *models.ValidateLogDetail, 50) // 指定容量
@@ -75,7 +77,7 @@ func validateWorks(workId int64) {
 
 }
 
-func prepareValiateWorks(workId int64) map[models.Work][]models.WorkStep {
+func prepareValiateWorks(app_id, workId int64) map[models.Work][]models.WorkStep {
 	// 从缓存中读取
 	dataMap := make(map[models.Work][]models.WorkStep, 0)
 	if workId > 0 {
@@ -85,7 +87,7 @@ func prepareValiateWorks(workId int64) map[models.Work][]models.WorkStep {
 		}
 		dataMap[workCache.Work] = workCache.Steps
 	} else {
-		workCaches := iworkcache.GetAllWorkCache()
+		workCaches := iworkcache.GetAllWorkCache(app_id)
 		for _, workCache := range workCaches {
 			dataMap[workCache.Work] = workCache.Steps
 		}
@@ -151,7 +153,7 @@ func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.V
 	defer stepWg.Done()
 	defer func() {
 		if err := recover(); err != nil {
-			logCh <- parseToValidateLogDetail(step, err)
+			logCh <- parseToValidateLogDetail(step, errorutil.ToError(string(errorutil.PanicTrace(4))))
 		}
 	}()
 
@@ -194,7 +196,7 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 	go func() {
 		defer wg.Done()
 		// 定制化校验
-		for _, s := range CheckCustom(step) {
+		for _, s := range CheckCustom(work.AppId, step) {
 			checkResultCh <- s
 		}
 	}()
@@ -206,14 +208,14 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 	return
 }
 
-func CheckCustom(step *models.WorkStep) (checkResult []string) {
+func CheckCustom(app_id int64, step *models.WorkStep) (checkResult []string) {
 	defer func() {
 		if err := recover(); err != nil {
-			checkResult = append(checkResult, errorutil.ToError(err).Error())
+			checkResult = append(checkResult, string(errorutil.PanicTrace(4)))
 		}
 	}()
 	factory := &node.WorkStepFactory{WorkStep: step}
-	return factory.ValidateCustom()
+	return factory.ValidateCustom(app_id)
 }
 
 // 校验变量的引用关系

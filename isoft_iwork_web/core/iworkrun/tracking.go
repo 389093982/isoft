@@ -2,10 +2,10 @@ package iworkrun
 
 import (
 	"fmt"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 	"time"
 )
@@ -23,6 +23,7 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work models.Work) 
 	startup.RunLogPool.JobQueue <- func() {
 		// 记录日志
 		models.InsertRunLogRecord(&models.RunLogRecord{
+			AppId:           work.AppId,
 			TrackingId:      trackingId,
 			WorkId:          work.Id,
 			WorkName:        work.WorkName,

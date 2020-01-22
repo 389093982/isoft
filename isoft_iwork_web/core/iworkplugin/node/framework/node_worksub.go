@@ -122,13 +122,13 @@ func (this *WorkSubNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputS
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkSubNode) ValidateCustom() (checkResult []string) {
+func (this *WorkSubNode) ValidateCustom(app_id int64) (checkResult []string) {
 	workSubName := this.getWorkSubName()
 	if workSubName == "" {
 		checkResult = append(checkResult, fmt.Sprintf("Empty workSubName was found!"))
 		return
 	}
-	work, err := models.QueryWorkByName(this.WorkCache.Work.AppId, workSubName, orm.NewOrm())
+	work, err := models.QueryWorkByName(app_id, workSubName, orm.NewOrm())
 	if err != nil {
 		checkResult = append(checkResult, fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
 		return

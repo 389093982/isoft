@@ -159,8 +159,8 @@ func (this *WorkStepFactory) BuildParamNamingRelation(items []*iworkmodels.Param
 	this.getProxy().BuildParamNamingRelation(items)
 }
 
-func (this *WorkStepFactory) ValidateCustom() (checkResult []string) {
-	return this.getProxy().ValidateCustom()
+func (this *WorkStepFactory) ValidateCustom(app_id int64) (checkResult []string) {
+	return this.getProxy().ValidateCustom(app_id)
 }
 
 // 获取入参 schema

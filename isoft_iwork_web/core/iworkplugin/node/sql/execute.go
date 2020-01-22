@@ -89,8 +89,8 @@ func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutp
 	return this.BPOS1([]string{iworkconst.NUMBER_PREFIX + "affected", iworkconst.NUMBER_PREFIX + "lastInsertId"})
 }
 
-func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkCache.Work.AppId, this.WorkStep)
+func (this *SQLExecuteNode) ValidateCustom(app_id int64) (checkResult []string) {
+	validateAndGetDataStoreName(app_id, this.WorkStep)
 	return []string{}
 }
 

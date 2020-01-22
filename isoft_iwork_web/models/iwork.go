@@ -81,9 +81,13 @@ func QueryAllWorks(app_id int64) (works []Work, err error) {
 	return
 }
 
-func QueryAllFilterAndWorks() (works []Work, err error) {
+func QueryAllFilterAndWorks(app_id int64) (works []Work, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("work").All(&works)
+	qs := o.QueryTable("work")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
+	_, err = qs.All(&works)
 	return
 }
 

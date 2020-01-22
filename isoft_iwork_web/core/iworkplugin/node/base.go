@@ -65,7 +65,7 @@ func (this *BaseNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSche
 	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *BaseNode) ValidateCustom() (checkResult []string) {
+func (this *BaseNode) ValidateCustom(app_id int64) (checkResult []string) {
 	fmt.Println("execute default ValidateCustom method...")
 	return
 }

@@ -113,7 +113,7 @@ func persistentMigratesToFile() {
 }
 
 func persistentWorkCahcesToFile() {
-	workCahces := iworkcache.GetAllWorkCache()
+	workCahces := iworkcache.GetAllWorkCache(-1)
 	for _, workCahce := range workCahces {
 		filepath := path.Join(persistentDirPath, "works", fmt.Sprintf(`%s.work`, workCahce.Work.WorkName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(workCahce)), false)

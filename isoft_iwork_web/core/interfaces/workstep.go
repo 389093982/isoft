@@ -36,7 +36,7 @@ type IWorkStep interface {
 	Execute(trackingId string)
 	IParamSchemaParser
 	// 节点定制化校验函数,校验不通过会触发 panic
-	ValidateCustom() (checkResult []string)
+	ValidateCustom(app_id int64) (checkResult []string)
 }
 
 type RunOneStepArgs struct {

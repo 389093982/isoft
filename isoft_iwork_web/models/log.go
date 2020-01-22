@@ -80,7 +80,7 @@ func QueryRunLogRecord(app_id int64, work_id int64, logLevel string, page int, o
 	qs = qs.OrderBy("-last_updated_time")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
-	qs.All(&runLogRecords)
+	_, err = qs.All(&runLogRecords)
 	return
 }
 

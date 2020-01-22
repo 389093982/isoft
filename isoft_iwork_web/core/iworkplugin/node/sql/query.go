@@ -128,8 +128,8 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutput
 	return pos
 }
 
-func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkCache.Work.AppId, this.WorkStep)
+func (this *SQLQueryNode) ValidateCustom(app_id int64) (checkResult []string) {
+	validateAndGetDataStoreName(app_id, this.WorkStep)
 	//validateSqlBindingParamCount(this.WorkStep)
 	//validateTotalSqlBindingParamCount(this.WorkStep)
 	return

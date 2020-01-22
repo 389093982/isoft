@@ -95,8 +95,8 @@ func GetWorkCache(work_id int64) (*WorkCache, error) {
 	}
 }
 
-func GetAllWorkCache() []*WorkCache {
-	works, _ := models.QueryAllFilterAndWorks()
+func GetAllWorkCache(app_id int64) []*WorkCache {
+	works, _ := models.QueryAllFilterAndWorks(app_id)
 	var m sync.WaitGroup
 	for _, work := range works {
 		m.Add(1)

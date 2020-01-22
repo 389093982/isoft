@@ -36,7 +36,7 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
-  import {EditResource,GetResourceById} from "../../../api"
+  import {EditResource, GetResourceById} from "../../../api"
 
   export default {
     name: "ResourceEdit",
@@ -44,7 +44,7 @@
     data(){
       return {
         formValidate: {
-          resource_id:-1,
+          resource_id: 0,
           resource_name: '',
           resource_type: '',
           resource_url: '',
@@ -100,6 +100,7 @@
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
               this.$refs.triggerModal.hideModal();
+              this.handleReset('formValidate');
               // 通知父组件添加成功
               this.$emit('handleSuccess');
             }else{
