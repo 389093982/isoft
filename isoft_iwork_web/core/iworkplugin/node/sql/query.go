@@ -110,10 +110,10 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutput
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	// 输出 metadata
-	pos, _ := getMetaDataQuietlyForQuery(this.WorkCache.Work.AppId, this.WorkStep)
+	pos, _ := getMetaDataQuietlyForQuery(this.AppId, this.WorkStep)
 	// 输出分页信息
-	current_page := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.NUMBER_PREFIX+"current_page?", this.WorkStep).(string)
-	page_size := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.NUMBER_PREFIX+"page_size?", this.WorkStep).(string)
+	current_page := param.GetStaticParamValueWithStep(this.AppId, iworkconst.NUMBER_PREFIX+"current_page?", this.WorkStep).(string)
+	page_size := param.GetStaticParamValueWithStep(this.AppId, iworkconst.NUMBER_PREFIX+"page_size?", this.WorkStep).(string)
 	if current_page != "" && page_size != "" {
 		items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: iworkconst.COMPLEX_PREFIX + "paginator"})

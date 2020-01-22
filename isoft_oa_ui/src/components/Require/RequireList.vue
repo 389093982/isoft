@@ -20,33 +20,48 @@
       <Col span="2">{{require.require_user}}</Col>
       <Col span="4">操作xxx</Col>
     </Row>
+
+    <Page :total="total" :page-size="offset" show-total show-sizer
+          :styles="{'text-align': 'center','margin-top': '10px'}"
+          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
 </template>
 
 <script>
+  import {FilterPageRequireList} from "../../api"
+
   export default {
     name: "RequireList",
     data() {
       return {
-        requires: [
-          {
-            'require_name': 'iwork 框架1.0迭代',
-            'require_detail': 'iwork 框架1.0迭代',
-            'require_time': '一月份需求 1.1~1.7',
-            'require_status': '已完成',
-            'require_owner': 'z00000',
-            'require_user': 'z00000',
-          },
-          {
-            'require_name': 'iwork 框架1.0迭代',
-            'require_detail': 'iwork 框架1.0迭代',
-            'require_time': '一月份需求 1.1~1.7',
-            'require_status': '已完成',
-            'require_owner': 'z00000',
-            'require_user': 'z00000',
-          }
-        ]
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
+        requires: []
       }
+    },
+    methods: {
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshRequireList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshRequireList();
+      },
+      refreshRequireList: async function () {
+        const result = await FilterPageRequireList({offset: this.offset, current_page: this.current_page});
+        if (result.status == "SUCCESS") {
+          this.requires = result.requires;
+          this.total = result.paginator.totalcount;
+        }
+      }
+    },
+    mounted() {
+      this.refreshRequireList();
     }
   }
 </script>

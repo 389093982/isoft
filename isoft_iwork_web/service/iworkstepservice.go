@@ -525,5 +525,5 @@ func BuildDynamic(work_id int64, work_step_id int64, step models.WorkStep, o orm
 
 	step, _ = models.QueryWorkStepInfo(work_id, work_step_id, o)
 	// 构建动态输出值
-	iworkbuild.BuildDynamicOutput(step, o)
+	iworkbuild.BuildDynamicOutput(work.AppId, step, o)
 }

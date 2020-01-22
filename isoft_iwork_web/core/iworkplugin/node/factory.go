@@ -29,6 +29,7 @@ func Regist(m map[string]reflect.Type) {
 }
 
 type WorkStepFactory struct {
+	AppId            int64
 	Work             *models.Work
 	WorkStep         *models.WorkStep                                                                                // 普通步骤执行时使用的参数
 	BlockStep        *block.BlockStep                                                                                // 块步骤执行时使用的参数
@@ -104,6 +105,7 @@ func (this *WorkStepFactory) getProxy() interfaces.IWorkStep {
 		"BaseNode": BaseNode{
 			DataStore:              this.DataStore,
 			O:                      this.O,
+			AppId:                  this.AppId,
 			LogWriter:              this.LogWriter,
 			WorkCache:              this.WorkCache,
 			Dispatcher:             this.Dispatcher,

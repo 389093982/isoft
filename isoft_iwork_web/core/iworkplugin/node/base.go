@@ -25,6 +25,7 @@ type BaseNode struct {
 	DataStore              *datastore.DataStore
 	O                      orm.Ormer
 	LogWriter              *iworklog.CacheLoggerWriter
+	AppId                  int64
 	WorkCache              *iworkcache.WorkCache
 	TmpDataMap             map[string]interface{}
 	PureTextTmpDataMap     map[string]interface{}

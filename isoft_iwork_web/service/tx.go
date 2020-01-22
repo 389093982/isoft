@@ -1,8 +1,10 @@
 package service
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/pkg/errors"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 )
 
 func renderError(err interface{}) error {
@@ -21,6 +23,7 @@ func ExecuteWithTx(serviceArgs map[string]interface{}, serviceFunc func(args map
 		defer o.Rollback()
 		defer func() {
 			if err1 := recover(); err1 != nil {
+				fmt.Println(string(errorutil.PanicTrace(4)))
 				err = renderError(err1)
 			}
 		}()
