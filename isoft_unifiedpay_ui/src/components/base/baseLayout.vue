@@ -3,7 +3,7 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <!--<div class="layout-logo" style="font-size: 20px">&nbsp;&nbsp;领&nbsp;&nbsp;创&nbsp;&nbsp;科&nbsp;&nbsp;技</div>-->
+          <!--<div class="base-logo" style="font-size: 20px">&nbsp;&nbsp;领&nbsp;&nbsp;创&nbsp;&nbsp;科&nbsp;&nbsp;技</div>-->
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="logo-yen" />
