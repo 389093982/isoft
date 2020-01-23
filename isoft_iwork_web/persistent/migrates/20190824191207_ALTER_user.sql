@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>4</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190824191207_ALTER_user.sql</MigrateName>
 	<MigrateSql>ALTER TABLE user ADD COLUMN small_icon VARCHAR(255) NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>aQzdUlZxM9/+Muxy6HPGDIUPsbFN/+TJjXehe1C97R4=</MigrateHash>

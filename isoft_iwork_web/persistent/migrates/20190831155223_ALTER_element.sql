@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>11</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190831155223_ALTER_element.sql</MigrateName>
 	<MigrateSql>ALTER TABLE element ADD COLUMN navigation_level  int(11) NOT NULL DEFAULT 0;&#xA;ALTER TABLE element ADD COLUMN navigation_parent_id  int(11) NOT NULL DEFAULT 0;</MigrateSql>
 	<MigrateHash>t/+t9u8iFkxd+0nLByqYitV4vgm/b9Ao0s0XRMVr4/w=</MigrateHash>

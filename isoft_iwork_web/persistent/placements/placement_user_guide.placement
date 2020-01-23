@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>61</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_user_guide</PlacementName>
 		<PlacementLabel>帮助中心</PlacementLabel>
 		<PlacementType>all</PlacementType>

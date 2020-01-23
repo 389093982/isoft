@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>30</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191003090531_ALTER_login_record.sql</MigrateName>
 	<MigrateSql>alter table login_record add column role_name varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;unknown&#39;;</MigrateSql>
 	<MigrateHash>wkqf9M2P8bRl30Ws9PZNKYTO67r4jJDIut8o7UJeJo8=</MigrateHash>

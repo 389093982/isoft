@@ -1,6 +1,7 @@
 <workdl work_id="236">
 	<work>
 		<Id>236</Id>
+		<AppId>5</AppId>
 		<WorkName>ToggleFavorite2</WorkName>
 		<WorkDesc>ToggleFavorite2</WorkDesc>
 		<WorkType>work</WorkType>

@@ -1,5 +1,6 @@
 <Module>
 	<Id>9</Id>
+	<AppId>5</AppId>
 	<ModuleName>Comment</ModuleName>
 	<ModuleDesc>评论模块</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>60</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_course_publish_desc</PlacementName>
 		<PlacementLabel>课程发布规范说明</PlacementLabel>
 		<PlacementType>all</PlacementType>

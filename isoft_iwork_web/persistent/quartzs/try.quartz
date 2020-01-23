@@ -1,0 +1,12 @@
+<CronMeta>
+	<Id>268</Id>
+	<AppId>6</AppId>
+	<TaskName>try</TaskName>
+	<TaskType>iwork_quartz</TaskType>
+	<CronStr>0 26,29,33 * * * ?</CronStr>
+	<Enable>false</Enable>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-20T20:33:49+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-20T20:33:49+08:00</LastUpdatedTime>
+</CronMeta>

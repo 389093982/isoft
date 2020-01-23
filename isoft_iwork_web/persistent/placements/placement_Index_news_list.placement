@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>55</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_Index_news_list</PlacementName>
 		<PlacementLabel>新闻公告</PlacementLabel>
 		<PlacementType>all</PlacementType>

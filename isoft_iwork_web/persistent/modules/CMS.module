@@ -1,5 +1,6 @@
 <Module>
 	<Id>10</Id>
+	<AppId>5</AppId>
 	<ModuleName>CMS</ModuleName>
 	<ModuleDesc>CMS</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

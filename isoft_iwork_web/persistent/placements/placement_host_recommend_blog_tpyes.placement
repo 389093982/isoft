@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>32</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_host_recommend_blog_tpyes</PlacementName>
 		<PlacementLabel>热门推荐博客分类</PlacementLabel>
 		<PlacementType>all</PlacementType>

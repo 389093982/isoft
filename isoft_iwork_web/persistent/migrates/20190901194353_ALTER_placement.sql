@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>12</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190901194353_ALTER_placement.sql</MigrateName>
 	<MigrateSql>alter table placement add column placement_label varchar(200) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>aftiyc8Ej4JtLXJGKX5bvKVtna43H1rv4ylKtQrqh84=</MigrateHash>

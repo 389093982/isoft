@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>58</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_hot_project_recommod</PlacementName>
 		<PlacementLabel>热门项目推荐</PlacementLabel>
 		<PlacementType>all</PlacementType>

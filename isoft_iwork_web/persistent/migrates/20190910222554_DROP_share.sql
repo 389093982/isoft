@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>17</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190910222554_DROP_share.sql</MigrateName>
 	<MigrateSql>drop table share;</MigrateSql>
 	<MigrateHash>ykhvMht9cUa9e7Ve0uV+nnxnRQMjjS2vHW0hKe6E4Mw=</MigrateHash>

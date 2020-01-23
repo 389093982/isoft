@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>35</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_host_course_type_carousel</PlacementName>
 		<PlacementLabel>helloworld123</PlacementLabel>
 		<PlacementType>img_text_link</PlacementType>

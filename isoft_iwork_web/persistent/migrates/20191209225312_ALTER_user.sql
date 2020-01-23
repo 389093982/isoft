@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>40</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191209225312_ALTER_user.sql</MigrateName>
 	<MigrateSql>alter table user add column nick_name varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>w0MQ8afgjfW0YeLGwUcs6hB0mvUOMX567UTch42CvYI=</MigrateHash>

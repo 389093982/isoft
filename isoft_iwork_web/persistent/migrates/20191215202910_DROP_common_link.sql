@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>44</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191215202910_DROP_common_link.sql</MigrateName>
 	<MigrateSql>drop table common_link;</MigrateSql>
 	<MigrateHash>BSigVKCZOtpEgOWRMPrDMFtzgUWfRzdocWNI/uEMyWE=</MigrateHash>

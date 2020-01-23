@@ -1,6 +1,7 @@
 <workdl work_id="351">
 	<work>
 		<Id>351</Id>
+		<AppId>5</AppId>
 		<WorkName>FilterPageJobList</WorkName>
 		<WorkDesc>分页查询 job 信息</WorkDesc>
 		<WorkType>work</WorkType>

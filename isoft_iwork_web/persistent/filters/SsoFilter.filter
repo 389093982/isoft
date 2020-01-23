@@ -1,5 +1,6 @@
 <Filters>
 	<Id>16</Id>
+	<AppId>0</AppId>
 	<FilterWorkId>209</FilterWorkId>
 	<FilterWorkName>SsoFilter</FilterWorkName>
 	<WorkName></WorkName>

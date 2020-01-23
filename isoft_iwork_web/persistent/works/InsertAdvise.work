@@ -1,6 +1,7 @@
 <workdl work_id="330">
 	<work>
 		<Id>330</Id>
+		<AppId>5</AppId>
 		<WorkName>InsertAdvise</WorkName>
 		<WorkDesc>发表意见或建议、吐槽接口</WorkDesc>
 		<WorkType>work</WorkType>

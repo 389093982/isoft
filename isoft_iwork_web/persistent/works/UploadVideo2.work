@@ -1,6 +1,7 @@
 <workdl work_id="240">
 	<work>
 		<Id>240</Id>
+		<AppId>5</AppId>
 		<WorkName>UploadVideo2</WorkName>
 		<WorkDesc>UploadVideo2</WorkDesc>
 		<WorkType>work</WorkType>

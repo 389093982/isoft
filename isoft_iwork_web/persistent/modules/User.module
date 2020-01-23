@@ -1,5 +1,6 @@
 <Module>
 	<Id>5</Id>
+	<AppId>5</AppId>
 	<ModuleName>User</ModuleName>
 	<ModuleDesc>User</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

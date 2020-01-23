@@ -1,6 +1,7 @@
 <workdl work_id="222">
 	<work>
 		<Id>222</Id>
+		<AppId>5</AppId>
 		<WorkName>getUserInfoFromRequest</WorkName>
 		<WorkDesc>refactor worksub</WorkDesc>
 		<WorkType>work</WorkType>

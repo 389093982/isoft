@@ -1,5 +1,6 @@
 <Module>
 	<Id>4</Id>
+	<AppId>5</AppId>
 	<ModuleName>SSO</ModuleName>
 	<ModuleDesc>SSO</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

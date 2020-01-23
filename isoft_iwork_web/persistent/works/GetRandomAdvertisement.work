@@ -1,6 +1,7 @@
 <workdl work_id="344">
 	<work>
 		<Id>344</Id>
+		<AppId>5</AppId>
 		<WorkName>GetRandomAdvertisement</WorkName>
 		<WorkDesc>获取随机数量的广告信息</WorkDesc>
 		<WorkType>work</WorkType>

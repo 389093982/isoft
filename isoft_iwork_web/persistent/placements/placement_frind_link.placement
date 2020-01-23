@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>59</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_frind_link</PlacementName>
 		<PlacementLabel>友情链接</PlacementLabel>
 		<PlacementType>text_link</PlacementType>

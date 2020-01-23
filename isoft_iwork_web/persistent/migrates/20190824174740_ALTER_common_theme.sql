@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>6</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190824174740_ALTER_common_theme.sql</MigrateName>
 	<MigrateSql>alter table comment_theme change comment_id theme_pk int(11) NOT NULL DEFAULT &#39;0&#39;;&#xA;alter table comment_theme change comment_content theme_desc  varchar(4000) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>4UMklc0Th81Km8hiJhR4w7VN4xptuvri142Kf2VXUkc=</MigrateHash>

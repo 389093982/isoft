@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>5</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190824192959_ALTER_user.sql</MigrateName>
 	<MigrateSql>ALTER TABLE USER ADD COLUMN user_points  int(11) NOT NULL DEFAULT &#39;0&#39;;</MigrateSql>
 	<MigrateHash>/C3jG2m1y2x93k41ApkvvzHfVIIsNS/7/F15/Vzzaj8=</MigrateHash>

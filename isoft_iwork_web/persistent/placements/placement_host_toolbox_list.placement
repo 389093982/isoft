@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>36</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_host_toolbox_list</PlacementName>
 		<PlacementLabel>工具盒</PlacementLabel>
 		<PlacementType>all</PlacementType>

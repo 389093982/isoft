@@ -1,6 +1,7 @@
 <workdl work_id="338">
 	<work>
 		<Id>338</Id>
+		<AppId>5</AppId>
 		<WorkName>createVerifyCode</WorkName>
 		<WorkDesc>生成验证码</WorkDesc>
 		<WorkType>work</WorkType>

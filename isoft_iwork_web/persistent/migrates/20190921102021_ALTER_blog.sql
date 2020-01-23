@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>23</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190921102021_ALTER_blog.sql</MigrateName>
 	<MigrateSql>RENAME TABLE blog TO article;</MigrateSql>
 	<MigrateHash>M3OeOBM8ouQ6M0K7PjQNTL+xHN6iToTqr6zqKpHwhrE=</MigrateHash>

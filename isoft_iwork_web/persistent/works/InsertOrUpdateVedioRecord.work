@@ -1,6 +1,7 @@
 <workdl work_id="242">
 	<work>
 		<Id>242</Id>
+		<AppId>5</AppId>
 		<WorkName>InsertOrUpdateVedioRecord</WorkName>
 		<WorkDesc>自动创建子流程:InsertOrUpdateVedioRecord</WorkDesc>
 		<WorkType>work</WorkType>

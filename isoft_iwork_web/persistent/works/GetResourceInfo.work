@@ -1,6 +1,7 @@
 <workdl work_id="356">
 	<work>
 		<Id>356</Id>
+		<AppId>5</AppId>
 		<WorkName>GetResourceInfo</WorkName>
 		<WorkDesc>查询资源信息</WorkDesc>
 		<WorkType>work</WorkType>

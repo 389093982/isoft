@@ -1,6 +1,7 @@
 <workdl work_id="192">
 	<work>
 		<Id>192</Id>
+		<AppId>5</AppId>
 		<WorkName>AddAppRegister2</WorkName>
 		<WorkDesc>AddAppRegister2</WorkDesc>
 		<WorkType>work</WorkType>
