@@ -89,7 +89,7 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
-  import {GetLoginUserName} from "../../tools";
+  import {GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BookList",
@@ -161,7 +161,7 @@
         }
       },
       renderUserInfoByName: async function () {
-        let user_names = this.books.map(book => book.book_author);
+        let user_names = MapAttrsForArray(this.books, 'book_author');
         user_names = Array.from(new Set(user_names));
         const result = await GetUserInfoByNames({usernames: user_names.join(",")});
         if (result.status == "SUCCESS") {
@@ -169,11 +169,7 @@
         }
       },
       renderNickName: function (user_name) {
-        let user_names = this.userInfos.filter(userinfo => userinfo.user_name == user_name);
-        if (user_names != null && user_names != undefined && user_names.length > 0) {
-          return user_names[0].nick_name;
-        }
-        return user_name;
+        return RenderNickName(this.userInfos, user_name);
       }
     },
     mounted(){

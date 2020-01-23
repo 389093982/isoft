@@ -1,6 +1,10 @@
 <template>
   <div v-if="userName" style="border: 1px #dbdbdb solid;margin:2px 0 5px 5px;padding: 15px;">
-    <IBeautifulLink><Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;{{userName}}</IBeautifulLink>&nbsp;&nbsp;
+    <IBeautifulLink>
+      <Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;
+      <span v-if="nick_name">{{nick_name}}</span>
+      <span v-else>{{userName}}</span>
+    </IBeautifulLink>&nbsp;&nbsp;
     <IBeautifulLink style="font-size: 12px;float: right;"
       @onclick="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心</IBeautifulLink>
 
@@ -106,6 +110,7 @@
         courses:[],
         // 当前 user 对应头像信息
         user_small_icon:'',
+        nick_name: '',
       }
     },
     methods:{
@@ -119,6 +124,7 @@
         const result = await GetUserDetail(this.userName);
         if(result.status == "SUCCESS"){
           this.user_small_icon = result.user.small_icon;
+          this.nick_name = result.user.nick_name;
         }
       },
       refreshBookList: async function () {

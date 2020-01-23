@@ -116,6 +116,21 @@ export function formatDate (date, fmt) {
   return fmt;
 }
 
+export const MapAttrsForArray = function (arrs, attrName) {
+  let attrs = arrs.map(arr => arr[attrName]);
+  return attrs;
+}
+
+export const RenderNickName = function (userInfos, user_name) {
+  if (userInfos != null && userInfos != undefined) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name == user_name);
+    if (user_names != null && user_names != undefined && user_names.length > 0) {
+      return user_names[0].nick_name;
+    }
+  }
+  return user_name;
+}
+
 export const CheckSSOLogin = (to, from, next) => checkSSOLogin(to, from, next);
 export const CheckNotLogin = () => checkNotLogin();
 export const CheckHasLogin = () => checkHasLogin();

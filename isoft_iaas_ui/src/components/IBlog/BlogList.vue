@@ -48,9 +48,15 @@
                 <Row>
                   <Col span="17">
                     <!-- 作者详情 -->
-                    <router-link :to="{path:'/iblog/author',query:{author:searchblog.author}}">{{searchblog.author}}</router-link>
-                    发布于:<Time :time="searchblog.created_time" style="color:red;"/>&nbsp;
-                    更新于:<Time :time="searchblog.last_updated_time" style="color:red;"/>&nbsp;
+                    <router-link :to="{path:'/iblog/author',query:{author:searchblog.author}}">
+                      作者:<span style="color: blue;">
+                        <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
+                        <span v-else>{{searchblog.author}}</span>
+                      </span>
+                    </router-link>
+                    <span style="margin-left: 10px;">发布于:<Time :time="searchblog.created_time"
+                                                               style="color:red;"/></span>
+                    <span style="margin-left: 10px;">更新于:<Time :time="searchblog.last_updated_time" style="color:red;"/></span>
                   </Col>
                   <Col span="2">
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
@@ -93,12 +99,13 @@
 
 <script>
   import HotCatalogItems from "./HotCatalogItems"
-  import {queryPageBlog} from "../../api"
+  import {GetUserInfoByNames, queryPageBlog} from "../../api"
   import CatalogList from "./CatalogList"
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import {MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BlogList",
@@ -113,6 +120,7 @@
         offset:20,
         searchblogs:[],
         search_type:'_all',
+        userInfos: [],
       }
     },
     methods:{
@@ -141,8 +149,21 @@
         if(result.status=="SUCCESS"){
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
+          this.renderUserInfoByName();
         }
       },
+      renderUserInfoByName: async function () {
+
+        let user_names = MapAttrsForArray(this.searchblogs, 'author');
+        user_names = Array.from(new Set(user_names));
+        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+        if (result.status == "SUCCESS") {
+          this.userInfos = result.users;
+        }
+      },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      }
     },
     mounted: function () {
       this.refreshBlogList();

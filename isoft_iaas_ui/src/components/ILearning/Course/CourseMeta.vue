@@ -14,7 +14,10 @@
       <span class="isoft_hover_red" @click=""
             style="margin-left: 30px;">开课流程</span>
     </p>
-    <p>作者：{{course.course_author}}</p>
+    <p>作者：
+      <span v-if="nick_name">{{nick_name}}</span>
+      <span v-else>{{course.course_author}}</span>
+    </p>
     <p>课程类型：{{course.course_type}}</p>
     <p>课程子类型：{{course.course_sub_type}}</p>
     <p>课程简介：{{course.course_short_desc}}</p>
@@ -24,6 +27,9 @@
 
 <script>
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
+  import {GetUserDetail} from "../../../api"
+  import {RenderNickName} from "../../../tools"
+
   export default {
     name: "CourseMeta",
     components: {IBeautifulLink},
@@ -31,7 +37,28 @@
       course:{
         type:Object,
         default:null,
+      },
+    },
+    data() {
+      return {
+        user_small_icon: '',
+        nick_name: '',
       }
+    },
+    methods: {
+      renderUserInfoByName: async function () {
+        const result = await GetUserDetail(this.course.course_author);
+        if (result.status == "SUCCESS") {
+          this.user_small_icon = result.user.small_icon;
+          this.nick_name = result.user.nick_name;
+        }
+      },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      }
+    },
+    mounted() {
+      this.renderUserInfoByName();
     }
   }
 </script>
