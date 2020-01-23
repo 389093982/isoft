@@ -1,5 +1,6 @@
 <Module>
 	<Id>13</Id>
+	<AppId>5</AppId>
 	<ModuleName>Common</ModuleName>
 	<ModuleDesc>公共模块:1、文件上传</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

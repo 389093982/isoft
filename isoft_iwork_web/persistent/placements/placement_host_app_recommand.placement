@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>51</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_host_app_recommand</PlacementName>
 		<PlacementLabel>热门应用</PlacementLabel>
 		<PlacementType>all</PlacementType>

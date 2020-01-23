@@ -1,5 +1,6 @@
 <Module>
 	<Id>15</Id>
+	<AppId>5</AppId>
 	<ModuleName>Advertisement</ModuleName>
 	<ModuleDesc>广告模块</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

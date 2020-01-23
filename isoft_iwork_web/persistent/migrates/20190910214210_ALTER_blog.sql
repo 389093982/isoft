@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>16</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190910214210_ALTER_blog.sql</MigrateName>
 	<MigrateSql>alter table blog add  column link_href varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>roBOevGGo45OAuwXurogRCXOCMEddr/wZzUDoYPv1E0=</MigrateHash>

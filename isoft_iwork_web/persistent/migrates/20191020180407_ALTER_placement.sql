@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>31</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191020180407_ALTER_placement.sql</MigrateName>
 	<MigrateSql>alter table placement add column element_limit  int(11) NOT NULL DEFAULT -1;</MigrateSql>
 	<MigrateHash>T+jOkM8lEf6l0Rx7xoB0FhSLrNj7m0t1DSfWCYabnns=</MigrateHash>

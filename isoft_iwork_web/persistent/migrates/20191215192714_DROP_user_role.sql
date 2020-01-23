@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>42</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191215192714_DROP_user_role.sql</MigrateName>
 	<MigrateSql>drop table user_role;</MigrateSql>
 	<MigrateHash>PHy2QBphDn9b0ISRwTPS+r95OXgliEjB83htzRRTpkU=</MigrateHash>

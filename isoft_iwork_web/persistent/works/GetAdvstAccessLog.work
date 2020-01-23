@@ -1,6 +1,7 @@
 <workdl work_id="353">
 	<work>
 		<Id>353</Id>
+		<AppId>5</AppId>
 		<WorkName>GetAdvstAccessLog</WorkName>
 		<WorkDesc>广告访问日志查询</WorkDesc>
 		<WorkType>work</WorkType>

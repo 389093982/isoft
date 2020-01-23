@@ -1,6 +1,7 @@
 <workdl work_id="350">
 	<work>
 		<Id>350</Id>
+		<AppId>5</AppId>
 		<WorkName>QueryResume</WorkName>
 		<WorkDesc>查询个人简历</WorkDesc>
 		<WorkType>work</WorkType>

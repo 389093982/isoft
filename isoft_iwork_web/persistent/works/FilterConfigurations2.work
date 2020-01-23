@@ -1,6 +1,7 @@
 <workdl work_id="249">
 	<work>
 		<Id>249</Id>
+		<AppId>5</AppId>
 		<WorkName>FilterConfigurations2</WorkName>
 		<WorkDesc>FilterConfigurations2</WorkDesc>
 		<WorkType>work</WorkType>

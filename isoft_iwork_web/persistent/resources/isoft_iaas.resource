@@ -1,5 +1,6 @@
 <Resource>
 	<Id>2</Id>
+	<AppId>5</AppId>
 	<ResourceName>isoft_iaas</ResourceName>
 	<ResourceType>db</ResourceType>
 	<ResourceUrl>isoft_iaas</ResourceUrl>

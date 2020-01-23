@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>86</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_communication_group</PlacementName>
 		<PlacementLabel>交流群组</PlacementLabel>
 		<PlacementType>all</PlacementType>

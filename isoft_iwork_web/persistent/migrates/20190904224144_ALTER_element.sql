@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>13</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190904224144_ALTER_element.sql</MigrateName>
 	<MigrateSql>alter table element add column md_content varchar(4000) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>PR1/vgKwlCABEd5ETQ0FS8vQMeBp/OCAf+LedTqyjHc=</MigrateHash>

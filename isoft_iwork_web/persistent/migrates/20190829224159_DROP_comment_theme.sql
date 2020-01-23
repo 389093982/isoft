@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>7</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190829224159_DROP_comment_theme.sql</MigrateName>
 	<MigrateSql>drop table comment_theme;</MigrateSql>
 	<MigrateHash>oCCoeYvHmzl2raYqpkCpVfUd7lDNA3ynghc9e93TU+w=</MigrateHash>

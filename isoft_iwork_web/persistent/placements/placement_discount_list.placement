@@ -1,6 +1,7 @@
 <PlacementElementMppaer>
 	<Placement>
 		<Id>63</Id>
+		<AppId>5</AppId>
 		<PlacementName>placement_discount_list</PlacementName>
 		<PlacementLabel>聚优惠列表</PlacementLabel>
 		<PlacementType>all</PlacementType>

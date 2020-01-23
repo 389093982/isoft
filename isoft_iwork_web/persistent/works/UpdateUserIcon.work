@@ -1,6 +1,7 @@
 <workdl work_id="303">
 	<work>
 		<Id>303</Id>
+		<AppId>5</AppId>
 		<WorkName>UpdateUserIcon</WorkName>
 		<WorkDesc>UpdateUserIcon</WorkDesc>
 		<WorkType>work</WorkType>

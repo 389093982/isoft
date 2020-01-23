@@ -1,6 +1,7 @@
 <workdl work_id="262">
 	<work>
 		<Id>262</Id>
+		<AppId>5</AppId>
 		<WorkName>UpdateUserPoints</WorkName>
 		<WorkDesc>更新用户积分数</WorkDesc>
 		<WorkType>work</WorkType>

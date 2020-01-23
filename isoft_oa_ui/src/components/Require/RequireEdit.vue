@@ -25,26 +25,20 @@
       </Row>
       <FormItem label="需求状态">
         <Select v-model="formInline.require_status">
-          <Option value="状态1" key="1">状态1</Option>
-          <Option value="状态2" key="2">状态2</Option>
-          <Option value="状态3" key="3">状态3</Option>
-          <Option value="状态4" key="4">状态4</Option>
+          <Option value="OPEN" key="1">OPEN</Option>
+          <Option value="CLOSED" key="2">CLOSED</Option>
         </Select>
       </FormItem>
       <FormItem label="需求责任人">
         <Select v-model="formInline.require_owner">
-          <Option value="状态1" key="1">状态1</Option>
-          <Option value="状态2" key="2">状态2</Option>
-          <Option value="状态3" key="3">状态3</Option>
-          <Option value="状态4" key="4">状态4</Option>
+          <Option value="z00000" key="1">z00000</Option>
+          <Option value="z00001" key="2">z00001</Option>
         </Select>
       </FormItem>
       <FormItem label="需求开发人">
         <Select v-model="formInline.require_user">
-          <Option value="状态1" key="1">状态1</Option>
-          <Option value="状态2" key="2">状态2</Option>
-          <Option value="状态3" key="3">状态3</Option>
-          <Option value="状态4" key="4">状态4</Option>
+          <Option value="z00000" key="1">z00000</Option>
+          <Option value="z00001" key="2">z00001</Option>
         </Select>
       </FormItem>
       <FormItem prop="require_mark" label="需求备注">
@@ -59,7 +53,7 @@
 </template>
 
 <script>
-  import {EditRequire} from "../../api"
+  import {EditRequire, QueryRequireById} from "../../api"
 
   export default {
     name: "RequireEdit",
@@ -102,6 +96,17 @@
           }
         })
       },
+      refreshRequireById: async function (id) {
+        const result = await QueryRequireById({id: id});
+        if (result.status == "SUCCESS") {
+          this.formInline = result.require;
+        }
+      }
+    },
+    mounted() {
+      if (this.$route.query.id > 0) {
+        this.refreshRequireById(this.$route.query.id);
+      }
     }
   }
 </script>

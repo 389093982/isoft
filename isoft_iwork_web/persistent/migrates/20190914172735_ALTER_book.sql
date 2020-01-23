@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>20</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190914172735_ALTER_book.sql</MigrateName>
 	<MigrateSql>alter table book add column book_desc varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;</MigrateSql>
 	<MigrateHash>TstBqw7OM15kaY97/0VMuIXjwhSFIUbLOzeFstfeGr0=</MigrateHash>

@@ -1,6 +1,7 @@
 <workdl work_id="357">
 	<work>
 		<Id>357</Id>
+		<AppId>5</AppId>
 		<WorkName>DownloadResourceFile</WorkName>
 		<WorkDesc>DownloadResourceFile</WorkDesc>
 		<WorkType>work</WorkType>

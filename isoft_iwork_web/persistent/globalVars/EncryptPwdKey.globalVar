@@ -1,5 +1,6 @@
 <GlobalVar>
 	<Id>9</Id>
+	<AppId>5</AppId>
 	<Name>EncryptPwdKey</Name>
 	<Value>zhourui&amp;zhoupeng12345678</Value>
 	<Type>1</Type>

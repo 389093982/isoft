@@ -1,6 +1,7 @@
 <workdl work_id="261">
 	<work>
 		<Id>261</Id>
+		<AppId>5</AppId>
 		<WorkName>GetHotUsers</WorkName>
 		<WorkDesc>查询热门用户列表</WorkDesc>
 		<WorkType>work</WorkType>

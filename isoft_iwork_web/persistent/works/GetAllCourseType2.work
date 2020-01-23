@@ -1,6 +1,7 @@
 <workdl work_id="231">
 	<work>
 		<Id>231</Id>
+		<AppId>5</AppId>
 		<WorkName>GetAllCourseType2</WorkName>
 		<WorkDesc>GetAllCourseType2</WorkDesc>
 		<WorkType>work</WorkType>

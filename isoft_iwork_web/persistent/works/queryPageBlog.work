@@ -1,6 +1,7 @@
 <workdl work_id="153">
 	<work>
 		<Id>153</Id>
+		<AppId>5</AppId>
 		<WorkName>queryPageBlog</WorkName>
 		<WorkDesc>分页查询 blog 数据</WorkDesc>
 		<WorkType>work</WorkType>

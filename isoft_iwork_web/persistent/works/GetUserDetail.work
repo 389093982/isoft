@@ -1,6 +1,7 @@
 <workdl work_id="301">
 	<work>
 		<Id>301</Id>
+		<AppId>5</AppId>
 		<WorkName>GetUserDetail</WorkName>
 		<WorkDesc>查询用户详细信息</WorkDesc>
 		<WorkType>work</WorkType>

@@ -1,5 +1,6 @@
 <Module>
 	<Id>16</Id>
+	<AppId>5</AppId>
 	<ModuleName>Job</ModuleName>
 	<ModuleDesc>招聘模块</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>

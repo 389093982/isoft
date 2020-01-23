@@ -1,0 +1,14 @@
+<Resource>
+	<Id>5</Id>
+	<AppId>6</AppId>
+	<ResourceName>isoft_oa</ResourceName>
+	<ResourceType>db</ResourceType>
+	<ResourceUrl>isoft_oa</ResourceUrl>
+	<ResourceDsn>root:123456@tcp(127.0.0.1:3306)/isoft_oa</ResourceDsn>
+	<ResourceUsername>root</ResourceUsername>
+	<ResourcePassword>123456</ResourcePassword>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-22T16:05:16+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-22T16:05:16+08:00</LastUpdatedTime>
+</Resource>

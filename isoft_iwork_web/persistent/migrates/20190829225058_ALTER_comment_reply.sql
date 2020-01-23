@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>8</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190829225058_ALTER_comment_reply.sql</MigrateName>
 	<MigrateSql>alter table comment_reply change comment_theme_id theme_pk int(11) NOT NULL;</MigrateSql>
 	<MigrateHash>qrF1wJI2mxBAuXADt++LM/1g6ORPlHdiYjS6AHTHTnE=</MigrateHash>

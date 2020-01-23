@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>34</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191027140254_CREATE_bookcatalog.sql</MigrateName>
 	<MigrateSql>CREATE TABLE `book_catalog` (&#xA;  `id` bigint(20) NOT NULL AUTO_INCREMENT,&#xA;  `author` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;,&#xA;  `catalog_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;,&#xA;  `created_by` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;,&#xA;  `created_time` datetime NOT NULL,&#xA;  `last_updated_by` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;,&#xA;  `last_updated_time` datetime NOT NULL,&#xA;  PRIMARY KEY (`id`)&#xA;) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;</MigrateSql>
 	<MigrateHash>UUQb7iihSZ3ZkTGO7cd181uxxl/spCe1uWQh9mmACeo=</MigrateHash>

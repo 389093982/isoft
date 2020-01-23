@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>24</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190921161616_DROP_course.sql</MigrateName>
 	<MigrateSql>alter table course drop column course_status;</MigrateSql>
 	<MigrateHash>BBr7rQQokIvbvbtUOYsN4LR9vfKROPAw6NzRwL6qPHw=</MigrateHash>

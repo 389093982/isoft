@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>29</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191002162756_ALTER_user_role.sql</MigrateName>
 	<MigrateSql>alter table user_role add column effective int(11) NOT NULL DEFAULT -1;</MigrateSql>
 	<MigrateHash>yy0lzjXtWvEkbVmzX+GKFQI72uV1JP07j2wLlj+JZ3E=</MigrateHash>

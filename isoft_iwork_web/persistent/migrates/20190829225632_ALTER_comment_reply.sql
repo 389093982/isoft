@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>9</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190829225632_ALTER_comment_reply.sql</MigrateName>
 	<MigrateSql>alter table comment_reply change reply_theme_type theme_type varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;&#xA;alter table comment_reply change reply_comment_type comment_type varchar(255) COLLATE utf8_bin NOT NULL DEFAULT &#39;&#39;;&#xA;rename table comment_reply to comment;</MigrateSql>
 	<MigrateHash>NPoEH6fUxADq8ayLgwk614exNobrTjlWKPHyfiW1oz4=</MigrateHash>

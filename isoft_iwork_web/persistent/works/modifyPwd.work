@@ -1,6 +1,7 @@
 <workdl work_id="339">
 	<work>
 		<Id>339</Id>
+		<AppId>5</AppId>
 		<WorkName>modifyPwd</WorkName>
 		<WorkDesc>更新用户密码</WorkDesc>
 		<WorkType>work</WorkType>

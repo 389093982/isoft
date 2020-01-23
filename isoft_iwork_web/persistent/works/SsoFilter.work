@@ -1,6 +1,7 @@
 <workdl work_id="209">
 	<work>
 		<Id>209</Id>
+		<AppId>5</AppId>
 		<WorkName>SsoFilter</WorkName>
 		<WorkDesc>登录过滤器</WorkDesc>
 		<WorkType>filter</WorkType>

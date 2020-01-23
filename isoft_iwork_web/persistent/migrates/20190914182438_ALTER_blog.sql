@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>21</Id>
+	<AppId>5</AppId>
 	<MigrateName>20190914182438_ALTER_blog.sql</MigrateName>
 	<MigrateSql>alter table blog add column book_id int(11) NOT NULL DEFAULT -1;</MigrateSql>
 	<MigrateHash>Aa5SKDuCsJVKNyysnSYU1CRqiJCjVzPiDw/TYODqpcE=</MigrateHash>

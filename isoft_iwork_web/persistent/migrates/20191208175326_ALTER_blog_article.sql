@@ -1,5 +1,6 @@
 <SqlMigrate>
 	<Id>39</Id>
+	<AppId>5</AppId>
 	<MigrateName>20191208175326_ALTER_blog_article.sql</MigrateName>
 	<MigrateSql>alter table blog_article add column to_top int(11) NOT NULL DEFAULT -1;</MigrateSql>
 	<MigrateHash>fTwVJpJFq6LzAmnEvfzxgOk+Dbq0xInm795wQy9HFKk=</MigrateHash>
