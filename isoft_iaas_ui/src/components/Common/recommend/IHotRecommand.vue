@@ -52,7 +52,7 @@
     font-size: 18px;
     line-height: 35px;
     text-align: center;
-    background: linear-gradient(to right, rgb(255, 0, 18), rgb(0, 0, 255));
+    background: linear-gradient(to right, rgba(255, 0, 18, 0.3), rgba(255, 0, 18, 0.1));
     color: #fff;
     position: relative;
     font-weight: normal;
