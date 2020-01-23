@@ -18,8 +18,6 @@ import 'mavon-editor/dist/css/index.css'
 import animated from 'animate.css'
 // 使用全局的 hover.css
 import hovered from 'hover.css'
-// 使用全局的 vshare
-import vshare from 'vshare'
 //------------------------------------------------------------------
 // 注册自定义公共组件
 import IBeautifulLink from "./components/Common/link/IBeautifulLink"
@@ -33,8 +31,6 @@ Vue.use(mavonEditor)
 Vue.use(animated)
 
 Vue.use(hovered)
-
-Vue.use(vshare)
 
 Vue.component('IBeautifulLink', IBeautifulLink);
 //------------------------------------------------------------------

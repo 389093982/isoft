@@ -4,7 +4,10 @@
       <span v-if="hasLogin">
         <BlogCatalogEdit v-if="showBlogCatalogEdit" @handleSuccess="handleSuccess"/>
         <Row>
-          <Col span="16">我的博客分类 <Icon type="md-add" @click="showBlogCatalogEdit = !showBlogCatalogEdit"/></Col>
+          <Col span="16">我的博客分类
+            <span style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit"><Icon
+              type="md-add"/>添加</span>
+          </Col>
           <Col span="8">创建时间</Col>
         </Row>
         <Row v-for="(catalog,index) in catalogs">

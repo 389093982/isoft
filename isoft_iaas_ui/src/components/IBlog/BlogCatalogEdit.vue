@@ -8,8 +8,7 @@
         <Input v-model="formValidate.catalog_desc" type="textarea" :rows="4" placeholder="Enter catalog desc..."></Input>
       </FormItem>
       <FormItem>
-        <Button type="success" size="small" @click="handleSubmit('formValidate')">Submit</Button>
-        <Button type="warning" size="small" @click="handleReset('formValidate')">Cancel</Button>
+        <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
       </FormItem>
     </Form>
   </div>

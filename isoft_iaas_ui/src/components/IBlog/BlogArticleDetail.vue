@@ -18,9 +18,6 @@
     </div>
     <IShowMarkdown v-if="blog.content" :content="blog.content"/>
     <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
-
-    <vshare></vshare>
-
     <hr>
     <!-- 评论模块 -->
     <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>
