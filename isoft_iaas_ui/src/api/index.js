@@ -172,11 +172,7 @@ export const Login = (username, passwd, redirectUrl) => ajax(BASE_URL + "/iwork/
 }, 'POST');
 
 // 注册接口
-export const Regist = (username, passwd, nickname) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/Regist2", {
-  username,
-  passwd,
-  nickname
-}, 'POST');
+export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/Regist2", params, 'POST');
 
 export const CreateVerifyCode = (username) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/createVerifyCode", {username}, 'POST');
 
