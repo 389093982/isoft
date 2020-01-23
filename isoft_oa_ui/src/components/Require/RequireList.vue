@@ -5,20 +5,25 @@
     <Row style="padding: 15px 0px;border-bottom: 1px solid #d7dde4;">
       <Col span="4">需求名称</Col>
       <Col span="4">需求详情</Col>
-      <Col span="4">迭代周期(迭代时间)</Col>
-      <Col span="4">需求状态</Col>
+      <Col span="4">需求备注</Col>
+      <Col span="4">需求时间</Col>
+      <Col span="2">需求状态</Col>
       <Col span="2">需求 owner</Col>
       <Col span="2">需求分配人员</Col>
-      <Col span="4">操作</Col>
+      <Col span="2">操作</Col>
     </Row>
     <Row v-for="(require, index) in requires" style="padding: 15px 0px;border-bottom: 1px solid #d7dde4;">
-      <Col span="4">{{require.require_name}}</Col>
-      <Col span="4">{{require.require_detail}}</Col>
-      <Col span="4">{{require.require_time}}</Col>
-      <Col span="4">{{require.require_status}}</Col>
+      <Col span="4" class="isoft_inline_ellipsis">{{require.require_name}}</Col>
+      <Col span="4" class="isoft_inline_ellipsis">{{require.require_detail}}</Col>
+      <Col span="4" class="isoft_inline_ellipsis">{{require.require_mark}}</Col>
+      <Col span="4">{{require.require_start_time}} - {{require.require_end_time}}</Col>
+      <Col span="2">{{require.require_status}}</Col>
       <Col span="2">{{require.require_owner}}</Col>
       <Col span="2">{{require.require_user}}</Col>
-      <Col span="4">操作xxx</Col>
+      <Col span="2">
+        <Button type="success" size="small" @click="$router.push({path:'/oa/requireEdit', query:{id:require.id}})">编辑
+        </Button>
+      </Col>
     </Row>
 
     <Page :total="total" :page-size="offset" show-total show-sizer
@@ -67,5 +72,11 @@
 </script>
 
 <style scoped>
-
+  .isoft_inline_ellipsis {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 </style>
