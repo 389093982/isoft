@@ -4,11 +4,11 @@
 	<ResourceName>isoft_iaas</ResourceName>
 	<ResourceType>db</ResourceType>
 	<ResourceUrl>isoft_iaas</ResourceUrl>
-	<ResourceDsn>root:lingchuang2020@tcp(193.112.162.61:3306)/isoft_iaas</ResourceDsn>
+	<ResourceDsn>root:123456@tcp(127.0.0.1:3306)/isoft_iaas</ResourceDsn>
 	<ResourceUsername>root</ResourceUsername>
 	<ResourcePassword>0</ResourcePassword>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2019-12-01T13:53:59+08:00</CreatedTime>
+	<CreatedTime>2020-01-23T11:05:30+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2019-12-01T13:53:59+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-01-23T11:05:30+08:00</LastUpdatedTime>
 </Resource>

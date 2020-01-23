@@ -8,10 +8,11 @@
     </div>
 
     <div id="login_content" style="margin: 0 auto;padding:20px;">
-      <input class="focus" name="username" placeholder="请输入用户名" type="text" style="width: 100%;height: 40px;" required/>
+      <input class="focus" name="username" placeholder="请输入用户名" type="text"
+             style="width: 100%;height: 40px;padding:3px;" required/>
       <input type="password" style="display:none">
       <input class="focus" name="passwd" placeholder="请输入密码" type="password"
-             style="width: 100%;height: 40px;margin-top:20px;" autocomplete="new-password" required/>
+             style="width: 100%;height: 40px;margin-top:20px;padding:3px;" autocomplete="new-password" required/>
       <span id="error_msg" v-if="showError">{{errorMsg}}</span>
       <p>
         <input id="submit" type="submit" value="登录" @click="login">
@@ -27,8 +28,7 @@
 
 <script>
   import {Login} from "../../../api"
-  import {setCookie} from "../../../tools"
-  import {strSplit} from "../../../tools"
+  import {setCookie, strSplit} from "../../../tools"
 
   export default {
     name: "LoginForm",

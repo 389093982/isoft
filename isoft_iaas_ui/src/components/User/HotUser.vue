@@ -2,12 +2,15 @@
   <div>
     <IBeautifulCard title="用户排行榜">
       <div slot="content" style="padding: 10px;">
-        <Row v-for="user in users" :gutter="10">
+        <Row v-for="(user,index) in users" :gutter="10">
           <Col span="4">
-            <img width="30" height="30" :src="user.small_icon" @error="defImg()">
+            <img style="cursor: pointer;" @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
+                 width="30" height="30" :src="user.small_icon" @error="defImg()" :title="'邮箱：' +user.user_name">
           </Col>
           <Col span="12" class="isoft_inline_ellipsis">
-            <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">{{user.user_name}}</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">
+              {{user.nick_name}}
+            </IBeautifulLink>
           </Col>
           <Col span="8" class="small_font_size">
             积分：{{user.user_points}}

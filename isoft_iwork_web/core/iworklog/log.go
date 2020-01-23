@@ -30,7 +30,7 @@ func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail 
 	if this.caches == nil {
 		this.cleanCaches()
 	}
-	this.logOrder++
+	this.logOrder = this.logOrder + 1
 	log := &models.RunLogDetail{
 		TrackingId:      trackingId,
 		WorkStepName:    workStepName,

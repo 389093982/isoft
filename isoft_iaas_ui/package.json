@@ -20,6 +20,7 @@
     "hover.css": "^2.3.2",
     "iview": "^3.5.1",
     "iview-editor": "^1.1.1",
+    "markdown-image-size": "^1.2.5",
     "marked": "^0.5.1",
     "mavon-editor": "^2.6.17",
     "qrcode": "^1.4.4",

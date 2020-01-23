@@ -24,9 +24,14 @@
         runLogRecord: null,
         columns1: [
           {
-            title: 'work_step_name',
+            title: '步骤名称',
             key: 'work_step_name',
-            width:150,
+            width: 100,
+          },
+          {
+            title: '日志编号',
+            key: 'log_order',
+            width: 100,
           },
           {
             title: 'log_level',
