@@ -12,6 +12,10 @@
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
+        <Button type="success" size="small" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag"
+                style="position: absolute;margin-left: 10px;margin-top: 3px;">
+          {{VerifyCodeButtonDesc}}
+        </Button>
       </FormItem>
       <FormItem label="修改密码" prop="passwd">
         <Input v-model.trim="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
@@ -20,14 +24,7 @@
         <Input v-model.trim="formValidate.repasswd" type="password" placeholder="请输入确认密码"></Input>
       </FormItem>
       <FormItem>
-        <Row :gutter="10">
-          <Col span="12">
-            <Button type="primary" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag" size="large">{{VerifyCodeButtonDesc}}</Button>
-          </Col>
-          <Col span="12">
-            <Button type="primary" @click="handleSubmit('formValidate')" size="large">&nbsp;&nbsp;&nbsp;&nbsp;提交&nbsp;&nbsp;&nbsp;&nbsp;</Button>
-          </Col>
-        </Row>
+        <div @click="handleSubmit('formValidate')" class="submitBtn">注册</div>
       </FormItem>
     </Form>
   </div>
@@ -35,7 +32,7 @@
 
 <script>
   import {validateEmail} from "../../../tools"
-  import {CreateVerifyCode,ModifyPwd} from "../../../api"
+  import {CreateVerifyCode, ModifyPwd} from "../../../api"
 
   export default {
     name: "Forget",
@@ -154,6 +151,10 @@
 </script>
 
 <style scoped>
+  a:hover {
+    color: #E4393C;
+    text-decoration: underline;
+  }
   .submitBtn{
     width: 100%;height: 40px;display: block;line-height: 40px;
     font-size: 16px;font-weight: 800;cursor: pointer;color: #fff;

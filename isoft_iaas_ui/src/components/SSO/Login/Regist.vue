@@ -12,6 +12,10 @@
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
+        <Button type="success" size="small" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag"
+                style="position: absolute;margin-left: 10px;margin-top: 3px;">
+          {{VerifyCodeButtonDesc}}
+        </Button>
       </FormItem>
       <FormItem label="用户昵称" prop="nickname">
         <Input v-model.trim="formValidate.nickname" placeholder="请输入用户昵称"></Input>
@@ -30,16 +34,7 @@
         </CheckboxGroup>
       </FormItem>
       <FormItem>
-        <Row :gutter="10">
-          <Col span="12">
-            <Button type="primary" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag" size="large">
-              {{VerifyCodeButtonDesc}}
-            </Button>
-          </Col>
-          <Col span="12">
-            <Button type="primary" @click="handleSubmit('formValidate')" size="large">&nbsp;&nbsp;&nbsp;&nbsp;提交&nbsp;&nbsp;&nbsp;&nbsp;</Button>
-          </Col>
-        </Row>
+        <div @click="handleSubmit('formValidate')" class="submitBtn">注册</div>
       </FormItem>
     </Form>
   </div>

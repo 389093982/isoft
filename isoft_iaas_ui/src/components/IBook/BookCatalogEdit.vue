@@ -27,7 +27,7 @@
           <div v-if="bookCatalogs && bookCatalogs.length > 0">
             <span style="font-size: 12px;color: green;">提示：双击目录可以进行编辑</span>
             <dl>
-              <dt><span style="color: green;font-weight: bold;">{{$route.query.book_name}}</span></dt>
+              <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
               <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="bookCatalog in bookCatalogs">
                 &nbsp;&nbsp;&nbsp;
                 <Icon type="ios-paper-outline"/>

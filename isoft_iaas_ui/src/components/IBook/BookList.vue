@@ -5,16 +5,16 @@
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
-            <Col span="2">
+            <Col span="3">
               <IBeautifulLink @onclick="refreshBookList('_all')">全部书单</IBeautifulLink>
             </Col>
-            <Col span="2">
+            <Col span="3">
               <IBeautifulLink @onclick="refreshBookList('_hot')">热门书单</IBeautifulLink>
             </Col>
-            <Col span="2">
+            <Col span="3">
               <IBeautifulLink @onclick="refreshBookList('mine')">我的书单</IBeautifulLink>
             </Col>
-            <Col span="2">
+            <Col span="3">
               <IBeautifulLink @onclick="showBookEditModal">新增书单</IBeautifulLink>
             </Col>
           </Row>
@@ -34,15 +34,15 @@
                   {{book.book_desc}}
                 </div>
                 <div v-if="mine" style="margin: 10px;float: right;">
-                  <IFileUpload size="small" :auto-hide-modal="true"
+                  <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true"
                                :extra-data="book.id" @uploadComplete="uploadComplete"
                                :action="fileUploadUrl" uploadLabel="换张图片"/>
-                  <IBeautifulLink @onclick="deleteBook(book.id)">删除</IBeautifulLink>
-                  <IBeautifulLink @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink @onclick="$router.push({path:'/ibook/book_edit',
-                                 query:{book_id:book.id,book_name:book.book_name}})">编辑
+                  <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
+                  <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
+                  <IBeautifulLink class="isoft_mr10" @onclick="$router.push({path:'/ibook/book_edit',
+                                 query:{book_id:book.id,book_name:book.book_name}})">编辑文章
                   </IBeautifulLink>
-                  <IBeautifulLink @onclick="refreshBookList('mine')">
+                  <IBeautifulLink class="isoft_mr10" @onclick="refreshBookList('mine')">
                     我的书单
                   </IBeautifulLink>
                 </div>
