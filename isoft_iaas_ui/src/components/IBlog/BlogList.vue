@@ -10,8 +10,8 @@
           <Row class="_search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
             <Col span="8" style="font-size: 20px;color: #333;">
               <span v-if="search_type==='_all'">全部分类</span>
-              <span v-else-if="search_type==='_hot'">热门分享</span>
-              <span v-else-if="search_type==='_personal'">我的分享</span>
+              <span v-else-if="search_type==='_hot'">热门博客</span>
+              <span v-else-if="search_type==='_personal'">我的博客</span>
               <span v-else>{{search_type}}</span>
             </Col>
             <Col span="3" offset="4" style="text-align: center;"><a @click="chooseItem('_all')">全部分类</a></Col>
