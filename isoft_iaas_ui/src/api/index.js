@@ -183,6 +183,7 @@ export const ModifyPwd = (username, passwd, verifyCode) => ajax(BASE_URL + "/iwo
 }, 'POST');
 
 export const GetHotUsers = () => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/GetHotUsers", {}, 'POST');
+export const GetUserInfoByNames = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/GetUserInfoByNames", params, 'POST');
 
 // 系统注册分页查询
 export const AppRegisterList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/AppRegisterList2", {

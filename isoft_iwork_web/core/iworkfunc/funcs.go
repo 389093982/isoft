@@ -3,13 +3,14 @@ package iworkfunc
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_utils/common/chiperutil"
 	"isoft/isoft_utils/common/stringutil"
-	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"math/rand"
 	"net/url"
 	"path"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -57,6 +58,9 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcDemo": "AesEncrypt($origData, $key)", "funcDesc": "aes 加密算法,用于生成密文密码,origData为明文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为密文"},
 		{"funcDemo": "AesDecrypt($crypted, $key)", "funcDesc": "aes 解密算法,用于解密密文密码,crypted为密文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为明文"},
 		{"funcDemo": "randNumberString($len)", "funcDesc": "生成指定长度的随机数"},
+		{"funcDemo": "stringsSplit($str1, $sep)", "funcDesc": "根据分隔符分割字符串"},
+		{"funcDemo": "stringsRepeatQuestion($count)", "funcDesc": "'?,'重复 count 次,最后一次不带,"},
+		{"funcDemo": "sliceLen($slices)", "funcDesc": "计算数组长度"},
 	}
 }
 
@@ -105,6 +109,10 @@ func (t *IWorkFuncProxy) BcryptGenerateFromPassword(args []interface{}) interfac
 func (t *IWorkFuncProxy) BcryptCompareHashAndPassword(args []interface{}) interface{} {
 	err := chiperutil.BcryptCompareHashAndPassword(args[0].(string), args[1].(string))
 	return err == nil
+}
+
+func (t *IWorkFuncProxy) SliceLen(args []interface{}) interface{} {
+	return reflect.ValueOf(args[0]).Len()
 }
 
 func (t *IWorkFuncProxy) FormatNowTimeToYYYYMMDD(args []interface{}) interface{} {
@@ -163,6 +171,18 @@ func (t *IWorkFuncProxy) StringsOneOf(args []interface{}) interface{} {
 
 func (t *IWorkFuncProxy) StringsTrimPrefix(args []interface{}) interface{} {
 	return strings.TrimPrefix(args[0].(string), args[1].(string))
+}
+
+func (t *IWorkFuncProxy) StringsRepeatQuestion(args []interface{}) interface{} {
+	s := strings.Repeat("?,", args[0].(int))
+	if strings.HasSuffix(s, ",") {
+		return strings.TrimSuffix(s, ",")
+	}
+	return s
+}
+
+func (t *IWorkFuncProxy) StringsSplit(args []interface{}) interface{} {
+	return strings.Split(args[0].(string), args[1].(string))
 }
 
 func (t *IWorkFuncProxy) StringsTrimSuffix(args []interface{}) interface{} {

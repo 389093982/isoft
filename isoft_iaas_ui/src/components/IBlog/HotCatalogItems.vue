@@ -8,9 +8,9 @@
       <Col span="5" v-for="element in getCurrentPage">
         <a href="javascript:;" style="color: #999;" @click="chooseItem(element.linked_refer)">
           <div class="item" style="padding:10px; height: 100px;">
-            <Row>
+            <Row :gutter="10">
               <Col span="6">
-                <img :src="element.img_path" :alt="element.element_label" width="50px" height="50px" @error="defImg()"/>
+                <img :src="element.img_path" :alt="element.element_label" width="40px" height="40px" @error="defImg()"/>
               </Col>
               <Col span="18" style="padding-left: 5px;">
                 <p class="share_catalog_name">{{element.element_label}}</p>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-  import {FilterElementByPlacement} from "../../api"
   import ElementsLoader from "../Background/CMS/ElementsLoader";
 
   export default {

@@ -26,7 +26,10 @@
                   {{book.book_name}}
                 </div>
                 <div>
-                  <span>作者：{{book.created_by}}</span>
+                  <span>作者：
+                    <span v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
+                    <span v-else>{{book.created_by}}</span>
+                  </span>
                   创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
                   修改时间：<span style="color: red;"><Time :time="book.last_updated_time" type="date"/></span>
                 </div>
@@ -77,7 +80,7 @@
 </template>
 
 <script>
-  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, UpdateBookIcon} from "../../api"
+  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, GetUserInfoByNames, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -98,6 +101,7 @@
         fileUploadUrl: fileUploadUrl,
         books:[],
         mine:false,
+        userInfos: [],
       }
     },
     methods:{
@@ -153,7 +157,23 @@
         });
         if(result.status == "SUCCESS"){
           this.books = result.books;
+          this.renderUserInfoByName();
         }
+      },
+      renderUserInfoByName: async function () {
+        let user_names = this.books.map(book => book.book_author);
+        user_names = Array.from(new Set(user_names));
+        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+        if (result.status == "SUCCESS") {
+          this.userInfos = result.users;
+        }
+      },
+      renderNickName: function (user_name) {
+        let user_names = this.userInfos.filter(userinfo => userinfo.user_name == user_name);
+        if (user_names != null && user_names != undefined && user_names.length > 0) {
+          return user_names[0].nick_name;
+        }
+        return user_name;
       }
     },
     mounted(){
