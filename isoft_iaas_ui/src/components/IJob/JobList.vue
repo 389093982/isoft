@@ -25,7 +25,7 @@
       <Row>
         <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
-          <Button @click="$router.push({path:'/job/resume_manage'})">简历管理</Button>
+          <Button @click="forwardResumeManage">简历管理</Button>
           <Button @click="toEditCorporateDetail">发布招聘</Button>
         </Col>
       </Row>
@@ -81,6 +81,9 @@
       }
     },
     methods: {
+      forwardResumeManage: function () {
+        CheckHasLoginConfirmDialog(this, {path: '/job/resume_manage'});
+      },
       handleAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {
           this.jobPlaceSearch = province;

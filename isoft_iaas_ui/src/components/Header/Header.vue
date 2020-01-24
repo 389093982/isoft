@@ -12,41 +12,41 @@
           <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
         </MenuItem>
         <MenuItem name="4">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
         </MenuItem>
         <MenuItem name="5">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">热门活动</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>
         </MenuItem>
         <MenuItem name="6">
+          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">热门活动</IBeautifulLink>
+        </MenuItem>
+        <MenuItem name="7">
           <IBeautifulLink @onclick="$router.push({path:'/background/cms/configuration'})">管理控制台</IBeautifulLink>
         </MenuItem>
-        <Submenu name="7">
+        <Submenu name="8">
           <template slot="title">
             <span>更多内容</span>
           </template>
           <MenuGroup title="更多内容">
-            <MenuItem name="7-1">全部菜单项</MenuItem>
-            <MenuItem name="7-2">精选内容</MenuItem>
-            <MenuItem name="7-3">更多内容</MenuItem>
-            <MenuItem name="7-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
+            <MenuItem name="8-1">全部菜单项</MenuItem>
+            <MenuItem name="8-2">精选内容</MenuItem>
+            <MenuItem name="8-3">更多内容</MenuItem>
+            <MenuItem name="8-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
           </MenuGroup>
         </Submenu>
-        <Submenu name="8">
+        <Submenu name="9">
           <template slot="title">
             <span v-if="loginUserName">{{loginUserName}}</span>
             <span v-else>未登录</span>
           </template>
           <MenuGroup title="账号管理">
-            <MenuItem name="8-1" @click.native="cancelUser">前往登录</MenuItem>
-            <MenuItem name="8-2" @click.native="cancelUser">切换账号</MenuItem>
-            <MenuItem name="8-3" @click.native="cancelUser">注销</MenuItem>
-            <MenuItem name="8-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
+            <MenuItem name="9-1" @click.native="cancelUser">前往登录</MenuItem>
+            <MenuItem name="9-2" @click.native="cancelUser">切换账号</MenuItem>
+            <MenuItem name="9-3" @click.native="cancelUser">注销</MenuItem>
+            <MenuItem name="9-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
             </MenuItem>
           </MenuGroup>
         </Submenu>
-        <MenuItem name="9">
-          <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
-        </MenuItem>
         <Submenu name="10">
           <template slot="title">
             会员中心

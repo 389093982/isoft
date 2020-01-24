@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <IBeautifulLink>简历管理</IBeautifulLink>
-      <IBeautifulLink>个人特色</IBeautifulLink>
-      <IBeautifulLink>简历下载</IBeautifulLink>
+      <IBeautifulLink @onclick="noImplement">简历管理</IBeautifulLink>
+      <IBeautifulLink @onclick="noImplement">个人特色</IBeautifulLink>
+      <IBeautifulLink @onclick="noImplement">简历下载</IBeautifulLink>
       <IBeautifulLink style="float: right;" @onclick="$router.push({path:'/job/resume_edit'})">编辑简历</IBeautifulLink>
     </div>
 
@@ -50,6 +50,9 @@
       }
     },
     methods: {
+      noImplement: function () {
+        alert("待开发!");
+      },
       refreshQueryResume: async function () {
         const result = await QueryResume();
         if (result.status == "SUCCESS") {
