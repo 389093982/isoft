@@ -40,6 +40,11 @@ func DeleteAppById(id int64) error {
 	return err
 }
 
+func GetAllAppIds() (appids []AppId, err error) {
+	_, err = orm.NewOrm().QueryTable("app_id").All(&appids)
+	return
+}
+
 func GetAppId(app_id int64, app_name string) (appId AppId, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("app_id")
