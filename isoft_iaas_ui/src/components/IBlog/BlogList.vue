@@ -16,9 +16,9 @@
             </Col>
             <Col span="3" offset="4" style="text-align: center;"><a @click="chooseItem('_all')">全部分类</a></Col>
             <Col span="3" style="text-align: center;"><a @click="chooseItem('_hot')">热门博客</a></Col>
-            <Col span="3" style="text-align: center;"><a @click="chooseItem('_personal')">我的博客</a></Col>
+            <Col span="3" style="text-align: center;"><a @click="chooseMyItem">我的博客</a></Col>
             <Col span="3" style="text-align: center;">
-              <router-link to="/iblog/blog_edit">我也要发布</router-link>
+              <a @click="blog_edit">我也要发布</a>
             </Col>
           </Row>
 
@@ -69,9 +69,7 @@
                     </router-link>
                   </Col>
                   <Col span="3">
-                    <router-link :to="{path:'/iblog/blog_edit'}">
-                      <span class="isoft_font12">我也要发布</span>
-                    </router-link>
+                    <a @click="blog_edit" class="isoft_font12">我也要发布</a>
                   </Col>
                 </Row>
               </p>
@@ -105,7 +103,7 @@
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
-  import {MapAttrsForArray, RenderNickName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BlogList",
@@ -124,6 +122,18 @@
       }
     },
     methods:{
+      chooseMyItem: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.chooseItem('_personal');
+        });
+      },
+      blog_edit: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$router.push({path: '/iblog/blog_edit'});
+        });
+      },
       chooseItem:function(item_name){
         if(this.search_type != item_name){
           this.search_type = item_name;
