@@ -7,7 +7,7 @@
             <img style="cursor: pointer;" @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
                  width="30" height="30" :src="user.small_icon" @error="defImg()" :title="'邮箱：' +user.user_name">
           </Col>
-          <Col span="12" class="isoft_inline_ellipsis">
+          <Col span="12" class="isoft_inline_ellipsis" style="font-size: 12px;">
             <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">
               {{user.nick_name}}
             </IBeautifulLink>

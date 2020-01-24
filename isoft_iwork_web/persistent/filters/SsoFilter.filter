@@ -1,12 +1,12 @@
 <Filters>
-	<Id>16</Id>
-	<AppId>0</AppId>
+	<Id>37</Id>
+	<AppId>5</AppId>
 	<FilterWorkId>209</FilterWorkId>
 	<FilterWorkName>SsoFilter</FilterWorkName>
-	<WorkName></WorkName>
+	<WorkName>PostCatalogEdit2,GetMyBlogs2,GetMyCatalogs2,BlogArticleEdit,BlogCatalogEdit,ArticleDelete,EditAdvertisement,GetPersonalAdvertisement,BookEdit,BookArticleEdit,UpdateBookIcon,DeleteBookById,BookCatalogEdit,AddComment2</WorkName>
 	<ComplexWorkName>queryPageBlog?search_type=_personal</ComplexWorkName>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2019-10-23T21:04:35+08:00</CreatedTime>
+	<CreatedTime>2020-01-24T11:36:33+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2019-10-23T21:04:35+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-01-24T11:36:33+08:00</LastUpdatedTime>
 </Filters>

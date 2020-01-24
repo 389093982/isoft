@@ -1,0 +1,10 @@
+<Module>
+	<Id>22</Id>
+	<AppId>7</AppId>
+	<ModuleName>vipCenter</ModuleName>
+	<ModuleDesc>会员中心模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T19:00:47+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T19:00:47+08:00</LastUpdatedTime>
+</Module>
