@@ -15,13 +15,13 @@
           <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
         </MenuItem>
         <MenuItem name="5">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/office/officeList'})">办公专区</IBeautifulLink>
         </MenuItem>
         <MenuItem name="6">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">热门活动</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>
         </MenuItem>
         <MenuItem name="7">
-          <IBeautifulLink @onclick="$router.push({path:'/background/cms/configuration'})">管理控制台</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">热门活动</IBeautifulLink>
         </MenuItem>
         <Submenu name="8">
           <template slot="title">
@@ -61,7 +61,7 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="11">
-          <IBeautifulLink @onclick="$router.push({path:'/office/officeList'})">办公专区</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/background/cms/configuration'})">管理控制台</IBeautifulLink>
         </MenuItem>
       </div>
     </Menu>

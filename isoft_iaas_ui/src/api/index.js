@@ -225,11 +225,7 @@ export const EditAdvertisement = (id, advertisement_label, linked_type, linked_r
   linked_img
 }, 'GET');
 
-export const EditCorporateDetail = (id,corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
-    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditCorporateDetail', {
-    id, corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
-    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address},'GET');
+export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditCorporateDetail', params, 'GET');
 
 export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, salary_range) =>
   ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditJobDetail', {

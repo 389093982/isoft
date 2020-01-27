@@ -11,7 +11,10 @@
         ref="upload"
         multiple
         :on-success="uploadComplete"
-        :action="action">
+        :action="action"
+        :format="format"
+        :on-format-error="onFormatError"
+        :multiple="multiple">
         <Button icon="ios-cloud-upload-outline">{{ uploadLabel }}</Button>
       </Upload>
     </div>
@@ -38,6 +41,18 @@
       size: {
         type: String,
         default: 'default'
+      },
+      format: {
+        type: Array,
+        default: ['jpg', 'jpeg', 'png', 'gif', 'mp4'],
+      },
+      multiple: {
+        type: Boolean,
+        default: false,
+      },
+      autoHideModal: {
+        type: Boolean,
+        deafult: true,
       }
     },
     data () {
@@ -47,6 +62,9 @@
       }
     },
     methods:{
+      onFormatError: function () {
+        this.$Message.error("文件格式不合法!");
+      },
       uploadComplete(result, file) {
         if(result.status=="SUCCESS"){
           // 父子组件通信
@@ -55,6 +73,9 @@
             title: '文件上传成功',
             desc: '文件 ' + file.name + ' 上传成功!'
           });
+          if (this.autoHideModal) {
+            this.hideModal();
+          }
         }else{
           this.$Notice.error({
             title: '文件上传失败',
