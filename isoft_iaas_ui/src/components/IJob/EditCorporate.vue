@@ -67,7 +67,7 @@
 
 <script>
   import {EditCorporateDetail, fileUploadUrl, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, strSplit} from "../../tools"
+  import {checkEmpty, handleSpecial, strSplit} from "../../tools"
   import IAreaChooser from "../Common/IAreaChooser";
   import IFileUpload from "../Common/file/IFileUpload";
 
@@ -117,7 +117,7 @@
       },
       uploadComplete: function (result) {
         if (result.status == "SUCCESS") {
-          this.formInline.corporate_logo = result.fileServerPath;
+          this.formInline.corporate_logo = handleSpecial(result.fileServerPath);
         }
       },
       handleAreaSubmit: function (province, city, area) {

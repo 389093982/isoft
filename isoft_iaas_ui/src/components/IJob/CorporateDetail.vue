@@ -2,7 +2,7 @@
   <div>
     <div class="isoft_bg_white isoft_pd20">
       <Row>
-        <Col span="4">
+        <Col span="5">
           <div class="bookImg">
             <a>
               <img v-if="formInline.corporate_logo" :src="formInline.corporate_logo" height="160px" width="180px"/>
@@ -10,7 +10,7 @@
             </a>
           </div>
         </Col>
-        <Col span="20">
+        <Col span="19">
           <p>
             <span>公司名称：{{formInline.corporate_name}}</span>
           </p>
@@ -127,18 +127,7 @@
         let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
         const result = await QueryCorporateDetail({'id': id});
         if(result.status == "SUCCESS" && result.corporate_detail){
-          this.formInline.id = result.corporate_detail.id;
-          this.formInline.corporate_name = result.corporate_detail.corporate_name;
-          this.formInline.corporate_site = result.corporate_detail.corporate_site;
-          this.formInline.corporate_logo = result.corporate_detail.corporate_logo;
-          this.formInline.corporate_size = result.corporate_detail.corporate_size;
-          this.formInline.job_type = result.corporate_detail.job_type;
-          this.formInline.job_type_detail = result.corporate_detail.job_type_detail;
-          this.formInline.salary_range = result.corporate_detail.salary_range;
-          this.formInline.corporate_desc = result.corporate_detail.corporate_desc;
-          this.formInline.job_desc = result.corporate_detail.job_desc;
-          this.formInline.corporate_welfare = result.corporate_detail.corporate_welfare;
-          this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
+          this.formInline = result.corporate_detail;
 
           this.jobDetails = result.job_details;
           this.editable = result.editable;
