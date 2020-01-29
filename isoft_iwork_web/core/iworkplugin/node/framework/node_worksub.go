@@ -100,7 +100,7 @@ func (this *WorkSubNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputS
 	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := models.QueryAllWorkStepByWorkName(this.WorkCache.Work.AppId, workSubName, this.O)
+		subSteps, err := models.QueryAllWorkStepByWorkName(this.AppId, workSubName, this.O)
 		if err != nil {
 			panic(err)
 		}

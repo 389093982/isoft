@@ -9,7 +9,7 @@
             </FormItem>
             <FormItem label="工作年限" prop="job_age">
               <Select v-model="formInline.job_age">
-                <Option v-for="(jobAge, index) in jobAges" :value="jobAge" :key="jobAge">{{jobAge}}</Option>
+                <Option v-for="(jobAge, index) in jobAges" :value="jobAge" :key="index">{{jobAge}}</Option>
               </Select>
             </FormItem>
             <FormItem label="工作地点" prop="job_address">
