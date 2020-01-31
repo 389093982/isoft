@@ -1,0 +1,12 @@
+<GlobalVar>
+	<Id>14</Id>
+	<AppId>7</AppId>
+	<Name>HOSTNAME</Name>
+	<Value>HOSTNAME</Value>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T19:18:02+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T19:18:02+08:00</LastUpdatedTime>
+</GlobalVar>

@@ -14,13 +14,13 @@
           </FormItem>
           <FormItem label="链接图片" prop="linked_img">
             <Input v-model="formValidate.linked_img" placeholder="点击右边图标选择图片"
-                   readonly="readonly" icon="ios-document" @on-click="editLinkedImg"></Input>
+                   readonly="readonly" @on-focus="editLinkedImg"></Input>
             <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
                          :action="fileUploadUrl" uploadLabel="上传链接图片"/>
           </FormItem>
           <FormItem>
-            <Button type="success" size="small" @click="handleSubmit('formValidate')">Submit</Button>
-            <Button type="warning" size="small" @click="handleReset('formValidate')">Cancel</Button>
+            <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
+            <Button type="warning" size="small" @click="handleReset('formValidate')">取消</Button>
           </FormItem>
         </Form>
       </Col>

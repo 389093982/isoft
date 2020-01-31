@@ -41,6 +41,7 @@
   import {GetLoginUserName} from "../../tools"
   import EditAdvertisement from "./EditAdvertisement"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
+  import {scrollTop} from "iview/src/utils/assist"
 
   export default {
     name: "Manage",
@@ -64,6 +65,8 @@
       },
       editAdvertisement:function (id) {
         this.$refs.editAdvertisement.initData(id);
+        const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+        scrollTop(window, sTop, 0, 1000);
       }
     },
     computed:{

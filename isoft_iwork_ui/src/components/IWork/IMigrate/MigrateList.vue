@@ -30,7 +30,10 @@
         </Scroll>
       </TabPane>
       <TabPane label="常用语句" name="cy">
-        待开发
+        <div v-for="(cysql,index) in cysqls">
+          <p style="color: red;">{{cysql.label}}</p>
+          <p>{{cysql.sql}}</p>
+        </div>
       </TabPane>
       <TabPane label="执行日志" name="log">
         <Scroll height="450">
@@ -51,6 +54,18 @@
     name: "MigrateList",
     data(){
       return {
+        cysqls: [{
+          'label': '互换两列主键 id',
+          'sql': 'UPDATE course_video a JOIN course_video b ON(a.id = ? AND b.id = ?) OR (a.id = ? AND b.id = ?) SET a.video_name = b.video_name, b.video_name = a.video_name, a.first_play = b.first_play, b.first_play = a.first_play, a.second_play = b.second_play, b.second_play = a.second_play;',
+        },
+          {
+            'label': '删除列',
+            'sql': 'alter table course_video drop column video_number;',
+          },
+          {
+            'label': '创建表',
+            'sql': 'CREATE TABLE `verify_code`( `user_name` VARCHAR(255) COLLATE utf8_bin NOT NULL DEFAULT \'\' COMMENT \'用户名\', `verify_code` INT(11) NOT NULL DEFAULT -1 COMMENT \'验证码\', verify_code_expired DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT \'验证码过期时间\', PRIMARY KEY (`user_name`)) ENGINE=INNODB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+          }],
         tabVal:'lst',
         logs:[],
         timer:'',

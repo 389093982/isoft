@@ -28,26 +28,46 @@ func init() {
 }
 
 func persistentToFile() {
+	appids, _ := models.GetAllAppIds()
 	// 进行备份操作
 	fileutils.CopyDir(persistentDirPath, fmt.Sprintf(`%s_backup/%s`, persistentDirPath, time.Now().Format("20060102150405")))
 	// 进行清理操作
 	fileutils.RemoveFileOrDirectory(persistentDirPath)
-	persistentFiltersToFile()
-	persistentModulesToFile()
-	persistentGlobalVarsToFile()
-	persistentQuartzsToFile()
-	persistentResourcesToFile()
-	persistentMigratesToFile()
-	persistentWorkCahcesToFile()
-	persistentAuditTasksToFile()
-	persistentPlacementsToFile()
+	persistentAppIdsToFile(appids)
+	persistentFiltersToFile(appids)
+	persistentModulesToFile(appids)
+	persistentGlobalVarsToFile(appids)
+	persistentQuartzsToFile(appids)
+	persistentResourcesToFile(appids)
+	persistentMigratesToFile(appids)
+	persistentWorkCahcesToFile(appids)
+	persistentAuditTasksToFile(appids)
+	persistentPlacementsToFile(appids)
 }
 
-func persistentPlacementsToFile() {
+func getAppName(appids []models.AppId, app_id int64) string {
+	for _, appid := range appids {
+		if appid.Id == app_id {
+			return appid.AppName
+		}
+	}
+	return string(app_id)
+}
+
+func persistentAppIdsToFile(appids []models.AppId) {
+	for _, appid := range appids {
+		_persistentDirPath := path.Join(persistentDirPath, appid.AppName)
+		filepath := path.Join(_persistentDirPath, "appid", fmt.Sprintf(`%s.appid`, appid.AppName))
+		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(appid)), false)
+	}
+}
+
+func persistentPlacementsToFile(appids []models.AppId) {
 	placements, _ := models.GetAllPlacements()
 	for _, placement := range placements {
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, placement.AppId))
 		elements, _ := models.QueryElementsByPlacename(placement.PlacementName)
-		filepath := path.Join(persistentDirPath, "placements", fmt.Sprintf(`%s.placement`, placement.PlacementName))
+		filepath := path.Join(_persistentDirPath, "placements", fmt.Sprintf(`%s.placement`, placement.PlacementName))
 		data := &models.PlacementElementMppaer{
 			Placement: placement,
 			Elements:  elements,
@@ -56,66 +76,74 @@ func persistentPlacementsToFile() {
 	}
 }
 
-func persistentAuditTasksToFile() {
+func persistentAuditTasksToFile(appids []models.AppId) {
 	tasks, _ := models.QueryAllAuditTasks(orm.NewOrm())
 	for _, task := range tasks {
-		filepath := path.Join(persistentDirPath, "audits", fmt.Sprintf(`%s.audit`, task.TaskName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, task.AppId))
+		filepath := path.Join(_persistentDirPath, "audits", fmt.Sprintf(`%s.audit`, task.TaskName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(task)), false)
 	}
 }
 
-func persistentModulesToFile() {
+func persistentModulesToFile(appids []models.AppId) {
 	modules, _ := models.QueryAllModules(-1)
 	for _, module := range modules {
-		filepath := path.Join(persistentDirPath, "modules", fmt.Sprintf(`%s.module`, module.ModuleName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, module.AppId))
+		filepath := path.Join(_persistentDirPath, "modules", fmt.Sprintf(`%s.module`, module.ModuleName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(module)), false)
 	}
 }
 
-func persistentFiltersToFile() {
+func persistentFiltersToFile(appids []models.AppId) {
 	filters, _ := models.QueryAllFilters(-1)
 	for _, filter := range filters {
-		filepath := path.Join(persistentDirPath, "filters", fmt.Sprintf(`%s.filter`, filter.FilterWorkName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, filter.AppId))
+		filepath := path.Join(_persistentDirPath, "filters", fmt.Sprintf(`%s.filter`, filter.FilterWorkName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(filter)), false)
 	}
 }
 
-func persistentGlobalVarsToFile() {
+func persistentGlobalVarsToFile(appids []models.AppId) {
 	globalVars := models.QueryAllGlobalVar(-1)
 	for _, globalVar := range globalVars {
-		filepath := path.Join(persistentDirPath, "globalVars", fmt.Sprintf(`%s.globalVar`, globalVar.Name))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, globalVar.AppId))
+		filepath := path.Join(_persistentDirPath, "globalVars", fmt.Sprintf(`%s.globalVar`, globalVar.Name))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(globalVar)), false)
 	}
 }
 
-func persistentQuartzsToFile() {
+func persistentQuartzsToFile(appids []models.AppId) {
 	metas, _ := models.QueryAllCronMeta()
 	for _, meta := range metas {
-		filepath := path.Join(persistentDirPath, "quartzs", fmt.Sprintf(`%s.quartz`, meta.TaskName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, meta.AppId))
+		filepath := path.Join(_persistentDirPath, "quartzs", fmt.Sprintf(`%s.quartz`, meta.TaskName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(meta)), false)
 	}
 }
 
-func persistentResourcesToFile() {
+func persistentResourcesToFile(appids []models.AppId) {
 	resources := models.QueryAllResource(-1)
 	for _, resource := range resources {
-		filepath := path.Join(persistentDirPath, "resources", fmt.Sprintf(`%s.resource`, resource.ResourceName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, resource.AppId))
+		filepath := path.Join(_persistentDirPath, "resources", fmt.Sprintf(`%s.resource`, resource.ResourceName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(resource)), false)
 	}
 }
 
-func persistentMigratesToFile() {
+func persistentMigratesToFile(appids []models.AppId) {
 	migrates, _ := models.QueryAllSqlMigrate(-1)
 	for _, migrate := range migrates {
-		filepath := path.Join(persistentDirPath, "migrates", fmt.Sprintf(`%s`, migrate.MigrateName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, migrate.AppId))
+		filepath := path.Join(_persistentDirPath, "migrates", fmt.Sprintf(`%s`, migrate.MigrateName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(migrate)), false)
 	}
 }
 
-func persistentWorkCahcesToFile() {
+func persistentWorkCahcesToFile(appids []models.AppId) {
 	workCahces := iworkcache.GetAllWorkCache(-1)
 	for _, workCahce := range workCahces {
-		filepath := path.Join(persistentDirPath, "works", fmt.Sprintf(`%s.work`, workCahce.Work.WorkName))
+		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, workCahce.Work.AppId))
+		filepath := path.Join(_persistentDirPath, "works", fmt.Sprintf(`%s.work`, workCahce.Work.WorkName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(workCahce)), false)
 	}
 }
@@ -154,6 +182,7 @@ func backupDB() {
 }
 
 func truncateDB() {
+	orm.NewOrm().QueryTable("app_id").Filter("id__gt", 0).Delete()
 	orm.NewOrm().QueryTable("filters").Filter("id__gt", 0).Delete()
 	orm.NewOrm().QueryTable("cron_meta").Filter("id__gt", 0).Delete()
 	orm.NewOrm().QueryTable("resource").Filter("id__gt", 0).Delete()
@@ -214,6 +243,9 @@ func Append(slice interface{}, value interface{}) interface{} {
 // 批量插入 DB
 func persistentMultiToDB(dirPath string, tp reflect.Type) {
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
+	if filepaths == nil || len(filepaths) == 0 {
+		return
+	}
 	// reflect.PtrTo 返回类型t的指针的类型
 	// reflect.SliceOf 返回类型t的切片的类型
 	rows := reflect.MakeSlice(reflect.SliceOf(reflect.PtrTo(tp)), 0, 0).Interface()
@@ -232,13 +264,20 @@ func importProject() {
 	if persistent_initial, _ := beego.AppConfig.Bool("persistent.initial"); persistent_initial == true {
 		backupDB()
 		truncateDB()
-		persistentMultiToDB(fmt.Sprintf("%s/filters", persistentDirPath), reflect.TypeOf(models.Filters{}))
-		persistentMultiToDB(fmt.Sprintf("%s/quartzs", persistentDirPath), reflect.TypeOf(models.CronMeta{}))
-		persistentMultiToDB(fmt.Sprintf("%s/resources", persistentDirPath), reflect.TypeOf(models.Resource{}))
-		persistentMultiToDB(fmt.Sprintf("%s/modules", persistentDirPath), reflect.TypeOf(models.Module{}))
-		persistentMultiToDB(fmt.Sprintf("%s/globalVars", persistentDirPath), reflect.TypeOf(models.GlobalVar{}))
-		persistentMultiToDB(fmt.Sprintf("%s/migrates", persistentDirPath), reflect.TypeOf(models.SqlMigrate{}))
-		persistentMultiToDB(fmt.Sprintf("%s/audits", persistentDirPath), reflect.TypeOf(models.AuditTask{}))
-		persistentWorkFilesToDB(fmt.Sprintf("%s/works", persistentDirPath))
+
+		files, _, err := fileutils.GetAllSubFile(persistentDirPath)
+		if err == nil {
+			for _, appNameFilePath := range files {
+				persistentMultiToDB(fmt.Sprintf("%s/appid", appNameFilePath), reflect.TypeOf(models.AppId{}))
+				persistentMultiToDB(fmt.Sprintf("%s/filters", appNameFilePath), reflect.TypeOf(models.Filters{}))
+				persistentMultiToDB(fmt.Sprintf("%s/quartzs", appNameFilePath), reflect.TypeOf(models.CronMeta{}))
+				persistentMultiToDB(fmt.Sprintf("%s/resources", appNameFilePath), reflect.TypeOf(models.Resource{}))
+				persistentMultiToDB(fmt.Sprintf("%s/modules", appNameFilePath), reflect.TypeOf(models.Module{}))
+				persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
+				persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
+				persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
+				persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
+			}
+		}
 	}
 }

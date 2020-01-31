@@ -222,7 +222,7 @@ func getSqlBinding(tmpDataMap map[string]interface{}, namings []string) []interf
 					result = append(result, v2.Interface())
 				}
 			} else {
-				result = append(result, v2)
+				result = append(result, v2.Interface())
 			}
 		}
 	} else if t1.Kind() == reflect.Interface {

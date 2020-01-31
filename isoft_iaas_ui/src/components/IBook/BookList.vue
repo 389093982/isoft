@@ -12,7 +12,7 @@
               <IBeautifulLink @onclick="refreshBookList('_hot')">热门书单</IBeautifulLink>
             </Col>
             <Col span="3">
-              <IBeautifulLink @onclick="refreshBookList('mine')">我的书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshMyBookList">我的书单</IBeautifulLink>
             </Col>
             <Col span="3">
               <IBeautifulLink @onclick="showBookEditModal">新增书单</IBeautifulLink>
@@ -26,11 +26,18 @@
                   {{book.book_name}}
                 </div>
                 <div>
-                  <span>作者：{{book.created_by}}</span>
-                  创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
-                  修改时间：<span style="color: red;"><Time :time="book.last_updated_time" type="date"/></span>
+                  <span>作者：
+                    <span v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
+                    <span v-else>{{book.created_by}}</span>
+                  </span>
+                  <span style="margin-left: 10px;">
+                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
+                  </span>
+                  <span style="margin-left: 10px;">
+                    修改时间：<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time" type="date"/></span>
+                  </span>
                 </div>
-                <div style="font-size: 14px;color: #333333;">
+                <div style="font-size: 14px;color: #7d7d7d;">
                   {{book.book_desc}}
                 </div>
                 <div v-if="mine" style="margin: 10px;float: right;">
@@ -77,7 +84,7 @@
 </template>
 
 <script>
-  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, UpdateBookIcon} from "../../api"
+  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, GetUserInfoByNames, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -86,7 +93,7 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
-  import {GetLoginUserName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BookList",
@@ -98,6 +105,7 @@
         fileUploadUrl: fileUploadUrl,
         books:[],
         mine:false,
+        userInfos: [],
       }
     },
     methods:{
@@ -134,26 +142,46 @@
         }
       },
       showBookEditModal:function () {
-        this.$refs.bookEditForm.handleReset('formValidate');
-        this.$refs.bookEditModal.showModal();
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$refs.bookEditForm.handleReset('formValidate');
+          _this.$refs.bookEditModal.showModal();
+        });
+      },
+      refreshMyBookList: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.refreshBookList('mine');
+        });
       },
       refreshBookList: async function (type) {
         var search_type = type;
         var search_user_name = '';
         if (type == 'mine') {
           search_user_name = GetLoginUserName();
-          this.mine = 'mine';
+          this.mine = true;
         } else {
-          this.mine = '';
+          this.mine = false;
         }
-
         const result = await BookList({
           search_type: search_type,
           search_user_name: search_user_name,
         });
         if(result.status == "SUCCESS"){
           this.books = result.books;
+          this.renderUserInfoByName();
         }
+      },
+      renderUserInfoByName: async function () {
+        let user_names = MapAttrsForArray(this.books, 'book_author');
+        user_names = Array.from(new Set(user_names));
+        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+        if (result.status == "SUCCESS") {
+          this.userInfos = result.users;
+        }
+      },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
       }
     },
     mounted(){

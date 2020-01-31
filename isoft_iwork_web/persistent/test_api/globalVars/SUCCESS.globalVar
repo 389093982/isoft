@@ -1,0 +1,12 @@
+<GlobalVar>
+	<Id>13</Id>
+	<AppId>7</AppId>
+	<Name>SUCCESS</Name>
+	<Value>SUCCESS</Value>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T19:17:07+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T19:17:07+08:00</LastUpdatedTime>
+</GlobalVar>

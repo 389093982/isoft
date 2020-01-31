@@ -3,13 +3,19 @@
     <div class="isoft_bg_white isoft_pd10">
       <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
         <FormItem label="公司名称" prop="corporate_name">
-          <Input v-model.trim="formInline.corporate_name" placeholder="请您输入公司名称"></Input>
+          <Input v-model.trim="formInline.corporate_name" :maxlength="50" show-word-limit
+                 placeholder="请您输入公司名称"></Input>
         </FormItem>
         <FormItem label="公司主页" prop="corporate_site">
-          <Input v-model.trim="formInline.corporate_site" placeholder="请您输入公司主页"></Input>
+          <Input v-model.trim="formInline.corporate_site" :maxlength="200" show-word-limit
+                 placeholder="请您输入公司主页"></Input>
         </FormItem>
         <FormItem label="公司 logo" prop="corporate_logo">
-          <Input v-model.trim="formInline.corporate_logo" placeholder="请您上传公司 logo"></Input>
+          <Input v-model.trim="formInline.corporate_logo" placeholder="请您上传公司 logo"
+                 @on-focus="editCorporateLogo"></Input>
+          <IFileUpload ref="fileUpload" :show-button="false" :auto-hide-modal="true" :multiple="false"
+                       :format="['jpg','jpeg','png','gif']" @uploadComplete="uploadComplete" :action="fileUploadUrl"
+                       uploadLabel="上传公司 logo"/>
         </FormItem>
         <FormItem label="公司规模" prop="corporate_size">
           <Select v-model="formInline.corporate_size">
@@ -26,7 +32,8 @@
           </Select>
         </FormItem>
         <FormItem label="详细类型" prop="job_type_detail">
-          <Input v-model.trim="formInline.job_type_detail" placeholder="请您输入招聘岗位详细类型"></Input>
+          <Input v-model.trim="formInline.job_type_detail" :maxlength="100" show-word-limit
+                 placeholder="请您输入招聘岗位详细类型"></Input>
         </FormItem>
         <FormItem label="薪酬范围" prop="salary_range">
           <Select v-model="formInline.salary_range">
@@ -59,15 +66,17 @@
 </template>
 
 <script>
-  import {EditCorporateDetail, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, strSplit} from "../../tools"
+  import {EditCorporateDetail, fileUploadUrl, QueryCorporateDetail} from "../../api"
+  import {checkEmpty, handleSpecial, strSplit} from "../../tools"
   import IAreaChooser from "../Common/IAreaChooser";
+  import IFileUpload from "../Common/file/IFileUpload";
 
   export default {
     name: "EditCorporate",
-    components: {IAreaChooser},
+    components: {IFileUpload, IAreaChooser},
     data(){
       return {
+        fileUploadUrl: fileUploadUrl,
         salaryRanges: this.GLOBAL.salaryRanges,
         corporateSizes: this.GLOBAL.corporateSizes,
         jobTypes: this.GLOBAL.jobTypes,
@@ -89,10 +98,28 @@
           corporate_welfare:'',
           corporate_address: '',
         },
-        ruleValidate: {}
+        ruleValidate: {
+          corporate_name: [
+            {required: true, message: '公司名称不能为空!', trigger: 'blur'},
+          ],
+          corporate_desc: [
+            {required: true, message: '公司简介不能为空!', trigger: 'blur'},
+          ],
+          job_desc: [
+            {required: true, message: '职位简介不能为空!', trigger: 'blur'},
+          ],
+        }
       }
     },
     methods:{
+      editCorporateLogo: function () {
+        this.$refs.fileUpload.showModal();
+      },
+      uploadComplete: function (result) {
+        if (result.status == "SUCCESS") {
+          this.formInline.corporate_logo = handleSpecial(result.fileServerPath);
+        }
+      },
       handleAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {
           this.formInline.corporate_address = province;
@@ -115,44 +142,22 @@
       handleSubmit: function (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditCorporateDetail(
-              this.formInline.id,
-              this.formInline.corporate_name,
-              this.formInline.corporate_site,
-              this.formInline.corporate_logo,
-              this.formInline.corporate_size,
-              this.formInline.job_type,
-              this.formInline.job_type_detail,
-              this.formInline.salary_range,
-              this.formInline.corporate_desc,
-              this.formInline.job_desc,
-              this.formInline.corporate_welfare,
-              this.formInline.corporate_address
-            );
+            const result = await EditCorporateDetail(this.formInline);
             if (result.status == "SUCCESS") {
               this.$Message.success("保存成功！");
               this.$router.push({path: '/job/corporate_detail'});
             } else {
               this.$Message.error(result.errorMsg);
             }
+          } else {
+            this.$Message.error("校验失败!");
           }
         })
       },
       refreshCorporateDetail:async function () {
         const result = await QueryCorporateDetail();
         if(result.status == "SUCCESS" && result.corporate_detail){
-          this.formInline.id = result.corporate_detail.id;
-          this.formInline.corporate_name = result.corporate_detail.corporate_name;
-          this.formInline.corporate_site = result.corporate_detail.corporate_site;
-          this.formInline.corporate_logo = result.corporate_detail.corporate_logo;
-          this.formInline.corporate_size = result.corporate_detail.corporate_size;
-          this.formInline.job_type = result.corporate_detail.job_type;
-          this.formInline.job_type_detail = result.corporate_detail.job_type_detail;
-          this.formInline.salary_range = result.corporate_detail.salary_range;
-          this.formInline.corporate_desc = result.corporate_detail.corporate_desc;
-          this.formInline.job_desc = result.corporate_detail.job_desc;
-          this.formInline.corporate_welfare = result.corporate_detail.corporate_welfare;
-          this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
+          this.formInline = result.corporate_detail;
         }
       }
     },

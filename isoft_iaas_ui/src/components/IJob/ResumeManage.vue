@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <IBeautifulLink>简历管理</IBeautifulLink>
-      <IBeautifulLink>个人特色</IBeautifulLink>
-      <IBeautifulLink>简历下载</IBeautifulLink>
-      <IBeautifulLink style="float: right;" @onclick="$router.push({path:'/job/resume_edit'})">编辑简历</IBeautifulLink>
+      <IBeautifulLink @onclick="noImplement">简历管理</IBeautifulLink>
+      <IBeautifulLink @onclick="noImplement">个人特色</IBeautifulLink>
+      <IBeautifulLink @onclick="downloadResume">简历下载</IBeautifulLink>
+      <IBeautifulLink style="float: right;" v-if="checkEditable" @onclick="$router.push({path:'/job/resume_edit'})">
+        编辑简历
+      </IBeautifulLink>
     </div>
 
-    <div v-if="resume" class="isoft_bg_white isoft_top10" style="padding: 50px;">
+    <div id="resumeInfo" v-if="resume" class="isoft_bg_white isoft_top10" style="padding: 50px;">
       <span style="position: absolute;right: 160px;top:180px;">
         <img v-if="resume.head_img" :src="resume.head_img" height="160px" width="140px"/>
         <img v-else src="../../assets/default.png" height="160px" width="140px"/>
@@ -38,9 +40,9 @@
     </div>
   </div>
 </template>
-
 <script>
   import {QueryResume} from "../../api"
+  import {checkEmpty, GetLoginUserName} from "../../tools";
 
   export default {
     name: "ResumeManage",
@@ -50,18 +52,32 @@
       }
     },
     methods: {
-      refreshQueryResume: async function () {
-        const result = await QueryResume();
+      noImplement: function () {
+        alert("待开发!");
+      },
+      downloadResume: function () {
+        if (this.resume != null) {
+          $("#resumeInfo").wordExport(this.resume.user_name + "的简历");
+        }
+      },
+      refreshQueryResume: async function (user_name) {
+        const result = await QueryResume({user_name: user_name});
         if (result.status == "SUCCESS") {
           this.resume = result.resume;
         }
+      },
+      checkEditable: function () {
+        return this.$route.query.user_name == GetLoginUserName();
       }
     },
     mounted() {
-      this.refreshQueryResume();
+      if (!checkEmpty(this.$route.query.user_name)) {
+        this.refreshQueryResume(this.$route.query.user_name);
+      }
     }
   }
 </script>
+
 
 <style scoped>
   p {

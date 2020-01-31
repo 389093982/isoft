@@ -25,8 +25,9 @@
       <Row>
         <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
-          <Button @click="$router.push({path:'/job/resume_manage'})">简历管理</Button>
+          <Button @click="forwardResumeManage">简历管理</Button>
           <Button @click="toEditCorporateDetail">发布招聘</Button>
+          <Button @click="toToudiDetail">投递清单</Button>
         </Col>
       </Row>
 
@@ -39,12 +40,11 @@
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.job_name}}</Col>
             <Col span="4" class="isoft_inline_ellipsis">{{job.job_age}}</Col>
             <Col span="6" class="isoft_inline_ellipsis">{{job.job_address}}</Col>
-            <Col span="4" class="isoft_inline_ellipsis">
+            <Col span="6" class="isoft_inline_ellipsis">
               <span style="font-size: 16px;color: #393;">{{job.salary_range}}</span>
               <span style="font-size: 14px;color: rgba(0,0,0,0.5);float: right;"><Time
                 :time="job.last_updated_time"/></span>
             </Col>
-            <Col span="2">我要应聘</Col>
           </div>
         </Row>
 
@@ -59,7 +59,7 @@
 
 <script>
   import {FilterPageJobList} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog, GetLoginUserName, strSplit} from "../../tools";
   import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
@@ -81,6 +81,9 @@
       }
     },
     methods: {
+      forwardResumeManage: function () {
+        CheckHasLoginConfirmDialog(this, {path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
+      },
       handleAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {
           this.jobPlaceSearch = province;
@@ -125,6 +128,9 @@
       },
       showJobDetail: function (job) {
         this.$router.push({path: '/job/corporate_detail', query: {'corporate_id': job.corporate_id}});
+      },
+      toToudiDetail: function () {
+        CheckHasLoginConfirmDialog(this, {path: '/job/apply_list'});
       },
       toEditCorporateDetail: function () {
         CheckHasLoginConfirmDialog(this, {path: '/job/corporate_detail'});

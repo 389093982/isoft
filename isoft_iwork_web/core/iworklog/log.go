@@ -27,9 +27,6 @@ func (this *CacheLoggerWriter) cleanCaches() {
 }
 
 func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail string) {
-	if this.caches == nil {
-		this.cleanCaches()
-	}
 	this.logOrder = this.logOrder + 1
 	log := &models.RunLogDetail{
 		TrackingId:      trackingId,
@@ -51,7 +48,8 @@ func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail 
 
 func (this *CacheLoggerWriter) flush() {
 	if sysconfig.SYSCONFIG_LOGWIRTER_ENABLE {
-		caches := this.caches // 使用临时变量进行参数传递
+		caches := make([]*models.RunLogDetail, len(this.caches))
+		copy(caches, this.caches) // 值拷贝
 		startup.RunLogPool.JobQueue <- func() {
 			if _, err := models.InsertMultiRunLogDetail(caches); err != nil {
 				fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@" + err.Error())

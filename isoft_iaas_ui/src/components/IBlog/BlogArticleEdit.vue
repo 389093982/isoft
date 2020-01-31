@@ -11,19 +11,22 @@
           <Row>
             <Col span="12">
               <FormItem label="文章标题" prop="blog_title">
-                <Input v-model="formValidate.blog_title" placeholder="Enter blog title..."/>
+                <Input v-model="formValidate.blog_title" maxlength="200" show-word-limit
+                       placeholder="Enter blog title..."/>
               </FormItem>
             </Col>
             <Col span="12">
               <FormItem label="简短描述" prop="short_desc">
-                <Input v-model="formValidate.short_desc" placeholder="Enter short_desc..."></Input>
+                <Input v-model="formValidate.short_desc" maxlength="200" show-word-limit
+                       placeholder="Enter short_desc..."></Input>
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col span="12">
               <FormItem label="检索词条" prop="key_words">
-                <Input v-model="formValidate.key_words" placeholder="Enter key_words..."></Input>
+                <Input v-model="formValidate.key_words" maxlength="200" show-word-limit
+                       placeholder="Enter key_words..."></Input>
               </FormItem>
             </Col>
             <Col span="12">
@@ -46,7 +49,7 @@
                           :toolbars="toolbars" :ishljs = "true" style="z-index: 1;"/>
           </FormItem>
           <FormItem label="分享链接" prop="link_href">
-            <Input v-model="formValidate.link_href" placeholder="请输入分享链接"></Input>
+            <Input v-model="formValidate.link_href" maxlength="200" show-word-limit placeholder="请输入分享链接"></Input>
           </FormItem>
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>

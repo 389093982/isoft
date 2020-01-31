@@ -2,9 +2,9 @@
   <div>
     <div class="isoft_bg_white">
       <div style="width: 100%;height: 100px;overflow: hidden;background-color: rgba(0,21,228,0.5);padding: 20px;">
-        <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">简历模板</p>
+        <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">共享资源</p>
         <p class="isoft_font_white" style="margin-top: 5px;">
-          2万精品简历模板内容，每日更新10+涵盖科技、简约、商务等风格精品简历模板，为互联网、行政、设计等领域从业者打造。
+          许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。
         </p>
         <p class="isoft_font_white" style="cursor:pointer;text-align: right;"
            @click="uploadResource">

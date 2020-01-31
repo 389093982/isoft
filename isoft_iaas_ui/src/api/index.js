@@ -99,12 +99,9 @@ export const UpdateCourseIcon = (course_id, small_image) => ajax(BASE_URL + "/iw
   course_id,
   small_image
 }, 'GET');
-export const UploadVideo = (id, video_number, video_name, video_path) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/UploadVideo2", {
-  id,
-  video_number,
-  video_name,
-  video_path
-}, 'GET');
+export const UploadVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/UploadVideo", params, 'GET');
+export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/DeleteVideo", params, 'GET');
+export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/ChangeVideoOrder", params, 'GET');
 
 // 显示课程详细信息
 export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/ShowCourseDetail2", {course_id}, 'GET');
@@ -183,6 +180,7 @@ export const ModifyPwd = (username, passwd, verifyCode) => ajax(BASE_URL + "/iwo
 }, 'POST');
 
 export const GetHotUsers = () => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/GetHotUsers", {}, 'POST');
+export const GetUserInfoByNames = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/GetUserInfoByNames", params, 'POST');
 
 // 系统注册分页查询
 export const AppRegisterList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/AppRegisterList2", {
@@ -224,11 +222,7 @@ export const EditAdvertisement = (id, advertisement_label, linked_type, linked_r
   linked_img
 }, 'GET');
 
-export const EditCorporateDetail = (id,corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
-    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditCorporateDetail', {
-    id, corporate_name, corporate_site, corporate_logo, corporate_size, job_type,
-    job_type_detail, salary_range, corporate_desc, job_desc, corporate_welfare, corporate_address},'GET');
+export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditCorporateDetail', params, 'GET');
 
 export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, salary_range) =>
   ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/EditJobDetail', {
@@ -241,6 +235,7 @@ export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, 
   }, 'GET');
 
 export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/QueryCorporateDetail', params, 'GET');
+export const ApplyJob = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/ApplyJob', params, 'GET');
 
 export const QueryJobById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/QueryJobById', {id}, 'GET');
 
@@ -249,6 +244,7 @@ export const EditResume = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_
 export const QueryResume = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/QueryResume', params, "POST");
 
 export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/FilterPageJobList', params, "POST");
+export const GetJobApplyList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/GetJobApplyList', params, "POST");
 
 //会员中心-初始下单
 export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WECHAT_PAY+'/Pay',{ProductId,ProductDesc,TransAmount,TransCurrCode},'POST');

@@ -16,9 +16,9 @@
             </Col>
             <Col span="3" offset="4" style="text-align: center;"><a @click="chooseItem('_all')">全部分类</a></Col>
             <Col span="3" style="text-align: center;"><a @click="chooseItem('_hot')">热门博客</a></Col>
-            <Col span="3" style="text-align: center;"><a @click="chooseItem('_personal')">我的博客</a></Col>
+            <Col span="3" style="text-align: center;"><a @click="chooseMyItem">我的博客</a></Col>
             <Col span="3" style="text-align: center;">
-              <router-link to="/iblog/blog_edit">我也要发布</router-link>
+              <a @click="blog_edit">我也要发布</a>
             </Col>
           </Row>
 
@@ -48,9 +48,15 @@
                 <Row>
                   <Col span="17">
                     <!-- 作者详情 -->
-                    <router-link :to="{path:'/iblog/author',query:{author:searchblog.author}}">{{searchblog.author}}</router-link>
-                    发布于:<Time :time="searchblog.created_time" style="color:red;"/>&nbsp;
-                    更新于:<Time :time="searchblog.last_updated_time" style="color:red;"/>&nbsp;
+                    <router-link :to="{path:'/iblog/author',query:{author:searchblog.author}}">
+                      作者:<span style="color: blue;">
+                        <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
+                        <span v-else>{{searchblog.author}}</span>
+                      </span>
+                    </router-link>
+                    <span style="margin-left: 10px;">发布于:<Time :time="searchblog.created_time"
+                                                               style="color:red;"/></span>
+                    <span style="margin-left: 10px;">更新于:<Time :time="searchblog.last_updated_time" style="color:red;"/></span>
                   </Col>
                   <Col span="2">
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
@@ -63,9 +69,7 @@
                     </router-link>
                   </Col>
                   <Col span="3">
-                    <router-link :to="{path:'/iblog/blog_edit'}">
-                      <span class="isoft_font12">我也要发布</span>
-                    </router-link>
+                    <a @click="blog_edit" class="isoft_font12">我也要发布</a>
                   </Col>
                 </Row>
               </p>
@@ -93,12 +97,13 @@
 
 <script>
   import HotCatalogItems from "./HotCatalogItems"
-  import {queryPageBlog} from "../../api"
+  import {GetUserInfoByNames, queryPageBlog} from "../../api"
   import CatalogList from "./CatalogList"
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BlogList",
@@ -113,9 +118,22 @@
         offset:20,
         searchblogs:[],
         search_type:'_all',
+        userInfos: [],
       }
     },
     methods:{
+      chooseMyItem: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.chooseItem('_personal');
+        });
+      },
+      blog_edit: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$router.push({path: '/iblog/blog_edit'});
+        });
+      },
       chooseItem:function(item_name){
         if(this.search_type != item_name){
           this.search_type = item_name;
@@ -141,8 +159,21 @@
         if(result.status=="SUCCESS"){
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
+          this.renderUserInfoByName();
         }
       },
+      renderUserInfoByName: async function () {
+
+        let user_names = MapAttrsForArray(this.searchblogs, 'author');
+        user_names = Array.from(new Set(user_names));
+        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+        if (result.status == "SUCCESS") {
+          this.userInfos = result.users;
+        }
+      },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      }
     },
     mounted: function () {
       this.refreshBlogList();

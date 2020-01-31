@@ -2,7 +2,7 @@
   <div>
     <div class="isoft_bg_white isoft_pd20">
       <Row>
-        <Col span="4">
+        <Col span="5">
           <div class="bookImg">
             <a>
               <img v-if="formInline.corporate_logo" :src="formInline.corporate_logo" height="160px" width="180px"/>
@@ -10,7 +10,7 @@
             </a>
           </div>
         </Col>
-        <Col span="20">
+        <Col span="19">
           <p>
             <span>公司名称：{{formInline.corporate_name}}</span>
           </p>
@@ -64,32 +64,42 @@
 
     <div class="isoft_bg_white isoft_pd20 isoft_top10">
       <p style="border-bottom: 1px solid #f0f0f0;">招聘岗位</p>
-      <div v-if="jobDetails.length > 0">
+      <div v-if="showJobDetails.length > 0">
         <Row style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
           <Col span="4">工作名称</Col>
           <Col span="4">工作年限</Col>
           <Col span="6">工作地点</Col>
-          <Col span="4">薪酬范围</Col>
-          <Col span="4">操作</Col>
+          <Col span="3">薪酬范围</Col>
+          <Col span="3">时间</Col>
+          <Col span="2">操作</Col>
         </Row>
-        <Row v-for="(jobDetail,index) in jobDetails" style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
+        <Row v-for="(jobDetail,index) in showJobDetails" style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
           <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_name}}</Col>
           <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_age}}</Col>
           <Col span="6">{{jobDetail.job_address}}</Col>
-          <Col span="4">
+          <Col span="3">
             <span style="font-size: 16px;color: #393;">{{jobDetail.salary_range}}</span>
           </Col>
-          <Col span="4">
+          <Col span="3">
+            <span><Time :time="jobDetail.last_updated_time" :interval="1"/></span>
+          </Col>
+          <Col span="2">
             <span v-if="editable == 'true'">
               <Button size="small"
                       @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
               <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
             </span>
+            <span v-else>
+              <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
+            </span>
           </Col>
         </Row>
 
         <div class="isoft_top10" style="text-align: center;">
-          <IBeautifulLink>查看更多职位</IBeautifulLink>
+          <IBeautifulLink v-if="showJobDetails.length < allJobDetails.length" @onclick="showMore">查看更多职位
+          </IBeautifulLink>
+
+          <a @click="$router.push({path:'/job/apply_list'})" style="float: right;">投递清单</a>
         </div>
       </div>
     </div>
@@ -97,8 +107,8 @@
 </template>
 
 <script>
-  import {QueryCorporateDetail} from "../../api"
-  import {checkEmpty, strSplit} from "../../tools";
+  import {ApplyJob, QueryCorporateDetail} from "../../api"
+  import {checkEmpty, CheckHasLoginConfirmDialog2, strSplit} from "../../tools";
 
   export default {
     name: "CorporateDetail",
@@ -118,29 +128,34 @@
           corporate_welfare:'',
           corporate_address: '',
         },
-        jobDetails:[],
+        allJobDetails: [],
+        showJobDetails: [],
         editable: 'false',
       }
     },
     methods:{
+      applyJob: function (job_id) {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, async function () {
+          const result = await ApplyJob({job_id: job_id});
+          if (result.status == "SUCCESS") {
+            _this.$Message.success("投递成功!");
+          } else {
+            _this.$Message.error("投递失败!");
+          }
+        });
+      },
+      showMore: function () {
+        this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
+      },
       refreshCorporateDetail:async function () {
         let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
         const result = await QueryCorporateDetail({'id': id});
         if(result.status == "SUCCESS" && result.corporate_detail){
-          this.formInline.id = result.corporate_detail.id;
-          this.formInline.corporate_name = result.corporate_detail.corporate_name;
-          this.formInline.corporate_site = result.corporate_detail.corporate_site;
-          this.formInline.corporate_logo = result.corporate_detail.corporate_logo;
-          this.formInline.corporate_size = result.corporate_detail.corporate_size;
-          this.formInline.job_type = result.corporate_detail.job_type;
-          this.formInline.job_type_detail = result.corporate_detail.job_type_detail;
-          this.formInline.salary_range = result.corporate_detail.salary_range;
-          this.formInline.corporate_desc = result.corporate_detail.corporate_desc;
-          this.formInline.job_desc = result.corporate_detail.job_desc;
-          this.formInline.corporate_welfare = result.corporate_detail.corporate_welfare;
-          this.formInline.corporate_addres = result.corporate_detail.corporate_addres;
+          this.formInline = result.corporate_detail;
 
-          this.jobDetails = result.job_details;
+          this.allJobDetails = result.job_details;
+          this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
           this.editable = result.editable;
         }
       },

@@ -1,0 +1,12 @@
+<GlobalVar>
+	<Id>12</Id>
+	<AppId>7</AppId>
+	<Name>ERROR</Name>
+	<Value>ERROR</Value>
+	<Type>0</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T18:19:39+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T18:19:39+08:00</LastUpdatedTime>
+</GlobalVar>

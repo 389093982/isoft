@@ -116,6 +116,21 @@ export function formatDate (date, fmt) {
   return fmt;
 }
 
+export const MapAttrsForArray = function (arrs, attrName) {
+  let attrs = arrs.map(arr => arr[attrName]);
+  return attrs;
+}
+
+export const RenderNickName = function (userInfos, user_name) {
+  if (userInfos != null && userInfos != undefined) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name == user_name);
+    if (user_names != null && user_names != undefined && user_names.length > 0) {
+      return user_names[0].nick_name;
+    }
+  }
+  return user_name;
+}
+
 export const CheckSSOLogin = (to, from, next) => checkSSOLogin(to, from, next);
 export const CheckNotLogin = () => checkNotLogin();
 export const CheckHasLogin = () => checkHasLogin();
@@ -189,5 +204,20 @@ export function CheckHasLoginConfirmDialog(node, pushObj) {
     });
   }else{
     _this.$router.push(pushObj);
+  }
+}
+
+export function CheckHasLoginConfirmDialog2(node, callback) {
+  var _this = node;
+  if (!CheckHasLogin()) {
+    _this.$Modal.confirm({
+      title: '登录提示！',
+      content: '您还未登录！前往登录？',
+      onOk: () => {
+        window.location.href = "/#/sso/login/?redirectUrl=" + window.location.href;
+      },
+    });
+  } else {
+    callback();
   }
 }

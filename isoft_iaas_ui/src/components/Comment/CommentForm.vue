@@ -21,7 +21,7 @@
 
 <script>
   import {AddComment} from "../../api/index"
-  import {checkFastClick} from "../../tools"
+  import {checkFastClick, CheckHasLoginConfirmDialog2} from "../../tools"
 
   export default {
     name: "CommentForm",
@@ -33,25 +33,28 @@
       }
     },
     methods:{
-      submitComment: async function (comment_type) {
+      submitComment: function (comment_type) {
+        var _this = this;
         if (checkFastClick()){
-          this.$Message.error("点击过快,请稍后重试!");
+          _this.$Message.error("点击过快,请稍后重试!");
           return;
         }
-        if(this.content == undefined || this.content.length < 10){
-          this.$Notice.error({
-            title: '温馨提示',
-            desc: "评论信息过短,需要10个字符以上！"
-          });
-        }else{
-          const result = await AddComment(this.parent_id, this.content, this.theme_pk,
-            this.theme_type, comment_type, this.refer_user_name);
-          if(result.status=="SUCCESS"){
-            this.$Message.success("发表成功!");
-            // 调用父组件的 refreshComment 方法
-            this.$emit('refreshComment','all');
+        CheckHasLoginConfirmDialog2(_this, async function () {
+          if (_this.content == undefined || _this.content.length < 10) {
+            _this.$Notice.error({
+              title: '温馨提示',
+              desc: "评论信息过短,需要10个字符以上！"
+            });
+          } else {
+            const result = await AddComment(_this.parent_id, _this.content, _this.theme_pk,
+              _this.theme_type, comment_type, _this.refer_user_name);
+            if (result.status == "SUCCESS") {
+              _this.$Message.success("发表成功!");
+              // 调用父组件的 refreshComment 方法
+              _this.$emit('refreshComment', 'all');
+            }
           }
-        }
+        });
       }
     }
   }

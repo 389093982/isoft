@@ -1,0 +1,14 @@
+<Resource>
+	<Id>6</Id>
+	<AppId>7</AppId>
+	<ResourceName>test_mysql_name</ResourceName>
+	<ResourceType>db</ResourceType>
+	<ResourceUrl>127.0.0.1:3306</ResourceUrl>
+	<ResourceDsn>root:123456@tcp(127.0.0.1:3306)/testMysql</ResourceDsn>
+	<ResourceUsername>127.0.0.1:3306</ResourceUsername>
+	<ResourcePassword>123456</ResourcePassword>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T18:22:58+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T18:22:58+08:00</LastUpdatedTime>
+</Resource>

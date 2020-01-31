@@ -1,0 +1,9 @@
+<AppId>
+	<Id>7</Id>
+	<AppName>test_api</AppName>
+	<AppDesc>test_api id desc</AppDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-01-23T18:19:39+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-01-23T18:19:39+08:00</LastUpdatedTime>
+</AppId>

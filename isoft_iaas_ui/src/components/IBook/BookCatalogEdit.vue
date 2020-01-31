@@ -1,54 +1,57 @@
 <template>
-  <Row :gutter="10">
-    <Col span="6">
-      <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
-        <Button size="small" @click="editBookCatalog" long>新建目录</Button>
+  <div>
+    <Alert closable type="error" style="cursor: pointer;color: red;">提示：单击目录可以编辑文章，双击目录可以编辑目录，编辑文章前请选择目录</Alert>
+    <Row :gutter="10">
+      <Col span="6">
+        <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
+          <Button size="small" @click="editBookCatalog" long>新建目录</Button>
 
-        <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
-          <div style="margin: 15px 30px;">
-            <p>目录命名规范示例：1-一级目录</p>
-            <p>目录命名规范示例：1.1-二级目录</p>
-            <p>目录命名规范示例：1.1.1-三级目录</p>
-            <p>目录不能超过三级,目录级别不能以 0 开头</p>
-          </div>
-          <!-- 表单信息 -->
-          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-            <FormItem label="目录名称" prop="catalogName">
-              <Input v-model.trim="formValidate.catalogName" placeholder="请输入目录名称"></Input>
-            </FormItem>
-            <FormItem>
-              <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
-              <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
-            </FormItem>
-          </Form>
-        </ISimpleConfirmModal>
+          <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
+            <div style="margin: 15px 30px;">
+              <p>目录命名规范示例：1-一级目录</p>
+              <p>目录命名规范示例：1.1-二级目录</p>
+              <p>目录命名规范示例：1.1.1-三级目录</p>
+              <p>目录不能超过三级,目录级别不能以 0 开头</p>
+            </div>
+            <!-- 表单信息 -->
+            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+              <FormItem label="目录名称" prop="catalogName">
+                <Input v-model.trim="formValidate.catalogName" placeholder="请输入目录名称"></Input>
+              </FormItem>
+              <FormItem>
+                <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+                <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
+              </FormItem>
+            </Form>
+          </ISimpleConfirmModal>
 
-        <div style="margin-top: 5px;min-height: 250px;">
-          <div v-if="bookCatalogs && bookCatalogs.length > 0">
-            <span style="font-size: 12px;color: green;">提示：双击目录可以进行编辑</span>
-            <dl>
-              <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
-              <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="bookCatalog in bookCatalogs">
-                &nbsp;&nbsp;&nbsp;
-                <Icon type="ios-paper-outline"/>
-                <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
-                      @dblclick="editBookCatalog(bookCatalog.id)">
+          <div style="margin-top: 5px;min-height: 250px;">
+            <div v-if="bookCatalogs && bookCatalogs.length > 0">
+              <dl>
+                <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
+                <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;"
+                    v-for="bookCatalog in bookCatalogs">
+                  &nbsp;&nbsp;&nbsp;
+                  <Icon type="ios-paper-outline"/>
+                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
+                        @dblclick="editBookCatalog(bookCatalog.id)">
                   <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
                   {{bookCatalog.catalog_name | filterCatalogName}}
                 </span>
-              </dd>
-            </dl>
-          </div>
-          <div v-else>
-            暂未创建目录,点击上面按钮创建
+                </dd>
+              </dl>
+            </div>
+            <div v-else>
+              暂未创建目录,点击上面按钮创建
+            </div>
           </div>
         </div>
-      </div>
-    </Col>
-    <Col span="18">
-      <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogList"/>
-    </Col>
-  </Row>
+      </Col>
+      <Col span="18">
+        <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogList"/>
+      </Col>
+    </Row>
+  </div>
 </template>
 
 <script>
