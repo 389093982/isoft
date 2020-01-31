@@ -9,11 +9,11 @@
       <div>
         <p style="padding:10px;">课程名称：{{course.course_name}}</p>
         <p style="background-color: rgba(253,0,0,0.11);padding: 10px;">
-          上传规则：1、上传视频暂不支持删除功能！2、可上传替换每一集视频 3、视频格式仅支持 mp4 格式！
+          上传规则：1、点击叉号可删除视频！2、视频格式仅支持 mp4 格式！
         </p>
 
         <Scroll height="220" style="margin: 5px 0;">
-          <Tag v-for="(cVideo, num) in cVideos" style="margin: 5px;">
+          <Tag v-for="(cVideo, num) in cVideos" style="margin: 5px;" closable @on-close="handleDeleteVideo(cVideo.id)">
             <span>第{{num + 1}}集: {{cVideo.video_name}}</span>
           </Tag>
           <Spin fix size="large" v-if="isLoading">
@@ -33,7 +33,7 @@
 
 <script>
   import IFileUpload from "../../Common/file/IFileUpload";
-  import {fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
+  import {DeleteVideo, fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
   import {handleSpecial} from "../../../tools";
 
   export default {
@@ -50,6 +50,15 @@
       }
     },
     methods:{
+      handleDeleteVideo: async function (id) {
+        const result = await DeleteVideo({course_id: this.course.id, id: id});
+        if (result.status == "SUCCESS") {
+          this.$Message.success("删除成功!");
+          this.refreshCourseDetail(this.course.id);
+        } else {
+          this.$Message.error("删除失败！");
+        }
+      },
       uploadComplete: async function (data) {
         if(data.status == "SUCCESS"){
           let uploadFilePath = data.fileServerPath;     // uploadFilePath 使用 hash 值时含有特殊字符 + 等需要转义
