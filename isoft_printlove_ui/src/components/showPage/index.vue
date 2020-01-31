@@ -1,34 +1,36 @@
 <template>
   <div>
-    <div style="background-color: #e3e4e5;padding: 5px 0 5px 30px">
+
+    <div id="headLineId">
       <div style="float: left;width: 30%">
-        <span style="color: #ff6900;font-size: 13px">收藏本站</span>
-        <span style="color: #ff6900;font-size: 13px">手机APP</span>
-        <span style="color: #ff6900;font-size: 13px">公众号</span>
+        <span class="headLineClass">收藏本站</span>
+        <span class="headLineClass">手机APP</span>
+        <span class="headLineClass">公众号</span>
       </div>
       <div style="float: right;width: 30%">
-        <span style="color: #ff6900;font-size: 13px">消息</span>
-        <span style="color: #ff6900;font-size: 13px">邮件</span>
-        <span style="color: #ff6900;font-size: 13px">在线客服</span>
-        <span style="color: #ff6900;font-size: 13px">充值</span>
-        <span style="color: #ff6900;font-size: 13px">注销</span>
+        <span class="headLineClass">消息</span>
+        <span class="headLineClass">邮件</span>
+        <span class="headLineClass">在线客服</span>
+        <span class="headLineClass">充值</span>
+        <span class="headLineClass">注销</span>
       </div>
       <div style="clear: both"></div>
     </div>
-    <div id="headShow" style="background-color: #f6f6f6 ; padding: 20px 40px 20px 40px">
+
+    <div id="headShowId">
       <div id="tagPicture" style="width: 30%;float: left;">
         <h1 style="color: #ff6900">print love</h1>
       </div>
       <div style="width: 70%;float: left;">
-        <input placeholder="搜索..." style="border-style:solid;border-color:#ff537c;width: 500px;height: 35px;padding: 2px 0 2px 2px"/>
-        <button style="border-style:solid;border-color:#ff537c;width:60px;height: 35px;background-color: #ff537c; position: relative;left: -4px;top: 1px">
-          <code style="color: white;cursor: pointer;font-size: 15px;">搜索</code>
+        <input id="searchId" placeholder="搜索..."/>
+        <button id="searchButtonId">
+          <code id="searchCodeId">搜索</code>
         </button>
       </div>
       <div style="clear: both;"></div>
     </div>
 
-    <div id="contentTitleId" style="background-color: #ff537c; padding: 5px 10px 5px 10px">
+    <div id="contentTitleId">
       <span>中央大厅</span>
       <span>
         <Dropdown>
@@ -78,37 +80,38 @@
         </DropdownMenu>
       </Dropdown>
       </span>
-
     </div>
 
-    <div style="margin: 20px 40px 0 20px ;">
-      <div id="menuId" style="width: 13%;float: left;background-color: #f6f4f0;border-radius: 10px;">
+    <div style="margin: 20px 40px 0 20px ;height: 400px">
+      <div id="leftContentId">
         <div>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
-          <p class="menuClass">css教程222</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客</p><hr>
         </div>
       </div>
-      <div id="contentId" style="width: 65%;float: left;background-color: #fff;margin: 0 1% 0 1% ">
-        111111111111111111111111111111111111111111111111111111111111111111111111111111111
+      <div id="centerContentId">
+        这里展示子页面
+        <router-view></router-view>
       </div>
-      <div id="navigationId" style="width: 20%;float: left;background-color: #f6f4f0;border-radius: 10px">
-        <p class="navigationClass">css教程222</p><hr>
-        <p class="navigationClass">css教程222</p><hr>
-        <p class="navigationClass">css教程222</p><hr>
-        <p class="navigationClass">css教程222</p><hr>
-        <p class="navigationClass">css教程222</p><hr>
-        <p class="navigationClass">css教程222</p><hr>
+      <div id="rightContentId">
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱手册</p><hr>
       </div>
       <div style="clear: both"></div>
     </div>
-
-
 
   </div>
 </template>
@@ -120,6 +123,36 @@
 </script>
 
 <style scoped>
+  #headLineId{
+    background-color: #e3e4e5;padding: 5px 0 5px 30px
+  }
+  .headLineClass{
+    color: #ff6900;font-size: 13px
+  }
+  #headShowId{
+    background-color: #f6f6f6 ; padding: 20px 40px 20px 60px
+  }
+  #searchId{
+    border-style:solid;border-color:#ff537c;width: 500px;height: 35px;padding: 2px 0 2px 2px
+  }
+  #searchButtonId{
+    border-style:solid;border-color:#ff537c;width:60px;height: 35px;background-color: #ff537c; position: relative;left: -4px;top: 1px
+  }
+  #searchCodeId{
+    color: white;cursor: pointer;font-size: 15px;
+  }
+  #contentTitleId{
+    background-color: #ff537c; padding: 5px 10px 5px 40px
+  }
+  #leftContentId{
+    width: 10%;float: left;background-color: #f6f4f0;border-radius: 10px;
+  }
+  #centerContentId{
+    width: 75%;float: left;background-color: #fff;margin: 0 1% 0 1% ;
+  }
+  #rightContentId{
+    width: 13%;float: left;background-color: #f6f4f0;border-radius: 10px
+  }
   span{
     font-size: 15px;
     margin: 0 0 0 2%;
@@ -129,10 +162,10 @@
   hr{
     background-color: rgba(242,21,255,0.05);border: none;height: 1px
   }
-  .navigationClass{
+  .rightContentClass{
     font-size: 15px;text-align: center;color: #000;cursor: pointer
   }
-  .menuClass{
+  .leftContentClass{
     font-size: 15px;cursor: pointer;
   }
 </style>
