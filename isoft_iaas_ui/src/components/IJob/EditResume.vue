@@ -79,7 +79,7 @@
 <script>
   import {EditResume, QueryResume} from "../../api"
   import IAreaChooser from "../Common/IAreaChooser"
-  import {checkEmpty, strSplit} from "../../tools";
+  import {checkEmpty, GetLoginUserName, strSplit} from "../../tools";
 
   export default {
     name: "EditResume",
@@ -124,7 +124,7 @@
             const result = await EditResume(this.formInline);
             if (result.status == "SUCCESS") {
               this.$Message.success("保存成功！");
-              this.$router.push({path: '/job/resume_manage'});
+              this.$router.push({path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
             } else {
               this.$Message.error("保存失败!");
             }
@@ -132,7 +132,7 @@
         })
       },
       refreshQueryResume: async function () {
-        const result = await QueryResume();
+        const result = await QueryResume({user_name: GetLoginUserName()});
         if (result.status == "SUCCESS") {
           this.formInline = result.resume;
         }

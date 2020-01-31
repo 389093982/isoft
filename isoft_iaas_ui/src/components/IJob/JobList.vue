@@ -27,7 +27,7 @@
         <Col span="12" style="text-align: right;padding-right: 25px;">
           <Button @click="forwardResumeManage">简历管理</Button>
           <Button @click="toEditCorporateDetail">发布招聘</Button>
-          <Button @click="toToudiDetail">投递信息</Button>
+          <Button @click="toToudiDetail">投递清单</Button>
         </Col>
       </Row>
 
@@ -59,7 +59,7 @@
 
 <script>
   import {FilterPageJobList} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog, GetLoginUserName, strSplit} from "../../tools";
   import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
@@ -82,7 +82,7 @@
     },
     methods: {
       forwardResumeManage: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/job/resume_manage'});
+        CheckHasLoginConfirmDialog(this, {path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
       },
       handleAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {

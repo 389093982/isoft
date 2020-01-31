@@ -98,6 +98,8 @@
         <div class="isoft_top10" style="text-align: center;">
           <IBeautifulLink v-if="showJobDetails.length < allJobDetails.length" @onclick="showMore">查看更多职位
           </IBeautifulLink>
+
+          <a @click="$router.push({path:'/job/apply_list'})" style="float: right;">投递清单</a>
         </div>
       </div>
     </div>
