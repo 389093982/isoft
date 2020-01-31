@@ -99,12 +99,7 @@ export const UpdateCourseIcon = (course_id, small_image) => ajax(BASE_URL + "/iw
   course_id,
   small_image
 }, 'GET');
-export const UploadVideo = (id, video_number, video_name, video_path) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/UploadVideo2", {
-  id,
-  video_number,
-  video_name,
-  video_path
-}, 'GET');
+export const UploadVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/UploadVideo", params, 'GET');
 
 // 显示课程详细信息
 export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservice/isoft_iaas_api/ShowCourseDetail2", {course_id}, 'GET');

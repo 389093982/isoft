@@ -53,6 +53,10 @@
       autoHideModal: {
         type: Boolean,
         deafult: true,
+      },
+      extraData: {
+        type: Object,
+        default: {},
       }
     },
     data () {
@@ -67,6 +71,7 @@
       },
       uploadComplete(result, file) {
         if(result.status=="SUCCESS"){
+          result.extraData = this.extraData;  // 返回 extraData
           // 父子组件通信
           this.$emit('uploadComplete',result);
           this.$Notice.success({

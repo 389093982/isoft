@@ -4,7 +4,8 @@
       v-model="showDialog"
       width="700"
       title="上传/更新视频"
-      :mask-closable="false">
+      :mask-closable="false"
+      :styles="{top: '20px'}">
       <div>
         <p style="padding:10px;">课程名称：{{course.course_name}}</p>
         <p style="background-color: rgba(253,0,0,0.11);padding: 10px;">
@@ -13,21 +14,16 @@
 
         <Scroll height="220" style="margin: 5px 0;">
           <Tag v-for="(cVideo, num) in cVideos" style="margin: 5px;">
-            <span @click="uploadVideoNum = num + 1">第{{num + 1}}集: {{cVideo.video_name}}</span>
-          </Tag>
-          <Tag>
-            <span @click="uploadVideoNum = cVideos.length + 1">新一集</span>
+            <span>第{{num + 1}}集: {{cVideo.video_name}}</span>
           </Tag>
           <Spin fix size="large" v-if="isLoading">
              <div class="isoft_loading"></div>
           </Spin>
         </Scroll>
 
-         <IFileUpload ref="fileUpload" btn-size="small" :auto-hide-modal="true" :multiple="false"
-                      :file-suffixs="['mp4']" :extra-data="{'id':course.id, 'video_number':uploadVideoNum}"
+         <IFileUpload ref="fileUpload" size="small" :auto-hide-modal="true" :multiple="false"
+                      :format="['mp4']" :extra-data="{'id':course.id}"
                       @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传视频"/>
-        <span v-if="uploadVideoNum > 0" style="color: green;">*当前更新第{{uploadVideoNum}}集</span>
-        <span v-else style="color: red;">请选择更新集数</span>
       </div>
     </Modal>
 
@@ -50,8 +46,6 @@
         fileUploadUrl: fileUploadUrl,
         isLoading:true,
         showDialog:false,
-        // 当前更新视频集数
-        uploadVideoNum:-1,
         cVideos:[],
       }
     },
@@ -60,12 +54,17 @@
         if(data.status == "SUCCESS"){
           let uploadFilePath = data.fileServerPath;     // uploadFilePath 使用 hash 值时含有特殊字符 + 等需要转义
           let courseId = data.extraData.id;
-          let video_number = data.extraData.video_number;
-          let filename = data.file.name;      // 上传文件名称
-          const result = await UploadVideo(courseId, video_number, filename, handleSpecial(uploadFilePath));
+          let filename = data.fileName;      // 上传文件名称
+          const result = await UploadVideo({
+            id: courseId,
+            video_name: filename,
+            video_path: handleSpecial(uploadFilePath)
+          });
           if(result.status == "SUCCESS"){
             this.refreshCourseDetail(courseId);
             this.$emit('uploadComplete');
+          } else {
+            this.$Message.error("视频更新失败!");
           }
         }
       },
