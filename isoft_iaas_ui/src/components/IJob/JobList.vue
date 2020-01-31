@@ -27,7 +27,7 @@
         <Col span="12" style="text-align: right;padding-right: 25px;">
           <Button @click="forwardResumeManage">简历管理</Button>
           <Button @click="toEditCorporateDetail">发布招聘</Button>
-          <Button>投递信息</Button>
+          <Button @click="toToudiDetail">投递信息</Button>
         </Col>
       </Row>
 
@@ -128,6 +128,9 @@
       },
       showJobDetail: function (job) {
         this.$router.push({path: '/job/corporate_detail', query: {'corporate_id': job.corporate_id}});
+      },
+      toToudiDetail: function () {
+        CheckHasLoginConfirmDialog(this, {path: '/job/apply_list'});
       },
       toEditCorporateDetail: function () {
         CheckHasLoginConfirmDialog(this, {path: '/job/corporate_detail'});

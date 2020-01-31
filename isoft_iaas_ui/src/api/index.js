@@ -244,6 +244,7 @@ export const EditResume = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_
 export const QueryResume = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/QueryResume', params, "POST");
 
 export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/FilterPageJobList', params, "POST");
+export const GetJobApplyList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_iaas_api/GetJobApplyList', params, "POST");
 
 //会员中心-初始下单
 export const pay = (ProductId,ProductDesc,TransAmount,TransCurrCode) => ajax(WECHAT_PAY+'/Pay',{ProductId,ProductDesc,TransAmount,TransCurrCode},'POST');

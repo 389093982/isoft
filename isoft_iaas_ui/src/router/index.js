@@ -52,6 +52,7 @@ const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
 const EditCorporate = () => import("@/components/IJob/EditCorporate");
 const EditJob = () => import("@/components/IJob/EditJob");
 const EditResume = () => import("@/components/IJob/EditResume");
+const JobApplyList = () => import("@/components/IJob/JobApplyList");
 
 const OfficeList = () => import("@/components/IOffice/OfficeList");
 const UploadResource = () => import("@/components/IOffice/UploadResource");
@@ -188,6 +189,7 @@ const IJob = [{
     {path: 'corporate_edit',component: EditCorporate},
     {path: 'job_edit',component: EditJob},
     {path: 'resume_edit', component: EditResume},
+    {path: 'apply_list', component: JobApplyList},
   ]
 }];
 
