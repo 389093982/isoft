@@ -96,6 +96,7 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getMetaInfo", wc, wc.GetMetaInfo, "get,post:GetMetaInfo")
 	registRouter("/api/iwork/queryWorkDetail", wc, wc.QueryWorkDetail, "get,post:QueryWorkDetail")
 	registRouter("/api/iwork/loadValidateResult", wc, wc.LoadValidateResult, "get,post:LoadValidateResult")
+
 	registRouter("/api/iwork/saveProject", wc, wc.SaveProject, "get,post:SaveProject")
 	registRouter("/api/iwork/importProject", wc, wc.ImportProject, "get,post:ImportProject")
 
