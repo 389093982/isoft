@@ -8,16 +8,13 @@ import (
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
-	"isoft/isoft_iwork_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iwork_web/models"
-	"isoft/isoft_iwork_web/startup/db"
 	"isoft/isoft_utils/common/fileutils"
 	"isoft/isoft_utils/common/xmlutil"
 	"path"
 	"path/filepath"
 	"reflect"
 	"runtime"
-	"strings"
 	"time"
 )
 
@@ -150,40 +147,6 @@ func persistentWorkCahcesToFile(appids []models.AppId) {
 	}
 }
 
-//**********************************************************************************************************************
-func backupTable(tableName, backupName string) {
-	p1, err := orm.NewOrm().Raw(fmt.Sprintf(`CREATE TABLE %s LIKE %s`, backupName, tableName)).Prepare()
-	errorutil.CheckError(err)
-	_, err = p1.Exec()
-	errorutil.CheckError(err)
-	p2, err := orm.NewOrm().Raw(fmt.Sprintf(`INSERT INTO %s SELECT * FROM %s`, backupName, tableName)).Prepare()
-	errorutil.CheckError(err)
-	_, err = p2.Exec()
-	errorutil.CheckError(err)
-}
-
-var tableSli = []string{"app_id", "sql_migrate", "work", "work_step", "filters", "cron_meta", "resource", "module", "global_var", "audit_task"}
-
-func backupDB() {
-	tableNames := sqlutil.GetAllTableNames(db.Dsn)
-	for _, table := range tableSli {
-		backupName := fmt.Sprintf(`backup_%s_%s`, table, time.Now().Format("20060102150405"))
-		backupTable("sql_migrate", backupName)
-	}
-
-	for _, tableName := range tableNames {
-		if strings.HasPrefix(tableName, "backup_") {
-			orm.NewOrm().Raw(fmt.Sprintf("DROP TABLE %s", tableName)).Exec()
-		}
-	}
-}
-
-func truncateDB() {
-	for _, table := range tableSli {
-		orm.NewOrm().Raw(fmt.Sprintf("truncate TABLE %s;", table)).Exec()
-	}
-}
-
 // 长度过长可能会批量导入失败,需要进一步拆分
 func persistentWorkFilesToDB(dirPath string) {
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
@@ -250,9 +213,15 @@ func persistentMultiToDB(dirPath string, tp reflect.Type) {
 	errorutil.CheckError(err)
 }
 
+var tableSli = []string{"app_id", "sql_migrate", "work", "work_step", "filters", "cron_meta", "resource", "module", "global_var", "audit_task"}
+
 func importProject() {
-	backupDB()
-	truncateDB()
+	// 清空表
+	for _, table := range tableSli {
+		orm.NewOrm().Raw(fmt.Sprintf("truncate TABLE %s;", table)).Exec()
+	}
+
+	// 再导入每个 AppID 下面的数据
 	if files, _, err := fileutils.GetAllSubFile(persistentDirPath); err == nil {
 		for _, appNameFilePath := range files {
 			persistentMultiToDB(fmt.Sprintf("%s/appid", appNameFilePath), reflect.TypeOf(models.AppId{}))
