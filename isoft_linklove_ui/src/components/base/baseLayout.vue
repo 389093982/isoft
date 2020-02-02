@@ -19,7 +19,7 @@
 
     <div id="headShowId">
       <div id="tagPicture" style="width: 30%;float: left;">
-        <h1 style="color: #ff6900">print love</h1>
+        <h1 style="color: #ff6900">link love</h1>
       </div>
       <div style="width: 70%;float: left;">
         <input id="searchId" placeholder="搜索..."/>
