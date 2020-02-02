@@ -3,7 +3,9 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
+          <div class="layout-iwork">
+            IWork V1.0.0
+          </div>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
@@ -174,19 +176,18 @@
     border-radius: 4px;
     overflow: hidden;
   }
-  .layout-logo{
+
+  .layout-iwork {
     width: 100px;
     height: 30px;
-    background: #5b6270;
-    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 65px;
     float: left;
-    position: relative;
-    top: 15px;
-    left: 20px;
   }
   .layout-nav{
     width: 920px;
-    margin: 0 auto;
-    margin-right: 20px;
+    float: right;
   }
 </style>
