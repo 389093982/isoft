@@ -83,10 +83,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/editGlobalVar", wc, wc.EditGlobalVar, "get,post:EditGlobalVar")
 	registRouter("/api/iwork/deleteGlobalVarById", wc, wc.DeleteGlobalVarById, "get,post:DeleteGlobalVarById")
 
-	registRouter("/api/iwork/editTemplate", wc, wc.EditTemplate, "get,post:EditTemplate")
-	registRouter("/api/iwork/templateList", wc, wc.TemplateList, "get,post:TemplateList")
-	registRouter("/api/iwork/deleteTemplateById", wc, wc.DeleteTemplateById, "get,post:DeleteTemplateById")
-
 	registRouter("/api/iwork/download/:work_id", wc, wc.Download, "get,post:Download")
 
 	registRouter("/api/iwork/moduleList", wc, wc.ModuleList, "get,post:ModuleList")
@@ -96,6 +92,7 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getMetaInfo", wc, wc.GetMetaInfo, "get,post:GetMetaInfo")
 	registRouter("/api/iwork/queryWorkDetail", wc, wc.QueryWorkDetail, "get,post:QueryWorkDetail")
 	registRouter("/api/iwork/loadValidateResult", wc, wc.LoadValidateResult, "get,post:LoadValidateResult")
+
 	registRouter("/api/iwork/saveProject", wc, wc.SaveProject, "get,post:SaveProject")
 	registRouter("/api/iwork/importProject", wc, wc.ImportProject, "get,post:ImportProject")
 

@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"io/ioutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
@@ -148,52 +147,6 @@ func persistentWorkCahcesToFile(appids []models.AppId) {
 	}
 }
 
-//**********************************************************************************************************************
-func backupTable(tableName, backupName string) {
-	p1, err := orm.NewOrm().Raw(fmt.Sprintf(`CREATE TABLE %s LIKE %s`, backupName, tableName)).Prepare()
-	errorutil.CheckError(err)
-	_, err = p1.Exec()
-	errorutil.CheckError(err)
-	p2, err := orm.NewOrm().Raw(fmt.Sprintf(`INSERT INTO %s SELECT * FROM %s`, backupName, tableName)).Prepare()
-	errorutil.CheckError(err)
-	_, err = p2.Exec()
-	errorutil.CheckError(err)
-}
-
-func backupDB() {
-	sql_migrate_backup := fmt.Sprintf(`backup_sql_migrate_%s`, time.Now().Format("20060102150405"))
-	backupTable("sql_migrate", sql_migrate_backup)
-	work_backup := fmt.Sprintf(`backup_work_%s`, time.Now().Format("20060102150405"))
-	backupTable("work", work_backup)
-	workstep_backup := fmt.Sprintf(`backup_work_step_%s`, time.Now().Format("20060102150405"))
-	backupTable("work_step", workstep_backup)
-	filter_backup := fmt.Sprintf(`backup_filters_%s`, time.Now().Format("20060102150405"))
-	backupTable("filters", filter_backup)
-	cron_meta_backup := fmt.Sprintf(`backup_cron_meta_%s`, time.Now().Format("20060102150405"))
-	backupTable("cron_meta", cron_meta_backup)
-	resource_backup := fmt.Sprintf(`backup_resource_%s`, time.Now().Format("20060102150405"))
-	backupTable("resource", resource_backup)
-	module_backup := fmt.Sprintf(`backup_module_%s`, time.Now().Format("20060102150405"))
-	backupTable("module", module_backup)
-	globalVar_backup := fmt.Sprintf(`backup_globalVar_%s`, time.Now().Format("20060102150405"))
-	backupTable("global_var", globalVar_backup)
-	audit_task_backup := fmt.Sprintf(`backup_audit_task_%s`, time.Now().Format("20060102150405"))
-	backupTable("audit_task", audit_task_backup)
-}
-
-func truncateDB() {
-	orm.NewOrm().QueryTable("app_id").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("filters").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("cron_meta").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("resource").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("module").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("global_var").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("sql_migrate").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("work").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("work_step").Filter("id__gt", 0).Delete()
-	orm.NewOrm().QueryTable("audit_task").Filter("id__gt", 0).Delete()
-}
-
 // 长度过长可能会批量导入失败,需要进一步拆分
 func persistentWorkFilesToDB(dirPath string) {
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
@@ -260,24 +213,41 @@ func persistentMultiToDB(dirPath string, tp reflect.Type) {
 	errorutil.CheckError(err)
 }
 
-func importProject() {
-	if persistent_initial, _ := beego.AppConfig.Bool("persistent.initial"); persistent_initial == true {
-		backupDB()
-		truncateDB()
+var tableSli = []string{"app_id", "sql_migrate", "work", "work_step", "filters", "cron_meta", "resource", "module", "global_var", "audit_task"}
 
-		files, _, err := fileutils.GetAllSubFile(persistentDirPath)
-		if err == nil {
-			for _, appNameFilePath := range files {
-				persistentMultiToDB(fmt.Sprintf("%s/appid", appNameFilePath), reflect.TypeOf(models.AppId{}))
-				persistentMultiToDB(fmt.Sprintf("%s/filters", appNameFilePath), reflect.TypeOf(models.Filters{}))
-				persistentMultiToDB(fmt.Sprintf("%s/quartzs", appNameFilePath), reflect.TypeOf(models.CronMeta{}))
-				persistentMultiToDB(fmt.Sprintf("%s/resources", appNameFilePath), reflect.TypeOf(models.Resource{}))
-				persistentMultiToDB(fmt.Sprintf("%s/modules", appNameFilePath), reflect.TypeOf(models.Module{}))
-				persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
-				persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
-				persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
-				persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
-			}
+func importProject() {
+	// 清空表
+	for _, table := range tableSli {
+		orm.NewOrm().Raw(fmt.Sprintf("truncate TABLE %s;", table)).Exec()
+	}
+
+	// 再导入每个 AppID 下面的数据
+	if files, _, err := fileutils.GetAllSubFile(persistentDirPath); err == nil {
+		for _, appNameFilePath := range files {
+			persistentMultiToDB(fmt.Sprintf("%s/appid", appNameFilePath), reflect.TypeOf(models.AppId{}))
+			persistentMultiToDB(fmt.Sprintf("%s/filters", appNameFilePath), reflect.TypeOf(models.Filters{}))
+			persistentMultiToDB(fmt.Sprintf("%s/quartzs", appNameFilePath), reflect.TypeOf(models.CronMeta{}))
+			persistentMultiToDB(fmt.Sprintf("%s/resources", appNameFilePath), reflect.TypeOf(models.Resource{}))
+			persistentMultiToDB(fmt.Sprintf("%s/modules", appNameFilePath), reflect.TypeOf(models.Module{}))
+			persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
+			persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
+			persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
+			persistentPlacementFilesToDB(fmt.Sprintf("%s/placements", appNameFilePath))
+			persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
 		}
+	}
+}
+
+func persistentPlacementFilesToDB(dirPath string) {
+	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
+	for _, filepath := range filepaths {
+		mapper := models.PlacementElementMppaer{}
+		bytes, _ := ioutil.ReadFile(filepath)
+		err := xml.Unmarshal(bytes, &mapper)
+		errorutil.CheckError(err)
+		_, err = orm.NewOrm().Insert(&mapper.Placement)
+		errorutil.CheckError(err)
+		_, err = orm.NewOrm().InsertMulti(len(mapper.Elements), mapper.Elements)
+		errorutil.CheckError(err)
 	}
 }

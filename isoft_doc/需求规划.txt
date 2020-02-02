@@ -79,3 +79,6 @@ social.js
 
 
 客户至上，互为客户、相对客户
+
+replaceMap ...map[string]interface{} 和 dispatcher *entry.Dispatcher 统一
+支持 if elif else 结构

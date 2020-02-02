@@ -3,7 +3,9 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
+          <div class="layout-iwork">
+            IWork V1.0.0
+          </div>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
@@ -102,9 +104,6 @@
                 <router-link to="/iwork/quickSql">快捷sql</router-link>
               </MenuItem>
               <MenuItem name="6-2">
-                <router-link to="/iwork/files">文件服务器管理</router-link>
-              </MenuItem>
-              <MenuItem name="6-3">
                 <router-link to="/iwork/audit">内容审核系统</router-link>
               </MenuItem>
             </Submenu>
@@ -174,19 +173,18 @@
     border-radius: 4px;
     overflow: hidden;
   }
-  .layout-logo{
+
+  .layout-iwork {
     width: 100px;
     height: 30px;
-    background: #5b6270;
-    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 65px;
     float: left;
-    position: relative;
-    top: 15px;
-    left: 20px;
   }
   .layout-nav{
     width: 920px;
-    margin: 0 auto;
-    margin-right: 20px;
+    float: right;
   }
 </style>

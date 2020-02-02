@@ -29,37 +29,41 @@
     <BaseInfo ref="workStepBaseInfo" @reloadWorkStepBaseInfo="showWorkStepBaseInfo" @handleSuccess="refreshWorkStepList" :worksteps="worksteps"/>
     <ParamInfo ref="workStepParamInfo" @reloadWorkStepParamInfo="showWorkStepParamInfo" @handleSuccess="refreshWorkStepList" :worksteps="worksteps"/>
 
-    <Row>
-      <Col span="12">
+    <Row style="margin-bottom: 5px;">
+      <Col span="24">
         <span @click="showRunLogDrawer = true">
           <Button type="default" size="small">失败次数/总次数 &nbsp;&nbsp;<span style="color: red;">{{errorCount}}</span> {{allCount}}</Button>
         </span>
         <Drawer title="运行日志" width="900" :closable="false" v-model="showRunLogDrawer">
           <RunLogList :work-id="_work_id"/>
         </Drawer>
-
-      </Col>
-      <Col span="12" style="text-align: right;margin-bottom: 10px;">
-        显示操作<i-switch v-model="showEditBtns" size="small" style="margin-right: 5px"></i-switch>
-        显示复选框<i-switch v-model="showCheckbox" size="small" style="margin-right: 5px"></i-switch>
-        显示编号<i-switch v-model="showIndex" size="small" style="margin-right: 5px"></i-switch>
-        显示边框<i-switch v-model="showBorder" size="small" style="margin-right: 5px"></i-switch>
       </Col>
     </Row>
 
-    <Table :loading="loading" :height="500" border :columns="columns1" ref="selection" :data="worksteps" size="small"
-           :border="showBorder"></Table>
+    <Table :loading="loading" :height="500" border :columns="columns1" ref="selection" :data="worksteps"
+           size="small"></Table>
   </div>
 </template>
 
 <script>
-  import {WorkStepList,GetMetaInfo,DeleteWorkStepByWorkStepId,RunWork,
-    CopyWorkStepByWorkStepId,ChangeWorkStepOrder,RefactorWorkStepInfo,
-    BatchChangeIndent,LoadValidateResult,AddWorkStep,EditWorkStepBaseInfo,QueryWorkDetail} from "../../../api"
+  import {
+    AddWorkStep,
+    BatchChangeIndent,
+    ChangeWorkStepOrder,
+    CopyWorkStepByWorkStepId,
+    DeleteWorkStepByWorkStepId,
+    EditWorkStepBaseInfo,
+    GetMetaInfo,
+    LoadValidateResult,
+    QueryWorkDetail,
+    RefactorWorkStepInfo,
+    RunWork,
+    WorkStepList
+  } from "../../../api"
   import ParamInfo from "./ParamInfo/ParamInfo"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import BaseInfo from "./BaseInfo/BaseInfo"
-  import {checkEmpty, oneOf, startsWith, getRepeatStr, checkFastClick} from "../../../tools"
+  import {checkEmpty, checkFastClick, getRepeatStr, oneOf, startsWith} from "../../../tools"
   import WorkValidate from "../IValidate/WorkValidate"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import WorkStepEditBtns from "./WorkStepEditBtns"
@@ -80,10 +84,6 @@
         nodeMetas: [],
         worksteps: [],
         loading:false,
-        showEditBtns:true,
-        showBorder: true,
-        showIndex: true,
-        showCheckbox: true,
         showWorkDashboard:false,
         usedMap: null,
         runLogRecordCount:{},
@@ -103,16 +103,13 @@
       },
       columns1(){
         var _this = this;
-        let columns = [];
-        if(this.showCheckbox){
-          columns.push({
+        let columns = [
+          {
             type: 'selection',
             width: 60,
             align: 'center',
-          })
-        }
-        if(this.showIndex){
-          columns.push({
+          },
+          {
             title: '步骤编号',
             key: 'work_step_id',
             width: 100,
@@ -168,10 +165,8 @@
                 }, 'E'),
               ]);
             },
-          })
-        }
-        if(this.showEditBtns){
-          columns.push({
+          },
+          {
             title: '操作',
             key: 'work_step_operate',
             width: 380,
@@ -191,12 +186,12 @@
                 }, [
                   h(WorkStepEditBtns,{
                     props:{
-                      showArrow: this.showEditBtns && !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]),
-                      showEdit: this.showEditBtns && !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]),
-                      showParam: this.showEditBtns && true,
-                      showDelete: this.showEditBtns && !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]),
-                      showCopy: this.showEditBtns && !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]),
-                      showRefer: this.showEditBtns && oneOf(this.worksteps[params.index]['work_step_type'], ["work_start"]),
+                      showArrow: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start", "work_end"]),
+                      showEdit: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start", "work_end"]),
+                      showParam: true,
+                      showDelete: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start", "work_end"]),
+                      showCopy: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start", "work_end"]),
+                      showRefer: oneOf(this.worksteps[params.index]['work_step_type'], ["work_start"]),
                     },
                     on: {
                       handleClick:function (clickType) {
@@ -252,8 +247,8 @@
                 ]
               )
             }
-          })
-        }
+          }
+        ];
         // push 其余列
         [].push.apply(columns,[
           {

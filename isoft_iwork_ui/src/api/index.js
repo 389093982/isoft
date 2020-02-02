@@ -122,12 +122,6 @@ export const EditGlobalVar = (id, globalVarName, globalVarValue) => ajax(BASE_UR
 
 export const DeleteGlobalVarById = (id) => ajax(BASE_URL+"/iwork/deleteGlobalVarById", {id},'POST');
 
-export const EditTemplate = (id, template_theme, template_name, template_value) => ajax(BASE_URL+"/iwork/editTemplate", {id, template_theme, template_name, template_value},'POST');
-
-export const TemplateList = (offset,current_page, search) => ajax(BASE_URL+"/iwork/templateList", {offset,current_page, search},'POST');
-
-export const DeleteTemplateById = (id) => ajax(BASE_URL+"/iwork/deleteTemplateById", {id},'POST');
-
 export const ModuleList = (offset,current_page, search) => ajax(BASE_URL+"/iwork/moduleList", {offset,current_page, search},'POST');
 
 export const EditModule = (module_id, module_name, module_desc) => ajax(BASE_URL+"/iwork/editModule", {module_id, module_name, module_desc},'POST');

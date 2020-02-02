@@ -15,7 +15,7 @@
           <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
         </MenuItem>
         <MenuItem name="5">
-          <IBeautifulLink @onclick="$router.push({path:'/office/officeList'})">办公专区</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
         </MenuItem>
         <MenuItem name="6">
           <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>

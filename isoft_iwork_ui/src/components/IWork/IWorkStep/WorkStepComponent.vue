@@ -1,5 +1,5 @@
 <template>
-  <Drawer title="全部组件" placement="left" :closable="true" :mask="false" v-model="showComponentDrawer">
+  <Drawer title="全部组件" placement="left" :closable="true" :mask="false" scrollable v-model="showComponentDrawer">
     <Tabs value="name1">
       <TabPane label="组件" name="name1">
         <span v-for="default_work_step_type in nodeMetas"

@@ -54,9 +54,9 @@ const EditJob = () => import("@/components/IJob/EditJob");
 const EditResume = () => import("@/components/IJob/EditResume");
 const JobApplyList = () => import("@/components/IJob/JobApplyList");
 
-const OfficeList = () => import("@/components/IOffice/OfficeList");
-const UploadResource = () => import("@/components/IOffice/UploadResource");
-const DownloadResource = () => import("@/components/IOffice/DownloadResource");
+const ResourceList = () => import("@/components/Resource/ResourceList");
+const UploadResource = () => import("@/components/Resource/UploadResource");
+const DownloadResource = () => import("@/components/Resource/DownloadResource");
 
 const ChatRom = () => import("@/components/Chat/ChatRom");
 const AskExpert = () => import("@/components/Communicate/AskExpert");
@@ -226,10 +226,10 @@ const IGoodReouter = [{
 }];
 
 
-const OfficeRouter = [{
-  path: '/office', component: ILayout,
+const ResourceRouter = [{
+  path: '/resource', component: ILayout,
   children: [
-    {path: 'officeList', component: OfficeList},
+    {path: 'resourceList', component: ResourceList},
     {path: 'uploadResource', component: UploadResource},
     {path: 'downloadResource', component: DownloadResource},
   ]
@@ -257,7 +257,7 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, ISSOReouter);
   allRouters = joinArray(allRouters, ICMSReouter);
   allRouters = joinArray(allRouters, VipCenterReouter);
-  allRouters = joinArray(allRouters, OfficeRouter);
+  allRouters = joinArray(allRouters, ResourceRouter);
   allRouters = joinArray(allRouters, getRootRouters());
   return allRouters;
 }

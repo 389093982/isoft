@@ -44,7 +44,9 @@
       },
       format: {
         type: Array,
-        default: ['jpg', 'jpeg', 'png', 'gif', 'mp4'],
+        default() {
+          return [];
+        }
       },
       multiple: {
         type: Boolean,

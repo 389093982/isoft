@@ -11,6 +11,9 @@ import (
 	"time"
 )
 
+// iwork 框架数据库连接 dsn 串
+var Dsn string
+
 func init() {
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
@@ -24,7 +27,7 @@ func init() {
 	dbuser = chiperutil.AesDecryptToStr(dbuser, aesChiperKey)
 	dbpass = chiperutil.AesDecryptToStr(dbpass, aesChiperKey)
 
-	Dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
+	Dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
 
 	if timezone != "" {
 		Dsn = Dsn + "&loc=" + url.QueryEscape(timezone)
@@ -57,7 +60,6 @@ func registerModel() {
 	orm.RegisterModel(new(models.SqlMigrate))
 	orm.RegisterModel(new(models.SqlMigrateLog))
 	orm.RegisterModel(new(models.GlobalVar))
-	orm.RegisterModel(new(models.Template))
 	orm.RegisterModel(new(models.Module))
 	orm.RegisterModel(new(models.Filters))
 	orm.RegisterModel(new(models.AuditTask))
