@@ -232,7 +232,22 @@ func importProject() {
 			persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
 			persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
 			persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
+			persistentPlacementFilesToDB(fmt.Sprintf("%s/placements", appNameFilePath))
 			persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
 		}
+	}
+}
+
+func persistentPlacementFilesToDB(dirPath string) {
+	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
+	for _, filepath := range filepaths {
+		mapper := models.PlacementElementMppaer{}
+		bytes, _ := ioutil.ReadFile(filepath)
+		err := xml.Unmarshal(bytes, &mapper)
+		errorutil.CheckError(err)
+		_, err = orm.NewOrm().Insert(&mapper.Placement)
+		errorutil.CheckError(err)
+		_, err = orm.NewOrm().InsertMulti(len(mapper.Elements), mapper.Elements)
+		errorutil.CheckError(err)
 	}
 }
