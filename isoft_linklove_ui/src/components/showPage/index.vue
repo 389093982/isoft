@@ -1,6 +1,6 @@
 <template>
   <div>
-
+      <!--第一行-->
       <div>
         <div style="float: left;width: 40%">
           <Card style="width:100%;height: 100%">
@@ -40,6 +40,7 @@
         <div style="clear: both"></div>
       </div>
 
+      <!--第二行-->
       <div>
         <div style="float: left;width: 20%">
           <Card style="width:100%;height: 100%">
