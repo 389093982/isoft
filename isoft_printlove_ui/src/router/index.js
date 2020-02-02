@@ -8,7 +8,7 @@ Vue.use(Router);
 
 //==============================================引入二级模块============================================================
 //首页
-const printloveRouters = [
+const linkloveRouters = [
   {path:'index',component:index},
 ];
 
@@ -18,7 +18,7 @@ export default new Router({
   //去掉#号
   mode:'history',
   routes: [
-    {path:'/printlove',component:baseLayout,children:printloveRouters},//首页
-    { path: '*', redirect: '/printlove/index' },//首页
+    {path:'/linklove',component:baseLayout,children:linkloveRouters},//首页
+    { path: '*', redirect: '/linklove/index' },//首页
   ]
 })

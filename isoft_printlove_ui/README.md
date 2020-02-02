@@ -1,4 +1,4 @@
-# isoft_printlove_ui
+# isoft_linklove_ui
 
 > A Vue.js project
 

@@ -85,15 +85,18 @@
     <div style="margin: 20px 40px 0 20px ;height: 400px">
       <div id="leftContentId">
         <div>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
-          <p class="leftContentClass">游客</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
         </div>
       </div>
       <div id="centerContentId">
@@ -101,13 +104,15 @@
       </div>
       <div id="rightContentId">
         <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱手册</p><hr>
+        <p class="rightContentClass">恋爱心得</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
       </div>
       <div style="clear: both"></div>
     </div>
@@ -144,13 +149,13 @@
     background-color: #ff537c; padding: 5px 10px 5px 40px
   }
   #leftContentId{
-    width: 10%;float: left;background-color: #f6f4f0;border-radius: 10px;
+    width: 10%;float: left;background-color: #fae5db;border-radius: 10px;
   }
   #centerContentId{
-    width: 78%;float: left;background-color: #fff;margin: 0 1% 0 1% ;
+    width: 78%;float: left;background-color: #f6f4f0;margin: 0 1% 0 1% ;
   }
   #rightContentId{
-    width: 10%;float: left;background-color: #f6f4f0;border-radius: 10px
+    width: 10%;float: left;background-color: #fae5db;border-radius: 10px
   }
   span{
     font-size: 15px;
@@ -159,7 +164,7 @@
     color: white
   }
   hr{
-    background-color: rgba(242,21,255,0.05);border: none;height: 1px
+    background-color: #ffd5d6;border: none;height: 1px
   }
   .rightContentClass{
     font-size: 15px;text-align: center;color: #000;cursor: pointer
