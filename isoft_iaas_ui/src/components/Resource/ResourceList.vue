@@ -64,7 +64,7 @@
   import {CheckHasLoginConfirmDialog} from "../../tools";
 
   export default {
-    name: "OfficeList",
+    name: "ResourceList",
     data() {
       return {
         resources: null,
@@ -75,10 +75,10 @@
     },
     methods: {
       uploadResource: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/office/uploadResource'});
+        CheckHasLoginConfirmDialog(this, {path: '/resource/uploadResource'});
       },
       downloadResource: function (resource) {
-        CheckHasLoginConfirmDialog(this, {path: '/office/downloadResource', query: {id: resource.id}});
+        CheckHasLoginConfirmDialog(this, {path: '/resource/downloadResource', query: {id: resource.id}});
       },
       refreshResourceList: async function () {
         const result = await FilterPageResourceList();
