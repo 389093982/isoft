@@ -60,7 +60,6 @@ func registerModel() {
 	orm.RegisterModel(new(models.SqlMigrate))
 	orm.RegisterModel(new(models.SqlMigrateLog))
 	orm.RegisterModel(new(models.GlobalVar))
-	orm.RegisterModel(new(models.Template))
 	orm.RegisterModel(new(models.Module))
 	orm.RegisterModel(new(models.Filters))
 	orm.RegisterModel(new(models.AuditTask))
