@@ -37,7 +37,7 @@
         </Dropdown>
       </Col>
       <Col span="15">
-        <div>
+        <div style="margin-bottom: 5px;">
           <span style="color: #657180;font-size: 14px;">
             (参数索引-{{paramIndex}}<span v-if="inputLabel.indexOf('?')>0">可选参数</span>) - {{inputLabel}}
           </span>

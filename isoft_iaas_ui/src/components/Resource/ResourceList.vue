@@ -31,9 +31,9 @@
       </div>
 
       <p class="isoft_font14" style="padding:15px;font-weight: 600;">
-        大家都在寻找适合自己的作品，我们为您
+        大家都在寻找适合自己的资源，我们为您
         <span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>
-        以下作品：
+        以下资源：
       </p>
     </div>
 
@@ -49,12 +49,16 @@
             <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
             <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
             <Col span="8">
-              <IBeautifulLink>内容真实 (10)</IBeautifulLink>&nbsp;&nbsp;&nbsp;
-              <IBeautifulLink>内容不真实 (10)</IBeautifulLink>
+              <IBeautifulLink>推荐 (10)</IBeautifulLink>&nbsp;&nbsp;&nbsp;
+              <IBeautifulLink>不推荐 (10)</IBeautifulLink>
             </Col>
           </Row>
         </p>
       </div>
+
+      <Page :total="total" :page-size="offset" show-total show-sizer
+            :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
     </div>
   </div>
 </template>
@@ -71,6 +75,12 @@
         resource_fl: ["热门分类1", "热门分类2", "热门分类3", "热门分类4"],
         resource_hy: ["热门行业1", "热门行业2", "热门行业3", "热门行业4"],
         resource_gs: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "zip"],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
       }
     },
     methods: {
@@ -81,11 +91,20 @@
         CheckHasLoginConfirmDialog(this, {path: '/resource/downloadResource', query: {id: resource.id}});
       },
       refreshResourceList: async function () {
-        const result = await FilterPageResourceList();
+        const result = await FilterPageResourceList({offset: this.offset, current_page: this.current_page});
         if (result.status == "SUCCESS") {
           this.resources = result.resources;
+          this.total = result.paginator.totalcount;
         }
-      }
+      },
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshResourceList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshResourceList();
+      },
     },
     mounted() {
       this.refreshResourceList();
