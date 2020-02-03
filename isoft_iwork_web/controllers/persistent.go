@@ -156,10 +156,14 @@ func persistentWorkFilesToDB(dirPath string) {
 	for _, filepath := range filepaths {
 		works, workSteps = parseWorkFile(filepath, works, workSteps)
 	}
-	_, err = orm.NewOrm().InsertMulti(len(works), works)
-	errorutil.CheckError(err)
-	_, err = orm.NewOrm().InsertMulti(len(workSteps), workSteps)
-	errorutil.CheckError(err)
+	if len(works) > 0 {
+		_, err = orm.NewOrm().InsertMulti(len(works), works)
+		errorutil.CheckError(err)
+	}
+	if len(workSteps) > 0 {
+		_, err = orm.NewOrm().InsertMulti(len(workSteps), workSteps)
+		errorutil.CheckError(err)
+	}
 }
 
 func parseWorkFile(filepath string, works []models.Work, workSteps []models.WorkStep) ([]models.Work, []models.WorkStep) {

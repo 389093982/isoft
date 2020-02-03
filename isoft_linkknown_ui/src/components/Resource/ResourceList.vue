@@ -39,7 +39,10 @@
 
     <div class="isoft_bg_white isoft_top10 isoft_pd20">
       <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
-        <h4>{{resource.resource_name}}</h4>
+        <Row>
+          <Col span="6"><h4>{{resource.resource_name}}</h4></Col>
+          <Col span="18"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
+        </Row>
         <p>介绍：{{resource.resource_desc}}</p>
         <p>
           <Row class="isoft_font12">

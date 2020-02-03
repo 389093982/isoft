@@ -58,24 +58,26 @@
       },
       extraData: {
         type: Object,
-        default: {},
+        default: function () {
+          return {}
+        },
       }
     },
-    data () {
+    data() {
       return {
         // 文件上传 modal
         fileUploadModal: false,
       }
     },
-    methods:{
+    methods: {
       onFormatError: function () {
         this.$Message.error("文件格式不合法!");
       },
       uploadComplete(result, file) {
-        if(result.status=="SUCCESS"){
+        if (result.status == "SUCCESS") {
           result.extraData = this.extraData;  // 返回 extraData
           // 父子组件通信
-          this.$emit('uploadComplete',result);
+          this.$emit('uploadComplete', result);
           this.$Notice.success({
             title: '文件上传成功',
             desc: '文件 ' + file.name + ' 上传成功!'
@@ -83,17 +85,17 @@
           if (this.autoHideModal) {
             this.hideModal();
           }
-        }else{
+        } else {
           this.$Notice.error({
             title: '文件上传失败',
             desc: '文件 ' + file.name + ' 上传失败!'
           });
         }
       },
-      showModal(){
+      showModal() {
         this.fileUploadModal = true;
       },
-      hideModal(){
+      hideModal() {
         this.fileUploadModal = false;
       }
     }

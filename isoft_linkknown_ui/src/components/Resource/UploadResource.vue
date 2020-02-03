@@ -1,8 +1,8 @@
 <template>
   <div class="isoft_bg_white isoft_pd20">
     <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
-      <FormItem label="分类名称" prop="resource_type">
-        <Input v-model.trim="formInline.resource_type" placeholder="请您选择分类名称"></Input>
+      <FormItem label="分类名称" prop="resource_catalog">
+        <Input v-model.trim="formInline.resource_catalog" placeholder="请您输入分类名称"></Input>
       </FormItem>
       <FormItem label="文件路径" prop="resource_path">
         <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径"
@@ -35,13 +35,13 @@
         fileUploadUrl: fileUploadUrl,
         formInline: {
           id: -1,
-          resource_type: '',
+          resource_catalog: '',
           resource_name: '',
           resource_desc: '',
           resource_path: '',
         },
         ruleValidate: {
-          resource_type: [
+          resource_catalog: [
             {required: true, message: '分类名称不能为空!', trigger: 'blur'},
           ],
           resource_name: [
@@ -71,6 +71,7 @@
           if (valid) {
             const result = await EditResource({
               id: this.formInline.id,
+              resource_catalog: this.formInline.resource_catalog,
               resource_name: this.formInline.resource_name,
               resource_desc: this.formInline.resource_desc,
               resource_path: this.formInline.resource_path,
