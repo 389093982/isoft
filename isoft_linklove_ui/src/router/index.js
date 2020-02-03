@@ -3,6 +3,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 const baseLayout = () => import('../components/base/baseLayout');
 const index = () => import('../components/showPage/index');
+const myself = () => import('../components/myself/myself/myself');
+const lover = () => import('../components/myself/lover/lover');
 
 Vue.use(Router);
 
@@ -10,6 +12,8 @@ Vue.use(Router);
 //首页
 const linkloveRouters = [
   {path:'index',component:index},
+  {path:'myself',component:myself},
+  {path:'lover',component:lover},
 ];
 
 

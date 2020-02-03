@@ -1,22 +1,34 @@
 <template>
   <div>
 
+    <!--页眉-->
     <div id="headLineId">
       <div style="float: left;width: 30%">
-        <span class="headLineClass">收藏本站</span>
-        <span class="headLineClass">手机APP</span>
-        <span class="headLineClass">公众号</span>
+        <code class="headLineClass">收藏本站</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">手机APP</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">公众号</code>
       </div>
-      <div style="float: right;width: 30%">
-        <span class="headLineClass">消息</span>
-        <span class="headLineClass">邮件</span>
-        <span class="headLineClass">在线客服</span>
-        <span class="headLineClass">充值</span>
-        <span class="headLineClass">注销</span>
+      <div style="float: right;width: 45%">
+        <code class="headLineClass" @click="login">你好,请登录</code>
+        <code class="BlackSpaceClass">&nbsp;</code>
+        <code class="headLineClass" style="color: #e33333" @click="regist">免费注册</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">消息</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">邮件</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">在线客服</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">充值</code>
+        <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
+        <code class="headLineClass">退出</code>
       </div>
       <div style="clear: both"></div>
     </div>
 
+    <!--logo和搜索-->
     <div id="headShowId">
       <div id="tagPicture" style="width: 30%;float: left;">
         <h1 style="color: #ff6900"><em>link</em> <em style="color: #ff537c">love</em></h1>
@@ -30,53 +42,44 @@
       <div style="clear: both;"></div>
     </div>
 
+    <!--横向菜单栏-->
     <div id="contentTitleId">
-      <span>中央大厅</span>
-      <span>
+      <span class="indexMenuClass"><router-link to="/linklove/index" class="whiteColorClass">中央大厅</router-link></span>
+      <span class="indexMenuClass"><router-link to="/linklove/myself" class="whiteColorClass">个人中心</router-link></span>
+      <span class="indexMenuClass"><router-link to="/linklove/lover" class="whiteColorClass">lover</router-link></span>
+      <span class="indexMenuClass">
         <Dropdown>
-        <a href="javascript:void(0)"><p style="color: white">未登录<Icon type="ios-arrow-down"></Icon></p></a>
+        <a href="javascript:void(0)"><p class="whiteColorClass">礼物<Icon type="ios-arrow-down"></Icon></p></a>
         <DropdownMenu slot="list">
-          <DropdownItem>前往登陆</DropdownItem>
-          <DropdownItem>切换账号</DropdownItem>
-          <DropdownItem>注销</DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">礼物商城</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">我的礼物</router-link></DropdownItem>
         </DropdownMenu>
       </Dropdown>
       </span>
-      <span>个人中心</span>
-      <span>lover</span>
-      <span>
+      <span class="indexMenuClass">
         <Dropdown>
-        <a href="javascript:void(0)"><p style="color: white">礼物<Icon type="ios-arrow-down"></Icon></p></a>
+        <a href="javascript:void(0)"><p class="whiteColorClass">礼金<Icon type="ios-arrow-down"></Icon></p></a>
         <DropdownMenu slot="list">
-          <DropdownItem>礼物商城</DropdownItem>
-          <DropdownItem>我的礼物</DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">我的红包</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">我的优惠券</router-link></DropdownItem>
         </DropdownMenu>
       </Dropdown>
       </span>
-      <span>
+      <span class="indexMenuClass">
         <Dropdown>
-        <a href="javascript:void(0)"><p style="color: white">礼金<Icon type="ios-arrow-down"></Icon></p></a>
+        <a href="javascript:void(0)"><p class="whiteColorClass">安排<Icon type="ios-arrow-down"></Icon></p></a>
         <DropdownMenu slot="list">
-          <DropdownItem>我的红包</DropdownItem>
-          <DropdownItem>我的优惠券</DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">结婚</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">设置定时可见</router-link></DropdownItem>
         </DropdownMenu>
       </Dropdown>
       </span>
-      <span>
-        <Dropdown>
-        <a href="javascript:void(0)"><p style="color: white">安排<Icon type="ios-arrow-down"></Icon></p></a>
-        <DropdownMenu slot="list">
-          <DropdownItem>结婚</DropdownItem>
-          <DropdownItem>设置定时可见</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      </span>
-      <span>
+      <span class="indexMenuClass">
         <Dropdown>
         <a href="javascript:void(0)"><p style="color: white">家族<Icon type="ios-arrow-down"></Icon></p></a>
         <DropdownMenu slot="list">
-          <DropdownItem>关系图谱</DropdownItem>
-          <DropdownItem>聊天会话</DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">关系图谱</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">聊天会话</router-link></DropdownItem>
         </DropdownMenu>
       </Dropdown>
       </span>
@@ -121,8 +124,27 @@
 </template>
 
 <script>
+  import {Login,Regist} from '../../api/api'
   export default {
-    name: "index"
+    name: "baseLayout",
+    data(){
+      return{
+
+      }
+    },
+    methods:{
+      login:async function () {
+        this.$Message.info("Login");
+        let result = await Login({});
+      },
+      regist:async function () {
+        this.$Message.info("Regist");
+        let result = await Regist({});
+      },
+
+
+    },
+
   }
 </script>
 
@@ -131,7 +153,10 @@
     background-color: #e3e4e5;padding: 5px 0 5px 30px
   }
   .headLineClass{
-    color: #ff6900;font-size: 13px
+    color: #999;font-size: 13px;cursor: pointer;
+  }
+  .BlackSpaceClass{
+    color: #999;font-size: 13px
   }
   #headShowId{
     background-color: #f6f6f6 ; padding: 20px 40px 20px 60px
@@ -157,11 +182,14 @@
   #rightContentId{
     width: 10%;float: left;background-color: #fae5db;border-radius: 10px
   }
-  span{
+  .indexMenuClass{
     font-size: 15px;
     margin: 0 0 0 2%;
     cursor: pointer;
     color: white
+  }
+  .whiteColorClass{
+    color: white;
   }
   hr{
     background-color: #ffd5d6;border: none;height: 1px
