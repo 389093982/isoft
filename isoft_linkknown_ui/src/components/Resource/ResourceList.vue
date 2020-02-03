@@ -49,8 +49,8 @@
             <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
             <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
             <Col span="8">
-              <IBeautifulLink>推荐 (10)</IBeautifulLink>&nbsp;&nbsp;&nbsp;
-              <IBeautifulLink>不推荐 (10)</IBeautifulLink>
+              <IBeautifulLink>推荐 ({{resource.recommend}})</IBeautifulLink>&nbsp;&nbsp;&nbsp;
+              <IBeautifulLink>不推荐 ({{resource.not_recommend}})</IBeautifulLink>
             </Col>
           </Row>
         </p>

@@ -61,6 +61,9 @@
           {
             'label': '删除列',
             'sql': 'alter table course_video drop column video_number;',
+          }, {
+            'label': '添加列',
+            'sql': 'alter table user add column nick_name varchar(255) COLLATE utf8_bin NOT NULL DEFAULT \'\';alter table blog_article add column to_top int(11) NOT NULL DEFAULT -1;',
           },
           {
             'label': '创建表',
