@@ -61,10 +61,17 @@
           {
             'label': '删除列',
             'sql': 'alter table course_video drop column video_number;',
+          }, {
+            'label': '添加列',
+            'sql': 'alter table user add column nick_name varchar(255) COLLATE utf8_bin NOT NULL DEFAULT \'\';alter table blog_article add column to_top int(11) NOT NULL DEFAULT -1;',
           },
           {
             'label': '创建表',
             'sql': 'CREATE TABLE `verify_code`( `user_name` VARCHAR(255) COLLATE utf8_bin NOT NULL DEFAULT \'\' COMMENT \'用户名\', `verify_code` INT(11) NOT NULL DEFAULT -1 COMMENT \'验证码\', verify_code_expired DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT \'验证码过期时间\', PRIMARY KEY (`user_name`)) ENGINE=INNODB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;',
+          },
+          {
+            'label': 'insertOrUpdate',
+            'sql': 'INSERT INTO test VALUES (1,\'b4\',\'c4\') ON DUPLICATE KEY UPDATE b=VALUES(b),c=VALUES(c);',
           }],
         tabVal:'lst',
         logs:[],

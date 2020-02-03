@@ -1,0 +1,199 @@
+/* 清除浮动只需要添加 class=clear 即可 */
+.clear::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.isoft_bordertop_red {
+  border-top: 3px solid rgba(255, 0, 0, 0.2);
+}
+
+.isoft_top10 {
+  margin-top: 10px;
+}
+
+.isoft_top5 {
+  margin-top: 5px;
+}
+
+.isoft_pd10 {
+  padding: 10px;
+}
+
+.isoft_border_bottom {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.isoft_pd20 {
+  padding: 20px;
+}
+
+.isoft_mg10 {
+  margin: 10px;
+}
+
+.isoft_mr10 {
+  margin-right: 10px;
+}
+
+.isoft_bgcolor {
+  background: #eee;
+}
+
+.isoft_bg_white {
+  background: #FFFFFF;
+}
+
+.isoft_bg_black {
+  background: #212121;
+}
+
+.isoft_bold {
+  font-weight: bold;
+}
+
+.isoft_font {
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+
+.isoft_text_rows {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.isoft_inline_ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.isoft_font12 {
+  font-size: 12px;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.isoft_font14 {
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.isoft_font_white {
+  color: #fff;
+}
+
+.isoft_hover_red:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.newspaper {
+  padding: 20px;
+  column-count: 3;
+  column-gap: 40px;
+  column-rule: 4px outset rgba(255, 0, 0, 0.11);
+}
+
+.hoverLinkColor {
+  color: #000;
+}
+
+.hoverLinkColor:hover {
+  color: red;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+.hoverBorderShadow {
+  border: 1px solid #E5E5E5;
+}
+
+.hoverBorderShadow:hover {
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .1);
+  border-color: rgba(229, 229, 229, .73);
+}
+
+/*
+  线性渐变背景色
+  在.box:hover中加入这行代码的意义是用于当鼠标移动上去时所产生的渐变效果,在.box中加入这行代码的意义是用于当鼠标移开时所产生的渐变效果,
+  如果有一方不加,则会导致不加的那一方在进行样式变化的时候不会产生渐变的效果
+*/
+.linearTransitionBg {
+  width: 500px;
+  height: 30px;
+  background-color: yellow;
+  transition: all 5s ease;
+}
+
+.linearTransitionBg:hover {
+  width: 100%;
+  transition: all 5s ease;
+}
+
+/**
+  水平 border-bottom 颜色渐变
+ */
+.linearTransitionBox {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.linearTransitionBorderBottom::after {
+  content: '';
+  position: relative;
+  bottom: 0;
+  border-top: 2px solid #ff6900;
+  display: block;
+  margin: 0 auto;
+  transition: all 120ms ease-in-out;
+  width: 0;
+}
+
+.linearTransitionBorderBottom:hover::after {
+  content: '';
+  position: relative;
+  bottom: 0;
+  border-top: 2px solid #ff6900;
+  display: block;
+  margin: 0 auto;
+  transition: all 120ms ease-in-out;
+  width: 100%;
+}
+
+.isoft_loading {
+  width: 65px;
+  height: 65px;
+  border-radius: 100%;
+  border: 5px rgba(33, 235, 9, 0.15) solid;
+  border-right-color: #03eb00;
+  animation: isoft_loading 1s linear infinite;
+}
+
+@keyframes isoft_loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 文字超过三行显示省略号 */
+.p3line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.p1line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
