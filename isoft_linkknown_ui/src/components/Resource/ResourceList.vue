@@ -49,8 +49,10 @@
             <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
             <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
             <Col span="8">
-              <IBeautifulLink>推荐 ({{resource.recommend}})</IBeautifulLink>&nbsp;&nbsp;&nbsp;
-              <IBeautifulLink>不推荐 ({{resource.not_recommend}})</IBeautifulLink>
+              <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">推荐 ({{resource.recommend}})
+              </IBeautifulLink>&nbsp;&nbsp;&nbsp;
+              <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">不推荐 ({{resource.not_recommend}})
+              </IBeautifulLink>
             </Col>
           </Row>
         </p>
@@ -64,8 +66,8 @@
 </template>
 
 <script>
-  import {FilterPageResourceList} from "../../api"
-  import {CheckHasLoginConfirmDialog} from "../../tools";
+  import {FilterPageResourceList, RecommendResource} from "../../api"
+  import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
 
   export default {
     name: "ResourceList",
@@ -84,6 +86,35 @@
       }
     },
     methods: {
+      recommandResource: async function (resource_id, recommendNum, not_recommendNum) {
+        var _this = this;
+        if (checkFastClick()) {
+          _this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
+        var flag = false;
+        if (recommendNum > 0 && localStorage.getItem(this.GLOBAL.currentSite + resource_id + "recommendNum") == null) {
+          localStorage.setItem(this.GLOBAL.currentSite + resource_id + "recommendNum", recommendNum);
+          flag = true;
+        }
+        if (not_recommendNum > 0 && localStorage.getItem(this.GLOBAL.currentSite + resource_id + "not_recommendNum") == null) {
+          localStorage.setItem(this.GLOBAL.currentSite + resource_id + "not_recommendNum", not_recommendNum);
+          flag = true;
+        }
+        if (flag) {
+          const result = await RecommendResource({
+            resource_id: resource_id,
+            recommendNum: recommendNum,
+            not_recommendNum: not_recommendNum
+          });
+          if (result.status == "SUCCESS") {
+            this.$Message.success("感谢您的评价!");
+            this.refreshResourceList();
+          }
+        } else {
+          this.$Message.error("您已经评价过！");
+        }
+      },
       uploadResource: function () {
         CheckHasLoginConfirmDialog(this, {path: '/resource/uploadResource'});
       },

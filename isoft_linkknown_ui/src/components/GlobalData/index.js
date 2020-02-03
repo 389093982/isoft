@@ -18,6 +18,8 @@ const salaryRanges = ['1k-5k', '5k-10k', '5k-15k', '5k-20k', '10k-15k', '10-20k'
 const corporateSizes = ['1-10人', '10-20人', '20-50人', '50-100人', '100-500人', '500-2000人', '2000以上'];
 const jobTypes = ['前端工程师', '后端工程师', '研发经理', '软件工程师', '安卓开发工程师', '架构负责人'];
 
+const currentSite = "_isoft_linkknown_ui";
+
 export default {
   placement_host_recommend_blog_tpyes,
   placement_host_course_type_carousel,
@@ -38,5 +40,7 @@ export default {
   salaryRanges,
   corporateSizes,
   jobTypes,
+
+  currentSite,
 }
 
