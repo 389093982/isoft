@@ -53,6 +53,7 @@
               </IBeautifulLink>&nbsp;&nbsp;&nbsp;
               <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">不推荐 ({{resource.not_recommend}})
               </IBeautifulLink>
+              <Progress :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
             </Col>
           </Row>
         </p>
@@ -86,6 +87,9 @@
       }
     },
     methods: {
+      calProgress: function (recommendNum, not_recommendNum) {
+        return recommendNum + not_recommendNum > 0 ? Math.ceil(100 * (recommendNum / (recommendNum + not_recommendNum))) : 100;
+      },
       recommandResource: async function (resource_id, recommendNum, not_recommendNum) {
         var _this = this;
         if (checkFastClick()) {
