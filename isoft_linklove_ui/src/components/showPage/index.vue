@@ -1,96 +1,31 @@
 <template>
   <div>
-      <!--第一行-->
-      <div>
-        <div style="float: left;width: 40%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/1.png" style="width:100%;height: 212px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
 
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/3.png" style="width:100%;height: 212px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/4.png" style="width:100%;height:212px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/5.png" style="width:100%;height: 212px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-        <div style="clear: both"></div>
-      </div>
-
-      <!--第二行-->
-      <div>
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/9.png" style="width:100%;height: 150px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/10.png" style="width:100%;height: 150px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/11.png" style="width:100%;height: 150px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/12.png" style="width:100%;height: 150px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-        <div style="float: left;width: 20%">
-          <Card style="width:100%;height: 100%">
-            <div style="text-align:center">
-              <img src="../../../static/img/personImg/lizhien/13.png" style="width:100%;height: 150px">
-              <!--<h3>iu-本科-168</h3>-->
-            </div>
-          </Card>
-        </div>
-
-      </div>
+    <Carousel autoplay v-model="carousel" loop autoplay-speed="3000">
+      <CarouselItem><div class="demo-carousel"><indexshow01></indexshow01></div></CarouselItem>
+      <CarouselItem><div class="demo-carousel"><indexshow02></indexshow02></div></CarouselItem>
+      <CarouselItem><div class="demo-carousel"><indexshow03></indexshow03></div></CarouselItem>
+      <CarouselItem><div class="demo-carousel"><indexshow04></indexshow04></div></CarouselItem>
+      <CarouselItem><div class="demo-carousel"><indexshow05></indexshow05></div></CarouselItem>
+    </Carousel>
 
   </div>
 </template>
 
 <script>
+  import indexshow01 from "./indexshow01";
+  import indexshow02 from "./indexshow02";
+  import indexshow03 from "./indexshow03";
+  import indexshow04 from "./indexshow04";
+  import indexshow05 from "./indexshow05";
   export default {
-    name: "index"
+    name: "index",
+    components: {indexshow01, indexshow02, indexshow03, indexshow04, indexshow05},
+    data(){
+      return{
+        carousel:0,
+      }
+    }
   }
 </script>
 

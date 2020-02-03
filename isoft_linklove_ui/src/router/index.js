@@ -4,7 +4,7 @@ import Router from 'vue-router'
 const baseLayout = () => import('../components/base/baseLayout');
 const index = () => import('../components/showPage/index');
 const myself = () => import('../components/myself/myself/myself');
-const lover = () => import('../components/myself/lover/lover');
+const lover = () => import('../components/lover/lover');
 
 Vue.use(Router);
 
