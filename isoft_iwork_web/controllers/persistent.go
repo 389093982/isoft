@@ -232,7 +232,7 @@ func importProject() {
 			persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
 			persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
 			persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
-			persistentPlacementFilesToDB(fmt.Sprintf("%s/placements", appNameFilePath))
+			//persistentPlacementFilesToDB(fmt.Sprintf("%s/placements", appNameFilePath))
 			persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
 		}
 	}
