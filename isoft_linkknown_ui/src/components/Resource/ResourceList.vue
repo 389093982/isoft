@@ -14,19 +14,15 @@
 
       <div class="isoft_pd10">
         <p class="isoft_top10">
-          分类：
-          <Tag>全部</Tag>
-          <Tag v-for="(fl, index) in resource_fl">{{fl}}</Tag>
-        </p>
-        <p class="isoft_top10">
-          行业：
-          <Tag>全部</Tag>
-          <Tag v-for="(hy, index) in resource_hy">{{hy}}</Tag>
+          热门分类：
+          <Tag><span @click="searchResource('')">全部</span></Tag>
+          <Tag v-for="(fl, index) in resource_fl"><span @click="searchResource(fl)">{{fl}}</span></Tag>
         </p>
         <p class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
-          格式：
-          <Tag>全部</Tag>
-          <Tag v-for="(gs, index) in resource_gs">{{gs}}</Tag>
+          文件格式：
+          <Tag><span @click="searchResource('')">全部</span></Tag>
+          <Tag v-for="(filetype, index) in resource_filetypes"><span
+            @click="searchResource(filetype)">{{filetype}}</span></Tag>
         </p>
       </div>
 
@@ -77,10 +73,10 @@
     name: "ResourceList",
     data() {
       return {
+        search: '',
         resources: null,
-        resource_fl: ["热门分类1", "热门分类2", "热门分类3", "热门分类4"],
-        resource_hy: ["热门行业1", "热门行业2", "热门行业3", "热门行业4"],
-        resource_gs: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "zip"],
+        resource_fl: ["java", "python", "php", "c", "c++", "vue"],
+        resource_filetypes: [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar"],
         // 当前页
         current_page: 1,
         // 总数
@@ -90,7 +86,11 @@
       }
     },
     methods: {
-      calProgress: function (recommendNum, not_recommendNum) {
+      searchResource: function (search) {
+        this.search = search;
+        this.refreshResourceList();
+      },
+      calProgress: function (recommendNum, not_recommendNum) {    // 计算推荐比例进度
         return recommendNum + not_recommendNum > 0 ? Math.ceil(100 * (recommendNum / (recommendNum + not_recommendNum))) : 100;
       },
       recommandResource: async function (resource_id, recommendNum, not_recommendNum) {
@@ -129,7 +129,11 @@
         CheckHasLoginConfirmDialog(this, {path: '/resource/downloadResource', query: {id: resource.id}});
       },
       refreshResourceList: async function () {
-        const result = await FilterPageResourceList({offset: this.offset, current_page: this.current_page});
+        const result = await FilterPageResourceList({
+          offset: this.offset,
+          current_page: this.current_page,
+          search: this.search
+        });
         if (result.status == "SUCCESS") {
           this.resources = result.resources;
           this.total = result.paginator.totalcount;
