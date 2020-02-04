@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <!--页眉-->
+    <!--左页眉-->
     <div id="headLineId">
       <div style="float: left;width: 30%">
         <code class="headLineClass">收藏本站</code>
@@ -10,6 +10,7 @@
         <code class="BlackSpaceClass">&nbsp;&nbsp;|&nbsp;&nbsp;</code>
         <code class="headLineClass">公众号</code>
       </div>
+      <!--右页眉-->
       <div style="float: right;width: 45%">
         <code class="headLineClass" @click="login">你好,请登录</code>
         <code class="BlackSpaceClass">&nbsp;</code>
@@ -30,12 +31,12 @@
 
     <!--logo和搜索-->
     <div id="headShowId">
-      <div id="tagPicture" style="width: 30%;float: left;">
+      <div id="tagPicture" style="width: 28%;float: left;">
         <h1 style="color: #ff6900"><em>link</em> <em style="color: #ff537c">love</em></h1>
       </div>
-      <div style="width: 70%;float: left;">
-        <input id="searchId" placeholder="搜索..."/>
-        <button id="searchButtonId">
+      <div style="width: 72%;float: left;">
+        <input id="searchId" placeholder="搜索..." @click="toIndex"/>
+        <button id="searchButtonId" @click="searchUser">
           <code id="searchCodeId">搜索</code>
         </button>
       </div>
@@ -69,8 +70,8 @@
         <Dropdown>
         <a href="javascript:void(0)"><p class="whiteColorClass">安排<Icon type="ios-arrow-down"></Icon></p></a>
         <DropdownMenu slot="list">
-          <DropdownItem><router-link to="/linklove/index">结婚</router-link></DropdownItem>
-          <DropdownItem><router-link to="/linklove/index">设置定时可见</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">我的婚礼</router-link></DropdownItem>
+          <DropdownItem><router-link to="/linklove/index">定时计划</router-link></DropdownItem>
         </DropdownMenu>
       </Dropdown>
       </span>
@@ -100,6 +101,11 @@
           <p class="leftContentClass">游客: 张三</p><hr>
           <p class="leftContentClass">游客: 张三</p><hr>
           <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
+          <p class="leftContentClass">游客: 张三</p><hr>
         </div>
       </div>
       <div id="centerContentId">
@@ -108,6 +114,13 @@
       <div id="rightContentId">
         <p class="rightContentClass">恋爱手册</p><hr>
         <p class="rightContentClass">恋爱心得</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
+        <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
@@ -141,7 +154,12 @@
         this.$Message.info("Regist");
         let result = await Regist({});
       },
-
+      toIndex:async function(){
+        this.$router.push({path:'/linklove/index'});
+      },
+      searchUser:function () {
+        this.$Message.info("searchUser");
+      }
 
     },
 
