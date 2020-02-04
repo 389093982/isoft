@@ -304,13 +304,22 @@ func GetRunLogRecordCount(works []models.Work) interface{} {
 	return m
 }
 
+// 保存和导入锁,保证同时只有一个任务执行
+var siMutex sync.Mutex
+
 func (this *WorkController) SaveProject() {
+	siMutex.Lock()
+	defer siMutex.Unlock()
+
 	persistentToFile()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }
 
 func (this *WorkController) ImportProject() {
+	siMutex.Lock()
+	defer siMutex.Unlock()
+
 	importProject()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
