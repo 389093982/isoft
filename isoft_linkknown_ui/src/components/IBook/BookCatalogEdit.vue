@@ -157,7 +157,7 @@
 
       },
       refreshBookCatalogList: async function () {
-        const result = await BookCatalogList(this.$route.query.book_id);
+        const result = await BookCatalogList({book_id: this.$route.query.book_id});
         if (result.status == "SUCCESS") {
           this.bookCatalogs = result.bookCatalogs;
         }

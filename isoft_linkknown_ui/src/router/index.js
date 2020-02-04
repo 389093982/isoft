@@ -15,6 +15,7 @@ const BlogArticleDetail = () => import("@/components/IBlog/BlogArticleDetail");
 const BlogArticleEdit = () => import("@/components/IBlog/BlogArticleEdit");
 const BookCatalogEdit = () => import("@/components/IBook/BookCatalogEdit");
 const BookList = () => import("@/components/IBook/BookList");
+const BookCatalogs = () => import("@/components/IBook/BookCatalogs");
 const BookArticleDetail = () => import("@/components/IBook/BookArticleDetail");
 const UserDetail = () => import("@/components/User/UserDetail");
 const UserGuide = () => import("@/components/User/UserGuide");
@@ -92,6 +93,7 @@ const IBookRouter = {
     {path: 'book_detail', component: BookArticleDetail},
     {path: 'book_edit', component: BookCatalogEdit},
     {path: 'book_list', component: BookList},
+    {path: 'book_catalogs', component: BookCatalogs},
   ]
 };
 
