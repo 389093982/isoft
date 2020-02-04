@@ -81,7 +81,7 @@
         }
       },
       refreshBookCatalogList: async function (book_id) {
-        const result = await BookCatalogList(book_id);
+        const result = await BookCatalogList({book_id: book_id});
         if (result.status == "SUCCESS") {
           this.bookCatalogs = result.bookCatalogs;
         }

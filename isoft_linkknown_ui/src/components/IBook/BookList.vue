@@ -22,7 +22,7 @@
           <div style="min-height: 450px;">
             <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
               <Col span="18">
-                <div class="bookName" @click="$router.push({path:'/ibook/book_detail',query:{book_id:book.id}})">
+                <div class="bookName" @click="$router.push({path:'/ibook/book_catalogs',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </div>
                 <div>
