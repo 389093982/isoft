@@ -6,7 +6,7 @@
       <div style="float: left;width: 40%">
         <Card style="width:100%;height: 100%">
           <div style="text-align:center">
-            <img src="../../../static/img/personImg/lizhien/1.png" style="width:100%;height: 190px">
+            <img src="../../../static/img/personImg/lizhien/1.png" style="width:100%;height: 190px;cursor: pointer">
             <!--<h3>iu-本科-168</h3>-->
           </div>
         </Card>

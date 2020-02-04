@@ -35,7 +35,7 @@
         <h1 style="color: #ff6900"><em>link</em> <em style="color: #ff537c">love</em></h1>
       </div>
       <div style="width: 72%;float: left;">
-        <input id="searchId" placeholder="搜索..." @click="toIndex"/>
+        <input id="searchId" placeholder="搜索..." v-model="searchUserId"/>
         <button id="searchButtonId" @click="searchUser">
           <code id="searchCodeId">搜索</code>
         </button>
@@ -86,37 +86,32 @@
       </span>
     </div>
 
-    <div style="margin: 20px 40px 0 20px ;height: 400px">
+    <!--左侧提示 + 中间router-view + 右侧提示-->
+    <div style="margin: 20px 2% 0 2% ;height: 400px;">
       <div id="leftContentId">
-        <div>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-          <p class="leftContentClass">游客: 张三</p><hr>
-        </div>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
+        <p class="leftContentClass">游客: 张三</p><hr>
       </div>
+
       <div id="centerContentId">
         <router-view></router-view>
       </div>
+
       <div id="rightContentId">
         <p class="rightContentClass">恋爱手册</p><hr>
         <p class="rightContentClass">恋爱心得</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
         <p class="rightContentClass">备忘录</p><hr>
@@ -133,6 +128,25 @@
       <div style="clear: both"></div>
     </div>
 
+    <!--其他内容 暂时待定-->
+    <div style="float: left;margin: 10px 12% 0 12% ;width:76%;height: 200px;background-color: #f6f4f0">
+      其他内容<br>
+      其他内容<br>
+      其他内容<br>
+      其他内容<br>
+      其他内容<br>
+    </div>
+
+    <!--页脚-->
+    <div style="float: left;margin: 1px 12% 0 12% ;width:76%;height: 150px;background-color: #ffcfce">
+      footer<br>
+      footer<br>
+      footer<br>
+      footer<br>
+      footer<br>
+    </div>
+    <div style="clear: both"></div>
+
   </div>
 </template>
 
@@ -142,7 +156,7 @@
     name: "baseLayout",
     data(){
       return{
-
+        searchUserId:'',
       }
     },
     methods:{
@@ -159,6 +173,7 @@
       },
       searchUser:function () {
         this.$Message.info("searchUser");
+        this.$router.push({path:'/linklove/index',query:{'userid':this.searchUserId}});
       }
 
     },
@@ -198,7 +213,7 @@
     width: 78%;float: left;background-color: #f6f4f0;margin: 0 1% 0 1% ;
   }
   #rightContentId{
-    width: 10%;float: left;background-color: #fae5db;border-radius: 10px
+    width: 10%;float: right;background-color: #fae5db;border-radius: 10px
   }
   .indexMenuClass{
     font-size: 15px;
