@@ -89,42 +89,55 @@
     <!--左侧提示 + 中间router-view + 右侧提示-->
     <div style="margin: 20px 2% 0 2% ;height: 400px;">
       <div id="leftContentId">
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
+        <!--左侧悬浮-->
+        <Affix :offset-top="100">
+          <div class="demo-affix" id="leftContentBoxId">
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+          </div>
+        </Affix>
       </div>
 
+      <!--中间router-view-->
       <div id="centerContentId">
         <router-view></router-view>
       </div>
 
       <div id="rightContentId">
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱心得</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
+        <!--右边悬浮-->
+        <Affix :offset-top="100">
+          <div class="demo-affix" id="rightContentBoxId">
+            <p class="rightContentClass">恋爱手册</p><hr>
+            <p class="rightContentClass">恋爱心得</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+          </div>
+        </Affix>
       </div>
+
+      <!--clear: both-->
       <div style="clear: both"></div>
     </div>
 
@@ -207,13 +220,19 @@
     background-color: #ff537c; padding: 5px 10px 5px 40px
   }
   #leftContentId{
-    width: 10%;float: left;background-color: #fae5db;border-radius: 10px;
+    width: 10%;float: left;
+  }
+  #leftContentBoxId{
+    background-color: #fae5db;border-radius: 10px;
   }
   #centerContentId{
     width: 78%;float: left;background-color: #f6f4f0;margin: 0 1% 0 1% ;
   }
   #rightContentId{
-    width: 10%;float: right;background-color: #fae5db;border-radius: 10px
+    width: 10%;float: right;
+  }
+  #rightContentBoxId{
+    background-color: #fae5db;border-radius: 10px
   }
   .indexMenuClass{
     font-size: 15px;
