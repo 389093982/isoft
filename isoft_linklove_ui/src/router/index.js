@@ -5,17 +5,17 @@ const baseLayout = () => import('../components/base/baseLayout');
 const index = () => import('../components/showPage/index');
 const myself = () => import('../components/myself/myself/myself');
 const lover = () => import('../components/lover/lover');
+const usercentral = () => import('../components/showPage/usercentral');
 
 Vue.use(Router);
 
 //==============================================引入二级模块============================================================
-//首页
 const linkloveRouters = [
   {path:'index',component:index},
   {path:'myself',component:myself},
   {path:'lover',component:lover},
+  {path:'usercentral',component:usercentral},
 ];
-
 
 //==============================================引入一级模块============================================================
 export default new Router({
