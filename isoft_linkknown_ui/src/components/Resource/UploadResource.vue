@@ -32,7 +32,7 @@
     components: {IFileUpload},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=resource&table_field=resource_path",
         formInline: {
           id: -1,
           resource_catalog: '',
