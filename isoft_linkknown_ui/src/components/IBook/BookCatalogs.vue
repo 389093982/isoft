@@ -59,8 +59,8 @@
         </div>
       </Col>
       <Col span="6" class="isoft_bg_white isoft_pd10">
-        <RandomAdmt2/>
-        <RandomAdmt2/>
+        <RandomAdmt/>
+        <RandomAdmt/>
       </Col>
     </Row>
 
@@ -70,11 +70,11 @@
 <script>
   import {BookCatalogList} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "BookCatalogs",
-    components: {RandomAdmt2, IEasyComment},
+    components: {RandomAdmt, IEasyComment},
     data() {
       return {
         bookInfo: null,

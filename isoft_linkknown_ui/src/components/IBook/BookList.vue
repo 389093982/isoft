@@ -85,8 +85,8 @@
         </div>
 
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
-          <RandomAdmt2/>
-          <RandomAdmt2/>
+          <RandomAdmt/>
+          <RandomAdmt/>
         </div>
       </Col>
     </Row>
@@ -109,13 +109,13 @@
   import IFileUpload from "../Common/file/IFileUpload"
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckHasLoginConfirmDialog2, GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BookList",
     components: {
-      RandomAdmt2,
+      RandomAdmt,
       IndexCarousel, HotUser, IBeautifulLink, IKeyValueForm, IBeautifulCard, ISimpleConfirmModal, IFileUpload
     },
     data() {

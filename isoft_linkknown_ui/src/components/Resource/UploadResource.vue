@@ -25,8 +25,8 @@
       </div>
     </Col>
     <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
-      <RandomAdmt2/>
-      <RandomAdmt2/>
+      <RandomAdmt/>
+      <RandomAdmt/>
     </Col>
   </Row>
 
@@ -35,11 +35,11 @@
 <script>
   import IFileUpload from "../Common/file/IFileUpload"
   import {EditResource, fileUploadUrl} from "../../api"
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "UploadResource",
-    components: {RandomAdmt2, IFileUpload},
+    components: {RandomAdmt, IFileUpload},
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=resource&table_field=resource_path",

@@ -91,8 +91,8 @@
           </div>
 
           <div class="isoft_bg_white isoft_pd10 isoft_top10">
-            <RandomAdmt2/>
-            <RandomAdmt2/>
+            <RandomAdmt/>
+            <RandomAdmt/>
           </div>
         </Col>
       </Row>
@@ -112,12 +112,12 @@
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BlogList",
-    components: {RandomAdmt2, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
+    components: {RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
     data() {
       return {
         // 当前页

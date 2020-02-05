@@ -67,8 +67,8 @@
         </div>
       </Col>
       <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
-        <RandomAdmt2/>
-        <RandomAdmt2/>
+        <RandomAdmt/>
+        <RandomAdmt/>
       </Col>
     </Row>
 
@@ -78,11 +78,11 @@
 <script>
   import {FilterPageResourceList, RecommendResource} from "../../api"
   import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "ResourceList",
-    components: {RandomAdmt2},
+    components: {RandomAdmt},
     data() {
       return {
         search: '',
