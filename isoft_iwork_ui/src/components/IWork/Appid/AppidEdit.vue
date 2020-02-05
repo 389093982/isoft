@@ -12,8 +12,8 @@
         <Input type="textarea" :rows="3" v-model.trim="formValidate.app_desc" placeholder="请输入 app_desc"></Input>
       </FormItem>
       <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
       </FormItem>
     </Form>
   </ISimpleBtnTriggerModal>

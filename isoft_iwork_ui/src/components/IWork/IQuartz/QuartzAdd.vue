@@ -16,8 +16,8 @@
         <Input v-model.trim="formValidate.cron_str" placeholder="请输入 cron 表达式"></Input>
       </FormItem>
       <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
       </FormItem>
     </Form>
   </ISimpleBtnTriggerModal>

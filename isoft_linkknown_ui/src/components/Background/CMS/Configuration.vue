@@ -25,8 +25,8 @@
           <Input v-model="formValidate.configuration_value" placeholder="请输入配置项值"></Input>
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
-          <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
+          <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+          <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
         </FormItem>
       </Form>
     </Modal>

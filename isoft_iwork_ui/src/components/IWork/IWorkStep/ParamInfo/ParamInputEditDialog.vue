@@ -77,7 +77,7 @@
           </Scroll>
 
           <Row style="text-align: right;margin-top: 10px;">
-            <Button type="success" size="small" @click="handleSubmit">Submit</Button>
+            <Button type="success" size="small" @click="handleSubmit">提交</Button>
             <Button type="info" size="small" @click="closeModal">Close</Button>
           </Row>
         </div>

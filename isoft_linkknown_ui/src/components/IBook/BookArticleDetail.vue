@@ -9,8 +9,7 @@
             <div v-for="bookCatalog in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
               <Icon type="ios-paper-outline"/>
               <span @click="showDetail(bookCatalog.id)">
-                <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
-                {{bookCatalog.catalog_name | filterCatalogName}}
+                {{bookCatalog.catalog_name}}
               </span>
             </div>
           </Scroll>
@@ -92,11 +91,6 @@
         this.refreshBookCatalogList(this.$route.query.book_id);
       }
     },
-    filters: {
-      filterCatalogName: function (value) {
-        return value.slice(value.indexOf("-") + 1);
-      },
-    }
   }
 </script>
 

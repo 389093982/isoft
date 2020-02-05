@@ -9,13 +9,13 @@
       <Input v-model="formValidate.migrate_sql" type="textarea" :rows="20" placeholder="Enter your migrate_sql"></Input>
     </FormItem>
     <FormItem>
-      <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+      <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
     </FormItem>
   </Form>
 </template>
 
 <script>
-  import {EditSqlMigrate,GetSqlMigrateInfo} from "../../../api"
+  import {EditSqlMigrate, GetSqlMigrateInfo} from "../../../api"
 
   export default {
     name: "EditMigrate",

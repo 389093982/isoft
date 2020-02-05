@@ -12,7 +12,7 @@
     </div>
 
     <Row style="text-align: right;">
-      <Button type="success" @click="handleSubmit()" style="margin-top: 6px">Submit</Button>
+      <Button type="success" @click="handleSubmit()" style="margin-top: 6px">提交</Button>
     </Row>
   </ISimpleBtnTriggerModal>
 </template>
