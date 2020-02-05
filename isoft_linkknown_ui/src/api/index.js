@@ -46,7 +46,7 @@ export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL + '/iwork/htt
   book_img
 }, 'POST');
 export const DeleteBookById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeleteBookById', {id}, 'POST');
-export const BookList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookList', params, 'POST');
+export const QueryPageBookList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageBookList', params, 'POST');
 export const BookArticleList = (book_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookArticleList', {book_id}, 'POST');
 export const BookCatalogEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookCatalogEdit', params, 'POST');
 export const BookCatalogList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookCatalogList', params, 'POST');
