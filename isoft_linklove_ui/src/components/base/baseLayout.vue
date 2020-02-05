@@ -30,18 +30,20 @@
     </div>
 
     <!--logo和搜索-->
-    <div id="headShowId">
-      <div id="tagPicture" style="width: 28%;float: left;">
-        <h1 style="color: #ff6900"><em>link</em> <em style="color: #ff537c">love</em></h1>
+    <Affix :offset-top="0">
+      <div class="demo-affix" id="headShowId">
+        <div id="tagPicture" style="width: 28%;float: left;cursor: pointer">
+          <h1 style="color: #ff6900"><em>link</em> <em style="color: #ff537c">love</em></h1>
+        </div>
+        <div style="width: 72%;float: left;">
+          <input id="searchId" placeholder="搜索..." v-model="searchUserId"/>
+          <button id="searchButtonId" @click="searchUser">
+            <code id="searchCodeId">搜索</code>
+          </button>
+        </div>
+        <div style="clear: both;"></div>
       </div>
-      <div style="width: 72%;float: left;">
-        <input id="searchId" placeholder="搜索..." v-model="searchUserId"/>
-        <button id="searchButtonId" @click="searchUser">
-          <code id="searchCodeId">搜索</code>
-        </button>
-      </div>
-      <div style="clear: both;"></div>
-    </div>
+    </Affix>
 
     <!--横向菜单栏-->
     <div id="contentTitleId">
@@ -89,47 +91,61 @@
     <!--左侧提示 + 中间router-view + 右侧提示-->
     <div style="margin: 20px 2% 0 2% ;height: 400px;">
       <div id="leftContentId">
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
-        <p class="leftContentClass">游客: 张三</p><hr>
+        <!--左侧悬浮-->
+        <Affix :offset-top="120">
+          <div class="demo-affix" id="leftContentBoxId">
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+            <p class="leftContentClass">游客: 张三</p><hr>
+          </div>
+        </Affix>
       </div>
 
+      <!--中间router-view-->
       <div id="centerContentId">
         <router-view></router-view>
       </div>
 
       <div id="rightContentId">
-        <p class="rightContentClass">恋爱手册</p><hr>
-        <p class="rightContentClass">恋爱心得</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
-        <p class="rightContentClass">备忘录</p><hr>
+        <!--右边悬浮-->
+        <Affix :offset-top="120">
+          <div class="demo-affix" id="rightContentBoxId">
+            <p class="rightContentClass">恋爱手册</p><hr>
+            <p class="rightContentClass">恋爱心得</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+            <p class="rightContentClass">备忘录</p><hr>
+          </div>
+        </Affix>
       </div>
+
+      <!--clear: both-->
       <div style="clear: both"></div>
     </div>
 
     <!--其他内容 暂时待定-->
-    <div style="float: left;margin: 10px 12% 0 12% ;width:76%;height: 200px;background-color: #f6f4f0">
+    <div style="float: left;margin: 10px 12% 0 12% ;width:76%;height: 2000px;background-color: #f6f4f0">
+      其他内容<br>
       其他内容<br>
       其他内容<br>
       其他内容<br>
@@ -143,10 +159,13 @@
       footer<br>
       footer<br>
       footer<br>
-      footer<br>
     </div>
+
     <div style="clear: both"></div>
 
+    <BackTop :height="100" :bottom="50" >
+      <div class="top"><Icon type="ios-arrow-up" /></div>
+    </BackTop>
   </div>
 </template>
 
@@ -207,13 +226,19 @@
     background-color: #ff537c; padding: 5px 10px 5px 40px
   }
   #leftContentId{
-    width: 10%;float: left;background-color: #fae5db;border-radius: 10px;
+    width: 10%;float: left;
+  }
+  #leftContentBoxId{
+    background-color: #fae5db;border-radius: 10px;
   }
   #centerContentId{
     width: 78%;float: left;background-color: #f6f4f0;margin: 0 1% 0 1% ;
   }
   #rightContentId{
-    width: 10%;float: right;background-color: #fae5db;border-radius: 10px
+    width: 10%;float: right;
+  }
+  #rightContentBoxId{
+    background-color: #fae5db;border-radius: 10px
   }
   .indexMenuClass{
     font-size: 15px;
@@ -232,5 +257,14 @@
   }
   .leftContentClass{
     font-size: 15px;cursor: pointer;
+  }
+  .top{
+    padding: 10px;
+    background: #ff537c;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    height: 60px;
+    width: 100px
   }
 </style>
