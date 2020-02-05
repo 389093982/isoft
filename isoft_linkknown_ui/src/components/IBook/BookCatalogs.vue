@@ -51,7 +51,7 @@
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
       <!-- 评论模块 -->
-      <IEasyComment :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
+      <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
     </div>
   </div>
 </template>

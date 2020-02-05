@@ -72,6 +72,10 @@
           {
             'label': 'insertOrUpdate',
             'sql': 'INSERT INTO test VALUES (1,\'b4\',\'c4\') ON DUPLICATE KEY UPDATE b=VALUES(b),c=VALUES(c);',
+          },
+          {
+            'label': '获取表自增 id',
+            'sql': 'SELECT AUTO_INCREMENT FROM information_schema.tables WHERE  table_schema = \'isoft_iaas\' AND table_name=\'book_catalog\';',
           }],
         tabVal:'lst',
         logs:[],

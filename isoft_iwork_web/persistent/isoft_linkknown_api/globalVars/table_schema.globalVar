@@ -1,0 +1,12 @@
+<GlobalVar>
+	<Id>12</Id>
+	<AppId>5</AppId>
+	<Name>table_schema</Name>
+	<Value>isoft_iaas</Value>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-05T11:31:25+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-05T11:31:25+08:00</LastUpdatedTime>
+</GlobalVar>

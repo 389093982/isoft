@@ -24,11 +24,12 @@
               <dl>
                 <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
                 <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;"
-                    v-for="bookCatalog in bookCatalogs">
-                  &nbsp;&nbsp;&nbsp;
-                  <Icon type="ios-paper-outline"/>
-                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
-                        @dblclick="editBookCatalog(bookCatalog.id)">
+                    v-for="(bookCatalog, index) in bookCatalogs">
+                  <Icon type="md-close" style="cursor: pointer" @click="deleteBookCatalog(bookCatalog.id)"/>
+                  <Icon type="md-arrow-down" style="cursor: pointer" @click="toggleLocation(index, 'down')"/>
+                  <Icon type="md-arrow-up" style="cursor: pointer" @click="toggleLocation(index, 'up')"/>
+                  <Icon type="ios-brush-outline" style="cursor: pointer" @click="editBookCatalog(bookCatalog.id)"/>
+                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)">
                     {{bookCatalog.catalog_name}}
                     <input style="width: 300px;" :value="bookCatalog.catalog_name"/>
                 </span>
@@ -50,7 +51,13 @@
 
 <script>
   import BookArticleEdit from "./BookArticleEdit";
-  import {BookCatalogEdit, BookCatalogList, ShowBookCatalogDetail} from "../../api";
+  import {
+    BookCatalogEdit,
+    BookCatalogList,
+    ChangeCatalogOrder,
+    DeleteBookCatalog,
+    ShowBookCatalogDetail
+  } from "../../api";
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal";
@@ -60,7 +67,6 @@
     components: {ISimpleConfirmModal, IBeautifulCard, IBeautifulLink, BookArticleEdit},
     data() {
       return {
-        timer: null,
         bookCatalogs: [],
         formValidate: {
           id: -1,
@@ -74,6 +80,29 @@
       }
     },
     methods: {
+      toggleLocation: async function (index, operate) {
+        if ((index == 0 && operate == "up") || (index == this.bookCatalogs.length - 1 && operate == "down")) {
+          return;
+        }
+        let catalog_id1 = this.bookCatalogs[index].id;
+        let catalog_id2 = operate == "up" ? this.bookCatalogs[index - 1].id : this.bookCatalogs[index + 1].id;
+        const result = await ChangeCatalogOrder({catalog_id1: catalog_id1, catalog_id2: catalog_id2});
+        if (result.status == "SUCCESS") {
+          this.refreshBookCatalogList();
+          this.$Message.success("移动成功!");
+        } else {
+          this.$Message.error("移动失败!");
+        }
+      },
+      deleteBookCatalog: async function (catalog_id) {
+        const result = await DeleteBookCatalog({catalog_id: catalog_id});
+        if (result.status == "SUCCESS") {
+          this.refreshBookCatalogList();
+          this.$Message.success("删除成功!");
+        } else {
+          this.$Message.error("删除失败!");
+        }
+      },
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
@@ -87,6 +116,8 @@
               this.$refs.bookCatalogEditModal.hideModal();
               this.refreshBookCatalogList();
               this.handleReset('formValidate');
+            } else {
+              this.$Message.error("编辑失败!");
             }
           }
         })
@@ -94,25 +125,10 @@
       handleReset(name) {
         this.$refs[name].resetFields();
       },
-      // vue中对同一元素添加单击和双击事件,并解决之间的冲突
-      // 把单击事件写在延时器里面晚一点执行,并如果是双击的话清除这个延时器也就清除了单击事件
       editBookArticle: function (bookCatalogId) {
-        var _this = this;
-        var timers = this.timer;
-        if (timers) {
-          window.clearTimeout(timers);
-          this.timer = null;
-        }
-        this.timer = window.setTimeout(function () {
-          _this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
-        }, 300);
+        this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
       },
       editBookCatalog: async function (bookCatalogId) {
-        var timers = this.timer;
-        if (timers) {
-          window.clearTimeout(timers);
-          this.timer = null;
-        }
         if (bookCatalogId > 0) {
           const result = await ShowBookCatalogDetail(bookCatalogId);
           if (result.status == "SUCCESS") {
