@@ -4,8 +4,10 @@
     <!--左页眉、右页眉-->
     <head-line></head-line>
 
-    <!--logo和搜索 不浮动-->
-    <logo-and-search></logo-and-search>
+    <!--logo和搜索 浮动-->
+    <Affix :offset-top="0">
+      <logo-and-search></logo-and-search>
+    </Affix>
 
     <!--横向菜单栏-->
     <pink-menu-title></pink-menu-title>
@@ -35,7 +37,7 @@
   import BackTop from "./backTop/backTop";
   import LeftMiddleRight from "./leftMiddleRight/leftMiddleRight";
   export default {
-    name: "baseLayout",
+    name: "indexLayout",
     components: {
       LeftMiddleRight,
       BackTop,
