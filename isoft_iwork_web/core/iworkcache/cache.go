@@ -51,6 +51,14 @@ func DeleteWorkCache(work_id int64) {
 	workCacheMap.Delete(work_id)
 }
 
+func RemoveOldWork(work_id int64) {
+	if cache, ok := workCacheMap.Load(work_id); ok {
+		workCache := cache.(*WorkCache)
+		workCacheMap.Delete(work_id)
+		workCacheMap.Delete(string(workCache.Work.AppId) + "_" + workCache.Work.WorkName)
+	}
+}
+
 func UpdateWorkCache(work_id int64) (err error) {
 	defer func() {
 		if err1 := recover(); err1 != nil {
@@ -58,6 +66,8 @@ func UpdateWorkCache(work_id int64) (err error) {
 			err = errorutil.ToError(err1)
 		}
 	}()
+	// 更新前需要先删除旧的,防止重命名等操作造成的脏数据
+	RemoveOldWork(work_id)
 	cache := &WorkCache{WorkId: work_id}
 	cache.FlushCache()
 	workCacheMap.Store(work_id, cache)

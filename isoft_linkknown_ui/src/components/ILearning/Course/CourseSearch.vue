@@ -24,7 +24,7 @@
       <Col span="8">
         <SiteDashBoard style="border: 1px solid #ccc;padding: 15px;margin-left: 5px;"/>
 
-        <RandomAdmt2/>
+        <RandomAdmt/>
       </Col>
     </Row>
   </div>
@@ -35,11 +35,11 @@
   import SiteDashBoard from "../Site/SiteDashBoard"
   import CourseMeta from "./CourseMeta";
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
-  import RandomAdmt2 from "../../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../../Advertisement/RandomAdmt";
 
   export default {
     name: "CourseSearch",
-    components: {RandomAdmt2, IBeautifulLink, CourseMeta, SiteDashBoard},
+    components: {RandomAdmt, IBeautifulLink, CourseMeta, SiteDashBoard},
     data() {
       return {
         courses: [],

@@ -1,11 +1,15 @@
 <template>
   <Row :gutter="10">
-    <Col span="6">
-      <div class="isoft_bg_white isoft_pd10" style="min-height: 560px;">
+    <Col span="7">
+      <div class="isoft_bg_white isoft_pd10" style="min-height: 200px;">
         <CatalogList/>
       </div>
+      <div class="isoft_bg_white isoft_pd10 isoft_top10">
+        <RandomAdmt/>
+        <RandomAdmt/>
+      </div>
     </Col>
-    <Col span="18">
+    <Col span="17">
       <div class="isoft_bg_white isoft_pd10">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
           <Row>
@@ -74,10 +78,11 @@
   } from "../../api"
   import axios from 'axios'
   import CatalogList from "./CatalogList";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "BlogArticleEdit",
-    components: {CatalogList},
+    components: {RandomAdmt, CatalogList},
     props: {
       successEmit: {
         type: Boolean,

@@ -65,6 +65,10 @@
                 </div>
               </Col>
             </Row>
+
+            <Page :total="total" :page-size="offset" show-total show-sizer
+                  :styles="{'text-align': 'center','margin-top': '10px'}"
+                  @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
 
           <ISimpleConfirmModal ref="bookEditModal" modal-title="新增/编辑 Book" :modal-width="600" :footer-hide="true">
@@ -75,16 +79,29 @@
           </ISimpleConfirmModal>
         </div>
       </Col>
-      <Col span="6" class="isoft_bg_white isoft_pd10">
-        <HotUser/>
-        <RandomAdmt2/>
+      <Col span="6">
+        <div class="isoft_bg_white isoft_pd10">
+          <HotUser/>
+        </div>
+
+        <div class="isoft_bg_white isoft_pd10 isoft_top10">
+          <RandomAdmt/>
+          <RandomAdmt/>
+        </div>
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-  import {BookEdit, BookList, DeleteBookById, fileUploadUrl, GetUserInfoByNames, UpdateBookIcon} from "../../api"
+  import {
+    BookEdit,
+    DeleteBookById,
+    fileUploadUrl,
+    GetUserInfoByNames,
+    QueryPageBookList,
+    UpdateBookIcon
+  } from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -92,17 +109,23 @@
   import IFileUpload from "../Common/file/IFileUpload"
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckHasLoginConfirmDialog2, GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BookList",
     components: {
-      RandomAdmt2,
+      RandomAdmt,
       IndexCarousel, HotUser, IBeautifulLink, IKeyValueForm, IBeautifulCard, ISimpleConfirmModal, IFileUpload
     },
     data() {
       return {
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
         fileUploadUrl: fileUploadUrl,
         books: [],
         mine: false,
@@ -110,6 +133,14 @@
       }
     },
     methods: {
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshBookList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshBookList();
+      },
       deleteBook: async function (book_id) {
         const result = await DeleteBookById(book_id);
         if (result.status == "SUCCESS") {
@@ -164,12 +195,15 @@
         } else {
           this.mine = false;
         }
-        const result = await BookList({
+        const result = await QueryPageBookList({
           search_type: search_type,
           search_user_name: search_user_name,
+          offset: this.offset,
+          current_page: this.current_page,
         });
         if (result.status == "SUCCESS") {
           this.books = result.books;
+          this.total = result.paginator.totalcount;
           this.renderUserInfoByName();
         }
       },

@@ -33,44 +33,56 @@
       </p>
     </div>
 
-    <div class="isoft_bg_white isoft_top10 isoft_pd20">
-      <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
-        <Row>
-          <Col span="6"><h4>{{resource.resource_name}}</h4></Col>
-          <Col span="18"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
-        </Row>
-        <p>介绍：{{resource.resource_desc}}</p>
-        <p>
-          <Row class="isoft_font12">
-            <Col span="4"><span>下载所需积分：<span style="color:red;">{{resource.points}}</span> </span></Col>
-            <Col span="4">上传时间：<span style="color:red;"><Time :time="resource.last_updated_time" :interval="1"/></span>
-            </Col>
-            <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
-            <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
-            <Col span="8">
-              <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">推荐 ({{resource.recommend}})
-              </IBeautifulLink>&nbsp;&nbsp;&nbsp;
-              <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">不推荐 ({{resource.not_recommend}})
-              </IBeautifulLink>
-              <Progress :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
-            </Col>
-          </Row>
-        </p>
-      </div>
+    <Row>
+      <Col span="18">
+        <div class="isoft_bg_white isoft_top10 isoft_pd20" style="margin-right: 10px;">
+          <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
+            <Row>
+              <Col span="6"><h4>{{resource.resource_name}}</h4></Col>
+              <Col span="18"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
+            </Row>
+            <p>介绍：{{resource.resource_desc}}</p>
+            <p>
+              <Row class="isoft_font12">
+                <Col span="4"><span>下载所需积分：<span style="color:red;">{{resource.points}}</span> </span></Col>
+                <Col span="4">上传时间：<span style="color:red;"><Time :time="resource.last_updated_time"
+                                                                  :interval="1"/></span>
+                </Col>
+                <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
+                <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
+                <Col span="8">
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">推荐 ({{resource.recommend}})
+                  </IBeautifulLink>&nbsp;&nbsp;&nbsp;
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">不推荐 ({{resource.not_recommend}})
+                  </IBeautifulLink>
+                  <Progress :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
+                </Col>
+              </Row>
+            </p>
+          </div>
 
-      <Page :total="total" :page-size="offset" show-total show-sizer
-            :styles="{'text-align': 'center','margin-top': '10px'}"
-            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
-    </div>
+          <Page :total="total" :page-size="offset" show-total show-sizer
+                :styles="{'text-align': 'center','margin-top': '10px'}"
+                @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+        </div>
+      </Col>
+      <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
+        <RandomAdmt/>
+        <RandomAdmt/>
+      </Col>
+    </Row>
+
   </div>
 </template>
 
 <script>
   import {FilterPageResourceList, RecommendResource} from "../../api"
   import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "ResourceList",
+    components: {RandomAdmt},
     data() {
       return {
         search: '',

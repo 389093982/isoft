@@ -84,10 +84,16 @@
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
         </Col>
-        <Col span="7" class="isoft_bg_white isoft_pd10">
-          <HotUser/>
-          <RandomAdmt2/>
-          <CatalogList/>
+        <Col span="7">
+          <div class="isoft_bg_white isoft_pd10">
+            <HotUser/>
+            <CatalogList/>
+          </div>
+
+          <div class="isoft_bg_white isoft_pd10 isoft_top10">
+            <RandomAdmt/>
+            <RandomAdmt/>
+          </div>
         </Col>
       </Row>
     </div>
@@ -106,12 +112,12 @@
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import RandomAdmt2 from "../Advertisement/RandomAdmt2";
+  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
 
   export default {
     name: "BlogList",
-    components: {RandomAdmt2, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
+    components: {RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
     data() {
       return {
         // 当前页

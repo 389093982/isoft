@@ -50,20 +50,31 @@
       </Row>
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <!-- 评论模块 -->
-      <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
-    </div>
+    <Row class="isoft_top10">
+      <Col span="18">
+        <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
+          <!-- 评论模块 -->
+          <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type"
+                        style="margin-top: 50px;"/>
+        </div>
+      </Col>
+      <Col span="6" class="isoft_bg_white isoft_pd10">
+        <RandomAdmt/>
+        <RandomAdmt/>
+      </Col>
+    </Row>
+
   </div>
 </template>
 
 <script>
   import {BookCatalogList} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
+  import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
     name: "BookCatalogs",
-    components: {IEasyComment},
+    components: {RandomAdmt, IEasyComment},
     data() {
       return {
         bookInfo: null,

@@ -38,63 +38,9 @@
               {
                 itemTitle: '热门',
                 items: [
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器1', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
+                  {item_label: 'iwork 低代码开发框架', item_desc: '快速高效、上手简单的敏捷开发工具', item_link: 'https://www.baidu.com',},
                 ],
               },
-              {
-                itemTitle: '计算',
-                items: [
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器2', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                ],
-              },
-              {
-                itemTitle: '存储',
-                items: [
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器3', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                ],
-              },
-              {
-                itemTitle: '视频服务',
-                items: [
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器4', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                ],
-              },
-              {
-                itemTitle: '数据库',
-                items: [
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                  {item_label: '云服务器5', item_desc: '稳定安全，高易用可弹性伸缩的计算服务', item_link: 'https://www.baidu.com',},
-                ],
-              }
             ]
           }
         }
