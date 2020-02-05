@@ -84,10 +84,16 @@
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
         </Col>
-        <Col span="7" class="isoft_bg_white isoft_pd10">
-          <HotUser/>
-          <RandomAdmt2/>
-          <CatalogList/>
+        <Col span="7">
+          <div class="isoft_bg_white isoft_pd10">
+            <HotUser/>
+            <CatalogList/>
+          </div>
+
+          <div class="isoft_bg_white isoft_pd10 isoft_top10">
+            <RandomAdmt2/>
+            <RandomAdmt2/>
+          </div>
         </Col>
       </Row>
     </div>
