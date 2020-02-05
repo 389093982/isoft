@@ -10,7 +10,9 @@
             </a>
           </li>
         </ul>
-        <p v-else style="padding: 15px;">敬请期待</p>
+        <p v-else style="padding: 15px;">
+          敬请期待
+        </p>
         <div style="clear: both;"></div>
       </div>
     </IBeautifulCard>
