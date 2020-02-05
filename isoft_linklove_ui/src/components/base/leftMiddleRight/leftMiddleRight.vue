@@ -40,7 +40,7 @@
     width: 10%;float: left;
   }
   #centerContentId{
-    width: 78%;float: left;background-color: #f6f4f0;margin: 0 1% 0 1% ;
+    width: 78%;float: left;background-color: rgba(255, 81, 142, 0.06);margin: 0 1% 0 1% ;
   }
   #rightContentId{
     width: 10%;float: right;

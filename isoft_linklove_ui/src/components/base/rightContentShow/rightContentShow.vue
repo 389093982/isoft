@@ -13,7 +13,7 @@
     <p class="rightContentClass">备忘录</p><hr>
     <p class="rightContentClass">备忘录</p><hr>
     <p class="rightContentClass">备忘录</p><hr>
-    <p class="rightContentClass">备忘录</p><hr>
+    <p class="rightContentClass">备忘录</p>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 
 <style scoped>
   #rightContentBoxId{
-    background-color: #fae5db;border-radius: 10px
+    background-color: rgba(255, 83, 124, 0.1);border-radius: 10px;border: 1px rgba(255, 83, 124, 0.47) solid;
   }
   .rightContentClass{
     font-size: 15px;text-align: center;color: #000;cursor: pointer
