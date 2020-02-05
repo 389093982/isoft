@@ -2,8 +2,8 @@
   <!--横向菜单栏-->
   <div id="contentTitleId">
     <span class="indexMenuClass"><router-link to="/linklove/index" class="whiteColorClass">中央大厅</router-link></span>
-    <span class="indexMenuClass"><router-link to="/linklove/myself" class="whiteColorClass">个人中心</router-link></span>
-    <span class="indexMenuClass"><router-link to="/linklove/lover" class="whiteColorClass">lover</router-link></span>
+    <span class="indexMenuClass"><router-link to="/myself/index" class="whiteColorClass">个人中心</router-link></span>
+    <span class="indexMenuClass"><router-link to="/lover/index" class="whiteColorClass">lover</router-link></span>
     <span class="indexMenuClass">
         <Dropdown>
         <a href="javascript:void(0)"><p class="whiteColorClass">礼物<Icon type="ios-arrow-down"></Icon></p></a>

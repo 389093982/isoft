@@ -52,7 +52,7 @@
 <script>
 	import myinfo from "./myinfo";
   export default {
-		name: "myself",
+		name: "myselfIndex",
     components: {myinfo},
     data(){
 		  return{

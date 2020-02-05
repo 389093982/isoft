@@ -8,7 +8,7 @@
 
 <script>
 	export default {
-		name: "lover"
+		name: "loverIndex"
 	}
 </script>
 
