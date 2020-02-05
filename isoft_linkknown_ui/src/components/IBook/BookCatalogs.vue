@@ -42,7 +42,8 @@
             <div style="padding: 10px 0;">
               <h3 style="margin:10px 0;">目录</h3>
               <p v-for="(bookCatalog, index) in bookCatalogs" style="color: #333333;font-size: 15px;">
-                {{bookCatalog.catalog_name}}</p>
+                <span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;{{bookCatalog.catalog_name}}
+              </p>
             </div>
           </div>
         </Col>
@@ -51,7 +52,7 @@
 
     <div class="isoft_bg_white isoft_pd10 isoft_top10">
       <!-- 评论模块 -->
-      <IEasyComment :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
+      <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
     </div>
   </div>
 </template>
