@@ -10,15 +10,7 @@
       </Col>
       <Col span="7">
         <GoodRank class="isoft_bg_white isoft_pd10"/>
-      </Col>
-    </Row>
 
-    <Row style="margin-top: 5px;">
-      <Col span="17" style="padding-right: 5px;">
-        <!-- 热门推荐区域 -->
-        <HotRecommend class="isoft_bg_white isoft_pd10"/>
-      </Col>
-      <Col span="7">
         <div class="isoft_bg_white isoft_pd10">
           <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
           <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
