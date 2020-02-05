@@ -4,18 +4,18 @@
     <div v-show="showContent">
       <Row>
         <Col span="12">
-          <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
+          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
         </Col>
         <Col span="12">
-          <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
+          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
         </Col>
       </Row>
       <Row>
         <Col span="12">
-          <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
+          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
         </Col>
         <Col span="12">
-          <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
+          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
         </Col>
       </Row>
     </div>

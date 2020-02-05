@@ -12,7 +12,7 @@
         <GoodRank class="isoft_bg_white isoft_pd10"/>
 
         <div class="isoft_bg_white isoft_pd10">
-          <ToolBox :placement_name="GLOBAL.element_host_app_recommand"/>
+          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
           <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
         </div>
       </Col>
@@ -20,10 +20,10 @@
 
     <Row class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
       <Col span="12">
-        <ToolBox :placement_name="GLOBAL.element_host_toolbox_list3"/>
+        <ToolBox :placement_name="GLOBAL.placement_host_toolbox_list3"/>
       </Col>
       <Col span="12">
-        <ToolBox :placement_name="GLOBAL.element_host_toolbox_list4"/>
+        <ToolBox :placement_name="GLOBAL.placement_host_toolbox_list4"/>
       </Col>
     </Row>
 
