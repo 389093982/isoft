@@ -6,29 +6,16 @@
       <IBeautifulCard title="我的广告清单">
         <div slot="content" style="padding: 10px;">
           <div v-if="advertisements && advertisements.length > 0">
-            <Row>
-              <Col span="4">友情链接名称</Col>
-              <Col span="4">链接类型</Col>
-              <Col span="4">链接地址</Col>
-              <Col span="4">链接图片</Col>
-              <Col span="4">联系人</Col>
-              <Col span="2">广告状态</Col>
-              <Col span="2">操作</Col>
-            </Row>
-            <Row v-for="(advertisement,index) in advertisements">
-              <!-- 加空格是防止没有内容而不占空间 -->
-              <Col span="4">
-                <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})">{{advertisement.advertisement_label}}</a>
-              </Col>
-              <Col span="4">{{advertisement.linked_type}}</Col>
-              <Col span="4">{{advertisement.linked_refer}}</Col>
-              <Col span="4" class="isoft_inline_ellipsis">
-                <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;
-              </Col>
-              <Col span="4">{{loginUserName}}&nbsp;</Col>
-              <Col span="2">已发布</Col>
-              <Col span="2"><a @click="editAdvertisement(advertisement.id)">编辑</a></Col>
-            </Row>
+            <div v-for="(advertisement,index) in advertisements" style="border-bottom: 1px solid #eee;padding: 10px 0;">
+              <p>友情链接名称: <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})">{{advertisement.advertisement_label}}</a>
+              </p>
+              <p>链接类型: {{advertisement.linked_type}}</p>
+              <p>链接地址: {{advertisement.linked_refer}}</p>
+              <p>链接图片: <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;</p>
+              <p>联系人：{{loginUserName}}</p>
+              <p>广告状态: 已发布</p>
+              <p>操作: <a @click="editAdvertisement(advertisement.id)">编辑</a></p>
+            </div>
           </div>
         </div>
       </IBeautifulCard>
