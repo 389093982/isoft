@@ -107,6 +107,7 @@ export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/
 
 // 显示课程详细信息
 export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail2", {course_id}, 'GET');
+export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 
 // 切换收藏点赞
 export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite2", {

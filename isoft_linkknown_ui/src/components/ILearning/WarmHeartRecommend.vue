@@ -11,31 +11,15 @@
         </video>
       </Col>
       <Col span="12" style="padding-left: 10px;">
-        <div class="linearTransitionBg"
+        <div v-if="custom_tags && custom_tags.length > 0" class="linearTransitionBg"
              style="height: 40px;padding:7px;margin-bottom:10px;background-color: rgba(228,228,228,0.4);">
-          <a class="hovered hvr-grow hoverLinkColor mr5">热门</a>
-          <a class="hovered hvr-grow hoverLinkColor mr5">最新</a>
-          <a class="hovered hvr-grow hoverLinkColor mr5">高评</a>
-          <a class="hovered hvr-grow hoverLinkColor mr5">特色</a>
+          <a class="hovered hvr-grow hoverLinkColor mr5" v-for="(tag, index) in custom_tags"
+             @click="getCustomTagCourses(tag.custom_tag)">{{tag.custom_tag}}</a>
         </div>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
-        <HoverBigImg class="hoverBorderShadow" width="144px" height="98px"
-                     src-img="http://localhost:8086/api/files/510825.gif" style="float: left;margin: 0 10px 10px 0;"/>
+        <HoverBigImg v-for="(course, index) in display_courses"
+                     class="hoverBorderShadow" width="144px" height="98px"
+                     :src-img="course.small_image" style="float: left;margin: 0 10px 10px 0;"
+                     @onclick="$router.push({path:'/ilearning/course_detail', query:{course_id: course.id}})"/>
       </Col>
     </Row>
 
@@ -43,17 +27,42 @@
 </template>
 
 <script>
-  import HoverBigImg from "../Common/img/HoverBigImg";
+  import HoverBigImg from "../Common/img/HoverBigImg"
+  import {QueryCustomTagCourse} from "../../api"
 
   export default {
     name: "WarmHeartRecommend",
-    components: {HoverBigImg}
+    components: {HoverBigImg},
+    data() {
+      return {
+        custom_tags: [],
+        custom_tag_courses: [],
+        display_courses: [],
+      }
+    },
+    methods: {
+      getCustomTagCourses: function (custom_tag) {
+        // 九宫格
+        this.display_courses = this.custom_tag_courses.filter(course => course.custom_tag == custom_tag).slice(0, 9);
+      },
+      refreshCustomTagCourse: async function () {
+        const result = await QueryCustomTagCourse();
+        if (result.status == "SUCCESS") {
+          this.custom_tags = result.custom_tags;
+          this.custom_tag_courses = result.custom_tag_courses;
+          if (this.custom_tags && this.custom_tags.length > 0) {
+            this.getCustomTagCourses(this.custom_tags[0].custom_tag);
+          }
+        }
+      }
+    },
+    mounted() {
+      this.refreshCustomTagCourse();
+    }
   }
 </script>
 
 <style scoped>
-
-
   .header {
     margin: 0 10px 10px 10px;
     position: relative;
