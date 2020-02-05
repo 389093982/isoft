@@ -9,8 +9,8 @@
     </FormItem>
     <slot name="extra"></slot>
     <FormItem>
-      <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-      <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+      <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+      <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
     </FormItem>
   </Form>
 </template>

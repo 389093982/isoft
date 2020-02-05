@@ -36,7 +36,7 @@
                 <Button size="small" slot="extra">input</Button>
               </Tabs>
               <Row style="padding-left: 130px;margin-top: 20px;">
-                <Button type="success" size="small" @click="handleSubmit">Submit</Button>
+                <Button type="success" size="small" @click="handleSubmit">提交</Button>
                 <Button type="info" size="small" @click="closeModal">Close</Button>
               </Row>
             </Col>
@@ -60,7 +60,7 @@
   import PreParamOutputTree from "./PreParamOutputTree"
   import ISimpleConfirmModal from "../../../Common/modal/ISimpleConfirmModal"
   import ParamMapping from "./ParamMapping"
-  import {EditWorkStepParamInfo,LoadWorkStepInfo,GetMetaInfo} from "../../../../api"
+  import {EditWorkStepParamInfo, LoadWorkStepInfo} from "../../../../api"
   import {oneOf} from "../../../../tools/index"
 
   export default {

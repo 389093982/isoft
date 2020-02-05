@@ -55,7 +55,8 @@
               <Input v-model.trim="formValidate.work_step_desc" type="textarea" :rows="4" placeholder="请输入 work_step_desc"></Input>
             </FormItem>
             <FormItem>
-              <Button type="success" size="small" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+              <Button type="success" size="small" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交
+              </Button>
               <Button type="warning" size="small" @click="showFormModal = false" style="margin-right: 6px">Close</Button>
             </FormItem>
           </Form>
@@ -66,7 +67,7 @@
 </template>
 
 <script>
-  import {EditWorkStepBaseInfo,GetMetaInfo,LoadWorkStepInfo} from "../../../../api"
+  import {EditWorkStepBaseInfo, LoadWorkStepInfo} from "../../../../api"
   import {validateCommonPatternForString} from "../../../../tools/index"
   import {oneOf} from "../../../../tools"
 

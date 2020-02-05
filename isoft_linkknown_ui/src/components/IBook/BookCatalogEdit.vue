@@ -36,7 +36,8 @@
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
                         @dblclick="editBookCatalog(bookCatalog.id)">
                   <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
-                  {{bookCatalog.catalog_name | filterCatalogName}}
+                    {{bookCatalog.catalog_name | filterCatalogName}}
+                    <input style="width: 300px;" :value="bookCatalog.catalog_name"/>
                 </span>
                 </dd>
               </dl>

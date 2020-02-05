@@ -27,8 +27,8 @@
         <Input v-model.trim="formValidate.resource_password" placeholder="请输入 resource_password"></Input>
       </FormItem>
       <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
       </FormItem>
     </Form>
   </ISimpleBtnTriggerModal>
