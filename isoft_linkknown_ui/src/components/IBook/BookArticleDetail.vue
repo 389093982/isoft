@@ -4,7 +4,7 @@
       <Col span="6"
            style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
         <div>
-          <Button @click="$router.push({path:'/ibook/book_list',query:{type:'mine'}})">管理我的书单</Button>
+          <Button @click="$router.push({path:'/ibook/book_list'})">全部书单</Button>
           <Scroll height="430" style="margin-top: 5px;">
             <div v-for="bookCatalog in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
               <Icon type="ios-paper-outline"/>
