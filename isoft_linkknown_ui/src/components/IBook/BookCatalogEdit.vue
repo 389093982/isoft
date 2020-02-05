@@ -7,12 +7,6 @@
           <Button size="small" @click="editBookCatalog" long>新建目录</Button>
 
           <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
-            <div style="margin: 15px 30px;">
-              <p>目录命名规范示例：1-一级目录</p>
-              <p>目录命名规范示例：1.1-二级目录</p>
-              <p>目录命名规范示例：1.1.1-三级目录</p>
-              <p>目录不能超过三级,目录级别不能以 0 开头</p>
-            </div>
             <!-- 表单信息 -->
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
               <FormItem label="目录名称" prop="catalogName">
@@ -35,8 +29,7 @@
                   <Icon type="ios-paper-outline"/>
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
                         @dblclick="editBookCatalog(bookCatalog.id)">
-                  <span style="color: rgba(0,128,0,0.4);">{{bookCatalog.grades}}</span> &nbsp;&nbsp;&nbsp;
-                    {{bookCatalog.catalog_name | filterCatalogName}}
+                    {{bookCatalog.catalog_name}}
                     <input style="width: 300px;" :value="bookCatalog.catalog_name"/>
                 </span>
                 </dd>
@@ -61,19 +54,11 @@
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal";
-  import {strSplit, validatePatternForString} from "../../tools";
 
   export default {
     name: "BookCatalogEdit",
     components: {ISimpleConfirmModal, IBeautifulCard, IBeautifulLink, BookArticleEdit},
     data() {
-      const _validateCatalogName = (rule, value, callback) => {
-        if (!validatePatternForString(/^[1-9][0-9]{0,}(\.[1-9][0-9]{0,}){0,2}-.*$/, value)) {
-          callback(new Error('目录名称命名不符合规范!'));
-        } else {
-          callback();
-        }
-      };
       return {
         timer: null,
         bookCatalogs: [],
@@ -84,7 +69,6 @@
         ruleValidate: {
           catalogName: [
             {required: true, message: '目录名称不能为空!', trigger: 'blur'},
-            {validator: _validateCatalogName, trigger: 'blur'}
           ],
         },
       }
@@ -93,26 +77,10 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            // 分割得到所有的目录
-            let grades = this.formValidate.catalogName.slice(0, this.formValidate.catalogName.indexOf("-"));
-            let gradeArr = strSplit(grades, ".");
-            var grade_1 = parseInt(gradeArr[0]);    // 一级目录
-            var grade_2 = 0;                            // 二级目录
-            var grade_3 = 0;                            // 三级目录
-            if (gradeArr.length > 1) {
-              grade_2 = parseInt(gradeArr[1]);
-            }
-            if (gradeArr.length > 2) {
-              grade_3 = parseInt(gradeArr[2]);
-            }
             const result = await BookCatalogEdit({
               book_id: parseInt(this.$route.query.book_id),
               id: this.formValidate.id,
               catalog_name: this.formValidate.catalogName,
-              grades: grades,
-              grade_1: grade_1,
-              grade_2: grade_2,
-              grade_3: grade_3,
             });
             if (result.status == "SUCCESS") {
               this.$Message.success("编辑成功!");
@@ -172,11 +140,6 @@
     mounted() {
       this.refreshBookCatalogList();
     },
-    filters: {
-      filterCatalogName: function (value) {
-        return value.slice(value.indexOf("-") + 1);
-      },
-    }
   }
 </script>
 
