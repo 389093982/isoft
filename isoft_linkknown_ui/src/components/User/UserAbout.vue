@@ -91,7 +91,7 @@
 </template>
 
 <script>
-  import {BookList, GetCourseListByUserName, GetUserDetail, queryPageBlog} from "../../api"
+  import {GetCourseListByUserName, GetUserDetail, queryPageBlog, QueryPageBookList} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
 
   export default {
@@ -118,7 +118,7 @@
     },
     methods: {
       refreshUserInfo: function () {
-        this.refreshBookList();
+        this.refreshQueryPageBookList();
         this.refreshBlogList();
         this.refreshCourseList();
         this.refreshUserDetail();
@@ -130,8 +130,8 @@
           this.nick_name = result.user.nick_name;
         }
       },
-      refreshBookList: async function () {
-        const result = await BookList({
+      refreshQueryPageBookList: async function () {
+        const result = await QueryPageBookList({
           search_type: '',
           search_user_name: this.userName,
         });
