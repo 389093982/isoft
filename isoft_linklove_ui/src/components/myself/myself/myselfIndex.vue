@@ -7,22 +7,26 @@
       <div style="float: left;width: 40%">
         <Card style="float: left;width:50%;height: 100%">
           <div style="text-align:center">
-            <img src="../../../../static/img/personImg/lizhien/9.png" style="width:100%;height: 150px">
+            <img src="../../../../static/img/personImg/kelusi/汤姆克鲁斯01.png" style="width:100%;height: 150px">
             <em><myinfo></myinfo></em>
           </div>
         </Card>
         <Card style="float: left;width:50%;height: 100%">
           <div style="text-align:center">
-            <img src="../../../../static/img/personImg/lizhien/12.png" style="width:100%;height: 150px">
-            <em style="color: #ff537c;cursor: pointer">我的女友</em>
+            <img src="../../../../static/img/personImg/lizhien/11.png" style="width:100%;height: 150px">
+            <em style="color: #ff537c;cursor: pointer"><my-lover></my-lover></em>
           </div>
         </Card>
       </div>
       <!--头像右侧应用-->
       <div style="float: right;width: 59%;">
           <div>
-            <Badge :count="3" type="lime"><Tag color="magenta">女友消息</Tag></Badge>
-            <Badge :count="3" type="info"><Tag color="blue">家族消息</Tag></Badge>
+            <Badge :count="3" type="lime">
+              <Tag color="magenta">
+                <lover-message></lover-message>
+              </Tag>
+            </Badge>
+            <Badge :count="3" type="info"><Tag color="blue">家族消息</Tag></Badge><br>
             <Badge :count="5" type="success"><Tag color="cyan">朋友消息</Tag></Badge>
             <Badge :count="2" type="warning"><Tag color="lime">大厅消息</Tag></Badge>
           </div>
@@ -34,10 +38,7 @@
     <div style="margin: 10px 0 0 0 ">
       <div style="float: left;width: 40%;">
         <div>
-          <Badge :count="3" type="lime"><Tag color="magenta">女友消息</Tag></Badge>
-          <Badge :count="3" type="info"><Tag color="blue">家族消息</Tag></Badge>
-          <Badge :count="5" type="success"><Tag color="cyan">朋友消息</Tag></Badge>
-          <Badge :count="2" type="warning"><Tag color="lime">大厅消息</Tag></Badge>
+          1234
         </div>
       </div>
       <div style="float: right;width: 60%">
@@ -51,9 +52,11 @@
 
 <script>
 	import myinfo from "./myinfo";
+  import MyLover from "./myLover";
+  import LoverMessage from "../../showPage/message/loverMessage";
   export default {
 		name: "myselfIndex",
-    components: {myinfo},
+    components: {LoverMessage, MyLover, myinfo},
     data(){
 		  return{
 

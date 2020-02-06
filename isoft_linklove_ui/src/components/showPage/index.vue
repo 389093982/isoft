@@ -4,9 +4,6 @@
     <Carousel autoplay v-model="carousel" loop autoplay-speed="3000">
       <CarouselItem><div class="demo-carousel"><indexshow01></indexshow01></div></CarouselItem>
       <CarouselItem><div class="demo-carousel"><indexshow02></indexshow02></div></CarouselItem>
-      <CarouselItem><div class="demo-carousel"><indexshow03></indexshow03></div></CarouselItem>
-      <CarouselItem><div class="demo-carousel"><indexshow04></indexshow04></div></CarouselItem>
-      <CarouselItem><div class="demo-carousel"><indexshow05></indexshow05></div></CarouselItem>
     </Carousel>
 
   </div>

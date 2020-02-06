@@ -5,7 +5,7 @@
       <Tabs value="name1">
         <TabPane label="我的信息" name="name1">
           <!--内容-->
-          <div style="background-color: rgba(176,108,239,0.04);float:left;height: auto;border: 1px #b06cef solid;border-radius: 10px">
+          <div style="background-color: rgba(176,108,239,0.2);float:left;width: 100%;height: auto;border: 1px #b06cef solid;border-radius: 10px">
             <div class="basicInformation">
               <div>
                 <h3><Icon type="ios-paper-outline" />基础信息</h3>
@@ -127,7 +127,7 @@
 
         <TabPane label="修改信息" name="name2">
           <!--内容-->
-          <div style="background-color: rgba(176,108,239,0.04);float:left;height: auto;border: 1px #b06cef solid;border-radius: 10px">
+          <div style="background-color: rgba(176,108,239,0.2);float:left;width: 100%;height: auto;border: 1px #b06cef solid;border-radius: 10px">
             <div class="basicInformation">
               <div>
                 <h3><Icon type="ios-paper-outline" />基础信息</h3>

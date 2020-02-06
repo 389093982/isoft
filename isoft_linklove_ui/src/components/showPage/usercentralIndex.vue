@@ -2,7 +2,7 @@
 	<div>
 
     <!--第一行-->
-    <div style="float: left;width:100%;height:auto;background-color: rgba(187,115,255,0.03);border:1px rgba(176,108,239,0.47) solid">
+    <div style="float: left;width:100%;height:auto;background-color: rgba(187,115,255,0.35);border:1px rgba(176,108,239,0.47) solid">
       <!--左边内容-->
       <div style="float: left;width: 84%;">
 
@@ -14,10 +14,10 @@
               </div>
             </Card>
           </div>
-          <div style="float: left;width: 60%;margin: 20px 0 0 2px ">
+          <div style="float: left;width: 70%;margin: 20px 0 0 2px ">
             <div style="height: 80px;background-color: #b06cef">
               <div style="float: left">
-                <b style="font-size: 23px;color: white">吴义祥</b>
+                <b style="font-size: 23px;color: white">汤姆克鲁斯</b>
               </div>
               <div style="float: left;margin-left: 15px;cursor: pointer">
                 <div style="width:80px;height: 23px;margin-top: 5px;text-align:center;font-size: 15px;background-color:white;color: #b06cef;border-radius: 10px"><Icon type="md-chatboxes" />打招呼</div>
@@ -27,7 +27,7 @@
               </div>
               <div style="clear: both"></div>
               <code style="font-size: 15px;color: white">ID:20204715</code><br>
-              <code style="font-size: 15px;color: white">安徽·六安|28岁|蚌埠学院|单身|未婚|170cm|10000-20000元</code>
+              <code style="font-size: 15px;color: white">美国·加州|28岁|戏剧学院|单身|未婚|180cm|100000-200000元</code>
             </div>
             <div style="height:80px;background-color:white;margin: 5px 0 0 0px ">
               <em style="font-size: 13px;">他还没有填写内心独白...</em>
@@ -71,7 +71,7 @@
         <div id="personalizedSignature">
           <h3><Icon type="ios-paper-outline" />个性签名</h3>
           <div style="width:80%; height: 25px;margin: 10px 0 0 60px;text-align: left;border-radius: 10px">
-            <code style="font-size:15px;">我命由我不由天！但是还是要给老板打工，唉...</code>
+            <code style="font-size:15px;">新碟中谍即将上映，希望大家喜欢</code>
           </div>
         </div>
 
