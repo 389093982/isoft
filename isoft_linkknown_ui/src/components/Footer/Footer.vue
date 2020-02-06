@@ -8,10 +8,6 @@
       <FrindLink/>
     </Row>
 
-    <Row class="isoft_bg_white isoft_pd10 isoft_top10">
-
-    </Row>
-
     <Row class="isoft_bg_white isoft_pd10" style="margin-top: 8px;">
       <Col span="4" style="padding: 50px;">
         <IVerticalList :showRightBorder="true" title="新手帮助">
@@ -53,7 +49,7 @@
     </Row>
 
     <Row style="text-align: center;">
-      <p style="margin: 40px;">Copyright © 2017-2018 Isoft 版权所有 All Rights Reserved.</p>
+      <p style="margin: 40px;">Copyright © 2019-2020 LinkKnown 版权所有 All Rights Reserved.</p>
     </Row>
   </div>
 </template>

@@ -11,8 +11,11 @@
       <Col span="7">
         <BookRank class="isoft_bg_white isoft_pd10"/>
 
-        <div class="isoft_bg_white isoft_pd10">
+        <div class="isoft_bg_white isoft_pd10 isoft_top5">
           <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
+        </div>
+
+        <div class="isoft_bg_white isoft_pd10 isoft_top5">
           <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
         </div>
       </Col>
