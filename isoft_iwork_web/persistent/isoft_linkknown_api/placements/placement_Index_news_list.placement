@@ -7,10 +7,10 @@
 		<PlacementType>all</PlacementType>
 		<PlacementDesc>新闻公告</PlacementDesc>
 		<CreatedBy>SYSTEM</CreatedBy>
-		<CreatedTime>2019-12-18T20:43:40+08:00</CreatedTime>
+		<CreatedTime>2020-02-06T10:37:33+08:00</CreatedTime>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-		<LastUpdatedTime>2019-12-18T20:43:40+08:00</LastUpdatedTime>
-		<ElementLimit>20</ElementLimit>
+		<LastUpdatedTime>2020-02-06T10:37:33+08:00</LastUpdatedTime>
+		<ElementLimit>10</ElementLimit>
 	</Placement>
 	<Elements>
 		<Id>203</Id>

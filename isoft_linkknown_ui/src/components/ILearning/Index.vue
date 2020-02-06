@@ -18,15 +18,6 @@
       </Col>
     </Row>
 
-    <Row class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <Col span="12">
-        <ToolBox :placement_name="GLOBAL.placement_host_toolbox_list3"/>
-      </Col>
-      <Col span="12">
-        <ToolBox :placement_name="GLOBAL.placement_host_toolbox_list4"/>
-      </Col>
-    </Row>
-
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
       <!-- 热门开源项目 -->
       <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
