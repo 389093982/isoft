@@ -1,35 +1,39 @@
 <template>
   <div style="padding-top: 10px;">
-    <h2 class="good_rank">精品排行</h2>
-    <a href="#" v-for="(rank, index) in ranks">
+    <h2 class="good_rank">热门书单</h2>
+    <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/book_catalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>
         <Col span="17">
-          <span class="rank_name">{{rank.rank_name}}</span>
-          <span class="rank_desc">{{rank.rank_desc}}</span>
+          <span class="rank_name">{{book.book_name}}</span>
+          <span class="rank_desc">{{book.book_desc}}</span>
         </Col>
-        <Col span="5" class="rank_label">{{rank.rank_label}}</Col>
+        <Col span="5" class="rank_label">{{book.views}} 次阅读</Col>
       </Row>
     </a>
   </div>
 </template>
 
 <script>
+  import {QueryCustomTagBook} from "../../api"
+
   export default {
-    name: "GoodRank",
+    name: "BookRank",
     data() {
       return {
-        ranks: [
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-          {rank_name: '哪吒之魔童降世', rank_desc: '东方英雄逆天改命', rank_label: '2554.0万'},
-        ],
+        books: [],
       }
+    },
+    methods: {
+      refreshCustomTagBook: async function () {
+        const result = await QueryCustomTagBook({custom_tag: 'hot'});
+        if (result.status == "SUCCESS") {
+          this.books = result.books;
+        }
+      },
+    },
+    mounted() {
+      this.refreshCustomTagBook();
     }
   }
 </script>

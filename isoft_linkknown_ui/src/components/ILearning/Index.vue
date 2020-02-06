@@ -9,7 +9,7 @@
         <HotRecommend class="isoft_bg_white isoft_pd10" :show-display-icon="true"/>
       </Col>
       <Col span="7">
-        <GoodRank class="isoft_bg_white isoft_pd10"/>
+        <BookRank class="isoft_bg_white isoft_pd10"/>
 
         <div class="isoft_bg_white isoft_pd10">
           <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
@@ -30,10 +30,6 @@
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
     </div>
-
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <Fun/>
-    </div>
   </div>
 </template>
 
@@ -43,18 +39,17 @@
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
   import IBeautifulTabLink from "../Common/link/IBeautifulTabLink"
-  import Fun from "./Fun"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks"
   import IHotRecommand from "../Common/recommend/IHotRecommand"
   import IndexCarousel from "./IndexCarousel";
-  import GoodRank from "./GoodRank";
+  import BookRank from "./BookRank";
   import WarmHeartRecommend from "./WarmHeartRecommend";
 
   export default {
     name: "Index",
     components: {
       WarmHeartRecommend,
-      GoodRank,
+      BookRank,
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
@@ -63,7 +58,6 @@
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
-      Fun
     },
   }
 </script>

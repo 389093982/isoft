@@ -28,7 +28,7 @@
         </ul>
 
         <div style="text-align: right;margin: 20px 20px 0 0;">
-          提供2019年至2020年最新热门编程视频，本视频每月定期更新，所有版本版权归xxx所有
+          提供 2019 年至 2020 年最新热门视频课程，每月定期更新，所有版本版权归 linkknown 所有
         </div>
       </div>
     </IBeautifulCard>
