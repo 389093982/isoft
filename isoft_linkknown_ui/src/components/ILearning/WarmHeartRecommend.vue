@@ -4,7 +4,7 @@
     <Row>
       <Col span="12" style="height:365px;">
         <video ref="video" style="width:100%;height:100%;object-fit: fill" controls autoplay="autoplay"
-               src="http://localhost:8086/api/files/75dd3df4-a3db-47ce-948e-4cacd6348d88">
+               src="http://localhost:8086/api/files/W43qGEPL5hTcqa4Els4r4gbgdol5KjE3Zv0Ho5L1A-s=.mp4">
           <source type="video/mp4">
           <source type="video/ogg">
           您的浏览器不支持Video标签。
