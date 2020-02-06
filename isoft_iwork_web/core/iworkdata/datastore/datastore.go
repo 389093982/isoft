@@ -6,7 +6,6 @@ import (
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworklog"
-	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/stringutil"
 	"strings"
 )
@@ -29,7 +28,7 @@ func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface
 	logs := make([]string, 0)
 	this.cacheMemory(nodeName, "__output__", paramMap)
 	for paramName, paramValue := range paramMap {
-		if !sysconfig.SYSCONFIG_VARS_USAGE_LOGGABLE && !this.isReferUsage(nodeName, paramName) {
+		if !this.isReferUsage(nodeName, paramName) {
 			continue
 		}
 		this.cacheMemory(nodeName, paramName, paramValue)
@@ -50,7 +49,7 @@ func (this *DataStore) isReferUsage(nodeName, paramName string) bool {
 	}
 	for _, usages := range this.WC.Usage.UsageMap {
 		for _, usage := range usages {
-			if usage == fmt.Sprintf(`$%s.%s`, nodeName, paramName) {
+			if strings.HasPrefix(usage, fmt.Sprintf(`$%s.%s`, nodeName, paramName)) {
 				return true
 			}
 		}
