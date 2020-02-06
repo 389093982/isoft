@@ -1,28 +1,31 @@
 <template>
   <div class="rightSuspension isoft_bg_white">
-    <div class="itemArea">
-      <Icon type="ios-apps-outline" :size="28" style="cursor: pointer;"
-            @click="$router.push({path:'/ilearning/advise'})"/>
+    <div class="itemArea" @click="$router.push({path:'/ilearning/advise'})">
+      <Icon type="ios-apps-outline" :size="28"/>
       <p>反馈</p>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea">
-      <Icon type="logo-reddit" :size="28" style="cursor: pointer;"
-            @click="$router.push({path:'/user/guide'})"/>
+    <div class="itemArea" @click="$router.push({path:'/user/guide'})">
+      <Icon type="logo-reddit" :size="28"/>
       <p>FAQ</p>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea">
-      <Icon type="ios-people-outline" :size="28" style="cursor: pointer;"/>
-      <p>社交</p>
+    <div class="itemArea" @click="$router.push({path:'/site/index'})">
+      <Icon type="ios-radio-outline" :size="28"/>
+      <p>站点</p>
     </div>
     <div class="item-line"></div>
 
     <div class="itemArea">
-      <Icon type="ios-person-add-outline" :size="28" style="cursor: pointer;"
-            @click="$router.push({path:'/user/mine/detail'})"/>
+      <Icon type="ios-people-outline" :size="28"/>
+      <p>社交</p>
+    </div>
+    <div class="item-line"></div>
+
+    <div class="itemArea" @click="$router.push({path:'/user/mine/detail'})">
+      <Icon type="ios-person-add-outline" :size="28"/>
       <p>我的</p>
     </div>
   </div>
@@ -48,6 +51,7 @@
     text-align: center;
     font-size: 10px;
     padding: 5px 0;
+    cursor: pointer;
   }
 
   .itemArea:hover {

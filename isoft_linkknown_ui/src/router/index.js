@@ -63,12 +63,20 @@ const ChatRom = () => import("@/components/Chat/ChatRom");
 const AskExpert = () => import("@/components/Communicate/AskExpert");
 const AskAnswer = () => import("@/components/Communicate/AskAnswer");
 
+const Site = () => import("@/components/Site");
+
 Vue.use(Router);
 
 function getRootRouters() {
   return [{
     path: '/',
     redirect: '/ilearning/index'
+  }, {
+    path: '/site',
+    component: ILayout,
+    children: [
+      {path: 'index', component: Site},
+    ]
   }]
 };
 
