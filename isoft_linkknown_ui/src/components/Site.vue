@@ -3,7 +3,7 @@
     <a @click="$router.push({path:'/ilearning/index'})" class="hovered hvr-grow hoverLinkColor mr5">返回首页</a>
 
     <a @click="$router.push({path:'/ilearning/about'})"
-       class="hovered hvr-grow hoverLinkColor mr5">关于ILearning</a>
+       class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
 
     <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
 

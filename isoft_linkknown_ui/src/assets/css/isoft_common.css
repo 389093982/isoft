@@ -37,6 +37,10 @@
   margin-right: 10px;
 }
 
+.isoft_auto_with {
+  display: inline-block;
+}
+
 .isoft_bgcolor {
   background: #eee;
 }

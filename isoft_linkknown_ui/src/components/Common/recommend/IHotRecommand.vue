@@ -1,9 +1,7 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
     <div>
-      <div>
-        <h4 class="title" :title="placement_label">{{placement_label}}</h4>
-      </div>
+      <div class="isoft_auto_with title" :title="placement_label">{{placement_label}}</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
         <Row :gutter="50">
           <Col span="8" style="margin-top: 12px;" v-for="element in elements">
@@ -47,17 +45,17 @@
 
 <style scoped>
   .title {
-    width: 200px;
-    height: 35px;
     font-size: 18px;
-    line-height: 35px;
-    text-align: center;
-    background: linear-gradient(to right, rgba(255, 0, 18, 0.3), rgba(255, 0, 18, 0.1));
-    color: #fff;
-    position: relative;
     font-weight: normal;
-    margin: 0;
-    padding: 0;
+    height: 35px;
+    line-height: 35px;
     font-family: "微软雅黑";
+  }
+
+  .title::after {
+    content: "";
+    display: block;
+    height: 3px;
+    border-bottom: 3px solid red;
   }
 </style>
