@@ -61,7 +61,6 @@
         <HotUser style="margin-left: 2px;"/>
         <HotRecommend showMode="list" style="margin-left: 2px;"/>
         <!-- 推荐系统 -->
-        <Recommand/>
         <CommunicationGroup :placement_name="GLOBAL.placement_communication_group"/>
       </Col>
     </Row>
@@ -70,7 +69,6 @@
 
 <script>
   import {ShowCourseDetail, ToggleFavorite} from "../../../api"
-  import Recommand from "./Recommand"
   import IEasyComment from "../../Comment/IEasyComment"
   import CommunicationGroup from "../Site/CommunicationGroup"
   import HotRecommend from "./HotRecommend"
@@ -80,7 +78,7 @@
 
   export default {
     name: "CourseDetail",
-    components: {CourseMeta, IEasyComment, Recommand, CommunicationGroup, HotRecommend, UserAbout, HotUser},
+    components: {CourseMeta, IEasyComment, CommunicationGroup, HotRecommend, UserAbout, HotUser},
     data() {
       return {
         isLoading: true,
