@@ -19,7 +19,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content></Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -36,7 +36,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content></Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -53,7 +53,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content>jjj</Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>0</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -70,7 +70,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content></Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -87,7 +87,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content></Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -104,7 +104,7 @@
 		<ElementLabel>gocn官网活动开始啦</ElementLabel>
 		<Content></Content>
 		<LinkedRefer>http://www.gocn.com</LinkedRefer>
-		<ImgPath>http://localhost:8086/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
+		<ImgPath>http://localhost:6001/api/files/92bf93dbc4bf415e24c7b53962d1e801.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>

@@ -86,7 +86,7 @@
 		<ElementName>热门书单</ElementName>
 		<ElementLabel>热门书单</ElementLabel>
 		<Content></Content>
-		<LinkedRefer>http://localhost:6003/#/iblog/book_list</LinkedRefer>
+		<LinkedRefer>http://localhost:8002/#/iblog/book_list</LinkedRefer>
 		<ImgPath></ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
@@ -171,7 +171,7 @@
 		<ElementName>博客中心</ElementName>
 		<ElementLabel>博客中心</ElementLabel>
 		<Content></Content>
-		<LinkedRefer>http://localhost:6003/#/iblog/blog_list</LinkedRefer>
+		<LinkedRefer>http://localhost:8002/#/iblog/blog_list</LinkedRefer>
 		<ImgPath></ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>

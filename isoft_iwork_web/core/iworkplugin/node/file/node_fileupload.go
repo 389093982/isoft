@@ -21,7 +21,7 @@ type DoReceiveFileNode struct {
 func (this *DoReceiveFileNode) Execute(trackingId string) {
 	fileUpload := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST].(interfaces.IFileUploadDownload)
 	suffixStr := this.TmpDataMap[iworkconst.STRING_PREFIX+"suffixs"].(string)
-	// fileServerAddr := "http://localhost:8086/api/files/"
+	// fileServerAddr := "http://localhost:6001/api/files/"
 	fileServerAddr := this.TmpDataMap[iworkconst.STRING_PREFIX+"fileServerAddr"].(string)
 	suffixs := strings.Split(suffixStr, ",")
 	tempFileName, fileName, tempFilePath := fileUpload.SaveFile(suffixs)

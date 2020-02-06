@@ -10,6 +10,6 @@ go tool pprof test profile,输入 top 命令得到
 
 go tool pprof http://localhost:6060/debug/pprof/block
 
-go tool pprof http://localhost:8086/debug/pprof/profile
+go tool pprof http://localhost:6001/debug/pprof/profile
     第一种： top 100
     第二种： web

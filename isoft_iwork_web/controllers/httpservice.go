@@ -25,7 +25,7 @@ func GenerateErrorMap(err interface{}) map[string]interface{} {
 	}
 }
 
-// 示例地址: http://localhost:8086/api/iwork/httpservice/isoft_linkknown_api/test_iblog_table_migrate?author0=admin1234567
+// 示例地址: http://localhost:6001/api/iwork/httpservice/isoft_linkknown_api/test_iblog_table_migrate?author0=admin1234567
 func (this *WorkController) PublishSerivce() {
 	defer func() {
 		if err := recover(); err != nil {
