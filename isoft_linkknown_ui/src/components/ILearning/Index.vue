@@ -18,6 +18,10 @@
         <div class="isoft_bg_white isoft_pd10 isoft_top5">
           <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
         </div>
+
+        <div class="isoft_bg_white isoft_pd10 isoft_top5">
+          <BlogRank/>
+        </div>
       </Col>
     </Row>
 
@@ -47,10 +51,12 @@
   import IndexCarousel from "./IndexCarousel";
   import BookRank from "./BookRank";
   import WarmHeartRecommend from "./WarmHeartRecommend";
+  import BlogRank from "./BlogRank";
 
   export default {
     name: "Index",
     components: {
+      BlogRank,
       WarmHeartRecommend,
       BookRank,
       IndexCarousel,

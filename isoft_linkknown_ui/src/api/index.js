@@ -35,6 +35,7 @@ export const ArticleDelete = (article_id) => ajax(BASE_URL + '/iwork/httpservice
 
 // 热门博客分页列表
 export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageBlog', params, 'GET');
+export const QueryCustomTagBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCustomTagBlog', params, 'GET');
 
 export const BookEdit = (book_id, book_name, book_desc) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookEdit', {
   book_id,

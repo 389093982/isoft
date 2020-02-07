@@ -1,0 +1,58 @@
+<template>
+  <IBeautifulCard title="热门博客">
+    <ul slot="content">
+      <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blog_detail', query:{'blog_id': blog.id}})">
+        <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
+        <IBeautifulLink>{{blog.blog_title}} - {{blog.short_desc}}</IBeautifulLink>
+      </li>
+    </ul>
+  </IBeautifulCard>
+</template>
+
+<script>
+  import {QueryCustomTagBlog} from "../../api"
+  import IBeautifulCard from "../Common/card/IBeautifulCard"
+
+  export default {
+    name: "BlogRank",
+    components: {IBeautifulCard},
+    data() {
+      return {
+        blogs: [],
+      }
+    },
+    methods: {
+      refreshCustomTagBlog: async function () {
+        const result = await QueryCustomTagBlog({custom_tag: 'hot'});
+        if (result.status == "SUCCESS") {
+          this.blogs = result.custom_tag_blogs;
+        }
+      }
+    },
+    mounted() {
+      this.refreshCustomTagBlog();
+    }
+  }
+</script>
+
+<style scoped>
+  a {
+    color: black;
+  }
+
+  a:hover {
+    color: red;
+  }
+
+  li {
+    padding: 3px 15px 0 15px;
+    list-style: none;
+    font-size: 14px;
+  }
+
+  .imgIcon {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+  }
+</style>
