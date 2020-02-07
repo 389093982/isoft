@@ -18,6 +18,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 )
 
 // 加载校验信息,校验失败异常信息也要返回给 UI,如缓存中的 BlockStep 信息获取不到(校验异常)也要提示出来
@@ -135,7 +136,7 @@ func checkBeginAndEnd(steps []models.WorkStep, logCh chan *models.ValidateLogDet
 func parseToValidateLogDetail(step *models.WorkStep, err interface{}) *models.ValidateLogDetail {
 	var detail string
 	if _, ok := err.(error); ok {
-		detail = string(errorutil.PanicTrace(4))
+		detail = string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))
 	} else if _err, ok := err.(string); ok {
 		detail = _err
 	} else if _err, ok := err.(models.ValidateLogDetail); ok {
@@ -153,7 +154,7 @@ func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.V
 	defer stepWg.Done()
 	defer func() {
 		if err := recover(); err != nil {
-			logCh <- parseToValidateLogDetail(step, errorutil.ToError(string(errorutil.PanicTrace(4))))
+			logCh <- parseToValidateLogDetail(step, errorutil.ToError(string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))))
 		}
 	}()
 
@@ -211,7 +212,7 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 func CheckCustom(app_id int64, step *models.WorkStep) (checkResult []string) {
 	defer func() {
 		if err := recover(); err != nil {
-			checkResult = append(checkResult, string(errorutil.PanicTrace(4)))
+			checkResult = append(checkResult, string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE)))
 		}
 	}()
 	factory := &node.WorkStepFactory{WorkStep: step}

@@ -197,7 +197,7 @@ export const LoginRecordList = (offset, current_page, search) => ajax(BASE_URL +
 }, 'POST');
 
 // 意见或建议
-export const InsertAdvise = (advise) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/InsertAdvise", {advise}, 'POST');
+export const InsertAdvise = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/InsertAdvise", params, 'POST');
 
 export const queryPageAdvise = (offset, current_page) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageAdvise', {
   offset,

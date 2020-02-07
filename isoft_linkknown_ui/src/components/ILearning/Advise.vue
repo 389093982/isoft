@@ -13,13 +13,13 @@
       <TabPane label="意见">
         <div style="text-align: right;">
           <Input v-model.trim="advise" type="textarea" :rows="8" placeholder="请输入您的意见我们也会虚心接受奥！"></Input>
-          <Button type="success" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise(0)">提交</Button>
+          <Button type="success" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise('advise')">提交</Button>
         </div>
       </TabPane>
       <TabPane label="吐槽">
         <div style="text-align: right;">
           <Input v-model.trim="complaints" type="textarea" :rows="8" placeholder="请输入您的吐槽内容..."></Input>
-          <Button type="success" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise(1)">提交</Button>
+          <Button type="success" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise('complaints')">提交</Button>
         </div>
       </TabPane>
     </Tabs>
@@ -44,7 +44,7 @@
     },
     methods: {
       submitAdvise: async function (type) {
-        const result = await InsertAdvise(type,this.advise);
+        const result = await InsertAdvise({'advise_type':type,'advise':this.advise});
         if (result.status == "SUCCESS") {
           this.$Message.success("提交成功!感谢您的反馈 ^_^");
         }

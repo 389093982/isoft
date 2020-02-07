@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"github.com/pkg/errors"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 )
 
 func renderError(err interface{}) error {
@@ -23,7 +24,7 @@ func ExecuteWithTx(serviceArgs map[string]interface{}, serviceFunc func(args map
 		defer o.Rollback()
 		defer func() {
 			if err1 := recover(); err1 != nil {
-				fmt.Println(string(errorutil.PanicTrace(4)))
+				fmt.Println(string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE)))
 				err = renderError(err1)
 			}
 		}()

@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"strings"
 	"sync"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 )
 
 type IParamSchemaCacheParser interface {
@@ -62,7 +63,7 @@ func RemoveOldWork(work_id int64) {
 func UpdateWorkCache(work_id int64) (err error) {
 	defer func() {
 		if err1 := recover(); err1 != nil {
-			fmt.Println(string(errorutil.PanicTrace(4)))
+			fmt.Println(string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE)))
 			err = errorutil.ToError(err1)
 		}
 	}()
