@@ -3,7 +3,7 @@
     <HeavyRecommend/>
 
     <div class="section01_bg">
-      <WhyChooseUs style="margin-left: 350px;"/>
+      <LinkKnownAbout style="margin-left: 350px;"/>
     </div>
 
     <Row :gutter="10">
@@ -19,13 +19,13 @@
 
 <script>
   import HeavyRecommend from "./HeavyRecommend";
-  import WhyChooseUs from "./WhyChooseUs";
+  import LinkKnownAbout from "./LinkKnownAbout";
   import ShowUserExperience from "./ShowUserExperience";
   import BlogRank2 from "./BlogRank2";
 
   export default {
     name: "About",
-    components: {HeavyRecommend, WhyChooseUs, ShowUserExperience, BlogRank2},
+    components: {HeavyRecommend, LinkKnownAbout, ShowUserExperience, BlogRank2},
   }
 </script>
 
