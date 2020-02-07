@@ -6,8 +6,6 @@
       <WhyChooseUs style="margin-left: 350px;"/>
     </div>
 
-    <Announce/>
-
     <Row :gutter="10">
       <Col span="6">
         <div class="hoverBorderShadow" style="height: 100px;padding: 20px;">
@@ -68,7 +66,7 @@
         <ShowUserExperience/>
       </Col>
       <Col span="8">
-        <Plan/>
+        <BlogRank2/>
       </Col>
     </Row>
   </div>
@@ -77,13 +75,12 @@
 <script>
   import HeavyRecommend from "./HeavyRecommend";
   import WhyChooseUs from "./WhyChooseUs";
-  import Announce from "./Announce";
   import ShowUserExperience from "./ShowUserExperience";
-  import Plan from "./Plan";
+  import BlogRank2 from "./BlogRank2";
 
   export default {
     name: "About",
-    components: {HeavyRecommend, WhyChooseUs, Announce, ShowUserExperience, Plan},
+    components: {HeavyRecommend, WhyChooseUs, ShowUserExperience, BlogRank2},
   }
 </script>
 
