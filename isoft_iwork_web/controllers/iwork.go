@@ -19,6 +19,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"github.com/astaxie/beego/logs"
 )
 
 type WorkController struct {
@@ -308,6 +309,7 @@ func GetRunLogRecordCount(works []models.Work) interface{} {
 var siMutex sync.Mutex
 
 func (this *WorkController) SaveProject() {
+	logs.Info("start SaveProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
 
@@ -317,6 +319,7 @@ func (this *WorkController) SaveProject() {
 }
 
 func (this *WorkController) ImportProject() {
+	logs.Info("start ImportProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
 

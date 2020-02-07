@@ -1,6 +1,14 @@
-# git clone命令将存储库克隆到新目录中
+疑难问题记录
 
+1. git clone命令将存储库克隆到新目录中
 fatal: unable to access ‘https://github.com/XXX/HP_ONE/’: The requested URL returned error: 403
 大致意思是说没有权限访问，解决方案如下
     >> 选择Settings
     >> 输入添加人gitHub账号,点击Add collaborator
+
+2.iwork保存项目后，未改动再提交，提示Git: The file will have its original line endings in your working directory
+首先出现这个问题主要原因是：我们从别人github地址上通过git clone下载下来，而又想git push到我们自己的github上，那么就会出现上面提示的错误信息
+此时需要执行如下代码：
+ 	git rm -r --cached .
+ 	git config core.autocrlf false
+ 	git add .
