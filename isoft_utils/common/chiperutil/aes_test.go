@@ -7,10 +7,10 @@ import (
 
 func Test_Aes(t *testing.T) {
 	//str := GenerateRandSeq(32)
-	str := "BpLnfgDsc2WD8F2qNfHK5a84jjJkwzDk"
+	str := "zhourui&zhoupeng12345678"
 	fmt.Println(str)
 	encryptStr := AesEncryptToStr("123456", str)
 	fmt.Println(encryptStr)
-	decryptStr := AesDecryptToStr(encryptStr, str)
+	decryptStr := AesDecryptToStr("jKgvx136LQWYrTlQZ5RMEQ==", str)
 	fmt.Println(decryptStr)
 }
