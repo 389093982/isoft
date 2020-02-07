@@ -7,12 +7,6 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu active-name="1-1" theme="light" width="auto" :open-names="['1']">
-            <Submenu name="1">
-              <template slot="title">
-                <Icon type="ios-navigate"></Icon>
-                分类管理
-              </template>
-            </Submenu>
             <Submenu name="2">
               <template slot="title">
                 <Icon type="ios-barcode"></Icon>

@@ -61,7 +61,7 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="11">
-          <IBeautifulLink @onclick="$router.push({path:'/background/cms/configuration'})">管理控制台</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
         </MenuItem>
       </div>
     </Menu>
