@@ -44,7 +44,13 @@
     },
     methods: {
       submitAdvise: async function (type) {
-        const result = await InsertAdvise({'advise_type':type,'advise':this.advise});
+        let result = '';
+        if ('advise' === type) {
+          result = await InsertAdvise({'advise_type':type,'advise':this.advise});
+        }else if ('complaints' === type) {
+          result = await InsertAdvise({'advise_type':type,'advise':this.complaints});
+        }
+
         if (result.status == "SUCCESS") {
           this.$Message.success("提交成功!感谢您的反馈 ^_^");
         }
