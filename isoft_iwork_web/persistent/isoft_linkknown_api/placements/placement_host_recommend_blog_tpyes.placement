@@ -19,7 +19,7 @@
 		<ElementLabel>java社区</ElementLabel>
 		<Content>人生苦短，我用python</Content>
 		<LinkedRefer>java社区</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/python_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/python_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -36,7 +36,7 @@
 		<ElementLabel>python社区</ElementLabel>
 		<Content>人生苦短，我用python</Content>
 		<LinkedRefer>python社区</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/python_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/python_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -53,7 +53,7 @@
 		<ElementLabel>golang社区</ElementLabel>
 		<Content>人生苦短，我用python</Content>
 		<LinkedRefer>golang社区</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/python_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/python_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -70,7 +70,7 @@
 		<ElementLabel>招聘空间</ElementLabel>
 		<Content>人生苦短，我用python</Content>
 		<LinkedRefer>招聘空间</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/python_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/python_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -87,7 +87,7 @@
 		<ElementLabel>开源项目</ElementLabel>
 		<Content>人生苦短，我用java</Content>
 		<LinkedRefer>开源项目</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/java_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/java_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -104,7 +104,7 @@
 		<ElementLabel>个性空间</ElementLabel>
 		<Content>人生苦短，我用java</Content>
 		<LinkedRefer>个性空间</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/java_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/java_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -121,7 +121,7 @@
 		<ElementLabel>官方声明</ElementLabel>
 		<Content>人生苦短，我用java</Content>
 		<LinkedRefer>官方声明</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/java_50_50.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/java_50_50.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>

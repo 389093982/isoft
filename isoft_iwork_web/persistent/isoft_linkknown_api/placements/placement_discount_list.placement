@@ -19,7 +19,7 @@
 		<ElementLabel>淘宝优惠券便宜啦</ElementLabel>
 		<Content>华为手机优惠券领取华为手机优惠券领取华为手机优惠券领取</Content>
 		<LinkedRefer>http://www.baidu.com?aaaaaaaaaaa=bbbbbbbbb</LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/身份证扫描件.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/身份证扫描件.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -36,7 +36,7 @@
 		<ElementLabel>华为手机优惠券领取</ElementLabel>
 		<Content>华为手机优惠券领取华为手机优惠券领取华为手机优惠券领取</Content>
 		<LinkedRefer></LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/3.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/3.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -53,7 +53,7 @@
 		<ElementLabel>华为手机优惠券领取</ElementLabel>
 		<Content>华为手机优惠券领取华为手机优惠券领取华为手机优惠券领取</Content>
 		<LinkedRefer></LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/3.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/3.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
@@ -70,7 +70,7 @@
 		<ElementLabel>华为手机优惠券领取</ElementLabel>
 		<Content>华为手机优惠券领取华为手机优惠券领取华为手机优惠券领取</Content>
 		<LinkedRefer></LinkedRefer>
-		<ImgPath>http://localhost:6001/api/files/3.jpg</ImgPath>
+		<ImgPath>http://localhost:8086/api/files/3.jpg</ImgPath>
 		<Status>1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>

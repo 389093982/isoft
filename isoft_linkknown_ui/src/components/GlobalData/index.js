@@ -4,7 +4,6 @@ const placement_host_toolbox_list = "placement_host_toolbox_list";
 const placement_host_app_recommand = "placement_host_app_recommand";
 const placement_host_toolbox_list3 = "placement_host_toolbox_list3";
 const placement_host_toolbox_list4 = "placement_host_toolbox_list4";
-const placement_communication_group = "placement_communication_group";
 const placement_want_to_find = "placement_want_to_find";
 const placement_hot_project_recommod = "placement_hot_project_recommod";
 const placement_frind_link = "placement_frind_link";
@@ -27,7 +26,6 @@ export default {
   placement_host_app_recommand,
   placement_host_toolbox_list3,
   placement_host_toolbox_list4,
-  placement_communication_group,
   placement_want_to_find,
   placement_hot_project_recommod,
   placement_frind_link,
