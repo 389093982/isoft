@@ -155,14 +155,6 @@ export const GetAllCourseSubType = (course_type) => ajax(BASE_URL + '/iwork/http
 // 课程搜索
 export const SearchCourseList = (search) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList2', {search}, 'GET');
 
-// 添加配置项
-export const AddConfiguration = (parent_id, configuration_name, configuration_value) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddConfiguration2', {
-    parent_id,
-    configuration_name,
-    configuration_value
-  }, 'GET');
-
 export const FilterElementByPlacement = (placement) => ajax(BASE_URL + '/iwork/filterElementByPlacement', {placement}, 'GET');
 
 // 登录接口

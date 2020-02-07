@@ -28,7 +28,6 @@ const CourseDetail = () => import("@/components/ILearning/Course/CourseDetail");
 const Advise = () => import("@/components/ILearning/Advise");
 const About = () => import("@/components/ILearning/About");
 const VideoPay = () => import("@/components/ILearning/Course/VideoPay");
-const Configuration = () => import("@/components/Background/CMS/Configuration");
 const CourseSearch = () => import("@/components/ILearning/Course/CourseSearch");
 const AdviseList = () => import("@/components/Background/AdviseList");
 const FoundList = () => import("@/components/IFound/FoundList");
@@ -154,7 +153,6 @@ const ICMSReouter = [{
   path: '/background',
   component: ICMSLayout,
   children: [
-    {path: 'cms/configuration', component: Configuration},
     {path: 'advise_list', component: AdviseList},
     {path: 'sso/appRegist', component: AppRegist},
     {path: 'sso/loginRecord', component: LoginRecord},
