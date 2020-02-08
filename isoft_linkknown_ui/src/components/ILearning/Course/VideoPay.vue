@@ -3,7 +3,8 @@
     <Row :gutter="10">
       <Col span="16">
         <div style="margin: 0 auto;">
-          <video ref="video" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay">
+          <video ref="video" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay"
+                 controlslist="nodownload">
             <source type="video/mp4">
             <source type="video/ogg">
             您的浏览器不支持Video标签。
