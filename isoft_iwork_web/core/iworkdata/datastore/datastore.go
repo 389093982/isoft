@@ -26,11 +26,11 @@ type DataStore struct {
 // 向数据中心缓存数据
 func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface{}, byteParamNames ...string) {
 	logs := make([]string, 0)
-	this.cacheMemory(nodeName, "__output__", paramMap)
+	//this.cacheMemory(nodeName, "__output__", paramMap)
 	for paramName, paramValue := range paramMap {
-		if !this.isReferUsage(nodeName, paramName) {
-			continue
-		}
+		//if !this.isReferUsage(nodeName, paramName) {
+		//	continue
+		//}
 		this.cacheMemory(nodeName, paramName, paramValue)
 		if !stringutil.CheckContains(paramName, byteParamNames) {
 			// 记录日志并存储到 db
@@ -43,19 +43,19 @@ func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface
 	this.logwriter.Write(this.TrackingId, nodeName, iworkconst.LOG_LEVEL_SUCCESS, strings.Join(logs, "<br/>"))
 }
 
-func (this *DataStore) isReferUsage(nodeName, paramName string) bool {
-	if nodeName == "start" || nodeName == "end" {
-		return true
-	}
-	for _, usages := range this.WC.Usage.UsageMap {
-		for _, usage := range usages {
-			if strings.HasPrefix(usage, fmt.Sprintf(`$%s.%s`, nodeName, paramName)) {
-				return true
-			}
-		}
-	}
-	return false
-}
+//func (this *DataStore) isReferUsage(nodeName, paramName string) bool {
+//	if nodeName == "start" || nodeName == "end" {
+//		return true
+//	}
+//	for _, usages := range this.WC.Usage.UsageMap {
+//		for _, usage := range usages {
+//			if strings.HasPrefix(usage, fmt.Sprintf(`$%s.%s`, nodeName, paramName)) {
+//				return true
+//			}
+//		}
+//	}
+//	return false
+//}
 
 // 存储字节数据,不用记录日志
 func (this *DataStore) cacheMemory(nodeName, paramName string, paramValue interface{}) {

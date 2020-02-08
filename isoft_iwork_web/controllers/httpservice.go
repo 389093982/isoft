@@ -85,6 +85,7 @@ func (this *WorkController) ResponseUploadFile(receiver *entry.Receiver) {
 			receiver.TmpDataMap["errorMsg"] = errorMsg
 			receiver.TmpDataMap["status"] = "ERROR"
 		}
+		delete(receiver.TmpDataMap, iworkconst.DO_RESPONSE_RECEIVE_FILE)
 	}
 }
 
