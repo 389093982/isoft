@@ -5,9 +5,9 @@
       <Col span="12">
         <h3>您的意见或建议是我们前进的动力</h3>
       </Col>
-      <Col span="12" style="text-align: right;">
-        <span>邀请好友赢取 VIP</span>&nbsp;&nbsp;&nbsp;<span>提出意见建议吐槽赢取 VIP</span>
-      </Col>
+      <!--<Col span="12" style="text-align: right;">-->
+        <!--<span>邀请好友赢取 VIP</span>&nbsp;&nbsp;&nbsp;<span>提出意见建议吐槽赢取 VIP</span>-->
+      <!--</Col>-->
     </Row>
     <Tabs size="small">
       <TabPane label="意见">
