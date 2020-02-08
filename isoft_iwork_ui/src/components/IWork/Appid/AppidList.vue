@@ -32,7 +32,7 @@
           {
             title: 'app_name',
             key: 'app_name',
-            width: 130,
+            width: 230,
           },
           {
             title: 'app_desc',
