@@ -17,37 +17,31 @@
         <MenuItem name="5">
           <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
         </MenuItem>
-        <MenuItem name="6">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">发现频道</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="7">
-          <IBeautifulLink @onclick="$router.push({path:'/ifound/found_list'})">热门活动</IBeautifulLink>
-        </MenuItem>
-        <Submenu name="8">
+        <Submenu name="6">
           <template slot="title">
             <span>更多内容</span>
           </template>
           <MenuGroup title="更多内容">
-            <MenuItem name="8-1">全部菜单项</MenuItem>
-            <MenuItem name="8-2">精选内容</MenuItem>
-            <MenuItem name="8-3">更多内容</MenuItem>
-            <MenuItem name="8-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
+            <MenuItem name="6-1">全部菜单项</MenuItem>
+            <MenuItem name="6-2">精选内容</MenuItem>
+            <MenuItem name="6-3">更多内容</MenuItem>
+            <MenuItem name="6-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
           </MenuGroup>
         </Submenu>
-        <Submenu name="9">
+        <Submenu name="7">
           <template slot="title">
             <span v-if="loginUserName">{{loginUserName}}</span>
             <span v-else>未登录</span>
           </template>
           <MenuGroup title="账号管理">
-            <MenuItem name="9-1" @click.native="cancelUser">前往登录</MenuItem>
-            <MenuItem name="9-2" @click.native="cancelUser">切换账号</MenuItem>
-            <MenuItem name="9-3" @click.native="cancelUser">注销</MenuItem>
-            <MenuItem name="9-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
+            <MenuItem name="8-1" @click.native="cancelUser">前往登录</MenuItem>
+            <MenuItem name="8-2" @click.native="cancelUser">切换账号</MenuItem>
+            <MenuItem name="8-3" @click.native="cancelUser">注销</MenuItem>
+            <MenuItem name="8-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
             </MenuItem>
           </MenuGroup>
         </Submenu>
-        <Submenu name="10">
+        <Submenu name="9">
           <template slot="title">
             会员中心
           </template>
@@ -61,11 +55,20 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="11">
+          <div class="message">
+            <IBeautifulLink>消息
+              <Badge dot style="position: relative;top: -12px;"></Badge>
+            </IBeautifulLink>
+            <div class="message_detail">
+              <MessageList :show-detail="false"/>
+            </div>
+          </div>
+        </MenuItem>
+        <MenuItem name="12">
           <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
         </MenuItem>
       </div>
     </Menu>
-
     <LevelTwoHeader/>
   </div>
 </template>
@@ -75,10 +78,11 @@
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import LevelTwoHeader from "./LevelTwoHeader";
+  import MessageList from "../Message/MessageList";
 
   export default {
     name: "Header",
-    components: {LevelTwoHeader, IBeautifulLink},
+    components: {MessageList, LevelTwoHeader, IBeautifulLink},
     data() {
       return {
         theme1: 'light',
@@ -105,7 +109,22 @@
 <style scoped>
   .layout-nav {
     float: right;
-    width: 1200px;
+    width: 1100px;
+  }
+
+  .message_detail {
+    display: none;
+  }
+
+  .message:hover > .message_detail {
+    padding: 5px 15px;
+    position: absolute;
+    left: -100px;
+    display: block;
+    max-height: 300px;
+    width: 300px;
+    background-color: white;
+    box-shadow: 0 0 5px red;
   }
 </style>
 

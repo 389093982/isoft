@@ -62,6 +62,8 @@ const ChatRom = () => import("@/components/Chat/ChatRom");
 const AskExpert = () => import("@/components/Communicate/AskExpert");
 const AskAnswer = () => import("@/components/Communicate/AskAnswer");
 
+const MessageList = () => import("@/components/Message/MessageList");
+
 const Site = () => import("@/components/Site");
 
 Vue.use(Router);
@@ -234,6 +236,13 @@ const IGoodReouter = [{
 }];
 
 
+const MessageRouter = [{
+  path: '/message', component: ILayout,
+  children: [
+    {path: 'message_list', component: MessageList},
+  ]
+}];
+
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
   children: [
@@ -266,6 +275,7 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, ICMSReouter);
   allRouters = joinArray(allRouters, VipCenterReouter);
   allRouters = joinArray(allRouters, ResourceRouter);
+  allRouters = joinArray(allRouters, MessageRouter);
   allRouters = joinArray(allRouters, getRootRouters());
   return allRouters;
 }

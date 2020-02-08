@@ -50,7 +50,7 @@
     props: ["course"],
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=course_video&table_field=first_play",
         isLoading: true,
         showDialog: false,
         cVideos: [],

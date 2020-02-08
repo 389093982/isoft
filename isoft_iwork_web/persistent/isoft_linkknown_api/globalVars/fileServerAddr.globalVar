@@ -2,11 +2,11 @@
 	<Id>13</Id>
 	<AppId>5</AppId>
 	<Name>fileServerAddr</Name>
-	<Value>http://localhost:8001/api/files/</Value>
+	<Value>http://localhost:6001/api/files/</Value>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-02-08T08:48:34+08:00</CreatedTime>
+	<CreatedTime>2020-02-08T17:38:30+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-08T08:48:34+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-02-08T17:38:30+08:00</LastUpdatedTime>
 </GlobalVar>

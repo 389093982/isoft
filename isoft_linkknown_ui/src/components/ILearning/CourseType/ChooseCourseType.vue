@@ -2,27 +2,33 @@
   <div>
     <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
       <Row>
-        <Col span="12" style="padding: 10px 0 0 20px;">
-          <span style="color: #c3cbd6;font-size: 18px;">物联网时代，让交流更直接</span>
-          <IBeautifulLink style="margin-left: 20px;">加入我们</IBeautifulLink>
+        <Col span="6">
+          <img src="../../../../static/images/linkknown_logo.png" style="width: 180px;height: 75px;"/>
         </Col>
-        <Col span="12">
-          <ISearch @submitFunc="searchFunc"/>
-        </Col>
-      </Row>
+        <Col span="18">
+          <Row>
+            <Col span="12" style="padding: 10px 0 0 20px;">
+              <span style="color: #c3cbd6;font-size: 18px;">物联网时代，让交流更直接</span>
+            </Col>
+            <Col span="12">
+              <ISearch @submitFunc="searchFunc"/>
+            </Col>
+          </Row>
 
-      <Row style="margin: 5px 0 5px 0;padding: 5px 15px 0px 15px;font-size: 12px;">
-        <Col span="12" style="text-align: left;">
-          <a @click="$router.push({path:'/ilearning/index'})" class="hovered hvr-grow hoverLinkColor mr5">返回首页</a>
-        </Col>
-        <Col span="12" style="text-align: right;">
-          <a @click="$router.push({path:'/ilearning/about'})"
-             class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
-          <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
-          <a @click="$router.push({path:'/advertisement/apply'})" class="hovered hvr-grow hoverLinkColor mr5">广告位招租</a>
-          <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})"
-             class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
-          <a @click="$router.push({ path: '/ilearning/mine/course_space'})" class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
+          <Row style="margin: 5px 0 5px 0;padding: 5px 15px 0px 15px;font-size: 12px;">
+            <Col span="12" style="text-align: left;">
+              <a @click="$router.push({path:'/ilearning/index'})" class="hovered hvr-grow hoverLinkColor mr5">返回首页</a>
+            </Col>
+            <Col span="12" style="text-align: right;">
+              <a class="hovered hvr-grow hoverLinkColor mr5">加入我们</a>
+              <a @click="$router.push({path:'/ilearning/about'})"
+                 class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
+              <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
+              <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})"
+                 class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
+              <a @click="$router.push({ path: '/ilearning/mine/course_space'})" class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>

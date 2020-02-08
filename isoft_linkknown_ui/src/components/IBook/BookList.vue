@@ -59,7 +59,7 @@
                 <div class="bookImg">
                   <router-link :to="{path:'/ibook/book_detail',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
-                    <img v-else src="../../assets/default.png" height="160px" width="140px"/>
+                    <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
                     <p style="font-size: 12px;">{{book.book_name | filterLimitFunc}}</p>
                   </router-link>
                 </div>
