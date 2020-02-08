@@ -31,7 +31,6 @@ func FlushMemoryGlobalVar(app_id int64) {
 	for index, _ := range globalVars {
 		GlobalVarMap.Store(string(globalVars[index].AppId)+"_"+globalVars[index].Name, &globalVars[index])
 	}
-	models.InitGlobalVars(app_id)
 }
 
 func FlushMemoryResource(app_id int64) {

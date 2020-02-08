@@ -6,8 +6,8 @@
       <span slot="left">
         <Button type="success" @click="addGlobalVar">新增</Button>
         <ISimpleConfirmModal ref="globalVarModal" modal-title="新增/编辑 GlobalVar" :modal-width="600" :footer-hide="true">
-          <IKeyValueForm ref="globalVarForm" form-key-label="GlobalVarName" form-value-label="GlobalVarValue"
-                         form-key-placeholder="请输入 GlobalVarName" form-value-placeholder="请输入 GlobalVarValue"
+          <GlobalVarForm ref="globalVarForm" :EnvNameList="EnvNameList" form-key-label="GlobalVarName" form-value-label01="GlobalVarValue01" form-value-label02="GlobalVarValue02"
+                         form-key-placeholder="请输入 GlobalVarName" form-value-placeholder01="请选择..." form-value-placeholder02="请输入 GlobalVarValue02"
                          @handleSubmit="editGlobalVar" :formkey-validator="globalVarNameValidator"/>
         </ISimpleConfirmModal>
       </span>
@@ -28,12 +28,14 @@
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import IKeyValueForm from "../../Common/form/IKeyValueForm"
   import {EditGlobalVar} from "../../../api"
+  import {queryEvnNameList} from "../../../api"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {validateCommonPatternForString} from "../../../tools/index"
+  import GlobalVarForm from "../../Common/form/GlobalVarForm";
 
   export default {
     name: "GlobalVarList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,IKeyValueForm,ISimpleConfirmModal},
+    components:{GlobalVarForm, ISimpleLeftRightRow,ISimpleSearch,IKeyValueForm,ISimpleConfirmModal},
     data(){
       return {
         // 当前页
@@ -44,11 +46,17 @@
         offset:10,
         search:"",
         globalVars: [],
+        EnvNameList:[],
         columns1: [
           {
             title: 'name',
             key: 'name',
-            width: 350,
+            width: 260,
+          },
+          {
+            title:'env_name',
+            key:'env_name',
+            width:160,
           },
           {
             title: 'value',
@@ -70,7 +78,7 @@
                   on: {
                     click: () => {
                       this.$refs.globalVarModal.showModal();
-                      this.$refs.globalVarForm.initFormData(this.globalVars[params.index].id, this.globalVars[params.index].name, this.globalVars[params.index].value);
+                      this.$refs.globalVarForm.initFormData(this.globalVars[params.index].id, this.globalVars[params.index].name, this.globalVars[params.index].env_name ,this.globalVars[params.index].value);
                     }
                   }
                 }, '编辑'),
@@ -95,11 +103,21 @@
       }
     },
     methods:{
-      addGlobalVar(){
-        this.$refs.globalVarModal.showModal();
+      queryEvnNameList:async function(){
+        const result = await queryEvnNameList();
+        if(result.status == "SUCCESS"){
+          this.EnvNameList = result.EnvNameList;
+        }else{
+          this.$Message.error("查询环境EnvNameList失败！");
+        }
       },
-      editGlobalVar:async function(id, globalVarName, globalVarValue){
-        const result = await EditGlobalVar(id, globalVarName, globalVarValue);
+      addGlobalVar(){
+        this.queryEvnNameList();
+        this.$refs.globalVarModal.showModal();
+        this.$refs.globalVarForm.initFormData();
+      },
+      editGlobalVar:async function(id, globalVarName, globalVarValue01,globalVarValue02){
+        const result = await EditGlobalVar(id, globalVarName, globalVarValue01,globalVarValue02);
         if(result.status == "SUCCESS"){
           this.$refs.globalVarForm.handleSubmitSuccess("提交成功!");
           this.$refs.globalVarModal.hideModal();

@@ -9,6 +9,7 @@ import (
 type GlobalVar struct {
 	Id              int64     `json:"id"`
 	AppId           int64     `json:"app_id"`
+	EnvName         string    `json:"env_name"`
 	Name            string    `json:"name"`
 	Value           string    `json:"value" orm:"type(text)"`
 	Type            int       `json:"type"` // 类型：0 表示不可删除
@@ -22,7 +23,7 @@ type GlobalVar struct {
 // 多字段唯一键
 func (u *GlobalVar) TableUnique() [][]string {
 	return [][]string{
-		{"AppId", "Name"},
+		{"AppId", "Name","EnvName"},
 	}
 }
 
@@ -73,32 +74,4 @@ func QueryGlobalVar(app_id int64, condArr map[string]string, page int, offset in
 	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
 	qs.All(&globalVars)
 	return
-}
-
-var initialGlobalVarMap map[string]string
-
-func init() {
-	initialGlobalVarMap = make(map[string]string)
-	initialGlobalVarMap["SUCCESS"] = "SUCCESS"
-	initialGlobalVarMap["ERROR"] = "ERROR"
-}
-
-func InitGlobalVars(app_id int64) {
-	if app_id > 0 {
-		for key, value := range initialGlobalVarMap {
-			if _, err := QueryGlobalVarByName(app_id, key); err != nil {
-				gv := &GlobalVar{
-					AppId:           app_id,
-					Name:            key,
-					Value:           value,
-					Type:            0,
-					CreatedBy:       "SYSTEM",
-					CreatedTime:     time.Now(),
-					LastUpdatedBy:   "SYSTEM",
-					LastUpdatedTime: time.Now(),
-				}
-				InsertOrUpdateGlobalVar(gv, orm.NewOrm())
-			}
-		}
-	}
 }

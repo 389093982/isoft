@@ -7,6 +7,8 @@ import (
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_utils/common/pageutil"
 	"time"
+	"github.com/astaxie/beego"
+	"strings"
 )
 
 func (this *WorkController) GlobalVarList() {
@@ -29,11 +31,13 @@ func (this *WorkController) EditGlobalVar() {
 	app_id, _ := this.GetInt64("app_id", -1)
 	id, err := this.GetInt64("id", -1)
 	globalVarName := this.GetString("globalVarName")
-	globalVarValue := this.GetString("globalVarValue")
+	globalVarValue01 := this.GetString("globalVarValue01")
+	globalVarValue02 := this.GetString("globalVarValue02")
 	globalVar := &models.GlobalVar{
 		AppId:           app_id,
 		Name:            globalVarName,
-		Value:           globalVarValue,
+		EnvName:         globalVarValue01,
+		Value:           globalVarValue02,
 		Type:            1,
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
@@ -50,6 +54,20 @@ func (this *WorkController) EditGlobalVar() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
+	this.ServeJSON()
+}
+
+func (this *WorkController)QueryEvnNameList() {
+	envNameList := beego.AppConfig.String("iwork.envname.list")
+	strArray := strings.Split(envNameList,",")
+	resultMap := make(map[string]interface{})
+	if len(strArray)>0{
+		resultMap["status"]="SUCCESS"
+	}else{
+		resultMap["status"]="ERROR"
+	}
+	resultMap["EnvNameList"] = strArray
+	this.Data["json"]=&resultMap
 	this.ServeJSON()
 }
 
