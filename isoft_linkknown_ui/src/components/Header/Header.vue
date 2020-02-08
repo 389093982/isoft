@@ -55,9 +55,14 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="11">
-          <IBeautifulLink @onclick="$router.push({path:'/message/message_list'})">消息
-            <Badge dot style="position: relative;top: -12px;"></Badge>
-          </IBeautifulLink>
+          <div class="message">
+            <IBeautifulLink>消息
+              <Badge dot style="position: relative;top: -12px;"></Badge>
+            </IBeautifulLink>
+            <div class="message_detail">
+              <MessageList :show-detail="false"/>
+            </div>
+          </div>
         </MenuItem>
         <MenuItem name="12">
           <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
@@ -73,10 +78,11 @@
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import LevelTwoHeader from "./LevelTwoHeader";
+  import MessageList from "../Message/MessageList";
 
   export default {
     name: "Header",
-    components: {LevelTwoHeader, IBeautifulLink},
+    components: {MessageList, LevelTwoHeader, IBeautifulLink},
     data() {
       return {
         theme1: 'light',
@@ -104,6 +110,21 @@
   .layout-nav {
     float: right;
     width: 1100px;
+  }
+
+  .message_detail {
+    display: none;
+  }
+
+  .message:hover > .message_detail {
+    padding: 5px 15px;
+    position: absolute;
+    left: -100px;
+    display: block;
+    max-height: 300px;
+    width: 300px;
+    background-color: white;
+    box-shadow: 0 0 5px red;
   }
 </style>
 
