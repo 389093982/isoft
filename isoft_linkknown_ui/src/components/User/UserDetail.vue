@@ -6,7 +6,7 @@
 
       <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
         <Col span="6" style="top:-100px;">
-          <img width="150" height="150" style="border: 2px solid rgba(197,197,197,0.2);" v-if="user.small_icon"
+          <img width="150" height="150" style="border: 2px solid rgba(197,197,197,0.2);"
                :src="user.small_icon" @error="defImg()">
           <p style="margin: 0 0 0 40px;" v-if="$route.query.username == 'mine'">
             <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
@@ -50,7 +50,7 @@
     components: {UserAbout, HotUser, IFileUpload},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
         user: null,
         defaultImg: require('../../assets/default.png'),
       }
