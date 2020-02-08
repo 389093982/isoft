@@ -55,7 +55,9 @@
           </MenuGroup>
         </Submenu>
         <MenuItem name="11">
-          <IBeautifulLink @onclick="$router.push({path:'/message/message_list'})">消息</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/message/message_list'})">消息
+            <Badge dot style="position: relative;top: -12px;"></Badge>
+          </IBeautifulLink>
         </MenuItem>
         <MenuItem name="12">
           <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
