@@ -261,6 +261,7 @@ export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/i
 export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DownloadResourceFile', params, "GET");
 
 export const fileUploadUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/fileUpload"
+export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay"
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
