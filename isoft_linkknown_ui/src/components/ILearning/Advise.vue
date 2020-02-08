@@ -46,8 +46,16 @@
       submitAdvise: async function (type) {
         let result = '';
         if ('advise' === type) {
+          if (this.advise.trim().length === 0) {
+            this.$Message.warning('请填写意见内容！');
+            return false;
+          }
           result = await InsertAdvise({'advise_type':type,'advise':this.advise});
         }else if ('complaints' === type) {
+          if (this.complaints.trim().length === 0) {
+            this.$Message.warning('请填写吐槽内容！');
+            return false;
+          }
           result = await InsertAdvise({'advise_type':type,'advise':this.complaints});
         }
 
