@@ -18,6 +18,12 @@
     </div>
     <div class="item-line"></div>
 
+    <div class="itemArea" @click="$router.push({path:'/advertisement/apply'})">
+      <Icon type="ios-cog-outline" :size="28"/>
+      <p>广告</p>
+    </div>
+    <div class="item-line"></div>
+
     <div class="itemArea">
       <Icon type="ios-people-outline" :size="28"/>
       <p>社交</p>
