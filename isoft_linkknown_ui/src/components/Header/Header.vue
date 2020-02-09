@@ -69,7 +69,6 @@
         </MenuItem>
       </div>
     </Menu>
-    <LevelTwoHeader/>
   </div>
 </template>
 
@@ -77,12 +76,11 @@
   import {CheckHasLogin, delCookie, getCookie} from '../../tools/index'
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import LevelTwoHeader from "./LevelTwoHeader";
   import MessageList from "../Message/MessageList";
 
   export default {
     name: "Header",
-    components: {MessageList, LevelTwoHeader, IBeautifulLink},
+    components: {MessageList, IBeautifulLink},
     data() {
       return {
         theme1: 'light',

@@ -16,10 +16,7 @@
           </Row>
 
           <Row style="margin: 5px 0 5px 0;padding: 5px 15px 0px 15px;font-size: 12px;">
-            <Col span="12" style="text-align: left;">
-              <a @click="$router.push({path:'/ilearning/index'})" class="hovered hvr-grow hoverLinkColor mr5">返回首页</a>
-            </Col>
-            <Col span="12" style="text-align: right;">
+            <Col span="24" style="text-align: right;">
               <a class="hovered hvr-grow hoverLinkColor mr5">加入我们</a>
               <a @click="$router.push({path:'/ilearning/about'})"
                  class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
