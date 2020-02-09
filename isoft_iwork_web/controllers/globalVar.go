@@ -1,14 +1,14 @@
 package controllers
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_utils/common/pageutil"
-	"time"
-	"github.com/astaxie/beego"
 	"strings"
+	"time"
 )
 
 func (this *WorkController) GlobalVarList() {
@@ -21,7 +21,7 @@ func (this *WorkController) GlobalVarList() {
 	onuse := beego.AppConfig.String("iwork.envname.onuse")
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": globalVars,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()),"onuse":onuse}
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()), "onuse": onuse}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
@@ -58,17 +58,17 @@ func (this *WorkController) EditGlobalVar() {
 	this.ServeJSON()
 }
 
-func (this *WorkController)QueryEvnNameList() {
+func (this *WorkController) QueryEvnNameList() {
 	envNameList := beego.AppConfig.String("iwork.envname.list")
-	strArray := strings.Split(envNameList,",")
+	strArray := strings.Split(envNameList, ",")
 	resultMap := make(map[string]interface{})
-	if len(strArray)>0{
-		resultMap["status"]="SUCCESS"
-	}else{
-		resultMap["status"]="ERROR"
+	if len(strArray) > 0 {
+		resultMap["status"] = "SUCCESS"
+	} else {
+		resultMap["status"] = "ERROR"
 	}
 	resultMap["EnvNameList"] = strArray
-	this.Data["json"]=&resultMap
+	this.Data["json"] = &resultMap
 	this.ServeJSON()
 }
 
@@ -87,4 +87,10 @@ func (this *WorkController) DeleteGlobalVarById() {
 
 func flushMemoryGlobalVar(app_id int64) {
 	memory.FlushMemoryGlobalVar(app_id)
+}
+
+func (this *WorkController) GetAllGlobalVars() {
+	gvs := models.GetAllGlobalVars()
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": gvs}
+	this.ServeJSON()
 }

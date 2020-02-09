@@ -83,6 +83,7 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/editGlobalVar", wc, wc.EditGlobalVar, "get,post:EditGlobalVar")
 	registRouter("/api/iwork/queryEvnNameList", wc, wc.QueryEvnNameList, "get,post:QueryEvnNameList")
 	registRouter("/api/iwork/deleteGlobalVarById", wc, wc.DeleteGlobalVarById, "get,post:DeleteGlobalVarById")
+	registRouter("/api/iwork/getAllGlobalVars", wc, wc.GetAllGlobalVars, "get,post:GetAllGlobalVars")
 
 	registRouter("/api/iwork/download/:work_id", wc, wc.Download, "get,post:Download")
 
