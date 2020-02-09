@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="isoft_bg_white isoft_pd10" style="height: 800px;">
     <Row :gutter="10">
       <Col span="16">
         <div style="margin: 0 auto;">

@@ -7,13 +7,7 @@ import (
 	"sync"
 )
 
-var dbMap map[string]*sql.DB
-var m *sync.RWMutex
-
-func init() {
-	m = new(sync.RWMutex)
-	dbMap = make(map[string]*sql.DB, 0)
-}
+var dbMap sync.Map
 
 func LoadAndCachePool() {
 	models.RegisterOpenConnFunc(OpenDBConn)
@@ -25,21 +19,15 @@ func LoadAndCachePool() {
 }
 
 func GetDBConn(driverName, dataSourceName string) (*sql.DB, error) {
-	m.RLock()
-	defer m.RUnlock()
-	// $RESOURCE 格式
-	if db, ok := dbMap[driverName+"_"+dataSourceName]; ok {
-		return db, nil
+	if val, ok := dbMap.Load(driverName + "_" + dataSourceName); ok {
+		return val.(*sql.DB), nil
 	}
-	// 一般格式
-	return openConn(driverName, dataSourceName)
+	return OpenDBConn(driverName, dataSourceName)
 }
 
-func OpenDBConn(driverName, dataSourceName string) (err error) {
-	m.Lock()
-	defer m.Unlock()
-	if db, err := openConn(driverName, dataSourceName); err == nil {
-		dbMap[driverName+"_"+dataSourceName] = db
+func OpenDBConn(driverName, dataSourceName string) (db *sql.DB, err error) {
+	if db, err = openConn(driverName, dataSourceName); err == nil {
+		dbMap.Store(driverName+"_"+dataSourceName, db)
 	}
 	return
 }

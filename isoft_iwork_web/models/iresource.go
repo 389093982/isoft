@@ -1,16 +1,17 @@
 package models
 
 import (
+	"database/sql"
 	"github.com/astaxie/beego/orm"
 	"strings"
 	"sync"
 	"time"
 )
 
-var openConnFunc func(driverName, dataSourceName string) (err error)
+var openConnFunc func(driverName, dataSourceName string) (db *sql.DB, err error)
 
 // 注册打开连接函数
-func RegisterOpenConnFunc(f func(driverName, dataSourceName string) (err error)) {
+func RegisterOpenConnFunc(f func(driverName, dataSourceName string) (db *sql.DB, err error)) {
 	var once = &sync.Once{}
 	once.Do(func() {
 		openConnFunc = f

@@ -37,6 +37,8 @@ func (this *WorkController) ExecuteMigrate() {
 	forceClean, _ := this.GetBool("forceClean", false)
 	resource, _ := models.QueryResourceByName(app_id, resource_name)
 	trackingId := stringutil.RandomUUID()
+	// 使用了全局变量则进一步替换
+	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 	go migrateutil.MigrateToDB(app_id, trackingId, resource.ResourceDsn, forceClean)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "trackingId": trackingId}
 	this.ServeJSON()
