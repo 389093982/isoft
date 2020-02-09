@@ -62,7 +62,7 @@
           {
             title: 'value',
             key: 'value',
-            width:350,
+            width:450,
           },
           {
             title: '操作',
