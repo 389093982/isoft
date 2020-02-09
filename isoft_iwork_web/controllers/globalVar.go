@@ -18,9 +18,10 @@ func (this *WorkController) GlobalVarList() {
 	condArr := map[string]string{"search": this.GetString("search")}
 	globalVars, count, err := models.QueryGlobalVar(app_id, condArr, current_page, offset, orm.NewOrm())
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	onuse := beego.AppConfig.String("iwork.envname.onuse")
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": globalVars,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()),"onuse":onuse}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}

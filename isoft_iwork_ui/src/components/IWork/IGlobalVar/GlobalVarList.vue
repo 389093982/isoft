@@ -4,7 +4,7 @@
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <span slot="left">
-        <Button type="success" @click="addGlobalVar">新增</Button>
+        <Button type="success" @click="addGlobalVar">新增</Button><code style="margin-left: 200px;color: #eb7d37">当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b></code>
         <ISimpleConfirmModal ref="globalVarModal" modal-title="新增/编辑 GlobalVar" :modal-width="600" :footer-hide="true">
           <GlobalVarForm ref="globalVarForm" :EnvNameList="EnvNameList" form-key-label="name" form-value-label01="env_name" form-value-label02="value"
                          form-key-placeholder="请输入 GlobalVarName" form-value-placeholder01="请选择..." form-value-placeholder02="请输入 GlobalVarValue02"
@@ -47,6 +47,7 @@
         search:"",
         globalVars: [],
         EnvNameList:[],
+        onuse:'',
         columns1: [
           {
             title: 'name',
@@ -142,6 +143,7 @@
       refreshGlobalVarList:async function () {
         const result = await GlobalVarList(this.offset,this.current_page,this.search);
         if(result.status=="SUCCESS"){
+          this.onuse = result.onuse;
           this.globalVars = result.globalVars;
           this.total = result.paginator.totalcount;
         }
