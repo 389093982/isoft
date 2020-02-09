@@ -1,6 +1,6 @@
 <template>
   <div v-if="advertisements && advertisements.length > 0" style="margin-top: 5px;">
-    <div style="text-align:right;font-size: 12px;">
+    <div style="text-align:right;font-size: 12px;" v-if="showRightText">
       热门广告推荐 &nbsp;&nbsp;&nbsp;
       <a @click="$router.push({path:'/advertisement/manage'})">我也要发布广告</a>
     </div>
@@ -22,6 +22,16 @@
 
   export default {
     name: "RandomAdmt",
+    props: {
+      showRightText: {
+        type: Boolean,
+        default: true
+      },
+      advertisementAmount: {
+        type: Number,
+        default: 4
+      }
+    },
     data() {
       return {
         advertisements: null,
@@ -35,7 +45,7 @@
       },
       refreshRandomAdvertisement: async function () {
         var _this = this;
-        const result = await GetRandomAdvertisement(4);
+        const result = await GetRandomAdvertisement(this.advertisementAmount);
         if (result.status == "SUCCESS") {
           this.advertisements = result.advertisements;
         }
