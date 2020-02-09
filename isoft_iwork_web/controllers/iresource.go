@@ -88,8 +88,10 @@ func (this *WorkController) DeleteResource() {
 func (this *WorkController) ValidateResource() {
 	var err error
 	id, _ := this.GetInt64("id")
+	app_id, _ := this.GetInt64("app_id", -1)
 	resource, err := models.QueryResourceById(id)
 	if err == nil {
+		resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 		switch resource.ResourceType {
 		case "db":
 			db, err1 := iworkpool.GetDBConn("mysql", resource.ResourceDsn)

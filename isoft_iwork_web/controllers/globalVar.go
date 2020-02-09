@@ -94,3 +94,16 @@ func (this *WorkController) GetAllGlobalVars() {
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": gvs}
 	this.ServeJSON()
 }
+
+func (this *WorkController) GlobalVarParserWarpper(app_id int64, value string) string {
+	value = strings.TrimSpace(value)
+	if strings.HasPrefix(value, "$Global.") {
+		value = strings.TrimPrefix(value, "$Global.")
+		value = strings.TrimSuffix(value, ";")
+		gv, err := models.QueryGlobalVarByName(app_id, value)
+		if err == nil {
+			return gv.Value
+		}
+	}
+	return value
+}
