@@ -1,0 +1,14 @@
+<Resource>
+	<Id>3</Id>
+	<AppId>5</AppId>
+	<ResourceName>isoft_iaas_test</ResourceName>
+	<ResourceType>db</ResourceType>
+	<ResourceUrl>isoft_iaas_test</ResourceUrl>
+	<ResourceDsn>$Global.isoft_iaas_dsn_test;</ResourceDsn>
+	<ResourceUsername>root</ResourceUsername>
+	<ResourcePassword>0</ResourcePassword>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-09T14:44:23+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-09T14:44:23+08:00</LastUpdatedTime>
+</Resource>
