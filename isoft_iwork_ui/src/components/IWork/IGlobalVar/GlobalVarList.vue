@@ -52,16 +52,17 @@
           {
             title: 'name',
             key: 'name',
-            width: 260,
+            width: 200,
           },
           {
             title:'env_name',
             key:'env_name',
-            width:160,
+            width:100,
           },
           {
             title: 'value',
             key: 'value',
+            width:350,
           },
           {
             title: '操作',
