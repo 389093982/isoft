@@ -7,6 +7,10 @@ import (
 	"isoft/isoft_utils/common/apppath"
 	"isoft/isoft_utils/common/fileutils"
 	"os"
+	"github.com/astaxie/beego/toolbox"
+	"time"
+	"github.com/astaxie/beego/orm"
+	"strconv"
 )
 
 func init() {
@@ -33,4 +37,43 @@ func init() {
 	logs.EnableFuncCallDepth(true)
 	// 异步输出日志
 	logs.Async(1e3)
+
+	//定时清理四张日志表
+	//cronExpress := "0/10 * * * * *"  //每隔10秒执行
+	cronExpress := "0 0 0 * * ?"  //每天凌晨0时0分0秒执行
+	clearLogTask := toolbox.NewTask("clearLogTask", cronExpress, ClearLog)
+	toolbox.AddTask("clearLogTask", clearLogTask)
+	toolbox.StartTask()
+	logs.Info("clearLogTask started ...")
+
+}
+
+//定时清理四张日志表--每日凌晨0点执行
+func ClearLog() error {
+	//获取7天前的日期
+	now := time.Now()
+	preDays, _ := strconv.Atoi(beego.AppConfig.String("iwork.clearRunAndValidateLog.preDays"))
+	oldTime := now.AddDate(0, 0, -preDays)
+
+	logs.Info("开始清理日志表 run_log_detail")
+	filter := orm.NewOrm().QueryTable("run_log_detail").Filter("last_updated_time__lt", oldTime)
+	count, _ := filter.Count()
+	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	delCount, _ := filter.Delete()
+	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+
+	logs.Info("开始清理日志表 validate_log_detail")
+	filter = orm.NewOrm().QueryTable("validate_log_detail").Filter("last_updated_time__lt", oldTime)
+	count, _ = filter.Count()
+	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	delCount, _ = filter.Delete()
+	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+
+	logs.Info("开始清理日志表 validate_log_record")
+	filter = orm.NewOrm().QueryTable("validate_log_record").Filter("last_updated_time__lt", oldTime)
+	count, _ = filter.Count()
+	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	delCount, _ = filter.Delete()
+	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+	return nil
 }
