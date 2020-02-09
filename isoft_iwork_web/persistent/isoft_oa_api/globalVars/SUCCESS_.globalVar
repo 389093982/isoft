@@ -1,8 +1,9 @@
 <GlobalVar>
-	<Id>11</Id>
+	<Id>10</Id>
 	<AppId>6</AppId>
-	<Name>ERROR</Name>
-	<Value>ERROR</Value>
+	<EnvName></EnvName>
+	<Name>SUCCESS</Name>
+	<Value>SUCCESS</Value>
 	<Type>0</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>

@@ -13,12 +13,12 @@ import (
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/service"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/stringutil"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"isoft/isoft_iwork_web/startup/sysconfig"
 )
 
 // 加载校验信息,校验失败异常信息也要返回给 UI,如缓存中的 BlockStep 信息获取不到(校验异常)也要提示出来
@@ -284,7 +284,7 @@ func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 }
 
 func checkVariableRelationShipForGlobal(app_id int64, paramName, referFiledName string, checkResultCh chan string) {
-	if _, ok := memory.GlobalVarMap.Load(string(app_id) + "_" + referFiledName); !ok {
+	if _, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, sysconfig.ENV_ONUSE)); !ok {
 		bytes, _ := json.Marshal(&map[string]string{
 			"paramName":      paramName,
 			"checkResultMsg": fmt.Sprintf("Invalid referFiledName relationship for %s was found!", referFiledName),

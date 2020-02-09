@@ -1,0 +1,13 @@
+<GlobalVar>
+	<Id>14</Id>
+	<AppId>5</AppId>
+	<EnvName>sit</EnvName>
+	<Name>isoft_iaas_dsn</Name>
+	<Value>root:123456@tcp(127.0.0.1:3306)/isoft_iaas</Value>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-09T12:45:52+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-09T12:45:52+08:00</LastUpdatedTime>
+</GlobalVar>
