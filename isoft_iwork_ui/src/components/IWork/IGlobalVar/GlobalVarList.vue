@@ -6,7 +6,7 @@
       <span slot="left">
         <Button type="success" @click="addGlobalVar">新增</Button>
         <ISimpleConfirmModal ref="globalVarModal" modal-title="新增/编辑 GlobalVar" :modal-width="600" :footer-hide="true">
-          <GlobalVarForm ref="globalVarForm" :EnvNameList="EnvNameList" form-key-label="GlobalVarName" form-value-label01="GlobalVarValue01" form-value-label02="GlobalVarValue02"
+          <GlobalVarForm ref="globalVarForm" :EnvNameList="EnvNameList" form-key-label="name" form-value-label01="env_name" form-value-label02="value"
                          form-key-placeholder="请输入 GlobalVarName" form-value-placeholder01="请选择..." form-value-placeholder02="请输入 GlobalVarValue02"
                          @handleSubmit="editGlobalVar" :formkey-validator="globalVarNameValidator"/>
         </ISimpleConfirmModal>
@@ -112,7 +112,6 @@
         }
       },
       addGlobalVar(){
-        this.queryEvnNameList();
         this.$refs.globalVarModal.showModal();
         this.$refs.globalVarForm.initFormData();
       },
@@ -165,6 +164,7 @@
     },
     mounted: function () {
       this.refreshGlobalVarList();
+      this.queryEvnNameList();
     },
   }
 </script>
