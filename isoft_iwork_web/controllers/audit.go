@@ -66,6 +66,7 @@ func (this *WorkController) GetAuditHandleData() {
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
 	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
+	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 	_, rowDatas0, err1 := sqlutil.QuerySql(strings.Replace(taskDetail.QuerySql, "*", "count(*) as totalcount", -1),
 		[]interface{}{}, resource.ResourceDsn)
 	_, rowDatas, err2 := sqlutil.QuerySql(fmt.Sprintf(`%s limit ?,?`, taskDetail.QuerySql), []interface{}{(current_page - 1) * offset, offset}, resource.ResourceDsn)
@@ -145,6 +146,7 @@ func (this *WorkController) ExecuteAuditTask() {
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
 	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
+	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 	_, affected, err := sqlutil.ExecuteSql(sql_str, nil, resource.ResourceDsn)
 	if err == nil && affected > 0 {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

@@ -26,7 +26,7 @@ func GetDBConn(driverName, dataSourceName string) (*sql.DB, error) {
 }
 
 func OpenDBConn(driverName, dataSourceName string) (db *sql.DB, err error) {
-	if db, err := openConn(driverName, dataSourceName); err == nil {
+	if db, err = openConn(driverName, dataSourceName); err == nil {
 		dbMap.Store(driverName+"_"+dataSourceName, db)
 	}
 	return

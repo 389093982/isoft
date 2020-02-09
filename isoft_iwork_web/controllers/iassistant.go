@@ -10,11 +10,13 @@ import (
 
 func (this *WorkController) LoadQuickSqlMeta() {
 	resource_id, _ := this.GetInt64("resource_id")
+	app_id, _ := this.GetInt64("app_id")
 	var err error
 	// 查询所有的数据库信息
 	resource, _ := models.QueryResourceById(resource_id)
 	tableColumnsMap := make(map[string]interface{}, 0)
 	tableSqlMap := make(map[string]interface{}, 0)
+	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 	tableNames := sqlutil.GetAllTableNames(resource.ResourceDsn)
 	for _, tableName := range tableNames {
 		tableColumns := sqlutil.GetAllColumnNames(tableName, resource.ResourceDsn)
