@@ -86,7 +86,7 @@ func QueryGlobalVar(app_id int64, condArr map[string]string, page int, offset in
 		qs = qs.Filter("app_id", app_id)
 	}
 	counts, _ = qs.Count()
-	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
+	qs = qs.OrderBy("name").Limit(offset, (page-1)*offset)
 	qs.All(&globalVars)
 	return
 }
