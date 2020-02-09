@@ -1,48 +1,62 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增资源信息" btn-size="small" modal-title="新增/编辑资源信息" modal-top="50px" :modal-width="600">
-    <!-- 表单信息 -->
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-      <FormItem label="resource_name" prop="resource_name">
-        <Input v-model.trim="formValidate.resource_name" placeholder="请输入 resource_name"></Input>
-      </FormItem>
-      <FormItem label="resource_type" prop="resource_type">
-        <Select v-model="formValidate.resource_type" placeholder="请选择 resource_type">
-          <Option value="db">db</Option>
-          <Option value="sftp">sftp</Option>
-          <Option value="ssh">ssh</Option>
-        </Select>
-      </FormItem>
-      <FormItem label="resource_url" prop="resource_url">
-        <Input v-model.trim="formValidate.resource_url" placeholder="请输入 resource_url"></Input>
-      </FormItem>
-      <FormItem label="resource_dsn" prop="resource_dsn">
-        <Input v-model.trim="formValidate.resource_dsn" placeholder="请输入 resource_dsn"></Input>
-      </FormItem>
-      <FormItem label="resource_username" prop="resource_username">
-        <Input v-model.trim="formValidate.resource_username" placeholder="请输入 resource_username"></Input>
-      </FormItem>
-      <FormItem label="resource_password" prop="resource_password">
-        <Input v-model.trim="formValidate.resource_password" placeholder="请输入 resource_password"></Input>
-      </FormItem>
-      <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
-        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
-      </FormItem>
-    </Form>
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增资源信息" btn-size="small" modal-title="新增/编辑资源信息" modal-top="50px"
+                          :modal-width="800">
+    <Row>
+      <Col span="6">
+        <Scroll>
+          <Tag v-for="(globalVar,index) in globalVars"><span draggable="true" @dragstart="dragstart($event, globalVar)">{{globalVar}}</span>
+          </Tag>
+        </Scroll>
+      </Col>
+      <Col span="18">
+        <!-- 表单信息 -->
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+          <FormItem label="resource_name" prop="resource_name">
+            <Input v-model.trim="formValidate.resource_name" placeholder="请输入 resource_name"></Input>
+          </FormItem>
+          <FormItem label="resource_type" prop="resource_type">
+            <Select v-model="formValidate.resource_type" placeholder="请选择 resource_type">
+              <Option value="db">db</Option>
+              <Option value="sftp">sftp</Option>
+              <Option value="ssh">ssh</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="resource_url" prop="resource_url">
+            <Input v-model.trim="formValidate.resource_url" placeholder="请输入 resource_url"></Input>
+          </FormItem>
+          <FormItem label="resource_dsn" prop="resource_dsn">
+            <Input v-model.trim="formValidate.resource_dsn" placeholder="请输入 resource_dsn"
+                   @drop="drop($event, 'resource_dsn')" @dragover="allowDrop($event)"></Input>
+          </FormItem>
+          <FormItem label="resource_username" prop="resource_username">
+            <Input v-model.trim="formValidate.resource_username" placeholder="请输入 resource_username"></Input>
+          </FormItem>
+          <FormItem label="resource_password" prop="resource_password">
+            <Input v-model.trim="formValidate.resource_password" placeholder="请输入 resource_password"></Input>
+          </FormItem>
+          <FormItem>
+            <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+            <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
+          </FormItem>
+        </Form>
+      </Col>
+    </Row>
   </ISimpleBtnTriggerModal>
 </template>
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
-  import {EditResource, GetResourceById} from "../../../api"
+  import {EditResource, GetAllGlobalVars, GetResourceById} from "../../../api"
+  import WorkStepComponent from "../IWorkStep/WorkStepComponent";
 
   export default {
     name: "ResourceEdit",
-    components:{ISimpleBtnTriggerModal},
+    components: {WorkStepComponent, ISimpleBtnTriggerModal},
     data(){
       return {
+        globalVars: [],
         formValidate: {
           resource_id: 0,
           resource_name: '',
@@ -76,6 +90,19 @@
       }
     },
     methods:{
+      dragstart: function (event, transferData) {
+        event.dataTransfer.setData("Text", transferData);
+      },
+      allowDrop: function (event) {
+        event.preventDefault();
+      },
+      drop: function (event, field_name) {
+        // 取消冒泡
+        event.stopPropagation();
+        event.preventDefault();
+        var globalVar = event.dataTransfer.getData("Text");
+        this.$set(this.formInline, field_name, globalVar);
+      },
       initData:async function(resource_id){
         this.$refs.triggerModal.triggerClick();
         const result = await GetResourceById(resource_id);
@@ -112,6 +139,15 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
+      refreshAllGlobalVars: async function () {
+        const result = await GetAllGlobalVars();
+        if (result.status == "SUCCESS") {
+          this.globalVars = result.globalVars;
+        }
+      }
+    },
+    mounted() {
+      this.refreshAllGlobalVars();
     }
   }
 </script>

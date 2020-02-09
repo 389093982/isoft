@@ -123,6 +123,7 @@ export const EditGlobalVar = (id, globalVarName, globalVarValue01,globalVarValue
 export const queryEvnNameList = () => ajax(BASE_URL+"/iwork/queryEvnNameList", {},'POST');
 
 export const DeleteGlobalVarById = (id) => ajax(BASE_URL+"/iwork/deleteGlobalVarById", {id},'POST');
+export const GetAllGlobalVars = () => ajax(BASE_URL + "/iwork/getAllGlobalVars", {}, 'POST');
 
 export const ModuleList = (offset,current_page, search) => ajax(BASE_URL+"/iwork/moduleList", {offset,current_page, search},'POST');
 

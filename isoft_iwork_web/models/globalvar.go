@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 	"time"
 )
@@ -23,7 +25,7 @@ type GlobalVar struct {
 // 多字段唯一键
 func (u *GlobalVar) TableUnique() [][]string {
 	return [][]string{
-		{"AppId", "Name","EnvName"},
+		{"AppId", "Name", "EnvName"},
 	}
 }
 
@@ -34,6 +36,19 @@ func QueryGlobalVarByName(app_id int64, name string) (gv GlobalVar, err error) {
 		qs = qs.Filter("app_id", app_id)
 	}
 	err = qs.Filter("name", name).One(&gv)
+	return
+}
+
+func GetAllGlobalVars() (gvs []string) {
+	var list orm.ParamsList
+	o := orm.NewOrm()
+	_, err := o.QueryTable("global_var").ValuesFlat(&list, "name")
+	if err == nil {
+		for _, lst := range list {
+			gvs = append(gvs, fmt.Sprintf("$Global.%s;", lst.(string)))
+		}
+	}
+	gvs = stringutil.RemoveRepeatForSlice(gvs)
 	return
 }
 
