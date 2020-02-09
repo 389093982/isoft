@@ -14,7 +14,7 @@
     <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 10px 10px 0 10px;">
       热门广告列表
 
-      <RandomAdmt :show-right-text="false" :advertisement-amount="10"/>
+      <RandomAdmt :show-right-text="false" :advertisement-amount="10" size="large"/>
     </div>
 
     <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 10px 10px 0 10px;">
