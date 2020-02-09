@@ -29,13 +29,13 @@ func (u *GlobalVar) TableUnique() [][]string {
 	}
 }
 
-func QueryGlobalVarByName(app_id int64, name string) (gv GlobalVar, err error) {
+func QueryGlobalVarByName(app_id int64, name, env_name string) (gv GlobalVar, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("global_var")
 	if app_id > 0 {
 		qs = qs.Filter("app_id", app_id)
 	}
-	err = qs.Filter("name", name).One(&gv)
+	err = qs.Filter("name", name).Filter("env_name", env_name).One(&gv)
 	return
 }
 

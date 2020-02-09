@@ -15,10 +15,10 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/dipool/pool"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"reflect"
 	"strings"
 	"sync"
-	"isoft/isoft_iwork_web/startup/sysconfig"
 )
 
 type IParamSchemaCacheParser interface {
@@ -50,6 +50,15 @@ var workCacheMap sync.Map
 
 func DeleteWorkCache(work_id int64) {
 	workCacheMap.Delete(work_id)
+}
+
+func DeleteAllWorkCache(app_id int64) {
+	// 遍历时删除全部
+	workCacheMap.Range(func(k, v interface{}) bool {
+		workCacheMap.Delete(k)
+		return true
+
+	})
 }
 
 func RemoveOldWork(work_id int64) {

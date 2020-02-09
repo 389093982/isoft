@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/pageutil"
 	"strings"
 	"time"
@@ -18,10 +19,9 @@ func (this *WorkController) GlobalVarList() {
 	condArr := map[string]string{"search": this.GetString("search")}
 	globalVars, count, err := models.QueryGlobalVar(app_id, condArr, current_page, offset, orm.NewOrm())
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
-	onuse := beego.AppConfig.String("iwork.envname.onuse")
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": globalVars,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()), "onuse": onuse}
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()), "onuse": sysconfig.ENV_ONUSE}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
@@ -86,7 +86,10 @@ func (this *WorkController) DeleteGlobalVarById() {
 }
 
 func flushMemoryGlobalVar(app_id int64) {
+	// 刷新全局变量
 	memory.FlushMemoryGlobalVar(app_id)
+	// 刷新资源链接,资源链接可以使用了全局变量
+	memory.FlushMemoryResource(app_id)
 }
 
 func (this *WorkController) GetAllGlobalVars() {
@@ -100,7 +103,7 @@ func (this *WorkController) GlobalVarParserWarpper(app_id int64, value string) s
 	if strings.HasPrefix(value, "$Global.") {
 		value = strings.TrimPrefix(value, "$Global.")
 		value = strings.TrimSuffix(value, ";")
-		gv, err := models.QueryGlobalVarByName(app_id, value)
+		gv, err := models.QueryGlobalVarByName(app_id, value, sysconfig.ENV_ONUSE)
 		if err == nil {
 			return gv.Value
 		}

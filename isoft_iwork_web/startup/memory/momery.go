@@ -1,7 +1,10 @@
 package memory
 
 import (
+	"fmt"
+	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/models"
+	"strings"
 	"sync"
 )
 
@@ -27,10 +30,18 @@ func FlushMemoryFilter(app_id int64) {
 }
 
 func FlushMemoryGlobalVar(app_id int64) {
+	// 先清除当前 app_id 下面所有的旧数据
+	GlobalVarMap.Range(func(k, v interface{}) bool {
+		if strings.HasPrefix(k.(string), fmt.Sprintf("%d_", app_id)) {
+			GlobalVarMap.Delete(k)
+		}
+		return true
+	})
 	globalVars := models.QueryAllGlobalVar(app_id)
 	for index, _ := range globalVars {
-		GlobalVarMap.Store(string(globalVars[index].AppId)+"_"+globalVars[index].Name, &globalVars[index])
+		GlobalVarMap.Store(fmt.Sprintf("%d_%s_%s", globalVars[index].AppId, globalVars[index].Name, globalVars[index].EnvName), &globalVars[index])
 	}
+	iworkcache.DeleteAllWorkCache(app_id)
 }
 
 func FlushMemoryResource(app_id int64) {

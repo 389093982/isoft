@@ -12,6 +12,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkvalid"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"reflect"
 	"strings"
 )
@@ -277,7 +278,13 @@ func (this *SimpleParser) parseParamVauleFromResource(app_id int64) interface{} 
 	if resource, ok := memory.ResourceMap.Load(string(app_id) + "_" + resource_name); ok {
 		resource := resource.(*models.Resource)
 		if resource.ResourceType == "db" {
-			return resource.ResourceDsn
+			if strings.HasPrefix(resource.ResourceDsn, "$Global.") {
+				// 重新去查询全局变量
+				this.paramVaule = resource.ResourceDsn
+				return this.parseParamVauleFromGlobalVar(app_id)
+			} else {
+				return resource.ResourceDsn
+			}
 		} else if resource.ResourceType == "sftp" || resource.ResourceType == "ssh" {
 			return resource
 		}
@@ -290,7 +297,10 @@ func (this *SimpleParser) parseParamVauleFromResource(app_id int64) interface{} 
 // 尽量从缓存中获取
 func (this *SimpleParser) parseParamVauleFromGlobalVar(app_id int64) interface{} {
 	gvName := strings.TrimPrefix(this.paramVaule, "$Global.")
-	if gv, ok := memory.GlobalVarMap.Load(string(app_id) + "_" + gvName); ok {
+	gvName = strings.TrimSuffix(gvName, ";")
+	if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, sysconfig.ENV_ONUSE)); ok {
+		return gv.(*models.GlobalVar).Value
+	} else if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, "dev")); ok {
 		return gv.(*models.GlobalVar).Value
 	} else {
 		panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))

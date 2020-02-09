@@ -106,7 +106,7 @@ func persistentGlobalVarsToFile(appids []models.AppId) {
 	globalVars := models.QueryAllGlobalVar(-1)
 	for _, globalVar := range globalVars {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, globalVar.AppId))
-		filepath := path.Join(_persistentDirPath, "globalVars", fmt.Sprintf(`%s.globalVar`, globalVar.Name))
+		filepath := path.Join(_persistentDirPath, "globalVars", fmt.Sprintf(`%s_%s.globalVar`, globalVar.Name, globalVar.EnvName))
 		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(globalVar)), false)
 	}
 }
