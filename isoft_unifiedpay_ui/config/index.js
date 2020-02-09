@@ -12,14 +12,14 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/wechatPayApi': { // 匹配所有以 '/wechatPayApi'开头的请求路径
-        target: 'http://localhost:8081', // 代理目标的基础路径
+        target: 'http://localhost:6002', // 代理目标的基础路径
         changeOrigin: true, // 支持跨域
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8003, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
