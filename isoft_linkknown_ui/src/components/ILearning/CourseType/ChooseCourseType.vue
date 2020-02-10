@@ -3,7 +3,7 @@
     <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
       <Row>
         <Col span="6">
-          <img src="../../../../static/images/linkknown_logo02.png" style="width: 180px;height: 75px;cursor: pointer"/>
+          <img src="../../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;cursor: pointer"/>
         </Col>
         <Col span="18">
           <Row>
