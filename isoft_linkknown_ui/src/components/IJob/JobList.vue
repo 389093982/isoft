@@ -33,8 +33,9 @@
 
       <div style="padding: 10px;">
         <Row v-for="(job,index) in jobs" :gutter="10" v-if="job.corporate_name && job.job_name"
-             style="padding: 15px;border-bottom: 1px solid #d7dde4;">
-          <div style="cursor: pointer;" @click="showJobDetail(job)">
+             style="margin: 10px 0;">
+          <div style="cursor: pointer;height: 60px;padding: 15px;background-color: rgba(219,255,227,0.29);"
+               @click="showJobDetail(job)">
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.corporate_name}}
             </Col>
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.job_name}}</Col>
@@ -45,6 +46,18 @@
               <span style="font-size: 14px;color: rgba(0,0,0,0.5);float: right;"><Time
                 :time="job.last_updated_time"/></span>
             </Col>
+          </div>
+          <div style="background-color: rgba(209,212,219,0.17);padding: 8px 15px;">
+            <Row>
+              <Col span="16">
+                <span class="box">人工智能</span>
+                <span class="box">人工智能</span>
+                <span class="box">人工智能</span>
+              </Col>
+              <Col span="8">
+                <span>定期体检，五险一金定期体检，五险一金</span>
+              </Col>
+            </Row>
           </div>
         </Row>
 
@@ -143,5 +156,8 @@
 </script>
 
 <style scoped>
-
+  .box {
+    padding: 2px 5px;
+    border: 1px solid #bfbfbf;
+  }
 </style>
