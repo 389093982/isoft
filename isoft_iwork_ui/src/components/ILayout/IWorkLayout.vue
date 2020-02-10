@@ -53,6 +53,9 @@
               </template>
               <MenuItem name="2-1"><router-link to="/iwork/resourceList">资源列表</router-link></MenuItem>
               <MenuItem name="2-2"><router-link to="/iwork/migrateList">数据库迁移管理</router-link></MenuItem>
+              <MenuItem name="2-3">
+                <router-link to="/iwork/globalVarList">全局变量管理</router-link>
+              </MenuItem>
             </Submenu>
             <Submenu name="3">
               <template slot="title">
@@ -68,10 +71,6 @@
               <MenuItem name="3-3">
                 <router-link to="/iwork/filterList">过滤器管理</router-link>
               </MenuItem>
-              <MenuItem name="3-4">
-                <router-link to="/iwork/globalVarList">全局变量管理</router-link>
-              </MenuItem>
-              <MenuItem name="3-5">WorkDL管理</MenuItem>
             </Submenu>
 
             <Submenu name="4">

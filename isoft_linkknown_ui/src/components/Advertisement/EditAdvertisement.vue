@@ -41,7 +41,7 @@
     components: {IFileUpload},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=advertisement&table_field=linked_img",
         formValidate: {
           id: -1,
           advertisement_label: '',

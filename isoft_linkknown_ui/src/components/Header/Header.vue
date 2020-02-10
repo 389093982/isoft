@@ -17,17 +17,6 @@
         <MenuItem name="5">
           <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
         </MenuItem>
-        <Submenu name="6">
-          <template slot="title">
-            <span>更多内容</span>
-          </template>
-          <MenuGroup title="更多内容">
-            <MenuItem name="6-1">全部菜单项</MenuItem>
-            <MenuItem name="6-2">精选内容</MenuItem>
-            <MenuItem name="6-3">更多内容</MenuItem>
-            <MenuItem name="6-4" @click.native="$router.push({path:'/chat/chatRom'})">Chat 聊天功能</MenuItem>
-          </MenuGroup>
-        </Submenu>
         <Submenu name="7">
           <template slot="title">
             <span v-if="loginUserName">{{loginUserName}}</span>

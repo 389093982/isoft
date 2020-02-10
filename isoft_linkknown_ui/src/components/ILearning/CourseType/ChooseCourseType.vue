@@ -17,7 +17,6 @@
 
           <Row style="margin: 5px 0 5px 0;padding: 5px 15px 0px 15px;font-size: 12px;">
             <Col span="24" style="text-align: right;">
-              <a class="hovered hvr-grow hoverLinkColor mr5">加入我们</a>
               <a @click="$router.push({path:'/ilearning/about'})"
                  class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
               <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
@@ -32,9 +31,9 @@
 
     <div class="isoft_bg_white isoft_pd10 isoft_bordertop_red" style="margin-top: 5px;">
       <IBeautifulCard title="课程天地">
-        <div slot="content" style="padding: 5px;">
+        <div slot="content" style="padding: 20px 10px;">
           <div>
-            <div style="border-bottom: 2px solid #edf1f2;">
+            <div style="border-bottom: 2px solid #edf1f2;padding: 0px 0px 5px 0px;">
               <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程推荐</a>
               <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">
                 <IBeautifulLink style="font-size: 14px;"> 更多</IBeautifulLink>

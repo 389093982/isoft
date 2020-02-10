@@ -44,7 +44,7 @@
 
   .search_input:focus {
     width: 450px;
-    box-shadow: 0 0 3px rgba(142, 142, 142, 0.5);
+    box-shadow: 0 0 3px rgba(142, 142, 142, 0.22);
   }
 
   .submit {

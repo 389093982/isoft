@@ -30,7 +30,7 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/user/mine/detail'})">
+    <div class="itemArea" @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">
       <Icon type="ios-person-add-outline" :size="28"/>
       <p>我的</p>
     </div>

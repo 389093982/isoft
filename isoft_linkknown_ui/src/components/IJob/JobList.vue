@@ -143,5 +143,9 @@
 </script>
 
 <style scoped>
-
+  .box {
+    padding: 2px 5px;
+    margin: 2px 10px 2px 0px;
+    border: 1px solid rgba(191, 191, 191, 0.34);
+  }
 </style>

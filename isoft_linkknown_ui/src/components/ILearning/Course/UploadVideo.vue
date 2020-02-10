@@ -13,7 +13,7 @@
         </p>
 
         <Scroll height="280" style="margin: 5px 0;">
-          <Tag v-for="(cVideo, index) in cVideos" style="width:98%;">
+          <Tag v-for="(cVideo, index) in cVideos" style="width:98%;height: 40px;line-height: 40px;">
             <span>第{{index + 1}}集: {{cVideo.video_name}}</span>
             <span style="float: right;">
               <Icon type="md-close" @click="handleDeleteVideo(cVideo.id)" :size="16"/>
