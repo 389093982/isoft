@@ -1,7 +1,6 @@
 <template>
   <div style="margin: 10px;">
     <Row type="flex" justify="center">
-      <Col span="3"><IWorkDL/></Col>
       <Col span="3"><WorkValidate/></Col>
     </Row>
     <ISimpleLeftRightRow style="margin: 10px 10px;">
@@ -95,11 +94,10 @@
   const ISimpleConfirmModal = () => import("@/components/Common/modal/ISimpleConfirmModal");
   const IKeyValueForm = () => import("@/components/Common/form/IKeyValueForm");
   const WorkValidate = () => import("@/components/IWork/IValidate/WorkValidate");
-  const IWorkDL = () => import("@/components/IWork/IWorkDL");
 
   export default {
     name: "WorkList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,IWorkDL,WorkValidate,ISimpleConfirmModal,IKeyValueForm},
+    components: {ISimpleLeftRightRow, ISimpleSearch, WorkValidate, ISimpleConfirmModal, IKeyValueForm},
     data(){
       return {
         nodeMetas: [],

@@ -71,7 +71,6 @@
               <MenuItem name="3-3">
                 <router-link to="/iwork/filterList">过滤器管理</router-link>
               </MenuItem>
-              <MenuItem name="3-4">WorkDL管理</MenuItem>
             </Submenu>
 
             <Submenu name="4">
