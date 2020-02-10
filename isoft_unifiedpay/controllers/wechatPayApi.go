@@ -43,6 +43,6 @@ func (this *MainController) QueryOrder() {
 	qs = qs.OrderBy("-TransTime").Limit(pageSize, (currentPage-1)*pageSize)
 	qs.All(&orders)
 	dataBytes, _ := json.Marshal(orders)
-	this.Data["json"] = map[string]interface{}{"orders":string(dataBytes),"totalCount":totalCount}
+	this.Data["json"] = &map[string]interface{}{"orders":string(dataBytes),"totalCount":totalCount}
 	this.ServeJSON()
 }

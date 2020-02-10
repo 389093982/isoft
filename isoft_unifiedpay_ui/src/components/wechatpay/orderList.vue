@@ -9,13 +9,13 @@
       <Input v-model="ProductDesc" placeholder="商品描述" style="width: 150px"/>
       <DatePicker v-model="TransTime" type="date" placeholder="交易日期" style="width: 140px"></DatePicker>
       <Input v-model="TransAmount" placeholder="交易金额" style="width: 100px"/>
-      <Button type="primary" shape="circle" icon="ios-search" @click="queryOrder"></Button>
+      <Button type="primary" shape="circle" icon="ios-search" @click="clickQuery"></Button>
     </div>
     <div>
       <Table width="1020" height="auto" border :columns="columns" :data="orders"></Table>
     </div>
     <div style="text-align: center;margin-top: 10px">
-      <Page :total="page.totalCount" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+      <Page :total="page.totalCount" :page-size="page.pageSize" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
     </div>
     <Modal title="订单详情" v-model="orderDetailModal" :mask-closable="false" width="1200">
       <orderDetail :Order=orderDetailModalData></orderDetail>
@@ -81,6 +81,11 @@
       this.queryOrder()
     },
     methods:{
+      clickQuery:function(){
+        this.page.currentPage=1;
+        this.page.pageSize=10;
+        this.queryOrder()
+      },
       queryOrder:async function () {
         let params = {
           'OrderId':this.OrderId,
