@@ -3,12 +3,12 @@
     <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
       <Row>
         <Col span="6">
-          <img src="../../../../static/images/linkknown_logo.png" style="width: 180px;height: 75px;"/>
+          <img src="../../../../static/images/linkknown_logo02.png" style="width: 180px;height: 75px;cursor: pointer"/>
         </Col>
         <Col span="18">
           <Row>
             <Col span="12" style="padding: 10px 0 0 20px;">
-              <span style="color: #c3cbd6;font-size: 18px;">物联网时代，让交流更直接</span>
+              <span style="color: #b49ed6;font-size: 18px;">物联网时代，让交流更直接</span>
             </Col>
             <Col span="12">
               <ISearch @submitFunc="searchFunc"/>
