@@ -51,7 +51,7 @@
     components: {IFileUpload, CourseMeta, UploadVideo},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=course&table_field=small_icon",
         isLoading: true,
         // 我的课程
         myCourses: null,

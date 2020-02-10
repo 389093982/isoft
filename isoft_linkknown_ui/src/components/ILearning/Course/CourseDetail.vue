@@ -35,18 +35,12 @@
         <hr style="margin-top: 10px;">
         <!-- 视频链接 -->
         <Row style="margin: 10px 0;min-height: 200px;">
-          <Col span="12" v-for="cVideo in cVideos" style="padding: 5px;">
-            <Row style="background-color: #f8f8f8;padding: 3px;">
-              <Col span="20">
-                <IBeautifulLink>第{{cVideo.video_number}}集：{{cVideo.video_name}}</IBeautifulLink>
-              </Col>
-              <Col span="4">
-                <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
-                  <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
-                </router-link>
-              </Col>
-            </Row>
-          </Col>
+          <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin: 0px 10px;padding: 10px;">
+            <IBeautifulLink>第 {{index + 1}} 集：{{cVideo.video_name}}</IBeautifulLink>
+            <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
+              <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
+            </router-link>
+          </div>
           <Spin fix size="large" v-if="isLoading">
             <div class="isoft_loading"></div>
           </Spin>
@@ -155,5 +149,10 @@
   .course_img:hover .course_name {
     display: block;
     top: -30px;
+  }
+
+  .video_item:hover {
+    background-color: rgba(218, 16, 0, 0.05);
+    cursor: pointer;
   }
 </style>
