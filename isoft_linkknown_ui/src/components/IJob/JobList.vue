@@ -32,9 +32,9 @@
       </Row>
 
       <div style="padding: 10px;">
-        <Row v-for="(job,index) in jobs" :gutter="10" v-if="job.corporate_name && job.job_name"
+        <div v-for="(job,index) in jobs" v-if="job.corporate_name && job.job_name"
              style="margin: 10px 0;">
-          <div style="cursor: pointer;height: 60px;padding: 15px;background-color: rgba(219,255,227,0.29);"
+          <div style="cursor: pointer;height: 60px;padding: 15px;background-color: rgba(219,255,227,0.21);"
                @click="showJobDetail(job)">
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.corporate_name}}
             </Col>
@@ -47,7 +47,7 @@
                 :time="job.last_updated_time"/></span>
             </Col>
           </div>
-          <div style="background-color: rgba(209,212,219,0.17);padding: 8px 15px;">
+          <div style="background-color: rgba(209,212,219,0.15);padding: 8px 15px;">
             <Row>
               <Col span="16">
                 <span class="box">人工智能</span>
@@ -59,7 +59,7 @@
               </Col>
             </Row>
           </div>
-        </Row>
+        </div>
 
         <Page :total="total" :page-size="offset" show-total show-sizer
               :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -158,6 +158,7 @@
 <style scoped>
   .box {
     padding: 2px 5px;
-    border: 1px solid #bfbfbf;
+    margin: 2px 10px 2px 0px;
+    border: 1px solid rgba(191, 191, 191, 0.34);
   }
 </style>
