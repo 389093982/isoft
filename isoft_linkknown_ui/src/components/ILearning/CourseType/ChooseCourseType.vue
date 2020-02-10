@@ -5,7 +5,7 @@
         <img src="../../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;cursor: pointer"/>
       </div>
       <div style="float: left;width: 40%;height: 85px; background-color: rgba(255,105,0,0.25)">
-        一张图片
+        <img src="../../../../static/images/index_showline.gif" style="width: 100%;height: 85px;cursor: pointer"/>
       </div>
       <div style="float: left;width: 40%;">
         <div style="margin: 10px 20px 0 0 ">
