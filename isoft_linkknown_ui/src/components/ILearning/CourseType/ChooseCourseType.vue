@@ -1,32 +1,25 @@
 <template>
   <div>
     <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
-      <Row>
-        <Col span="6">
-          <img src="../../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;cursor: pointer"/>
-        </Col>
-        <Col span="18">
-          <Row>
-            <Col span="12" style="padding: 10px 0 0 20px;">
-              <span style="color: #b49ed6;font-size: 18px;">物联网时代，让交流更直接</span>
-            </Col>
-            <Col span="12">
-              <ISearch @submitFunc="searchFunc"/>
-            </Col>
-          </Row>
+      <div style="float: left;width: 20%;">
+        <img src="../../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;cursor: pointer"/>
+      </div>
+      <div style="float: left;width: 40%;height: 85px; background-color: rgba(255,105,0,0.25)">
+        一张图片
+      </div>
+      <div style="float: left;width: 40%;">
+        <div style="margin: 10px 20px 0 0 ">
+          <ISearch @submitFunc="searchFunc"/>
+        </div>
+        <div style="margin: 8px 0 0 70px ">
+          <a @click="$router.push({path:'/ilearning/about'})" class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
+          <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
+          <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
+          <a @click="$router.push({ path: '/ilearning/mine/course_space'})" class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
+        </div>
+      </div>
 
-          <Row style="margin: 5px 0 5px 0;padding: 5px 15px 0px 15px;font-size: 12px;">
-            <Col span="24" style="text-align: right;">
-              <a @click="$router.push({path:'/ilearning/about'})"
-                 class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
-              <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
-              <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})"
-                 class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
-              <a @click="$router.push({ path: '/ilearning/mine/course_space'})" class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <div style="clear: both"></div>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_bordertop_red" style="margin-top: 5px;">
