@@ -12,7 +12,10 @@
       <Button type="primary" shape="circle" icon="ios-search" @click="queryOrder"></Button>
     </div>
     <div>
-      <Table width="1020" height="430" border :columns="columns" :data="orders"></Table>
+      <Table width="1020" height="auto" border :columns="columns" :data="orders"></Table>
+    </div>
+    <div style="text-align: center;margin-top: 10px">
+      <Page :total="page.totalCount" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
     </div>
     <Modal title="订单详情" v-model="orderDetailModal" :mask-closable="false" width="1200">
       <orderDetail :Order=orderDetailModalData></orderDetail>
@@ -66,7 +69,8 @@
           }
         ],
         orders: [],
-        orderDetailModalData:{}
+        orderDetailModalData:{},
+        page:{totalCount:0,currentPage:1,pageSize:10},
       }
     },
     // created:{
@@ -74,22 +78,22 @@
     // },
     mounted (){
       //初始化界面，展示几条订单
-      this.showLastedOrders()
+      this.queryOrder()
     },
     methods:{
       queryOrder:async function () {
-        if (this.OrderId.length===0 && this.TransType.length===0 && this.ProductDesc.length===0 && this.TransTime.length===0 && this.TransAmount.length===0){
-          this.$Message.error('查询条件不能全部为空！');
-          return false;
-        }
         let params = {
           'OrderId':this.OrderId,
           'TransType':this.TransType,
           'ProductDesc':this.ProductDesc,
           'TransTime':new Date(this.TransTime).format("yyyyMMdd"),
           'TransAmount':this.TransAmount,
+          'currentPage':this.page.currentPage,
+          'pageSize':this.page.pageSize,
         };
-        let orders = await QueryOrder(params);
+        let result = await QueryOrder(params);
+        let orders = result.orders;
+        this.page.totalCount = result.totalCount;
         let ordersObj = JSON.parse(orders);
         if (ordersObj.length === 0) {
           this.$Message.warning("查不到数据！")
@@ -102,24 +106,14 @@
           this.orders = ordersObj;
         }
       },
-
-      showLastedOrders:async function() {
-        let params = {
-          'count':'8',
-        };
-        let orders = await ShowLastedOrders(params);
-        let ordersObj = JSON.parse(orders);
-        if (ordersObj.length === 0) {
-          this.$Message.warning("查不到数据！")
-        }else{
-          for (let i = 0; i < ordersObj.length; i++) {
-            ordersObj[i].TransAmount = ordersObj[i].TransAmount/100;  //金额从分转为元
-            ordersObj[i].RefundedAmount = ordersObj[i].RefundedAmount/100  //金额从分转为元
-          }
-          this.orders = ordersObj;
-        }
-      }
-
+      pageChange:function (page) {
+        this.page.currentPage = page;
+        this.queryOrder()
+      },
+      pageSizeChange:function (pageSize) {
+        this.page.pageSize = pageSize;
+        this.queryOrder()
+      },
 
     }
   }

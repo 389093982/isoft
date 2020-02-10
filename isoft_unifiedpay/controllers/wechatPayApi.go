@@ -17,10 +17,12 @@ func (this *MainController) QueryOrder() {
 	ProductDesc := this.GetString("ProductDesc")
 	TransTime := this.GetString("TransTime")
 	TransAmount := this.GetString("TransAmount")
-	logs.Info(fmt.Sprintf("接口入参: OrderId=%v, TransType=%v, ProductDesc=%v, TransTime=%v, TransAmount=%v", OrderId, TransType, ProductDesc, TransTime, TransAmount))
+	currentPage, _ := this.GetInt("currentPage")
+	pageSize,_ := this.GetInt("pageSize")
+	logs.Info(fmt.Sprintf("接口入参: OrderId=%v, TransType=%v, ProductDesc=%v, TransTime=%v, TransAmount=%v, currentPage=%v, pageSize=%v", OrderId, TransType, ProductDesc, TransTime, TransAmount, currentPage, pageSize))
 	o := orm.NewOrm()
 	var orders []*models.Order
-	qs := o.QueryTable("Order").Limit(100)
+	qs := o.QueryTable("Order")
 	if len(OrderId) > 0 {
 		qs = qs.Filter("OrderId__istartswith", OrderId)
 	}
@@ -37,23 +39,10 @@ func (this *MainController) QueryOrder() {
 		amount, _ := strconv.ParseFloat(TransAmount, 64) //string 转 float
 		qs = qs.Filter("TransAmount", int64(amount*100))
 	}
-	qs.OrderBy("-TransTime").All(&orders)
+	totalCount, _ := qs.Count()
+	qs = qs.OrderBy("-TransTime").Limit(pageSize, (currentPage-1)*pageSize)
+	qs.All(&orders)
 	dataBytes, _ := json.Marshal(orders)
-	this.Data["json"] = string(dataBytes)
-	this.ServeJSON()
-}
-
-//最新订单查询-初始化界面
-func (this *MainController) ShowLastedOrders() {
-	logs.Info("调用订单查询接口...")
-	count := this.GetString("count")
-	logs.Info(fmt.Sprintf("接口入参: count=%v", count))
-	limit, _ := strconv.Atoi(count)
-	o := orm.NewOrm()
-	var orders []*models.Order
-	qs := o.QueryTable("Order").Limit(limit)
-	qs.OrderBy("-TransTime").All(&orders)
-	dataBytes, _ := json.Marshal(orders)
-	this.Data["json"] = string(dataBytes)
+	this.Data["json"] = map[string]interface{}{"orders":string(dataBytes),"totalCount":totalCount}
 	this.ServeJSON()
 }
