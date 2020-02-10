@@ -32,10 +32,9 @@
       </Row>
 
       <div style="padding: 10px;">
-        <div v-for="(job,index) in jobs" v-if="job.corporate_name && job.job_name"
-             style="margin: 10px 0;">
-          <div style="cursor: pointer;height: 60px;padding: 15px;background-color: rgba(219,255,227,0.21);"
-               @click="showJobDetail(job)">
+        <Row v-for="(job,index) in jobs" :gutter="10" v-if="job.corporate_name && job.job_name"
+             style="padding: 15px;border-bottom: 1px solid #d7dde4;">
+          <div style="cursor: pointer;" @click="showJobDetail(job)">
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.corporate_name}}
             </Col>
             <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.job_name}}</Col>
@@ -47,19 +46,7 @@
                 :time="job.last_updated_time"/></span>
             </Col>
           </div>
-          <div style="background-color: rgba(209,212,219,0.15);padding: 8px 15px;">
-            <Row>
-              <Col span="16">
-                <span class="box">人工智能</span>
-                <span class="box">人工智能</span>
-                <span class="box">人工智能</span>
-              </Col>
-              <Col span="8">
-                <span>定期体检，五险一金定期体检，五险一金</span>
-              </Col>
-            </Row>
-          </div>
-        </div>
+        </Row>
 
         <Page :total="total" :page-size="offset" show-total show-sizer
               :styles="{'text-align': 'center','margin-top': '10px'}"
