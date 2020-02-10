@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="padding-top: 10px;">
+    <div style="padding: 10px 0px;">
       <Row>
         <Col span="2">
           <span style="font-weight: bold;">课程大类：</span>
