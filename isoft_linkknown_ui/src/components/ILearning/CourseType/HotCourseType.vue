@@ -6,10 +6,9 @@
           <span style="font-weight: bold;">课程大类：</span>
         </Col>
         <Col span="22">
-          <span v-for="element in elements">
-            <a class="isoft_font12" style="margin-right: 10px;" v-if="element.navigation_level == 0"
-               @click="currentElement=element">{{element.element_label}}</a>
-          </span>
+          <div v-for="(element,index) in levelOneElements" style="display: inline-block;margin: 0 5px 5px 5px;">
+            <a class="isoft_font12" @click="currentElement=element">{{element.element_label}}</a>
+          </div>
         </Col>
       </Row>
       <Row>
@@ -17,12 +16,12 @@
           <span style="font-weight: bold;">详细分类：</span>
         </Col>
         <Col span="22">
-          <span v-for="element in elements" style="margin-right:10px;"
-                v-if="currentElement != null && element.navigation_parent_id == currentElement.id">
+          <div v-for="(element,index) in levelTwoElements" style="display: inline-block;margin: 0 5px 5px 5px;"
+               v-if="currentElement != null && element.navigation_parent_id == currentElement.id">
             <a class="isoft_font12" @click="chooseCourseType(currentElement.element_label, element.element_label)">
               {{element.element_label}}
             </a>
-          </span>
+          </div>
         </Col>
       </Row>
     </div>
@@ -45,7 +44,8 @@
       return {
         currentElement: null,
         placement_label: '',
-        elements: [],
+        levelOneElements: [],
+        levelTwoElements: [],
       }
     },
     methods: {
@@ -54,16 +54,15 @@
       },
       onLoadElement: function (placement_label, elements) {
         this.placement_label = placement_label;
-        this.elements = elements;
-        this.currentElement = elements.filter(element => element.navigation_level == 0)[0];
+        this.levelOneElements = elements.filter(element => element.navigation_level == 0);
+        this.levelTwoElements = elements.filter(element => element.navigation_level == 1);
+        this.currentElement = this.levelOneElements[0];
       }
     },
   }
 </script>
 
 <style scoped>
-  @import "../../../assets/css/isoft_common.css";
-
   a {
     color: #657180;
   }
