@@ -58,7 +58,6 @@ const ResourceList = () => import("@/components/Resource/ResourceList");
 const UploadResource = () => import("@/components/Resource/UploadResource");
 const DownloadResource = () => import("@/components/Resource/DownloadResource");
 
-const ChatRom = () => import("@/components/Chat/ChatRom");
 const AskExpert = () => import("@/components/Communicate/AskExpert");
 const AskAnswer = () => import("@/components/Communicate/AskAnswer");
 
@@ -171,15 +170,6 @@ const IUserReouter = [{
   ]
 }];
 
-
-const IChat = [{
-  path: '/chat',
-  component: ILayout,
-  children: [
-    {path: 'chatRom', component: ChatRom},
-  ]
-}];
-
 const ICommunicate = [{
   path: '/communicate',
   component: ILayout,
@@ -264,7 +254,6 @@ const VipCenterReouter = [{
 function getAllRouters() {
   let allRouters = [];
   allRouters = joinArray(allRouters, ICommunicate);
-  allRouters = joinArray(allRouters, IChat);
   allRouters = joinArray(allRouters, IJob);
   allRouters = joinArray(allRouters, IAdvertisement);
   allRouters = joinArray(allRouters, IFoundReouter);

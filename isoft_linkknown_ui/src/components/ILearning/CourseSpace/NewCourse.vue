@@ -1,5 +1,13 @@
 <template>
   <div>
+
+    <div
+      style="line-height: 30px;height: 30px;background-color: #eee;text-align: center;margin: 10px 0;cursor: pointer;"
+      @click="$router.push({path:'/user/guide'})">
+      <Icon type="logo-buffer" style="color: red;" :size="18"/>
+      查看课程发布说明
+    </div>
+
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="课程名称" prop="course_name">
         <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
@@ -24,8 +32,6 @@
         <Button style="margin-left: 8px" @click="handleReset('formValidate')">重置</Button>
       </FormItem>
     </Form>
-
-    <MarkDownElementRender :placement_name="GLOBAL.placement_course_publish_desc"/>
   </div>
 </template>
 
@@ -33,11 +39,10 @@
   import {NewCourse} from "../../../api"
   import ChooseHotCourseType from "../CourseType/ChooseHotCourseType"
   import IBeautifulCard from "../../Common/card/IBeautifulCard"
-  import MarkDownElementRender from "../../Background/CMS/MarkDownElementRender"
 
   export default {
     name: "NewCourse",
-    components: {IBeautifulCard, ChooseHotCourseType, MarkDownElementRender},
+    components: {IBeautifulCard, ChooseHotCourseType},
     data() {
       return {
         formValidate: {

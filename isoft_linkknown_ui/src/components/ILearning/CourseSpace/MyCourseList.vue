@@ -3,7 +3,7 @@
     <div v-if="myCourses && myCourses.length > 0">
       <Row v-for="myCourse in myCourses" style="border-bottom: 1px solid #f4f4f4;padding: 10px;">
         <Col span="8">
-          <h4>课程名称：{{myCourse.course_name}}</h4>
+          <h4 class="isoft_inline_ellipsis">课程名称：{{myCourse.course_name}}</h4>
           <p>
             <img v-if="myCourse.small_image" :src="myCourse.small_image" height="120" width="180"/>
             <img v-else src="../../../assets/default.png" height="120" width="180"/>

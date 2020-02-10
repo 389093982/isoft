@@ -8,7 +8,6 @@ const placement_want_to_find = "placement_want_to_find";
 const placement_hot_project_recommod = "placement_hot_project_recommod";
 const placement_frind_link = "placement_frind_link";
 const placement_Index_news_list = "placement_Index_news_list";
-const placement_course_publish_desc = "placement_course_publish_desc";
 const placement_user_guide = "placement_user_guide";
 const placement_discount_list = "placement_discount_list";
 const placement_activity_list = "placement_activity_list";
@@ -30,7 +29,6 @@ export default {
   placement_hot_project_recommod,
   placement_frind_link,
   placement_Index_news_list,
-  placement_course_publish_desc,
   placement_user_guide,
   placement_discount_list,
   placement_activity_list,
