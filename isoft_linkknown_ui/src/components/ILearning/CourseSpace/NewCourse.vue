@@ -1,36 +1,31 @@
 <template>
   <div>
-    <Row>
-      <Col span="12" style="padding:20px;">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-          <FormItem label="课程名称" prop="course_name">
-            <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
-          </FormItem>
-          <FormItem label="课程类型" prop="course_type">
-            <Row>
-              <Col span="14"><Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input></Col>
-              <Col span="10">
-                <ChooseHotCourseType @chooseCourseType="chooseCourseType"/>
-              </Col>
-            </Row>
-          </FormItem>
-          <FormItem label="课程子类型" prop="course_sub_type">
-            <Input v-model="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
-          </FormItem>
-          <FormItem label="课程描述" prop="course_short_desc">
-            <Input v-model="formValidate.course_short_desc" type="textarea" :rows="6"
-                   placeholder="Enter course short desc..."></Input>
-          </FormItem>
-          <FormItem>
-            <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-            <Button style="margin-left: 8px" @click="handleReset('formValidate')">重置</Button>
-          </FormItem>
-        </Form>
-      </Col>
-      <Col span="12">
-        <MarkDownElementRender :placement_name="GLOBAL.placement_course_publish_desc"/>
-      </Col>
-    </Row>
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+      <FormItem label="课程名称" prop="course_name">
+        <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
+      </FormItem>
+      <FormItem label="课程类型" prop="course_type">
+        <Row>
+          <Col span="20"><Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input></Col>
+          <Col span="4">
+            <ChooseHotCourseType @chooseCourseType="chooseCourseType"/>
+          </Col>
+        </Row>
+      </FormItem>
+      <FormItem label="课程子类型" prop="course_sub_type">
+        <Input v-model="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
+      </FormItem>
+      <FormItem label="课程描述" prop="course_short_desc">
+        <Input v-model="formValidate.course_short_desc" type="textarea" :rows="6"
+               placeholder="Enter course short desc..."></Input>
+      </FormItem>
+      <FormItem>
+        <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+        <Button style="margin-left: 8px" @click="handleReset('formValidate')">重置</Button>
+      </FormItem>
+    </Form>
+
+    <MarkDownElementRender :placement_name="GLOBAL.placement_course_publish_desc"/>
   </div>
 </template>
 
