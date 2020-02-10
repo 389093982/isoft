@@ -34,6 +34,5 @@
 </script>
 
 <style scoped>
-  .bgArea {
-  }
+
 </style>
