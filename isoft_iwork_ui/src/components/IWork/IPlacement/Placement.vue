@@ -2,7 +2,13 @@
   <div>
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
-      <Button type="success" size="small" slot="left" @click="$router.push({ path: '/iwork/placementEdit'})" v-if="!this.chooserMode">新增占位符</Button>
+      <div slot="left">
+        <Button type="success" size="small" @click="$router.push({ path: '/iwork/placementEdit'})"
+                v-if="!this.chooserMode">新增占位符
+        </Button>
+        <IFileUpload size="small" ref="fileUpload" @uploadComplete="uploadComplete" action="/api/iwork/import"
+                     uploadLabel="导入"/>
+      </div>
 
       <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
@@ -19,11 +25,12 @@
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import IKeyValueForm from "../../Common/form/IKeyValueForm"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
-  import {FilterPlacement,DeletePlacementById,CopyPlacement} from "../../../api"
+  import IFileUpload from "../../Common/file/IFileUpload"
+  import {CopyPlacement, DeletePlacementById, FilterPlacement} from "../../../api"
 
   export default {
     name: "Placement",
-    components:{ISimpleLeftRightRow,ISimpleConfirmModal,IKeyValueForm,ISimpleSearch},
+    components: {ISimpleLeftRightRow, ISimpleConfirmModal, IKeyValueForm, ISimpleSearch, IFileUpload},
     props:{
       chooserMode:{ // 选择模式
         type: Boolean,
@@ -151,6 +158,14 @@
       }
     },
     methods:{
+      uploadComplete: function (result) {
+        if (result.status == "SUCCESS") {
+          this.refreshPlacementList();
+          this.$Message.success("导入成功！");
+        } else {
+          this.$Message.error(result.errorMsg);
+        }
+      },
       copyPlacement:async function(id){
         const result = await CopyPlacement(id);
         if(result.status == "SUCCESS"){
