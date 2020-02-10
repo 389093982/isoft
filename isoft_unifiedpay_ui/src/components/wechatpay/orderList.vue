@@ -15,7 +15,7 @@
       <Table width="1020" height="auto" border :columns="columns" :data="orders"></Table>
     </div>
     <div style="text-align: center;margin-top: 10px">
-      <Page :total="page.totalCount" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+      <Page :total="page.totalCount" :page-size="page.pageSize" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
     </div>
     <Modal title="订单详情" v-model="orderDetailModal" :mask-closable="false" width="1200">
       <orderDetail :Order=orderDetailModalData></orderDetail>
@@ -82,6 +82,7 @@
     },
     methods:{
       clickQuery:function(){
+        this.page.pageSize=10;
         this.page.currentPage=1;
         this.queryOrder()
       },
