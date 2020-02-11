@@ -15,7 +15,7 @@
           </video>
         </div>
       </Col>
-      <Col span="8" style="padding: 0px 20px;">
+      <Col span="8" style="padding: 16px 20px;">
         <div class="isoft_auto_with title">
           推荐课程
         </div>
