@@ -11,8 +11,13 @@
           </video>
         </div>
       </Col>
-      <Col span="8">
-        AAAAAAAAAAAAAAA
+      <Col span="8" style="padding: 30px;">
+        <div class="isoft_auto_with title">
+          推荐课程
+        </div>
+        <div style="padding: 10px;border-top: 2px solid #edeff0;">
+          ASASASASASASASASASASASASASAS
+        </div>
       </Col>
     </Row>
   </div>
@@ -49,5 +54,18 @@
 </script>
 
 <style scoped>
+  .title {
+    font-size: 18px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    font-family: "微软雅黑";
+  }
 
+  .title::after {
+    content: "";
+    display: block;
+    height: 3px;
+    border-bottom: 3px solid red;
+  }
 </style>

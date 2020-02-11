@@ -212,7 +212,8 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 func CheckCustom(app_id int64, step *models.WorkStep) (checkResult []string) {
 	defer func() {
 		if err := recover(); err != nil {
-			checkResult = append(checkResult, string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE)))
+			checkResult = append(checkResult,
+				fmt.Sprintf("%s - %s", errorutil.ToError(err).Error(), string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))))
 		}
 	}()
 	factory := &node.WorkStepFactory{WorkStep: step}

@@ -1,9 +1,12 @@
 package param
 
 import (
+	"errors"
+	"fmt"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"strings"
 )
 
@@ -42,6 +45,7 @@ func (this *ParamVauleParser) removeUnsupportChars() {
 	this.ParamValue = strings.Replace(this.ParamValue, "\n", "", -1)
 }
 
+// 获取静态字段值,即无需运行流程(Runtime 运行时)的数据
 func (this *ParamVauleParser) GetStaticParamValue(app_id int64) interface{} {
 	this.removeUnsupportChars()
 	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
@@ -53,14 +57,26 @@ func (this *ParamVauleParser) GetStaticParamValue(app_id int64) interface{} {
 		if resource, ok := memory.ResourceMap.Load(string(app_id) + "_" + resource_name); ok {
 			_resource := resource.(*models.Resource)
 			if _resource.ResourceType == "db" {
+				if strings.HasPrefix(_resource.ResourceDsn, "$Global.") {
+					this.ParamValue = _resource.ResourceDsn
+					return this.GetStaticParamValue(app_id)
+				}
 				return _resource.ResourceDsn
 			} else if _resource.ResourceType == "sftp" || _resource.ResourceType == "ssh" {
 				return _resource
 			}
 		}
 		return ""
-	} else if strings.HasPrefix(this.ParamValue, "$WorkVars.") {
-		return strings.Replace(strings.Replace(this.ParamValue, "$WorkVars.", "", -1), ";", "", -1)
+	} else if strings.HasPrefix(this.ParamValue, "$Global.") {
+		gvName := strings.TrimPrefix(this.ParamValue, "$Global.")
+		gvName = strings.TrimSuffix(gvName, ";")
+		if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, sysconfig.ENV_ONUSE)); ok {
+			return gv.(*models.GlobalVar).Value
+		} else if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, "dev")); ok {
+			return gv.(*models.GlobalVar).Value
+		} else {
+			panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))
+		}
 	}
 	return this.ParamValue
 }

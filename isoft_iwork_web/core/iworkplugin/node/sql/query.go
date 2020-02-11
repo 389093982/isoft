@@ -1,8 +1,8 @@
 package sql
 
 import (
-	"errors"
 	"fmt"
+	"github.com/pkg/errors"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
@@ -158,7 +158,7 @@ func validateAndGetDataStoreName(app_id int64, step *models.WorkStep) string {
 	}
 	_, err := iworkpool.GetDBConn("mysql", dataSourceName) // 全局 db 不能 Close
 	if err != nil {
-		panic(fmt.Sprintf("Can't get DB connection for %s!", dataSourceName))
+		panic(errors.Wrapf(err, "Can't get DB connection for %s!", dataSourceName))
 	}
 	return dataSourceName
 }
