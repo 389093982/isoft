@@ -1,7 +1,6 @@
 <template>
   <div>
     <LoginHeader/>
-    <ImproveAccount/>
     <LoginBg/>
     <LoginFooter/>
   </div>
@@ -9,13 +8,12 @@
 
 <script>
   import LoginHeader from "./LoginHeader"
-  import ImproveAccount from "./ImproveAccount"
   import LoginBg from "./LoginBg"
   import LoginFooter from "./LoginFooter"
 
   export default {
     name: "Login",
-    components: {LoginHeader, ImproveAccount, LoginBg, LoginFooter}
+    components: {LoginHeader, LoginBg, LoginFooter}
   }
 </script>
 

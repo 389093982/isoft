@@ -1,37 +1,32 @@
 <template>
-  <div id="header">
-    <div class="wellogin">欢迎登陆</div>
-    <div style="position: absolute;top: 40px;right: 100px;">
-      <b id="question"></b>
-      <span style="font-size: 14px;"><a @click="$router.push({path:'/ilearning/advise'})">我要吐槽 / 建议</a></span>
+  <div style="height: 60px;background-color: white">
+    <div style="float: left;width: 20%;">
+      <img src="../../../../static/images/linkknown_logo02.png" style="width: 120px;height: 60px;margin-left: 20px"/>
     </div>
+    <div style="float: left;width: 60%;padding: 20px 0 0 0;">
+      <div style="background-color: #fef2f2;width:80%;height: 25px;text-align: center;border-radius: 10px;border: 1px #ffb4a8 solid">
+        <div style="margin: 2px 0 0 0 ">
+          依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完善账号信息!
+          <a href="javascript:;" @click="$router.push({path:'/sso/regist', query: { pattern: 1 }})"><code style="color: #eb7d37;margin-left: 5px"><u>完善账号资料</u></code></a>
+        </div>
+      </div>
+    </div>
+    <div style="float: right;width: 20%;padding: 20px 0 0 0 ">
+      <b id="question"></b>
+      <span style="font-size: 14px;"><a @click="$router.push({path:'/ilearning/advise'})"><b style="color: #ff6900">我要吐槽 / 建议</b></a></span>
+    </div>
+    <div style="clear: both"></div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "LoginHeader"
+    name: "LoginHeader",
+    components: {}
   }
 </script>
 
 <style scoped>
-  #header {
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-    height: 70px;
-    padding: 5px;
-  }
-
-  .wellogin {
-    display: block;
-    width: 110px;
-    height: 40px;
-    position: absolute;
-    top: 20px;
-    left: 50px;
-    font-size: 20px;
-  }
-
   #question {
     display: inline-block;
     width: 18px;
@@ -41,12 +36,10 @@
     overflow: hidden;
     vertical-align: middle;
   }
-
   a {
     color: #666;
     text-decoration: none;
   }
-
   a:hover {
     color: #E4393C;
     text-decoration: underline;
