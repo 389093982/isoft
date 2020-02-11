@@ -10,7 +10,7 @@
 
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="课程名称" prop="course_name">
-        <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
+        <Input v-model.trim="formValidate.course_name" placeholder="Enter course name..."/>
       </FormItem>
       <FormItem label="课程类型" prop="course_type">
         <Row>
@@ -21,11 +21,14 @@
         </Row>
       </FormItem>
       <FormItem label="课程子类型" prop="course_sub_type">
-        <Input v-model="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
+        <Input v-model.trim="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
       </FormItem>
       <FormItem label="课程描述" prop="course_short_desc">
-        <Input v-model="formValidate.course_short_desc" type="textarea" :rows="6"
+        <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="6"
                placeholder="Enter course short desc..."></Input>
+      </FormItem>
+      <FormItem label="自定义标签语" prop="course_label">
+        <Input v-model.trim="formValidate.course_label" placeholder="多个标签语用 / 分割"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
@@ -36,19 +39,22 @@
 </template>
 
 <script>
-  import {NewCourse} from "../../../api"
+  import {EditCourse, ShowCourseDetail} from "../../../api"
   import ChooseHotCourseType from "../CourseType/ChooseHotCourseType"
   import IBeautifulCard from "../../Common/card/IBeautifulCard"
+  import {checkEmpty} from "../../../tools";
 
   export default {
-    name: "NewCourse",
+    name: "EditCourse",
     components: {IBeautifulCard, ChooseHotCourseType},
     data() {
       return {
         formValidate: {
-          course_name: '',
-          course_type: '',
+          id: -1,
+          course_name: "",
+          course_type: "",
           course_sub_type: "",
+          course_label: "",
           course_short_desc: "",
         },
         ruleValidate: {
@@ -71,11 +77,10 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await NewCourse(this.formValidate.course_name,
-              this.formValidate.course_type, this.formValidate.course_sub_type, this.formValidate.course_short_desc);
+            const result = await EditCourse(this.formValidate);
             if (result.status == "SUCCESS") {
               this.$Message.success('提交成功!');
-              this.$router.push({path: "/ilearning/mine/course_space/myCourseList"});
+              this.$router.push({path: "/ilearning/course_space/myCourseList"});
             } else {
               this.$Message.error('提交失败!');
             }
@@ -90,6 +95,17 @@
       chooseCourseType: function (course_type, course_sub_type) {
         this.formValidate.course_type = course_type;
         this.formValidate.course_sub_type = course_sub_type;
+      },
+      refreshCourseInfo: async function (course_id) {
+        const result = await ShowCourseDetail(course_id);
+        if (result.status == "SUCCESS") {
+          this.formValidate = result.course;
+        }
+      }
+    },
+    mounted() {
+      if (!checkEmpty(this.$route.query.course_id) && this.$route.query.course_id > 0) {
+        this.refreshCourseInfo(this.$route.query.course_id);
       }
     }
   }

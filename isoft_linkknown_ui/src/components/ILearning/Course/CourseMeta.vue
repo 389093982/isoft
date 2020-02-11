@@ -9,7 +9,7 @@
       课程名称：{{course.course_name}}
       <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/index'})"
             style="margin-left: 30px;">搜索同类资源</span>
-      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/ilearning/mine/course_space'}))"
+      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/ilearning/course_space'}))"
             style="margin-left: 30px;">我的课程空间</span>
       <span class="isoft_hover_red" @click=""
             style="margin-left: 30px;">开课流程</span>

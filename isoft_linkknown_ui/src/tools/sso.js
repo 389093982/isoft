@@ -28,7 +28,7 @@ const _checkSSOLogin = function (to, from, next) {
   if ((_mustLogin(to.path) && !_checkHasLogin()) || (_mustAdminLogin(to.path) && (!_checkHasLogin() || !_checkAdminLogin()))) {
     if (!checkContainsInString(from.path, "/sso/login/")) {
       // 跳往登录页面
-      window.location.href = "/#/sso/login/?redirectUrl=" + window.location.href;
+      window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
     }
   } else {
     next();
@@ -36,8 +36,8 @@ const _checkSSOLogin = function (to, from, next) {
 };
 
 const _mustLogin = function (target) {
-  // 包含 /mine/ 是必须要检查登录状态的,其它地址是免登陆的
-  return checkContainsInString(target, "/mine/");
+  // 注册必须要登录的地址白名单
+  return target.indexOf("/ilearning/course_space") >= 0;
 }
 
 const _mustAdminLogin = function (target) {
@@ -46,7 +46,7 @@ const _mustAdminLogin = function (target) {
 }
 
 const _checkNotLogin = function () {
-  if (checkContainsInString(window.location.href, "/#/sso/login") || checkContainsInString(window.location.href, "/#/sso/regist")) {
+  if (checkContainsInString(window.location.href, "/sso/login") || checkContainsInString(window.location.href, "/sso/regist")) {
     return true;
   }
   return false;

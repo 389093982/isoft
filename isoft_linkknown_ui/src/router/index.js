@@ -21,7 +21,7 @@ const UserDetail = () => import("@/components/User/UserDetail");
 const UserGuide = () => import("@/components/User/UserGuide");
 const ILearningIndex = () => import("@/components/ILearning/Index");
 const CourseSpace = () => import("@/components/ILearning/CourseSpace/CourseSpace");
-const NewCourse = () => import("@/components/ILearning/CourseSpace/NewCourse");
+const EditCourse = () => import("@/components/ILearning/CourseSpace/EditCourse");
 const RecentlyViewed = () => import("@/components/ILearning/CourseSpace/RecentlyViewed");
 const MyCourseList = () => import("@/components/ILearning/CourseSpace/MyCourseList");
 const CourseDetail = () => import("@/components/ILearning/Course/CourseDetail");
@@ -115,11 +115,11 @@ const ILearningRouter = {
       component: ILearningIndex,
     },
     {
-      path: 'mine/course_space',
+      path: 'course_space',
       component: CourseSpace,
-      redirect: '/ilearning/mine/course_space/myCourseList',
+      redirect: '/ilearning/course_space/myCourseList',
       children: [
-        {path: 'newCourse', component: NewCourse,},
+        {path: 'editCourse', component: EditCourse,},
         {path: 'myCourseList', component: MyCourseList,},
         {path: 'RecentlyViewed', component: RecentlyViewed,},
       ]
@@ -272,7 +272,7 @@ function getAllRouters() {
 export default new Router({
   // # 主要用来区分前后台应用, history 模式需要使用 nginx 代理
   // History 模式,去除vue项目中的 #
-  // mode: 'history',
+  mode: 'history',
   routes: getAllRouters(),
   // 页面跳转时,让页面滚动在顶部
   scrollBehavior(to, from, savedPosition) {

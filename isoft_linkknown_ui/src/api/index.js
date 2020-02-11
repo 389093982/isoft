@@ -87,13 +87,7 @@ export const UpdateUserIcon = (userName, small_icon) => ajax(BASE_URL + '/iwork/
 export const ShowBlogArticleDetail = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail', {id}, 'GET');
 
 // 新建课程
-export const NewCourse = (course_name, course_type, course_sub_type, course_short_desc) =>
-  ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/NewCourse2", {
-    course_name,
-    course_type,
-    course_sub_type,
-    course_short_desc
-  }, 'GET');
+export const EditCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/EditCourse", params, 'GET');
 
 // 根据用户名查询用户的课程信息
 export const GetCourseListByUserName = (userName) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", {userName}, 'GET');
@@ -265,6 +259,6 @@ export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/V
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
-export const LoginAddr = "/#/sso/login/";
+export const LoginAddr = "/sso/login/";
 
 export const expires = /*60 * 60 * */1000;
