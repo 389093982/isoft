@@ -16,7 +16,7 @@
         <Col span="16">
           <CourseMeta :course="myCourse"/>
           <p>
-            <router-link :to="{path:'/ilearning/mine/course_space/editCourse',query:{course_id:myCourse.id}}"
+            <router-link :to="{path:'/ilearning/course_space/editCourse',query:{course_id:myCourse.id}}"
                          style="color:#1000db;font-family: Arial;font-weight: 700;">编辑课程信息
             </router-link>
             <router-link :to="{path:'/ilearning/course_detail',query:{course_id:myCourse.id}}"
@@ -29,7 +29,7 @@
     </div>
     <div v-if="myCourses && myCourses.length == 0" style="padding: 30px 10px;">
       您还没有任何课程奥，如果你想传播你的知识，
-      <IBeautifulLink font-weight="bold" @onclick="$router.push({path:'/ilearning/mine/course_space/editCourse'})">
+      <IBeautifulLink font-weight="bold" @onclick="$router.push({path:'/ilearning/course_space/editCourse'})">
         请前去开课！
       </IBeautifulLink>
       <IBeautifulLink @onclick="">如何开课呢？</IBeautifulLink>

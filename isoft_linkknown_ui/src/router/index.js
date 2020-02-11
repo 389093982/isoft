@@ -115,9 +115,9 @@ const ILearningRouter = {
       component: ILearningIndex,
     },
     {
-      path: 'mine/course_space',
+      path: 'course_space',
       component: CourseSpace,
-      redirect: '/ilearning/mine/course_space/myCourseList',
+      redirect: '/ilearning/course_space/myCourseList',
       children: [
         {path: 'editCourse', component: EditCourse,},
         {path: 'myCourseList', component: MyCourseList,},

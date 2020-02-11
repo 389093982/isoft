@@ -36,8 +36,8 @@ const _checkSSOLogin = function (to, from, next) {
 };
 
 const _mustLogin = function (target) {
-  // 包含 /mine/ 是必须要检查登录状态的,其它地址是免登陆的
-  return checkContainsInString(target, "/mine/");
+  // 注册必须要登录的地址白名单
+  return target.indexOf("/ilearning/course_space") >= 0;
 }
 
 const _mustAdminLogin = function (target) {
