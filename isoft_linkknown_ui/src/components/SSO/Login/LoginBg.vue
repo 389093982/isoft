@@ -1,9 +1,7 @@
 <template>
-  <div id="content" style="width: 100%;">
-    <div id="section">
-      <div class="login_bg">
-        <LoginForm/>
-      </div>
+  <div style="width: 100%;">
+    <div class="login_bg">
+      <LoginForm/>
     </div>
   </div>
 </template>
@@ -18,14 +16,9 @@
 </script>
 
 <style scoped>
-  #section {
-    width: 100%;
-    height: 500px;
-  }
-
   .login_bg {
-    height: 100%;
+    height: 550px;
     width: 100%;
-    background: url(../../../assets/sso/login_bg02.jpg) 0px -300px no-repeat;
+    background: url(../../../assets/sso/login_bg02.jpg) 0px -200px no-repeat;
   }
 </style>

@@ -13,7 +13,7 @@
     </div>
     <div style="float: right;width: 20%;padding: 20px 0 0 0 ">
       <b id="question"></b>
-      <span style="font-size: 14px;"><a @click="$router.push({path:'/ilearning/advise'})"><b style="color: #ff6900">我要吐槽 / 建议</b></a></span>
+      <span style="font-size: 14px;"><a @click="$router.push({path:'/ilearning/advise'})"><b style="color: #ff6900">意见 / 吐槽</b></a></span>
     </div>
     <div style="clear: both"></div>
   </div>

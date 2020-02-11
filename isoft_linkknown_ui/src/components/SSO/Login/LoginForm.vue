@@ -1,25 +1,39 @@
 <template>
   <div id="login_area">
-    <div id="login_header" style="float: right;width: 94%">
-      <h4>
-        密码登录
-        <a style="float: right;width: 30%;color:#2E82FF" href="/sso/login">访问首页</a>
-      </h4>
+    <div id="login_header">
+      <div style="float: left;width: 50%;">
+        <div style="margin: 15px 0 0 20px ">
+          <h2>密码登录</h2>
+        </div>
+      </div>
+      <div style="float: left;width: 50%">
+        <div style="margin: 15px 0 0 70px ">
+          <h2><a style="color:#2E82FF" href="/sso/login">访问首页</a></h2>
+        </div>
+      </div>
+      <div style="clear: both"></div>
     </div>
 
-    <div id="login_content" style="margin: 0 auto;padding:20px;">
-      <input class="focus" name="username" placeholder="请输入用户名" type="text"
-             style="width: 100%;height: 40px;padding:3px;" required/>
+    <div id="login_submit_content">
+      <input class="focus" name="username" placeholder="请输入账号" type="text" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " required/>
       <input type="password" style="display:none">
-      <input class="focus" name="passwd" placeholder="请输入密码" type="password"
-             style="width: 100%;height: 40px;margin-top:20px;padding:3px;" autocomplete="new-password" required/>
-      <span id="error_msg" v-if="showError">{{errorMsg}}</span>
-      <p>
-        <input id="submit" type="submit" value="登录" @click="login">
-        <router-link :to="{path:'/sso/forget', query: { pattern: 2 }}" style="float: right;color: #2e82ff;">忘记密码？
-        </router-link>
-      </p>
+      <input class="focus" name="passwd" placeholder="请输入密码" type="password" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " autocomplete="new-password" required/>
+      <div style="margin: 0 0 0 0 ">
+        <div style="float: left;width: 50%;">
+          <div style="margin: 8px 0 0 15px ">
+            <span style="font-size: 12px;color: red" v-if="showError">{{errorMsg}}</span>
+          </div>
+        </div>
+        <div style="float: right;width: 50%;">
+          <div style="float:right;padding: 8px 15px 0 0 ">
+            <router-link :to="{path:'/sso/forget', query: { pattern: 2 }}">忘记密码</router-link>
+          </div>
+        </div>
+        <div style="clear: both"></div>
+      </div>
+      <input id="submit" type="submit" value="登    录" @click="login">
     </div>
+
     <div id="login_footer">
       <router-link :to="{path:'/sso/user/loginProblem'}" style="float: left;color: #2e82ff;">常见登录问题</router-link>
       <router-link :to="{path:'/sso/regist', query: { pattern: 1 }}" style="float: right;color: #2e82ff;">立即注册
@@ -72,26 +86,26 @@
 <style scoped>
   #login_area {
     width: 320px;
-    height: 450px;
-    background: #ffffff;
+    height: 300px;
+    background: white;
     float: right;
-    margin-top: 20px;
+    margin-top: 100px;
     margin-right: 150px;
     position: relative;
   }
 
   #login_header {
-    height: 80px;
-    line-height: 80px;
-    text-align: left;
-    font-size: 16px;
-    color: #000;
+    width: 100%;height: 50px;
+  }
+
+  #login_submit_content{
+
   }
 
   #submit {
-    width: 100%;
+    width: 90%;
     height: 40px;
-    margin-top: 30px;
+    margin: 8px 0 0 15px ;
     margin-bottom: 20px;
     display: block;
     line-height: 40px;
@@ -104,7 +118,6 @@
   }
 
   #login_footer {
-    color: #2e82ff;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -112,13 +125,6 @@
     line-height: 60px;
     background: #f0f6ff;
     padding: 0 28px;
-  }
-
-  #error_msg {
-    font-size: 12px;
-    color: red;
-    float: right;
-    margin-top: 5px;
   }
 
   a {
