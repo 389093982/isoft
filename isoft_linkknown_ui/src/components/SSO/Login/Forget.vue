@@ -3,7 +3,7 @@
     <div style="text-align: center;padding-left: 50px;">
       <span style="height: 60px;line-height: 60px;font-size: 16px;color: #000;">修改账号</span>
       <span>
-        <a href="/#/sso/login/" style="font-size: 15px;font-weight: inherit;">已有账号,前去登录</a>
+        <a href="/sso/login/" style="font-size: 15px;font-weight: inherit;">已有账号,前去登录</a>
       </span>
     </div>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">

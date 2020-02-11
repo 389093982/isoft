@@ -8,7 +8,7 @@
       </div>
       <div style="float: left;width: 50%">
         <div style="margin: 15px 0 0 70px ">
-          <h2><a style="color:#2E82FF" href="/sso/login">访问首页</a></h2>
+          <h2><a style="color:#2E82FF" href="/">访问首页</a></h2>
         </div>
       </div>
       <div style="clear: both"></div>
