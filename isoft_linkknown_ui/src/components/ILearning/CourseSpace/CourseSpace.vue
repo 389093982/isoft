@@ -5,7 +5,7 @@
         <IBeautifulCard title="我的课程空间">
           <div slot="content">
             <p style="padding: 5px 5px 5px 20px;">
-              <IBeautifulLink @onclick="$router.push({path:'/ilearning/mine/course_space/newCourse'})">我要开课
+              <IBeautifulLink @onclick="$router.push({path:'/ilearning/mine/course_space/editCourse'})">我要开课
               </IBeautifulLink>
             </p>
             <p style="padding: 5px 5px 5px 20px;">

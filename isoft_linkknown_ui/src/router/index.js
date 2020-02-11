@@ -21,7 +21,7 @@ const UserDetail = () => import("@/components/User/UserDetail");
 const UserGuide = () => import("@/components/User/UserGuide");
 const ILearningIndex = () => import("@/components/ILearning/Index");
 const CourseSpace = () => import("@/components/ILearning/CourseSpace/CourseSpace");
-const NewCourse = () => import("@/components/ILearning/CourseSpace/NewCourse");
+const EditCourse = () => import("@/components/ILearning/CourseSpace/EditCourse");
 const RecentlyViewed = () => import("@/components/ILearning/CourseSpace/RecentlyViewed");
 const MyCourseList = () => import("@/components/ILearning/CourseSpace/MyCourseList");
 const CourseDetail = () => import("@/components/ILearning/Course/CourseDetail");
@@ -119,7 +119,7 @@ const ILearningRouter = {
       component: CourseSpace,
       redirect: '/ilearning/mine/course_space/myCourseList',
       children: [
-        {path: 'newCourse', component: NewCourse,},
+        {path: 'editCourse', component: EditCourse,},
         {path: 'myCourseList', component: MyCourseList,},
         {path: 'RecentlyViewed', component: RecentlyViewed,},
       ]
