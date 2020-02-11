@@ -2,6 +2,10 @@
   <div class="isoft_bg_white isoft_pd10" style="height: 800px;">
     <Row :gutter="10">
       <Col span="16">
+        <div v-if="course && curVideo" style="height: 50px;line-height: 50px;font-size: 16px;
+          color: #1c1f21;font-weight: 700;padding: 2px 10px;">
+          {{course.course_name}} / {{curVideo.video_name | filterSuffix }}
+        </div>
         <div style="margin: 0 auto;">
           <video ref="video" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay"
                  controlslist="nodownload">
@@ -34,7 +38,9 @@
       return {
         recommendCourses: [],
         cVideos: [],
+        course: null,
         curVideoId: -1, // 当前播放视频 id
+        curVideo: null,
       }
     },
     methods: {
@@ -74,8 +80,10 @@
         const course_id = this.$route.query.course_id;
         const result = await ShowCourseDetail(course_id);
         if (result.status == "SUCCESS") {
+          this.course = result.course;
           // 根据 id 顺序排序
           this.cVideos = result.cVideos.sort((video1, video2) => video1.id < video2.id);
+          this.curVideo = this.cVideos.filter(video => video.id == this.$route.query.video_id)[0];
         }
       }
     },
@@ -88,6 +96,17 @@
       this.playVideo(this.$route.query.video_id);
       // 注册播放下一集事件
       this.addPlayNextEventListener();
+    },
+    filters: {
+      filterSuffix: function (value) {
+        // 去除视频文件后缀
+        return value.slice(0, value.indexOf("."));
+      }
+    },
+    watch: {
+      curVideoId: function (curVideoId) {
+        this.curVideo = this.cVideos.filter(video => video.id == curVideoId)[0];
+      }
     }
   }
 </script>
