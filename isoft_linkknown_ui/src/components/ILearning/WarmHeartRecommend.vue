@@ -12,9 +12,12 @@
       </Col>
       <Col span="12" style="padding-left: 10px;">
         <div style="height: 40px;padding:7px;margin-bottom:10px;background-color: rgba(228,228,228,0.4);">
-          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('hot')">热门</a>
-          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('special')">特色</a>
-          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('high_comment')">高评</a>
+          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('hot')"
+             :style="{color: checked_tag == 'hot' ? 'red' : ''}">热门</a>
+          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('special')"
+             :style="{color: checked_tag == 'special' ? 'red' : ''}">特色</a>
+          <a class="hovered hvr-grow hoverLinkColor mr5" @click="refreshCustomTagCourse('high_comment')"
+             :style="{color: checked_tag == 'high_comment' ? 'red' : ''}">高评</a>
         </div>
         <div style="column-count:3;">
           <HoverBigImg v-for="(course, index) in display_courses"
@@ -37,11 +40,13 @@
     components: {HoverBigImg},
     data() {
       return {
+        checked_tag: 'hot',
         display_courses: [],
       }
     },
     methods: {
       refreshCustomTagCourse: async function (custom_tag) {
+        this.checked_tag = custom_tag;
         const result = await QueryCustomTagCourse({custom_tag: custom_tag});
         if (result.status == "SUCCESS") {
           // 九宫格
