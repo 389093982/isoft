@@ -14,13 +14,11 @@
           </Col>
           <Col span="16">
             <CourseMeta :course="course"/>
-            <p>
+            <p v-if="course_labels && course_labels.length > 0">
               标签：
-              <Tag>生动形象</Tag>
-              <Tag>生动形象</Tag>
-              <Tag>java</Tag>
-              <Tag>java</Tag>
-              <Tag>java</Tag>
+              <Tag v-for="(course_label, index) in course_labels">
+                {{course_label}}
+              </Tag>
             </p>
             <p>
               <a href="javascript:;" v-if="course_collect==true"
@@ -66,6 +64,7 @@
   import UserAbout from "../../User/UserAbout"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
+  import {checkEmpty, strSplit} from "../../../tools";
 
   export default {
     name: "CourseDetail",
@@ -82,6 +81,8 @@
         course_collect: false,
         // 课程点赞
         course_parise: false,
+        // 课程标签语
+        course_labels: [],
       }
     },
     methods: {
@@ -100,6 +101,9 @@
             this.cVideos = result.cVideos;
             this.course_collect = result.course_collect;
             this.course_parise = result.course_parise;
+            if (!checkEmpty(result.course.course_label)) {
+              this.course_labels = strSplit(result.course.course_label, "/");
+            }
           }
         } finally {
           this.isLoading = false;
