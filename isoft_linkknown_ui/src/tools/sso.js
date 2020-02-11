@@ -28,7 +28,7 @@ const _checkSSOLogin = function (to, from, next) {
   if ((_mustLogin(to.path) && !_checkHasLogin()) || (_mustAdminLogin(to.path) && (!_checkHasLogin() || !_checkAdminLogin()))) {
     if (!checkContainsInString(from.path, "/sso/login/")) {
       // 跳往登录页面
-      window.location.href = "/#/sso/login/?redirectUrl=" + window.location.href;
+      window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
     }
   } else {
     next();
@@ -46,7 +46,7 @@ const _mustAdminLogin = function (target) {
 }
 
 const _checkNotLogin = function () {
-  if (checkContainsInString(window.location.href, "/#/sso/login") || checkContainsInString(window.location.href, "/#/sso/regist")) {
+  if (checkContainsInString(window.location.href, "/sso/login") || checkContainsInString(window.location.href, "/sso/regist")) {
     return true;
   }
   return false;

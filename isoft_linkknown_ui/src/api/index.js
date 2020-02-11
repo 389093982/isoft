@@ -259,6 +259,6 @@ export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/V
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
-export const LoginAddr = "/#/sso/login/";
+export const LoginAddr = "/sso/login/";
 
 export const expires = /*60 * 60 * */1000;

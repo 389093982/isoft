@@ -272,7 +272,7 @@ function getAllRouters() {
 export default new Router({
   // # 主要用来区分前后台应用, history 模式需要使用 nginx 代理
   // History 模式,去除vue项目中的 #
-  // mode: 'history',
+  mode: 'history',
   routes: getAllRouters(),
   // 页面跳转时,让页面滚动在顶部
   scrollBehavior(to, from, savedPosition) {

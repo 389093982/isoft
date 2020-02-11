@@ -199,7 +199,7 @@ export function CheckHasLoginConfirmDialog(node, pushObj) {
       title: '登录提示！',
       content: '您还未登录！前往登录？',
       onOk: () => {
-        window.location.href = "/#/sso/login/?redirectUrl=" + window.location.href;
+        window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
       },
     });
   } else {
@@ -214,7 +214,7 @@ export function CheckHasLoginConfirmDialog2(node, callback) {
       title: '登录提示！',
       content: '您还未登录！前往登录？',
       onOk: () => {
-        window.location.href = "/#/sso/login/?redirectUrl=" + window.location.href;
+        window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
       },
     });
   } else {
