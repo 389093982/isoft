@@ -107,6 +107,7 @@ func (this *WorkController) EditAuditTaskSource() {
 	resourceName := this.GetString("resource_name")
 	querySql := this.GetString("query_sql")
 	resource, _ := models.QueryResourceByName(app_id, resourceName)
+	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 	colNames := sqlutil.GetMetaDatas(querySql, resource.ResourceDsn)
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
@@ -147,8 +148,8 @@ func (this *WorkController) ExecuteAuditTask() {
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
 	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
 	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
-	_, affected, err := sqlutil.ExecuteSql(sql_str, nil, resource.ResourceDsn)
-	if err == nil && affected > 0 {
+	_, _, err := sqlutil.ExecuteSql(sql_str, nil, resource.ResourceDsn)
+	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

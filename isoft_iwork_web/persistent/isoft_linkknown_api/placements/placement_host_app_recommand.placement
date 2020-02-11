@@ -71,7 +71,7 @@
 		<Content></Content>
 		<LinkedRefer></LinkedRefer>
 		<ImgPath>http://localhost:8086/api/files/7154aaab-5721-4e8c-a2a3-c0c0669ae96f</ImgPath>
-		<Status>1</Status>
+		<Status>-1</Status>
 		<NavigationLevel>0</NavigationLevel>
 		<NavigationParentId>0</NavigationParentId>
 		<MdContent></MdContent>

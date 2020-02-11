@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="isoft_bg_white">
+    <div class="isoft_bg_white isoft_pd10">
       <p>
         <Button type="success" style="width: 20%;">我要提问</Button>
         <Button type="success" style="width: 20%;">我要提问</Button>

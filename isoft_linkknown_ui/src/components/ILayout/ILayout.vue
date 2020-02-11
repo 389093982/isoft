@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Layout :style="{minHeight: '550px'}">
+    <Layout :style="{minHeight: '550px'}" style="background-color: rgba(226,182,205,0.27);">
       <Header>
         <Header/>
       </Header>
