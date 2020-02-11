@@ -11,12 +11,14 @@
           </video>
         </div>
       </Col>
-      <Col span="8" style="padding: 30px;">
+      <Col span="8" style="padding: 0px 20px;">
         <div class="isoft_auto_with title">
           推荐课程
         </div>
-        <div style="padding: 10px;border-top: 2px solid #edeff0;">
-          ASASASASASASASASASASASASASAS
+        <div style="padding: 10px 0px;border-top: 2px solid #edeff0;">
+          <div class="course_item isoft_inline_ellipsis" v-for="(course, index) in recommendCourses">
+            {{course.course_name}}
+          </div>
         </div>
       </Col>
     </Row>
@@ -24,12 +26,14 @@
 </template>
 
 <script>
-  import {videoPlayUrl} from "../../../api"
+  import {QueryCustomTagCourse, videoPlayUrl} from "../../../api"
 
   export default {
     name: "VideoPay",
     data() {
-      return {}
+      return {
+        recommendCourses: [],
+      }
     },
     methods: {
       playVideo: function () {
@@ -46,8 +50,15 @@
         };
         xhr.send();
       },
+      refreshCustomTagCourse: async function (custom_tag) {
+        const result = await QueryCustomTagCourse({custom_tag: custom_tag});
+        if (result.status == "SUCCESS") {
+          this.recommendCourses = result.custom_tag_courses;
+        }
+      }
     },
     mounted: function () {
+      this.refreshCustomTagCourse('recommand');
       this.playVideo();
     }
   }
@@ -67,5 +78,15 @@
     display: block;
     height: 3px;
     border-bottom: 3px solid red;
+  }
+
+  .course_item {
+    padding: 5px 8px;
+    cursor: pointer;
+  }
+
+  .course_item:hover {
+    background-color: rgba(0, 191, 20, 0.68);
+    color: white;
   }
 </style>
