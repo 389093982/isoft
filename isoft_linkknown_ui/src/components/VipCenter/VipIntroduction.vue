@@ -17,7 +17,7 @@
       <div class="demo-split">
         <Split v-model="split1">
           <div slot="left" class="demo-split-pane">
-            <a><p style="color: #ff6600">非会员简介:</p></a>
+            <a><p style="color: #ff6600">普通用户简介:</p></a>
           </div>
           <div slot="right" class="demo-split-pane">
             <a><p style="color: #ff6600;font-size: 15px">会员介绍:</p></a>
@@ -37,7 +37,7 @@
         split1: 0.5,
         columns1: [
           {
-            title: '非会员',
+            title: '普通用户',
             key: 'notVip'
           },
           {
@@ -51,7 +51,7 @@
         ],
         data1: [
           {
-            notVip: '学习时间有限',
+            notVip: '学习&发布教学视频',
             isVip: '学习时间不限',
             privilege: '随时随地都可以登录学习',
           },
