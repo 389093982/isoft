@@ -11,15 +11,17 @@
         </video>
       </Col>
       <Col span="12" style="padding-left: 10px;">
-        <div v-if="custom_tags && custom_tags.length > 0" class="linearTransitionBg"
+        <div v-if="custom_tags && custom_tags.length > 0"
              style="height: 40px;padding:7px;margin-bottom:10px;background-color: rgba(228,228,228,0.4);">
           <a class="hovered hvr-grow hoverLinkColor mr5" v-for="(tag, index) in custom_tags"
              @click="getCustomTagCourses(tag.custom_tag)">{{tag.custom_tag}}</a>
         </div>
-        <HoverBigImg v-for="(course, index) in display_courses"
-                     class="hoverBorderShadow" width="144px" height="98px"
-                     :src-img="course.small_image" style="float: left;margin: 0 10px 10px 0;"
-                     @onclick="$router.push({path:'/ilearning/course_detail', query:{course_id: course.id}})"/>
+        <div style="column-count:3;">
+          <HoverBigImg v-for="(course, index) in display_courses"
+                       class="hoverBorderShadow" width="100%" height="98px"
+                       :src-img="course.small_image" style="float: left;margin: 0 10px 10px 0;"
+                       @onclick="$router.push({path:'/ilearning/course_detail', query:{course_id: course.id}})"/>
+        </div>
       </Col>
     </Row>
 
@@ -72,15 +74,5 @@
     font-weight: 400;
     line-height: 40px;
     white-space: nowrap;
-  }
-
-  .linearTransitionBg {
-    width: 450px;
-    transition: all 5s ease;
-  }
-
-  .linearTransitionBg:hover {
-    width: 250px;
-    transition: all 5s ease;
   }
 </style>
