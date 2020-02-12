@@ -1,7 +1,7 @@
 <template>
   <div id="footer"
-       style="background-color: #ffffff;text-align: center;clear: both;padding: 30px;height: 120px;font-size: 12px;">
-    <p style="line-height: 30px;">
+       style="background-color: #ffffff;text-align: center;clear: both;padding: 30px;height: 60px;font-size: 12px;padding-top: 10px">
+    <p style="line-height: 25px;">
       <a href="#">关于我们</a> |
       <a href="#">联系我们</a> |
       <a href="#">人才招聘</a> |
@@ -11,7 +11,7 @@
       <a href="#">Isoft论坛</a> |
       <a href="#">更多</a>
     </p>
-    <p style="line-height: 30px;">Copyright © 2017-2019 Isoft 版权所有</p>
+    <p style="line-height: 25px;">Copyright © 2017-2019 Isoft 版权所有</p>
   </div>
 </template>
 

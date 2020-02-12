@@ -17,7 +17,7 @@
 
 <style scoped>
   .login_bg {
-    height: 550px;
+    height: 460px;
     width: 100%;
     background: url(../../../assets/sso/login_bg03.jpg) 0px 0px no-repeat;
     background-size: 100%;

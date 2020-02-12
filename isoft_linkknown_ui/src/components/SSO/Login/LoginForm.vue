@@ -102,7 +102,7 @@
     height: 300px;
     background: white;
     float: right;
-    margin-top: 100px;
+    margin-top: 80px;
     margin-right: 150px;
     position: relative;
   }
