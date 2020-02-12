@@ -1,13 +1,13 @@
 <template>
   <div style="margin:50px 200px;">
     <div style="text-align: center;padding-left: 50px;">
-      <span style="height: 60px;line-height: 60px;font-size: 16px;color: #000;">修改账号</span>
+      <span style="height: 60px;line-height: 60px;font-size: 16px;color: #000;">修改密码</span>
       <span>
         <a href="/sso/login/" style="font-size: 15px;font-weight: inherit;">已有账号,前去登录</a>
       </span>
     </div>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="用户名" prop="username">
+      <FormItem label="账号" prop="username">
         <Input v-model.trim="formValidate.username" placeholder="请输入注册邮箱"></Input>
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
@@ -24,7 +24,7 @@
         <Input v-model.trim="formValidate.repasswd" type="password" placeholder="请输入确认密码"></Input>
       </FormItem>
       <FormItem>
-        <div @click="handleSubmit('formValidate')" class="submitBtn">注册</div>
+        <div @click="handleSubmit('formValidate')" class="submitBtn">修改</div>
       </FormItem>
     </Form>
   </div>
