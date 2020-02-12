@@ -39,6 +39,10 @@
                 </Row>
               </li>
             </ul>
+
+            <Page :total="total" :page-size="offset" show-total show-sizer
+                  :styles="{'text-align': 'center','margin-top': '10px'}"
+                  @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
         </Col>
         <Col span="8">
@@ -60,17 +64,32 @@
     components: {ExpertWall},
     data() {
       return {
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
         asks: [],
       }
     },
     methods: {
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshAskExperts();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshAskExperts();
+      },
       showEdit: function (user_name) {
         return user_name === GetLoginUserName();
       },
       refreshAskExperts: async function () {
-        const result = await QueryPageAskExpert({});
+        const result = await QueryPageAskExpert({offset: this.offset, current_page: this.current_page});
         if (result.status == "SUCCESS") {
           this.asks = result.asks;
+          this.total = result.paginator.totalcount;
         }
       }
     },
