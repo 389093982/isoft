@@ -20,17 +20,18 @@
       <ul>
         <li v-for="(as, index) in answer_experts"
             style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-          <h4 style="color: red;">专家回答({{index+1}} 楼)</h4>{{as.answer}}
+          <h4 style="color: red;">专家回答({{index+1}} 楼)</h4>
           <p>{{as.answer}}</p>
           <Row>
-            <Col span="6"></Col>
             <Col span="6">
               <span class="isoft_font12">回答人：{{as.user_name}}</span>
             </Col>
             <Col span="6" class="isoft_font12">
               <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
             </Col>
-            <Col span="6" class="isoft_font12">好评(100) 差评(50)</Col>
+            <Col span="6" class="isoft_font12">
+              <span style="cursor: pointer;" @click="modifyGoodBadNumber(as.id)">好评({{as.good_number}})</span>
+            </Col>
           </Row>
         </li>
       </ul>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-  import {EditAnswerExpert, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
+  import {EditAnswerExpert, ModifyGoodNumber, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
   import {checkEmpty} from "../../tools"
 
   export default {
@@ -53,6 +54,17 @@
       }
     },
     methods: {
+      modifyGoodBadNumber: async function (answerId) {
+        if (localStorage.getItem(this.GLOBAL.currentSite + "anser_expert" + answerId)) {
+          this.$Message.success("您已经点过好评了!");
+          return;
+        }
+        const result = await ModifyGoodNumber({id: answerId});
+        if (result.status == "SUCCESS") {
+          this.refreshAskanswerList();
+          localStorage.setItem(this.GLOBAL.currentSite + "anser_expert" + answerId, true);
+        }
+      },
       refreshQuestionDetail: async function (id) {
         const result = await ShowAskExpertDetail({id: id});
         if (result.status == "SUCCESS") {

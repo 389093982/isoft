@@ -47,12 +47,11 @@
             <Col span="6">
               <span class="isoft_font12">提出人:{{as.user_name}}</span>
             </Col>
-            <Col span="6" class="isoft_font12">好评(100) 差评(50)</Col>
             <Col span="6">
               <span class="isoft_font12 mr5"><a
                 @click="$router.push({path:'/communicate/edit_question', query: {id : as.id}})">编辑</a></span>
               <span class="isoft_font12 mr5"><a
-                @click="$router.push({path:'/communicate/answer_expert', query:{id : as.id}})">回答数({{as.anser_number}})</a></span>
+                @click="$router.push({path:'/communicate/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a></span>
             </Col>
           </Row>
         </li>
