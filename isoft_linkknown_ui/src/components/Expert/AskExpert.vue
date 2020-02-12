@@ -1,23 +1,5 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10">
-      2元 5元 10元 20元 50元 100元提问
-
-      我来回答
-
-      好评率不够，无法提现，已自动转为积分
-
-      热门专家 问答数 回答数 好评数
-
-      我的专家标签
-      回答人，回答人专家标签
-      设置答案可见性
-      非提问者需要花积分查看答案
-
-
-      专家墙
-    </div>
-
     <div>
       <Row class="isoft_top10">
         <Col span="16" style="padding-right: 5px;">
@@ -38,17 +20,20 @@
                 <h4>{{as.short_desc}}</h4>
                 <p>{{as.question}}</p>
                 <Row>
-                  <Col span="6">
+                  <Col span="8">
                     <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
                   </Col>
-                  <Col span="6">
+                  <Col span="8">
                     <span class="isoft_font12">提出人:{{as.user_name}}</span>
                   </Col>
-                  <Col span="6">
-              <span class="isoft_font12 mr5"><a
-                @click="$router.push({path:'/communicate/edit_question', query: {id : as.id}})">编辑</a></span>
-                    <span class="isoft_font12 mr5"><a
-                      @click="$router.push({path:'/communicate/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a></span>
+                  <Col span="8" style="text-align: right;">
+                    <span class="isoft_font12 mr5">
+                      <a v-if="showEdit(as.user_name)"
+                         @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
+                    </span>
+                    <span class="isoft_font12 mr5">
+                      <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
+                    </span>
                   </Col>
                 </Row>
               </li>
@@ -67,6 +52,7 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
+  import {GetLoginUserName} from "../../tools";
 
   export default {
     name: "AskExpert",
@@ -77,6 +63,9 @@
       }
     },
     methods: {
+      showEdit: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
       refreshAskExperts: async function () {
         const result = await QueryPageAskExpert({});
         if (result.status == "SUCCESS") {
