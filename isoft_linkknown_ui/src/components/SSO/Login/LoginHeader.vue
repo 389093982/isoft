@@ -6,8 +6,8 @@
     <div style="float: left;width: 60%;padding: 20px 0 0 0;">
       <div style="background-color: #fef2f2;width:80%;height: 25px;text-align: center;border-radius: 10px;border: 1px #ffb4a8 solid">
         <div style="margin: 2px 0 0 0 ">
-          依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完善账号信息!
-          <a href="javascript:;" @click="$router.push({path:'/sso/regist', query: { pattern: 1 }})"><code style="color: #eb7d37;margin-left: 5px"><u>完善账号资料</u></code></a>
+          依据《网络安全法》，为保障您的账户安全和正常使用，请尽快
+          <a href="javascript:;" @click="$router.push({path:'/sso/regist', query: { pattern: 1 }})"><code style="color: #eb7d37;margin-left: 5px"><u>完善账户信息</u></code></a>
         </div>
       </div>
     </div>
