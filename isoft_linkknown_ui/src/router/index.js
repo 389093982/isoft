@@ -60,6 +60,7 @@ const DownloadResource = () => import("@/components/Resource/DownloadResource");
 
 const AskExpert = () => import("@/components/Communicate/AskExpert");
 const AskAnswer = () => import("@/components/Communicate/AskAnswer");
+const EditQuestion = () => import("@/components/Communicate/EditQuestion");
 
 const MessageList = () => import("@/components/Message/MessageList");
 
@@ -176,6 +177,7 @@ const ICommunicate = [{
   children: [
     {path: 'ask_expert', component: AskExpert},
     {path: 'ask_answer', component: AskAnswer},
+    {path: 'edit_question', component: EditQuestion},
   ]
 }];
 
