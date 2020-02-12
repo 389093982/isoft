@@ -5,14 +5,19 @@
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
             <Row style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
-              <Col span="3" offset="3" style="text-align: center;"><a @click="searchQuestion(1)">全部问题</a></Col>
-              <Col span="3" style="text-align: center;"><a @click="searchQuestion(2)">已有答复</a></Col>
-              <Col span="3" style="text-align: center;"><a @click="searchQuestion(3)">暂无答复</a></Col>
-              <Col span="3" style="text-align: center;"><a @click="searchQuestion(4)">热门问题</a></Col>
+              <Col span="3" offset="3" style="text-align: center;">
+                <a @click="searchQuestion(1)" :style="{color: pattern === 1 ? 'red':''}">全部问题</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="searchQuestion(2)" :style="{color: pattern === 2 ? 'red':''}">已有答复</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="searchQuestion(3)" :style="{color: pattern === 3 ? 'red':''}">暂无答复</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="searchQuestion(4)" :style="{color: pattern === 4 ? 'red':''}">热门问题</a></Col>
               <Col span="3" style="text-align: center;">
                 <router-link to="/expert/edit_question">我要提问</router-link>
               </Col>
-              <Col span="3" style="text-align: center;"><a @click="searchQuestion(5)">我的问题</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="searchQuestion(5)" :style="{color: pattern === 5 ? 'red':''}">我的问题</a></Col>
             </Row>
 
             <ul>
@@ -71,12 +76,14 @@
         // 每页记录数
         offset: 10,
         asks: [],
+        pattern: 1,
         search_type: '',
         search_user_name: '',
       }
     },
     methods: {
       searchQuestion: function (pattern) {
+        this.pattern = pattern;
         // 置空参数
         this.search_user_name = '';
         this.search_type = '';
