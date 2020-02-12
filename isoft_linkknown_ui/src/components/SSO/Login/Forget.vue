@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import {validateEmail} from "../../../tools"
+  import {validateEmail,validatePatternForString} from "../../../tools"
   import {CreateVerifyCode, ModifyPwd} from "../../../api"
 
   export default {
@@ -54,6 +54,17 @@
             callback();
           }
         };
+      };
+      //校验密码规则 checkPassRuleValidator
+      const checkPassRuleValidator = (rule,value,callback) => {
+        let patrn = /^[a-zA-Z0-9]{6,20}$/;
+        if (value === '') {
+          callback(new Error('密码不能为空!'));
+        }else if(!validatePatternForString(patrn,value)){
+          callback(new Error('密码必须由数字或字母组合，长度 6-20'));
+        }else {
+          callback();
+        }
       };
       // 确认密码校验 validatePassCheck
       const validatePassCheck = (rule, value, callback) => {
@@ -83,7 +94,7 @@
             {required: true, validator: checkEmptyValidator("验证码不能为空!"), trigger: 'blur'}
           ],
           passwd: [
-            {required: true, validator: checkEmptyValidator("密码不能为空!"), trigger: 'blur'},
+            {required: true, validator: checkPassRuleValidator, trigger: 'blur'},
           ],
           repasswd: [        // 确认密码校验 validatePassCheck
             {required: true, validator: validatePassCheck, trigger: 'blur'}
