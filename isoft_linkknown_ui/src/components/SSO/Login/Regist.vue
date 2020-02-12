@@ -7,7 +7,7 @@
       </span>
     </div>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="用户名" prop="username">
+      <FormItem label="账号" prop="username">
         <Input v-model.trim="formValidate.username" placeholder="请输入注册邮箱"></Input>
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
