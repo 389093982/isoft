@@ -254,6 +254,13 @@ export const RecommendResource = (params) => ajax(BASE_URL + '/iwork/httpservice
 export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetResourceInfo', params, "POST");
 export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DownloadResourceFile', params, "GET");
 
+
+export const QueryPageAskExpert = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAskExpert', params, "POST");
+export const EditQuestion = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditQuestion', params, "POST");
+export const ShowAskExpertDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowAskExpertDetail', params, "POST");
+export const EditAnserExpert = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditAnserExpert', params, "POST");
+export const QueryPageAskAnserList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAskAnserList', params, "POST");
+
 export const fileUploadUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/fileUpload"
 export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay"
 

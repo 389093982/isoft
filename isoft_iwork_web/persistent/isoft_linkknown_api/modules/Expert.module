@@ -1,0 +1,10 @@
+<Module>
+	<Id>22</Id>
+	<AppId>5</AppId>
+	<ModuleName>Expert</ModuleName>
+	<ModuleDesc>求问专家模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-11T16:23:11+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-11T16:23:11+08:00</LastUpdatedTime>
+</Module>
