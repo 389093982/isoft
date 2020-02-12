@@ -52,7 +52,7 @@
               <span class="isoft_font12 mr5"><a
                 @click="$router.push({path:'/communicate/edit_question', query: {id : as.id}})">编辑</a></span>
               <span class="isoft_font12 mr5"><a
-                @click="$router.push({path:'/communicate/ask_answer', query:{id : as.id}})">回答数({{as.anser_number}})</a></span>
+                @click="$router.push({path:'/communicate/answer_expert', query:{id : as.id}})">回答数({{as.anser_number}})</a></span>
             </Col>
           </Row>
         </li>

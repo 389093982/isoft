@@ -4,24 +4,24 @@
       <h4>{{ask_expert.short_desc}}</h4>
       <p>{{ask_expert.question}}</p>
       <div style="text-align: right;">
-        <a @click="showEditAnser = !showEditAnser">我来回答</a>
+        <a @click="showEditanswer = !showEditanswer">我来回答</a>
         <a @click="$router.push({path:'/communicate/ask_expert'})">返回问题列表</a>
       </div>
 
-      <div v-if="showEditAnser">
-        <Input type="textarea" :rows="10" v-model.trim="anser"/>
+      <div v-if="showEditanswer">
+        <Input type="textarea" :rows="10" v-model.trim="answer"/>
         <Button size="small" style="float: right;margin: 10px 0;" type="success"
-                @click="editAnserExpert">提交
+                @click="EditAnswerExpert">提交
         </Button>
       </div>
     </div>
 
     <div class="isoft_bg_white isoft_top10 isoft_pd10">
       <ul>
-        <li v-for="(as, index) in anser_experts"
+        <li v-for="(as, index) in answer_experts"
             style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
           <h4 style="color: red;">专家回答({{index+1}} 楼)</h4>{{as.answer}}
-          <p>{{as.anser}}</p>
+          <p>{{as.answer}}</p>
           <Row>
             <Col span="6"></Col>
             <Col span="6">
@@ -39,17 +39,17 @@
 </template>
 
 <script>
-  import {EditAnserExpert, QueryPageAskAnserList, ShowAskExpertDetail} from "../../api"
+  import {EditAnswerExpert, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
   import {checkEmpty} from "../../tools"
 
   export default {
-    name: "AskAnswer",
+    name: "AnswerExpert",
     data() {
       return {
         ask_expert: null,
-        showEditAnser: false,
-        anser: '',
-        anser_experts: [],
+        showEditanswer: false,
+        answer: '',
+        answer_experts: [],
       }
     },
     methods: {
@@ -59,24 +59,24 @@
           this.ask_expert = result.ask_expert;
         }
       },
-      editAnserExpert: async function () {
-        if (!checkEmpty(this.anser)) {
-          const result = await EditAnserExpert({question_id: this.ask_expert.id, anser: this.anser});
+      EditAnswerExpert: async function () {
+        if (!checkEmpty(this.answer)) {
+          const result = await EditAnswerExpert({question_id: this.ask_expert.id, answer: this.answer});
           if (result.status == "SUCCESS") {
-            this.refreshAskAnserList();
+            this.refreshAskanswerList();
           }
         }
       },
-      refreshAskAnserList: async function () {
-        const result = await QueryPageAskAnserList({question_id: this.$route.query.id});
+      refreshAskanswerList: async function () {
+        const result = await QueryPageAnswerExpertList({question_id: this.$route.query.id});
         if (result.status == "SUCCESS") {
-          this.anser_experts = result.anser_experts;
+          this.answer_experts = result.answer_experts;
         }
       }
     },
     mounted() {
       if (this.$route.query.id > 0) {
-        this.refreshAskAnserList();
+        this.refreshAskanswerList();
         this.refreshQuestionDetail(this.$route.query.id);
       }
     }
