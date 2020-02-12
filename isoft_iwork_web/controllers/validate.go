@@ -285,7 +285,9 @@ func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 }
 
 func checkVariableRelationShipForGlobal(app_id int64, paramName, referFiledName string, checkResultCh chan string) {
-	if _, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, sysconfig.ENV_ONUSE)); !ok {
+	_, ok1 := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, sysconfig.ENV_ONUSE))
+	_, ok2 := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, "dev"))
+	if !ok1 && !ok2{
 		bytes, _ := json.Marshal(&map[string]string{
 			"paramName":      paramName,
 			"checkResultMsg": fmt.Sprintf("Invalid referFiledName relationship for %s was found!", referFiledName),
