@@ -41,11 +41,9 @@ const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const VipInterest = () => import("@/components/VipCenter/VipInterest");
 const Recharge = () => import("@/components/VipCenter/Recharge");
-
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 const AccessLog = () => import("@/components/Advertisement/AccessLog");
-
 const JobList = () => import("@/components/IJob/JobList");
 const ResumeManage = () => import("@/components/IJob/ResumeManage");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
@@ -53,17 +51,14 @@ const EditCorporate = () => import("@/components/IJob/EditCorporate");
 const EditJob = () => import("@/components/IJob/EditJob");
 const EditResume = () => import("@/components/IJob/EditResume");
 const JobApplyList = () => import("@/components/IJob/JobApplyList");
-
 const ResourceList = () => import("@/components/Resource/ResourceList");
 const UploadResource = () => import("@/components/Resource/UploadResource");
 const DownloadResource = () => import("@/components/Resource/DownloadResource");
-
 const AskExpert = () => import("@/components/Communicate/AskExpert");
 const AskAnswer = () => import("@/components/Communicate/AskAnswer");
 const EditQuestion = () => import("@/components/Communicate/EditQuestion");
 
 const MessageList = () => import("@/components/Message/MessageList");
-
 const Site = () => import("@/components/Site");
 
 Vue.use(Router);

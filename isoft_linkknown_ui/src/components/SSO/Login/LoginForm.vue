@@ -63,6 +63,16 @@
         }
         var username = $("input[name='username']").val();
         var passwd = $("input[name='passwd']").val();
+        if (username.length === 0) {
+          this.showError = true;
+          this.errorMsg = '请填写账号';
+          return false;
+        }
+        if (passwd.length === 0) {
+          this.showError = true;
+          this.errorMsg = '请填写密码';
+          return false;
+        }
         var result = await Login(username, passwd, decodeURIComponent(redirectUrl));
         if (result.loginSuccess == true || result.loginSuccess == "SUCCESS") {
           setCookie("tokenString", result.tokenString, 365, result.domain);

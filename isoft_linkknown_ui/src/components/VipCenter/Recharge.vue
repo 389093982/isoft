@@ -84,7 +84,7 @@
     },
     methods: {
       prePage: function () {
-        window.location.href = "#/vipcenter/vipIntroduction/";
+        window.location.href = "/vipcenter/vipIntroduction/";
       },
       getPayUrl: async function () {
         let payMoney = this.openingTime.trim().split('¥')[1];
