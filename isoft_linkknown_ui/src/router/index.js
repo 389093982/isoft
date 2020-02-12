@@ -54,9 +54,9 @@ const JobApplyList = () => import("@/components/IJob/JobApplyList");
 const ResourceList = () => import("@/components/Resource/ResourceList");
 const UploadResource = () => import("@/components/Resource/UploadResource");
 const DownloadResource = () => import("@/components/Resource/DownloadResource");
-const AskExpert = () => import("@/components/Communicate/AskExpert");
-const AnswerExpert = () => import("@/components/Communicate/AnswerExpert");
-const EditQuestion = () => import("@/components/Communicate/EditQuestion");
+const AskExpert = () => import("@/components/Expert/AskExpert");
+const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
+const EditQuestion = () => import("@/components/Expert/EditQuestion");
 
 const MessageList = () => import("@/components/Message/MessageList");
 const Site = () => import("@/components/Site");
