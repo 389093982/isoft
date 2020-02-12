@@ -5,9 +5,10 @@
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
             <Row style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
-              <Col span="3" offset="4" style="text-align: center;"><a>暂无回答</a></Col>
-              <Col span="3" style="text-align: center;"><a>热门回答</a></Col>
-              <Col span="3" style="text-align: center;"><a>全部回答</a></Col>
+              <Col span="3" offset="3" style="text-align: center;"><a>全部问题</a></Col>
+              <Col span="3" style="text-align: center;"><a>已有答复</a></Col>
+              <Col span="3" style="text-align: center;"><a>暂无答复</a></Col>
+              <Col span="3" style="text-align: center;"><a>热门问题</a></Col>
               <Col span="3" style="text-align: center;">
                 <router-link to="/expert/edit_question">我要提问</router-link>
               </Col>
