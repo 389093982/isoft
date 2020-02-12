@@ -43,7 +43,7 @@
 
 <script>
   import {Login} from "../../../api"
-  import {setCookie, strSplit} from "../../../tools"
+  import {checkEmpty, setCookie, strSplit} from "../../../tools"
 
   export default {
     name: "LoginForm",
@@ -81,8 +81,12 @@
           setCookie("roleName", result.roleName, 365, result.domain);
           let expireSecond = new Date().getTime() + result.expireSecond * 1000;     // 时间戳
           setCookie("expireSecond", expireSecond, 365, result.domain);
-          // 跳往需要跳转的页面,并设置cookie
-          window.location.href = result.redirectUrl;
+          if (!checkEmpty(result.redirectUrl)) {
+            // 跳往需要跳转的页面,并设置cookie
+            window.location.href = result.redirectUrl;
+          } else {
+            window.location.href = "/";
+          }
         } else {
           this.showError = true;
           this.errorMsg = result.errorMsg;
