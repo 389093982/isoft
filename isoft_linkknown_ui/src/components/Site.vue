@@ -10,7 +10,7 @@
     <a @click="$router.push({ path: '/ifound/discount_list'})" class="hovered hvr-grow hoverLinkColor">聚优惠</a>
     <a @click="$router.push({ path: '//ifound/activity_list'})" class="hovered hvr-grow hoverLinkColor">聚活动</a>
     <a @click="$router.push({ path: '/ifound/activity_list'})" class="hovered hvr-grow hoverLinkColor">商业合作</a>
-    <a @click="$router.push({ path: '/communicate/ask_expert'})" class="hovered hvr-grow hoverLinkColor">求问专家</a>
+    <a @click="$router.push({ path: '/expert/ask_expert'})" class="hovered hvr-grow hoverLinkColor">求问专家</a>
   </div>
 </template>
 

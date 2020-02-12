@@ -42,7 +42,7 @@
           if (valid) {
             const result = await EditQuestion(this.formValidate);
             if (result.status == "SUCCESS") {
-              this.$router.push({path: '/communicate/ask_expert'});
+              this.$router.push({path: '/expert/ask_expert'});
             }
           }
         })

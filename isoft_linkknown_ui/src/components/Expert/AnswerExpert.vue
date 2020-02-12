@@ -5,7 +5,7 @@
       <p>{{ask_expert.question}}</p>
       <div style="text-align: right;">
         <a @click="showEditanswer = !showEditanswer">我来回答</a>
-        <a @click="$router.push({path:'/communicate/ask_expert'})">返回问题列表</a>
+        <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>
       </div>
 
       <div v-if="showEditanswer">
