@@ -21,7 +21,7 @@
                 <a @click="blog_edit">我也要发布</a>
               </Col>
               <Col span="3" style="text-align: center;">
-                <a @click="$router.push({path:'/expert/ask_expert'})">求问专家</a>
+                <a @click="$router.push({path:'/expert/ask_expert'})"><span style="color: red;">(荐)</span>求问专家</a>
               </Col>
             </Row>
 

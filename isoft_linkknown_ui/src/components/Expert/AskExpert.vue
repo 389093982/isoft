@@ -1,12 +1,6 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <p>
-        <Button type="success" style="width: 20%;" @click="$router.push({path:'/communicate/edit_question'})">我要提问
-        </Button>
-        <Button type="success" style="width: 20%;">我要提问</Button>
-      </p>
-
       2元 5元 10元 20元 50元 100元提问
 
       我来回答
@@ -33,7 +27,7 @@
               <Col span="3" style="text-align: center;"><a>热门回答</a></Col>
               <Col span="3" style="text-align: center;"><a>全部回答</a></Col>
               <Col span="3" style="text-align: center;">
-                <router-link to="/iblog/blog_edit">我要提问</router-link>
+                <router-link to="/expert/edit_question">我要提问</router-link>
               </Col>
               <Col span="3" style="text-align: center;"><a>我的问题</a></Col>
             </Row>
