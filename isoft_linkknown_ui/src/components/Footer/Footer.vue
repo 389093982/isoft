@@ -37,7 +37,7 @@
     </Row>
 
     <Row style="text-align: center;">
-      <p style="margin: 40px;">Copyright © 2019-2020 LinkKnown 版权所有 All Rights Reserved.</p>
+      <p style="margin: 40px;">Copyright © 2019-2020 LinkKnown 版权所有</p>
     </Row>
   </div>
 </template>

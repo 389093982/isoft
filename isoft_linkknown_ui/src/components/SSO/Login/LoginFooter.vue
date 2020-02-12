@@ -11,7 +11,7 @@
       <a href="#">Isoft论坛</a> |
       <a href="#">更多</a>
     </p>
-    <p style="line-height: 25px;">Copyright © 2017-2019 Isoft 版权所有</p>
+    <p style="line-height: 25px;">Copyright © 2019-2020 LinkKnown 版权所有</p>
   </div>
 </template>
 
