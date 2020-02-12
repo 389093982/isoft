@@ -22,11 +22,10 @@
           </h3>
           <hr>
           <div style="font-size: 12px;font-family: Tahoma, Helvetica, 'Microsoft Yahei', 微软雅黑, Arial, STHeiti;">
-            <p style="line-height: 30px;">1、为简化注册流程,注册不需要用户接收验证码校验,请自行保证邮箱信息正确</p>
-            <p style="line-height: 30px;">2、账号注册需要使用真实邮箱进行注册,禁止冒用无效邮箱、他人邮箱注册,以防账号存在安全问题</p>
-            <p style="line-height: 30px;">3、修改用户昵称或者密码时需要先获取验证码,验证码有效时间 5 min</p>
-            <p style="line-height: 30px;">4、新用户注册账号赠送 7 天 VIP 会员体验资格</p>
-            <p style="line-height: 30px;">5、需要继续完善咯...</p>
+            <p style="line-height: 30px;">1、现阶段需使用邮箱注册并登录</p>
+            <p style="line-height: 30px;">2、邮箱验证码,有效时间 5 分钟</p>
+            <p style="line-height: 30px;">3、本站欢迎大家共同参与学习自己感兴趣的教程， 并分享自己制作的<b>原创</b>视频教程,为linkknown公共学习区域贡献自己的力量</p>
+            <p style="line-height: 30px;">4、为制造良好的互联网环境，用户不得在本站发布相关法律、法规禁止的内容， 一经发现，立即封停账号</p>
           </div>
         </div>
       </Col>
