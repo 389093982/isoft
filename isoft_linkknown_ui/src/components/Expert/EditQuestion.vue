@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="isoft_bg_white isoft_pd10">
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="问题简述" prop="short_desc">
         <Input v-model.trim="formValidate.short_desc" placeholder="Enter short_desc..."></Input>
