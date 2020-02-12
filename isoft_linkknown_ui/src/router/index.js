@@ -166,8 +166,8 @@ const IUserReouter = [{
   ]
 }];
 
-const ICommunicate = [{
-  path: '/communicate',
+const IExpert = [{
+  path: '/expert',
   component: ILayout,
   children: [
     {path: 'ask_expert', component: AskExpert},
@@ -250,7 +250,7 @@ const VipCenterReouter = [{
 
 function getAllRouters() {
   let allRouters = [];
-  allRouters = joinArray(allRouters, ICommunicate);
+  allRouters = joinArray(allRouters, IExpert);
   allRouters = joinArray(allRouters, IJob);
   allRouters = joinArray(allRouters, IAdvertisement);
   allRouters = joinArray(allRouters, IFoundReouter);

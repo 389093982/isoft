@@ -8,7 +8,7 @@
         <Col span="17" style="padding: 0 8px 0 0;">
           <div class="isoft_bg_white isoft_pd10">
             <Row class="_search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
-              <Col span="8" style="font-size: 20px;color: #333;">
+              <Col span="5" style="font-size: 20px;color: #333;">
                 <span v-if="search_type==='_all'">全部分类</span>
                 <span v-else-if="search_type==='_hot'">热门博客</span>
                 <span v-else-if="search_type==='_personal'">我的博客</span>
@@ -19,6 +19,9 @@
               <Col span="3" style="text-align: center;"><a @click="chooseMyItem">我的博客</a></Col>
               <Col span="3" style="text-align: center;">
                 <a @click="blog_edit">我也要发布</a>
+              </Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="$router.push({path:'/expert/ask_expert'})">求问专家</a>
               </Col>
             </Row>
 
