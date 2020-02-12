@@ -5,14 +5,14 @@
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
             <Row style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
-              <Col span="3" offset="3" style="text-align: center;"><a>全部问题</a></Col>
-              <Col span="3" style="text-align: center;"><a>已有答复</a></Col>
-              <Col span="3" style="text-align: center;"><a>暂无答复</a></Col>
-              <Col span="3" style="text-align: center;"><a>热门问题</a></Col>
+              <Col span="3" offset="3" style="text-align: center;"><a @click="searchQuestion(1)">全部问题</a></Col>
+              <Col span="3" style="text-align: center;"><a @click="searchQuestion(2)">已有答复</a></Col>
+              <Col span="3" style="text-align: center;"><a @click="searchQuestion(3)">暂无答复</a></Col>
+              <Col span="3" style="text-align: center;"><a @click="searchQuestion(4)">热门问题</a></Col>
               <Col span="3" style="text-align: center;">
                 <router-link to="/expert/edit_question">我要提问</router-link>
               </Col>
-              <Col span="3" style="text-align: center;"><a>我的问题</a></Col>
+              <Col span="3" style="text-align: center;"><a @click="searchQuestion(5)">我的问题</a></Col>
             </Row>
 
             <ul>
@@ -57,7 +57,7 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
-  import {GetLoginUserName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools";
 
   export default {
     name: "AskExpert",
@@ -71,9 +71,38 @@
         // 每页记录数
         offset: 10,
         asks: [],
+        search_type: '',
+        search_user_name: '',
       }
     },
     methods: {
+      searchQuestion: function (pattern) {
+        // 置空参数
+        this.search_user_name = '';
+        this.search_type = '';
+        if (pattern === 1) {
+          this.search_type = '_all';
+          this.refreshAskExperts();
+        } else if (pattern === 2) {
+          this.search_type = '_response';
+          this.refreshAskExperts();
+        } else if (pattern === 3) {
+          this.search_type = '_noresponse';
+          this.refreshAskExperts();
+        } else if (pattern === 4) {
+          this.search_type = '_hot';
+          this.refreshAskExperts();
+        } else if (pattern === 5) {
+          this.searchMyQuestion();
+        }
+      },
+      searchMyQuestion: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.search_user_name = GetLoginUserName();
+          _this.refreshAskExperts();
+        });
+      },
       handleChange(page) {
         this.current_page = page;
         this.refreshAskExperts();
@@ -86,7 +115,12 @@
         return user_name === GetLoginUserName();
       },
       refreshAskExperts: async function () {
-        const result = await QueryPageAskExpert({offset: this.offset, current_page: this.current_page});
+        const result = await QueryPageAskExpert({
+          offset: this.offset,
+          current_page: this.current_page,
+          search_type: this.search_type,
+          search_user_name: this.search_user_name
+        });
         if (result.status == "SUCCESS") {
           this.asks = result.asks;
           this.total = result.paginator.totalcount;
