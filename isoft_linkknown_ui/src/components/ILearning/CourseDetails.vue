@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import ChooseCourseType from "./CourseType/ChooseCourseType"
+  import ChooseCourseType from "./LogoAndSearch"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"

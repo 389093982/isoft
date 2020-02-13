@@ -9,9 +9,7 @@
         :style="{margin: '0px 100px 18px 100px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
         <router-view/>
       </Content>
-      <Footer>
-        <Footer/>
-      </Footer>
+      <Footer></Footer>
     </Layout>
 
     <RightSuspensionMenu/>
