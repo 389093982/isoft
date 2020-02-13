@@ -5,13 +5,23 @@
       <a @click="$router.push({path:'/advertisement/manage'})">我也要发布广告</a>
     </div>
     <div class="clear">
-      <div v-for="(advertisement, index) in advertisements"
-           style="width: 120px;height: 120px;float: left;margin-right: 2px;">
-        <a @click="redirectAdvertisement(advertisement.id, advertisement.linked_refer)"
-           :title="advertisement.advertisement_label">
-          <img :src="advertisement.linked_img" :style="styles"/>
-          <div class="advertisement_label">{{advertisement.advertisement_label}}</div>
-        </a>
+      <div style="display:inline-block;">
+        <div v-for="(advertisement, index) in advertisements_kt" style="display:inline-block;margin-right: 2px;">
+          <a @click="redirectAdvertisement(advertisement.id, advertisement.linked_refer)"
+             :title="advertisement.advertisement_label">
+            <img :src="advertisement.linked_img" style="width: 200px;height: 80px;"/>
+            <div class="advertisement_label" style="width: 200px;">{{advertisement.advertisement_label}}</div>
+          </a>
+        </div>
+      </div>
+      <div style="display: inline-block;">
+        <div v-for="(advertisement, index) in advertisements" style="display:inline-block;margin-right: 2px;">
+          <a @click="redirectAdvertisement(advertisement.id, advertisement.linked_refer)"
+             :title="advertisement.advertisement_label">
+            <img :src="advertisement.linked_img" style="width: 120px;height: 80px;"/>
+            <div class="advertisement_label" style="width: 120px;">{{advertisement.advertisement_label}}</div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -19,7 +29,6 @@
 
 <script>
   import {GetRandomAdvertisement, RecordAdvstAccessLog} from "../../api"
-  import {oneOf} from "../../tools"
 
   export default {
     name: "RandomAdmt",
@@ -32,17 +41,11 @@
         type: Number,
         default: 4
       },
-      size: {
-        type: String,
-        default: 'default',
-        validator(value) {
-          return oneOf(value, ['small', 'large', 'default']);
-        },
-      }
     },
     data() {
       return {
-        advertisements: null,
+        advertisements_kt: [],
+        advertisements: [],
       }
     },
     methods: {
@@ -54,26 +57,15 @@
       refreshRandomAdvertisement: async function () {
         var _this = this;
         const result = await GetRandomAdvertisement(this.advertisementAmount);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.advertisements = result.advertisements;
+          this.advertisements_kt = result.advertisements.filter(adv => adv.size_type === 1);
+          this.advertisements = result.advertisements.filter(adv => adv.size_type === 0);
         }
       },
     },
     mounted() {
       this.refreshRandomAdvertisement();
-    },
-    computed: {
-      styles() {
-        let style = {};
-        if (this.size === "large") {
-          style.width = '120px';
-          style.height = '80px';
-        } else {
-          style.width = '120px';
-          style.height = '80px';
-        }
-        return style;
-      }
     },
   }
 </script>
@@ -88,20 +80,17 @@
   }
 
   a .advertisement_label {
-    padding-left: 10px;
+    text-align: center;
+    padding: 0 0 0 10px;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    width: 120px;
     height: 30px;
     position: relative;
-    transition: all ease-in 1s;
-    display: block;
+    visibility: visible;
     top: -37px;
   }
 
   a:hover .advertisement_label {
-    display: none;
-    top: 0px;
-
+    visibility: hidden;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
+    <div class="isoft_bg_white" style="padding: 20px;">
       <p>广告投放说明</p>
       <p class="isoft_font12">1、用户可以在本站点发布广告，每个广告位对应一个链接地址，跳往用户指定站点;</p>
       <p class="isoft_font12">不接受违法、色情、赌博类站点的广告，一经发现永久查封，欢迎大家举报;</p>
@@ -11,10 +11,10 @@
       </Button>
     </div>
 
-    <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 10px 10px 0 10px;">
-      热门广告列表
+    <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 20px;">
+      <p style="height: 30px;line-height: 30px;">热门广告列表</p>
 
-      <RandomAdmt :show-right-text="false" :advertisement-amount="10" size="large"/>
+      <RandomAdmt :show-right-text="false" :advertisement-amount="10"/>
     </div>
 
     <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 10px 10px 0 10px;">

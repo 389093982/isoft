@@ -14,7 +14,10 @@
               </p>
               <p>链接类型: {{advertisement.linked_type}}</p>
               <p>链接地址: {{advertisement.linked_refer}}</p>
-              <p>显示图片: <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;</p>
+              <p>显示图片:
+                <img :src="advertisement.linked_img" :title="advertisement.linked_img"
+                     style="width: 150px;height: 100px;"/>
+              </p>
               <p>联系人：{{loginUserName}}</p>
               <p>广告状态:
                 <span v-if="advertisement.is_valid === 1">已生效</span>
