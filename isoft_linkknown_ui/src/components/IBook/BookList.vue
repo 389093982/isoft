@@ -270,6 +270,7 @@
   .bookImg:hover {
     background-color: rgba(214, 214, 214, 0.5);
     border: 1px solid #d0cdd2;
+    top: -10px;
   }
 
   li a:hover {
