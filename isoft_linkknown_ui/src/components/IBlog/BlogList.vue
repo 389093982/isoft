@@ -31,6 +31,7 @@
               <Col span="3" style="text-align: center;">
                 <a @click="$router.push({path:'/expert/ask_expert'})"><span style="color: red;">(荐)</span>求问专家</a>
               </Col>
+              <MoveLine/>
             </Row>
 
             <ul>
@@ -125,10 +126,11 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckHasLoginConfirmDialog2, RenderNickName, renderUserInfoByNames} from "../../tools";
+  import MoveLine from "../../components/Common/decorate/MoveLine";
 
   export default {
     name: "BlogList",
-    components: {RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
+    components: {MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
     data() {
       return {
         // 当前页
