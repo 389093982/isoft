@@ -57,7 +57,6 @@
 </template>
 
 <script>
-  import LogoAndSearch from "./LogoAndSearch"
   import CourseType from "./CourseType/CourseType"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
@@ -81,7 +80,6 @@
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
-      LogoAndSearch,
       CourseType,
       HotRecommend,
       NewsNotice,
