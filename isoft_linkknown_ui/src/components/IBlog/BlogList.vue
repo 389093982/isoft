@@ -198,7 +198,6 @@
         }
       },
       renderUserInfoByName: async function () {
-
         let user_names = MapAttrsForArray(this.searchblogs, 'author');
         user_names = Array.from(new Set(user_names));
         const result = await GetUserInfoByNames({usernames: user_names.join(",")});

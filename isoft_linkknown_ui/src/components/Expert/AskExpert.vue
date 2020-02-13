@@ -30,7 +30,10 @@
                     <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
                   </Col>
                   <Col span="8">
-                    <span class="isoft_font12">提出人:{{as.user_name}}</span>
+                    <span class="isoft_font12">
+                      提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
+                        <span v-else>{{as.user_name}}</span>
+                    </span>
                   </Col>
                   <Col span="8" style="text-align: right;">
                     <span class="isoft_font12 mr5">
@@ -62,7 +65,7 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, renderUserInfoByNames} from "../../tools";
 
   export default {
     name: "AskExpert",
@@ -79,6 +82,7 @@
         pattern: 1,           // 按钮选中的模式
         search_type: '',
         search_user_name: '',
+        userInfos: [],
       }
     },
     methods: {
@@ -129,9 +133,13 @@
           search_user_name: this.search_user_name
         });
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByNames(result.asks, 'user_name');
           this.asks = result.asks;
           this.total = result.paginator.totalcount;
         }
+      },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
       }
     },
     mounted() {
