@@ -7,14 +7,14 @@
         <div slot="content" style="padding: 10px;">
           <div v-if="advertisements && advertisements.length > 0">
             <div v-for="(advertisement,index) in advertisements" style="border-bottom: 1px solid #eee;padding: 10px 0;">
-              <p>广告链接名称:
+              <p>广告显示名称:
                 <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})">
                   {{advertisement.advertisement_label}}
                 </a>
               </p>
               <p>链接类型: {{advertisement.linked_type}}</p>
               <p>链接地址: {{advertisement.linked_refer}}</p>
-              <p>链接图片: <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;</p>
+              <p>显示图片: <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;</p>
               <p>联系人：{{loginUserName}}</p>
               <p>广告状态: 已发布</p>
               <p>

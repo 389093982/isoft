@@ -3,7 +3,7 @@
     <Row :gutter="10">
       <Col span="12">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-          <FormItem label="链接名称" prop="advertisement_label">
+          <FormItem label="显示名称" prop="advertisement_label">
             <Input v-model="formValidate.advertisement_label" placeholder="Enter advertisement_label..."/>
           </FormItem>
           <FormItem label="链接类型" prop="linked_type">
@@ -12,11 +12,11 @@
           <FormItem label="链接地址" prop="linked_refer">
             <Input v-model="formValidate.linked_refer" placeholder="Enter linked_refer..."></Input>
           </FormItem>
-          <FormItem label="链接图片" prop="linked_img">
+          <FormItem label="显示图片" prop="linked_img">
             <Input v-model="formValidate.linked_img" placeholder="点击右边图标选择图片"
                    readonly="readonly" @on-focus="editLinkedImg"></Input>
             <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
-                         :action="fileUploadUrl" uploadLabel="上传链接图片"/>
+                         :action="fileUploadUrl" uploadLabel="上传显示图片"/>
           </FormItem>
           <FormItem>
             <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
@@ -51,7 +51,7 @@
         },
         ruleValidate: {
           advertisement_label: [
-            {required: true, message: '链接名称不能为空', trigger: 'blur'}
+            {required: true, message: '显示名称不能为空', trigger: 'blur'}
           ],
           linked_type: [
             {required: true, message: '链接类型不能为空', trigger: 'blur'}
