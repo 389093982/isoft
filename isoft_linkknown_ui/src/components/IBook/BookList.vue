@@ -97,14 +97,7 @@
 </template>
 
 <script>
-  import {
-    BookEdit,
-    DeleteBookById,
-    fileUploadUrl,
-    GetUserInfoByNames,
-    QueryPageBookList,
-    UpdateBookIcon
-  } from "../../api"
+  import {BookEdit, DeleteBookById, fileUploadUrl, QueryPageBookList, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -113,7 +106,7 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, renderUserInfoByNames} from "../../tools";
 
   export default {
     name: "BookList",
@@ -205,17 +198,10 @@
           current_page: this.current_page,
         });
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByNames(this.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
-          this.renderUserInfoByName();
-        }
-      },
-      renderUserInfoByName: async function () {
-        let user_names = MapAttrsForArray(this.books, 'book_author');
-        user_names = Array.from(new Set(user_names));
-        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
-        if (result.status == "SUCCESS") {
-          this.userInfos = result.users;
+
         }
       },
       renderNickName: function (user_name) {

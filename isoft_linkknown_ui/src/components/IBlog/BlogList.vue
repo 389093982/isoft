@@ -118,13 +118,13 @@
 
 <script>
   import HotCatalogItems from "./HotCatalogItems"
-  import {GetUserInfoByNames, queryPageBlog} from "../../api"
+  import {queryPageBlog} from "../../api"
   import CatalogList from "./CatalogList"
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, RenderNickName, renderUserInfoByNames} from "../../tools";
 
   export default {
     name: "BlogList",
@@ -192,17 +192,9 @@
           search_type: search_type,
         });
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByNames(result.blogs, 'author');
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
-          this.renderUserInfoByName();
-        }
-      },
-      renderUserInfoByName: async function () {
-        let user_names = MapAttrsForArray(this.searchblogs, 'author');
-        user_names = Array.from(new Set(user_names));
-        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
-        if (result.status == "SUCCESS") {
-          this.userInfos = result.users;
         }
       },
       renderNickName: function (user_name) {
