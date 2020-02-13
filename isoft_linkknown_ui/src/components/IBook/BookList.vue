@@ -60,7 +60,10 @@
                   <router-link :to="{path:'/ibook/book_detail',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
-                    <p style="font-size: 12px;">{{book.book_name | filterLimitFunc}}</p>
+                    <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                      <span class="book_label">基础</span>
+                      <span>{{book.book_name | filterLimitFunc}}</span>
+                    </p>
                   </router-link>
                 </div>
               </Col>
@@ -240,8 +243,6 @@
 </script>
 
 <style scoped>
-  /* 引入公共样式库 */
-
   .bookName {
     cursor: pointer;
     color: #474747;
@@ -260,18 +261,33 @@
   .bookImg {
     padding: 10px 9px 0;
     width: 160px;
+    background-color: rgba(234, 234, 234, 0.5);
     border: 1px solid #FFFFFF;
     overflow: hidden;
-    text-align: center;
     position: relative;
   }
 
   .bookImg:hover {
-    background-color: #f4f4f4;
+    background-color: rgba(214, 214, 214, 0.5);
     border: 1px solid #d0cdd2;
   }
 
   li a:hover {
     color: red;
+  }
+
+  .bookImg .book_label {
+    color: #FF9628;
+    border: 1px solid #FF9628;
+    border-radius: 1px;
+    padding: 1px 4px;
+  }
+
+  .bookImg:hover .book_label {
+    color: #FF9628;
+    border: 1px solid #ffffff;
+    background-color: white;
+    border-radius: 1px;
+    padding: 1px 4px;
   }
 </style>
