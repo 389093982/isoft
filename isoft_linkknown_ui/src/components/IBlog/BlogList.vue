@@ -1,7 +1,9 @@
 <template>
   <div>
-    <!-- 热门分类 -->
-    <HotCatalogItems @chooseItem="chooseItem"/>
+    <div class="isoft_top10">
+      <!-- 热门分类 -->
+      <HotCatalogItems @chooseItem="chooseItem"/>
+    </div>
 
     <div>
       <Row>
@@ -9,14 +11,19 @@
           <div class="isoft_bg_white isoft_pd10">
             <Row class="_search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="5" style="font-size: 20px;color: #333;">
+                <!-- 占据内容 -->
+                <span style="width: 1px;height: 1px;display: inline-block;"></span>
                 <span v-if="search_type==='_all'">全部分类</span>
                 <span v-else-if="search_type==='_hot'">热门博客</span>
                 <span v-else-if="search_type==='_personal'">我的博客</span>
                 <span v-else>{{search_type}}</span>
               </Col>
-              <Col span="3" offset="4" style="text-align: center;"><a @click="chooseItem('_all')">全部分类</a></Col>
-              <Col span="3" style="text-align: center;"><a @click="chooseItem('_hot')">热门博客</a></Col>
-              <Col span="3" style="text-align: center;"><a @click="chooseMyItem">我的博客</a></Col>
+              <Col span="3" offset="4" style="text-align: center;">
+                <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}">热门博客</a></Col>
+              <Col span="3" style="text-align: center;">
+                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}">我的博客</a></Col>
               <Col span="3" style="text-align: center;">
                 <a @click="blog_edit">我也要发布</a>
               </Col>
@@ -132,6 +139,7 @@
         searchblogs: [],
         search_type: '_all',
         userInfos: [],
+        pattern: 1,           // 按钮选中的模式
       }
     },
     methods: {
@@ -147,9 +155,22 @@
           _this.$router.push({path: '/iblog/blog_edit'});
         });
       },
-      chooseItem: function (item_name) {
-        if (this.search_type != item_name) {
-          this.search_type = item_name;
+      chooseItem: function (pattern) {
+        this.pattern = pattern;
+        if (pattern === 1) {
+          this.search_type = "_all";
+          this.current_page = 1;
+          this.refreshBlogList();
+        } else if (pattern === 2) {
+          this.search_type = "_hot";
+          this.current_page = 1;
+          this.refreshBlogList();
+        } else if (pattern === 3) {
+          this.current_page = 1;
+          this.search_type = "";
+          this.chooseMyItem();
+        } else {
+          this.search_type = pattern;
           this.current_page = 1;
           this.refreshBlogList();
         }

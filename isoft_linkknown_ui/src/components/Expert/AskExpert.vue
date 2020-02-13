@@ -4,7 +4,7 @@
       <Row class="isoft_top10">
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
-            <Row style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
+            <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="3" offset="3" style="text-align: center;">
                 <a @click="searchQuestion(1)" :style="{color: pattern === 1 ? 'red':''}">全部问题</a></Col>
               <Col span="3" style="text-align: center;">
@@ -76,7 +76,7 @@
         // 每页记录数
         offset: 10,
         asks: [],
-        pattern: 1,
+        pattern: 1,           // 按钮选中的模式
         search_type: '',
         search_user_name: '',
       }
@@ -141,5 +141,11 @@
 </script>
 
 <style scoped>
+  .search a {
+    color: #155faa;
+  }
 
+  .search a:hover {
+    color: #6cb0ca;
+  }
 </style>

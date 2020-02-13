@@ -59,7 +59,9 @@ func (this *CacheLoggerWriter) flush() {
 }
 
 func (this *CacheLoggerWriter) Close() {
-	this.flush()
+	if len(this.caches) > 0 {
+		this.flush()
+	}
 }
 
 // 统计操作所花费的时间方法
