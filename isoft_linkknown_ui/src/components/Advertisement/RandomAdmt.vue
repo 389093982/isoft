@@ -81,10 +81,14 @@
 
   a .advertisement_label {
     text-align: center;
+    height: 30px;
+    line-height: 30px;
     padding: 0 0 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    height: 30px;
     position: relative;
     visibility: visible;
     top: -37px;
