@@ -1,11 +1,12 @@
 <template>
   <div>
-    <Layout :style="{minHeight: '550px'}" style="background-color: rgba(226,182,205,0.27);">
+    <Layout :style="{minHeight: '550px'}"
+            style=" background: linear-gradient(to right, rgba(0,7,255,0.04), rgba(255,0,249,0.04));">
       <Header>
         <Header/>
       </Header>
       <Content
-        :style="{margin: '0px 100px 18px 100px', paddingTop: '5px', minHeight: '550px', background: '#f5f6f7', lineHeight: '24px', fontSize: '14px'}">
+        :style="{margin: '0px 100px 18px 100px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
         <router-view/>
       </Content>
       <Footer>

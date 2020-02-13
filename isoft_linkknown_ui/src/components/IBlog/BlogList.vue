@@ -5,7 +5,7 @@
       <HotCatalogItems @chooseItem="chooseItem"/>
     </div>
 
-    <div>
+    <div class="isoft_top5">
       <Row>
         <Col span="17" style="padding: 0 8px 0 0;">
           <div class="isoft_bg_white isoft_pd10">
