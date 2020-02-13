@@ -31,6 +31,7 @@
               <Col span="3" style="text-align: center;">
                 <a @click="$router.push({path:'/expert/ask_expert'})"><span style="color: red;">(荐)</span>求问专家</a>
               </Col>
+              <MoveLine/>
             </Row>
 
             <ul>
@@ -118,17 +119,18 @@
 
 <script>
   import HotCatalogItems from "./HotCatalogItems"
-  import {GetUserInfoByNames, queryPageBlog} from "../../api"
+  import {queryPageBlog} from "../../api"
   import CatalogList from "./CatalogList"
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, MapAttrsForArray, RenderNickName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, RenderNickName, renderUserInfoByNames} from "../../tools";
+  import MoveLine from "../../components/Common/decorate/MoveLine";
 
   export default {
     name: "BlogList",
-    components: {RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
+    components: {MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
     data() {
       return {
         // 当前页
@@ -192,18 +194,9 @@
           search_type: search_type,
         });
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByNames(result.blogs, 'author');
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
-          this.renderUserInfoByName();
-        }
-      },
-      renderUserInfoByName: async function () {
-
-        let user_names = MapAttrsForArray(this.searchblogs, 'author');
-        user_names = Array.from(new Set(user_names));
-        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
-        if (result.status == "SUCCESS") {
-          this.userInfos = result.users;
         }
       },
       renderNickName: function (user_name) {

@@ -21,7 +21,10 @@
                 </div>
               </Col>
               <Col span="12">
-                <div>{{bookInfo.created_by}}（作者）</div>
+                <div>
+                  <span v-if="renderNickName(bookInfo.created_by)">{{renderNickName(bookInfo.created_by)}}</span>
+                  <span v-else>{{bookInfo.created_by}}</span>（作者）
+                </div>
               </Col>
               <Col span="8">
                 <div>阅读xx 评论xx</div>
@@ -71,6 +74,7 @@
   import {BookCatalogList} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
   import RandomAdmt from "../Advertisement/RandomAdmt";
+  import {RenderNickName, renderUserInfoByName} from "../../tools"
 
   export default {
     name: "BookCatalogs",
@@ -80,6 +84,7 @@
         bookInfo: null,
         bookCatalogs: [],
         defaultImg: require('../../assets/default.png'),
+        userInfos: null,
       }
     },
     methods: {
@@ -91,10 +96,14 @@
       refreshBookCatalogList: async function (book_id) {
         const result = await BookCatalogList({book_id: book_id});
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByName(result.bookInfo.created_by);
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
         }
       },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      }
     },
     mounted() {
       if (this.$route.query.book_id != undefined && this.$route.query.book_id != null) {

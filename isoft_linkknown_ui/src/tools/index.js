@@ -1,6 +1,7 @@
 import cronValidate from "./cron"
 import {checkAdminLogin, checkHasLogin, checkNotLogin, checkSSOLogin, getLoginUserName} from "./sso"
 import Storage from "./storage"
+import {GetUserInfoByNames} from "../api";
 
 export const _store = new Storage();
 
@@ -120,6 +121,30 @@ export const MapAttrsForArray = function (arrs, attrName) {
   let attrs = arrs.map(arr => arr[attrName]);
   return attrs;
 }
+
+export const renderUserInfoByName = async function (user_name) {
+  const result = await GetUserInfoByNames({usernames: user_name});
+  let userInfos = [];
+  if (result.status == "SUCCESS") {
+    userInfos = result.users;
+  }
+  return new Promise(function (resolve, reject) {
+    resolve(userInfos);
+  });
+};
+
+export const renderUserInfoByNames = async function (arrs, attrName) {
+  let user_names = MapAttrsForArray(arrs, attrName);
+  user_names = Array.from(new Set(user_names));
+  const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+  let userInfos = [];
+  if (result.status == "SUCCESS") {
+    userInfos = result.users;
+  }
+  return new Promise(function (resolve, reject) {
+    resolve(userInfos);
+  });
+};
 
 export const RenderNickName = function (userInfos, user_name) {
   if (userInfos != null && userInfos != undefined) {

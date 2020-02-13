@@ -31,10 +31,11 @@
                     <span v-else>{{book.created_by}}</span>
                   </span>
                   <span style="margin-left: 10px;">
-                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
+                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="relative"/></span>
                   </span>
                   <span style="margin-left: 10px;">
-                    修改时间：<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time" type="date"/></span>
+                    最后更新于:<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time"
+                                                                            type="relative"/></span>
                   </span>
                 </div>
                 <div style="font-size: 14px;color: #7d7d7d;">
@@ -57,7 +58,7 @@
               </Col>
               <Col span="4">
                 <div class="bookImg">
-                  <router-link :to="{path:'/ibook/book_detail',query:{book_id:book.id}}">
+                  <router-link :to="{path:'/ibook/book_catalogs',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -97,14 +98,7 @@
 </template>
 
 <script>
-  import {
-    BookEdit,
-    DeleteBookById,
-    fileUploadUrl,
-    GetUserInfoByNames,
-    QueryPageBookList,
-    UpdateBookIcon
-  } from "../../api"
+  import {BookEdit, DeleteBookById, fileUploadUrl, QueryPageBookList, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
@@ -113,7 +107,7 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName, MapAttrsForArray, RenderNickName} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, renderUserInfoByNames} from "../../tools";
 
   export default {
     name: "BookList",
@@ -205,17 +199,10 @@
           current_page: this.current_page,
         });
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByNames(result.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
-          this.renderUserInfoByName();
-        }
-      },
-      renderUserInfoByName: async function () {
-        let user_names = MapAttrsForArray(this.books, 'book_author');
-        user_names = Array.from(new Set(user_names));
-        const result = await GetUserInfoByNames({usernames: user_names.join(",")});
-        if (result.status == "SUCCESS") {
-          this.userInfos = result.users;
+
         }
       },
       renderNickName: function (user_name) {
@@ -259,7 +246,7 @@
   }
 
   .bookImg {
-    padding: 10px 9px 0;
+    padding: 10px 9px 4px;
     width: 160px;
     background-color: rgba(234, 234, 234, 0.5);
     border: 1px solid #FFFFFF;
@@ -270,6 +257,7 @@
   .bookImg:hover {
     background-color: rgba(214, 214, 214, 0.5);
     border: 1px solid #d0cdd2;
+    top: -10px;
   }
 
   li a:hover {
