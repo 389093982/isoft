@@ -259,7 +259,7 @@
   }
 
   .bookImg {
-    padding: 10px 9px 0;
+    padding: 10px 9px 4px;
     width: 160px;
     background-color: rgba(234, 234, 234, 0.5);
     border: 1px solid #FFFFFF;
