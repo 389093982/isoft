@@ -73,7 +73,7 @@ function getRootRouters() {
   ]
 }
 
-const IBlogRouter = {
+const IBlogRouter = [{
   path: '/iblog', component: ILayout,
     children: [
       {path: 'blog_index', component: IBlog},
@@ -81,9 +81,9 @@ const IBlogRouter = {
       {path: 'blog_detail', component: BlogArticleDetail},
       {path: 'blog_edit', component: BlogArticleEdit},
     ]
-};
+}];
 
-const IBookRouter = {
+const IBookRouter = [{
   path: '/ibook', component: ILayout,
     children: [
       {path: 'book_list', component: BookList},
@@ -92,9 +92,9 @@ const IBookRouter = {
       {path: 'book_list', component: BookList},
       {path: 'book_catalogs', component: BookCatalogs},
     ]
-};
+}];
 
-const ILearningRouter = {
+const ILearningRouter = [{
   path: '/ilearning', component: ILayout,
     children: [
       {path: 'index', component: ILearningIndex,},
@@ -112,7 +112,7 @@ const ILearningRouter = {
       {path: 'about', component: About,},
       {path: 'course_search', component: CourseSearch,},
     ]
-};
+}];
 
 const ISSOReouter = [{
   path: '/sso', component: IEmptyLayout,
