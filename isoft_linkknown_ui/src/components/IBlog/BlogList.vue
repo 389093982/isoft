@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="isoft_top10">
+    <div class="isoft_top10 isoft_bg_white"
+         style="padding: 10px 0;box-shadow: 0px 1px 2px 0px rgba(0,87,255,0.24);border-radius: 4px;">
       <!-- 热门分类 -->
       <HotCatalogItems @chooseItem="chooseItem"/>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement"
-                  style="margin-left: 50px;margin-right: 50px;margin-bottom: 20px;">
+                  style="margin-left: 50px;margin-right: 50px;">
     <Row>
       <Col span="2" style="text-align: center;padding-top: 25px;">
         <a href="javascript:;" @click="previous" v-show="showPrevious"><img src="/static/images/arrow_left.png"/></a>
@@ -98,6 +98,14 @@
   .item:hover {
     background: #ebebeb;
     border-radius: 10px;
+  }
+
+  .item:hover img {
+    transform: rotateY(360deg)
+  }
+
+  .item img {
+    transition: transform 1s ease-in
   }
 
   .share_catalog_name {
