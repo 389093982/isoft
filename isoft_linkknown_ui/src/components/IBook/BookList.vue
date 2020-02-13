@@ -31,10 +31,11 @@
                     <span v-else>{{book.created_by}}</span>
                   </span>
                   <span style="margin-left: 10px;">
-                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="date"/></span>
+                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="relative"/></span>
                   </span>
                   <span style="margin-left: 10px;">
-                    修改时间：<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time" type="date"/></span>
+                    最后更新于:<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time"
+                                                                            type="relative"/></span>
                   </span>
                 </div>
                 <div style="font-size: 14px;color: #7d7d7d;">
