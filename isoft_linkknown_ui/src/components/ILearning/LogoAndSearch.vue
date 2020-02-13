@@ -2,10 +2,10 @@
   <div>
     <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
       <div style="float: left;width: 20%;">
-        <img src="../../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;"/>
+        <img src="../../../static/images/linkknown_logo02.png" style="width: 170px;height: 85px;"/>
       </div>
       <div style="float: left;width: 40%;height: 85px; background-color: rgba(255,105,0,0.25)">
-        <img src="../../../../static/images/index_showline.gif" style="width: 100%;height: 85px;"/>
+        <img src="../../../static/images/index_showline.gif" style="width: 100%;height: 85px;"/>
       </div>
       <div style="float: left;width: 40%;">
         <div style="margin: 10px 20px 0 0 ">
@@ -20,39 +20,18 @@
 
       <div style="clear: both"></div>
     </div>
-
-    <div class="isoft_bg_white isoft_pd10 isoft_bordertop_red" style="margin-top: 5px;">
-      <IBeautifulCard title="课程天地">
-        <div slot="content" style="padding: 20px 10px;">
-          <div>
-            <div style="border-bottom: 2px solid #edf1f2;padding: 0px 0px 5px 0px;">
-              <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程推荐</a>
-              <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">
-                <IBeautifulLink style="font-size: 14px;"> 更多</IBeautifulLink>
-              </a>
-            </div>
-            <div>
-              <HotCourseType :placement_name="GLOBAL.placement_host_course_type_carousel" v-show="showCourseType===true"
-                             @chooseCourseType="chooseCourseType"/>
-              <TotalCourseType v-show="showCourseType===false" @chooseCourseType="chooseCourseType"/>
-            </div>
-          </div>
-        </div>
-      </IBeautifulCard>
-    </div>
-
   </div>
 </template>
 
 <script>
-  import HotCourseType from "./HotCourseType"
-  import TotalCourseType from "./TotalCourseType"
-  import ISearch from "../../Common/search/ISearch"
-  import IBeautifulCard from "../../Common/card/IBeautifulCard"
-  import IBeautifulLink from "../../Common/link/IBeautifulLink"
+  import HotCourseType from "./CourseType/HotCourseType"
+  import TotalCourseType from "./CourseType/TotalCourseType"
+  import ISearch from "../Common/search/ISearch"
+  import IBeautifulCard from "../Common/card/IBeautifulCard"
+  import IBeautifulLink from "../Common/link/IBeautifulLink"
 
   export default {
-    name: "ChooseCourseType",
+    name: "LogoAndSearch",
     components: {ISearch, HotCourseType, TotalCourseType, IBeautifulCard, IBeautifulLink},
     data() {
       return {
@@ -77,6 +56,6 @@
 </script>
 
 <style scoped>
-  @import "../../../assets/css/isoft_common.css";
+  @import "../../assets/css/isoft_common.css";
 
 </style>
