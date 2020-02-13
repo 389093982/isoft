@@ -58,7 +58,7 @@
               </Col>
               <Col span="4">
                 <div class="bookImg">
-                  <router-link :to="{path:'/ibook/book_detail',query:{book_id:book.id}}">
+                  <router-link :to="{path:'/ibook/book_catalogs',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
@@ -199,7 +199,7 @@
           current_page: this.current_page,
         });
         if (result.status == "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(this.books, 'book_author');
+          this.userInfos = await renderUserInfoByNames(result.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
 

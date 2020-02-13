@@ -122,6 +122,17 @@ export const MapAttrsForArray = function (arrs, attrName) {
   return attrs;
 }
 
+export const renderUserInfoByName = async function (user_name) {
+  const result = await GetUserInfoByNames({usernames: user_name});
+  let userInfos = [];
+  if (result.status == "SUCCESS") {
+    userInfos = result.users;
+  }
+  return new Promise(function (resolve, reject) {
+    resolve(userInfos);
+  });
+};
+
 export const renderUserInfoByNames = async function (arrs, attrName) {
   let user_names = MapAttrsForArray(arrs, attrName);
   user_names = Array.from(new Set(user_names));
