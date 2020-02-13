@@ -1,6 +1,17 @@
 <template>
   <div>
 
+    <div style="width: 40%;">
+      <div style="margin: 10px 20px 0 0 ">
+        <ISearch @submitFunc="searchFunc"/>
+      </div>
+      <div style="margin: 8px 0 0 70px ">
+        <a @click="$router.push({path:'/ilearning/about'})" class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
+        <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
+        <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
+      </div>
+    </div>
+
     <WarmHeartRecommend style="margin-top: 5px;"/>
 
     <Row style="margin-top: 5px;">
@@ -87,6 +98,7 @@
 
 <script>
   import ChooseCourseType from "./LogoAndSearch"
+  import ISearch from "../Common/search/ISearch"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
@@ -99,7 +111,7 @@
   import BlogRank from "./BlogRank";
 
   export default {
-    name: "CourseDetails",
+    name: "BoutiqueCourse",
     components: {
       BlogRank,
       WarmHeartRecommend,
@@ -112,6 +124,21 @@
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
+      ISearch,
+    },
+    methods:{
+      searchFunc: function (data) {
+        this.$router.push({path: '/ilearning/course_search', query: {search: data}});
+      },
+      chooseCourseType: function (course_type, course_sub_type) {
+        // params是路由的一部分
+        // query是拼接在url后面的参数
+        // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
+        this.$router.push({path: '/ilearning/course_search', query: {search: course_sub_type}});
+      },
+      toggle: function (data) {
+        alert(data);
+      }
     },
   }
 </script>

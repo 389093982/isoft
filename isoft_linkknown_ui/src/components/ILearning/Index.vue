@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!--首页logo图片 和 搜索框 -->
-    <LogoAndSearch></LogoAndSearch>
+    <!--首页轮播图-->
+    <IndexCarousel></IndexCarousel>
 
     <!--课程分类-->
     <CourseType></CourseType>

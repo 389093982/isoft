@@ -1,64 +1,72 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" :theme="theme1" active-name="1">
-      <div class="layout-nav">
-        <MenuItem name="1">
-          <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">链知首页</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="2">
-          <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseDetails'})">精品课程</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="3">
-          <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="4">
-          <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="5">
-          <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
-        </MenuItem>
-        <MenuItem name="6">
-          <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
-        </MenuItem>
-        <Submenu name="7">
-          <template slot="title">
-            <span v-if="loginUserName">{{loginUserName}}</span>
-            <span v-else>未登录</span>
-          </template>
-          <MenuGroup title="账号管理">
-            <MenuItem name="8-1" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心</MenuItem>
-            <MenuItem name="8-2" @click.native="cancelUser">重新登录</MenuItem>
-            <MenuItem name="8-3" @click.native="cancelUser">退出</MenuItem>
-          </MenuGroup>
-        </Submenu>
-        <Submenu name="8">
-          <template slot="title">
-            会员中心
-          </template>
-          <MenuGroup title="账号管理">
-            <MenuItem name="10-1">
-              <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">开通会员</IBeautifulLink>
-            </MenuItem>
-            <MenuItem name="10-2">
-              <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipInterest'})">会员权益</IBeautifulLink>
-            </MenuItem>
-          </MenuGroup>
-        </Submenu>
-        <MenuItem name="9">
-          <div class="message">
-            <IBeautifulLink>消息
-              <Badge dot style="position: relative;top: -12px;"></Badge>
-            </IBeautifulLink>
-            <div class="message_detail">
-              <MessageList :show-detail="false"/>
-            </div>
-          </div>
-        </MenuItem>
-        <MenuItem name="10">
-          <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
-        </MenuItem>
+    <div style="float: left;width: 15%;background-color: white">
+      <div style="padding: 5px 0 0 30px ">
+        <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 50px;"/>
       </div>
-    </Menu>
+    </div>
+    <div style="float: left;width: 85%">
+      <Menu mode="horizontal" :theme="theme1" active-name="1">
+        <div class="layout-nav">
+          <MenuItem name="1">
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">链知首页</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="2">
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">精品课程</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="3">
+            <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="4">
+            <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="5">
+            <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="6">
+            <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
+          </MenuItem>
+          <Submenu name="7">
+            <template slot="title">
+              <span v-if="loginUserName">{{loginUserName}}</span>
+              <span v-else>未登录</span>
+            </template>
+            <MenuGroup title="账号管理">
+              <MenuItem name="8-1" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心</MenuItem>
+              <MenuItem name="8-2" @click.native="cancelUser">重新登录</MenuItem>
+              <MenuItem name="8-3" @click.native="cancelUser">退出</MenuItem>
+            </MenuGroup>
+          </Submenu>
+          <Submenu name="8">
+            <template slot="title">
+              会员中心
+            </template>
+            <MenuGroup title="账号管理">
+              <MenuItem name="10-1">
+                <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">开通会员</IBeautifulLink>
+              </MenuItem>
+              <MenuItem name="10-2">
+                <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipInterest'})">会员权益</IBeautifulLink>
+              </MenuItem>
+            </MenuGroup>
+          </Submenu>
+          <MenuItem name="9">
+            <div class="message">
+              <IBeautifulLink>消息
+                <Badge dot style="position: relative;top: -12px;"></Badge>
+              </IBeautifulLink>
+              <div class="message_detail">
+                <MessageList :show-detail="false"/>
+              </div>
+            </div>
+          </MenuItem>
+          <MenuItem name="10">
+            <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
+          </MenuItem>
+        </div>
+      </Menu>
+    </div>
+    <div style="clear: both"></div>
   </div>
 </template>
 
