@@ -16,7 +16,10 @@
               <p>链接地址: {{advertisement.linked_refer}}</p>
               <p>显示图片: <span :title="advertisement.linked_img">{{advertisement.linked_img}}</span>&nbsp;</p>
               <p>联系人：{{loginUserName}}</p>
-              <p>广告状态: 已发布</p>
+              <p>广告状态:
+                <span v-if="advertisement.is_valid === 1">已生效</span>
+                <span v-else>等待审核</span>
+              </p>
               <p>
                 <a @click="editAdvertisement(advertisement.id)">编辑</a>
                 <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})"
