@@ -1,27 +1,11 @@
 <template>
   <div>
-    <ChooseCourseType/>
 
     <WarmHeartRecommend style="margin-top: 5px;"/>
 
     <Row style="margin-top: 5px;">
-      <Col span="17" style="padding-right: 5px;">
+      <Col span="24" style="padding-right: 5px;">
         <HotRecommend class="isoft_bg_white isoft_pd10" :show-display-icon="true"/>
-      </Col>
-      <Col span="7">
-        <BookRank class="isoft_bg_white isoft_pd10"/>
-
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </div>
-
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
-        </div>
-
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <BlogRank/>
-        </div>
       </Col>
     </Row>
 
@@ -115,7 +99,7 @@
   import BlogRank from "./BlogRank";
 
   export default {
-    name: "Index",
+    name: "CourseDetails",
     components: {
       BlogRank,
       WarmHeartRecommend,
@@ -133,5 +117,6 @@
 </script>
 
 <style scoped>
+  /* 引入公共样式库 */
 
 </style>

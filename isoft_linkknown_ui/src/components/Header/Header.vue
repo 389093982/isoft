@@ -3,10 +3,10 @@
     <Menu mode="horizontal" :theme="theme1" active-name="1">
       <div class="layout-nav">
         <MenuItem name="1">
-          <IBeautifulLink @onclick="$router.push({path:'/linkknown/index'})">链知首页</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">链知首页</IBeautifulLink>
         </MenuItem>
         <MenuItem name="2">
-          <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">精品课程</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseDetails'})">精品课程</IBeautifulLink>
         </MenuItem>
         <MenuItem name="3">
           <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
