@@ -3,18 +3,21 @@
     <Menu mode="horizontal" :theme="theme1" active-name="1">
       <div class="layout-nav">
         <MenuItem name="1">
-          <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">精品课程</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/linkknown/index'})">链知首页</IBeautifulLink>
         </MenuItem>
         <MenuItem name="2">
-          <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">精品课程</IBeautifulLink>
         </MenuItem>
         <MenuItem name="3">
-          <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
         </MenuItem>
         <MenuItem name="4">
-          <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
+          <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
         </MenuItem>
         <MenuItem name="5">
+          <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
+        </MenuItem>
+        <MenuItem name="6">
           <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
         </MenuItem>
         <Submenu name="7">
@@ -23,13 +26,12 @@
             <span v-else>未登录</span>
           </template>
           <MenuGroup title="账号管理">
-            <MenuItem name="8-1" @click.native="cancelUser">前往登录</MenuItem>
-            <MenuItem name="8-3" @click.native="cancelUser">注销</MenuItem>
-            <MenuItem name="8-4" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
-            </MenuItem>
+            <MenuItem name="8-1" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心</MenuItem>
+            <MenuItem name="8-2" @click.native="cancelUser">重新登录</MenuItem>
+            <MenuItem name="8-3" @click.native="cancelUser">退出</MenuItem>
           </MenuGroup>
         </Submenu>
-        <Submenu name="9">
+        <Submenu name="8">
           <template slot="title">
             会员中心
           </template>
@@ -42,7 +44,7 @@
             </MenuItem>
           </MenuGroup>
         </Submenu>
-        <MenuItem name="11">
+        <MenuItem name="9">
           <div class="message">
             <IBeautifulLink>消息
               <Badge dot style="position: relative;top: -12px;"></Badge>
@@ -52,7 +54,7 @@
             </div>
           </div>
         </MenuItem>
-        <MenuItem name="12">
+        <MenuItem name="10">
           <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
         </MenuItem>
       </div>

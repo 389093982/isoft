@@ -15,8 +15,6 @@
           <a @click="$router.push({path:'/ilearning/about'})" class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
           <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
           <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
-          <a @click="$router.push({ path: '/ilearning/course_space'})"
-             class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
         </div>
       </div>
 

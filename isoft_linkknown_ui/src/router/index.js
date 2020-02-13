@@ -57,28 +57,24 @@ const DownloadResource = () => import("@/components/Resource/DownloadResource");
 const AskExpert = () => import("@/components/Expert/AskExpert");
 const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
-
 const MessageList = () => import("@/components/Message/MessageList");
 const Site = () => import("@/components/Site");
 
 Vue.use(Router);
 
 function getRootRouters() {
-  return [{
-    path: '/',
-    redirect: '/ilearning/index'
-  }, {
-    path: '/site',
-    component: ILayout,
-    children: [
-      {path: 'index', component: Site},
-    ]
-  }]
-};
+  return [
+    {path: '/', redirect: '/ilearning/index'},
+    {path: '/site', component: ILayout,
+      children: [
+        {path: 'index', component: Site},
+      ]
+    }
+  ]
+}
 
 const IBlogRouter = {
-  path: '/iblog',
-  component: ILayout,
+  path: '/iblog', component: ILayout,
   // 二级路由的配置
   children: [
     {path: 'blog_index', component: IBlog},
@@ -89,30 +85,23 @@ const IBlogRouter = {
 };
 
 const IBookRouter = {
-  path: '/ibook',
-  component: ILayout,
-  // 二级路由的配置
-  children: [
-    {path: 'book_list', component: BookList},
-    {path: 'book_detail', component: BookArticleDetail},
-    {path: 'book_edit', component: BookCatalogEdit},
-    {path: 'book_list', component: BookList},
-    {path: 'book_catalogs', component: BookCatalogs},
-  ]
+  path: '/ibook', component: ILayout,
+    // 二级路由的配置
+    children: [
+      {path: 'book_list', component: BookList},
+      {path: 'book_detail', component: BookArticleDetail},
+      {path: 'book_edit', component: BookCatalogEdit},
+      {path: 'book_list', component: BookList},
+      {path: 'book_catalogs', component: BookCatalogs},
+    ]
 };
 
 const ILearningRouter = {
-  path: '/ilearning',
-  component: ILayout,
+  path: '/ilearning', component: ILayout,
   // 二级路由的配置
   children: [
-    {
-      path: 'index',
-      component: ILearningIndex,
-    },
-    {
-      path: 'course_space',
-      component: CourseSpace,
+    {path: 'index', component: ILearningIndex,},
+    {path: 'course_space', component: CourseSpace,
       redirect: '/ilearning/course_space/myCourseList',
       children: [
         {path: 'editCourse', component: EditCourse,},
@@ -124,128 +113,111 @@ const ILearningRouter = {
     {path: 'video_play', component: VideoPay,},
     {path: 'advise', component: Advise,},
     {path: 'about', component: About,},
-    {
-      // this.$router.push({ name: 'xxx'});
-      // this.$router.push({ path: 'xxx'});
-      name: 'course_search',
-      path: 'course_search',
-      component: CourseSearch,
-    },
+    {path: 'course_search', component: CourseSearch,},
   ]
 };
 
-const ILearningRouters = [IBlogRouter, IBookRouter, ILearningRouter];
-
 const ISSOReouter = [{
-  path: '/sso',
-  component: IEmptyLayout,
-  children: [
-    {path: 'login', component: Login},
-    {path: 'regist', component: RegistOrForget},
-    {path: 'forget', component: RegistOrForget},
-  ]
+  path: '/sso', component: IEmptyLayout,
+    children: [
+      {path: 'login', component: Login},
+      {path: 'regist', component: RegistOrForget},
+      {path: 'forget', component: RegistOrForget},
+    ]
 }];
 
 const ICMSReouter = [{
-  path: '/background',
-  component: ICMSLayout,
-  children: [
-    {path: 'advise_list', component: AdviseList},
-    {path: 'sso/appRegist', component: AppRegist},
-    {path: 'sso/loginRecord', component: LoginRecord},
-  ]
+  path: '/background', component: ICMSLayout,
+    children: [
+      {path: 'advise_list', component: AdviseList},
+      {path: 'sso/appRegist', component: AppRegist},
+      {path: 'sso/loginRecord', component: LoginRecord},
+    ]
 }];
 
 const IUserReouter = [{
-  path: '/user',
-  component: ILayout,
-  children: [
-    {path: 'detail', component: UserDetail},
-    {path: 'guide', component: UserGuide},
-    {path: 'mine/detail', component: UserDetail},
-  ]
+  path: '/user', component: ILayout,
+    children: [
+      {path: 'detail', component: UserDetail},
+      {path: 'guide', component: UserGuide},
+      {path: 'mine/detail', component: UserDetail},
+    ]
 }];
 
 const IExpert = [{
-  path: '/expert',
-  component: ILayout,
-  children: [
-    {path: 'ask_expert', component: AskExpert},
-    {path: 'answer_expert', component: AnswerExpert},
-    {path: 'edit_question', component: EditQuestion},
-  ]
+  path: '/expert', component: ILayout,
+    children: [
+      {path: 'ask_expert', component: AskExpert},
+      {path: 'answer_expert', component: AnswerExpert},
+      {path: 'edit_question', component: EditQuestion},
+    ]
 }];
 
 const IJob = [{
-  path: '/job',
-  component: ILayout,
-  children: [
-    {path: 'jobList', component: JobList},
-    {path: 'resume_manage', component: ResumeManage},
-    {path: 'corporate_detail', component: CorporateDetail},
-    {path: 'corporate_edit', component: EditCorporate},
-    {path: 'job_edit', component: EditJob},
-    {path: 'resume_edit', component: EditResume},
-    {path: 'apply_list', component: JobApplyList},
-  ]
+  path: '/job', component: ILayout,
+    children: [
+      {path: 'jobList', component: JobList},
+      {path: 'resume_manage', component: ResumeManage},
+      {path: 'corporate_detail', component: CorporateDetail},
+      {path: 'corporate_edit', component: EditCorporate},
+      {path: 'job_edit', component: EditJob},
+      {path: 'resume_edit', component: EditResume},
+      {path: 'apply_list', component: JobApplyList},
+    ]
 }];
 
 const IAdvertisement = [{
-  path: '/advertisement',
-  component: ILayout,
-  children: [
-    {path: 'apply', component: AdvApply},
-    {path: 'manage', component: AdvManage},
-    {path: 'accesslog', component: AccessLog},
-  ]
+  path: '/advertisement', component: ILayout,
+    children: [
+      {path: 'apply', component: AdvApply},
+      {path: 'manage', component: AdvManage},
+      {path: 'accesslog', component: AccessLog},
+    ]
 }];
 
 const IFoundReouter = [{
-  path: '/ifound',
-  component: ILayout,
-  children: [
-    {path: 'found_list', component: FoundList},
-    {path: 'discount_list', component: DiscountList},
-    {path: 'activity_list', component: ActivityList},
-  ]
+  path: '/ifound', component: ILayout,
+    children: [
+      {path: 'found_list', component: FoundList},
+      {path: 'discount_list', component: DiscountList},
+      {path: 'activity_list', component: ActivityList},
+    ]
 }];
 
 const IGoodReouter = [{
-  path: '/igood',
-  component: ILayout,
-  children: [
-    {path: 'good_list', component: GoodList},
-    {path: 'mine/good_list', component: GoodList},
-    {path: 'mine/good_edit', component: GoodEdit},
-    {path: 'good_detail', component: GoodDetail},
-    {path: 'pay_confirm', component: PayConfirm},
-  ]
+  path: '/igood', component: ILayout,
+    children: [
+      {path: 'good_list', component: GoodList},
+      {path: 'mine/good_list', component: GoodList},
+      {path: 'mine/good_edit', component: GoodEdit},
+      {path: 'good_detail', component: GoodDetail},
+      {path: 'pay_confirm', component: PayConfirm},
+    ]
 }];
-
 
 const MessageRouter = [{
   path: '/message', component: ILayout,
-  children: [
-    {path: 'message_list', component: MessageList},
-  ]
+    children: [
+      {path: 'message_list', component: MessageList},
+    ]
 }];
 
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
-  children: [
-    {path: 'resourceList', component: ResourceList},
-    {path: 'uploadResource', component: UploadResource},
-    {path: 'downloadResource', component: DownloadResource},
-  ]
+    children: [
+      {path: 'resourceList', component: ResourceList},
+      {path: 'uploadResource', component: UploadResource},
+      {path: 'downloadResource', component: DownloadResource},
+    ]
 }];
 
 const VipCenterReouter = [{
   path: '/vipcenter', component: ILayout,
-  children: [
-    {path: 'vipIntroduction', component: VipIntroduction},
-    {path: 'vipInterest', component: VipInterest},
-    {path: 'recharge', component: Recharge},
-  ]
+    children: [
+      {path: 'vipIntroduction', component: VipIntroduction},
+      {path: 'vipInterest', component: VipInterest},
+      {path: 'recharge', component: Recharge},
+    ]
 }];
 
 function getAllRouters() {
@@ -256,7 +228,9 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, IFoundReouter);
   allRouters = joinArray(allRouters, IGoodReouter);
   allRouters = joinArray(allRouters, IUserReouter);
-  allRouters = joinArray(allRouters, ILearningRouters);
+  allRouters = joinArray(allRouters, ILearningRouter);
+  allRouters = joinArray(allRouters, IBlogRouter);
+  allRouters = joinArray(allRouters, IBookRouter);
   allRouters = joinArray(allRouters, ISSOReouter);
   allRouters = joinArray(allRouters, ICMSReouter);
   allRouters = joinArray(allRouters, VipCenterReouter);
