@@ -75,18 +75,16 @@ function getRootRouters() {
 
 const IBlogRouter = {
   path: '/iblog', component: ILayout,
-  // 二级路由的配置
-  children: [
-    {path: 'blog_index', component: IBlog},
-    {path: 'blog_list', component: BlogList},
-    {path: 'blog_detail', component: BlogArticleDetail},
-    {path: 'blog_edit', component: BlogArticleEdit},
-  ]
+    children: [
+      {path: 'blog_index', component: IBlog},
+      {path: 'blog_list', component: BlogList},
+      {path: 'blog_detail', component: BlogArticleDetail},
+      {path: 'blog_edit', component: BlogArticleEdit},
+    ]
 };
 
 const IBookRouter = {
   path: '/ibook', component: ILayout,
-    // 二级路由的配置
     children: [
       {path: 'book_list', component: BookList},
       {path: 'book_detail', component: BookArticleDetail},
@@ -98,23 +96,22 @@ const IBookRouter = {
 
 const ILearningRouter = {
   path: '/ilearning', component: ILayout,
-  // 二级路由的配置
-  children: [
-    {path: 'index', component: ILearningIndex,},
-    {path: 'course_space', component: CourseSpace,
-      redirect: '/ilearning/course_space/myCourseList',
-      children: [
-        {path: 'editCourse', component: EditCourse,},
-        {path: 'myCourseList', component: MyCourseList,},
-        {path: 'RecentlyViewed', component: RecentlyViewed,},
-      ]
-    },
-    {path: 'course_detail', component: CourseDetail,},
-    {path: 'video_play', component: VideoPay,},
-    {path: 'advise', component: Advise,},
-    {path: 'about', component: About,},
-    {path: 'course_search', component: CourseSearch,},
-  ]
+    children: [
+      {path: 'index', component: ILearningIndex,},
+      {path: 'course_space', component: CourseSpace,
+        redirect: '/ilearning/course_space/myCourseList',
+        children: [
+          {path: 'editCourse', component: EditCourse,},
+          {path: 'myCourseList', component: MyCourseList,},
+          {path: 'RecentlyViewed', component: RecentlyViewed,},
+        ]
+      },
+      {path: 'course_detail', component: CourseDetail,},
+      {path: 'video_play', component: VideoPay,},
+      {path: 'advise', component: Advise,},
+      {path: 'about', component: About,},
+      {path: 'course_search', component: CourseSearch,},
+    ]
 };
 
 const ISSOReouter = [{
