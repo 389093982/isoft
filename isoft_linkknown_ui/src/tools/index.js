@@ -138,7 +138,7 @@ export const renderUserInfoByNames = async function (arrs, attrName) {
   user_names = Array.from(new Set(user_names));
   const result = await GetUserInfoByNames({usernames: user_names.join(",")});
   let userInfos = [];
-  if (result.status == "SUCCESS") {
+  if (result.status === "SUCCESS") {
     userInfos = result.users;
   }
   return new Promise(function (resolve, reject) {
@@ -146,10 +146,20 @@ export const renderUserInfoByNames = async function (arrs, attrName) {
   });
 };
 
+export const RenderUserIcon = function (userInfos, user_name) {
+  if (userInfos != null) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);
+    if (user_names != null && user_names.length > 0) {
+      return user_names[0].small_icon;
+    }
+  }
+  return null;
+};
+
 export const RenderNickName = function (userInfos, user_name) {
-  if (userInfos != null && userInfos != undefined) {
-    let user_names = userInfos.filter(userinfo => userinfo.user_name == user_name);
-    if (user_names != null && user_names != undefined && user_names.length > 0) {
+  if (userInfos != null) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);
+    if (user_names != null && user_names.length > 0) {
       return user_names[0].nick_name;
     }
   }

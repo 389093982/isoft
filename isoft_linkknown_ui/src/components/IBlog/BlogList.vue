@@ -39,8 +39,10 @@
                   style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
                   <Col span="12">
-                    <router-link to="" style="float: left;">
-                      <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
+                    <router-link to="" style="float: left;margin-right: 10px;">
+                      <Avatar size="small" v-if="renderUserIcon(searchblog.author)"
+                              :src="renderUserIcon(searchblog.author)"/>
+                      <Avatar size="small" v-else src="../../../static/images/404.jpg"/>
                     </router-link>
                     <!-- 使用v-bind动态绑定id传递给目标路径 -->
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
@@ -62,7 +64,7 @@
                   <Row>
                     <Col span="17">
                       <!-- 作者详情 -->
-                      <router-link :to="{path:'/iblog/author',query:{author:searchblog.author}}">
+                      <router-link to="">
                         作者:<span style="color: blue;">
                         <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
                         <span v-else>{{searchblog.author}}</span>
@@ -125,7 +127,7 @@
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, RenderNickName, renderUserInfoByNames} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, RenderNickName, RenderUserIcon, renderUserInfoByNames} from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
 
   export default {
@@ -201,6 +203,9 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
+      },
+      renderUserIcon: function (user_name) {
+        return RenderUserIcon(this.userInfos, user_name);
       }
     },
     mounted: function () {
