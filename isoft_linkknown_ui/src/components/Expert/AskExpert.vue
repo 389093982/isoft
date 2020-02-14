@@ -1,8 +1,6 @@
 <template>
   <div>
     <div>
-      <div class="weather snow"></div>
-
       <Row class="isoft_top10">
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
@@ -152,16 +150,6 @@
 </script>
 
 <style scoped>
-  @import "../../assets/css/weather.css";
-
-  .weather {
-    text-align: center;
-    width: 1000px;
-    height: 1000px;
-    position: absolute;
-    z-index: 0;
-  }
-
   .search a {
     color: #155faa;
   }

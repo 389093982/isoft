@@ -17,7 +17,7 @@
         </Col>
         <Col span="22">
           <div v-for="(element,index) in levelTwoElements" style="display: inline-block;margin: 0 5px 5px 5px;"
-               v-if="currentElement != null && element.navigation_parent_id == currentElement.id">
+               v-if="currentElement != null && element.navigation_parent_id === currentElement.id">
             <a class="isoft_font12" @click="chooseCourseType(currentElement.element_label, element.element_label)">
               {{element.element_label}}
             </a>
@@ -54,8 +54,13 @@
       },
       onLoadElement: function (placement_label, elements) {
         this.placement_label = placement_label;
-        this.levelOneElements = elements.filter(element => element.navigation_level == 0);
-        this.levelTwoElements = elements.filter(element => element.navigation_level == 1);
+        this.levelOneElements = elements.filter(element => element.navigation_level === 0);
+        this.levelTwoElements = elements.filter(element => element.navigation_level === 1);
+        // 进行排序, 二级子分类元素多的放在前面
+        this.levelOneElements = this.levelOneElements.sort((e1, e2) => {
+          return this.levelTwoElements.filter(e => e.navigation_parent_id === e2.id).length -
+            this.levelTwoElements.filter(e => e.navigation_parent_id === e1.id).length;
+        });
         this.currentElement = this.levelOneElements[0];
       }
     },

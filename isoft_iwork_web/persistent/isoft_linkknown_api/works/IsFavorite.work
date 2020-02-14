@@ -4,8 +4,8 @@
 		<AppId>5</AppId>
 		<WorkName>IsFavorite</WorkName>
 		<WorkDesc>自动创建子流程:IsFavorite</WorkDesc>
-		<WorkType></WorkType>
-		<ModuleName></ModuleName>
+		<WorkType>work</WorkType>
+		<ModuleName>Common</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>

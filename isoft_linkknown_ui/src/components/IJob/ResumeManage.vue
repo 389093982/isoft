@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10">
-      <IBeautifulLink @onclick="noImplement">简历管理</IBeautifulLink>
-      <IBeautifulLink @onclick="noImplement">个人特色</IBeautifulLink>
-      <IBeautifulLink @onclick="downloadResume">简历下载</IBeautifulLink>
-      <IBeautifulLink style="float: right;" v-if="checkEditable" @onclick="$router.push({path:'/job/resume_edit'})">
+    <div class="isoft_bg_white isoft_pd10" style="text-align: right;">
+      <IBeautifulLink v-if="checkEditable" @onclick="$router.push({path:'/job/resume_edit'})">
         编辑简历
       </IBeautifulLink>
     </div>
@@ -52,14 +49,6 @@
       }
     },
     methods: {
-      noImplement: function () {
-        alert("待开发!");
-      },
-      downloadResume: function () {
-        if (this.resume != null) {
-          $("#resumeInfo").wordExport(this.resume.user_name + "的简历");
-        }
-      },
       refreshQueryResume: async function (user_name) {
         const result = await QueryResume({user_name: user_name});
         if (result.status == "SUCCESS") {

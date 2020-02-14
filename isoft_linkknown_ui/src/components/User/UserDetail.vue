@@ -6,16 +6,19 @@
 
       <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
         <Col span="6" style="top:-100px;">
-          <img width="150" height="150" style="border: 2px solid rgba(197,197,197,0.2);"
-               :src="user.small_icon" @error="defImg()">
-          <p style="margin: 0 0 0 40px;" v-if="$route.query.username == 'mine'">
+          <img class="isoft_hover_red hover_img" style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);"
+               width="150" height="150" :src="user.small_icon" @error="defImg()">
+
+          <div style="margin: 0 0 0 40px;" v-if="$route.query.username === 'mine'">
             <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
-          </p>
+          </div>
         </Col>
         <Col span="12" style="padding-top: 30px;">
-          <p style="margin-bottom: 20px;">加入时间：{{user.created_time}}</p>
+          <p style="margin-bottom: 20px;">加入时间：
+            <Time :time="user.created_time" :interval="1"/>
+          </p>
 
-          <h3>{{user.user_name}}</h3>
+          <h3>{{user.nick_name}} / {{user.user_name}}</h3>
           <p>这家伙很懒，什么个性签名都没有留下</p>
         </Col>
         <Col span="6" style="padding-top: 100px;text-align: right;">
@@ -96,5 +99,12 @@
 </script>
 
 <style scoped>
+  .hover_img {
+    position: relative;
+    transition: transform 1s ease-in;
+  }
 
+  .hover_img:hover {
+    transform: rotateY(360deg);
+  }
 </style>
