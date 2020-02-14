@@ -6,8 +6,8 @@
 
       <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
         <Col span="6" style="top:-100px;">
-          <img width="150" height="150" style="border: 2px solid rgba(197,197,197,0.2);"
-               :src="user.small_icon" @error="defImg()">
+          <img class="isoft_hover_red hover_img" style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);"
+               width="150" height="150" :src="user.small_icon" @error="defImg()">
 
           <div style="margin: 0 0 0 40px;" v-if="$route.query.username === 'mine'">
             <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
@@ -97,5 +97,12 @@
 </script>
 
 <style scoped>
+  .hover_img {
+    position: relative;
+    transition: transform 1s ease-in;
+  }
 
+  .hover_img:hover {
+    transform: rotateY(360deg);
+  }
 </style>
