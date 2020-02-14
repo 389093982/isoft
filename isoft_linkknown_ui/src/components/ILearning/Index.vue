@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <!--高度这里就设置400px-->
     <div style="height: 400px;">
       <div style="float: left;width: 70%;">
         <!--首页轮播图-->
@@ -29,11 +30,6 @@
     <!--热门书单-->
     <div>
       <BookRank class="isoft_bg_white isoft_pd10"/>
-    </div>
-
-    <!--求职招聘相关-->
-    <div>
-      求职招聘相关
     </div>
 
     <!--热门资源相关-->
