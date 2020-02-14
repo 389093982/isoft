@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd20">
+      <p class="header">公司主页</p>
       <Row>
         <Col span="5">
           <div class="bookImg">
@@ -185,5 +186,14 @@
 </script>
 
 <style scoped>
-
+  .header {
+    margin: 0 10px 10px 10px;
+    position: relative;
+    height: 40px;
+    color: #111;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 40px;
+    white-space: nowrap;
+  }
 </style>
