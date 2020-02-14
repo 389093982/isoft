@@ -14,9 +14,11 @@
           </div>
         </Col>
         <Col span="12" style="padding-top: 30px;">
-          <p style="margin-bottom: 20px;">加入时间：{{user.created_time}}</p>
+          <p style="margin-bottom: 20px;">加入时间：
+            <Time :time="user.created_time" :interval="1"/>
+          </p>
 
-          <h3>{{user.user_name}}</h3>
+          <h3>{{user.nick_name}} / {{user.user_name}}</h3>
           <p>这家伙很懒，什么个性签名都没有留下</p>
         </Col>
         <Col span="6" style="padding-top: 100px;text-align: right;">

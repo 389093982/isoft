@@ -2,7 +2,7 @@
   <div>
     <div class="isoft_bg_white">
       <div style="width: 100%;height: 100px;overflow: hidden;background-color: rgba(0,21,228,0.5);padding: 20px;">
-        <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">共享资源</p>
+        <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
         <p class="isoft_font_white" style="margin-top: 5px;">
           许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。
         </p>
@@ -53,7 +53,7 @@
                 <Col span="8">
                   <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">推荐 ({{resource.recommend}})
                   </IBeautifulLink>&nbsp;&nbsp;&nbsp;
-                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">不推荐 ({{resource.not_recommend}})
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">内容与描述不符 ({{resource.not_recommend}})
                   </IBeautifulLink>
                   <Progress :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
                 </Col>
@@ -94,7 +94,7 @@
         // 总数
         total: 0,
         // 每页记录数
-        offset: 10,
+        offset: 20,
       }
     },
     methods: {
