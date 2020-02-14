@@ -8,7 +8,7 @@
 
     <div class="itemArea" @click="$router.push({path:'/user/guide'})">
       <Icon type="logo-reddit" :size="28"/>
-      <p>FAQ</p>
+      <p>帮助中心</p>
     </div>
     <div class="item-line"></div>
 

@@ -74,27 +74,6 @@ function getRootRouters() {
   ]
 }
 
-const IBlogRouter = [{
-  path: '/iblog', component: ILayout,
-    children: [
-      {path: 'blog_index', component: IBlog},
-      {path: 'blog_list', component: BlogList},
-      {path: 'blog_detail', component: BlogArticleDetail},
-      {path: 'blog_edit', component: BlogArticleEdit},
-    ]
-}];
-
-const IBookRouter = [{
-  path: '/ibook', component: ILayout,
-    children: [
-      {path: 'book_list', component: BookList},
-      {path: 'book_detail', component: BookArticleDetail},
-      {path: 'book_edit', component: BookCatalogEdit},
-      {path: 'book_list', component: BookList},
-      {path: 'book_catalogs', component: BookCatalogs},
-    ]
-}];
-
 const ILearningRouter = [{
   path: '/ilearning', component: ILayout,
     children: [
@@ -113,6 +92,27 @@ const ILearningRouter = [{
       {path: 'advise', component: Advise,},
       {path: 'about', component: About,},
       {path: 'course_search', component: CourseSearch,},
+    ]
+}];
+
+const IBlogRouter = [{
+  path: '/iblog', component: ILayout,
+    children: [
+      {path: 'blog_index', component: IBlog},
+      {path: 'blog_list', component: BlogList},
+      {path: 'blog_detail', component: BlogArticleDetail},
+      {path: 'blog_edit', component: BlogArticleEdit},
+    ]
+}];
+
+const IBookRouter = [{
+  path: '/ibook', component: ILayout,
+    children: [
+      {path: 'book_list', component: BookList},
+      {path: 'book_detail', component: BookArticleDetail},
+      {path: 'book_edit', component: BookCatalogEdit},
+      {path: 'book_list', component: BookList},
+      {path: 'book_catalogs', component: BookCatalogs},
     ]
 }];
 

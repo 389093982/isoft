@@ -1,13 +1,14 @@
 <template>
   <div>
     <!--首页轮播图-->
-    <IndexCarousel></IndexCarousel>
-
-    <!--课程分类-->
-    <CourseType></CourseType>
+    <div>
+      <IndexCarousel></IndexCarousel>
+    </div>
 
     <!--为您精选、热门、特色、高评-->
-    <WarmHeartRecommend style="margin-top: 5px;"/>
+    <div style="margin: 100px 0 0 0 ">
+      <WarmHeartRecommend/>
+    </div>
 
     <Row style="margin-top: 5px;">
       <Col span="17" style="padding-right: 5px;">
@@ -57,7 +58,6 @@
 </template>
 
 <script>
-  import CourseType from "./CourseType/CourseType"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
@@ -80,7 +80,6 @@
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
-      CourseType,
       HotRecommend,
       NewsNotice,
       ToolBox,

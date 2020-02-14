@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <!--搜索框-->
     <div style="width: 100%;height: 100px;">
       <div style="width: 60%;display: inline-block;">
         <input id="courseSearchId" placeholder="请输入搜索内容..." v-model.trim="search_data"/>
@@ -9,97 +10,19 @@
         </button>
       </div>
     </div>
-    <div style="width: 100%;height: 100px;text-align: center">
-      <a @click="$router.push({path:'/ilearning/about'})" class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
-      <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
-      <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
-    </div>
 
-    <WarmHeartRecommend style="margin-top: 5px;"/>
+    <!--课程分类-->
+    <CourseType></CourseType>
 
-    <Row style="margin-top: 5px;">
-      <Col span="24" style="padding-right: 5px;">
-        <HotRecommend class="isoft_bg_white isoft_pd10" :show-display-icon="true"/>
-      </Col>
-    </Row>
+    <!--热门课程推荐-->
+    <HotRecommend></HotRecommend>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top5">
-      <Row :gutter="10">
-        <Col span="6">
-          <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-               @click="$router.push({path:'/ilearning/index'})">
-            <Row>
-              <Col span="8">
-                <img src="../../../static/images/course.jpg" style="width: 52px;height: 52px;"/>
-              </Col>
-              <Col span="16">
-                <h4>精品课程</h4>
-                <p>好评如潮好评如潮</p>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-        <Col span="6">
-          <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-               @click="$router.push({path:'/iblog/blog_list'})">
-            <Row>
-              <Col span="8">
-                <img src="../../../static/images/blog.jpg" style="width: 52px;height: 52px;"/>
-              </Col>
-              <Col span="16">
-                <h4>话题博客</h4>
-                <p>好评如潮好评如潮</p>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-        <Col span="6">
-          <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-               @click="$router.push({path:'/ibook/book_list'})">
-            <Row>
-              <Col span="8">
-                <img src="../../../static/images/book.jpg" style="width: 52px;height: 52px;"/>
-              </Col>
-              <Col span="16">
-                <h4>热门书单</h4>
-                <p>好评如潮好评如潮</p>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-        <Col span="6">
-          <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-               @click="$router.push({path:'/site/index'})">
-            <Row>
-              <Col span="8">
-                <img src="../../../static/images/more.jpg" style="width: 52px;height: 52px;"/>
-              </Col>
-              <Col span="16">
-                <h4>更多资源</h4>
-                <p>查看更多关于链知网的相关资源</p>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-      </Row>
-    </div>
 
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <!-- 热门开源项目 -->
-      <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
-    </div>
-
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <IBeautifulTabLink/>
-    </div>
-
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
-    </div>
   </div>
 </template>
 
 <script>
+  import CourseType from "./CourseType/CourseType"
   import ISearch from "../Common/search/ISearch"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
@@ -111,10 +34,13 @@
   import BookRank from "./BookRank";
   import WarmHeartRecommend from "./WarmHeartRecommend";
   import BlogRank from "./BlogRank";
+  import ShowModulars from "./ShowModulars";
 
   export default {
     name: "BoutiqueCourse",
     components: {
+      CourseType,
+      ShowModulars,
       BlogRank,
       WarmHeartRecommend,
       BookRank,

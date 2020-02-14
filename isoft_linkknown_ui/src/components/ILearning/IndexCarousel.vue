@@ -7,13 +7,13 @@
           <div class="demo-carousel"><img src="../../../static/images/indexCarousel/1.jpg" height="400" width="100%"/></div>
         </CarouselItem>
         <CarouselItem>
+          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/2.jpg" height="400" width="100%"/></div>
+        </CarouselItem>
+        <CarouselItem>
           <div class="demo-carousel"><img src="../../../static/images/indexCarousel/3.jpg" height="400" width="100%"/></div>
         </CarouselItem>
         <CarouselItem>
           <div class="demo-carousel"><img src="../../../static/images/indexCarousel/4.jpg" height="400" width="100%"/></div>
-        </CarouselItem>
-        <CarouselItem>
-          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/5.jpg" height="400" width="100%"/></div>
         </CarouselItem>
       </Carousel>
     </div>
