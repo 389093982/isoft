@@ -1,6 +1,20 @@
 <template>
   <div>
 
+    <div style="width: 100%;height: 100px;">
+      <div style="width: 60%;display: inline-block;">
+        <input id="courseSearchId" placeholder="请输入搜索内容..." v-model.trim="search_data"/>
+        <button id="courseSearchButtonId" @click="searchFunc">
+          <code id="courseSearchCodeId">搜索</code>
+        </button>
+      </div>
+    </div>
+    <div style="width: 100%;height: 100px;text-align: center">
+      <a @click="$router.push({path:'/ilearning/about'})" class="hovered hvr-grow hoverLinkColor mr5">关于LinkKnown</a>
+      <a @click="$router.push({path:'/user/guide'})" class="hovered hvr-grow hoverLinkColor mr5">站点引导</a>
+      <a @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
+    </div>
+
     <WarmHeartRecommend style="margin-top: 5px;"/>
 
     <Row style="margin-top: 5px;">
@@ -86,7 +100,7 @@
 </template>
 
 <script>
-  import ChooseCourseType from "./LogoAndSearch"
+  import ISearch from "../Common/search/ISearch"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
@@ -99,7 +113,7 @@
   import BlogRank from "./BlogRank";
 
   export default {
-    name: "CourseDetails",
+    name: "BoutiqueCourse",
     components: {
       BlogRank,
       WarmHeartRecommend,
@@ -107,16 +121,45 @@
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
-      ChooseCourseType,
       HotRecommend,
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
+      ISearch,
+    },
+    data() {
+      return {
+        search_data: "",
+      }
+    },
+    methods:{
+      searchFunc: function () {
+        if (this.search_data.trim().length === 0) {
+          this.search_data = "all"
+        }
+        this.$router.push({path: '/ilearning/course_search', query: {search: this.search_data}});
+      },
+      chooseCourseType: function (course_type, course_sub_type) {
+        // params是路由的一部分
+        // query是拼接在url后面的参数
+        // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
+        this.$router.push({path: '/ilearning/course_search', query: {search: course_sub_type}});
+      },
+      toggle: function (data) {
+        alert(data);
+      }
     },
   }
 </script>
 
 <style scoped>
-  /* 引入公共样式库 */
-
+  #courseSearchId{
+    border-style:solid;border-color:#ff537c;width: 400px;height: 35px;padding: 2px 0 2px 8px;position: absolute;left:400px;top:100px;
+  }
+  #courseSearchButtonId{
+    border-style:solid;border-color:#ff537c;width:60px;height: 35px;background-color: #ff537c;cursor: pointer;position: absolute;left:800px;top:100px;
+  }
+  #courseSearchCodeId{
+    color: white;cursor: pointer;font-size: 15px;
+  }
 </style>

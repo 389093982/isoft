@@ -1,43 +1,30 @@
 <template>
-  <div class="header">
-    <Carousel autoplay v-model="value" loop dots="inside">
-      <CarouselItem>
-        <div class="demo-carousel">
-          <img class="demo-img" height="250px;" src="../../assets/ilearning/course/1.jpg"/>
-        </div>
-      </CarouselItem>
-      <CarouselItem>
-        <div class="demo-carousel">
-          <img class="demo-img" height="250px;" src="../../assets/ilearning/course/2.jpg"/>
-        </div>
-      </CarouselItem>
-      <CarouselItem>
-        <div class="demo-carousel">
-          <img class="demo-img" height="250px;" src="../../assets/ilearning/course/3.jpg">
-        </div>
-      </CarouselItem>
-      <CarouselItem>
-        <div class="demo-carousel">
-          <img class="demo-img" height="250px;" src="../../assets/ilearning/course/4.jpg">
-        </div>
-      </CarouselItem>
-    </Carousel>
+  <div style="height: 330px">
+    <div style="width: 100%">
+      <!--首页轮播图-->
+      <Carousel autoplay="true" autoplaySpeed="2000" dots="outside" trigger="hover" loop>
+        <CarouselItem>
+          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/1.jpg" height="400" width="100%"/></div>
+        </CarouselItem>
+        <CarouselItem>
+          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/3.jpg" height="400" width="100%"/></div>
+        </CarouselItem>
+        <CarouselItem>
+          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/4.jpg" height="400" width="100%"/></div>
+        </CarouselItem>
+        <CarouselItem>
+          <div class="demo-carousel"><img src="../../../static/images/indexCarousel/5.jpg" height="400" width="100%"/></div>
+        </CarouselItem>
+      </Carousel>
+    </div>
   </div>
 </template>
-
 <script>
-
   export default {
-    name: 'IndexCarousel',
-    data() {
-      return {
-        value: 0,
-      }
-    }
+    name:'IndexCarousel',
   }
 </script>
 
-<style lang="stylus" scoped>
-  .demo-img
-    width: 100%
+<style scoped>
+
 </style>

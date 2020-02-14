@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!--首页logo图片 和 搜索框 -->
-    <LogoAndSearch></LogoAndSearch>
+    <!--首页轮播图-->
+    <IndexCarousel></IndexCarousel>
 
     <!--课程分类-->
     <CourseType></CourseType>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-  import LogoAndSearch from "./LogoAndSearch"
   import CourseType from "./CourseType/CourseType"
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
@@ -81,7 +80,6 @@
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
-      LogoAndSearch,
       CourseType,
       HotRecommend,
       NewsNotice,

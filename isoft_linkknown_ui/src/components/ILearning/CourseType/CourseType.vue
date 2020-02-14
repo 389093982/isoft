@@ -8,7 +8,7 @@
             <div style="border-bottom: 2px solid #edf1f2;padding: 0px 0px 5px 0px;">
               <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程</a>
               <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">
-                <IBeautifulLink style="font-size: 14px;"> 更多</IBeautifulLink>
+                <IBeautifulLink style="font-size: 14px;">更多</IBeautifulLink>
               </a>
             </div>
             <div>
