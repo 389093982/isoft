@@ -6,10 +6,10 @@
       title="热门课程分类"
       width="850"
       :footer-hide="true"
-      :styles="{top: '20px'}"
+      :styles="{top: '30px'}"
       :mask-closable="false">
-      <div style="height: 450px;">
-        <Scroll height="450">
+      <div style="height: 400px;">
+        <Scroll height="400">
           <HotCourseType :placement_name="GLOBAL.placement_host_course_type_carousel"
                          @chooseCourseType="chooseCourseType"/>
         </Scroll>

@@ -8,9 +8,10 @@
         <Col span="6" style="top:-100px;">
           <img width="150" height="150" style="border: 2px solid rgba(197,197,197,0.2);"
                :src="user.small_icon" @error="defImg()">
-          <p style="margin: 0 0 0 40px;" v-if="$route.query.username == 'mine'">
+
+          <div style="margin: 0 0 0 40px;" v-if="$route.query.username === 'mine'">
             <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
-          </p>
+          </div>
         </Col>
         <Col span="12" style="padding-top: 30px;">
           <p style="margin-bottom: 20px;">加入时间：{{user.created_time}}</p>

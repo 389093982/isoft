@@ -1,14 +1,16 @@
 <template>
   <div v-if="blog" style="background: #ffffff;margin: 10px;padding: 20px;min-height: 800px;">
     <h3>{{blog.blog_title}}</h3>
-    <div style="border-bottom: 1px solid #f4f4f4;margin-top:20px;margin-bottom: 20px;">
+    <div style="border-bottom: 1px solid #eee;margin-top:20px;margin-bottom: 20px;">
       <Row style="margin: 10px;">
         <Col span="18">
           发布于:
           <Time :time="blog.created_time" style="color:red;"/>&nbsp;
           更新于:
           <Time :time="blog.last_updated_time" style="color:red;"/>&nbsp;
-          作者:{{blog.author}}
+          作者:
+          <span v-if="renderNickName(blog.author)">{{renderNickName(blog.author)}}</span>
+          <span v-else>{{blog.author}}</span>
         </Col>
         <Col span="3">阅读次数 {{blog.views}}</Col>
         <Col span="3">编辑次数 {{blog.edits}}
@@ -18,9 +20,12 @@
         </Col>
       </Row>
     </div>
-    <IShowMarkdown v-if="blog.content" :content="blog.content"/>
-    <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
-    <hr>
+
+    <div style="border-bottom: 1px solid #eee;min-height: 200px;">
+      <IShowMarkdown v-if="blog.content" :content="blog.content"/>
+      <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
+    </div>
+
     <!-- 评论模块 -->
     <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>
   </div>
@@ -30,30 +35,36 @@
   import {ShowBlogArticleDetail} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin, GetLoginUserName} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName, RenderNickName, renderUserInfoByName} from "../../tools"
+  import MoveLine from "../Common/decorate/MoveLine";
 
   export default {
     name: "BlogArticleDetail",
-    components: {IShowMarkdown, IEasyComment},
+    components: {MoveLine, IShowMarkdown, IEasyComment},
     data() {
       return {
         blog: null,
+        userInfos: [],
       }
     },
     methods: {
       refreshArticleDetail: async function () {
         const result = await ShowBlogArticleDetail(this.$route.query.blog_id);
         if (result.status == "SUCCESS") {
+          this.userInfos = await renderUserInfoByName(result.blog.author);
           this.blog = result.blog;
         }
       },
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      }
     },
     mounted: function () {
       this.refreshArticleDetail();
     },
     computed: {
       editable: function () {
-        return CheckHasLogin() && this.blog != null && this.blog.author == GetLoginUserName();
+        return CheckHasLogin() && this.blog != null && this.blog.author === GetLoginUserName();
       }
     }
   }
