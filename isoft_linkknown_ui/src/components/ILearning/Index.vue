@@ -5,50 +5,52 @@
       <IndexCarousel></IndexCarousel>
     </div>
 
+    <!--精品课程相关-->
     <!--为您精选、热门、特色、高评-->
     <div style="margin: 100px 0 0 0 ">
       <WarmHeartRecommend/>
     </div>
 
-    <Row style="margin-top: 5px;">
-      <Col span="17" style="padding-right: 5px;">
-        <!--热门课程推荐-->
-        <HotRecommend class="isoft_bg_white isoft_pd10" :show-display-icon="true"/>
-      </Col>
-      <Col span="7">
+    <!--话题博客相关-->
+    <!--热门博客-->
+    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+      <BlogRank/>
+    </div>
 
-        <!--热门书单-->
-        <BookRank class="isoft_bg_white isoft_pd10"/>
+    <!--热门书单相关-->
+    <!--热门书单-->
+    <div>
+      <BookRank class="isoft_bg_white isoft_pd10"/>
+    </div>
 
-        <!--热门应用-->
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </div>
+    <!--求职招聘相关-->
+    <div>
+      求职招聘相关
+    </div>
 
-        <!--新闻公告-->
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
-        </div>
+    <!--热门资源相关-->
+    <div>
+      <!--热门应用-->
+      <div class="isoft_bg_white isoft_pd10 isoft_top5">
+        <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
+      </div>
+      <!--热门产品-->
+      <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
+        <IBeautifulTabLink/>
+      </div>
+      <!-- 热门项目推荐 -->
+      <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
+        <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
+      </div>
+    </div>
 
-        <!--热门博客-->
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <BlogRank/>
-        </div>
-      </Col>
-    </Row>
+    <!--新闻公告-->
+    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+      <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
+    </div>
 
     <!--展示模块  目前是4个展示-->
     <show-modulars></show-modulars>
-
-    <!-- 热门项目推荐 -->
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
-    </div>
-
-    <!--热门产品-->
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-      <IBeautifulTabLink/>
-    </div>
 
     <!--您是不是想找-->
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
