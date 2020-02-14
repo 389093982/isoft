@@ -32,7 +32,7 @@
               <span v-else>未登录</span>
             </template>
             <MenuGroup title="账号管理">
-              <MenuItem name="8-1" @click.native="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心</MenuItem>
+              <MenuItem name="8-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
               <MenuItem name="8-2" @click.native="cancelUser">重新登录</MenuItem>
               <MenuItem name="8-3" @click.native="cancelUser">退出</MenuItem>
             </MenuGroup>
