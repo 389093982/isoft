@@ -6,7 +6,7 @@
         <Header/>
       </Header>
       <Content
-        :style="{margin: '0px 100px 18px 100px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
+        :style="{margin: '0px 50px 18px 50px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
         <router-view/>
       </Content>
       <Footer></Footer>

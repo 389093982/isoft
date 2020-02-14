@@ -1,13 +1,21 @@
 <template>
   <div>
-    <!--首页轮播图-->
-    <div>
-      <IndexCarousel></IndexCarousel>
+
+    <div style="height: 400px;">
+      <div style="float: left;width: 70%;">
+        <!--首页轮播图-->
+        <IndexCarousel></IndexCarousel>
+      </div>
+      <div style="float: left;width: 30%;">
+        <!--新闻公告-->
+        <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
+      </div>
+      <div style="clear: both"></div>
     </div>
 
     <!--精品课程相关-->
     <!--为您精选、热门、特色、高评-->
-    <div style="margin: 100px 0 0 0 ">
+    <div style="margin: 40px 0 0 0 ">
       <WarmHeartRecommend/>
     </div>
 
@@ -42,11 +50,6 @@
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
         <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
       </div>
-    </div>
-
-    <!--新闻公告-->
-    <div class="isoft_bg_white isoft_pd10 isoft_top5">
-      <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
     </div>
 
     <!--展示模块  目前是4个展示-->
