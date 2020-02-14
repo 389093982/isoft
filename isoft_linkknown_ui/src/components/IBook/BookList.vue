@@ -41,7 +41,7 @@
                 <div style="font-size: 14px;color: #7d7d7d;">
                   {{book.book_desc}}
                 </div>
-                <div v-if="mine" style="margin: 10px;float: right;">
+                <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
                   <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true"
                                :extra-data="book.id" @uploadComplete="uploadComplete"
                                :action="fileUploadUrl" uploadLabel="换张图片"/>
@@ -63,7 +63,7 @@
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                       <span class="book_label">基础</span>
-                      <span>{{book.book_name | filterLimitFunc}}</span>
+                      <span>{{book.book_name}}</span>
                     </p>
                   </router-link>
                 </div>
@@ -130,6 +130,9 @@
       }
     },
     methods: {
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
       handleChange(page) {
         this.current_page = page;
         this.refreshBookList();
@@ -140,17 +143,17 @@
       },
       deleteBook: async function (book_id) {
         const result = await DeleteBookById(book_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.refreshBookList();
         }
       },
       uploadComplete: async function (data) {
-        if (data.status == "SUCCESS") {
-          if (data.status == "SUCCESS") {
+        if (data.status === "SUCCESS") {
+          if (data.status === "SUCCESS") {
             let uploadFilePath = data.fileServerPath;
             let bookId = data.extraData;
             const result = await UpdateBookIcon(bookId, uploadFilePath);
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               this.refreshBookList();
             }
           }
@@ -162,7 +165,7 @@
       },
       editBook: async function (book_id, book_name, book_desc) {
         const result = await BookEdit(book_id, book_name, book_desc);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$refs.bookEditModal.hideModal();
           this.$refs.bookEditForm.handleSubmitSuccess("提交成功!");
           this.refreshBookList();
@@ -198,7 +201,7 @@
           offset: this.offset,
           current_page: this.current_page,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.userInfos = await renderUserInfoByNames(result.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
@@ -217,15 +220,6 @@
       // 监听路由是否变化
       '$route': 'refreshBookList'
     },
-    filters: {
-      // 内容超长则显示部分
-      filterLimitFunc: function (value) {
-        if (value && value.length > 15) {
-          value = value.substring(0, 15) + '...';
-        }
-        return value;
-      },
-    }
   }
 </script>
 
