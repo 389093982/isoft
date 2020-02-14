@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd20">
-      <p class="header">公司主页</p>
-      <Row>
+    <div class="isoft_bg_white" style="padding: 10px 0 0 10px;">
+      <div class="header" style="cursor:pointer;display: inline-block;"
+           @click="section = 'section1'" :style="{color: section === 'section1' ? 'red':''}">公司主页
+      </div>
+      <div class="header" style="cursor:pointer;display: inline-block;"
+           @click="section = 'section2'" :style="{color: section === 'section2' ? 'red':''}">招聘岗位
+      </div>
+    </div>
+
+    <div id="section1" v-if="section === 'section1'" class="isoft_top5">
+      <Row class="isoft_bg_white isoft_pd10">
         <Col span="5">
           <div class="bookImg">
             <a>
@@ -39,31 +47,31 @@
             </span>
           </p>
         </Col>
+        <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
+                v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
+        </Button>
       </Row>
-      <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
-              v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
-      </Button>
-    </div>
 
-    <div class="isoft_bg_white isoft_pd20 isoft_top10">
-      <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
-        公司简介：{{formInline.corporate_desc}}
+      <div class="isoft_bg_white isoft_pd20 isoft_top5">
+        <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
+          公司简介：{{formInline.corporate_desc}}
+        </div>
+        <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
+          职位简介：{{formInline.job_desc}}
+        </div>
       </div>
-      <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
-        职位简介：{{formInline.job_desc}}
-      </div>
-    </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top10">
-      <div>
-        公司福利：{{formInline.corporate_welfare}}
-      </div>
-      <div>
-        公司地址：{{formInline.corporate_address}}
+      <div class="isoft_bg_white isoft_pd10 isoft_top5">
+        <div>
+          公司福利：{{formInline.corporate_welfare}}
+        </div>
+        <div>
+          公司地址：{{formInline.corporate_address}}
+        </div>
       </div>
     </div>
 
-    <div class="isoft_bg_white isoft_pd20 isoft_top10">
+    <div id="section2" v-if="section === 'section2'" class="isoft_bg_white isoft_pd20 isoft_top5">
       <p style="border-bottom: 1px solid #f0f0f0;">招聘岗位</p>
       <div v-if="showJobDetails.length > 0">
         <Row style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
@@ -115,6 +123,7 @@
     name: "CorporateDetail",
     data() {
       return {
+        section: 'section1',
         formInline: {
           id: -1,
           corporate_name: '',
