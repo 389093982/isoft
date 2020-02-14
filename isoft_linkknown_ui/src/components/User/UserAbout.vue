@@ -1,12 +1,12 @@
 <template>
-  <div v-if="userName" style="border: 1px #dbdbdb solid;margin:2px 0 5px 5px;padding: 15px;">
+  <div v-if="getUserName()" style="border: 1px #dbdbdb solid;margin:2px 0 5px 5px;padding: 15px;">
     <IBeautifulLink>
       <Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;
       <span v-if="nick_name">{{nick_name}}</span>
-      <span v-else>{{userName}}</span>
+      <span v-else>{{getUserName()}}</span>
     </IBeautifulLink>&nbsp;&nbsp;
     <IBeautifulLink style="font-size: 12px;float: right;"
-                    @onclick="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">个人中心
+                    @onclick="$router.push({path:'/user/detail'})">个人中心
     </IBeautifulLink>
 
     <div style="margin-top: 5px;">
@@ -93,6 +93,7 @@
 <script>
   import {GetCourseListByUserName, GetUserDetail, queryPageBlog, QueryPageBookList} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
+  import {checkEmpty, GetLoginUserName} from "../../tools"
 
   export default {
     name: "UserAbout",
@@ -118,13 +119,19 @@
     },
     methods: {
       refreshUserInfo: function () {
+        if (checkEmpty(this.userName) && checkEmpty(GetLoginUserName())) {
+          return;
+        }
         this.refreshQueryPageBookList();
         this.refreshBlogList();
         this.refreshCourseList();
         this.refreshUserDetail();
       },
+      getUserName: function () {
+        return !checkEmpty(this.userName) ? this.userName : GetLoginUserName();
+      },
       refreshUserDetail: async function () {
-        const result = await GetUserDetail(this.userName);
+        const result = await GetUserDetail(this.getUserName());
         if (result.status == "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
           this.nick_name = result.user.nick_name;
@@ -133,7 +140,7 @@
       refreshQueryPageBookList: async function () {
         const result = await QueryPageBookList({
           search_type: '',
-          search_user_name: this.userName,
+          search_user_name: this.getUserName(),
         });
         if (result.status == "SUCCESS") {
           this.books = result.books;
@@ -143,14 +150,14 @@
         const result = await queryPageBlog({
           offset: 20,
           current_page: 1,
-          search_user_name: this.userName,
+          search_user_name: this.getUserName(),
         });
         if (result.status == "SUCCESS") {
           this.blogs = result.blogs;
         }
       },
       refreshCourseList: async function () {
-        const result = await GetCourseListByUserName(this.userName);
+        const result = await GetCourseListByUserName(this.getUserName());
         if (result.status == "SUCCESS") {
           this.courses = result.courses;
         }

@@ -9,7 +9,7 @@
           <img class="isoft_hover_red hover_img" style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);"
                width="150" height="150" :src="user.small_icon" @error="defImg()">
 
-          <div style="margin: 0 0 0 40px;" v-if="$route.query.username === 'mine'">
+          <div style="margin: 0 0 0 40px;" v-if="isLoginUserName(user.user_name)">
             <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
           </div>
         </Col>
@@ -23,7 +23,6 @@
         </Col>
         <Col span="6" style="padding-top: 100px;text-align: right;">
           <Button @click="$router.push({ path: '/iblog/blog_edit'})">发&nbsp;&nbsp;&nbsp;&nbsp;帖</Button>
-          <Button @click="$router.push({path:'/user/mine/detail',query:{username:'mine'}})">编辑个人资料</Button>
         </Col>
       </Row>
     </div>
@@ -44,7 +43,7 @@
 <script>
   import {fileUploadUrl, GetUserDetail, UpdateUserIcon} from "../../api"
   import HotUser from "./HotUser"
-  import {GetLoginUserName} from "../../tools"
+  import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
   import UserAbout from "./UserAbout";
 
@@ -59,37 +58,42 @@
       }
     },
     methods: {
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
       defImg() {
         let img = event.srcElement;
         img.src = this.defaultImg;
         img.onerror = null; //防止闪图
       },
       uploadComplete: async function (data) {
-        if (data.status == "SUCCESS") {
+        if (data.status === "SUCCESS") {
           this.$refs.fileUpload.hideModal();
           let uploadFilePath = data.fileServerPath;
           const result = await UpdateUserIcon(GetLoginUserName(), uploadFilePath);
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.refreshUserDetail();
           }
         }
       },
+      getUserName: function () {
+        return !checkEmpty(this.$route.query.username) ? this.$route.query.username : GetLoginUserName();
+      },
       refreshUserDetail: async function () {
-        let userName = this.$route.query.username == 'mine' ? GetLoginUserName() : this.$route.query.username;
-        const result = await GetUserDetail(userName);
-        if (result.status == "SUCCESS") {
+        const result = await GetUserDetail(this.getUserName());
+        if (result.status === "SUCCESS") {
           this.user = result.user;
         }
       }
     },
     mounted() {
-      if (this.$route.query.username != undefined && this.$route.query.username != null) {
+      if (this.getUserName()) {
         this.refreshUserDetail();
       }
     },
     computed: {
       _userName: function () {
-        return this.$route.query.username == 'mine' ? GetLoginUserName() : this.$route.query.username;
+        return this.getUserName();
       }
     },
     watch: {
