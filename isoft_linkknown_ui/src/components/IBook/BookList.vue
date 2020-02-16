@@ -6,10 +6,10 @@
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
             <Col span="3">
-              <IBeautifulLink @onclick="refreshBookList('_all')">全部书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('_all', '')">全部书单</IBeautifulLink>
             </Col>
             <Col span="3">
-              <IBeautifulLink @onclick="refreshBookList('_hot')">热门书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('_hot', '')">热门书单</IBeautifulLink>
             </Col>
             <Col span="3">
               <IBeautifulLink @onclick="refreshMyBookList">我的书单</IBeautifulLink>
@@ -50,7 +50,7 @@
                   <IBeautifulLink class="isoft_mr10" @onclick="$router.push({path:'/ibook/book_edit',
                                  query:{book_id:book.id,book_name:book.book_name}})">编辑文章
                   </IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10" @onclick="refreshBookList('mine')">
+                  <IBeautifulLink class="isoft_mr10" @onclick="refreshMyBookList">
                     我的书单
                   </IBeautifulLink>
                 </div>
@@ -107,7 +107,13 @@
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, renderUserInfoByNames} from "../../tools";
+  import {
+    checkEmpty,
+    CheckHasLoginConfirmDialog2,
+    GetLoginUserName,
+    RenderNickName,
+    renderUserInfoByNames
+  } from "../../tools";
 
   export default {
     name: "BookList",
@@ -125,7 +131,6 @@
         offset: 10,
         fileUploadUrl: fileUploadUrl,
         books: [],
-        mine: false,
         userInfos: [],
       }
     },
@@ -183,18 +188,10 @@
       refreshMyBookList: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.refreshBookList('mine');
+          _this.refreshBookList('', GetLoginUserName());
         });
       },
-      refreshBookList: async function (type) {
-        var search_type = type;
-        var search_user_name = '';
-        if (type == 'mine') {
-          search_user_name = GetLoginUserName();
-          this.mine = true;
-        } else {
-          this.mine = false;
-        }
+      refreshBookList: async function (search_type, search_user_name) {
         const result = await QueryPageBookList({
           search_type: search_type,
           search_user_name: search_user_name,
@@ -213,8 +210,8 @@
       }
     },
     mounted() {
-      let type = this.$route.query.type ? this.$route.query.type : '_all';
-      this.refreshBookList(type);
+      let search_type = !checkEmpty(this.$route.query.type) ? this.$route.query.type : '_all';
+      this.refreshBookList(search_type, '');
     },
     watch: {
       // 监听路由是否变化
