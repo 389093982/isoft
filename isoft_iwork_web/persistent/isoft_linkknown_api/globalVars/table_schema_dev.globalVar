@@ -4,10 +4,11 @@
 	<EnvName>dev</EnvName>
 	<Name>table_schema</Name>
 	<Value>isoft_iaas</Value>
+	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-02-09T12:29:38+08:00</CreatedTime>
+	<CreatedTime>2020-02-16T17:29:54+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-09T12:29:38+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-02-16T17:29:54+08:00</LastUpdatedTime>
 </GlobalVar>

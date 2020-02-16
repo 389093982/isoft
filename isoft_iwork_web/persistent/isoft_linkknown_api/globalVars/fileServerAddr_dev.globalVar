@@ -3,11 +3,12 @@
 	<AppId>5</AppId>
 	<EnvName>dev</EnvName>
 	<Name>fileServerAddr</Name>
-	<Value>http://localhost:6001/api/files/</Value>
+	<Value>http://localhost:6001/api/iwork/files/</Value>
+	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-02-09T12:29:30+08:00</CreatedTime>
+	<CreatedTime>2020-02-16T17:28:17+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-09T12:29:30+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-02-16T17:28:17+08:00</LastUpdatedTime>
 </GlobalVar>
