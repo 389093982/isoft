@@ -54,7 +54,7 @@
             // 获取blob对象
             var blob = this.response;
             // 获取blob对象地址，并把值赋给容器
-            $("#videoPath").attr("src", URL.createObjectURL(blob));
+          document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
           }
         };
         xhr.send();

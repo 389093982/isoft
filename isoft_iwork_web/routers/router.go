@@ -30,6 +30,8 @@ func init() {
 
 func loadloadIWorkerRouterDetail() {
 	wc := &controllers.WorkController{}
+	beego.Router("/", &controllers.WorkController{})
+
 	registRouter("/api/iwork/addQuartz", wc, wc.AddQuartz, "get,post:AddQuartz")
 	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
 	registRouter("/api/iwork/editQuartz", wc, wc.EditQuartz, "get,post:EditQuartz")
