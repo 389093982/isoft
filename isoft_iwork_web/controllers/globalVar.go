@@ -113,8 +113,8 @@ func (this *WorkController) GlobalVarParserWarpper(app_id int64, value string) s
 		value = strings.TrimSuffix(value, ";")
 		gv, err := models.QueryGlobalVarByName(app_id, value, sysconfig.ENV_ONUSE)
 		if err == nil {
-			return gv.Value
+			return iworkutil.DecodeBase64StringSecurity(gv.Value)
 		}
 	}
-	return value
+	return iworkutil.DecodeBase64StringSecurity(value)
 }
