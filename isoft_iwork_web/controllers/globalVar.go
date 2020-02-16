@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
+	"isoft/isoft_iwork_web/core/iworkutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
@@ -31,14 +32,21 @@ func (this *WorkController) GlobalVarList() {
 func (this *WorkController) EditGlobalVar() {
 	app_id, _ := this.GetInt64("app_id", -1)
 	id, err := this.GetInt64("id", -1)
-	globalVarName := this.GetString("globalVarName")
-	globalVarValue01 := this.GetString("globalVarValue01")
-	globalVarValue02 := this.GetString("globalVarValue02")
+	name := this.GetString("name")
+	env_name := this.GetString("env_name")
+	value := this.GetString("value")
+	encrypt_flag, _ := this.GetBool("encrypt_flag", false)
+	if encrypt_flag {
+		value = iworkutil.EncodeToBase64StringSecurity(value)
+	} else {
+		value = iworkutil.DecodeBase64StringSecurity(value)
+	}
 	globalVar := &models.GlobalVar{
 		AppId:           app_id,
-		Name:            globalVarName,
-		EnvName:         globalVarValue01,
-		Value:           globalVarValue02,
+		Name:            name,
+		EnvName:         env_name,
+		EncryptFalg:     encrypt_flag,
+		Value:           value,
 		Type:            1,
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
@@ -105,8 +113,8 @@ func (this *WorkController) GlobalVarParserWarpper(app_id int64, value string) s
 		value = strings.TrimSuffix(value, ";")
 		gv, err := models.QueryGlobalVarByName(app_id, value, sysconfig.ENV_ONUSE)
 		if err == nil {
-			return gv.Value
+			return iworkutil.DecodeBase64StringSecurity(gv.Value)
 		}
 	}
-	return value
+	return iworkutil.DecodeBase64StringSecurity(value)
 }

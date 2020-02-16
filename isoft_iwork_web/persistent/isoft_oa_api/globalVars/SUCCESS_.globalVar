@@ -4,6 +4,7 @@
 	<EnvName></EnvName>
 	<Name>SUCCESS</Name>
 	<Value>SUCCESS</Value>
+	<EncryptFalg>false</EncryptFalg>
 	<Type>0</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
