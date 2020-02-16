@@ -6,8 +6,14 @@
         <Input v-model.trim="formValidate.name" placeholder="请输入全局变量名称"></Input>
       </FormItem>
       <FormItem label="环境" prop="env_name">
-        <Select v-model.trim="formValidate.env_name" placeholder="请选择环境" style="width:100%">
+        <Select v-model.trim="formValidate.env_name" placeholder="环境" style="width:100%">
           <Option v-for="item in EnvNameList" :value="item" :key="item">{{ item }}</Option>
+        </Select>
+      </FormItem>
+      <FormItem label="base64加密" prop="encrypt_flag">
+        <Select v-model.trim="formValidate.encrypt_flag" placeholder="是否加密" style="width:100%">
+          <Option :value="1" key="1">true</Option>
+          <Option :value="0" key="2">false</Option>
         </Select>
       </FormItem>
       <FormItem label="变量值" prop="value">
@@ -41,6 +47,7 @@
           name: '',
           env_name: '',
           value: '',
+          encrypt_flag: 0,
         },
         ruleValidate: {
           name: [
@@ -88,6 +95,7 @@
         this.handleReset('formValidate');
         this.showModal(true);
         if (globalVar) {
+          globalVar.encrypt_flag = globalVar.encrypt_flag ? 1 : 0;
           this.formValidate = globalVar;
         }
       },

@@ -8,7 +8,7 @@
         <span style="margin-left: 200px;color: #eb7d37;font-size: 14px;">
           当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b>
         </span>
-        <GlobalVarEdit ref="GlobalVarEdit" @handleSubmit="refreshGlobalVarList"/>
+        <GlobalVarEdit ref="GlobalVarEdit" :env-name-list="EnvNameList" @handleSubmit="refreshGlobalVarList"/>
       </span>
       <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>

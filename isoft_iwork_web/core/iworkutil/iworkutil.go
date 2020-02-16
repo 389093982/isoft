@@ -41,12 +41,29 @@ func GetWorkSubNameForWorkSubNode(paramInputSchema *iworkmodels.ParamInputSchema
 	return ""
 }
 
+func EncodeToBase64StringSecurity(src string) string {
+	if DecodeBase64String(src) != nil {
+		// 已经 encode
+		return src
+	} else {
+		return EncodeToBase64String([]byte(src))
+	}
+}
+
+func DecodeBase64StringSecurity(str string) string {
+	if DecodeBase64String(str) != nil {
+		return string(DecodeBase64String(str))
+	} else {
+		return str
+	}
+}
+
 func EncodeToBase64String(src []byte) string {
 	return base64.StdEncoding.EncodeToString(src)
 }
 
 func DecodeBase64String(encodeString string) (bytes []byte) {
-	if bytes, err := base64.StdEncoding.DecodeString(encodeString); err != nil {
+	if bytes, err := base64.StdEncoding.DecodeString(encodeString); err == nil {
 		return bytes
 	}
 	return

@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
+	"isoft/isoft_iwork_web/core/iworkutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
@@ -34,10 +35,17 @@ func (this *WorkController) EditGlobalVar() {
 	name := this.GetString("name")
 	env_name := this.GetString("env_name")
 	value := this.GetString("value")
+	encrypt_flag, _ := this.GetBool("encrypt_flag", false)
+	if encrypt_flag {
+		value = iworkutil.EncodeToBase64StringSecurity(value)
+	} else {
+		value = iworkutil.DecodeBase64StringSecurity(value)
+	}
 	globalVar := &models.GlobalVar{
 		AppId:           app_id,
 		Name:            name,
 		EnvName:         env_name,
+		EncryptFalg:     encrypt_flag,
 		Value:           value,
 		Type:            1,
 		CreatedBy:       "SYSTEM",

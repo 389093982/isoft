@@ -14,6 +14,7 @@ type GlobalVar struct {
 	EnvName         string    `json:"env_name"`
 	Name            string    `json:"name"`
 	Value           string    `json:"value" orm:"type(text)"`
+	EncryptFalg     bool      `json:"encrypt_flag"`
 	Type            int       `json:"type"` // 类型：0 表示不可删除
 	Desc            string    `json:"desc"`
 	CreatedBy       string    `json:"created_by"`
