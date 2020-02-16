@@ -4,12 +4,11 @@
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <span slot="left">
-        <Button type="success" @click="addGlobalVar">新增</Button><code style="margin-left: 200px;color: #eb7d37">当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b></code>
-        <ISimpleConfirmModal ref="globalVarModal" modal-title="新增/编辑 GlobalVar" :modal-width="600" :footer-hide="true">
-          <GlobalVarForm ref="globalVarForm" :EnvNameList="EnvNameList" form-key-label="name" form-value-label01="env_name" form-value-label02="value"
-                         form-key-placeholder="请输入 GlobalVarName" form-value-placeholder01="请选择..." form-value-placeholder02="请输入 GlobalVarValue02"
-                         @handleSubmit="editGlobalVar" :formkey-validator="globalVarNameValidator"/>
-        </ISimpleConfirmModal>
+        <Button type="success" @click="addGlobalVar">新增</Button>
+        <span style="margin-left: 200px;color: #eb7d37;font-size: 14px;">
+          当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b>
+        </span>
+        <GlobalVarEdit ref="GlobalVarEdit" @handleSubmit="refreshGlobalVarList"/>
       </span>
       <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
@@ -22,20 +21,15 @@
 </template>
 
 <script>
-  import {GlobalVarList} from "../../../api"
-  import {DeleteGlobalVarById} from "../../../api"
+  import {DeleteGlobalVarById, GlobalVarList, queryEvnNameList} from "../../../api"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import IKeyValueForm from "../../Common/form/IKeyValueForm"
-  import {EditGlobalVar} from "../../../api"
-  import {queryEvnNameList} from "../../../api"
-  import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
-  import {validateCommonPatternForString} from "../../../tools/index"
-  import GlobalVarForm from "../../Common/form/GlobalVarForm";
+  import GlobalVarEdit from "./GlobalVarEdit";
 
   export default {
     name: "GlobalVarList",
-    components:{GlobalVarForm, ISimpleLeftRightRow,ISimpleSearch,IKeyValueForm,ISimpleConfirmModal},
+    components: {GlobalVarEdit, ISimpleLeftRightRow, ISimpleSearch, IKeyValueForm},
     data(){
       return {
         // 当前页
@@ -79,8 +73,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.globalVarModal.showModal();
-                      this.$refs.globalVarForm.initFormData(this.globalVars[params.index].id, this.globalVars[params.index].name, this.globalVars[params.index].env_name ,this.globalVars[params.index].value);
+                      this.$refs.GlobalVarEdit.initFormData(this.globalVars[params.index]);
                     }
                   }
                 }, '编辑'),
@@ -114,18 +107,7 @@
         }
       },
       addGlobalVar(){
-        this.$refs.globalVarModal.showModal();
-        this.$refs.globalVarForm.initFormData();
-      },
-      editGlobalVar:async function(id, globalVarName, globalVarValue01,globalVarValue02){
-        const result = await EditGlobalVar(id, globalVarName, globalVarValue01,globalVarValue02);
-        if(result.status == "SUCCESS"){
-          this.$refs.globalVarForm.handleSubmitSuccess("提交成功!");
-          this.$refs.globalVarModal.hideModal();
-          this.refreshGlobalVarList();
-        }else{
-          this.$refs.globalVarForm.handleSubmitError("提交失败!");
-        }
+        this.$refs.GlobalVarEdit.initFormData();
       },
       handleChange(page){
         this.current_page = page;
@@ -147,13 +129,6 @@
           this.onuse = result.onuse;
           this.globalVars = result.globalVars;
           this.total = result.paginator.totalcount;
-        }
-      },
-      globalVarNameValidator (rule, value, callback) {
-        if (!validateCommonPatternForString(value)) {
-          callback(new Error('存在非法字符，只能包含字母，数字，下划线!'));
-        } else {
-          callback();
         }
       },
       deleteGlobalVar:async function (id){

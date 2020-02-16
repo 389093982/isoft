@@ -118,7 +118,7 @@ export const ParseToMultiValue = (pureText, value) => ajax(BASE_URL+"/iwork/pars
 
 export const GlobalVarList = (offset,current_page, search) => ajax(BASE_URL+"/iwork/globalVarList", {offset,current_page, search},'POST');
 
-export const EditGlobalVar = (id, globalVarName, globalVarValue01,globalVarValue02) => ajax(BASE_URL+"/iwork/editGlobalVar", {id, globalVarName, globalVarValue01,globalVarValue02},'POST');
+export const EditGlobalVar = (params) => ajax(BASE_URL + "/iwork/editGlobalVar", params, 'POST');
 
 export const queryEvnNameList = () => ajax(BASE_URL+"/iwork/queryEvnNameList", {},'POST');
 
