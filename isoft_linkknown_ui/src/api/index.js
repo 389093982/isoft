@@ -77,6 +77,7 @@ export const NewOrder = (good_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_l
 export const GetGoodDetail = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetGoodDetail', {id}, 'POST');
 export const GetOrderDetail = (orderCode) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetOrderDetail', {orderCode}, 'POST');
 
+export const EditUserSignature = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditUserSignature', params, 'POST');
 export const GetUserDetail = (userName) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetUserDetail', {userName}, 'POST');
 export const UpdateUserIcon = (userName, small_icon) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon', {
   userName,

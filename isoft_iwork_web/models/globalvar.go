@@ -74,7 +74,7 @@ func QueryAllGlobalVar(app_id int64) (globalVars []GlobalVar) {
 	if app_id > 0 {
 		qs = qs.Filter("app_id", app_id)
 	}
-	qs.All(&globalVars)
+	qs.OrderBy("name").All(&globalVars)
 	return
 }
 

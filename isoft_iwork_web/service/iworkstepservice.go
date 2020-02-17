@@ -14,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iwork_web/core/iworkvalid"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/stringutil"
 	"strings"
 	"time"
 )
@@ -49,9 +50,15 @@ func LoadGlobalVarInfo(app_id int64) *iworkmodels.ParamOutputSchema {
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
 	globalVars := models.QueryAllGlobalVar(app_id)
-	for _, globalVar := range globalVars {
+	// 变量名称去重
+	sli := make([]string, 0)
+	for _, gv := range globalVars {
+		sli = append(sli, gv.Name)
+	}
+	sli = stringutil.RemoveRepeatForSlice(sli)
+	for _, gvname := range sli {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
-			ParamName: globalVar.Name,
+			ParamName: gvname,
 		})
 	}
 	return pos
