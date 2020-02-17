@@ -4,7 +4,8 @@
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <span slot="left">
-        <Button type="success" @click="addGlobalVar">新增</Button>
+        <Button type="success" size="small" @click="addGlobalVar">新增</Button>
+        <Button type="warning" size="small" @click="viewPattern = !viewPattern">大纲</Button>
         <span style="margin-left: 200px;color: #eb7d37;font-size: 14px;">
           当前正在使用的环境:<b style="margin-left: 10px;color: #cc0000">{{onuse}}</b>
         </span>
@@ -14,8 +15,20 @@
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
 
-    <Table border :columns="columns1" :data="globalVars" size="small"></Table>
+    <table v-if="viewPattern" cellspacing="0">
+      <tr>
+        <th>变量名称</th>
+        <th v-for="(env_name, index) in env_names">{{env_name}}</th>
+      </tr>
+      <tr v-for="(name, index) in names">
+        <td>{{name}}</td>
+        <td v-for="(env_name, index2) in env_names">
+          <span v-html="renderShowText(name, env_name)"></span>
+        </td>
+      </tr>
+    </table>
 
+    <Table v-else border :columns="columns1" :data="globalVars" size="small"></Table>
   </div>
 </template>
 
@@ -104,6 +117,9 @@
             }
           }
         ],
+        names: [],
+        env_names: [],
+        viewPattern: false,
       }
     },
     methods:{
@@ -127,6 +143,7 @@
         if(result.status=="SUCCESS"){
           this.onuse = result.onuse;
           this.globalVars = result.globalVars;
+          this.renderShow();
         }
       },
       deleteGlobalVar:async function (id){
@@ -137,6 +154,15 @@
           this.$Message.error(result.errorMsg);
         }
       },
+      renderShow: function () {
+        let names = Array.from(new Set(this.globalVars.map(gv => gv.name)));
+        let env_names = Array.from(new Set(this.globalVars.map(gv => gv.env_name)));
+        this.names = names;
+        this.env_names = env_names;
+      },
+      renderShowText: function (name, env_name) {
+        return this.globalVars.filter(gv => gv.name === name && gv.env_name === env_name).length > 0 ? "Y" : "N";
+      }
     },
     mounted: function () {
       this.refreshGlobalVarList();
@@ -146,5 +172,7 @@
 </script>
 
 <style scoped>
-
+  td {
+    padding: 10px 20px;
+  }
 </style>
