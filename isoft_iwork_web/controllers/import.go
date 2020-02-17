@@ -3,11 +3,11 @@ package controllers
 import (
 	"encoding/xml"
 	"io/ioutil"
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
 	"isoft/isoft_iwork_web/models"
-	"isoft/isoft_iwork_web/startup/runtimecfg"
+	"isoft/isoft_iwork_web/startup/sysconfig"
+	"isoft/isoft_utils/common/stringutil"
 	"path"
 )
 
@@ -17,7 +17,7 @@ func (this *WorkController) Import() {
 	defer f.Close()
 	tempFileName := stringutil.RandomUUID() + path.Ext(h.Filename)
 	//保存文件到指定的位置
-	tempFilePath := path.Join(runtimecfg.FileSavePath, tempFileName)
+	tempFilePath := path.Join(sysconfig.FileSavePath, tempFileName)
 	err1 := this.SaveToFile("file", tempFilePath)
 	err2 := this.ImportFile(tempFilePath)
 	if err1 == nil && err2 == nil {

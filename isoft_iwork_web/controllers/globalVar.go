@@ -3,26 +3,20 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft_iwork_web/core/iworkutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
-	"isoft/isoft_utils/common/pageutil"
 	"strings"
 	"time"
 )
 
 func (this *WorkController) GlobalVarList() {
 	app_id, _ := this.GetInt64("app_id", -1)
-	offset, _ := this.GetInt("offset", 10)            // 每页记录数
-	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	condArr := map[string]string{"search": this.GetString("search")}
-	globalVars, count, err := models.QueryGlobalVar(app_id, condArr, current_page, offset, orm.NewOrm())
-	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	globalVars, err := models.QueryGlobalVar(app_id, condArr, orm.NewOrm())
 	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": globalVars,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()), "onuse": sysconfig.ENV_ONUSE}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "globalVars": globalVars, "onuse": sysconfig.ENV_ONUSE}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}

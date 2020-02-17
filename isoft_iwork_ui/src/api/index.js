@@ -116,7 +116,7 @@ export const LoadQuickSqlMeta = (resource_id) => ajax(BASE_URL+"/iwork/loadQuick
 
 export const ParseToMultiValue = (pureText, value) => ajax(BASE_URL+"/iwork/parseToMultiValue", {pureText, value},'POST');
 
-export const GlobalVarList = (offset,current_page, search) => ajax(BASE_URL+"/iwork/globalVarList", {offset,current_page, search},'POST');
+export const GlobalVarList = (search) => ajax(BASE_URL + "/iwork/globalVarList", {search}, 'POST');
 
 export const EditGlobalVar = (params) => ajax(BASE_URL + "/iwork/editGlobalVar", params, 'POST');
 

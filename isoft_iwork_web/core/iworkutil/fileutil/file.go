@@ -36,7 +36,7 @@ func WriteFile(filename string, data []byte, append bool) error {
 func MkdirAll(fp string) {
 	// 判断目标文件是否存在,不存在则创建
 	if exist, _ := fileutils.PathExists(fp); exist == false {
-		os.MkdirAll(filepath.Dir(fp), os.ModePerm)
+		os.MkdirAll(fp, os.ModePerm)
 	}
 }
 

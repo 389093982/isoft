@@ -10,7 +10,7 @@ import (
 	"isoft/isoft_iwork_web/startup/filter"
 	_ "isoft/isoft_iwork_web/startup/logger"
 	"isoft/isoft_iwork_web/startup/memory"
-	"isoft/isoft_iwork_web/startup/runtimecfg"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	_ "isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_iwork_web/startup/task"
 	_ "net/http/pprof"
@@ -24,7 +24,7 @@ func main() {
 	iworkpool.LoadAndCachePool()
 	regist.RegistNodes()
 	task.RegisterCronTask()
-	beego.SetStaticPath("/api/files", runtimecfg.FileSavePath)
+	beego.SetStaticPath("/api/iwork/files", sysconfig.FileSavePath)
 
 	beego.Run()
 }

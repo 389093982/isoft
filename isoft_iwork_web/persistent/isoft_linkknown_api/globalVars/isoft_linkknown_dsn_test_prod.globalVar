@@ -1,0 +1,14 @@
+<GlobalVar>
+	<Id>20</Id>
+	<AppId>5</AppId>
+	<EnvName>prod</EnvName>
+	<Name>isoft_linkknown_dsn_test</Name>
+	<Value>root:lingchuang2020@tcp(rm-bp1g80i49oj6z246pro.mysql.rds.aliyuncs.com:3306)/isoft_linkknown_test</Value>
+	<EncryptFalg>false</EncryptFalg>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-17T11:58:02+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-17T11:58:02+08:00</LastUpdatedTime>
+</GlobalVar>
