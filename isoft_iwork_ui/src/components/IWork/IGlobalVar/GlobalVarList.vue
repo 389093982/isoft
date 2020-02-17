@@ -72,6 +72,22 @@
                 }, '编辑'),
                 h('Button', {
                   props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      let gv = this.globalVars[params.index];
+                      gv.id = 0;
+                      this.$refs.GlobalVarEdit.initFormData(gv);
+                    }
+                  }
+                }, '拷贝'),
+                h('Button', {
+                  props: {
                     type: 'error',
                     size: 'small'
                   },
