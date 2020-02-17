@@ -75,7 +75,7 @@
           },
           {
             'label': '获取表自增 id',
-            'sql': 'SELECT AUTO_INCREMENT FROM information_schema.tables WHERE  table_schema = \'isoft_iaas\' AND table_name=\'book_catalog\';',
+            'sql': 'SELECT AUTO_INCREMENT FROM information_schema.tables WHERE  table_schema = \'isoft_linkknown\' AND table_name=\'book_catalog\';',
           }],
         tabVal:'lst',
         logs:[],

@@ -2,8 +2,8 @@
 	<Id>14</Id>
 	<AppId>5</AppId>
 	<EnvName>dev</EnvName>
-	<Name>isoft_iaas_dsn</Name>
-	<Value>root:123456@tcp(127.0.0.1:3306)/isoft_iaas</Value>
+	<Name>isoft_linkknown_dsn</Name>
+	<Value>root:123456@tcp(127.0.0.1:3306)/isoft_linkknown</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>

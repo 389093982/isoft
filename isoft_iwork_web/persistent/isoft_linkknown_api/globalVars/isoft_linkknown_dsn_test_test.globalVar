@@ -2,8 +2,8 @@
 	<Id>18</Id>
 	<AppId>5</AppId>
 	<EnvName>test</EnvName>
-	<Name>isoft_iaas_dsn_test</Name>
-	<Value>root:lingchuang2020@tcp(193.112.162.61:3306)/isoft_iaas_test</Value>
+	<Name>isoft_linkknown_dsn_test</Name>
+	<Value>root:lingchuang2020@tcp(193.112.162.61:3306)/isoft_linkknown_test</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>

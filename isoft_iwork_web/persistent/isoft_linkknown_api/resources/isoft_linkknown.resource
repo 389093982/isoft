@@ -1,10 +1,10 @@
 <Resource>
 	<Id>2</Id>
 	<AppId>5</AppId>
-	<ResourceName>isoft_iaas</ResourceName>
+	<ResourceName>isoft_linkknown</ResourceName>
 	<ResourceType>db</ResourceType>
-	<ResourceUrl>isoft_iaas</ResourceUrl>
-	<ResourceDsn>$Global.isoft_iaas_dsn;</ResourceDsn>
+	<ResourceUrl>isoft_linkknown</ResourceUrl>
+	<ResourceDsn>$Global.isoft_linkknown_dsn;</ResourceDsn>
 	<ResourceUsername>root</ResourceUsername>
 	<ResourcePassword>0</ResourcePassword>
 	<CreatedBy>SYSTEM</CreatedBy>

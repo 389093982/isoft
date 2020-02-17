@@ -10,7 +10,7 @@ import (
 )
 
 func Test_sql(t *testing.T) {
-	db, _ := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/isoft_iaas")
+	db, _ := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/isoft_linkknown")
 
 	rows, _ := db.Query("select * from share where id = ? and link_href = ? and last_updated_time = ?", nil, nil, nil)
 	colNames, _ := rows.Columns()
@@ -18,7 +18,7 @@ func Test_sql(t *testing.T) {
 }
 
 func Test_sql2(t *testing.T) {
-	db, _ := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/isoft_iaas")
+	db, _ := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/isoft_linkknown")
 
 	stmt, _ := db.Prepare("select * from share where id = ? and link_href = ? and last_updated_time = ?")
 	rows, _ := stmt.Query(nil, nil, nil)

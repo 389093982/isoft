@@ -1,0 +1,7 @@
+1、创建用户
+    CREATE USER 'linker'@'%' IDENTIFIED BY 'Linker2020';
+2、设置权限
+    GRANT ALL ON *.* TO 'linker'@'%';
+    FLUSH PRIVILEGES;
+3、MySQL创建新用户时登录出错（ERROR 1045）解决方案：删除系统中的匿名用户
+    DROP USER ''@'localhost';

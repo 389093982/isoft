@@ -3,7 +3,7 @@
 	<AppId>5</AppId>
 	<EnvName>dev</EnvName>
 	<Name>table_schema</Name>
-	<Value>isoft_iaas</Value>
+	<Value>isoft_linkknown</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
