@@ -11,7 +11,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/memory"
-	"isoft/isoft_iwork_web/startup/runtimecfg"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/stringutil"
 	"net/http"
 	"path"
@@ -128,7 +128,7 @@ func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, 
 	//得到文件的名称
 	fileName = h.Filename
 	//保存文件到指定的位置,static/uploadfile,这个是文件的地址,第一个static前面不要有/
-	tempFilePath = path.Join(runtimecfg.FileSavePath, tempFileName)
+	tempFilePath = path.Join(sysconfig.FileSavePath, tempFileName)
 	err = this.SaveToFile("file", tempFilePath)
 	checkError(err)
 	return tempFileName, fileName, tempFilePath

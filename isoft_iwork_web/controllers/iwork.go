@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkcache"
@@ -13,13 +14,12 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/service"
-	"isoft/isoft_iwork_web/startup/runtimecfg"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/stringutil"
 	"path"
 	"strconv"
 	"sync"
 	"time"
-	"github.com/astaxie/beego/logs"
 )
 
 type WorkController struct {
@@ -234,7 +234,7 @@ func (this *WorkController) Download() {
 	work_id := this.Ctx.Input.Param(":work_id")
 	workId, _ := strconv.ParseInt(work_id, 10, 64)
 	workCache, _ := iworkcache.GetWorkCache(workId)
-	tofile := path.Join(runtimecfg.FileSavePath, stringutil.RandomUUID())
+	tofile := path.Join(sysconfig.FileSavePath, stringutil.RandomUUID())
 	fileutil.WriteFile(tofile, []byte(workCache.RenderToString()), false)
 	defer fileutil.RemoveFileOrDirectory(tofile)
 	this.Ctx.Output.Download(tofile, fmt.Sprintf(`%s.txt`, workCache.Work.WorkName))
