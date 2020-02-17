@@ -78,7 +78,7 @@ func QueryAllGlobalVar(app_id int64) (globalVars []GlobalVar) {
 	return
 }
 
-func QueryGlobalVar(app_id int64, condArr map[string]string, page int, offset int, o orm.Ormer) (globalVars []GlobalVar, counts int64, err error) {
+func QueryGlobalVar(app_id int64, condArr map[string]string, o orm.Ormer) (globalVars []GlobalVar, err error) {
 	qs := o.QueryTable("global_var")
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		qs = qs.Filter("name__contains", search)
@@ -86,8 +86,6 @@ func QueryGlobalVar(app_id int64, condArr map[string]string, page int, offset in
 	if app_id > 0 {
 		qs = qs.Filter("app_id", app_id)
 	}
-	counts, _ = qs.Count()
-	qs = qs.OrderBy("name").Limit(offset, (page-1)*offset)
-	qs.All(&globalVars)
+	qs.OrderBy("name", "env_name").All(&globalVars)
 	return
 }

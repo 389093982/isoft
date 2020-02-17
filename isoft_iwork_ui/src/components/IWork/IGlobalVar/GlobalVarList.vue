@@ -15,8 +15,7 @@
     </ISimpleLeftRightRow>
 
     <Table border :columns="columns1" :data="globalVars" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+
   </div>
 </template>
 
@@ -32,12 +31,6 @@
     components: {GlobalVarEdit, ISimpleLeftRightRow, ISimpleSearch, IKeyValueForm},
     data(){
       return {
-        // 当前页
-        current_page:1,
-        // 总数
-        total:0,
-        // 每页记录数
-        offset:10,
         search:"",
         globalVars: [],
         EnvNameList:[],
@@ -109,26 +102,15 @@
       addGlobalVar(){
         this.$refs.GlobalVarEdit.initFormData();
       },
-      handleChange(page){
-        this.current_page = page;
-        this.refreshGlobalVarList();
-      },
-      handlePageSizeChange(pageSize){
-        this.offset = pageSize;
-        this.refreshGlobalVarList();
-      },
       handleSearch(data){
-        this.offset = 10;
-        this.current_page = 1;
         this.search = data;
         this.refreshGlobalVarList();
       },
       refreshGlobalVarList:async function () {
-        const result = await GlobalVarList(this.offset,this.current_page,this.search);
+        const result = await GlobalVarList(this.search);
         if(result.status=="SUCCESS"){
           this.onuse = result.onuse;
           this.globalVars = result.globalVars;
-          this.total = result.paginator.totalcount;
         }
       },
       deleteGlobalVar:async function (id){
