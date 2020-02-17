@@ -3,12 +3,12 @@
 	<AppId>5</AppId>
 	<EnvName>test</EnvName>
 	<Name>isoft_linkknown_dsn</Name>
-	<Value>root:lingchuang2020@tcp(193.112.162.61:3306)/isoft_linkknown</Value>
+	<Value>linker:Linker2020@tcp(193.112.162.61:3306)/isoft_linkknown</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-02-16T17:30:00+08:00</CreatedTime>
+	<CreatedTime>2020-02-17T14:39:57+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-16T17:30:00+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-02-17T14:39:57+08:00</LastUpdatedTime>
 </GlobalVar>
