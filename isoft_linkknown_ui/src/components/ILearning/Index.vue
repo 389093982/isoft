@@ -59,17 +59,18 @@
 </template>
 
 <script>
-  import HotRecommend from "./Course/HotRecommend"
-  import NewsNotice from "./Course/NewsNotice"
-  import ToolBox from "../Background/CMS/ToolBox"
-  import IBeautifulTabLink from "../Common/link/IBeautifulTabLink"
-  import HorizontalLinks from "../Elementviewers/HorizontalLinks"
-  import IHotRecommand from "../Common/recommend/IHotRecommand"
-  import IndexCarousel from "./IndexCarousel";
-  import BookRank from "./BookRank";
-  import WarmHeartRecommend from "./WarmHeartRecommend";
-  import BlogRank from "./BlogRank";
-  import ShowModulars from "./ShowModulars";
+
+  const ToolBox = () => import("@/components/Background/CMS/ToolBox");
+  const IBeautifulTabLink = () => import("@/components/Common/link/IBeautifulTabLink");
+  const HorizontalLinks = () => import("@/components/Elementviewers/HorizontalLinks");
+  const IHotRecommand = () => import("@/components/Common/recommend/IHotRecommand");
+  const IndexCarousel = () => import("@/components/ILearning/IndexCarousel");
+  const BookRank = () => import("@/components/ILearning/BookRank");
+  const WarmHeartRecommend = () => import("@/components/ILearning/WarmHeartRecommend");
+  const ShowModulars = () => import("@/components/ILearning/ShowModulars");
+  const BlogRank = () => import("@/components/ILearning/BlogRank");
+  const HotRecommend = () => import("@/components/ILearning/Course/HotRecommend");
+  const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
 
   export default {
     name: "Index",
