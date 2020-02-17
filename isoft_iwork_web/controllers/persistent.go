@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"runtime"
 	"time"
+	"github.com/astaxie/beego/logs"
 )
 
 var persistentDirPath string
@@ -219,12 +220,20 @@ func persistentMultiToDB(dirPath string, tp reflect.Type) {
 
 var tableSli = []string{"app_id", "sql_migrate", "work", "work_step", "filters", "cron_meta", "resource", "module", "global_var", "audit_task"}
 
-func importProject() {
+func truncateTables()  {
+	defer func() {
+		if err := recover();err!=nil{
+			logs.Info(errorutil.ToError(err).Error())
+		}
+	}()
 	// 清空表
 	for _, table := range tableSli {
 		orm.NewOrm().Raw(fmt.Sprintf("truncate TABLE %s;", table)).Exec()
 	}
+}
 
+func importProject() {
+	truncateTables()
 	// 再导入每个 AppID 下面的数据
 	if files, _, err := fileutils.GetAllSubFile(persistentDirPath); err == nil {
 		for _, appNameFilePath := range files {
