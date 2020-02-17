@@ -231,7 +231,7 @@ export function CheckHasLoginConfirmDialog(node, pushObj) {
   var _this = node;
   if (!CheckHasLogin()) {
     _this.$Modal.confirm({
-      title: '登录提示！',
+      title: '提示！',
       content: '您还未登录！前往登录？',
       onOk: () => {
         window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
@@ -246,7 +246,7 @@ export function CheckHasLoginConfirmDialog2(node, callback) {
   var _this = node;
   if (!CheckHasLogin()) {
     _this.$Modal.confirm({
-      title: '登录提示！',
+      title: '提示！',
       content: '您还未登录！前往登录？',
       onOk: () => {
         window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
