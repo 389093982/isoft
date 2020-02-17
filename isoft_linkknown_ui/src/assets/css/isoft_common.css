@@ -87,6 +87,10 @@
   color: #fff;
 }
 
+.isoft_point_cursor {
+  cursor: pointer;
+}
+
 .isoft_hover_red:hover {
   cursor: pointer;
   color: red;

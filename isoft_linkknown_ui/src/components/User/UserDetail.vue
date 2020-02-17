@@ -19,7 +19,14 @@
           </p>
 
           <h3>{{user.nick_name}} / {{user.user_name}}</h3>
-          <p>这家伙很懒，什么个性签名都没有留下</p>
+          <p>
+            <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature"
+                      style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
+            <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
+            <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor"
+                  type="ios-create-outline" :size="20"
+                  @click="editSign"/>
+          </p>
         </Col>
         <Col span="6" style="padding-top: 100px;text-align: right;">
           <Button @click="$router.push({ path: '/iblog/blog_edit'})">发&nbsp;&nbsp;&nbsp;&nbsp;帖</Button>
@@ -41,7 +48,7 @@
 </template>
 
 <script>
-  import {fileUploadUrl, GetUserDetail, UpdateUserIcon} from "../../api"
+  import {EditUserSignature, fileUploadUrl, GetUserDetail, UpdateUserIcon} from "../../api"
   import HotUser from "./HotUser"
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -55,9 +62,21 @@
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
         user: null,
         defaultImg: require('../../assets/default.png'),
+        editSignFlag: false,
+        user_signature: '这家伙很懒，什么个性签名都没有留下',
       }
     },
     methods: {
+      handleEditSignFlag: async function () {
+        const result = await EditUserSignature({"user_signature": this.user_signature});
+        if (result.status === "SUCCESS") {
+          this.refreshUserDetail();
+        }
+        this.editSignFlag = false;
+      },
+      editSign: function () {
+        this.editSignFlag = true;
+      },
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
       },
@@ -83,6 +102,9 @@
         const result = await GetUserDetail(this.getUserName());
         if (result.status === "SUCCESS") {
           this.user = result.user;
+          if (!checkEmpty(this.user.user_signature)) {
+            this.user_signature = this.user.user_signature;
+          }
         }
       }
     },
@@ -99,6 +121,15 @@
     watch: {
       '$route': 'refreshUserDetail'
     },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc: function (value) {
+        if (value && value.length > 200) {
+          value = value.substring(0, 200) + '...';
+        }
+        return value;
+      },
+    }
   }
 </script>
 
@@ -110,5 +141,19 @@
 
   .hover_img:hover {
     transform: rotateY(360deg);
+  }
+
+  .focus:focus {
+    background-color: #ffffff;
+    border-color: #2c5bff;
+  }
+
+  .hoverFlash {
+    cursor: pointer;
+    transition: all 1s ease;
+  }
+
+  .hoverFlash:hover {
+    color: red;
   }
 </style>
