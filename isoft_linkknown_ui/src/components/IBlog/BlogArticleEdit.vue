@@ -35,7 +35,7 @@
             </Col>
             <Col span="12">
               <FormItem label="文章分类" prop="catalog_name">
-                <Select v-model="formValidate.catalog_name" filterable>
+                <Select v-model="formValidate.catalog_name" filterable :on-open-change="refreshMyCatalogs()">
                   <!-- 热门分类 -->
                   <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
                           :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}
@@ -228,6 +228,12 @@
           this.hotCatalogItems = result.elements;
         }
       },
+      refreshMyCatalogs: async function () {
+        const result = await GetMyCatalogs();
+        if (result.status == "SUCCESS") {
+          this.mycatalogs = result.catalogs;
+        }
+      }
     },
     mounted: async function () {
       // 加载热门分类
