@@ -18,7 +18,7 @@
             <Col span="6">简介</Col>
             <Col span="6">时间</Col>
           </Row>
-          <Row v-for="(blog,index) in blogs">
+          <Row v-for="(blog,index) in blogs" style="line-height: 28px;height: 28px;">
             <Col span="6" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
                 {{blog.blog_title}}
@@ -45,7 +45,7 @@
             <Col span="8">课程类型</Col>
             <Col span="8">课程子类型</Col>
           </Row>
-          <Row v-for="course in courses" :gutter="10">
+          <Row v-for="course in courses" :gutter="10" style="line-height: 28px;height: 28px;">
             <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
                 {{course.course_name}}
@@ -72,7 +72,7 @@
             <Col span="8">课程子类型</Col>
           </Row>
           <Row v-for="(book,index) in books">
-            <Row>
+            <Row style="line-height: 28px;height: 28px;">
               <Col span="8" class="isoft_inline_ellipsis">
                 <IBeautifulLink @onclick="$router.push({path:'/ibook/book_detail',query:{book_id:book.id}})">
                   {{book.book_name}}

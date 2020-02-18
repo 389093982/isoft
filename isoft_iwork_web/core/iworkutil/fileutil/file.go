@@ -11,6 +11,19 @@ import (
 	"strings"
 )
 
+// 写文件,文件存在且内容一致则跳过
+func WriteFileSecurity(filename string, data string) error {
+	filename = fileutils.ChangeToLinuxSeparator(filename)
+	if _, err := fileutils.PathExists(filename); err == nil {
+		if bs, err := ioutil.ReadFile(filename); err == nil {
+			if data == string(bs) {
+				return nil
+			}
+		}
+	}
+	return WriteFile(filename, []byte(data), false)
+}
+
 // 写文件,文件不存在时会自动创建
 func WriteFile(filename string, data []byte, append bool) error {
 	filename = fileutils.ChangeToLinuxSeparator(filename)
