@@ -41,7 +41,7 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await BlogCatalogEdit(_this.formValidate.catalog_name, _this.formValidate.catalog_desc);
+            const result = await BlogCatalogEdit(_this.formValidate);
             if (result.status == "SUCCESS") {
               _this.$Message.success('提交成功!');
               this.$emit("handleSuccess");
