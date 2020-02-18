@@ -35,6 +35,7 @@ func (this *SendMailNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	if err != nil {
 		paramMap["flag"] = "FAILED"
+		paramMap["errorMsg"] = err.Error()
 	} else {
 		paramMap["flag"] = "SUCCESS"
 	}
@@ -57,7 +58,7 @@ func (this *SendMailNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 }
 
 func (this *SendMailNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"flag"})
+	return this.BPOS1([]string{"flag", "errorMsg"})
 }
 
 //定义邮箱服务器连接信息,如果是阿里邮箱 pass填密码,qq邮箱填授权码
