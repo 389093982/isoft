@@ -26,6 +26,9 @@
           </p>
         </Col>
       </Row>
+      <div style="text-align: center;margin-top: 10px">
+        <Page :total="totalCount" :page-size="offset" :current="current_page" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+      </div>
     </div>
     <div v-if="myCourses && myCourses.length == 0" style="padding: 30px 10px;">
       您还没有任何课程奥，如果你想传播你的知识，
@@ -56,6 +59,9 @@
         isLoading: true,
         // 我的课程
         myCourses: null,
+        totalCount:0,
+        current_page:1,
+        offset:10,
       }
     },
     methods: {
@@ -73,9 +79,10 @@
         this.isLoading = true;
         try {
           var userName = getCookie("userName");
-          const result = await GetCourseListByUserName(userName);
+          const result = await GetCourseListByUserName({"userName":userName,"current_page":this.current_page,"offset":this.offset});
           if (result.status == "SUCCESS") {
             this.myCourses = result.courses;
+            this.totalCount = result.paginator.totalcount
           }
         } finally {
           this.isLoading = false;
@@ -83,6 +90,14 @@
       },
       uploadVideoComplete: function () {
         this.refreshMyCourseList();
+      },
+      pageChange:function (page) {
+        this.current_page = page;
+        this.refreshMyCourseList()
+      },
+      pageSizeChange:function (pageSize) {
+        this.offset = pageSize;
+        this.refreshMyCourseList()
       },
     },
     mounted: function () {

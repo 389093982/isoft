@@ -88,7 +88,7 @@ export const ShowBlogArticleDetail = (id) => ajax(BASE_URL + '/iwork/httpservice
 export const EditCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/EditCourse", params, 'GET');
 
 // 根据用户名查询用户的课程信息
-export const GetCourseListByUserName = (userName) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", {userName}, 'GET');
+export const GetCourseListByUserName = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", params, 'GET');
 
 // 完结视频更新
 export const UpdateCourseIcon = (course_id, small_image) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", {
