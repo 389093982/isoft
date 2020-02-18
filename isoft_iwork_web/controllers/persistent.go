@@ -60,7 +60,7 @@ func persistentAppIdsToFile(appids []models.AppId) {
 	for _, appid := range appids {
 		_persistentDirPath := path.Join(persistentDirPath, appid.AppName)
 		filepath := path.Join(_persistentDirPath, "appid", fmt.Sprintf(`%s.appid`, appid.AppName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(appid)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(appid))
 	}
 }
 
@@ -74,7 +74,7 @@ func persistentPlacementsToFile(appids []models.AppId) {
 			Placement: placement,
 			Elements:  elements,
 		}
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(data)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(data))
 	}
 }
 
@@ -83,7 +83,7 @@ func persistentAuditTasksToFile(appids []models.AppId) {
 	for _, task := range tasks {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, task.AppId))
 		filepath := path.Join(_persistentDirPath, "audits", fmt.Sprintf(`%s.audit`, task.TaskName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(task)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(task))
 	}
 }
 
@@ -92,7 +92,7 @@ func persistentModulesToFile(appids []models.AppId) {
 	for _, module := range modules {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, module.AppId))
 		filepath := path.Join(_persistentDirPath, "modules", fmt.Sprintf(`%s.module`, module.ModuleName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(module)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(module))
 	}
 }
 
@@ -101,7 +101,7 @@ func persistentFiltersToFile(appids []models.AppId) {
 	for _, filter := range filters {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, filter.AppId))
 		filepath := path.Join(_persistentDirPath, "filters", fmt.Sprintf(`%s.filter`, filter.FilterWorkName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(filter)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(filter))
 	}
 }
 
@@ -110,7 +110,7 @@ func persistentGlobalVarsToFile(appids []models.AppId) {
 	for _, globalVar := range globalVars {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, globalVar.AppId))
 		filepath := path.Join(_persistentDirPath, "globalVars", fmt.Sprintf(`%s_%s.globalVar`, globalVar.Name, globalVar.EnvName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(globalVar)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(globalVar))
 	}
 }
 
@@ -119,7 +119,7 @@ func persistentQuartzsToFile(appids []models.AppId) {
 	for _, meta := range metas {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, meta.AppId))
 		filepath := path.Join(_persistentDirPath, "quartzs", fmt.Sprintf(`%s.quartz`, meta.TaskName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(meta)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(meta))
 	}
 }
 
@@ -128,7 +128,7 @@ func persistentResourcesToFile(appids []models.AppId) {
 	for _, resource := range resources {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, resource.AppId))
 		filepath := path.Join(_persistentDirPath, "resources", fmt.Sprintf(`%s.resource`, resource.ResourceName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(resource)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(resource))
 	}
 }
 
@@ -137,7 +137,7 @@ func persistentMigratesToFile(appids []models.AppId) {
 	for _, migrate := range migrates {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, migrate.AppId))
 		filepath := path.Join(_persistentDirPath, "migrates", fmt.Sprintf(`%s`, migrate.MigrateName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(migrate)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(migrate))
 	}
 }
 
@@ -146,7 +146,7 @@ func persistentWorkCahcesToFile(appids []models.AppId) {
 	for _, workCahce := range workCahces {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, workCahce.Work.AppId))
 		filepath := path.Join(_persistentDirPath, "works", fmt.Sprintf(`%s.work`, workCahce.Work.WorkName))
-		fileutil.WriteFile(filepath, []byte(xmlutil.RenderToString(workCahce)), false)
+		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(workCahce))
 	}
 }
 
