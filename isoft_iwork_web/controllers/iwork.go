@@ -323,6 +323,7 @@ func (this *WorkController) SaveProject() {
 }
 
 func (this *WorkController) ImportProject() {
+	defer logs.Info("end ImportProject")
 	logs.Info("start ImportProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
