@@ -3,6 +3,7 @@
 
 2、beego 项目打包
 bee pack -be GOOS=linux
+bee pack -be GOOS=windows
 ..\bin\bee.exe pack -be GOOS=linux
 
 3、Linux编译go程序步骤

@@ -49,10 +49,15 @@ func (this *BlockStepOrdersRunner) recordLog(err interface{}) {
 func (this *BlockStepOrdersRunner) Run() (receiver *entry.Receiver) {
 	defer func() {
 		if err := recover(); err != nil {
-			this.recordLog(err)
-			// 重置 parentStepId,并执行 end 节点
-			this.ParentStepId = iworkconst.PARENT_STEP_ID_FOR_START_END
-			receiver = this.runDetail(true)
+			if this.Dispatcher.ExistParentWork {
+				// 继续抛出异常到父级流程
+				panic(err)
+			} else {
+				this.recordLog(err)
+				// 重置 parentStepId,并执行 end 节点
+				this.ParentStepId = iworkconst.PARENT_STEP_ID_FOR_START_END
+				receiver = this.runDetail(true)
+			}
 		}
 	}()
 	return this.runDetail()
