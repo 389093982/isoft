@@ -313,6 +313,7 @@ func GetRunLogRecordCount(works []models.Work) interface{} {
 var siMutex sync.Mutex
 
 func (this *WorkController) SaveProject() {
+	defer logs.Info("end SaveProject")
 	logs.Info("start SaveProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()

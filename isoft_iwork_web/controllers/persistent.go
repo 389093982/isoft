@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	"io/ioutil"
 	"isoft/isoft_iwork_web/core/iworkcache"
@@ -16,7 +17,6 @@ import (
 	"reflect"
 	"runtime"
 	"time"
-	"github.com/astaxie/beego/logs"
 )
 
 var persistentDirPath string
@@ -28,6 +28,8 @@ func init() {
 }
 
 func persistentToFile() {
+	logs.Info("==> 将 iwork 框架 DB 中的数据导入到 %s 目录下!", persistentDirPath)
+
 	appids, _ := models.GetAllAppIds()
 	// 进行备份操作
 	fileutils.CopyDir(persistentDirPath, fmt.Sprintf(`%s_backup/%s`, persistentDirPath, time.Now().Format("20060102150405")))
@@ -220,9 +222,9 @@ func persistentMultiToDB(dirPath string, tp reflect.Type) {
 
 var tableSli = []string{"app_id", "sql_migrate", "work", "work_step", "filters", "cron_meta", "resource", "module", "global_var", "audit_task"}
 
-func truncateTables()  {
+func truncateTables() {
 	defer func() {
-		if err := recover();err!=nil{
+		if err := recover(); err != nil {
 			logs.Info(errorutil.ToError(err).Error())
 		}
 	}()
@@ -233,6 +235,7 @@ func truncateTables()  {
 }
 
 func importProject() {
+	logs.Info("==> 将 %s 目录下的项目导入的 iwork 框架 DB！", persistentDirPath)
 	truncateTables()
 	// 再导入每个 AppID 下面的数据
 	if files, _, err := fileutils.GetAllSubFile(persistentDirPath); err == nil {
