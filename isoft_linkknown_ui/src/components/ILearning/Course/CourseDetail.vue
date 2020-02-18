@@ -141,10 +141,10 @@
 
   .course_img .course_name {
     display: none;
-    padding: 3px 0 0 10px;
+    padding: 2px 0 0 10px;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    height: 30px;
+    height: 24px;
     position: relative;
     top: 0px;
     transition: all ease-in 1s;

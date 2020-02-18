@@ -22,6 +22,7 @@
     <p>课程子类型：{{course.course_sub_type}}</p>
     <p>课程简介：{{course.course_short_desc}}</p>
     <p>课程集数：{{course.course_number}}</p>
+    <p>标签语：{{course.course_label}}</p>
   </span>
 </template>
 

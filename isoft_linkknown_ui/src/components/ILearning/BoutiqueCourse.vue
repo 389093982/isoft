@@ -15,7 +15,7 @@
     <CourseType></CourseType>
 
     <!--热门课程推荐-->
-    <HotRecommend></HotRecommend>
+    <HotRecommend :show-display-icon="true"></HotRecommend>
 
 
   </div>
