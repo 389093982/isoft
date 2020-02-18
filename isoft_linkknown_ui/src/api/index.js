@@ -8,10 +8,7 @@ const BASE_URL = '/api';
 const WECHAT_PAY = '/wechatPayApi';
 
 // 编辑或者新增博客分类
-export const BlogCatalogEdit = (catalog_name, catalog_desc) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit', {
-  catalog_name,
-  catalog_desc
-}, 'POST');
+export const BlogCatalogEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit', params, 'POST');
 
 // 获取我的所有博客分类
 export const GetMyCatalogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs2', {}, 'GET');
