@@ -14,10 +14,7 @@
               <Col span="5" style="font-size: 20px;color: #333;">
                 <!-- 占据内容 -->
                 <span style="width: 1px;height: 1px;display: inline-block;"></span>
-                <span v-if="search_type==='_all'">全部分类</span>
-                <span v-else-if="search_type==='_hot'">热门博客</span>
-                <span v-else-if="search_type==='_personal'">我的博客</span>
-                <span v-else>{{search_type}}</span>
+                <span>{{showLabel}}</span>
               </Col>
               <Col span="3" offset="4" style="text-align: center;">
                 <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></Col>
@@ -127,7 +124,13 @@
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {CheckHasLoginConfirmDialog2, RenderNickName, RenderUserIcon, renderUserInfoByNames} from "../../tools";
+  import {
+    CheckHasLoginConfirmDialog2,
+    GetLoginUserName,
+    RenderNickName,
+    RenderUserIcon,
+    renderUserInfoByNames
+  } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
 
   export default {
@@ -142,18 +145,14 @@
         // 每页记录数
         offset: 20,
         searchblogs: [],
-        search_type: '_all',
+        search_type: '',
+        showLabel: '全部分类',
+        search_user_name: '',
         userInfos: [],
         pattern: 1,           // 按钮选中的模式
       }
     },
     methods: {
-      chooseMyItem: function () {
-        var _this = this;
-        CheckHasLoginConfirmDialog2(this, function () {
-          _this.chooseItem('_personal');
-        });
-      },
       blog_edit: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
@@ -161,22 +160,31 @@
         });
       },
       chooseItem: function (pattern) {
+        // 置空搜索条件
+        this.search_user_name = '';
+        this.search_type = '';
+        // 设置搜索的模式
         this.pattern = pattern;
+        this.current_page = 1;
+
         if (pattern === 1) {
-          this.search_type = "_all";
-          this.current_page = 1;
+          this.search_type = "";  // search_type 为空表示查询全部分类
+          this.showLabel = "全部分类";
           this.refreshBlogList();
         } else if (pattern === 2) {
           this.search_type = "_hot";
-          this.current_page = 1;
+          this.showLabel = "热门博客";
           this.refreshBlogList();
         } else if (pattern === 3) {
-          this.current_page = 1;
-          this.search_type = "";
-          this.chooseMyItem();
+          var _this = this;
+          CheckHasLoginConfirmDialog2(this, function () {
+            _this.showLabel = "我的博客";
+            _this.search_user_name = GetLoginUserName();
+            this.refreshBlogList();
+          });
         } else {
+          this.showLabel = pattern;
           this.search_type = pattern;
-          this.current_page = 1;
           this.refreshBlogList();
         }
       },
@@ -194,8 +202,9 @@
           offset: this.offset,
           current_page: this.current_page,
           search_type: search_type,
+          search_user_name: this.search_user_name,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.userInfos = await renderUserInfoByNames(result.blogs, 'author');
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
