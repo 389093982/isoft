@@ -11,8 +11,7 @@
             style="margin-left: 30px;">搜索同类资源</span>
       <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/ilearning/course_space'}))"
             style="margin-left: 30px;">我的课程空间</span>
-      <span class="isoft_hover_red" @click=""
-            style="margin-left: 30px;">开课流程</span>
+      <span class="isoft_hover_red" @click="" style="margin-left: 30px;">开课流程</span>
     </p>
     <p>作者：
       <span v-if="nick_name">{{nick_name}}</span>
@@ -22,14 +21,16 @@
     <p>课程子类型：{{course.course_sub_type}}</p>
     <p>课程简介：{{course.course_short_desc}}</p>
     <p>课程集数：{{course.course_number}}</p>
-    <p>标签语：{{course.course_label}}</p>
+    <p v-if="course.course_label">标签语：
+      <Tag v-for="(clabel, index) in clabels">{{clabel}}</Tag>
+    </p>
   </span>
 </template>
 
 <script>
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
   import {GetUserDetail} from "../../../api"
-  import {RenderNickName} from "../../../tools"
+  import {checkEmpty, RenderNickName, strSplit} from "../../../tools"
 
   export default {
     name: "CourseMeta",
@@ -56,6 +57,11 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
+      }
+    },
+    computed: {
+      clabels: function () {
+        return strSplit(this.course.course_label, "/").filter(label => !checkEmpty(label));
       }
     },
     mounted() {

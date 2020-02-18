@@ -60,7 +60,7 @@
               </div>
             </div>
           </MenuItem>
-          <MenuItem name="10">
+          <MenuItem name="10" v-if="isAdmin()">
             <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
           </MenuItem>
         </div>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import {CheckHasLogin, delCookie, getCookie} from '../../tools/index'
+  import {CheckAdminLogin, CheckHasLogin, delCookie, getCookie} from '../../tools/index'
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import MessageList from "../Message/MessageList";
@@ -86,6 +86,9 @@
       }
     },
     methods: {
+      isAdmin: function () {
+        return CheckAdminLogin();
+      },
       cancelUser() {
         delCookie("tokenString");
         delCookie("userName");
@@ -105,7 +108,7 @@
 <style scoped>
   .layout-nav {
     float: right;
-    width: 1100px;
+    width: 1000px;
   }
 
   .message_detail {
