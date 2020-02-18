@@ -7,7 +7,8 @@
       <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
         <Col span="6" style="top:-100px;">
           <div class="user_icon">
-            <img class="isoft_hover_red hover_img" style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);"
+            <img class="isoft_hover_red"
+                 style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
                  width="150" height="150" :src="user.small_icon" @error="defImg()">
 
             <span class="user_icon_tip isoft_hover_red"
@@ -143,15 +144,6 @@
 </script>
 
 <style scoped>
-  .hover_img {
-    position: relative;
-    transition: transform 1s ease-in;
-  }
-
-  .hover_img:hover {
-    transform: rotateY(360deg);
-  }
-
   .focus:focus {
     background-color: #ffffff;
     border-color: #2c5bff;
@@ -183,17 +175,20 @@
       position: absolute;
       top: 2px;
       right: -105px;
+      opacity: 0;
     }
     50% {
       position: absolute;
       top: 2px;
       right: -145px;
       color: #c50000;
+      opacity: 1;
     }
     100% {
       position: absolute;
       top: 2px;
       right: -105px;
+      opacity: 0;
     }
   }
 </style>
