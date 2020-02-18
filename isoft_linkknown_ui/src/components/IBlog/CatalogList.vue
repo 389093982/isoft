@@ -4,15 +4,15 @@
       <span v-if="hasLogin">
         <BlogCatalogEdit v-if="showBlogCatalogEdit" @handleSuccess="handleSuccess"/>
         <Row>
-          <Col span="16">我的博客分类
+          <Col span="18">我的博客分类
             <span style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit"><Icon
               type="md-add"/>添加</span>
           </Col>
-          <Col span="8">创建时间</Col>
+          <Col span="6">创建时间</Col>
         </Row>
-        <Row v-for="(catalog,index) in catalogs">
-          <Col span="16">{{ catalog.catalog_name | filterLimitFunc }}</Col>
-          <Col span="8" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
+        <Row v-for="(catalog,index) in catalogs" style="line-height: 28px;height: 28px;">
+          <Col span="18" class="isoft_inline_ellipsis">{{ catalog.catalog_name }}</Col>
+          <Col span="6" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
         </Row>
       </span>
       <span v-else>
@@ -54,15 +54,6 @@
       if (CheckHasLogin()) {
         this.refreshMyCatalogList();
       }
-    },
-    filters: {
-      // 内容超长则显示部分
-      filterLimitFunc: function (value) {
-        if (value && value.length > 15) {
-          value = value.substring(0, 15) + '...';
-        }
-        return value;
-      },
     },
     computed: {
       hasLogin: function () {
