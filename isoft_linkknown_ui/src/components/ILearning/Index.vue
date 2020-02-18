@@ -69,7 +69,6 @@
   const WarmHeartRecommend = () => import("@/components/ILearning/WarmHeartRecommend");
   const ShowModulars = () => import("@/components/ILearning/ShowModulars");
   const BlogRank = () => import("@/components/ILearning/BlogRank");
-  const HotRecommend = () => import("@/components/ILearning/Course/HotRecommend");
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
 
   export default {
@@ -82,7 +81,6 @@
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,
-      HotRecommend,
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
