@@ -1,33 +1,26 @@
 <template>
-  <div class="isoft_bg_white" style="padding: 10px 10px 0 10px;">
-    <Row :gutter="10">
-      <Col span="12">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-          <FormItem label="显示名称" prop="advertisement_label">
-            <Input v-model="formValidate.advertisement_label" placeholder="Enter advertisement_label..."/>
-          </FormItem>
-          <FormItem label="链接类型" prop="linked_type">
-            <Input v-model="formValidate.linked_type" placeholder="Enter linked_type..."></Input>
-          </FormItem>
-          <FormItem label="链接地址" prop="linked_refer">
-            <Input v-model="formValidate.linked_refer" placeholder="Enter linked_refer..."></Input>
-          </FormItem>
-          <FormItem label="显示图片" prop="linked_img">
-            <Input v-model="formValidate.linked_img" placeholder="点击右边图标选择图片"
-                   readonly="readonly" @on-focus="editLinkedImg"></Input>
-            <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
-                         :action="fileUploadUrl" uploadLabel="上传显示图片"/>
-          </FormItem>
-          <FormItem>
-            <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
-            <Button type="warning" size="small" @click="handleReset('formValidate')">取消</Button>
-          </FormItem>
-        </Form>
-      </Col>
-      <Col span="12">
-        这块再来点别的东西
-      </Col>
-    </Row>
+  <div>
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+      <FormItem label="显示名称" prop="advertisement_label">
+        <Input v-model="formValidate.advertisement_label" placeholder="广告标语"/>
+      </FormItem>
+      <FormItem label="链接类型" prop="linked_type">
+        <Input v-model="formValidate.linked_type" placeholder="链接类型"></Input>
+      </FormItem>
+      <FormItem label="链接地址" prop="linked_refer">
+        <Input v-model="formValidate.linked_refer" placeholder="广告跳转第三方地址"></Input>
+      </FormItem>
+      <FormItem label="显示图片" prop="linked_img">
+        <Input v-model="formValidate.linked_img" placeholder="上传图片"
+               readonly="readonly" @on-focus="editLinkedImg"></Input>
+        <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
+                     :action="fileUploadUrl" uploadLabel="上传显示图片"/>
+      </FormItem>
+      <FormItem>
+        <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
+        <Button type="warning" size="small" @click="handleReset('formValidate')">取消</Button>
+      </FormItem>
+    </Form>
   </div>
 </template>
 
