@@ -3,12 +3,7 @@
 
     <!--搜索框-->
     <div style="width: 100%;height: 100px;">
-      <div style="width: 60%;display: inline-block;">
-        <input id="courseSearchId" placeholder="请输入搜索内容..." v-model.trim="search_data"/>
-        <button id="courseSearchButtonId" @click="searchFunc">
-          <code id="courseSearchCodeId">搜索</code>
-        </button>
-      </div>
+      <ISearch @submitFunc="submitFunc()"></ISearch>
     </div>
 
     <!--课程分类-->
@@ -55,15 +50,12 @@
     },
     data() {
       return {
-        search_data: "",
+
       }
     },
     methods:{
-      searchFunc: function () {
-        if (this.search_data.trim().length === 0) {
-          this.search_data = "all"
-        }
-        this.$router.push({path: '/ilearning/course_search', query: {search: this.search_data}});
+      submitFunc: function (search_data) {
+        this.$router.push({path: '/ilearning/course_search', query: {search:search_data}});
       },
       chooseCourseType: function (course_type, course_sub_type) {
         // params是路由的一部分
