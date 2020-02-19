@@ -43,15 +43,12 @@
                 </div>
                 <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
                   <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true"
-                               :extra-data="book.id" @uploadComplete="uploadComplete"
+                               :extra-data="book" @uploadComplete="uploadComplete"
                                :action="fileUploadUrl" uploadLabel="换张图片"/>
                   <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10" @onclick="$router.push({path:'/ibook/book_edit',
                                  query:{book_id:book.id,book_name:book.book_name}})">编辑文章
-                  </IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10" @onclick="refreshMyBookList">
-                    我的书单
                   </IBeautifulLink>
                 </div>
 
@@ -75,12 +72,7 @@
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
 
-          <ISimpleConfirmModal ref="bookEditModal" modal-title="新增/编辑 Book" :modal-width="600" :footer-hide="true">
-            <IKeyValueForm ref="bookEditForm" form-key-label="图书名称" form-value-label="图书描述"
-                           form-key-placeholder="请输入书名" form-value-placeholder="请输入描述"
-                           @handleSubmit="editBook">
-            </IKeyValueForm>
-          </ISimpleConfirmModal>
+          <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
       <Col span="6">
@@ -98,9 +90,8 @@
 </template>
 
 <script>
-  import {BookEdit, DeleteBookById, fileUploadUrl, QueryPageBookList, UpdateBookIcon} from "../../api"
+  import {DeleteBookById, fileUploadUrl, QueryPageBookList, UpdateBookIcon} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
-  import IKeyValueForm from "../Common/form/IKeyValueForm";
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -114,12 +105,14 @@
     RenderNickName,
     renderUserInfoByNames
   } from "../../tools";
+  import BookInfoEdit from "./BookInfoEdit";
 
   export default {
     name: "BookList",
     components: {
+      BookInfoEdit,
       RandomAdmt,
-      IndexCarousel, HotUser, IBeautifulLink, IKeyValueForm, IBeautifulCard, ISimpleConfirmModal, IFileUpload
+      IndexCarousel, HotUser, IBeautifulLink, IBeautifulCard, ISimpleConfirmModal, IFileUpload
     },
     data() {
       return {
@@ -129,7 +122,7 @@
         total: 0,
         // 每页记录数
         offset: 10,
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=book&table_field=book_img",
         books: [],
         userInfos: [],
       }
@@ -156,7 +149,7 @@
         if (data.status === "SUCCESS") {
           if (data.status === "SUCCESS") {
             let uploadFilePath = data.fileServerPath;
-            let bookId = data.extraData;
+            let bookId = data.extraData.id;
             const result = await UpdateBookIcon(bookId, uploadFilePath);
             if (result.status === "SUCCESS") {
               this.refreshBookList();
@@ -165,23 +158,15 @@
         }
       },
       showBookEditModal2: function (book) {
-        this.$refs.bookEditModal.showModal();
-        this.$refs.bookEditForm.initFormData(book.id, book.book_name, book.book_desc);
-      },
-      editBook: async function (book_id, book_name, book_desc) {
-        const result = await BookEdit(book_id, book_name, book_desc);
-        if (result.status === "SUCCESS") {
-          this.$refs.bookEditModal.hideModal();
-          this.$refs.bookEditForm.handleSubmitSuccess("提交成功!");
-          this.refreshBookList();
-        } else {
-          this.$refs.bookEditForm.handleSubmitError("提交失败!");
-        }
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$refs.bookEditModal.initFormData(book);
+          _this.$refs.bookEditModal.showModal();
+        });
       },
       showBookEditModal: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$refs.bookEditForm.handleReset('formValidate');
           _this.$refs.bookEditModal.showModal();
         });
       },
