@@ -110,15 +110,56 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1230</Id>
+		<Id>1767</Id>
 		<WorkId>273</WorkId>
 		<WorkStepId>3</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>mapper_uploadChecker</WorkStepName>
+		<WorkStepDesc>上传检查</WorkStepDesc>
+		<WorkStepType>mapper</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;file_suffixs&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;switchCase(\nStringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`user/small_icon`),`.jpg,.png,.gif`,\nStringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`book/book_img`),`.jpg,.png,.gif`,\nStringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`course/small_icon`),`.jpg,.png,.gif`,\nStringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`course_video/first_play`),`.mp4`,\ntrue(), `*`);\n\n\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>file_suffixs</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>switchCase(&#xA;StringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`user/small_icon`),`.jpg,.png,.gif`,&#xA;StringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`book/book_img`),`.jpg,.png,.gif`,&#xA;StringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`course/small_icon`),`.jpg,.png,.gif`,&#xA;StringsEq(fmtSprintf(`%s/%s`,$start.table_name,$start.table_field),`course_video/first_play`),`.mp4`,&#xA;true(), `*`);&#xA;&#xA;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;file_suffixs&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>file_suffixs</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;file_suffixs&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>1230</Id>
+		<WorkId>273</WorkId>
+		<WorkStepId>4</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>do_receive_file_fileUpload</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
 		<WorkStepType>do_receive_file</WorkStepType>
 		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_calHash?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;是否计算hash值&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: [&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`true`&#34;,&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`false`&#34;&#xA;&#x9;&#x9;&#x9;],&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`true`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_suffixs&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;上传文件支持的后缀名,*表示支持任意类型的后缀,多个后缀用逗号分隔&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;*&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_fileServerAddr&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;上传文件服务器访问路径&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.fileServerAddr;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_calHash?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;是否计算hash值&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: [&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`true`&#34;,&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`false`&#34;&#xA;&#x9;&#x9;&#x9;],&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`true`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_suffixs&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;上传文件支持的后缀名,*表示支持任意类型的后缀,多个后缀用逗号分隔&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_uploadChecker.file_suffixs;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_fileServerAddr&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;上传文件服务器访问路径&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.fileServerAddr;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>bool_calHash?</paramName>
@@ -136,8 +177,8 @@
 		<paramDesc>上传文件支持的后缀名,*表示支持任意类型的后缀,多个后缀用逗号分隔</paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
-		<pureText>true</pureText>
-		<paramValue>*</paramValue>
+		<pureText>false</pureText>
+		<paramValue>$mapper_uploadChecker.file_suffixs;&#xA;</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -203,7 +244,7 @@
 	<steps>
 		<Id>1232</Id>
 		<WorkId>273</WorkId>
-		<WorkStepId>4</WorkStepId>
+		<WorkStepId>5</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>file_sync_fileUpload</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -272,7 +313,7 @@
 	<steps>
 		<Id>1568</Id>
 		<WorkId>273</WorkId>
-		<WorkStepId>5</WorkStepId>
+		<WorkStepId>6</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_Insert_fileUploadLog</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -354,7 +395,7 @@
 	<steps>
 		<Id>1231</Id>
 		<WorkId>273</WorkId>
-		<WorkStepId>6</WorkStepId>
+		<WorkStepId>7</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>do_response_receive_file_fileUpload</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -423,7 +464,7 @@
 	<steps>
 		<Id>1229</Id>
 		<WorkId>273</WorkId>
-		<WorkStepId>7</WorkStepId>
+		<WorkStepId>8</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>end</WorkStepName>
 		<WorkStepDesc>end节点</WorkStepDesc>
