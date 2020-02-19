@@ -61,7 +61,18 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcDemo": "stringsSplit($str1, $sep)", "funcDesc": "根据分隔符分割字符串"},
 		{"funcDemo": "stringsRepeatQuestion($count)", "funcDesc": "'?,'重复 count 次,最后一次不带,"},
 		{"funcDemo": "sliceLen($slices)", "funcDesc": "计算数组长度"},
+		{"funcDemo": "switchCase($bool1,$val1,$bool2,$val2,$bool3,$val3)", "funcDesc": "bool 条件满足时返回 val"},
+		{"funcDemo": "true()", "funcDesc": "返回布尔 true 值"},
+		{"funcDemo": "false()", "funcDesc": "返回布尔 false 值"},
 	}
+}
+
+func (t *IWorkFuncProxy) True(args []interface{}) interface{} {
+	return true
+}
+
+func (t *IWorkFuncProxy) False(args []interface{}) interface{} {
+	return false
 }
 
 func (t *IWorkFuncProxy) RandNumberString(args []interface{}) interface{} {
@@ -378,4 +389,18 @@ func parseArgsToInt64Arr(args []interface{}) []int64 {
 		}
 	}
 	return sargs
+}
+
+func (t *IWorkFuncProxy) SwitchCase(args []interface{}) interface{} {
+	if len(args)%2 != 0 {
+		panic("参数格式必须是偶数个!")
+	}
+	for index, arg := range args {
+		if index%2 == 0 {
+			if checkFlag := arg.(bool); checkFlag && checkFlag == true {
+				return args[index+1]
+			}
+		}
+	}
+	panic("所有条件都不满足")
 }
