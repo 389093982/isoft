@@ -16,7 +16,9 @@
     <CourseType></CourseType>
 
     <!--热门课程推荐-->
-    <HotRecommend :show-display-icon="true"></HotRecommend>
+    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+      <HotRecommend :show-display-icon="true"></HotRecommend>
+    </div>
 
   </div>
 </template>
