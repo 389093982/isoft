@@ -19,13 +19,15 @@
 ②将dist下面的所有文件(静态文件)（可以先压缩为zip文件再上传）复制到apache-tomcat-8.5.51_8002下webapps目录里的isoft_linkknown_ui（新建目录）目录里
 ③修改tomcat默认端口为8002，在apache-tomcat-8.5.51_8002/conf/server.xml里，将8080修改为8002
   	并且在server.xml最下面</Host>结束标签上一行添加（配置docBase）： <Context path="" docBase="isoft_linkknown_ui" reloadable="true" />
+  	注：如果<Server port="8005" shutdown="SHUTDOWN">这里是8005端口，而一台服务器上部署了多个tomcat，那么这里的8005会和之前的项目发生端口冲突，
+  	可以将8005改为8006，不重复即可。
 ④在tomcat的web.xml文件里<web-app ...>标签里，添加如下配置：
 	<error-page>
 			<error-code>404</error-code>
 			<location>/index.html</location>
 	</error-page>
-④进入bin目录下，给sh文件设置可执行权限，执行命令是：chmod +x *.sh
-⑤nginx代理跳转配置：
+⑤进入bin目录下，给sh文件设置可执行权限，执行命令是：chmod +x *.sh
+⑥nginx代理跳转配置：
 	vi /etc/nginx/nginx.conf 并添加如下配置，因为要将根目录指向isoft_linkknown_ui项目
 	 location / {
 			 proxy_pass http://localhost:8002/;

@@ -1,0 +1,44 @@
+前端 isoft_unifiedpay_ui 部署（最终希望通过浏览器输入ip或者域名/isoft_unifiedpay_ui 访问项目）
+
+1.环境准备
+①/home/linker/下安装apache-tomcat-8.5.51，并修改名称为：apache-tomcat-8.5.51_8003
+②/home/linker/下安装jdk1.8.0_241
+③配置环境变量 vi /etc/profile 最下面添加如下配置
+	JAVA_HOME=/home/linker/jdk1.8.0_241
+	TOMCAT_HOME=/home/linker/apache-tomcat-8.5.51
+	PATH=$JAVA_HOME/bin:$PATH
+	CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	export JAVA_HOME
+	export TOMCAT_HOME
+	export PATH
+	export CLASSPATH
+④root用户安装nginx，并配置（默认安装目录：/etc/nginx）
+
+2.打包与部署
+①路径跳转配置，需要修改isoft_unifiedpay_ui 项目的两个地方。
+	先将src/router/index.js最下面路由里添加：base:'isoft_unifiedpay_ui',(表示项目最终是以域名/isoft_unifiedpay_ui 访问的)
+	然后找到config/index.js里build模块，将assetsPublicPath: '/'修改为 assetsPublicPath: '/isoft_unifiedpay_ui/'
+	
+②终端执行 npm run build
+③将dist下面的所有文件(静态文件)（可以先压缩为zip文件再上传）复制到apache-tomcat-8.5.51_8003下webapps目录里的isoft_unifiedpay_ui（新建目录）目录里
+④修改tomcat默认端口为8003，在apache-tomcat-8.5.51_8003/conf/server.xml里，将8080修改为8003
+  	并且在server.xml最下面</Host>结束标签上一行添加（配置docBase）： <Context path="" docBase="isoft_unifiedpay_ui" reloadable="true" />
+  	注：如果<Server port="8005" shutdown="SHUTDOWN">这里是8005端口，而一台服务器上部署了多个tomcat，那么这里的8005会和之前的项目发生端口冲突，
+  	可以将8005改为8006，不重复即可
+⑤在tomcat的web.xml文件里<web-app ...>标签里，添加如下配置：
+	<error-page>
+			<error-code>404</error-code>
+			<location>/index.html</location>
+	</error-page>
+⑥进入bin目录下，给sh文件设置可执行权限，执行命令是：chmod +x *.sh
+⑦nginx代理跳转配置：
+	vi /etc/nginx/nginx.conf 并添加如下配置，因为要将根目录指向isoft_unifiedpay_ui项目
+	 location /isoft_unifiedpay_ui {
+		 proxy_pass http://localhost:8003/isoft_unifiedpay_ui;
+	 }
+
+3.启动
+①启动tomcat: 在apache-tomcat-8.5.51_8003/bin目录下执行启动命令：nohup ./startup.sh &
+②启动nginx: cd /etc/nginx, 执行nginx -s reload
+注：启动nginx命令还有：service nginx start
+	关闭nginx命令有：nginx -s stop ,或者 ps -ef|grep nginx 然后kill -9 端口号（这种方式比较彻底）
