@@ -10,6 +10,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/fileutils"
 	"isoft/isoft_utils/common/xmlutil"
 	"path"
@@ -21,10 +22,20 @@ import (
 
 var persistentDirPath string
 
-func init() {
+func initPersistentDirPath() {
+	if sysconfig.PERSISTENT_DIR != "" {
+		if ok, _ := fileutils.PathExists(sysconfig.PERSISTENT_DIR); ok {
+			persistentDirPath = sysconfig.PERSISTENT_DIR
+			return
+		}
+	}
 	// 获取 persistent 目录
 	_, file, _, _ := runtime.Caller(0)
 	persistentDirPath = fileutils.ChangeToLinuxSeparator(fmt.Sprintf("%s/persistent", filepath.Dir(filepath.Dir(file))))
+}
+
+func init() {
+	initPersistentDirPath()
 }
 
 func persistentToFile() {
