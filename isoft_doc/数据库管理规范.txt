@@ -5,3 +5,11 @@
     FLUSH PRIVILEGES;
 3、MySQL创建新用户时登录出错（ERROR 1045）解决方案：删除系统中的匿名用户
     DROP USER ''@'localhost';
+
+4、mysql 修改普通用 linker 户密码
+    5.7 以下版本：
+        update user set password=password('Linker2020') where user='linker' and host='%';
+        flush privileges;
+    5.7 及 5.7 以上版本：
+        update user set authentication_string=password('Linker2020') where user='linker' and host='%';
+        flush privileges;
