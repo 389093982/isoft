@@ -5,8 +5,10 @@
         <BlogCatalogEdit v-if="showBlogCatalogEdit" @handleSuccess="handleSuccess"/>
         <Row>
           <Col span="18">我的博客分类
-            <span style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit"><Icon
-              type="md-add"/>添加</span>
+            <span style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit">
+              <span v-if="!showBlogCatalogEdit"><Icon type="md-add"/>添加分类</span>
+              <span v-else><Icon type="ios-remove" />收起添加</span>
+            </span>
           </Col>
           <Col span="6">创建时间</Col>
         </Row>
