@@ -61,6 +61,8 @@
 
         if (result.status == "SUCCESS") {
           this.$Message.success("提交成功!感谢您的反馈 ^_^");
+        }else{
+          this.$Message.error(result.errorMsg);
         }
       },
     }
