@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego"
+	"isoft/isoft_iwork_web/controllers"
 	"isoft/isoft_iwork_web/core/iworkplugin/node/regist"
 	"isoft/isoft_iwork_web/core/iworkpool"
 	_ "isoft/isoft_iwork_web/routers"
@@ -17,6 +18,9 @@ import (
 )
 
 func main() {
+	// 首页和 404 页面都跳往前端 index.html 页面
+	beego.ErrorController(&controllers.ErrorController{})
+
 	beego.InsertFilter("/api/iwork/httpservice/*", beego.BeforeExec, filter.FilterFunc)
 	beego.InsertFilter("/*", beego.BeforeExec, filter.IPFilterFunc)
 

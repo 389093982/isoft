@@ -27,10 +27,6 @@ type WorkController struct {
 	interfaces.IFileUploadDownload
 }
 
-func (this *WorkController) Get() {
-	this.TplName = "index.html"
-}
-
 func (this *WorkController) BuildIWorkDL() {
 	//dls := make([]*IWorkDL,0)
 	//works := iwork.GetAllWorkInfo()
