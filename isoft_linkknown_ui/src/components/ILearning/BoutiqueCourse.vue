@@ -2,8 +2,14 @@
   <div>
 
     <!--搜索框-->
-    <div style="width: 100%;height: 100px;">
-      <ISearch @submitFunc="submitFunc()"></ISearch>
+    <div style="width: 100%;height: 70px;">
+      <div style="float: left;width: 50%">
+        <div style="font-size: 30px;margin: 25px 0 0 200px;color: rgba(128,128,128,0.58)">Stay hungry，Stay foolish</div>
+      </div>
+      <div style="float: left;width: 50%;padding: 15px 120px 0 0 ">
+        <ISearch @submitFunc="submitFunc"></ISearch>
+      </div>
+      <div style="clear: both"></div>
     </div>
 
     <!--课程分类-->
@@ -11,7 +17,6 @@
 
     <!--热门课程推荐-->
     <HotRecommend :show-display-icon="true"></HotRecommend>
-
 
   </div>
 </template>
@@ -55,6 +60,9 @@
     },
     methods:{
       submitFunc: function (search_data) {
+        if (search_data.length === 0) {
+          return false;
+        }
         this.$router.push({path: '/ilearning/course_search', query: {search:search_data}});
       },
       chooseCourseType: function (course_type, course_sub_type) {
