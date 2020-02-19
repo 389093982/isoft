@@ -1,0 +1,38 @@
+前端 isoft_linkknown_ui 部署（最终希望通过浏览器输入ip或者域名，直接可以访问项目）
+
+1.环境准备
+①/home/linker/下安装apache-tomcat-8.5.51，并修改名称为：apache-tomcat-8.5.51_8002
+②/home/linker/下安装jdk1.8.0_241
+③配置环境变量 vi /etc/profile 最下面添加如下配置
+	JAVA_HOME=/home/linker/jdk1.8.0_241
+	TOMCAT_HOME=/home/linker/apache-tomcat-8.5.51
+	PATH=$JAVA_HOME/bin:$PATH
+	CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	export JAVA_HOME
+	export TOMCAT_HOME
+	export PATH
+	export CLASSPATH
+④root用户安装nginx，并配置（默认安装目录：/etc/nginx）
+
+2.打包与部署
+①终端执行 npm run build
+②将dist下面的所有文件(静态文件)（可以先压缩为zip文件再上传）复制到apache-tomcat-8.5.51_8002下webapps目录里的isoft_linkknown_ui（新建目录）目录里
+③修改tomcat默认端口为8002，在apache-tomcat-8.5.51_8002/conf/server.xml里，将8080修改为8002
+  	并且在server.xml最下面</Host>结束标签上一行添加（配置docBase）： <Context path="" docBase="isoft_linkknown_ui" reloadable="true" />
+④在tomcat的web.xml文件里<web-app ...>标签里，添加如下配置：
+	<error-page>
+			<error-code>404</error-code>
+			<location>/index.html</location>
+	</error-page>
+④进入bin目录下，给sh文件设置可执行权限，执行命令是：chmod +x *.sh
+⑤nginx代理跳转配置：
+	vi /etc/nginx/nginx.conf 并添加如下配置，因为要将根目录指向isoft_linkknown_ui项目
+	 location / {
+			 proxy_pass http://localhost:8002/;
+	 }
+
+3.启动
+①启动tomcat: 在apache-tomcat-8.5.51_8002/bin目录下执行启动命令：nohup ./startup.sh &
+②启动nginx: cd /etc/nginx, 执行nginx -s reload
+注：启动nginx命令还有：service nginx start
+	关闭nginx命令有：nginx -s stop ,或者 ps -ef|grep nginx 然后kill -9 端口号（这种方式比较彻底）
