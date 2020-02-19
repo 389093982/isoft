@@ -100,6 +100,7 @@
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {
     checkEmpty,
+    checkFastClick,
     CheckHasLoginConfirmDialog2,
     GetLoginUserName,
     RenderNickName,
@@ -140,6 +141,10 @@
         this.refreshBookList();
       },
       deleteBook: async function (book_id) {
+        if (checkFastClick()) {
+          this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
         const result = await DeleteBookById(book_id);
         if (result.status === "SUCCESS") {
           this.refreshBookList();
