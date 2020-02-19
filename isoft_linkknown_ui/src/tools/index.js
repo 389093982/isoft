@@ -256,3 +256,7 @@ export function CheckHasLoginConfirmDialog2(node, callback) {
     callback();
   }
 }
+
+export function copyObj(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}

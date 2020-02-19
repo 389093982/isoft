@@ -34,11 +34,7 @@ export const ArticleDelete = (article_id) => ajax(BASE_URL + '/iwork/httpservice
 export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageBlog', params, 'GET');
 export const QueryCustomTagBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCustomTagBlog', params, 'GET');
 
-export const BookEdit = (book_id, book_name, book_desc) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookEdit', {
-  book_id,
-  book_name,
-  book_desc
-}, 'POST');
+export const BookEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookEdit', params, 'POST');
 export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateBookIcon', {
   book_id,
   book_img
