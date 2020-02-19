@@ -23,6 +23,7 @@ const wechatpayRouters = [
 export default new Router({
   //去掉#号
   mode:'history',
+  base:'isoft_unifiedpay_ui',
   routes: [
     {path:'/wechatpay',component:baseLayout,children:wechatpayRouters},//微信支付
     { path: '*', redirect: '/wechatpay/payOrder' }
