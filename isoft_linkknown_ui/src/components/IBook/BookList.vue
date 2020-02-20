@@ -5,14 +5,19 @@
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
-            <Col span="3">
-              <IBeautifulLink @onclick="refreshBookList('_all', '')">全部书单</IBeautifulLink>
+            <Col span="3" offset="6">
+              <IBeautifulLink @onclick="refreshBookList('_all', '')" :style="{color: pattern === '_all' ? 'red': ''}">
+                全部书单
+              </IBeautifulLink>
             </Col>
             <Col span="3">
-              <IBeautifulLink @onclick="refreshBookList('_hot', '')">热门书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshBookList('_hot', '')" :style="{color: pattern === '_hot' ? 'red': ''}">
+                热门书单
+              </IBeautifulLink>
             </Col>
             <Col span="3">
-              <IBeautifulLink @onclick="refreshMyBookList">我的书单</IBeautifulLink>
+              <IBeautifulLink @onclick="refreshMyBookList" :style="{color: pattern === 'mine' ? 'red': ''}">我的书单
+              </IBeautifulLink>
             </Col>
             <Col span="3">
               <IBeautifulLink @onclick="showBookEditModal">新增书单</IBeautifulLink>
@@ -126,6 +131,7 @@
         fileUploadUrl: fileUploadUrl + "?table_name=book&table_field=book_img",
         books: [],
         userInfos: [],
+        pattern: '_all',
       }
     },
     methods: {
@@ -179,9 +185,11 @@
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
           _this.refreshBookList('', GetLoginUserName());
+          _this.pattern = 'mine';
         });
       },
       refreshBookList: async function (search_type, search_user_name) {
+        this.pattern = search_type;
         const result = await QueryPageBookList({
           search_type: search_type,
           search_user_name: search_user_name,
