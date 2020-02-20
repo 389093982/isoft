@@ -5,8 +5,7 @@
       <span v-if="nick_name">{{nick_name}}</span>
       <span v-else>{{getUserName()}}</span>
     </IBeautifulLink>&nbsp;&nbsp;
-    <IBeautifulLink style="font-size: 12px;float: right;"
-                    @onclick="$router.push({path:'/user/detail'})">个人中心
+    <IBeautifulLink style="font-size: 12px;float: right;" @onclick="$router.push({path:'/user/detail'})">个人中心
     </IBeautifulLink>
 
     <div style="margin-top: 5px;">

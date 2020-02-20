@@ -14,7 +14,7 @@
 
     <div class="itemArea" @click="$router.push({path:'/site/index'})">
       <Icon type="ios-radio-outline" :size="28"/>
-      <p>站点</p>
+      <p>站点导航</p>
     </div>
     <div class="item-line"></div>
 
@@ -32,7 +32,7 @@
 
     <div class="itemArea" @click="$router.push({path:'/user/detail'})">
       <Icon type="ios-person-add-outline" :size="28"/>
-      <p>我的</p>
+      <p>个人中心</p>
     </div>
   </div>
 </template>
