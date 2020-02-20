@@ -83,9 +83,9 @@
         let ProductDesc = 'linkknown.com网站会员';
         let TransAmount = payMoney * 100;
         let TransCurrCode = 'CNY';
-        // let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
-        // this.payUrl = orderResult.code_url;
-        this.payUrl = "test";
+        let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
+        this.payUrl = orderResult.code_url;
+        // this.payUrl = "test";
       }
     },
   }
