@@ -27,9 +27,10 @@
                 <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
                 <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;"
                     v-for="(bookCatalog, index) in bookCatalogs">
-                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)"
+                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id, index)"
                         style="padding-left: 10px;">
-                    <span style="color: rgba(115,179,137,0.91);">{{index + 1}} -</span> {{bookCatalog.catalog_name}}
+                    <span style="color: rgba(115,179,137,0.91);">{{index + 1}} -</span>
+                    <span :style="{color: editIndex === index ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
                   </span>
                   <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
                         padding: 3px 10px;background-color: #eee;border-radius: 5px;">
@@ -72,6 +73,7 @@
     components: {ISimpleConfirmModal, IBeautifulCard, IBeautifulLink, BookArticleEdit},
     data() {
       return {
+        editIndex: 0,     // 当前编辑的文章索引
         bookCatalogs: [],
         formValidate: {
           id: -1,
@@ -130,7 +132,8 @@
       handleReset(name) {
         this.$refs[name].resetFields();
       },
-      editBookArticle: function (bookCatalogId) {
+      editBookArticle: function (bookCatalogId, index) {
+        this.editIndex = index;
         this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
       },
       editBookCatalog: async function (bookCatalogId) {
