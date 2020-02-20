@@ -43,7 +43,6 @@ const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const Recharge = () => import("@/components/VipCenter/Recharge");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
-const AccessLog = () => import("@/components/Advertisement/AccessLog");
 const JobList = () => import("@/components/IJob/JobList");
 const ResumeManage = () => import("@/components/IJob/ResumeManage");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
@@ -169,7 +168,6 @@ const IAdvertisement = [{
     children: [
       {path: 'apply', component: AdvApply},
       {path: 'manage', component: AdvManage},
-      {path: 'accesslog', component: AccessLog},
     ]
 }];
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 列表形式显示 -->
-    <div v-if="showMode=='list'">
+    <div v-if="showMode==='list'">
       <IBeautifulCard title="热门课程推荐">
         <div slot="content" style="padding: 20px;">
           <Row v-for="course in courses">

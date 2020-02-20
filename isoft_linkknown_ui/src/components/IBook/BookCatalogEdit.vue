@@ -11,7 +11,7 @@
                                :footer-hide="true">
             <!-- 表单信息 -->
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-              <FormItem label="目录名称" prop="catalogName">
+              <FormItem label="文章名称" prop="catalogName">
                 <Input v-model.trim="formValidate.catalogName" placeholder="请输入文章名称"></Input>
               </FormItem>
               <FormItem>
