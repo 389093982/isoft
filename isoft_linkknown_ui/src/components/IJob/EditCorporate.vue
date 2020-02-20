@@ -147,7 +147,7 @@
               this.$Message.success("保存成功！");
               this.$router.push({path: '/job/corporate_detail'});
             } else {
-              this.$Message.error(result.insensitiveErrorMsg);
+              this.$Message.error(result.errorMsg);
             }
           } else {
             this.$Message.error("校验失败!");

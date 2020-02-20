@@ -94,7 +94,7 @@
           this.formValidate.linked_refer = result.advertisement.linked_refer;
           this.formValidate.linked_img = result.advertisement.linked_img;
         } else {
-          this.$Message.error(result.insensitiveErrorMsg);
+          this.$Message.error(result.errorMsg);
         }
       }
     }
