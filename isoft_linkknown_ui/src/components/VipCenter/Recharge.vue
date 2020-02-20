@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="demo-split" style="padding-top: 30px;">
+    <div class="demo-split" style="padding-top: 30px;background-color: rgba(0,0,0,0.09)">
         <div style="text-align: center">
           <Icon type="md-ribbon" style="font-size: 40px;color: #ff6900"/>
           <span class="payCenter">支付中心</span>
@@ -29,11 +29,16 @@
           </Row>
           <br>
           <Row>
-            <a style="color: #ff6600">支付金额: </a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>元
+            <a style="color: #ff6600">支付金额: <Icon type="logo-yen" /></a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>
           </Row>
           <br>
+          <Row>
+            <Button type="primary" icon="md-cart" @click="getPayUrl">立&nbsp;&nbsp;即&nbsp;&nbsp;下&nbsp;&nbsp;单</Button>
+          </Row>
         </div>
-        <div class="qrcode">
+        <div v-if="payUrl" class="qrcode">
+          扫码支付金额：<Icon type="logo-yen" />{{realPay}}
+          <br>
           <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
         </div>
       </div>
@@ -52,61 +57,69 @@
     data() {
       return {
         openingTime: ' 1个月 / ¥60 ',
+        tempChoice: '',
+        lastTimeChoice:'',
         payType: '微信支付',
-        payUrl: 'test',
+        realPay:'',
+        payUrl: '',
         imageUrl: require("../../../static/images/vip.png"),
       }
-    },
-    created: async function () {
-      let payMoney = this.openingTime.trim().split('¥')[1];
-      let ProductId = '待定';
-      let ProductDesc = '学习网站会员';
-      let TransAmount = payMoney * 100;
-      let TransCurrCode = 'CNY';
-      let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
-      this.payUrl = orderResult.code_url;
     },
     computed: {
       loginUserName: function () {
         return GetLoginUserName();
       },
     },
-    watch: {
-      openingTime: function () {
-        this.getPayUrl()
-      }
-    },
     methods: {
-      prePage: function () {
-        window.location.href = "/vipcenter/vipIntroduction/";
-      },
       getPayUrl: async function () {
+        this.lastTimeChoice = this.tempChoice;
+        this.tempChoice = this.openingTime;
+        if (this.openingTime===this.lastTimeChoice) {
+          return false;
+        }
         let payMoney = this.openingTime.trim().split('¥')[1];
+        this.realPay = payMoney;
         let ProductId = '待定';
-        let ProductDesc = '学习网站会员';
+        let ProductDesc = 'linkknown.com网站会员';
         let TransAmount = payMoney * 100;
         let TransCurrCode = 'CNY';
-        let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
-        this.payUrl = orderResult.code_url;
+        // let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
+        // this.payUrl = orderResult.code_url;
+        this.payUrl = "test";
       }
     },
   }
 </script>
 
 <style scoped>
-
   .vipDesc {
     float: right;
     width: 70%;
   }
-
   .payCenter {
     color: #ff6900;
     font-size: 25px
   }
-
+  .demo-split {
+    height: 550px;
+    border: 1px solid #dcdee2;
+  }
   .qrcode {
     float: right;
     width: 58%;
+  }
+  #order {
+    width: 30%;
+    height: 40px;
+    margin: 8px 0 0 0 ;
+    margin-bottom: 20px;
+    display: block;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    color: #fff;
+    background: #ec7f17;
+    border: 0;
   }
 </style>
