@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import {validateEmail,validatePatternForString} from "../../../tools"
+  import {validateEmail, validatePatternForString} from "../../../tools"
   import {CreateVerifyCode, ModifyPwd} from "../../../api"
 
   export default {
@@ -141,7 +141,7 @@
             }
           }, 1000);
         } else {
-          this.$Message.error(result.errorMsg);
+          this.$Message.error(result.insensitiveErrorMsg);
         }
       },
       modifyPwd: async function () {
@@ -154,7 +154,7 @@
             _this.$router.push({path: '/sso/login'});
           }, 2000);
         } else {
-          this.$Message.error(result.errorMsg);
+          this.$Message.error(result.insensitiveErrorMsg);
         }
       }
     }

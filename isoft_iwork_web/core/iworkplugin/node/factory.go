@@ -14,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"reflect"
 	"strings"
 	"sync"
@@ -77,7 +78,7 @@ func (this *WorkStepFactory) handleAndPanicInsensitiveError(err interface{}) {
 	}
 	insensitiveErrorMsg := wsError.Error()
 	if !insensitiveErrorFlag {
-		insensitiveErrorMsg = "InternalError"
+		insensitiveErrorMsg = sysconfig.INTERNAL_ERROR_MSG
 	}
 	// 将错误写入 Error 中去
 	this.DataStore.CacheDatas("Error", map[string]interface{}{

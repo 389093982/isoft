@@ -43,7 +43,7 @@
         if (result.status == "SUCCESS") {
           this.resource = result.resource;
         } else {
-          this.$Message.error(result.errorMsg);
+          this.$Message.error(result.insensitiveErrorMsg);
         }
       }
     },
