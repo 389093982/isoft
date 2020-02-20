@@ -44,13 +44,18 @@
       </Row>
     </div>
 
-    <div style="min-height: 150px;background-color: #ffffff;margin: 10px 0 0 0; padding:10px;">
+    <div style="min-height: 450px;background-color: #ffffff;margin: 10px 0 0 0; padding:10px;">
       <Row :gutter="10">
         <Col span="16">
-          <UserAbout :user-name="_userName"/>
+          <div v-if="user"><UserAbout :user-name="_userName"/></div>
+          <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
+            <ForwardLogin></ForwardLogin>
+          </div>
         </Col>
         <Col span="8">
-          <HotUser/>
+          <div>
+            <HotUser/>
+          </div>
         </Col>
       </Row>
     </div>
@@ -63,10 +68,11 @@
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
   import UserAbout from "./UserAbout";
+  import ForwardLogin from "../SSO/ForwardLogin";
 
   export default {
     name: "UserDetail",
-    components: {UserAbout, HotUser, IFileUpload},
+    components: {ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",

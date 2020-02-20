@@ -1,6 +1,6 @@
 <template>
   <span>
-    您还未登录奥,前去 <IBeautifulLink @onclick="cancelUser">登录</IBeautifulLink>
+    您还未登录奥,前去 <IBeautifulLink @onclick="cancelUser" style="color: rgba(44,91,255,0.8)">登录</IBeautifulLink>
   </span>
 </template>
 
