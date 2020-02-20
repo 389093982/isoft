@@ -108,10 +108,6 @@
         }
       },
       handleSubmit: function (name) {
-        if (this.formValidate.book_catalog_id <= 0) {
-          this.$Message.error('请先选择目录再进行编辑！');
-          return;
-        }
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {

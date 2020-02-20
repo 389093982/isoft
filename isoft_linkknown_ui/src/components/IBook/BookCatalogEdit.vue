@@ -49,7 +49,8 @@
         </div>
       </Col>
       <Col span="18">
-        <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogList"/>
+        <BookArticleEdit ref="bookArticleEdit" :success-emit="true"
+                         @successEmitFunc="refreshBookCatalogListWithRefresh"/>
       </Col>
     </Row>
   </div>
@@ -73,7 +74,7 @@
     components: {ISimpleConfirmModal, IBeautifulCard, IBeautifulLink, BookArticleEdit},
     data() {
       return {
-        editIndex: 0,     // 当前编辑的文章索引
+        editIndex: -1,     // 当前编辑的文章索引
         bookCatalogs: [],
         formValidate: {
           id: -1,
@@ -148,6 +149,11 @@
           this.$refs.bookCatalogEditModal.showModal();
         }
 
+      },
+      refreshBookCatalogListWithRefresh: function () {
+        // 刷新右侧文章
+        this.editBookArticle(this.bookCatalogs[this.editIndex].id, this.editIndex);
+        this.refreshBookCatalogList();
       },
       refreshBookCatalogList: async function () {
         const result = await BookCatalogList({book_id: this.$route.query.book_id});
