@@ -1,5 +1,5 @@
 <template>
-  <div class="isoft_bg_white isoft_pd20">
+  <div class="isoft_bg_white isoft_pd20" v-if="advertisement && advertisement_logs">
     <p>
       <span>{{advertisement.advertisement_label}}</span> &nbsp;&nbsp;
       <span>累计访问次数：<span style="color: red;">{{advertisement.access_num}}</span></span> &nbsp;&nbsp;
@@ -30,18 +30,12 @@
     methods: {
       refreshAdvstAccessLog: async function (id) {
         const result = await GetAdvstAccessLog({id: id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.advertisement = result.advertisement;
           this.advertisement_logs = result.advertisement_logs;
         }
       },
-
     },
-    mounted() {
-      if (this.$route.query.id != null) {
-        this.refreshAdvstAccessLog(this.$route.query.id);
-      }
-    }
   }
 </script>
 

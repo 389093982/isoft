@@ -1,19 +1,14 @@
 <template>
   <div>
-    <Row>
-      <Col span="12">
-        <div class="isoft_bg_white isoft_pd10 mr5">
-          <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
-        </div>
-      </Col>
-      <Col span="12">
-        <div class="isoft_bg_white isoft_pd10">
+    <Row style="margin-bottom: 5px;">
+      <Col span="12" style="padding-right: 5px;">
+        <div class="isoft_bg_white isoft_pd10" style="height: 600px;">
           <IBeautifulCard title="我的广告清单">
             <div slot="content" style="padding: 10px;">
               <div v-if="advertisements && advertisements.length > 0">
-                <Carousel>
+                <Carousel @on-change="changeAdvIndex">
                   <CarouselItem v-for="(advertisement,index) in advertisements">
-                    <div style="padding: 40px 30px;">
+                    <div style="padding: 40px 20px 100px 20px;">
                       <p>广告显示名称:
                         <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})">
                           {{advertisement.advertisement_label}}
@@ -31,10 +26,6 @@
                       </p>
                       <p>
                         <a @click="editAdvertisement(advertisement.id)">编辑</a>
-                        <a @click="$router.push({path:'/advertisement/accesslog',query:{id:advertisement.id}})"
-                           style="color: green;">
-                          查看访问记录
-                        </a>
                       </p>
                     </div>
                   </CarouselItem>
@@ -44,7 +35,24 @@
           </IBeautifulCard>
         </div>
       </Col>
+
+      <Col span="12">
+        <div class="isoft_bg_white isoft_pd10 mr5" style="min-height: 444px;">
+          <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
+
+          <div>
+            <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">开通会员可发布 10 条广告
+            </div>
+
+            <div class="isoft_auto_with title">广告访问记录</div>
+            <div style="padding: 10px;border-top: 2px solid #edeff0;">
+              <AccessLog ref="adv_accesslog"/>
+            </div>
+          </div>
+        </div>
+      </Col>
     </Row>
+
   </div>
 </template>
 
@@ -54,23 +62,29 @@
   import EditAdvertisement from "./EditAdvertisement"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import {scrollTop} from "iview/src/utils/assist"
+  import AccessLog from "./AccessLog";
 
   export default {
     name: "Manage",
-    components: {IBeautifulCard, EditAdvertisement},
+    components: {AccessLog, IBeautifulCard, EditAdvertisement},
     data() {
       return {
         advertisements: null,
       }
     },
     methods: {
+      changeAdvIndex: function (oldValue, value) {
+        let index = value;    // 索引
+        this.$refs.adv_accesslog.refreshAdvstAccessLog(this.advertisements[index].id);
+      },
       handleAdvertisementSubmit: function () {
         this.refreshPersonalAdvertisement();
       },
       refreshPersonalAdvertisement: async function () {
         const result = await GetPersonalAdvertisement();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.advertisements = result.advertisements.slice(0, 10);
+          this.changeAdvIndex(null, 0);
         } else {
           this.$Message.error(result.errorMsg);
         }
@@ -93,6 +107,18 @@
 </script>
 
 <style scoped>
+  .title {
+    font-size: 18px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    font-family: "微软雅黑";
+  }
 
-
+  .title::after {
+    content: "";
+    display: block;
+    height: 3px;
+    border-bottom: 3px solid red;
+  }
 </style>
