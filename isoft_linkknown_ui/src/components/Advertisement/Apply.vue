@@ -17,8 +17,12 @@
       <RandomAdmt :show-right-text="false" :advertisement-amount="10"/>
     </div>
 
-    <div class="isoft_bg_white" style="margin: 5px 0 5px 0;padding: 10px 10px 0 10px;">
-      广告费用说明
+    <div class="isoft_bg_white isoft_pd10" style="margin: 5px 0 5px 0;">
+      广告使用说明
+      <p style="color: #8d8d8d;">
+        链知网致力于推动互联网技术分享，整合互联网资源，传播互联网文化，为 IT 人营造一个便捷的学习、办公、创业的环境。新用户注册可免费发布一条时长为 1 个月的广告。
+        开通会员可获得 10 条广告资格，且支持链知网和其它友情应用推广资格。
+      </p>
     </div>
   </div>
 </template>
