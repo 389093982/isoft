@@ -76,7 +76,7 @@
     components: {IFileUpload, IAreaChooser},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=corporate_detail&table_field=corporate_logo",
         salaryRanges: this.GLOBAL.salaryRanges,
         corporateSizes: this.GLOBAL.corporateSizes,
         jobTypes: this.GLOBAL.jobTypes,
