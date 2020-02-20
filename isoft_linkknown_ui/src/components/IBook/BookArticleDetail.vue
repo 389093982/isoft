@@ -16,14 +16,15 @@
       <Col span="18"
            style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
         <div style="border-bottom: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <Row>
+          <Row :gutter="20">
             <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis" v-if="viewIndex > 0">
+              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0">
                 上一篇 {{prevCatalogName}}
               </div>
             </Col>
             <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis" v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
+              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor"
+                   v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
                 下一篇 {{nextCatalogName}}
               </div>
             </Col>
@@ -35,14 +36,15 @@
         </div>
 
         <div style="border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <Row>
+          <Row :gutter="20">
             <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis" v-if="viewIndex > 0">
+              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0">
                 上一篇 {{prevCatalogName}}
               </div>
             </Col>
             <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis" v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
+              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor"
+                   v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
                 下一篇 {{nextCatalogName}}
               </div>
             </Col>
