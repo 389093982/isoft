@@ -1,15 +1,9 @@
 <template>
-  <div class="isoft_bg_white isoft_pd10">
-    <div>
-      <a @click="prePage()" style="color: #ff6600">
-        <Icon type="ios-undo-outline" style="font-size: 40px"/>
-        会员中心</a>
-    </div>
+  <div>
 
-    <div class="demo-split" style="padding-top: 20px;">
-      <div class="demo-split-pane">
-        <div>
-          <img class="vipLogo" src="../../../static/images/vipCenter/vipLogo.png" height="41" width="41"/>
+    <div class="demo-split" style="padding-top: 30px;">
+        <div style="text-align: center">
+          <Icon type="md-ribbon" style="font-size: 40px;color: #ff6900"/>
           <span class="payCenter">支付中心</span>
         </div>
         <div class="vipDesc">
@@ -43,7 +37,7 @@
           <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
         </div>
       </div>
-    </div>
+
   </div>
 </template>
 
@@ -100,10 +94,6 @@
 </script>
 
 <style scoped>
-  .vipLogo {
-    background-position-x: center;
-    background-position-y: center;
-  }
 
   .vipDesc {
     float: right;
@@ -111,8 +101,6 @@
   }
 
   .payCenter {
-    float: right;
-    width: 55%;
     color: #ff6900;
     font-size: 25px
   }

@@ -6,7 +6,7 @@
       </div>
       <div style="font-size: 30px;padding: 10px 54% 30px 46%">
         <Button shape="circle" size="large" @click="toRecharge()" style="color: #ff6600;font-size: 20px;">
-          开通会员
+          <div id="openVip" class="hvr-grow">开通会员</div>
         </Button>
       </div>
     </div>
@@ -77,6 +77,16 @@
   }
 </script>
 <style>
+  #openVip{
+    text-align: center;
+    font-size: 20px;
+    color: #ff6900;
+  }
+  #openVip:hover{
+    text-align: center;
+    font-size: 21px;
+    color: red;
+  }
   .vipCenterUp {
     width: 100%;
     height: 246px;
