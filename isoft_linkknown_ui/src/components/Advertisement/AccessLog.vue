@@ -1,10 +1,8 @@
 <template>
   <div class="isoft_bg_white isoft_pd20" v-if="advertisement && advertisement_logs">
-    <p>
-      <span>{{advertisement.advertisement_label}}</span> &nbsp;&nbsp;
-      <span>累计访问次数：<span style="color: red;">{{advertisement.access_num}}</span></span> &nbsp;&nbsp;
-      <span style="color: green;">说明：统计依据以最近 7 天不重复访问 ip 作为一次计数，只展示最近 50 条访问记录</span>
-    </p>
+    <div>{{advertisement.advertisement_label}}&nbsp;&nbsp;&nbsp;&nbsp;<span>累计访问次数：<span style="color: red;">{{advertisement.access_num}}</span></span>
+    </div> &nbsp;&nbsp;
+    <div style="color: green;">说明：统计依据以最近 7 天不重复访问 ip 作为一次计数，只展示最近 50 条访问记录</div>
 
     <div v-if="advertisement_logs" style="margin-top: 30px;">
       <Row v-for="(advertisement_log,index) in advertisement_logs"
