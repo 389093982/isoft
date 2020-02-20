@@ -70,7 +70,7 @@
         var formdata = new FormData();
         formdata.append('file', $file);
         axios({
-          url: fileUploadUrl,
+          url: fileUploadUrl + "?table_name=book_article&table_field=content",
           method: 'post',
           data: formdata,
           headers: {'Content-Type': 'multipart/form-data'},
