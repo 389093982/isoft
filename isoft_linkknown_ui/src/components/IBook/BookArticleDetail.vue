@@ -16,8 +16,9 @@
       <Col span="18"
            style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
         <div style="text-align: right;border-bottom: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <IBeautifulLink v-if="viewIndex > 0">上一篇</IBeautifulLink>
-          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇</IBeautifulLink>
+          <IBeautifulLink v-if="viewIndex > 0">上一篇 {{prevCatalogName}}</IBeautifulLink>
+          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇 {{nextCatalogName}}
+          </IBeautifulLink>
         </div>
 
         <div style="min-height: 400px;">
@@ -25,8 +26,9 @@
         </div>
 
         <div style="text-align: right;border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <IBeautifulLink v-if="viewIndex > 0">上一篇</IBeautifulLink>
-          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇</IBeautifulLink>
+          <IBeautifulLink v-if="viewIndex > 0">上一篇 {{prevCatalogName}}</IBeautifulLink>
+          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇 {{nextCatalogName}}
+          </IBeautifulLink>
         </div>
 
         <div style="margin-top: 20px;">
@@ -56,11 +58,19 @@
         bookArticle: null,
         bookCatalogs: [],
         viewIndex: 0,
+        viewCatalogName: '',     // 当前阅读的文章标题
+        prevCatalogName: '',     // 上一篇文章标题
+        nextCatalogName: '',     // 下一篇文章标题
       }
     },
     methods: {
       showDetail: async function (book_catalog_id, index) {
+        // 设置当前阅读的索引，上一篇、当前篇、下一篇标题
         this.viewIndex = index;
+        this.viewCatalogName = this.bookCatalogs[index].catalog_name;
+        this.prevCatalogName = index > 0 ? this.bookCatalogs[index - 1].catalog_name : '';
+        this.nextCatalogName = index < this.bookCatalogs.length - 1 ? this.bookCatalogs[index + 1].catalog_name : '';
+
         const result = await ShowBookArticleDetail(book_catalog_id);
         if (result.status == "SUCCESS") {
           if (result.bookArticle != null) {
