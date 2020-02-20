@@ -31,11 +31,14 @@
           </Row>
         </div>
 
-        <div style="min-height: 400px;padding: 20px 0;">
+        <div style="min-height: 400px;padding: 20px 0 60px 0;">
           <IShowMarkdown v-if="bookArticle && bookArticle.content" :content="bookArticle.content"/>
         </div>
 
         <div style="border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
+          <img src="../../../static/images/book/dianzan.gif" style="width: 50px;height: 50px;
+             position: absolute;margin-top: -80px;"/>
+
           <Row :gutter="20">
             <Col span="12">
               <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0">
