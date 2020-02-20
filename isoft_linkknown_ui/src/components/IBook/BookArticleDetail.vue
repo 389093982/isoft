@@ -139,24 +139,18 @@
 
   @keyframes move_dh_1 {
     0% {
-      opacity: 0.5;
-      color: #000000;
       transform: rotateY(0deg)
     }
     25% {
-      color: #6e6e6e;
       transform: rotateY(5deg)
     }
     50% {
-      color: #ababab;
       transform: rotateY(10deg)
     }
     750% {
-      color: #6e6e6e;
       transform: rotateY(5deg)
     }
     100% {
-      color: #000000;
       transform: rotateY(0deg)
     }
   }
