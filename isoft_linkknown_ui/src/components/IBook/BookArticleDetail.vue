@@ -15,20 +15,38 @@
       </Col>
       <Col span="18"
            style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
-        <div style="text-align: right;border-bottom: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <IBeautifulLink v-if="viewIndex > 0">上一篇 {{prevCatalogName}}</IBeautifulLink>
-          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇 {{nextCatalogName}}
-          </IBeautifulLink>
+        <div style="border-bottom: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
+          <Row>
+            <Col span="12">
+              <div class="move_dh isoft_inline_ellipsis" v-if="viewIndex > 0">
+                上一篇 {{prevCatalogName}}
+              </div>
+            </Col>
+            <Col span="12">
+              <div class="move_dh isoft_inline_ellipsis" v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
+                下一篇 {{nextCatalogName}}
+              </div>
+            </Col>
+          </Row>
         </div>
 
-        <div style="min-height: 400px;">
+        <div style="min-height: 400px;padding: 20px 0;">
           <IShowMarkdown v-if="bookArticle && bookArticle.content" :content="bookArticle.content"/>
         </div>
 
-        <div style="text-align: right;border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <IBeautifulLink v-if="viewIndex > 0">上一篇 {{prevCatalogName}}</IBeautifulLink>
-          <IBeautifulLink v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">下一篇 {{nextCatalogName}}
-          </IBeautifulLink>
+        <div style="border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
+          <Row>
+            <Col span="12">
+              <div class="move_dh isoft_inline_ellipsis" v-if="viewIndex > 0">
+                上一篇 {{prevCatalogName}}
+              </div>
+            </Col>
+            <Col span="12">
+              <div class="move_dh isoft_inline_ellipsis" v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
+                下一篇 {{nextCatalogName}}
+              </div>
+            </Col>
+          </Row>
         </div>
 
         <div style="margin-top: 20px;">
@@ -108,5 +126,31 @@
 </script>
 
 <style scoped>
+  .move_dh {
+    animation: move_dh_1 5s infinite;
+  }
 
+  @keyframes move_dh_1 {
+    0% {
+      opacity: 0.5;
+      color: #000000;
+      transform: rotateY(0deg)
+    }
+    25% {
+      color: #6e6e6e;
+      transform: rotateY(5deg)
+    }
+    50% {
+      color: #ababab;
+      transform: rotateY(10deg)
+    }
+    750% {
+      color: #6e6e6e;
+      transform: rotateY(5deg)
+    }
+    100% {
+      color: #000000;
+      transform: rotateY(0deg)
+    }
+  }
 </style>
