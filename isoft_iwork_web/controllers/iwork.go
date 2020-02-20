@@ -14,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/service"
+	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
 	"isoft/isoft_utils/common/stringutil"
 	"path"
@@ -324,7 +325,9 @@ func (this *WorkController) ImportProject() {
 	logs.Info("start ImportProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
-
+	// 刷新内存,同时清理所有的内存 work 流程,第一次访问会再次加载
+	defer iworkcache.DeleteAllWorkCache(-1)
+	defer memory.FlushAll()
 	importProject()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
