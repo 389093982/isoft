@@ -24,25 +24,38 @@
           </div>
         </Col>
         <Col span="6" style="padding-top: 30px;">
-          <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
-          <p style="margin-bottom: 20px;">加入时间：
-            <Time :time="user.created_time" :interval="1"/>
-          </p>
-          <p>
+          <div>
+            <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
+          </div>
+          <div style="margin-bottom: 20px;">
+            加入时间：<Time :time="user.created_time" :interval="1"/>
+          </div>
+          <div>
             个性签名:
-            <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220"
-                      style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
+            <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
             <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
-            <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor"
-                  type="ios-create-outline" :size="20"
-                  @click="editSign"/>
-          </p>
+            <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign"/>
+          </div>
         </Col>
         <Col span="6" style="padding-top: 100px;text-align: right;padding: 30px 200px 0 0 ">
-          <Button @click="$router.push({ path: '/iblog/blog_edit'})" style="border: 1px rgba(255,127,80,0.38) solid">发布博客</Button>
+          <Button @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;border: 1px rgba(255,127,80,0.38) solid" class="hvr-grow">发布博客</Button>
         </Col>
-        <Col span="8" style="padding-top: 100px;text-align: right;">
-          <!--会员中心相关信息-->
+        <Col span="8">
+          <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
+            <p slot="title">
+              <Icon type="md-ribbon" style="font-size: 20px"/>
+              会员权益
+            </p>
+            <a href="#" slot="extra" @click.prevent="changeLimit">
+              <Icon type="ios-loop-strong"></Icon>
+              <span id="openVip" class="hvr-grow" @click="$router.push({path:'/vipcenter/vipIntroduction'})">开通会员</span>
+            </a>
+            <ul style="padding-left: 10px">
+              <li>无限制使用全站资源</li>
+              <li>免费订阅本站优秀资源</li>
+              <li>广告协同：本站和其它周边应用推广广告</li>
+            </ul>
+          </Card>
         </Col>
       </Row>
     </div>
@@ -153,6 +166,16 @@
 </script>
 
 <style scoped>
+  #openVip{
+    text-align: center;
+    font-size: 15px;
+    color: red;
+  }
+  #openVip:hover{
+    text-align: center;
+    font-size: 16px;
+    color: #2c5bff;
+  }
   .focus:focus {
     background-color: #ffffff;
     border-color: #2c5bff;

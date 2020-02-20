@@ -40,7 +40,6 @@ const GoodDetail = () => import("@/components/IGood/GoodDetail");
 const PayConfirm = () => import("@/components/IGood/PayConfirm");
 const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
-const VipInterest = () => import("@/components/VipCenter/VipInterest");
 const Recharge = () => import("@/components/VipCenter/Recharge");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
@@ -214,7 +213,6 @@ const VipCenterReouter = [{
   path: '/vipcenter', component: ILayout,
     children: [
       {path: 'vipIntroduction', component: VipIntroduction},
-      {path: 'vipInterest', component: VipInterest},
       {path: 'recharge', component: Recharge},
     ]
 }];

@@ -37,20 +37,7 @@
               <MenuItem name="7-3" @click.native="cancelUser">退出</MenuItem>
             </MenuGroup>
           </Submenu>
-          <Submenu name="8">
-            <template slot="title">
-              会员中心
-            </template>
-            <MenuGroup title="账号管理">
-              <MenuItem name="8-1">
-                <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipIntroduction'})">开通会员</IBeautifulLink>
-              </MenuItem>
-              <MenuItem name="8-2">
-                <IBeautifulLink @onclick="$router.push({path:'/vipcenter/vipInterest'})">会员权益</IBeautifulLink>
-              </MenuItem>
-            </MenuGroup>
-          </Submenu>
-          <MenuItem name="9">
+          <MenuItem name="8">
             <div class="message">
               <IBeautifulLink>消息
                 <Badge dot style="position: relative;top: -12px;"></Badge>
@@ -60,7 +47,7 @@
               </div>
             </div>
           </MenuItem>
-          <MenuItem name="10" v-if="isAdmin()">
+          <MenuItem name="9" v-if="isAdmin()">
             <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
           </MenuItem>
         </div>
