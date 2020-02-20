@@ -56,7 +56,7 @@
     components: {IFileUpload},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl,
+        fileUploadUrl: fileUploadUrl + "?table_name=good&table_field=good_images",
         formValidate: {
           good_id: -1,
           good_name: '',

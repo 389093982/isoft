@@ -1,16 +1,18 @@
 <template>
   <div>
-    <Alert closable type="error" style="cursor: pointer;color: red;">提示：单击目录可以编辑文章，双击目录可以编辑目录，编辑文章前请选择目录</Alert>
+    <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
+    </Alert>
     <Row :gutter="10">
       <Col span="6">
         <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
-          <Button size="small" @click="editBookCatalog" long>新建目录</Button>
+          <Button size="small" @click="editBookCatalog" long>新建文章</Button>
 
-          <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 目录" :modal-width="600" :footer-hide="true">
+          <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑文章标题" :modal-width="600"
+                               :footer-hide="true">
             <!-- 表单信息 -->
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
               <FormItem label="目录名称" prop="catalogName">
-                <Input v-model.trim="formValidate.catalogName" placeholder="请输入目录名称"></Input>
+                <Input v-model.trim="formValidate.catalogName" placeholder="请输入文章名称"></Input>
               </FormItem>
               <FormItem>
                 <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
@@ -23,27 +25,32 @@
             <div v-if="bookCatalogs && bookCatalogs.length > 0">
               <dl>
                 <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
-                <dd class="isoft_font isoft_inline_ellipsis" style="color: #333333;"
+                <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;"
                     v-for="(bookCatalog, index) in bookCatalogs">
-                  <Icon type="md-close" style="cursor: pointer" @click="deleteBookCatalog(bookCatalog.id)"/>
-                  <Icon type="md-arrow-down" style="cursor: pointer" @click="toggleLocation(index, 'down')"/>
-                  <Icon type="md-arrow-up" style="cursor: pointer" @click="toggleLocation(index, 'up')"/>
-                  <Icon type="ios-brush-outline" style="cursor: pointer" @click="editBookCatalog(bookCatalog.id)"/>
-                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)">
-                    {{bookCatalog.catalog_name}}
-                    <input style="width: 300px;" :value="bookCatalog.catalog_name"/>
-                </span>
+                  <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id, index)"
+                        style="padding-left: 10px;">
+                    <span style="color: rgba(115,179,137,0.91);">{{index + 1}} -</span>
+                    <span :style="{color: editIndex === index ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
+                  </span>
+                  <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
+                        padding: 3px 10px;background-color: #eee;border-radius: 5px;">
+                    <Icon type="md-close" style="cursor: pointer" @click="deleteBookCatalog(bookCatalog.id)"/>
+                    <Icon type="md-arrow-down" style="cursor: pointer" @click="toggleLocation(index, 'down')"/>
+                    <Icon type="md-arrow-up" style="cursor: pointer" @click="toggleLocation(index, 'up')"/>
+                    <Icon type="ios-brush-outline" style="cursor: pointer" @click="editBookCatalog(bookCatalog.id)"/>
+                  </span>
                 </dd>
               </dl>
             </div>
             <div v-else>
-              暂未创建目录,点击上面按钮创建
+              暂未创建文章,点击上面按钮创建
             </div>
           </div>
         </div>
       </Col>
       <Col span="18">
-        <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogList"/>
+        <BookArticleEdit ref="bookArticleEdit" :success-emit="true"
+                         @successEmitFunc="refreshBookCatalogListWithRefresh"/>
       </Col>
     </Row>
   </div>
@@ -67,6 +74,7 @@
     components: {ISimpleConfirmModal, IBeautifulCard, IBeautifulLink, BookArticleEdit},
     data() {
       return {
+        editIndex: -1,     // 当前编辑的文章索引
         bookCatalogs: [],
         formValidate: {
           id: -1,
@@ -74,20 +82,20 @@
         },
         ruleValidate: {
           catalogName: [
-            {required: true, message: '目录名称不能为空!', trigger: 'blur'},
+            {required: true, message: '文章名称不能为空!', trigger: 'blur'},
           ],
         },
       }
     },
     methods: {
       toggleLocation: async function (index, operate) {
-        if ((index == 0 && operate == "up") || (index == this.bookCatalogs.length - 1 && operate == "down")) {
+        if ((index === 0 && operate === "up") || (index === this.bookCatalogs.length - 1 && operate === "down")) {
           return;
         }
         let catalog_id1 = this.bookCatalogs[index].id;
-        let catalog_id2 = operate == "up" ? this.bookCatalogs[index - 1].id : this.bookCatalogs[index + 1].id;
+        let catalog_id2 = operate === "up" ? this.bookCatalogs[index - 1].id : this.bookCatalogs[index + 1].id;
         const result = await ChangeCatalogOrder({catalog_id1: catalog_id1, catalog_id2: catalog_id2});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.refreshBookCatalogList();
           this.$Message.success("移动成功!");
         } else {
@@ -96,7 +104,7 @@
       },
       deleteBookCatalog: async function (catalog_id) {
         const result = await DeleteBookCatalog({catalog_id: catalog_id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.refreshBookCatalogList();
           this.$Message.success("删除成功!");
         } else {
@@ -111,7 +119,7 @@
               id: this.formValidate.id,
               catalog_name: this.formValidate.catalogName,
             });
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               this.$Message.success("编辑成功!");
               this.$refs.bookCatalogEditModal.hideModal();
               this.refreshBookCatalogList();
@@ -125,7 +133,8 @@
       handleReset(name) {
         this.$refs[name].resetFields();
       },
-      editBookArticle: function (bookCatalogId) {
+      editBookArticle: function (bookCatalogId, index) {
+        this.editIndex = index;
         this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
       },
       editBookCatalog: async function (bookCatalogId) {
@@ -141,9 +150,14 @@
         }
 
       },
+      refreshBookCatalogListWithRefresh: function () {
+        // 刷新右侧文章
+        this.editBookArticle(this.bookCatalogs[this.editIndex].id, this.editIndex);
+        this.refreshBookCatalogList();
+      },
       refreshBookCatalogList: async function () {
         const result = await BookCatalogList({book_id: this.$route.query.book_id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.bookCatalogs = result.bookCatalogs;
         }
       },
@@ -160,5 +174,11 @@
 </script>
 
 <style scoped>
+  .bookCatalogs .bookCatalogIcon {
+    display: none;
+  }
 
+  .bookCatalogs:hover .bookCatalogIcon {
+    display: inline-block;
+  }
 </style>

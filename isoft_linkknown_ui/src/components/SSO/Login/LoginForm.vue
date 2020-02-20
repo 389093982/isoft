@@ -91,7 +91,7 @@
           }
         } else {
           this.showError = true;
-          this.errorMsg = result.insensitiveErrorMsg;
+          this.errorMsg = result.errorMsg;
         }
       },
 

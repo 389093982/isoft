@@ -141,7 +141,7 @@
             }
           }, 1000);
         } else {
-          this.$Message.error(result.insensitiveErrorMsg);
+          this.$Message.error(result.errorMsg);
         }
       },
       modifyPwd: async function () {
@@ -154,7 +154,7 @@
             _this.$router.push({path: '/sso/login'});
           }, 2000);
         } else {
-          this.$Message.error(result.insensitiveErrorMsg);
+          this.$Message.error(result.errorMsg);
         }
       }
     }

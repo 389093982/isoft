@@ -69,7 +69,7 @@
         if (result.status == "SUCCESS") {
           this.advertisements = result.advertisements;
         } else {
-          this.$Message.error(result.insensitiveErrorMsg);
+          this.$Message.error(result.errorMsg);
         }
       },
       editAdvertisement: function (id) {

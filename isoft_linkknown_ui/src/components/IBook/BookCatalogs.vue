@@ -1,15 +1,13 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd10">
-      <div>
-        <a>首页</a>
-        <a>图书</a>
-      </div>
       <Row v-if="bookInfo" style="min-height: 400px;">
         <Col span="4" style="text-align: center;">
           <img :src="bookInfo.book_img" style="cursor: pointer;" height="160px" width="140px" @error="defImg()"/>
 
-          <p class="isoft_font">推荐图书</p>
+          <div class="isoft_font isoft_font12"
+               style="background-color: #eee;padding: 2px 10px;border-radius: 3px;display: inline-block;">推荐图书
+          </div>
         </Col>
         <Col span="20">
           <div style="border-bottom: 1px solid #d7dde4;padding: 10px 0;">
@@ -43,7 +41,7 @@
             </div>
 
             <div style="padding: 10px 0;">
-              <h3 style="margin:10px 0;">目录</h3>
+              <h3 style="margin:10px 0;">文章列表</h3>
               <p v-for="(bookCatalog, index) in bookCatalogs" style="color: #333333;font-size: 15px;">
                 <span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;{{bookCatalog.catalog_name}}
               </p>
