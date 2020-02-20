@@ -1,18 +1,28 @@
 <template>
   <div>
-    <Spin fix size="large" v-if="isLoading">
-      <div class="isoft_loading"></div>
-    </Spin>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-      <FormItem prop="content">
-        <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
-                      :editable="formValidate.book_catalog_id > 0"
-                      :toolbars="toolbars" :ishljs="true" style="z-index: 1;min-height: 500px;"/>
-      </FormItem>
-      <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-      </FormItem>
-    </Form>
+    <div v-if="this.formValidate.book_catalog_id > 0">
+      <Spin fix size="large" v-if="isLoading">
+        <div class="isoft_loading"></div>
+      </Spin>
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+        <FormItem prop="content">
+          <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
+                        :editable="formValidate.book_catalog_id > 0"
+                        :toolbars="toolbars" :ishljs="true" style="z-index: 1;min-height: 500px;"/>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+        </FormItem>
+      </Form>
+    </div>
+
+    <div v-else class="isoft_bg_white" style="min-height: 500px;text-align: center;padding: 50px 0;cursor: pointer;">
+      <span class="book_icon">
+        <img src="../../../static/images/book/book.gif" width="150px" height="150px"/>
+        <p class="book_icon_text1">多读书使人聪明</p>
+        <p class="book_icon_text2">选择左侧文章进行编辑</p>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -124,6 +134,15 @@
 </script>
 
 <style scoped>
+  .book_icon .book_icon_text1 {
+    display: none;
+  }
 
+  .book_icon:hover .book_icon_text1 {
+    display: block;
+  }
 
+  .book_icon:hover .book_icon_text2 {
+    display: none;
+  }
 </style>
