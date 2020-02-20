@@ -31,17 +31,24 @@
                   </CarouselItem>
                 </Carousel>
               </div>
+
+              <div v-else style="text-align: center;margin-top: 50px;">您还没有发布过广告,赶紧发布一条吧</div>
             </div>
           </IBeautifulCard>
         </div>
       </Col>
 
       <Col span="12">
-        <div class="isoft_bg_white isoft_pd10 mr5" style="min-height: 444px;">
+        <div class="isoft_bg_white isoft_pd10 mr5" style="min-height: 600px;">
+          <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
+            新用户可免费发布一条时长 30 天的广告，开通会员可发布 10 条广告
+          </div>
+
           <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
 
           <div>
-            <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">开通会员可发布 10 条广告
+            <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
+              一站式监控广告访问效果
             </div>
 
             <div class="isoft_auto_with title">广告访问记录</div>
@@ -74,8 +81,10 @@
     },
     methods: {
       changeAdvIndex: function (oldValue, value) {
-        let index = value;    // 索引
-        this.$refs.adv_accesslog.refreshAdvstAccessLog(this.advertisements[index].id);
+        if (this.advertisements && this.advertisements.length > 0) {
+          let index = value;    // 索引
+          this.$refs.adv_accesslog.refreshAdvstAccessLog(this.advertisements[index].id);
+        }
       },
       handleAdvertisementSubmit: function () {
         this.refreshPersonalAdvertisement();
