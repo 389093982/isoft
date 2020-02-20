@@ -38,6 +38,8 @@
         <div style="border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
           <img src="../../../static/images/book/dianzan.gif" style="width: 50px;height: 50px;
              position: absolute;margin-top: -80px;"/>
+          <img src="../../../static/images/book/learning.gif" style="width: 100px;height: 120px;
+             position: absolute;margin-top: -80px;right: 30px;"/>
 
           <Row :gutter="20">
             <Col span="12">
