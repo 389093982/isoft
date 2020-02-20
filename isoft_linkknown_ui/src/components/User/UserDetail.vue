@@ -5,7 +5,7 @@
           background-size: cover;background-position: 50%;background-repeat: no-repeat;"></div>
 
       <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
-        <Col span="6" style="top:-100px;">
+        <Col span="4" style="top:-100px;">
           <div class="user_icon">
             <img class="isoft_hover_red"
                  style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
@@ -23,13 +23,13 @@
             </div>
           </div>
         </Col>
-        <Col span="12" style="padding-top: 30px;">
+        <Col span="6" style="padding-top: 30px;">
+          <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
           <p style="margin-bottom: 20px;">加入时间：
             <Time :time="user.created_time" :interval="1"/>
           </p>
-
-          <h3>{{user.nick_name}} / {{user.user_name}}</h3>
           <p>
+            个性签名:
             <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220"
                       style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
             <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
@@ -38,8 +38,11 @@
                   @click="editSign"/>
           </p>
         </Col>
-        <Col span="6" style="padding-top: 100px;text-align: right;">
-          <Button @click="$router.push({ path: '/iblog/blog_edit'})">发&nbsp;&nbsp;&nbsp;&nbsp;帖</Button>
+        <Col span="6" style="padding-top: 100px;text-align: right;padding: 30px 200px 0 0 ">
+          <Button @click="$router.push({ path: '/iblog/blog_edit'})" style="border: 1px rgba(255,127,80,0.38) solid">发布博客</Button>
+        </Col>
+        <Col span="8" style="padding-top: 100px;text-align: right;">
+          <!--会员中心相关信息-->
         </Col>
       </Row>
     </div>
