@@ -72,7 +72,7 @@
   import {BookCatalogList} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {RenderNickName, renderUserInfoByName} from "../../tools"
+  import {RenderNickName, RenderUserInfoByName} from "../../tools"
 
   export default {
     name: "BookCatalogs",
@@ -94,7 +94,7 @@
       refreshBookCatalogList: async function (book_id) {
         const result = await BookCatalogList({book_id: book_id});
         if (result.status == "SUCCESS") {
-          this.userInfos = await renderUserInfoByName(result.bookInfo.created_by);
+          this.userInfos = await RenderUserInfoByName(result.bookInfo.created_by);
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
         }

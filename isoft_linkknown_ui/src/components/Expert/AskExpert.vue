@@ -65,7 +65,7 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, renderUserInfoByNames} from "../../tools";
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, RenderUserInfoByNames} from "../../tools";
   import MoveLine from "../Common/decorate/MoveLine";
 
   export default {
@@ -134,7 +134,7 @@
           search_user_name: this.search_user_name
         });
         if (result.status == "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.asks, 'user_name');
+          this.userInfos = await RenderUserInfoByNames(result.asks, 'user_name');
           this.asks = result.asks;
           this.total = result.paginator.totalcount;
         }

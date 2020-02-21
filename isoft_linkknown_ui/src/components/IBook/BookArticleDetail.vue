@@ -1,34 +1,27 @@
 <template>
   <div>
     <Row>
-      <Col span="6"
-           style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
-        <div>
+      <Col span="6" style="padding-right: 5px;">
+        <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 600px;">
           <Button @click="$router.push({path:'/ibook/book_list'})">全部书单</Button>
-          <Scroll height="430" style="margin-top: 5px;">
-            <div v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
-              <Icon type="ios-paper-outline"/>
-              <span @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
-            </div>
-          </Scroll>
+          <div v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
+            <Icon type="ios-paper-outline"/>
+            <span @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
+          </div>
         </div>
       </Col>
-      <Col span="18"
-           style="background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;padding: 20px;min-height: 500px;">
-        <div style="border-bottom: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
-          <Row :gutter="20">
-            <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0">
-                上一篇 {{prevCatalogName}}
-              </div>
-            </Col>
-            <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor"
-                   v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
-                下一篇 {{nextCatalogName}}
-              </div>
-            </Col>
-          </Row>
+      <Col span="18" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
+        <div style="height: 125px;border-bottom: 1px solid #eee;">
+          <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;
+            color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
+          <span style="background-color: rgb(249, 236, 236);color: rgb(202, 12, 22);padding: 3px 5px;">原创</span>
+          <a class="isoft_mr10" v-if="created_by">
+            <span v-if="renderNickName(created_by)">{{renderNickName(created_by)}}</span>
+            <span v-else>{{created_by}}</span>
+          </a>
+          <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于{{last_updated_time}}</span>
+          <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数 1000</span>
+          <a class="isoft_mr10">收藏</a>
         </div>
 
         <div style="min-height: 400px;padding: 20px 0 60px 0;">
@@ -73,6 +66,7 @@
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import RandomAdmt from "../Advertisement/RandomAdmt";
+  import {RenderNickName, RenderUserInfoByName} from "../../tools"
 
   export default {
     name: "BookArticleDetail",
@@ -86,20 +80,29 @@
         viewCatalogName: '',     // 当前阅读的文章标题
         prevCatalogName: '',     // 上一篇文章标题
         nextCatalogName: '',     // 下一篇文章标题
+        created_by: '',
+        last_updated_time: null,
+        userInfos: [],
       }
     },
     methods: {
+      renderNickName: function (user_name) {
+        return RenderNickName(this.userInfos, user_name);
+      },
       showDetail: async function (book_catalog_id, index) {
         // 设置当前阅读的索引，上一篇、当前篇、下一篇标题
         this.viewIndex = index;
         this.viewCatalogName = this.bookCatalogs[index].catalog_name;
         this.prevCatalogName = index > 0 ? this.bookCatalogs[index - 1].catalog_name : '';
         this.nextCatalogName = index < this.bookCatalogs.length - 1 ? this.bookCatalogs[index + 1].catalog_name : '';
-
         const result = await ShowBookArticleDetail(book_catalog_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           if (result.bookArticle != null) {
             this.bookArticle = result.bookArticle;
+
+            this.created_by = this.bookArticle.last_updated_by;
+            this.last_updated_time = this.bookArticle.last_updated_time;
+            this.userInfos = await RenderUserInfoByName(this.created_by);
           }
         } else {
           this.$Message.error("加载失败!");
@@ -107,7 +110,7 @@
       },
       refreshBookInfo: async function (book_id) {
         const result = await BookArticleList(book_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.bookArticles = result.books;
           if (this.bookArticles.length > 0) {
             this.showDetail(this.bookArticles[0]);
@@ -116,7 +119,7 @@
       },
       refreshBookCatalogList: async function (book_id) {
         const result = await BookCatalogList({book_id: book_id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.bookCatalogs = result.bookCatalogs;
           if (this.bookCatalogs && this.bookCatalogs.length > 0) {
             this.showDetail(this.bookCatalogs[0].id, 0); // 默认显示第一条
@@ -142,13 +145,13 @@
       transform: rotateY(0deg)
     }
     25% {
-      transform: rotateY(5deg)
-    }
-    50% {
       transform: rotateY(10deg)
     }
-    750% {
-      transform: rotateY(5deg)
+    50% {
+      transform: rotateY(20deg)
+    }
+    75% {
+      transform: rotateY(10deg)
     }
     100% {
       transform: rotateY(0deg)

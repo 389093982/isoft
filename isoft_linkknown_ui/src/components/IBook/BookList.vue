@@ -113,7 +113,7 @@
     CheckHasLoginConfirmDialog2,
     GetLoginUserName,
     RenderNickName,
-    renderUserInfoByNames
+    RenderUserInfoByNames
   } from "../../tools";
   import BookInfoEdit from "./BookInfoEdit";
 
@@ -201,7 +201,7 @@
           current_page: this.current_page,
         });
         if (result.status === "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.books, 'book_author');
+          this.userInfos = await RenderUserInfoByNames(result.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
 

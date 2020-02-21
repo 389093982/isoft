@@ -129,7 +129,7 @@
     GetLoginUserName,
     RenderNickName,
     RenderUserIcon,
-    renderUserInfoByNames
+    RenderUserInfoByNames
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
 
@@ -205,7 +205,7 @@
           search_user_name: this.search_user_name,
         });
         if (result.status === "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.blogs, 'author');
+          this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
         }
