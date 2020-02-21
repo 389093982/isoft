@@ -165,12 +165,6 @@
           this.$refs.md.$img2Url(pos, result.data.fileServerPath);
         })
       },
-      // createEmptyArticle:async function(book_id){
-      //   const result = await BlogEdit(-1, book_id, '新建文章', '', '', '', '','');
-      //   if(result.status == "SUCCESS"){
-      //       this.$emit("successEmitFunc");
-      //   }
-      // },
       handleDelete: async function (name) {
         if (this.formValidate.article_id > 0) {
           const result = await ArticleDelete(this.formValidate.article_id);

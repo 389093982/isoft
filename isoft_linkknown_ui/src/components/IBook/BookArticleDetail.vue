@@ -20,11 +20,11 @@
             <span v-else>{{created_by}}</span>
           </a>
           <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于{{last_updated_time}}</span>
-          <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数 1000</span>
+          <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数 {{views}}</span>
           <a class="isoft_mr10">收藏</a>
         </div>
 
-        <div style="min-height: 400px;padding: 20px 0 60px 0;">
+        <div style="min-height: 400px;padding: 15px 5px 60px 5px;">
           <IShowMarkdown v-if="bookArticle && bookArticle.content" :content="bookArticle.content"/>
         </div>
 
@@ -76,13 +76,14 @@
         bookArticles: [],
         bookArticle: null,
         bookCatalogs: [],
-        viewIndex: 0,
+        viewIndex: -1,
         viewCatalogName: '',     // 当前阅读的文章标题
         prevCatalogName: '',     // 上一篇文章标题
         nextCatalogName: '',     // 下一篇文章标题
         created_by: '',
         last_updated_time: null,
         userInfos: [],
+        views: 0,
       }
     },
     methods: {
@@ -90,6 +91,9 @@
         return RenderNickName(this.userInfos, user_name);
       },
       showDetail: async function (book_catalog_id, index) {
+        if (this.viewIndex === index) {   // 点击的是同一篇文章,不重复加载
+          return;
+        }
         // 设置当前阅读的索引，上一篇、当前篇、下一篇标题
         this.viewIndex = index;
         this.viewCatalogName = this.bookCatalogs[index].catalog_name;
@@ -102,6 +106,7 @@
 
             this.created_by = this.bookArticle.last_updated_by;
             this.last_updated_time = this.bookArticle.last_updated_time;
+            this.views = this.bookArticle.views;
             this.userInfos = await RenderUserInfoByName(this.created_by);
           }
         } else {
