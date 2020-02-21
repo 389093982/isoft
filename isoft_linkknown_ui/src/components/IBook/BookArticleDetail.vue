@@ -92,7 +92,6 @@
         userInfos: [],
         views: 0,
         readToEnd: false,
-        continue_pattern: true,   // 连读模式
       }
     },
     methods: {
@@ -160,11 +159,28 @@
         // 最后一篇文章
         if (this.viewIndex === this.bookCatalogs.length - 1) {
           this.readToEnd = this.isMoveToArticleEnd(e);      // 最后一篇文章滚动到底部
-        } else {
-          if (this.continue_pattern && this.isMoveToArticleEnd(e)) {
-            const sTop = document.documentElement.scrollTop || document.body.scrollTop;
-            scrollTop(window, sTop, 50, 1000);
-            this.showDetail(this.bookCatalogs[this.viewIndex + 1].id, this.viewIndex + 1);
+        }
+      },
+      readPrefixOrNextArticle: function (index) {
+        if (index < 0 || index >= this.bookCatalogs.length) {
+          return;
+        }
+        const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+        // 滚动到顶部 50px
+        scrollTop(window, sTop, 50, 1000);
+        this.showDetail(this.bookCatalogs[index].id, index);
+      },
+      registOnKeyDown: function () {
+        var _this = this;
+        //当前页面监视键盘输入
+        document.onkeydown = function (e) {
+          //事件对象兼容
+          let e1 = e || event || window.event || arguments.callee.caller.arguments[0];
+          //键盘按键判断:左箭头-37;上箭头-38；右箭头-39;下箭头-40
+          if (e1 && e1.keyCode === 37) {
+            _this.readPrefixOrNextArticle(_this.viewIndex - 1);
+          } else if (e1 && e1.keyCode === 39) {
+            _this.readPrefixOrNextArticle(_this.viewIndex + 1);
           }
         }
       }
@@ -175,6 +191,7 @@
       }
       // 绑定页面的滚动事件
       window.addEventListener('scroll', this.scrollHandle);
+      this.registOnKeyDown();
     },
   }
 </script>
