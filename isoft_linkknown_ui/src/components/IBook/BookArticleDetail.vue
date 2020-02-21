@@ -73,6 +73,7 @@
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {RenderNickName, RenderUserInfoByName} from "../../tools"
+  import {scrollTop} from "iview/src/utils/assist"
 
   export default {
     name: "BookArticleDetail",
@@ -91,6 +92,7 @@
         userInfos: [],
         views: 0,
         readToEnd: false,
+        continue_pattern: true,   // 连读模式
       }
     },
     methods: {
@@ -138,23 +140,31 @@
           }
         }
       },
+      isMoveToArticleEnd: function (e) {
+        // 网页可见区域高: document.body.clientHeight
+        // 网页正文全文高: document.body.scrollHeight
+        // 网页可见区域高(包括边线的高): document.body.offsetHeight
+        // 网页被卷去的高: document.body.scrollTop
+        // 屏幕分辨率高: window.screen.height
+        let scrollTop = e.srcElement.scrollingElement.scrollTop;    // 获取页面滚动高度
+        let clientHeight = e.srcElement.scrollingElement.clientHeight;
+        let scrollHeight = this.$refs.scrollArticleArea.scrollHeight;
+        let height = 250; //根据项目实际定义
+        // 网页被卷去的高 + 网页可见区域高 >= 文章高度 + 误差(文章距顶部高度)
+        return scrollTop + clientHeight >= scrollHeight + height;
+      },
       scrollHandle: function (e) {
-        // 最后一篇文章滚动到底部
-        if (this.viewIndex >= 0 && this.viewIndex === this.bookCatalogs.length - 1) {
-          // 网页可见区域高: document.body.clientHeight
-          // 网页正文全文高: document.body.scrollHeight
-          // 网页可见区域高(包括边线的高): document.body.offsetHeight
-          // 网页被卷去的高: document.body.scrollTop
-          // 屏幕分辨率高: window.screen.height
-          let scrollTop = e.srcElement.scrollingElement.scrollTop;    // 获取页面滚动高度
-          let clientHeight = e.srcElement.scrollingElement.clientHeight;
-          let scrollHeight = this.$refs.scrollArticleArea.scrollHeight;
-          let height = 250; //根据项目实际定义
-          // 网页被卷去的高 + 网页可见区域高 >= 文章高度 + 误差(文章距顶部高度)
-          if (scrollTop + clientHeight >= scrollHeight + height) {
-            this.readToEnd = true;
-          } else {
-            this.readToEnd = false;
+        if (this.viewIndex < 0) {
+          return;
+        }
+        // 最后一篇文章
+        if (this.viewIndex === this.bookCatalogs.length - 1) {
+          this.readToEnd = this.isMoveToArticleEnd(e);      // 最后一篇文章滚动到底部
+        } else {
+          if (this.continue_pattern && this.isMoveToArticleEnd(e)) {
+            const sTop = document.documentElement.scrollTop || document.body.scrollTop;
+            scrollTop(window, sTop, 50, 1000);
+            this.showDetail(this.bookCatalogs[this.viewIndex + 1].id, this.viewIndex + 1);
           }
         }
       }
