@@ -24,7 +24,7 @@
           <a class="isoft_mr10">收藏</a>
         </div>
 
-        <div style="min-height: 400px;padding: 15px 5px 60px 5px;">
+        <div ref="scrollArticleArea" style="min-height: 400px;padding: 15px 5px 60px 5px;">
           <IShowMarkdown v-if="bookArticle && bookArticle.content" :content="bookArticle.content"/>
         </div>
 
@@ -33,6 +33,10 @@
              position: absolute;margin-top: -80px;"/>
           <img src="../../../static/images/book/learning.gif" style="width: 100px;height: 120px;
              position: absolute;margin-top: -80px;right: 30px;"/>
+
+          <div v-if="readToEnd" style="background-color: red;text-align: center;padding: 5px 10px;
+            position: fixed;bottom: 10px;">已到底部了
+          </div>
 
           <Row :gutter="20">
             <Col span="12">
@@ -84,6 +88,7 @@
         last_updated_time: null,
         userInfos: [],
         views: 0,
+        readToEnd: false,
       }
     },
     methods: {
@@ -131,11 +136,33 @@
           }
         }
       },
+      scrollHandle: function (e) {
+        // 最后一篇文章滚动到底部
+        if (this.viewIndex >= 0 && this.viewIndex === this.bookCatalogs.length - 1) {
+          // 网页可见区域高: document.body.clientHeight
+          // 网页正文全文高: document.body.scrollHeight
+          // 网页可见区域高(包括边线的高): document.body.offsetHeight
+          // 网页被卷去的高: document.body.scrollTop
+          // 屏幕分辨率高: window.screen.height
+          let scrollTop = e.srcElement.scrollingElement.scrollTop;    // 获取页面滚动高度
+          let clientHeight = e.srcElement.scrollingElement.clientHeight;
+          let scrollHeight = this.$refs.scrollArticleArea.scrollHeight;
+          let height = 250; //根据项目实际定义
+          // 网页被卷去的高 + 网页可见区域高 >= 文章高度 + 误差(文章距顶部高度)
+          if (scrollTop + clientHeight >= scrollHeight + height) {
+            this.readToEnd = true;
+          } else {
+            this.readToEnd = false;
+          }
+        }
+      }
     },
     mounted() {
-      if (this.$route.query.book_id != undefined && this.$route.query.book_id != null) {
+      if (this.$route.query.book_id != null) {
         this.refreshBookCatalogList(this.$route.query.book_id);
       }
+      // 绑定页面的滚动事件
+      window.addEventListener('scroll', this.scrollHandle);
     },
   }
 </script>
