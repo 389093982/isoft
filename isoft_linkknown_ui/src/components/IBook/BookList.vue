@@ -57,8 +57,8 @@
                                :action="fileUploadUrl" uploadLabel="换张图片"/>
                   <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10" @onclick="$router.push({path:'/ibook/book_edit',
-                                 query:{book_id:book.id,book_name:book.book_name}})">编辑文章
+                  <IBeautifulLink class="isoft_mr10"
+                                  @onclick="$router.push({path:'/ibook/book_catalogs',query:{book_id:book.id}})">编辑文章
                   </IBeautifulLink>
                 </div>
 

@@ -100,10 +100,8 @@ export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservi
 export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 
 // 切换收藏点赞
-export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite2", {
-  favorite_id,
-  favorite_type
-}, 'GET');
+export const ToggleFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite", params, 'GET');
+export const IsFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/IsFavorite", params, 'GET');
 
 // 添加评论
 export const AddComment = (parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) =>

@@ -31,9 +31,21 @@
           </div>
 
           <div style="padding: 10px 0;">
-            <Button size="small" style="float: right;"
-                    @click="$router.push({path:'/ibook/book_detail', query:{book_id: $route.query.book_id}})">在线阅读
-            </Button>
+            <div style="text-align: right;">
+              <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
+              <Button v-if="!isCollected"
+                      @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')">收藏</Button>
+              <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')">已收藏</Button>
+
+              </span>
+
+              <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/book_edit',
+                query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑
+              </Button>
+              <Button @click="$router.push({path:'/ibook/book_detail',
+                query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读
+              </Button>
+            </div>
 
             <div style="border-bottom: 1px solid #d7dde4;padding-bottom: 10px;">
               <h3 style="margin:10px 0;">简介</h3>
@@ -69,10 +81,10 @@
 </template>
 
 <script>
-  import {BookCatalogList} from "../../api"
+  import {BookCatalogList, IsFavorite, ToggleFavorite} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
   import RandomAdmt from "../Advertisement/RandomAdmt";
-  import {RenderNickName, RenderUserInfoByName} from "../../tools"
+  import {checkEmpty, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
 
   export default {
     name: "BookCatalogs",
@@ -83,9 +95,29 @@
         bookCatalogs: [],
         defaultImg: require('../../assets/default.png'),
         userInfos: null,
+        isCollected: false,  // 是否收藏
       }
     },
     methods: {
+      isFavorite: async function (favorite_id, favorite_type) {
+        const result = await IsFavorite({favorite_id: favorite_id, favorite_type: favorite_type});
+        if (result.status === "SUCCESS") {
+          this.isCollected = result.isFavorite;
+        }
+      },
+      toggle_favorite: async function (favorite_id, favorite_type, message) {
+        const result = await ToggleFavorite({favorite_id, favorite_type});
+        if (result.status === "SUCCESS") {
+          this.$Message.success(message + "成功!");
+          this.isFavorite(favorite_id, favorite_type);
+        }
+      },
+      isDifferentLoginUserName: function (user_name) {
+        return !checkEmpty(GetLoginUserName()) && user_name != GetLoginUserName();
+      },
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
       defImg() {
         let img = event.srcElement;
         img.src = this.defaultImg;
@@ -93,7 +125,7 @@
       },
       refreshBookCatalogList: async function (book_id) {
         const result = await BookCatalogList({book_id: book_id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.userInfos = await RenderUserInfoByName(result.bookInfo.created_by);
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
@@ -104,7 +136,7 @@
       }
     },
     mounted() {
-      if (this.$route.query.book_id != undefined && this.$route.query.book_id != null) {
+      if (this.$route.query.book_id != null) {
         this.refreshBookCatalogList(this.$route.query.book_id);
       }
     }

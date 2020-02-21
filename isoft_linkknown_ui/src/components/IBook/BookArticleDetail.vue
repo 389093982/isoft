@@ -9,10 +9,13 @@
       <Col span="6" style="padding-right: 5px;">
         <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 600px;">
           <Button @click="$router.push({path:'/ibook/book_list'})">全部书单</Button>
-          <div v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
-            <Icon type="ios-paper-outline"/>
-            <span @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
-          </div>
+          <dl>
+            <dd><h3>{{$route.query.book_name}}</h3></dd>
+            <dt v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
+              &nbsp;&nbsp;<span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;<span
+              @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
+            </dt>
+          </dl>
         </div>
       </Col>
       <Col span="18" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
@@ -27,7 +30,6 @@
           </a>
           <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于{{last_updated_time}}</span>
           <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数 {{views}}</span>
-          <a class="isoft_mr10">收藏</a>
         </div>
 
         <div ref="scrollArticleArea" style="min-height: 400px;padding: 15px 5px 60px 5px;">
