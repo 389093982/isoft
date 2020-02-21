@@ -34,8 +34,10 @@
           <img src="../../../static/images/book/learning.gif" style="width: 100px;height: 120px;
              position: absolute;margin-top: -80px;right: 30px;"/>
 
-          <div v-if="readToEnd" style="background-color: red;text-align: center;padding: 5px 10px;
-            position: fixed;bottom: 10px;">已到底部了
+          <div v-if="viewIndex >= 0 && viewIndex === bookCatalogs.length - 1 && readToEnd"
+               style="background-color: #a0a0a0;text-align: center;position: fixed;width: 400px;bottom: 100px;
+               right:200px;z-index: 999;cursor: pointer;height: 40px;line-height: 40px;font-size: 20px;color: white;">
+            您太棒了，一口气读完全部内容
           </div>
 
           <Row :gutter="20">
