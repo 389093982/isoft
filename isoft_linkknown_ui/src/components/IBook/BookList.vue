@@ -25,7 +25,8 @@
             </Col>
           </Row>
 
-          <div style="text-align: center;background-color: #eee;padding: 5px 10px;">图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
+          <div style="text-align: center;background-color: #eee;padding: 5px 10px;">
+            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
           </div>
 
           <div style="min-height: 450px;">

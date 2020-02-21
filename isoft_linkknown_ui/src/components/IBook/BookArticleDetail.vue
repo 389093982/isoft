@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div v-if="showTip" style="text-align: center;background-color: #eee;padding: 5px 10px;">
+      温馨提示：点击键盘左右箭头可切换上一篇和下一篇文章
+      <Icon type="md-close" style="float: right;margin: 5px;cursor: pointer;" @click="showTip = false"/>
+    </div>
+
     <Row>
       <Col span="6" style="padding-right: 5px;">
         <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 600px;">
@@ -15,7 +20,8 @@
           <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;
             color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
           <span style="background-color: rgb(249, 236, 236);color: rgb(202, 12, 22);padding: 3px 5px;">原创</span>
-          <a class="isoft_mr10" v-if="created_by">
+          <a class="isoft_mr10" v-if="created_by"
+             @click="$router.push({path:'/user/detail',query:{username:created_by}})">
             <span v-if="renderNickName(created_by)">{{renderNickName(created_by)}}</span>
             <span v-else>{{created_by}}</span>
           </a>
@@ -28,7 +34,7 @@
           <IShowMarkdown v-if="bookArticle && bookArticle.content" :content="bookArticle.content"/>
         </div>
 
-        <div style="border-top: 2px solid #bababa;margin: 0 0 10px 0;padding: 10px 0;">
+        <div style="border-top: 2px solid #e8e8e8;margin: 0 0 10px 0;padding: 10px 0;">
           <img src="../../../static/images/book/dianzan.gif" style="width: 50px;height: 50px;
              position: absolute;margin-top: -80px;"/>
           <img src="../../../static/images/book/learning.gif" style="width: 100px;height: 120px;
@@ -36,13 +42,15 @@
 
           <Row :gutter="20">
             <Col span="12">
-              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0">
+              <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0"
+                   @click="readPrefixOrNextArticle(viewIndex - 1)">
                 上一篇 {{prevCatalogName}}
               </div>
             </Col>
             <Col span="12">
               <div class="move_dh isoft_inline_ellipsis isoft_point_cursor"
-                   v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1">
+                   v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1"
+                   @click="readPrefixOrNextArticle(viewIndex + 1)">
                 下一篇 {{nextCatalogName}}
               </div>
             </Col>
@@ -74,6 +82,7 @@
     components: {RandomAdmt, HorizontalLinks, IBeautifulLink, IShowMarkdown},
     data() {
       return {
+        showTip: true,
         bookArticles: [],
         bookArticle: null,
         bookCatalogs: [],
