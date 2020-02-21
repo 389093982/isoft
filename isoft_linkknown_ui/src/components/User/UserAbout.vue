@@ -10,7 +10,7 @@
 
     <div style="margin-top: 5px;">
       <Tabs :animated="false">
-        <TabPane label="作者博文">
+        <TabPane icon="ios-card-outline" label="作者博文">
           <Row>
             <Col span="6">标题</Col>
             <Col span="6">分类</Col>
@@ -38,7 +38,7 @@
             </Col>
           </Row>
         </TabPane>
-        <TabPane label="作者课程">
+        <TabPane icon="ios-videocam-outline" label="作者课程">
           <Row>
             <Col span="8">课程名称</Col>
             <Col span="8">课程类型</Col>
@@ -64,7 +64,7 @@
             </Col>
           </Row>
         </TabPane>
-        <TabPane label="作者书单">
+        <TabPane icon="ios-book-outline" label="作者书单">
           <Row>
             <Col span="8">图书名称</Col>
             <Col span="8">课程类型</Col>

@@ -37,10 +37,10 @@
           </div>
         </Col>
         <Col span="8" style="text-align: left;padding: 10px 0 0 3px ;">
-          <div class="isoft_inline_ellipsis">
-            <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 3px;cursor: pointer" class="hvr-grow"><Icon type="ios-card-outline" style="font-size: 15px" />发布博客</div>
-            <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 3px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
-            <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 3px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
+          <div class="isoft_inline_ellipsis" style="padding-left: 20px">
+            <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-card-outline" style="font-size: 15px" />发布博客</div>
+            <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
+            <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
           </div>
         </Col>
         <Col span="8" style="padding: 0 0 0 3px">
@@ -55,10 +55,12 @@
                 <Icon type="md-arrow-round-forward" />开通会员
               </span>
             </a>
-            <Carousel autoplay loop arrow="never" dots="outside" trigger="hover" radius-dot autoplay-speed="3000">
+            <Carousel autoplay loop arrow="never" dots="outside" trigger="hover" radius-dot autoplay-speed="6000">
               <CarouselItem>
                 <div class="demo-carousel">
                   <ul style="padding-left: 10px">
+                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
+                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
                     <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
                   </ul>
                 </div>
@@ -66,6 +68,8 @@
               <CarouselItem>
                 <div class="demo-carousel">
                   <ul style="padding-left: 10px">
+                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
+                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
                     <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
                   </ul>
                 </div>
