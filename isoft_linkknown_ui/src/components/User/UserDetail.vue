@@ -83,7 +83,10 @@
     <div style="min-height: 450px;background-color: #ffffff;margin: 10px 0 0 0; padding:10px;">
       <Row :gutter="10">
         <Col span="16">
-          <div v-if="user"><UserAbout :user-name="_userName"/></div>
+          <div v-if="user">
+            <UserAbout :user-name="_userName"/>
+            <UserFavorite :user-name="_userName"/>
+          </div>
           <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
             <ForwardLogin></ForwardLogin>
           </div>
@@ -105,10 +108,11 @@
   import IFileUpload from "../Common/file/IFileUpload"
   import UserAbout from "./UserAbout";
   import ForwardLogin from "../SSO/ForwardLogin";
+  import UserFavorite from "./UserFavorite";
 
   export default {
     name: "UserDetail",
-    components: {ForwardLogin, UserAbout, HotUser, IFileUpload},
+    components: {UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",

@@ -2,8 +2,8 @@
 	<work>
 		<Id>236</Id>
 		<AppId>5</AppId>
-		<WorkName>ToggleFavorite2</WorkName>
-		<WorkDesc>ToggleFavorite2</WorkDesc>
+		<WorkName>ToggleFavorite</WorkName>
+		<WorkDesc>收藏、点赞等功能模块使用</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Common</ModuleName>
 		<CacheResult>false</CacheResult>
