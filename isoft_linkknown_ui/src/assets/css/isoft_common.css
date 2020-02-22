@@ -37,6 +37,22 @@
   margin-right: 10px;
 }
 
+.isoft_title {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: normal;
+  height: 35px;
+  line-height: 35px;
+  font-family: "微软雅黑";
+}
+
+.isoft_title::after {
+  content: "";
+  display: block;
+  height: 3px;
+  border-bottom: 3px solid red;
+}
+
 .isoft_auto_with {
   display: inline-block;
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout :style="{minHeight: '550px'}"
-            style=" background: linear-gradient(to right, rgba(0,7,255,0.04), rgba(255,0,249,0.04));">
+            style="background: linear-gradient(to right, rgba(0,7,255,0.04), rgba(255,0,249,0.04));">
       <Header>
         <Header/>
       </Header>

@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="isoft_pd10">
-      <div class="isoft_auto_with title">他/她收藏的图书</div>
+      <div class="isoft_title">他/她收藏的图书</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
         <div v-for="(book, index) in books">
           <Row style="border:1px solid #eee;margin-bottom: 10px;">
             <Col span="4" style="text-align: center;padding: 10px;">
-              <img :src="book.book_img" @error="defImg()" style="width: 80px; height: 110px;"/>
+              <img :src="book.book_img" @error="defImg()" style="width: 100px; height: 130px;"/>
             </Col>
             <Col span="20" style="padding: 10px;">
               <h3>{{book.book_name}}</h3>
@@ -71,18 +71,5 @@
 </script>
 
 <style scoped>
-  .title {
-    font-size: 18px;
-    font-weight: normal;
-    height: 35px;
-    line-height: 35px;
-    font-family: "微软雅黑";
-  }
 
-  .title::after {
-    content: "";
-    display: block;
-    height: 3px;
-    border-bottom: 3px solid red;
-  }
 </style>

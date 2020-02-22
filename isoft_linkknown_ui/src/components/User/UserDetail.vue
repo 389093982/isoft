@@ -4,7 +4,7 @@
       <div style="min-height: 140px;background: linear-gradient(to right, rgb(176, 108, 239), rgba(176,108,239,0.13));
           background-size: cover;background-position: 50%;background-repeat: no-repeat;">
       </div>
-      <Row style="min-height: 150px;background-color: #ffffff;padding: 20px;">
+      <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px;">
         <Col span="3" style="top:-100px;">
           <div class="user_icon">
             <img class="isoft_hover_red"
@@ -55,7 +55,7 @@
                 <Icon type="md-arrow-round-forward" />开通会员
               </span>
             </a>
-            <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot autoplay-speed="2000">
+            <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot autoplay-speed="6000">
               <CarouselItem>
                 <div class="demo-carousel">
                   <ul style="padding-left: 10px">
@@ -92,9 +92,13 @@
                 <UserFavorite :user-name="_userName"/>
               </div>
             </div>
-            <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
-              <ForwardLogin></ForwardLogin>
+            <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
+              <Spin fix size="large" v-if="isLoading">
+                <div class="isoft_loading"></div>
+              </Spin>
+              <ForwardLogin v-else></ForwardLogin>
             </div>
+
           </div>
         </Col>
         <Col span="8">
@@ -123,6 +127,7 @@
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
         user: null,
+        isLoading: true,
         defaultImg: require('../../assets/default.png'),
         editSignFlag: false,
         user_signature: '这家伙很懒，什么个性签名都没有留下',
@@ -161,18 +166,25 @@
         return !checkEmpty(this.$route.query.username) ? this.$route.query.username : GetLoginUserName();
       },
       refreshUserDetail: async function () {
-        const result = await GetUserDetail(this.getUserName());
-        if (result.status === "SUCCESS") {
-          this.user = result.user;
-          if (!checkEmpty(this.user.user_signature)) {
-            this.user_signature = this.user.user_signature;
+        this.isLoading = true;
+        try {
+          const result = await GetUserDetail(this.getUserName());
+          if (result.status === "SUCCESS") {
+            this.user = result.user;
+            if (!checkEmpty(this.user.user_signature)) {
+              this.user_signature = this.user.user_signature;
+            }
           }
+        } finally {
+          this.isLoading = false;
         }
       }
     },
     mounted() {
       if (this.getUserName()) {
         this.refreshUserDetail();
+      } else {
+        this.isLoading = false;
       }
     },
     computed: {
