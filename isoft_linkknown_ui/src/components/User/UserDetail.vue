@@ -80,15 +80,17 @@
       </Row>
     </div>
 
-    <div style="min-height: 450px;background-color: #ffffff;margin: 10px 0 0 0; padding:10px;">
-      <Row :gutter="10">
+    <div class="isoft_top5" style="min-height: 450px;">
+      <Row>
         <Col span="16">
-          <div v-if="user">
-            <UserAbout :user-name="_userName"/>
-            <UserFavorite :user-name="_userName"/>
-          </div>
-          <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
-            <ForwardLogin></ForwardLogin>
+          <div style="background-color: #ffffff;">
+            <div v-if="user">
+              <UserAbout :user-name="_userName"/>
+              <UserFavorite :user-name="_userName"/>
+            </div>
+            <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
+              <ForwardLogin></ForwardLogin>
+            </div>
           </div>
         </Col>
         <Col span="8">
