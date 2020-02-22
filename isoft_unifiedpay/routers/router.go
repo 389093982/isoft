@@ -15,9 +15,9 @@ func registRouter(rootpath string, c beego.ControllerInterface, callFunc func(),
 
 func init() {
 	beego.Router("/", mc)
-	//registRouter("/wechatPayApi/Pay", mc, mc.Pay, "post:Pay")
-	registRouter("/wechatPayApi/Pay", mc, mc.Pay, "post:Pay")
+	registRouter("/wechatPayApi/Order", mc, mc.Order, "get,post:Order")
 	registRouter("/wechatPayApi/Refund", mc, mc.Refund, "post:Refund")
 	registRouter("/wechatPayApi/QueryOrder", mc, mc.QueryOrder, "post:QueryOrder")
+	registRouter("/wechatPayApi/PayNotifyResult", mc, mc.PayNotifyResult, "post:PayNotifyResult")
 
 }

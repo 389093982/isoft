@@ -12,17 +12,91 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"crypto/tls"
 	"strings"
+	"github.com/gorilla/websocket"
+	"net/http"
+	"encoding/json"
+	"sync"
 )
 
+// 解决跨域问题
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
+//定义Message
+type Message struct {
+	MessageType string `json:"message_type"`
+	MessageContent string `json:"message_content"`
+}
+
+//下单请求订单
+type OrderParams struct {
+	UserName string  `json:"user_name"`
+	ProductId string  `json:"product_id"`
+	PoductDesc string`json:"poduct_desc"`
+	TransAmount string `json:"trans_amount"`
+	TransCurrCode string`json:"trans_curr_code"`
+}
+
+//存储用户的账号和对应的websocket连接conn
+var userMap sync.Map
+
+//websocket 下单请求
+func (this *MainController) Order() {
+	//orderChan := make(chan interface{})
+	conn, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
+	if err != nil {
+		logs.Info("upgrade(http升级):", err)
+		return
+	}
+	for {
+		messageType, messageContent, err := conn.ReadMessage()
+		if err != nil {
+			logs.Info("read error:", err)
+			break
+		}
+		logs.Info("收到websocket信息: %s",messageContent)
+		var (
+			message Message
+			orderParams OrderParams
+		)
+		json.Unmarshal([]byte(messageContent), &message)
+		if message.MessageType == "createOrder" {
+			go func() {
+				json.Unmarshal([]byte(message.MessageContent), &orderParams)
+				userMap.Store(orderParams.UserName,conn)
+				//调下单方法
+				//this.Pay(orderParams, orderChan)
+			}()
+		}
+
+		err = conn.WriteMessage(messageType, messageContent)
+		if err != nil {
+			logs.Info("write error:", err)
+			break
+		}
+		logs.Info("返回websocket信息: %s", messageContent)
+	}
+}
+
+func notify(username string, message string)  {
+	if v, ok := userMap.Load(username); ok {
+		conn := v.(*websocket.Conn)
+		conn.WriteMessage(1, []byte(""))
+	}
+}
+
 //支付下单-具体处理方法
-func (this *MainController) Pay() {
+func (this *MainController) Pay(orderParams OrderParams, orderChan chan interface{}) {
 	code_url := "下单失败" //支付二维码，默认显示‘下单失败’
 	o := orm.NewOrm()
 	//界面接收的参数
-	productId := this.GetString("ProductId")
-	productDesc := this.GetString("ProductDesc")
-	transAmount := this.GetString("TransAmount")
-	transCurrCode := this.GetString("TransCurrCode")
+	productId := orderParams.ProductId
+	productDesc := orderParams.PoductDesc
+	transAmount := orderParams.TransAmount
+	transCurrCode := orderParams.TransCurrCode
 	//productId := "001256"
 	//productDesc := "苹果手机"
 	//transAmount := "5888"
