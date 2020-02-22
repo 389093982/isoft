@@ -15,7 +15,6 @@
     </p>
     <p>作者：
       <span v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
-      <span v-else>{{course.course_author}}</span>
     </p>
     <p>课程类型：{{course.course_type}}</p>
     <p>课程子类型：{{course.course_sub_type}}</p>
@@ -43,7 +42,6 @@
     },
     data() {
       return {
-        user_small_icon: '',
         user: null,
       }
     },
@@ -51,7 +49,6 @@
       RenderUserInfoByName: async function () {
         const result = await GetUserDetail(this.course.course_author);
         if (result.status === "SUCCESS") {
-          this.user_small_icon = result.user.small_icon;
           this.user = result.user;
         }
       },
