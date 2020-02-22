@@ -14,7 +14,7 @@
               </div>
             </Col>
             <Col span="16">
-              <CourseMeta :course="course"/>
+              <CourseMeta v-if="course && course.course_author" :course="course"/>
               <p>
                 <a href="javascript:;" v-if="course_collect==true"
                    @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
@@ -69,7 +69,6 @@
   import UserAbout from "../../User/UserAbout"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
-  import {checkEmpty} from "../../../tools";
 
   export default {
     name: "CourseDetail",
@@ -99,13 +98,11 @@
         try {
           const course_id = this.$route.query.course_id;
           const result = await ShowCourseDetail(course_id);
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.course = result.course;
             this.cVideos = result.cVideos;
             this.course_collect = result.course_collect;
             this.course_parise = result.course_parise;
-            if (!checkEmpty(result.course.course_label)) {
-            }
           }
         } finally {
           this.isLoading = false;
@@ -113,7 +110,7 @@
       },
       toggle_favorite: async function (favorite_id, favorite_type, message) {
         const result = await ToggleFavorite({favorite_id, favorite_type});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success(message + "成功!");
           this.refreshCourseDetail();
         }
@@ -129,8 +126,6 @@
 </script>
 
 <style scoped>
-  @import "../../../assets/css/isoft_common.css";
-
   .header a {
     color: red;
   }

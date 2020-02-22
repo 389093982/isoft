@@ -12,6 +12,7 @@
         </div>
       </IBeautifulCard>
     </div>
+
     <!-- 图标形式显示 -->
     <IBeautifulCard v-else title="热门课程推荐">
       <div slot="content" style="min-height:850px;padding: 10px;">
@@ -63,7 +64,7 @@
     methods: {
       refreshHotRecommend: async function () {
         const result = await GetHotCourseRecommend();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.courses = result.courses;
         }
       }
@@ -75,9 +76,6 @@
 </script>
 
 <style scoped>
-  /* 引入公共样式库 */
-  @import "../../../assets/css/isoft_common.css";
-
   a {
     color: black;
   }

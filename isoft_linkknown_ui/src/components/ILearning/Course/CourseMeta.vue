@@ -54,7 +54,7 @@
       },
       renderNickName: function (user_name) {
         return !checkEmpty(this.user.nick_name) ? this.user.nick_name : user_name;
-      }
+      },
     },
     computed: {
       clabels: function () {
