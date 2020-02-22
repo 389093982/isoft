@@ -63,6 +63,7 @@
         realPay:'',
         payUrl: '',
         imageUrl: require("../../../static/images/vip.png"),
+        websocket:null,
       }
     },
     computed: {
@@ -75,18 +76,53 @@
         this.lastTimeChoice = this.tempChoice;
         this.tempChoice = this.openingTime;
         if (this.openingTime===this.lastTimeChoice) {
+          this.$Message.warning("请勿重复下单！");
           return false;
         }
         let payMoney = this.openingTime.trim().split('¥')[1];
         this.realPay = payMoney;
         let ProductId = '待定';
-        let ProductDesc = 'linkknown.com网站会员';
+        let ProductDesc = 'linkknown网站会员';
         let TransAmount = payMoney * 100;
         let TransCurrCode = 'CNY';
-        let orderResult = await pay(ProductId, ProductDesc, TransAmount, TransCurrCode);
-        this.payUrl = orderResult.code_url;
-        // this.payUrl = "test";
-      }
+        let data = {
+          message_type: 'createOrder',
+          message_content: {
+            'user_name':this.loginUserName,
+            'product_id': ProductId,
+            'poduct_desc': ProductDesc,
+            'trans_amount': TransAmount,
+            'trans_curr_code': TransCurrCode
+          }
+        };
+        this.initWebSocket(data);
+      },
+      initWebSocket:function(data) {
+        const wsuri = 'ws://localhost:6002/wechatPayApi/Order';
+        this.websocket = new WebSocket(wsuri);
+        this.websocket.onopen = this.websocketonopen;
+        this.websocket.onmessage = this.websocketonmessage;
+        this.websocket.onerror = this.websocketonerror;
+        this.websocket.onclose = this.websocketclose;
+        var _this = this;
+        setTimeout(function () {
+          console.log("WebSocket 发送数据: " + JSON.stringify(data));
+          _this.websocket.send(JSON.stringify(data));
+        }, 500);
+      },
+      websocketonopen:function() {
+        console.log("WebSocket 连接成功");
+      },
+      websocketonerror:function(e) {
+        console.log("WebSocket 连接发生错误");
+      },
+      websocketonmessage(e){
+        console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
+      },
+      websocketclose(e){
+        console.log("WebSocket 连接关闭 (" + e.code + ")");
+      },
+
     },
   }
 </script>
