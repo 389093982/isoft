@@ -51,8 +51,8 @@ func (this *HttpRequestParserNode) GetDefaultParamOutputSchema() *iworkmodels.Pa
 
 func (this *HttpRequestParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	headers := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
-	cookies := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
+	headers := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
+	cookies := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
 	pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, parseToItems(headers, "header_")...)
 	pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, parseToItems(cookies, "cookie_")...)
 	return pos

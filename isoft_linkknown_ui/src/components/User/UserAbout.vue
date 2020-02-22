@@ -1,7 +1,8 @@
 <template>
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;">
     <IBeautifulLink>
-      <Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;
+      <img style="cursor: pointer;border-radius: 50%;"
+           width="30" height="30" :src="user_small_icon" @error="defImg()">
       <span v-if="nick_name">{{nick_name}}</span>
       <span v-else>{{getUserName()}}</span>
     </IBeautifulLink>&nbsp;&nbsp;
@@ -114,9 +115,15 @@
         // 当前 user 对应头像信息
         user_small_icon: '',
         nick_name: '',
+        defaultImg: require('../../assets/default.png'),
       }
     },
     methods: {
+      defImg() {
+        let img = event.srcElement;
+        img.src = this.defaultImg;
+        img.onerror = null; //防止闪图
+      },
       refreshUserInfo: function () {
         if (checkEmpty(this.userName) && checkEmpty(GetLoginUserName())) {
           return;
@@ -131,7 +138,7 @@
       },
       refreshUserDetail: async function () {
         const result = await GetUserDetail(this.getUserName());
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
           this.nick_name = result.user.nick_name;
         }
@@ -140,8 +147,10 @@
         const result = await QueryPageBookList({
           search_type: '',
           search_user_name: this.getUserName(),
+          current_page: 1,
+          offset: 10,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.books = result.books;
         }
       },
@@ -151,13 +160,13 @@
           current_page: 1,
           search_user_name: this.getUserName(),
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.blogs = result.blogs;
         }
       },
       refreshCourseList: async function () {
-        const result = await GetCourseListByUserName(this.getUserName());
-        if (result.status == "SUCCESS") {
+        const result = await GetCourseListByUserName({userName: this.getUserName(), current_page: 1, offset: 10});
+        if (result.status === "SUCCESS") {
           this.courses = result.courses;
         }
       },

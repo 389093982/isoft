@@ -84,7 +84,7 @@ func (this *ParseJWTNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 
 func (this *ParseJWTNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{}
-	_claimsMap := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
+	_claimsMap := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"claimsMap", this.WorkStep).(string)
 	claimArr := strings.Split(_claimsMap, ",")
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	for _, claim := range claimArr {
