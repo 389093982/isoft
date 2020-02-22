@@ -83,10 +83,14 @@
     <div class="isoft_top5" style="min-height: 450px;">
       <Row>
         <Col span="16">
-          <div style="background-color: #ffffff;">
+          <div>
             <div v-if="user">
-              <UserAbout :user-name="_userName"/>
-              <UserFavorite :user-name="_userName"/>
+              <div style="background-color: #ffffff;">
+                <UserAbout :user-name="_userName"/>
+              </div>
+              <div class="isoft_top5" style="background-color: #ffffff;">
+                <UserFavorite :user-name="_userName"/>
+              </div>
             </div>
             <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
               <ForwardLogin></ForwardLogin>
