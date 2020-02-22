@@ -1,4 +1,4 @@
-import {checkContainsInString, checkEmpty, getCookie} from "./index"
+import {checkContainsInString, checkEmpty, delCookie, getCookie} from "./index"
 
 const _checkAdminLogin = function () {
   let roleName = getCookie("roleName");
@@ -52,9 +52,20 @@ const _checkNotLogin = function () {
   return false;
 }
 
+const _deleteLoginInfo = function () {
+  delCookie("tokenString");
+  delCookie("userName");
+  delCookie("isLogin");
+}
+
+const _getNickName = function () {
+  return getCookie("nickName");
+}
+
 export const checkSSOLogin = (to, from, next) => _checkSSOLogin(to, from, next);
 export const checkNotLogin = () => _checkNotLogin();
 export const checkHasLogin = () => _checkHasLogin();
 export const checkAdminLogin = () => _checkAdminLogin();
 export const getLoginUserName = () => _getLoginUserName();
-
+export const deleteLoginInfo = () => _deleteLoginInfo();
+export const getNickName = () => _getNickName();
