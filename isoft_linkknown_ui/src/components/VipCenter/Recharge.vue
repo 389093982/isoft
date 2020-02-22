@@ -48,7 +48,7 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
-  import {pay} from '../../api'
+  import isoft_unifiedpay_order from "../GlobalData/index"
   import vueQr from 'vue-qr'
 
   export default {
@@ -85,20 +85,17 @@
         let ProductDesc = 'linkknown网站会员';
         let TransAmount = payMoney * 100;
         let TransCurrCode = 'CNY';
-        let data = {
-          message_type: 'createOrder',
-          message_content: {
-            'user_name':this.loginUserName,
-            'product_id': ProductId,
-            'poduct_desc': ProductDesc,
-            'trans_amount': TransAmount,
-            'trans_curr_code': TransCurrCode
-          }
+        let OrderParams = {
+          'user_name':this.loginUserName,
+          'product_id': ProductId,
+          'poduct_desc': ProductDesc,
+          'trans_amount': TransAmount,
+          'trans_curr_code': TransCurrCode
         };
-        this.initWebSocket(data);
+        this.initWebSocket(OrderParams);
       },
-      initWebSocket:function(data) {
-        const wsuri = 'ws://localhost:6002/wechatPayApi/Order';
+      initWebSocket:function(OrderParams) {
+        const wsuri = this.GLOBAL.isoft_unifiedpay_order;
         this.websocket = new WebSocket(wsuri);
         this.websocket.onopen = this.websocketonopen;
         this.websocket.onmessage = this.websocketonmessage;
@@ -106,9 +103,9 @@
         this.websocket.onclose = this.websocketclose;
         var _this = this;
         setTimeout(function () {
-          console.log("WebSocket 发送数据: " + JSON.stringify(data));
-          _this.websocket.send(JSON.stringify(data));
-        }, 500);
+          console.log("WebSocket 发送数据: " + JSON.stringify(OrderParams));
+          _this.websocket.send(JSON.stringify(OrderParams));
+        }, 1000);
       },
       websocketonopen:function() {
         console.log("WebSocket 连接成功");
@@ -118,6 +115,10 @@
       },
       websocketonmessage(e){
         console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
+        let result = JSON.parse(e.data);
+        if (result.user_name === this.loginUserName) {
+          this.payUrl = result.code_url;
+        }
       },
       websocketclose(e){
         console.log("WebSocket 连接关闭 (" + e.code + ")");

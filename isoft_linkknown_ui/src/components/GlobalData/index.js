@@ -15,8 +15,8 @@ const jobAges = ['不限', '1-3年', '3-5年', '5-7年', '5-10年', '3-10年', '
 const salaryRanges = ['1k-5k', '5k-10k', '5k-15k', '5k-20k', '10k-15k', '10-20k', '15k-20k', '20k-50k', '50k-100k', '100k+'];
 const corporateSizes = ['1-10人', '10-20人', '20-50人', '50-100人', '100-500人', '500-2000人', '2000以上'];
 const jobTypes = ['前端工程师', '后端工程师', '研发经理', '软件工程师', '安卓开发工程师', '架构负责人'];
-
 const currentSite = "_isoft_linkknown_ui";
+const isoft_unifiedpay_order = "ws://localhost:6002/wechatPayApi/Order";
 
 export default {
   placement_host_recommend_blog_tpyes,
@@ -36,7 +36,7 @@ export default {
   salaryRanges,
   corporateSizes,
   jobTypes,
-
   currentSite,
+  isoft_unifiedpay_order,
 }
 

@@ -18,20 +18,10 @@ import (
 	"sync"
 )
 
-// 解决跨域问题
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
+//存储用户的账号和对应的websocket连接conn
+var userMap sync.Map
 
-//定义Message
-type Message struct {
-	MessageType string `json:"message_type"`
-	MessageContent string `json:"message_content"`
-}
-
-//下单请求订单
+//下单请求参数
 type OrderParams struct {
 	UserName string  `json:"user_name"`
 	ProductId string  `json:"product_id"`
@@ -40,17 +30,29 @@ type OrderParams struct {
 	TransCurrCode string`json:"trans_curr_code"`
 }
 
-//存储用户的账号和对应的websocket连接conn
-var userMap sync.Map
+//下单返回参数
+type OrderResult struct {
+	UserName string  `json:"user_name"`
+	CodeUrl string  `json:"code_url"`
+}
+
+// 解决跨域问题
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 //websocket 下单请求
 func (this *MainController) Order() {
 	//orderChan := make(chan interface{})
+	//获取请求连接
 	conn, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
 	if err != nil {
 		logs.Info("upgrade(http升级):", err)
 		return
 	}
+	//读取连接中参数
 	for {
 		messageType, messageContent, err := conn.ReadMessage()
 		if err != nil {
@@ -58,26 +60,22 @@ func (this *MainController) Order() {
 			break
 		}
 		logs.Info("收到websocket信息: %s",messageContent)
-		var (
-			message Message
-			orderParams OrderParams
-		)
-		json.Unmarshal([]byte(messageContent), &message)
-		if message.MessageType == "createOrder" {
-			go func() {
-				json.Unmarshal([]byte(message.MessageContent), &orderParams)
-				userMap.Store(orderParams.UserName,conn)
-				//调下单方法
-				//this.Pay(orderParams, orderChan)
-			}()
-		}
-
-		err = conn.WriteMessage(messageType, messageContent)
+		var orderParams OrderParams
+		json.Unmarshal([]byte(messageContent), &orderParams)
+		userMap.Store(orderParams.UserName,conn)
+		//调下单方法
+		//this.Pay(orderParams, orderChan)
+		//返回信息
+		var orderResult OrderResult
+		orderResult.UserName = orderParams.UserName
+		orderResult.CodeUrl = "test url"
+		resultMessageContent, _ := json.Marshal(orderResult)
+		err = conn.WriteMessage(messageType, resultMessageContent)
 		if err != nil {
 			logs.Info("write error:", err)
 			break
 		}
-		logs.Info("返回websocket信息: %s", messageContent)
+		logs.Info("返回websocket信息: %s", resultMessageContent)
 	}
 }
 
