@@ -58,7 +58,8 @@
 </template>
 
 <script>
-  import {CheckAdminLogin, CheckHasLogin, delCookie, getCookie} from '../../tools/index'
+  import {CheckAdminLogin, CheckHasLogin} from '../../tools/index'
+  import {deleteLoginInfo, getNickName} from "../../tools/sso"
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import MessageList from "../Message/MessageList";
@@ -77,16 +78,14 @@
         return CheckAdminLogin();
       },
       cancelUser() {
-        delCookie("tokenString");
-        delCookie("userName");
-        delCookie("isLogin");
+        deleteLoginInfo();
         this.loginUserName = "";
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       }
     },
     mounted: function () {
       if (CheckHasLogin()) {
-        this.loginUserName = getCookie("nickName");
+        this.loginUserName = getNickName();
       }
     },
   }

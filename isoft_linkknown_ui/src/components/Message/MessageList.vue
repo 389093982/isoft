@@ -31,8 +31,9 @@
 </template>
 
 <script>
-  import {QueryPageMessageList,LoginAddr} from "../../api"
-  import {CheckHasLogin,delCookie} from "../../tools/index"
+  import {LoginAddr, QueryPageMessageList} from "../../api"
+  import {CheckHasLogin} from "../../tools/index"
+  import {deleteLoginInfo} from "../../tools/sso"
 
   export default {
     name: "MessageList",
@@ -51,14 +52,12 @@
     methods: {
       refreshMessageList: async function () {
         const result = await QueryPageMessageList({});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.messages = result.messages;
         }
       },
       cancelUser () {
-        delCookie("tokenString");
-        delCookie("userName");
-        delCookie("isLogin");
+        deleteLoginInfo();
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       }
     },

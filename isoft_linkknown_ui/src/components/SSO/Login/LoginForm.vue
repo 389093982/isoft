@@ -43,7 +43,8 @@
 
 <script>
   import {Login} from "../../../api"
-  import {checkEmpty, setCookie, strSplit} from "../../../tools"
+  import {checkEmpty, strSplit} from "../../../tools"
+  import {setLoginInfo} from "../../../tools/sso"
 
   export default {
     name: "LoginForm",
@@ -75,14 +76,8 @@
           return false;
         }
         var result = await Login(username, passwd, decodeURIComponent(redirectUrl));
-        if (result.loginSuccess == true || result.loginSuccess == "SUCCESS") {
-          setCookie("tokenString", result.tokenString, 365, result.domain);
-          setCookie("userName", username, 365, result.domain);
-          setCookie("nickName", result.nickName, 365, result.domain);
-          setCookie("isLogin", "isLogin", 365, result.domain);
-          setCookie("roleName", result.roleName, 365, result.domain);
-          let expireSecond = new Date().getTime() + result.expireSecond * 1000;     // 时间戳
-          setCookie("expireSecond", expireSecond, 365, result.domain);
+        if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
+          setLoginInfo(result, username);
           if (!checkEmpty(result.redirectUrl)) {
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;

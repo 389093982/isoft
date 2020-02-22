@@ -46,7 +46,7 @@
 <script>
   import {EndUpdate, fileUploadUrl, GetCourseListByUserName, UpdateCourseIcon} from "../../../api"
   import UploadVideo from "../Course/UploadVideo"
-  import {getCookie, handleSpecial} from "../../../tools"
+  import {GetLoginUserName, handleSpecial} from "../../../tools"
   import CourseMeta from "../Course/CourseMeta";
   import IFileUpload from "../../Common/file/IFileUpload";
 
@@ -78,11 +78,11 @@
       refreshMyCourseList: async function () {
         this.isLoading = true;
         try {
-          var userName = getCookie("userName");
+          var userName = GetLoginUserName();
           const result = await GetCourseListByUserName({"userName":userName,"current_page":this.current_page,"offset":this.offset});
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.myCourses = result.courses;
-            this.totalCount = result.paginator.totalcount
+            this.totalCount = result.paginator.totalcount;
           }
         } finally {
           this.isLoading = false;

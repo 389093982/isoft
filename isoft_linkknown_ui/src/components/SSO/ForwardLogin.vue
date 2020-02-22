@@ -7,16 +7,14 @@
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {LoginAddr} from "../../api"
-  import {delCookie} from '../../tools/index'
+  import {deleteLoginInfo} from '../../tools/sso'
 
   export default {
     name: "ForwardLogin",
     components: {IBeautifulLink},
     methods: {
       cancelUser() {
-        delCookie("tokenString");
-        delCookie("userName");
-        delCookie("isLogin");
+        deleteLoginInfo();
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       }
     }
