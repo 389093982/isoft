@@ -1,4 +1,4 @@
-import {checkContainsInString, checkEmpty, delCookie, getCookie} from "./index"
+import {checkContainsInString, checkEmpty, delCookie, getCookie, setCookie} from "./index"
 
 const _checkAdminLogin = function () {
   let roleName = getCookie("roleName");
@@ -62,6 +62,16 @@ const _getNickName = function () {
   return getCookie("nickName");
 }
 
+const _setLoginInfo = function (loginResult, username) {
+  setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
+  setCookie("userName", username, 365, loginResult.domain);
+  setCookie("nickName", loginResult.nickName, 365, loginResult.domain);
+  setCookie("isLogin", "isLogin", 365, loginResult.domain);
+  setCookie("roleName", loginResult.roleName, 365, loginResult.domain);
+  let expireSecond = new Date().getTime() + loginResult.expireSecond * 1000;     // 时间戳
+  setCookie("expireSecond", expireSecond, 365, loginResult.domain);
+}
+
 export const checkSSOLogin = (to, from, next) => _checkSSOLogin(to, from, next);
 export const checkNotLogin = () => _checkNotLogin();
 export const checkHasLogin = () => _checkHasLogin();
@@ -69,3 +79,4 @@ export const checkAdminLogin = () => _checkAdminLogin();
 export const getLoginUserName = () => _getLoginUserName();
 export const deleteLoginInfo = () => _deleteLoginInfo();
 export const getNickName = () => _getNickName();
+export const setLoginInfo = (loginResult, username) => _setLoginInfo(loginResult, username);
