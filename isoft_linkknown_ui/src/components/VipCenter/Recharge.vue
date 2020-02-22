@@ -43,12 +43,19 @@
         </div>
       </div>
 
+    <Modal
+      v-model="showPayResult"
+      title="支付结果"
+      @on-ok="ok"
+      @on-cancel="cancel">
+      <p>{{payResultDesc}}</p>
+    </Modal>
+
   </div>
 </template>
 
 <script>
   import {GetLoginUserName} from "../../tools"
-  import isoft_unifiedpay_order from "../GlobalData/index"
   import vueQr from 'vue-qr'
 
   export default {
@@ -64,6 +71,8 @@
         payUrl: '',
         imageUrl: require("../../../static/images/vip.png"),
         websocket:null,
+        showPayResult:false,
+        payResultDesc:'',
       }
     },
     computed: {
@@ -117,7 +126,13 @@
         console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
         let result = JSON.parse(e.data);
         if (result.user_name === this.loginUserName) {
-          this.payUrl = result.code_url;
+          if (result.code_url != null) {
+            this.payUrl = result.code_url;
+          }
+          if (result.status != null && result.status==="SUCCESS") {
+            this.showPayResult = true;
+            this.payResultDesc="支付成功！"
+          }
         }
       },
       websocketclose(e){
