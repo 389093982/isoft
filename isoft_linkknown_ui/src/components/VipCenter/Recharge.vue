@@ -41,15 +41,13 @@
           <br>
           <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
         </div>
+        <div v-if="showPayResult" style="float: right;width: 55%">
+          <i-circle :percent="percent" :stroke-color="color">
+            <Icon v-if="percent === 100" type="ios-checkmark" size="60" style="color:#5cb85c"></Icon>
+            <span v-else style="font-size:24px">等待中...</span>
+          </i-circle>
+        </div>
       </div>
-
-    <Modal
-      v-model="showPayResult"
-      title="支付结果"
-      @on-ok="ok"
-      @on-cancel="cancel">
-      <p>{{payResultDesc}}</p>
-    </Modal>
 
   </div>
 </template>
@@ -71,6 +69,7 @@
         payUrl: '',
         imageUrl: require("../../../static/images/vip.png"),
         websocket:null,
+        percent:0,
         showPayResult:false,
         payResultDesc:'',
       }
@@ -79,6 +78,13 @@
       loginUserName: function () {
         return GetLoginUserName();
       },
+      color () {
+        let color = '#2db7f5';
+        if (this.percent === 100) {
+          color = '#5cb85c';
+        }
+        return color;
+      }
     },
     methods: {
       getPayUrl: async function () {
@@ -88,6 +94,10 @@
           this.$Message.warning("请勿重复下单！");
           return false;
         }
+        //清理上次付款结果
+        this.showPayResult = false;
+        this.percent = 0;
+        //准备参数
         let payMoney = this.openingTime.trim().split('¥')[1];
         this.realPay = payMoney;
         let ProductId = '待定';
@@ -130,8 +140,14 @@
             this.payUrl = result.code_url;
           }
           if (result.status != null && result.status==="SUCCESS") {
+            this.payUrl = '';
             this.showPayResult = true;
-            this.payResultDesc="支付成功！"
+            this.payResultDesc="支付成功！";
+            var handler = setInterval(this.add, 50);
+            //一秒后让handler失效
+            setTimeout(function () {
+              clearInterval(handler);
+            }, 1000);
           }
         }
       },
@@ -139,7 +155,14 @@
         console.log("WebSocket 连接关闭 (" + e.code + ")");
       },
 
-    },
+      //支付成功，来个进度环显示下动态效果
+      add:function() {
+        if (this.percent >= 100) {
+          return false;
+        }
+        this.percent += 10;
+      },
+  },
   }
 </script>
 
