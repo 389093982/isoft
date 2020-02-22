@@ -222,3 +222,20 @@ export function CheckHasLoginConfirmDialog2(node, callback) {
 export function copyObj(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
+
+// 跨域设置 cookie
+export function setCookie(c_name, value, expiredays, domain) {
+  if (checkContainsInString(domain, "localhost")) {
+    // instead for localhost you should use false
+    domain = false
+  }
+  var exdate = new Date();
+  exdate.setDate(exdate.getDate() + expiredays);
+  //判断是否需要跨域存储
+  if (domain) {
+    // egg：path=/;domain=xueersi.com";
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/;domain=" + domain;
+  } else {
+    document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
+  }
+}

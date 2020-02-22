@@ -1,8 +1,8 @@
-import {checkContainsInString, checkEmpty} from "./index"
+import {checkContainsInString, checkEmpty, setCookie} from "./index"
 
 const _checkAdminLogin = function () {
   let roleName = localStorage.getItem("roleName");
-  return roleName == "admin";
+  return roleName === "admin";
 
 }
 
@@ -64,6 +64,7 @@ const _setLoginInfo = function (loginResult, username) {
   localStorage.setItem("nickName", loginResult.nickName);
   localStorage.setItem("isLogin", "isLogin");
   localStorage.setItem("roleName", loginResult.roleName);
+  setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 
 export const checkSSOLogin = (to, from, next) => _checkSSOLogin(to, from, next);
