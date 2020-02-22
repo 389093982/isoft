@@ -14,7 +14,7 @@
           </p>
         </Col>
         <Col span="16">
-          <CourseMeta :course="myCourse"/>
+          <CourseMeta :course="myCourse" :show-course-space="false"/>
           <p>
             <router-link :to="{path:'/ilearning/course_space/editCourse',query:{course_id:myCourse.id}}"
                          style="color:#1000db;font-family: Arial;font-weight: 700;">编辑课程信息

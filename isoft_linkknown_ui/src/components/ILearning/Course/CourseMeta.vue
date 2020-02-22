@@ -6,12 +6,13 @@
       &nbsp; <span>如何提升得分？</span>
     </p>
     <p>
-      课程名称：{{course.course_name}}
+      <span>课程名称：{{course.course_name}}</span>
       <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/index'})"
             style="margin-left: 30px;">搜索同类资源</span>
-      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/ilearning/course_space'}))"
-            style="margin-left: 30px;">我的课程空间</span>
-      <span class="isoft_hover_red" @click="" style="margin-left: 30px;">开课流程</span>
+      <span v-if="showCourseSpace" class="isoft_hover_red" style="margin-left: 30px;"
+            @click="$router.push($router.push({ path: '/ilearning/course_space'}))">我的课程空间</span>
+      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))"
+            style="margin-left: 30px;">开课流程</span>
     </p>
     <p>作者：
       <span v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
@@ -38,6 +39,10 @@
       course: {
         type: Object,
         default: null,
+      },
+      showCourseSpace: {    // 是否显示我的课程空间
+        type: Boolean,
+        default: true,
       },
     },
     data() {

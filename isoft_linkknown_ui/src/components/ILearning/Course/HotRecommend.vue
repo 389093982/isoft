@@ -5,9 +5,10 @@
       <IBeautifulCard title="热门课程推荐">
         <div slot="content" style="padding: 20px;">
           <Row v-for="course in courses">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
+            <div class="isoft_inline_ellipsis isoft_hover_red"
+                 @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
               {{course.course_name}}
-            </IBeautifulLink>
+            </div>
           </Row>
         </div>
       </IBeautifulCard>

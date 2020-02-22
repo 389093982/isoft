@@ -7,7 +7,7 @@
           <!-- 头部 -->
           <Row class="header">
             <Col span="8">
-              <h4>课程名称：{{course.course_name}}</h4>
+              <h4 class="isoft_inline_ellipsis">课程名称：{{course.course_name}}</h4>
               <div class="course_img">
                 <img :src="course.small_image" width="180" height="120" @error="defImg()"/>
                 <div class="course_name">{{course.course_name}}</div>
