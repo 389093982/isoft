@@ -35,7 +35,7 @@
   import {ShowBlogArticleDetail} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin, GetLoginUserName, RenderNickName, renderUserInfoByName} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
 
   export default {
@@ -51,7 +51,7 @@
       refreshArticleDetail: async function () {
         const result = await ShowBlogArticleDetail(this.$route.query.blog_id);
         if (result.status == "SUCCESS") {
-          this.userInfos = await renderUserInfoByName(result.blog.author);
+          this.userInfos = await RenderUserInfoByName(result.blog.author);
           this.blog = result.blog;
         }
       },

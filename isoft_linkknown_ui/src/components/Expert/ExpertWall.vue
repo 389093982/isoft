@@ -41,7 +41,7 @@
 <script>
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import {QueryExpertWallList} from "../../api"
-  import {RenderNickName, renderUserInfoByNames} from "../../tools";
+  import {RenderNickName, RenderUserInfoByNames} from "../../tools";
 
   export default {
     name: "ExpertWall",
@@ -58,7 +58,7 @@
       refreshExpertWallList: async function () {
         const result = await QueryExpertWallList({});
         if (result.status === "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.users.concat(result.users2).concat(result.users3), "user_name");
+          this.userInfos = await RenderUserInfoByNames(result.users.concat(result.users2).concat(result.users3), "user_name");
           this.users = result.users;
           this.users2 = result.users2;
           this.users3 = result.users3;

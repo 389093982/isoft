@@ -129,7 +129,7 @@
     GetLoginUserName,
     RenderNickName,
     RenderUserIcon,
-    renderUserInfoByNames
+    RenderUserInfoByNames
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
 
@@ -168,7 +168,7 @@
         this.current_page = 1;
 
         if (pattern === 1) {
-          this.search_type = "";  // search_type 为空表示查询全部分类
+          this.search_type = "_all";
           this.showLabel = "全部分类";
           this.refreshBlogList();
         } else if (pattern === 2) {
@@ -205,7 +205,7 @@
           search_user_name: this.search_user_name,
         });
         if (result.status === "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.blogs, 'author');
+          this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
           this.searchblogs = result.blogs;
           this.total = result.paginator.totalcount;
         }

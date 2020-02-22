@@ -48,7 +48,7 @@
       }
     },
     methods: {
-      renderUserInfoByName: async function () {
+      RenderUserInfoByName: async function () {
         const result = await GetUserDetail(this.course.course_author);
         if (result.status == "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
@@ -65,7 +65,7 @@
       }
     },
     mounted() {
-      this.renderUserInfoByName();
+      this.RenderUserInfoByName();
     }
   }
 </script>

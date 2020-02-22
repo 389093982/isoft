@@ -25,7 +25,8 @@
             </Col>
           </Row>
 
-          <div style="text-align: center;background-color: #eee;padding: 5px 10px;">图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
+          <div style="text-align: center;background-color: #eee;padding: 5px 10px;">
+            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
           </div>
 
           <div style="min-height: 450px;">
@@ -56,8 +57,8 @@
                                :action="fileUploadUrl" uploadLabel="换张图片"/>
                   <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10" @onclick="$router.push({path:'/ibook/book_edit',
-                                 query:{book_id:book.id,book_name:book.book_name}})">编辑文章
+                  <IBeautifulLink class="isoft_mr10"
+                                  @onclick="$router.push({path:'/ibook/book_catalogs',query:{book_id:book.id}})">编辑文章
                   </IBeautifulLink>
                 </div>
 
@@ -113,7 +114,7 @@
     CheckHasLoginConfirmDialog2,
     GetLoginUserName,
     RenderNickName,
-    renderUserInfoByNames
+    RenderUserInfoByNames
   } from "../../tools";
   import BookInfoEdit from "./BookInfoEdit";
 
@@ -201,7 +202,7 @@
           current_page: this.current_page,
         });
         if (result.status === "SUCCESS") {
-          this.userInfos = await renderUserInfoByNames(result.books, 'book_author');
+          this.userInfos = await RenderUserInfoByNames(result.books, 'book_author');
           this.books = result.books;
           this.total = result.paginator.totalcount;
 

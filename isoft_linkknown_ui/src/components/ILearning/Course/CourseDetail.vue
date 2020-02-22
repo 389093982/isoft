@@ -110,7 +110,7 @@
         }
       },
       toggle_favorite: async function (favorite_id, favorite_type, message) {
-        const result = await ToggleFavorite(favorite_id, favorite_type);
+        const result = await ToggleFavorite({favorite_id, favorite_type});
         if (result.status == "SUCCESS") {
           this.$Message.success(message + "成功!");
           this.refreshCourseDetail();

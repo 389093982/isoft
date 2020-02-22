@@ -17,23 +17,14 @@ export const GetMyCatalogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_lin
 export const GetMyBlogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyBlogs2', {}, 'GET');
 
 // 编辑或者新增博客文章
-export const BlogArticleEdit = (article_id, bookId, blog_title, short_desc, key_words, catalog_name, content, link_href) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit', {
-    article_id,
-    bookId,
-    blog_title,
-    short_desc,
-    key_words,
-    catalog_name,
-    content,
-    link_href
-  }, 'POST');
+export const BlogArticleEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit', params, 'POST');
 export const ArticleDelete = (article_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ArticleDelete', {article_id}, 'POST');
 
 // 热门博客分页列表
 export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageBlog', params, 'GET');
 export const QueryCustomTagBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCustomTagBlog', params, 'GET');
 
+export const QueryBookListByIds = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryBookListByIds', params, 'POST');
 export const BookEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookEdit', params, 'POST');
 export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateBookIcon', {
   book_id,
@@ -100,10 +91,9 @@ export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservi
 export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 
 // 切换收藏点赞
-export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite2", {
-  favorite_id,
-  favorite_type
-}, 'GET');
+export const ToggleFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite", params, 'GET');
+export const IsFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/IsFavorite", params, 'GET');
+export const GetUserFavoriteList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList", params, 'GET');
 
 // 添加评论
 export const AddComment = (parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) =>

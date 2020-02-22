@@ -80,12 +80,21 @@
       </Row>
     </div>
 
-    <div style="min-height: 450px;background-color: #ffffff;margin: 10px 0 0 0; padding:10px;">
-      <Row :gutter="10">
+    <div class="isoft_top5" style="min-height: 450px;">
+      <Row>
         <Col span="16">
-          <div v-if="user"><UserAbout :user-name="_userName"/></div>
-          <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
-            <ForwardLogin></ForwardLogin>
+          <div>
+            <div v-if="user">
+              <div style="background-color: #ffffff;">
+                <UserAbout :user-name="_userName"/>
+              </div>
+              <div class="isoft_top5" style="background-color: #ffffff;">
+                <UserFavorite :user-name="_userName"/>
+              </div>
+            </div>
+            <div v-else style="font-size: 20px;text-align: center;margin-top: 50px">
+              <ForwardLogin></ForwardLogin>
+            </div>
           </div>
         </Col>
         <Col span="8">
@@ -105,10 +114,11 @@
   import IFileUpload from "../Common/file/IFileUpload"
   import UserAbout from "./UserAbout";
   import ForwardLogin from "../SSO/ForwardLogin";
+  import UserFavorite from "./UserFavorite";
 
   export default {
     name: "UserDetail",
-    components: {ForwardLogin, UserAbout, HotUser, IFileUpload},
+    components: {UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
@@ -218,20 +228,20 @@
     0% {
       position: absolute;
       top: 2px;
-      right: -105px;
+      right: -135px;
       opacity: 0;
     }
     50% {
       position: absolute;
       top: 2px;
-      right: -145px;
+      right: -175px;
       color: #c50000;
       opacity: 1;
     }
     100% {
       position: absolute;
       top: 2px;
-      right: -105px;
+      right: -135px;
       opacity: 0;
     }
   }

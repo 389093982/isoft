@@ -122,10 +122,10 @@ export const MapAttrsForArray = function (arrs, attrName) {
   return attrs;
 }
 
-export const renderUserInfoByName = async function (user_name) {
+export const RenderUserInfoByName = async function (user_name) {
   const result = await GetUserInfoByNames({usernames: user_name});
   let userInfos = [];
-  if (result.status == "SUCCESS") {
+  if (result.status === "SUCCESS") {
     userInfos = result.users;
   }
   return new Promise(function (resolve, reject) {
@@ -133,7 +133,7 @@ export const renderUserInfoByName = async function (user_name) {
   });
 };
 
-export const renderUserInfoByNames = async function (arrs, attrName) {
+export const RenderUserInfoByNames = async function (arrs, attrName) {
   let user_names = MapAttrsForArray(arrs, attrName);
   user_names = Array.from(new Set(user_names));
   const result = await GetUserInfoByNames({usernames: user_names.join(",")});

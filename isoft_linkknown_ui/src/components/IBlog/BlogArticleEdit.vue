@@ -15,13 +15,13 @@
           <Row>
             <Col span="12">
               <FormItem label="文章标题" prop="blog_title">
-                <Input v-model="formValidate.blog_title" maxlength="200" show-word-limit
+                <Input v-model="formValidate.blog_title" :maxlength="200" show-word-limit
                        placeholder="Enter blog title..."/>
               </FormItem>
             </Col>
             <Col span="12">
               <FormItem label="简短描述" prop="short_desc">
-                <Input v-model="formValidate.short_desc" maxlength="200" show-word-limit
+                <Input v-model="formValidate.short_desc" :maxlength="200" show-word-limit
                        placeholder="Enter short_desc..."></Input>
               </FormItem>
             </Col>
@@ -29,7 +29,7 @@
           <Row>
             <Col span="12">
               <FormItem label="检索词条" prop="key_words">
-                <Input v-model="formValidate.key_words" maxlength="200" show-word-limit
+                <Input v-model="formValidate.key_words" :maxlength="200" show-word-limit
                        placeholder="Enter key_words..."></Input>
               </FormItem>
             </Col>
@@ -53,7 +53,7 @@
                           :toolbars="toolbars" :ishljs="true" style="z-index: 1;"/>
           </FormItem>
           <FormItem label="分享链接" prop="link_href">
-            <Input v-model="formValidate.link_href" maxlength="200" show-word-limit placeholder="请输入分享链接"></Input>
+            <Input v-model="formValidate.link_href" :maxlength="200" show-word-limit placeholder="请输入分享链接"></Input>
           </FormItem>
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
@@ -165,16 +165,10 @@
           this.$refs.md.$img2Url(pos, result.data.fileServerPath);
         })
       },
-      // createEmptyArticle:async function(book_id){
-      //   const result = await BlogEdit(-1, book_id, '新建文章', '', '', '', '','');
-      //   if(result.status == "SUCCESS"){
-      //       this.$emit("successEmitFunc");
-      //   }
-      // },
       handleDelete: async function (name) {
         if (this.formValidate.article_id > 0) {
           const result = await ArticleDelete(this.formValidate.article_id);
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.$refs[name].resetFields();
             if (this.successEmit) {
               this.$emit("successEmitFunc");
@@ -186,11 +180,8 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await BlogArticleEdit(_this.formValidate.article_id, this.bookId,
-              _this.formValidate.blog_title, _this.formValidate.short_desc,
-              _this.formValidate.key_words, _this.formValidate.catalog_name,
-              _this.formValidate.content, _this.formValidate.link_href);
-            if (result.status == "SUCCESS") {
+            const result = await BlogArticleEdit(_this.formValidate);
+            if (result.status === "SUCCESS") {
               _this.$Message.success('提交成功!');
               if (this.successEmit) {
                 this.$emit("successEmitFunc");
@@ -209,7 +200,7 @@
         var articleId = article_id > 0 ? article_id : this.$route.query.id;
         this.formValidate.article_id = articleId;
         const result = await ShowBlogArticleDetail(articleId);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           if (result.blog != null) {
             this.blog = result.blog;
             this.formValidate.article_id = result.blog.id;
@@ -224,13 +215,13 @@
       },
       refreshHotCatalogItems: async function () {
         const result = await FilterElementByPlacement(this.GLOBAL.placement_host_recommend_blog_tpyes);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.hotCatalogItems = result.elements;
         }
       },
       refreshMyCatalogs: async function () {
         const result = await GetMyCatalogs();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.mycatalogs = result.catalogs;
         }
       }
@@ -239,12 +230,12 @@
       // 加载热门分类
       this.refreshHotCatalogItems();
       // 数据回显
-      if (this.$route.query.id != undefined && this.$route.query.id != null) {
+      if (this.$route.query.id != null) {
         this.refreshArticleDetail();
       }
 
       const result = await GetMyCatalogs();
-      if (result.status == "SUCCESS") {
+      if (result.status === "SUCCESS") {
         this.mycatalogs = result.catalogs;
       }
     }
