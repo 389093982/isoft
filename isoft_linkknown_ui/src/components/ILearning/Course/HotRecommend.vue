@@ -5,16 +5,18 @@
       <IBeautifulCard title="热门课程推荐">
         <div slot="content" style="padding: 20px;">
           <Row v-for="course in courses">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
+            <div class="isoft_inline_ellipsis isoft_hover_red"
+                 @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
               {{course.course_name}}
-            </IBeautifulLink>
+            </div>
           </Row>
         </div>
       </IBeautifulCard>
     </div>
+
     <!-- 图标形式显示 -->
     <IBeautifulCard v-else title="热门课程推荐">
-      <div slot="content" style="min-height:850px;padding: 10px;">
+      <div slot="content" style="min-height:350px;padding: 10px;">
         <ul class="clear">
           <li v-for="course in courses">
             <router-link :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">
@@ -22,7 +24,7 @@
               <img v-else src="../../../assets/default.png" height="100" width="155"/>
               <!-- 播放图标 -->
               <div v-if="showDisplayIcon" class="ico_play"></div>
-              <p class="isoft_font12">{{course.course_name}}</p>
+              <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
             </router-link>
           </li>
         </ul>
@@ -63,7 +65,7 @@
     methods: {
       refreshHotRecommend: async function () {
         const result = await GetHotCourseRecommend();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.courses = result.courses;
         }
       }
@@ -75,9 +77,6 @@
 </script>
 
 <style scoped>
-  /* 引入公共样式库 */
-  @import "../../../assets/css/isoft_common.css";
-
   a {
     color: black;
   }

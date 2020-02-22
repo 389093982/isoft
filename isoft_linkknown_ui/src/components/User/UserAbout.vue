@@ -1,5 +1,5 @@
 <template>
-  <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;">
+  <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;min-height: 350px;">
     <IBeautifulLink>
       <img style="cursor: pointer;border-radius: 50%;"
            width="30" height="30" :src="user_small_icon" @error="defImg()">

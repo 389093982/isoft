@@ -6,16 +6,14 @@
       &nbsp; <span>如何提升得分？</span>
     </p>
     <p>
-      课程名称：{{course.course_name}}
+      <span>课程名称：{{course.course_name}}</span>
       <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/index'})"
             style="margin-left: 30px;">搜索同类资源</span>
-      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/ilearning/course_space'}))"
-            style="margin-left: 30px;">我的课程空间</span>
-      <span class="isoft_hover_red" @click="" style="margin-left: 30px;">开课流程</span>
+      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))"
+            style="margin-left: 30px;">开课流程</span>
     </p>
     <p>作者：
       <span v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
-      <span v-else>{{course.course_author}}</span>
     </p>
     <p>课程类型：{{course.course_type}}</p>
     <p>课程子类型：{{course.course_sub_type}}</p>
@@ -24,6 +22,9 @@
     <p v-if="course.course_label">标签语：
       <Tag v-for="(clabel, index) in clabels">{{clabel}}</Tag>
     </p>
+
+    <span v-if="showCourseSpace" class="isoft_hover_red forwardCourseSpace"
+          @click="$router.push($router.push({ path: '/ilearning/course_space'}))">进入我的课程空间</span>
   </span>
 </template>
 
@@ -40,10 +41,13 @@
         type: Object,
         default: null,
       },
+      showCourseSpace: {    // 是否显示我的课程空间
+        type: Boolean,
+        default: true,
+      },
     },
     data() {
       return {
-        user_small_icon: '',
         user: null,
       }
     },
@@ -51,13 +55,12 @@
       RenderUserInfoByName: async function () {
         const result = await GetUserDetail(this.course.course_author);
         if (result.status === "SUCCESS") {
-          this.user_small_icon = result.user.small_icon;
           this.user = result.user;
         }
       },
       renderNickName: function (user_name) {
         return !checkEmpty(this.user.nick_name) ? this.user.nick_name : user_name;
-      }
+      },
     },
     computed: {
       clabels: function () {
@@ -71,5 +74,31 @@
 </script>
 
 <style scoped>
+  .forwardCourseSpace {
+    background-color: #d6eecb;
+    padding: 8px 12px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 
+    animation: move_dh_1 5s infinite;
+  }
+
+  @keyframes move_dh_1 {
+    0% {
+      transform: rotateY(0deg)
+    }
+    25% {
+      transform: rotateY(10deg)
+    }
+    50% {
+      transform: rotateY(20deg)
+    }
+    75% {
+      transform: rotateY(10deg)
+    }
+    100% {
+      transform: rotateY(0deg)
+    }
+  }
 </style>
