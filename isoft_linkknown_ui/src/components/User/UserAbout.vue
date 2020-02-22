@@ -130,6 +130,7 @@
         return !checkEmpty(this.userName) ? this.userName : GetLoginUserName();
       },
       refreshUserDetail: async function () {
+        alert(this.getUserName());
         const result = await GetUserDetail(this.getUserName());
         if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
