@@ -16,7 +16,7 @@
 
     <!-- 图标形式显示 -->
     <IBeautifulCard v-else title="热门课程推荐">
-      <div slot="content" style="min-height:850px;padding: 10px;">
+      <div slot="content" style="min-height:350px;padding: 10px;">
         <ul class="clear">
           <li v-for="course in courses">
             <router-link :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">
@@ -24,7 +24,7 @@
               <img v-else src="../../../assets/default.png" height="100" width="155"/>
               <!-- 播放图标 -->
               <div v-if="showDisplayIcon" class="ico_play"></div>
-              <p class="isoft_font12">{{course.course_name}}</p>
+              <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
             </router-link>
           </li>
         </ul>

@@ -48,7 +48,7 @@
     position: fixed;
     width: 40px;
     min-height: 100px;
-    right: 0;
+    right: 7px;
     top: 20%;
     z-index: 999;
   }
