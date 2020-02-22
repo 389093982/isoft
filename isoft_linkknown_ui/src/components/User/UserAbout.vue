@@ -1,7 +1,8 @@
 <template>
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;">
     <IBeautifulLink>
-      <Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;
+      <img style="cursor: pointer;border-radius: 50%;"
+           width="30" height="30" :src="user_small_icon" @error="defImg()">
       <span v-if="nick_name">{{nick_name}}</span>
       <span v-else>{{getUserName()}}</span>
     </IBeautifulLink>&nbsp;&nbsp;
@@ -114,9 +115,15 @@
         // 当前 user 对应头像信息
         user_small_icon: '',
         nick_name: '',
+        defaultImg: require('../../assets/default.png'),
       }
     },
     methods: {
+      defImg() {
+        let img = event.srcElement;
+        img.src = this.defaultImg;
+        img.onerror = null; //防止闪图
+      },
       refreshUserInfo: function () {
         if (checkEmpty(this.userName) && checkEmpty(GetLoginUserName())) {
           return;
