@@ -19,5 +19,6 @@ func init() {
 	registRouter("/wechatPayApi/Refund", mc, mc.Refund, "post:Refund")
 	registRouter("/wechatPayApi/QueryOrder", mc, mc.QueryOrder, "post:QueryOrder")
 	registRouter("/wechatPayApi/PayNotifyResult", mc, mc.PayNotifyResult, "post:PayNotifyResult")
+	registRouter("/wechatPayApi/TestNotify", mc, mc.TestNotify, "get,post:TestNotify")
 
 }

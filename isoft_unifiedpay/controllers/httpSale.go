@@ -19,7 +19,7 @@ import (
 )
 
 //存储用户的账号和对应的websocket连接conn
-var userMap sync.Map
+var infoMap sync.Map
 
 //下单请求参数
 type OrderParams struct {
@@ -62,7 +62,10 @@ func (this *MainController) Order() {
 		logs.Info("收到websocket信息: %s",messageContent)
 		var orderParams OrderParams
 		json.Unmarshal([]byte(messageContent), &orderParams)
-		userMap.Store(orderParams.UserName,conn)
+		var userMap sync.Map
+		userMap.Store("conn",conn)
+		userMap.Store("messageType",messageType)
+		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
 		//this.Pay(orderParams, orderChan)
 		//返回信息
@@ -79,10 +82,27 @@ func (this *MainController) Order() {
 	}
 }
 
-func notify(username string, message string)  {
-	if v, ok := userMap.Load(username); ok {
-		conn := v.(*websocket.Conn)
-		conn.WriteMessage(1, []byte(""))
+//支付成功返回参数
+type PaySuccessNotify struct {
+	UserName string  `json:"user_name"`
+	Status string  `json:"status"`
+}
+
+//微信支付官方通知支付成功 -- 模拟
+func (this *MainController)TestNotify()  {
+	userName := "1875112921@qq.com"
+	if v, ok := infoMap.Load(userName); ok {
+		userMap := v.(sync.Map)
+		messageType_value, _ := userMap.Load("messageType")
+		conn_value, _ := userMap.Load("conn")
+		messageType := messageType_value.(int)
+		conn := conn_value.(*websocket.Conn)
+		defer conn.Close()
+		var paySuccessNotify PaySuccessNotify
+		paySuccessNotify.UserName = userName
+		paySuccessNotify.Status = "SUCCESS"
+		payResult, _ := json.Marshal(paySuccessNotify)
+		conn.WriteMessage(messageType, []byte(payResult))
 	}
 }
 
