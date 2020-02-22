@@ -131,7 +131,7 @@
       },
       refreshUserDetail: async function () {
         const result = await GetUserDetail(this.getUserName());
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
           this.nick_name = result.user.nick_name;
         }
@@ -140,8 +140,10 @@
         const result = await QueryPageBookList({
           search_type: '',
           search_user_name: this.getUserName(),
+          current_page: 1,
+          offset: 10,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.books = result.books;
         }
       },
@@ -151,13 +153,13 @@
           current_page: 1,
           search_user_name: this.getUserName(),
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.blogs = result.blogs;
         }
       },
       refreshCourseList: async function () {
-        const result = await GetCourseListByUserName(this.getUserName());
-        if (result.status == "SUCCESS") {
+        const result = await GetCourseListByUserName({userName: this.getUserName(), current_page: 1, offset: 10});
+        if (result.status === "SUCCESS") {
           this.courses = result.courses;
         }
       },
