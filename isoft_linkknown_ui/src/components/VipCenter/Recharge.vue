@@ -42,10 +42,11 @@
           <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
         </div>
         <div v-if="showPayResult" style="float: right;width: 55%">
-          <i-circle :percent="percent" :stroke-color="color">
+          <i-circle :percent="percent" :stroke-color="color" :size="100">
             <Icon v-if="percent === 100" type="ios-checkmark" size="60" style="color:#5cb85c"></Icon>
             <span v-else style="font-size:24px">等待中...</span>
           </i-circle>
+          <div style="margin-left: 20px">{{payResultDesc}}</div>
         </div>
       </div>
 
@@ -79,7 +80,7 @@
         return GetLoginUserName();
       },
       color () {
-        let color = '#2db7f5';
+        let color = 'grey';
         if (this.percent === 100) {
           color = '#5cb85c';
         }
@@ -96,6 +97,7 @@
         }
         //清理上次付款结果
         this.showPayResult = false;
+        this.payResultDesc = '';
         this.percent = 0;
         //准备参数
         let payMoney = this.openingTime.trim().split('¥')[1];
@@ -142,7 +144,6 @@
           if (result.status != null && result.status==="SUCCESS") {
             this.payUrl = '';
             this.showPayResult = true;
-            this.payResultDesc="支付成功！";
             var handler = setInterval(this.add, 50);
             //一秒后让handler失效
             setTimeout(function () {
@@ -158,6 +159,7 @@
       //支付成功，来个进度环显示下动态效果
       add:function() {
         if (this.percent >= 100) {
+          this.payResultDesc="支付成功！";
           return false;
         }
         this.percent += 10;
