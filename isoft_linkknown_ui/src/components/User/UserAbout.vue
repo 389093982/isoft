@@ -1,5 +1,5 @@
 <template>
-  <div v-if="getUserName()" style="border: 1px #dbdbdb solid;margin:2px 0 5px 5px;padding: 15px;">
+  <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;">
     <IBeautifulLink>
       <Avatar :src="user_small_icon" icon="ios-person" size="default"/>&nbsp;
       <span v-if="nick_name">{{nick_name}}</span>

@@ -1,57 +1,68 @@
 <template>
-  <div style="background: #FFFFFF;padding: 10px;">
-    <Row :gutter="10">
+  <div>
+    <Row>
       <!-- 左侧课程详情部分 -->
-      <Col span="16">
-        <!-- 头部 -->
-        <Row class="header">
-          <Col span="8">
-            <h4>课程名称：{{course.course_name}}</h4>
-            <div class="course_img">
-              <img :src="course.small_image" width="180" height="120" @error="defImg()"/>
-              <div class="course_name">{{course.course_name}}</div>
+      <Col span="16" style="padding-right: 5px;">
+        <div class="isoft_bg_white isoft_pd20">
+          <!-- 头部 -->
+          <Row class="header">
+            <Col span="8">
+              <h4>课程名称：{{course.course_name}}</h4>
+              <div class="course_img">
+                <img :src="course.small_image" width="180" height="120" @error="defImg()"/>
+                <div class="course_name">{{course.course_name}}</div>
+              </div>
+            </Col>
+            <Col span="16">
+              <CourseMeta :course="course"/>
+              <p v-if="course_labels && course_labels.length > 0">
+                标签：
+                <Tag v-for="(course_label, index) in course_labels">
+                  {{course_label}}
+                </Tag>
+              </p>
+              <p>
+                <a href="javascript:;" v-if="course_collect==true"
+                   @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
+                <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect', '收藏')">加入收藏</a>&nbsp;
+                <a href="javascript:;" v-if="course_parise==true"
+                   @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
+                <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise', '点赞')">我要点赞</a>
+              </p>
+            </Col>
+          </Row>
+          <hr style="margin-top: 10px;">
+          <!-- 视频链接 -->
+          <Row style="margin: 10px 0;min-height: 200px;">
+            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin: 0px 10px;padding: 10px;">
+              <IBeautifulLink>第 {{index + 1}} 集：{{cVideo.video_name}}</IBeautifulLink>
+              <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
+                <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
+              </router-link>
             </div>
-          </Col>
-          <Col span="16">
-            <CourseMeta :course="course"/>
-            <p v-if="course_labels && course_labels.length > 0">
-              标签：
-              <Tag v-for="(course_label, index) in course_labels">
-                {{course_label}}
-              </Tag>
-            </p>
-            <p>
-              <a href="javascript:;" v-if="course_collect==true"
-                 @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
-              <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect', '收藏')">加入收藏</a>&nbsp;
-              <a href="javascript:;" v-if="course_parise==true"
-                 @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
-              <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise', '点赞')">我要点赞</a>
-            </p>
-          </Col>
-        </Row>
-        <hr style="margin-top: 10px;">
-        <!-- 视频链接 -->
-        <Row style="margin: 10px 0;min-height: 200px;">
-          <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin: 0px 10px;padding: 10px;">
-            <IBeautifulLink>第 {{index + 1}} 集：{{cVideo.video_name}}</IBeautifulLink>
-            <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
-              <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
-            </router-link>
-          </div>
-          <Spin fix size="large" v-if="isLoading">
-            <div class="isoft_loading"></div>
-          </Spin>
-        </Row>
-        <hr>
-        <!-- 评论模块 -->
-        <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
+            <Spin fix size="large" v-if="isLoading">
+              <div class="isoft_loading"></div>
+            </Spin>
+          </Row>
+          <hr>
+        </div>
+
+        <div class="isoft_bg_white isoft_top5 isoft_pd20" style="min-height: 600px;">
+          <!-- 评论模块 -->
+          <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
+        </div>
       </Col>
 
       <Col span="8">
-        <UserAbout :userName="course.course_author"/>
-        <HotUser style="margin-left: 2px;"/>
-        <HotRecommend showMode="list" style="margin-left: 2px;"/>
+        <div class="isoft_bg_white">
+          <UserAbout :userName="course.course_author"/>
+        </div>
+        <div class="isoft_bg_white">
+          <HotUser style="margin-left: 2px;"/>
+        </div>
+        <div class="isoft_bg_white">
+          <HotRecommend showMode="list" style="margin-left: 2px;"/>
+        </div>
       </Col>
     </Row>
   </div>
