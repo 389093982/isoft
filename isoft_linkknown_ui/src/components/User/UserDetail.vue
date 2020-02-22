@@ -22,7 +22,7 @@
             </div>
           </div>
         </Col>
-        <Col span="5" style="padding: 10px 0 0 3px;">
+        <Col span="13" style="padding: 10px 0 0 3px;">
           <div>
             <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
           </div>
@@ -35,13 +35,13 @@
           <div>
             加入时间：<Time :time="user.created_time" :interval="1"/>
           </div>
-        </Col>
-        <Col span="8" style="text-align: left;padding: 10px 0 0 3px ;">
-          <div class="isoft_inline_ellipsis" style="padding-left: 20px">
-            <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-card-outline" style="font-size: 15px" />发布博客</div>
-            <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
-            <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
-          </div>
+
+            <div class="isoft_inline_ellipsis" style="padding:20px 0 0 0 ">
+              <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 5px;cursor: pointer" class="hvr-grow"><Icon type="ios-card-outline" style="font-size: 15px" />发布博客</div>
+              <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 10px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
+              <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 10px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
+            </div>
+
         </Col>
         <Col span="8" style="padding: 0 0 0 3px">
           <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
