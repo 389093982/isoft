@@ -228,20 +228,20 @@
     0% {
       position: absolute;
       top: 2px;
-      right: -105px;
+      right: -135px;
       opacity: 0;
     }
     50% {
       position: absolute;
       top: 2px;
-      right: -145px;
+      right: -175px;
       color: #c50000;
       opacity: 1;
     }
     100% {
       position: absolute;
       top: 2px;
-      right: -105px;
+      right: -135px;
       opacity: 0;
     }
   }
