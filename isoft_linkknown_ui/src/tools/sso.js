@@ -1,24 +1,20 @@
-import {checkContainsInString, checkEmpty, delCookie, getCookie, setCookie} from "./index"
+import {checkContainsInString, checkEmpty} from "./index"
 
 const _checkAdminLogin = function () {
-  let roleName = getCookie("roleName");
+  let roleName = localStorage.getItem("roleName");
   return roleName == "admin";
 
 }
 
 const _checkHasLogin = function () {
-  let userName = getCookie("userName");
-  var isLogin = getCookie("isLogin");
-  var token = getCookie("tokenString");
-  var expireSecond = getCookie("expireSecond");
-  if (expireSecond == null || new Date().getTime() > expireSecond) {    // 判断是否过期
-    return false;
-  }
-  return !checkEmpty(userName) && !checkEmpty(isLogin) && !checkEmpty(token) && isLogin == "isLogin";
+  let userName = localStorage.getItem("userName");
+  var isLogin = localStorage.getItem("isLogin");
+  var token = localStorage.getItem("tokenString");
+  return !checkEmpty(userName) && !checkEmpty(isLogin) && !checkEmpty(token) && isLogin === "isLogin";
 };
 
 const _getLoginUserName = function () {
-  return getCookie("userName");
+  return localStorage.getItem("userName");
 };
 
 // sso 登陆拦截
@@ -53,23 +49,21 @@ const _checkNotLogin = function () {
 }
 
 const _deleteLoginInfo = function () {
-  delCookie("tokenString");
-  delCookie("userName");
-  delCookie("isLogin");
+  localStorage.removeItem("tokenString");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("isLogin");
 }
 
 const _getNickName = function () {
-  return getCookie("nickName");
+  return localStorage.getItem("nickName");
 }
 
 const _setLoginInfo = function (loginResult, username) {
-  setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
-  setCookie("userName", username, 365, loginResult.domain);
-  setCookie("nickName", loginResult.nickName, 365, loginResult.domain);
-  setCookie("isLogin", "isLogin", 365, loginResult.domain);
-  setCookie("roleName", loginResult.roleName, 365, loginResult.domain);
-  let expireSecond = new Date().getTime() + loginResult.expireSecond * 1000;     // 时间戳
-  setCookie("expireSecond", expireSecond, 365, loginResult.domain);
+  localStorage.setItem("tokenString", loginResult.tokenString);
+  localStorage.setItem("userName", username);
+  localStorage.setItem("nickName", loginResult.nickName);
+  localStorage.setItem("isLogin", "isLogin");
+  localStorage.setItem("roleName", loginResult.roleName);
 }
 
 export const checkSSOLogin = (to, from, next) => _checkSSOLogin(to, from, next);
