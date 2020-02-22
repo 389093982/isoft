@@ -1,11 +1,13 @@
 <template>
   <div>
-    SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    <div v-for="(book_collect, index) in book_collects">
+      {{book_collect}}
+    </div>
   </div>
 </template>
 
 <script>
-  import {GetUserFavoriteList} from "../../api"
+  import {GetUserFavoriteList, QueryBookListByIds} from "../../api"
   import {checkEmpty} from "../../tools"
 
   export default {
@@ -16,11 +18,22 @@
         default: ''
       },
     },
+    data() {
+      return {
+        book_collects: [],
+      }
+    },
     methods: {
+      refreshBookList: async function () {
+        let book_ids = this.book_collects.map(bc => bc.id).join(",");
+        const result = await QueryBookListByIds({book_ids});
+        alert(JSON.stringify(result));
+      },
       refreshUserFavoriteList: async function () {
-        const result = await GetUserFavoriteList({favorite_type: 'book_collect'});
+        const result = await GetUserFavoriteList({favorite_type: 'book_collect', user_name: this.userName});
         if (result.status === "SUCCESS") {
-          alert(JSON.stringify(result));
+          this.book_collects = result.favorites;
+          this.refreshBookList();
         }
       }
     },

@@ -168,7 +168,7 @@
         this.current_page = 1;
 
         if (pattern === 1) {
-          this.search_type = "";  // search_type 为空表示查询全部分类
+          this.search_type = "_all";
           this.showLabel = "全部分类";
           this.refreshBlogList();
         } else if (pattern === 2) {
