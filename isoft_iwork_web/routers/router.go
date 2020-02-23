@@ -119,9 +119,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/queryElementById", wc, wc.QueryElementById, "get,post:QueryElementById")
 	registRouter("/api/iwork/copyElement", wc, wc.CopyElement, "get,post:CopyElement")
 	registRouter("/api/iwork/filterElementByPlacement", wc, wc.FilterElementByPlacement, "get,post:FilterElementByPlacement")
-
-	// 导入 Placement 和 Element
-	registRouter("/api/iwork/import", wc, wc.Import, "get,post:Import")
 }
 
 func registRouter(rootpath string, c beego.ControllerInterface, callFunc func(), mappingMethods ...string) *beego.App {

@@ -6,8 +6,6 @@
         <Button type="success" size="small" @click="$router.push({ path: '/iwork/placementEdit'})"
                 v-if="!this.chooserMode">新增占位符
         </Button>
-        <IFileUpload size="small" ref="fileUpload" @uploadComplete="uploadComplete" action="/api/iwork/import"
-                     uploadLabel="导入"/>
       </div>
 
       <!-- right 插槽部分 -->
@@ -158,14 +156,6 @@
       }
     },
     methods:{
-      uploadComplete: function (result) {
-        if (result.status == "SUCCESS") {
-          this.refreshPlacementList();
-          this.$Message.success("导入成功！");
-        } else {
-          this.$Message.error(result.errorMsg);
-        }
-      },
       copyPlacement:async function(id){
         const result = await CopyPlacement(id);
         if(result.status == "SUCCESS"){
