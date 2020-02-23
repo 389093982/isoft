@@ -55,7 +55,6 @@ func persistentToFile() {
 	persistentMigratesToFile(appids)
 	persistentWorkCahcesToFile(appids)
 	persistentAuditTasksToFile(appids)
-	persistentPlacementsToFile(appids)
 }
 
 func getAppName(appids []models.AppId, app_id int64) string {
@@ -72,20 +71,6 @@ func persistentAppIdsToFile(appids []models.AppId) {
 		_persistentDirPath := path.Join(persistentDirPath, appid.AppName)
 		filepath := path.Join(_persistentDirPath, "appid", fmt.Sprintf(`%s.appid`, appid.AppName))
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(appid))
-	}
-}
-
-func persistentPlacementsToFile(appids []models.AppId) {
-	placements, _ := models.GetAllPlacements()
-	for _, placement := range placements {
-		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, placement.AppId))
-		elements, _ := models.QueryElementsByPlacename(placement.PlacementName)
-		filepath := path.Join(_persistentDirPath, "placements", fmt.Sprintf(`%s.placement`, placement.PlacementName))
-		data := &models.PlacementElementMppaer{
-			Placement: placement,
-			Elements:  elements,
-		}
-		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(data))
 	}
 }
 
@@ -259,22 +244,7 @@ func importProject() {
 			persistentMultiToDB(fmt.Sprintf("%s/globalVars", appNameFilePath), reflect.TypeOf(models.GlobalVar{}))
 			persistentMultiToDB(fmt.Sprintf("%s/migrates", appNameFilePath), reflect.TypeOf(models.SqlMigrate{}))
 			persistentMultiToDB(fmt.Sprintf("%s/audits", appNameFilePath), reflect.TypeOf(models.AuditTask{}))
-			//persistentPlacementFilesToDB(fmt.Sprintf("%s/placements", appNameFilePath))
 			persistentWorkFilesToDB(fmt.Sprintf("%s/works", appNameFilePath))
 		}
-	}
-}
-
-func persistentPlacementFilesToDB(dirPath string) {
-	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
-	for _, filepath := range filepaths {
-		mapper := models.PlacementElementMppaer{}
-		bytes, _ := ioutil.ReadFile(filepath)
-		err := xml.Unmarshal(bytes, &mapper)
-		errorutil.CheckError(err)
-		_, err = orm.NewOrm().Insert(&mapper.Placement)
-		errorutil.CheckError(err)
-		_, err = orm.NewOrm().InsertMulti(len(mapper.Elements), mapper.Elements)
-		errorutil.CheckError(err)
 	}
 }

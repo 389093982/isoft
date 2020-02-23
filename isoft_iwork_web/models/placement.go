@@ -8,11 +8,6 @@ import (
 	"time"
 )
 
-type PlacementElementMppaer struct {
-	Placement Placement `json:"placement"`
-	Elements  []Element `json:"elements"`
-}
-
 type Placement struct {
 	Id              int64     `json:"id"`
 	AppId           int64     `json:"app_id"`
@@ -169,10 +164,5 @@ func CopyElement(id int64) (err error) {
 
 func DeleteElementById(id int64) (err error) {
 	_, err = orm.NewOrm().QueryTable("element").Filter("id", id).Delete()
-	return
-}
-
-func QueryElementsByPlacename(placement_name string) (elements []Element, err error) {
-	_, err = orm.NewOrm().QueryTable("element").Filter("placement", placement_name).All(&elements)
 	return
 }
