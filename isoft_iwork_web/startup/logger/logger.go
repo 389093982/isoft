@@ -57,22 +57,16 @@ func ClearLog() error {
 
 	logs.Info("开始清理日志表 runlog_detail")
 	filter := orm.NewOrm().QueryTable("runlog_detail").Filter("last_updated_time__lt", oldTime)
-	count, _ := filter.Count()
-	logs.Info("准备删除条数:" + strconv.Itoa(int(count)))
 	delCount, _ := filter.Delete()
 	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 
 	logs.Info("开始清理日志表 validatelog_detail")
 	filter = orm.NewOrm().QueryTable("validatelog_detail").Filter("last_updated_time__lt", oldTime)
-	count, _ = filter.Count()
-	logs.Info("准备删除条数:" + strconv.Itoa(int(count)))
 	delCount, _ = filter.Delete()
 	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 
 	logs.Info("开始清理日志表 validatelog_record")
 	filter = orm.NewOrm().QueryTable("validatelog_record").Filter("last_updated_time__lt", oldTime)
-	count, _ = filter.Count()
-	logs.Info("准备删除条数:" + strconv.Itoa(int(count)))
 	delCount, _ = filter.Delete()
 	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 	return nil
