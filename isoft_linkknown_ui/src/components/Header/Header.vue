@@ -33,8 +33,10 @@
             </template>
             <MenuGroup title="账号管理">
               <MenuItem name="7-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
-              <MenuItem name="7-2" @click.native="cancelUser">重新登录</MenuItem>
-              <MenuItem name="7-3" @click.native="cancelUser">退出</MenuItem>
+              <MenuItem name="7-2" @click.native="cancelUser">
+                <span v-if="isLogin()">重新</span><span>登录</span>
+              </MenuItem>
+              <MenuItem name="7-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
             </MenuGroup>
           </Submenu>
           <MenuItem name="8">
@@ -76,6 +78,9 @@
     methods: {
       isAdmin: function () {
         return CheckAdminLogin();
+      },
+      isLogin:function(){
+        return CheckHasLogin();
       },
       cancelUser() {
         deleteLoginInfo();

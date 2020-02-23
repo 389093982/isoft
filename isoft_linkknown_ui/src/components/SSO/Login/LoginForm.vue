@@ -15,9 +15,9 @@
     </div>
 
     <div id="login_submit_content">
-      <input class="focus" name="username" v-model.trim="username" placeholder="请输入账号" type="text" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " required @keyup.enter="login"/>
+      <input class="focus" name="username" v-model.trim="username" placeholder="邮箱..." type="text" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " required @keyup.enter="login"/>
       <input type="password" style="display:none">
-      <input class="focus" name="passwd" v-model.trim="passwd" placeholder="请输入密码" type="password" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " autocomplete="new-password" required @keyup.enter="login"/>
+      <input class="focus" name="passwd" v-model.trim="passwd" placeholder="密码..." type="password" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " autocomplete="new-password" required @keyup.enter="login"/>
       <div style="margin: 0 0 0 0 ">
         <div style="float: left;width: 50%;">
           <div style="margin: 8px 0 0 15px ">

@@ -7,7 +7,7 @@
       </span>
     </div>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="账号" prop="username">
+      <FormItem label="邮箱" prop="username">
         <Input v-model.trim="formValidate.username" placeholder="请输入注册邮箱"></Input>
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
@@ -39,7 +39,7 @@
     data() {
       const _validateUserName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('用户名不能为空!'));
+          callback(new Error('邮箱不能为空!'));
         } else if (!validateEmail(value)) {
           callback(new Error('邮箱不合法!'));
         } else {
