@@ -36,10 +36,10 @@
             <Button type="primary" icon="md-cart" @click="getPayUrl">立&nbsp;&nbsp;即&nbsp;&nbsp;下&nbsp;&nbsp;单</Button>
           </Row>
         </div>
-        <div v-if="payUrl" class="qrcode">
+        <div v-if="codeUrl" class="qrcode">
           扫码支付金额：<Icon type="logo-yen" />{{realPay}}
           <br>
-          <vue-qr :logoSrc="imageUrl" :text="payUrl" :size="180"></vue-qr>
+          <vue-qr :logoSrc="imageUrl" :text="codeUrl" :size="180"></vue-qr>
         </div>
         <div v-if="showPayResult" style="float: right;width: 55%">
           <i-circle :percent="percent" :stroke-color="color" :size="100">
@@ -67,7 +67,7 @@
         lastTimeChoice:'',
         payType: '微信支付',
         realPay:'',
-        payUrl: '',
+        codeUrl: '',
         imageUrl: require("../../../static/images/vip.png"),
         websocket:null,
         percent:0,
@@ -139,10 +139,10 @@
         let result = JSON.parse(e.data);
         if (result.user_name === this.loginUserName) {
           if (result.code_url != null) {
-            this.payUrl = result.code_url;
+            this.codeUrl = result.code_url;
           }
           if (result.status != null && result.status==="SUCCESS") {
-            this.payUrl = '';
+            this.codeUrl = '';
             this.showPayResult = true;
             var handler = setInterval(this.add, 50);
             //一秒后让handler失效

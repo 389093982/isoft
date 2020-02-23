@@ -26,7 +26,7 @@ type OrderParams struct {
 	UserName string  `json:"user_name"`
 	ProductId string  `json:"product_id"`
 	PoductDesc string`json:"poduct_desc"`
-	TransAmount string `json:"trans_amount"`
+	TransAmount int64 `json:"trans_amount"`
 	TransCurrCode string`json:"trans_curr_code"`
 }
 
@@ -71,7 +71,7 @@ func (this *MainController) Order() {
 		//返回信息
 		var orderResult OrderResult
 		orderResult.UserName = orderParams.UserName
-		orderResult.CodeUrl = "test url"
+		orderResult.CodeUrl = "test url";
 		resultMessageContent, _ := json.Marshal(orderResult)
 		err = conn.WriteMessage(messageType, resultMessageContent)
 		if err != nil {
@@ -132,8 +132,7 @@ func (this *MainController) Pay(orderParams OrderParams, orderChan chan interfac
 	order.ProductId = productId
 	order.ProductDesc = productDesc
 	order.TransTime = now
-	amount, _ := strconv.Atoi(transAmount)
-	order.TransAmount = int64(amount)
+	order.TransAmount = transAmount
 	order.TransCurrCode = transCurrCode
 
 	//入库
