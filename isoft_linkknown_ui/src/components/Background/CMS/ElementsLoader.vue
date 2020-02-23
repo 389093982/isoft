@@ -39,11 +39,8 @@
         }
       },
       checkElementsResult: function (result) {
-        alert(result.status +""+result.placement);
-        if (result == null || result.status !== "SUCCESS") {
-          console.log("call filterElementByPlacement method error!");
-        } else if (result.status === "SUCESS" && result.placement === null) {
-          console.log("please config placement for " + this.placement_name);
+        if (result.placement == null || result.elements == null) {
+          console.log("placement not found ,placement_name:"+this.placement_name);
         }
       }
     },
