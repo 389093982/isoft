@@ -57,7 +57,7 @@ func (this *WorkController) WorkStepList() {
 	if worksteps, err := models.QueryWorkStep(map[string]interface{}{"work_id": work_id}, orm.NewOrm()); err == nil {
 		jsonMap["status"] = "SUCCESS"
 		jsonMap["worksteps"] = worksteps
-		jsonMap["runLogRecordCount"] = GetRunLogRecordCount([]models.Work{{Id: work_id}})
+		jsonMap["runLogRecordCount"] = GetRunlogRecordCount([]models.Work{{Id: work_id}})
 	} else {
 		jsonMap["status"] = "ERROR"
 		jsonMap["errorMsg"] = err.Error()

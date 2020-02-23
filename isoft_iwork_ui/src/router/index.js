@@ -7,7 +7,7 @@ import AuditDetail from "../components/IWork/Audit/AuditDetail"
 const WorkList = () => import("@/components/IWork/IWork/WorkList");
 const WorkStepList = () => import("@/components/IWork/IWorkStep/WorkStepList");
 const RunLogList = () => import("@/components/IWork/IRunLog/RunLogList");
-const RunLogDetail = () => import("@/components/IWork/IRunLog/RunLogDetail");
+const RunlogDetail = () => import("@/components/IWork/IRunLog/RunlogDetail");
 const IWorkLayout = () => import("@/components/ILayout/IWorkLayout");
 const QuartzList = () => import("@/components/IWork/IQuartz/QuartzList");
 const AppidList = () => import("@/components/IWork/Appid/AppidList");
@@ -45,7 +45,7 @@ const IWorkRouter = [
       {path: 'filterList',component: IFilterList},
       {path: 'workstepList',component: WorkStepList},
       {path: 'runLogList',component: RunLogList},
-      {path: 'runLogDetail',component: RunLogDetail},
+      {path: 'runLogDetail', component: RunlogDetail},
       {path: 'migrateList',component: MigrateList},
       {path: 'editMigrate',component: EditMigrate},
       {path: 'quickSql',component: QuickSql},

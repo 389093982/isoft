@@ -13,10 +13,10 @@
 </template>
 
 <script>
-  import {GetLastRunLogDetail} from "../../../api"
+  import {GetLastRunlogDetail} from "../../../api"
 
   export default {
-    name: "RunLogDetail",
+    name: "RunlogDetail",
     data(){
       return {
         highlightError:false,
@@ -73,8 +73,8 @@
       viewWorkSteps:function (id, work_name) {
         this.$router.push({ path: '/iwork/workstepList', query: { work_id: id, work_name: work_name }});
       },
-      refreshRunLogDetail:async function () {
-        const result = await GetLastRunLogDetail(this.$route.query.tracking_id);
+      refreshRunlogDetail: async function () {
+        const result = await GetLastRunlogDetail(this.$route.query.tracking_id);
         if(result.status=="SUCCESS"){
           this.runLogRecord = result.runLogRecord;
           this.runLogDetails = result.runLogDetails;
@@ -88,7 +88,7 @@
       }
     },
     mounted(){
-      this.refreshRunLogDetail();
+      this.refreshRunlogDetail();
     }
   }
 </script>

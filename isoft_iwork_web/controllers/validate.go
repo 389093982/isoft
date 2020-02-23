@@ -58,10 +58,10 @@ func validateWorks(app_id, workId int64) {
 	// 待校验的所有 work 信息
 	workMap := prepareValiateWorks(app_id, workId)
 	// 记录日志
-	recordValidateLogRecord(trackingId, workId)
-	logCh := make(chan *models.ValidateLogDetail, 50) // 指定容量
+	recordValidatelogRecord(trackingId, workId)
+	logCh := make(chan *models.ValidatelogDetail, 50) // 指定容量
 	go func() {
-		recordValidateLogDetails(logCh, trackingId, workMap) // 开协程保证读和写同时进行
+		recordValidatelogDetails(logCh, trackingId, workMap) // 开协程保证读和写同时进行
 		completeFlag <- 1
 	}()
 	var wg sync.WaitGroup
@@ -97,10 +97,10 @@ func prepareValiateWorks(app_id, workId int64) map[models.Work][]models.WorkStep
 }
 
 // 校验单个 work
-func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models.ValidateLogDetail, workWg *sync.WaitGroup) {
+func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models.ValidatelogDetail, workWg *sync.WaitGroup) {
 	defer workWg.Done()
 	defer func(start time.Time) {
-		logCh <- &models.ValidateLogDetail{
+		logCh <- &models.ValidatelogDetail{
 			WorkId: work.Id,
 			Detail: fmt.Sprintf(`validate %s work cost %d ms!`, work.WorkName, time.Now().Sub(start).Nanoseconds()/1e6),
 		}
@@ -118,10 +118,10 @@ func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models
 	wg.Wait()
 }
 
-func checkBeginAndEnd(steps []models.WorkStep, logCh chan *models.ValidateLogDetail, work *models.Work) {
+func checkBeginAndEnd(steps []models.WorkStep, logCh chan *models.ValidatelogDetail, work *models.Work) {
 	checkError := func(step *models.WorkStep, workStepName string, errorMsg string) {
 		if step.WorkStepType != workStepName {
-			logCh <- &models.ValidateLogDetail{
+			logCh <- &models.ValidatelogDetail{
 				WorkId:     work.Id,
 				WorkStepId: step.WorkStepId,
 				Detail:     errorMsg,
@@ -133,16 +133,16 @@ func checkBeginAndEnd(steps []models.WorkStep, logCh chan *models.ValidateLogDet
 	return
 }
 
-func parseToValidateLogDetail(step *models.WorkStep, err interface{}) *models.ValidateLogDetail {
+func parseToValidatelogDetail(step *models.WorkStep, err interface{}) *models.ValidatelogDetail {
 	var detail string
 	if _, ok := err.(error); ok {
 		detail = string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))
 	} else if _err, ok := err.(string); ok {
 		detail = _err
-	} else if _err, ok := err.(models.ValidateLogDetail); ok {
+	} else if _err, ok := err.(models.ValidatelogDetail); ok {
 		detail = _err.Detail
 	}
-	return &models.ValidateLogDetail{
+	return &models.ValidatelogDetail{
 		WorkId:     step.WorkId,
 		WorkStepId: step.WorkStepId,
 		Detail:     detail,
@@ -150,11 +150,11 @@ func parseToValidateLogDetail(step *models.WorkStep, err interface{}) *models.Va
 }
 
 // 校验单个 step,并将校验不通过的信息放入 logCh 中
-func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.ValidateLogDetail, stepWg *sync.WaitGroup) {
+func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.ValidatelogDetail, stepWg *sync.WaitGroup) {
 	defer stepWg.Done()
 	defer func() {
 		if err := recover(); err != nil {
-			logCh <- parseToValidateLogDetail(step, errorutil.ToError(string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))))
+			logCh <- parseToValidatelogDetail(step, errorutil.ToError(string(errorutil.PanicTrace(sysconfig.IWORK_PANICTRACE_SIZE))))
 		}
 	}()
 
@@ -169,7 +169,7 @@ func validateStep(work *models.Work, step *models.WorkStep, logCh chan *models.V
 			checkResultMsg = checkResult
 		}
 
-		logCh <- &models.ValidateLogDetail{
+		logCh <- &models.ValidatelogDetail{
 			WorkId:     step.WorkId,
 			WorkStepId: step.WorkStepId,
 			ParamName:  paramName,
@@ -287,7 +287,7 @@ func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 func checkVariableRelationShipForGlobal(app_id int64, paramName, referFiledName string, checkResultCh chan string) {
 	_, ok1 := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, sysconfig.ENV_ONUSE))
 	_, ok2 := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, referFiledName, "dev"))
-	if !ok1 && !ok2{
+	if !ok1 && !ok2 {
 		bytes, _ := json.Marshal(&map[string]string{
 			"paramName":      paramName,
 			"checkResultMsg": fmt.Sprintf("Invalid referFiledName relationship for %s was found!", referFiledName),
@@ -359,7 +359,7 @@ func parseReferNodeAndFiledName(refer string) (referNodeName, referFiledName str
 }
 
 // 从 logCh 中读取日志并记录
-func recordValidateLogDetails(logCh chan *models.ValidateLogDetail, trackingId string, workMap map[models.Work][]models.WorkStep) {
+func recordValidatelogDetails(logCh chan *models.ValidatelogDetail, trackingId string, workMap map[models.Work][]models.WorkStep) {
 	workCaches := make(map[string]models.Work, 0)
 	workStepCaches := make(map[string]models.WorkStep, 0)
 	for work, steps := range workMap {
@@ -369,19 +369,19 @@ func recordValidateLogDetails(logCh chan *models.ValidateLogDetail, trackingId s
 			workStepCaches[strconv.FormatInt(work.Id, 10)+"_"+strconv.FormatInt(step.WorkStepId, 10)] = step
 		}
 	}
-	details := make([]*models.ValidateLogDetail, 0)
+	details := make([]*models.ValidatelogDetail, 0)
 	// 从 logCh 中循环读取校验不通过的信息,并将其写入日志表中去
 	for log := range logCh {
 		workCacheKey, workStepCacheKey :=
 			string(strconv.FormatInt(log.WorkId, 10)), strconv.FormatInt(log.WorkId, 10)+"_"+strconv.FormatInt(log.WorkStepId, 10)
 		work, _ := workCaches[workCacheKey]
 		step, _ := workStepCaches[workStepCacheKey]
-		details = append(details, fillWorkValidateLogDetail(log, trackingId, &work, &step))
+		details = append(details, fillWorkValidatelogDetail(log, trackingId, &work, &step))
 	}
-	models.InsertMultiValidateLogDetail(details)
+	models.InsertMultiValidatelogDetail(details)
 }
 
-func fillWorkValidateLogDetail(log *models.ValidateLogDetail, trackingId string, work *models.Work, step *models.WorkStep) *models.ValidateLogDetail {
+func fillWorkValidatelogDetail(log *models.ValidatelogDetail, trackingId string, work *models.Work, step *models.WorkStep) *models.ValidatelogDetail {
 	log.TrackingId = trackingId
 	log.WorkName = work.WorkName
 	log.CreatedBy = "SYSTEM"
@@ -394,8 +394,8 @@ func fillWorkValidateLogDetail(log *models.ValidateLogDetail, trackingId string,
 	return log
 }
 
-func recordValidateLogRecord(trackingId string, workId int64) (int64, error) {
-	return models.InsertValidateLogRecord(&models.ValidateLogRecord{
+func recordValidatelogRecord(trackingId string, workId int64) (int64, error) {
+	return models.InsertValidatelogRecord(&models.ValidatelogRecord{
 		TrackingId:      trackingId,
 		WorkId:          workId,
 		CreatedBy:       "SYSTEM",
@@ -408,12 +408,12 @@ func recordValidateLogRecord(trackingId string, workId int64) (int64, error) {
 // 统计操作所花费的时间方法
 func recordCostTimeLog(trackingId string, start time.Time) {
 	detail := fmt.Sprintf("validate complete! total cost %d ms!", time.Now().Sub(start).Nanoseconds()/1e6)
-	log := newValidateLogDetail(trackingId, detail)
-	models.InsertMultiValidateLogDetail([]*models.ValidateLogDetail{log})
+	log := newValidatelogDetail(trackingId, detail)
+	models.InsertMultiValidatelogDetail([]*models.ValidatelogDetail{log})
 }
 
-func newValidateLogDetail(trackingId, detail string) *models.ValidateLogDetail {
-	return &models.ValidateLogDetail{
+func newValidatelogDetail(trackingId, detail string) *models.ValidatelogDetail {
+	return &models.ValidatelogDetail{
 		TrackingId:      trackingId,
 		Detail:          detail,
 		CreatedBy:       "SYSTEM",

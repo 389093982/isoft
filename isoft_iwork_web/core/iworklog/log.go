@@ -12,7 +12,7 @@ import (
 const cacheLen = 5
 
 type CacheLoggerWriter struct {
-	caches   []*models.RunLogDetail
+	caches   []*models.RunlogDetail
 	logOrder int64
 }
 
@@ -28,7 +28,7 @@ func (this *CacheLoggerWriter) cleanCaches() {
 
 func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail string) {
 	this.logOrder = this.logOrder + 1
-	log := &models.RunLogDetail{
+	log := &models.RunlogDetail{
 		TrackingId:      trackingId,
 		WorkStepName:    workStepName,
 		LogLevel:        logLevel,
@@ -48,10 +48,10 @@ func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail 
 
 func (this *CacheLoggerWriter) flush() {
 	if sysconfig.SYSCONFIG_LOGWIRTER_ENABLE {
-		caches := make([]*models.RunLogDetail, len(this.caches))
+		caches := make([]*models.RunlogDetail, len(this.caches))
 		copy(caches, this.caches) // 值拷贝
 		startup.RunLogPool.JobQueue <- func() {
-			if _, err := models.InsertMultiRunLogDetail(caches); err != nil {
+			if _, err := models.InsertMultiRunlogDetail(caches); err != nil {
 				fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@" + err.Error())
 			}
 		}
