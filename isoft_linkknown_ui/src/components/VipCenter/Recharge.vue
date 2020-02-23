@@ -14,10 +14,10 @@
           <Row>
             <a style="color: #ff6600">开通时长: </a>{{openingTime}}&nbsp;&nbsp;&nbsp;
             <RadioGroup v-model="openingTime" type="button">
-              <Radio label=" 1个月 / ¥60 " openingTime></Radio>
-              <Radio label=" 3个月 / ¥150 " openingTime></Radio>
-              <Radio label=" 6个月 / ¥240 " openingTime></Radio>
-              <Radio label=" 1年 / ¥360 " openingTime></Radio>
+              <Radio :label="openingTime_choice_one" openingTime></Radio>
+              <Radio :label="openingTime_choice_two" openingTime></Radio>
+              <Radio :label="openingTime_choice_three" openingTime></Radio>
+              <Radio :label="openingTime_choice_four" openingTime></Radio>
             </RadioGroup>
           </Row>
           <br>
@@ -62,6 +62,10 @@
     components: {vueQr},
     data() {
       return {
+        openingTime_choice_one:' 1个月 / ¥60 ',
+        openingTime_choice_two:' 3个月 / ¥150 ',
+        openingTime_choice_three:' 6个月 / ¥240 ',
+        openingTime_choice_four:' 1年 / ¥360 ',
         openingTime: ' 1个月 / ¥60 ',
         tempChoice: '',
         lastTimeChoice:'',
@@ -92,7 +96,7 @@
         this.lastTimeChoice = this.tempChoice;
         this.tempChoice = this.openingTime;
         if (this.openingTime===this.lastTimeChoice) {
-          this.$Message.warning("请勿重复下单！");
+          // this.$Message.warning("请勿重复下单！");
           return false;
         }
         //清理上次付款结果
