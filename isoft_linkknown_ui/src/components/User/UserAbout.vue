@@ -68,8 +68,8 @@
         <TabPane icon="ios-book-outline" label="作者书单">
           <Row>
             <Col span="8">图书名称</Col>
-            <Col span="8">课程类型</Col>
-            <Col span="8">课程子类型</Col>
+            <Col span="8">图书描述</Col>
+            <Col span="8">时间</Col>
           </Row>
           <Row v-for="(book,index) in books">
             <Row style="line-height: 28px;height: 28px;">
