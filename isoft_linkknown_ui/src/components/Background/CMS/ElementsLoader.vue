@@ -24,7 +24,7 @@
         } else {
           if (!checkEmpty(this.placement_name)) {
             result = await FilterElementByPlacement(this.placement_name);
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               _store.setItem({
                 name: this.placement_name,
                 value: JSON.stringify(result),
@@ -33,8 +33,16 @@
             }
           }
         }
-        if (result != null && result.status == "SUCCESS") {
+        this.checkElementsResult(result);
+        if (result != null && result.status === "SUCCESS") {
           this.$emit("onLoadElement", result.placement.placement_label, result.elements);
+        }
+      },
+      checkElementsResult: function (result) {
+        if (result == null || result.status !== "SUCCESS") {
+          console.log("call filterElementByPlacement method error!");
+        } else if (result.status === "SUCESS" && result.placement === null) {
+          console.log("please config placement for " + this.placement_name);
         }
       }
     },
