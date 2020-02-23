@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_utils/common/pageutil"
 	"time"
+	"github.com/astaxie/beego/logs"
 )
 
 func (this *WorkController) FilterPagePlacement() {
@@ -195,15 +196,20 @@ func (this *WorkController) CopyElement() {
 
 func (this *WorkController) FilterElementByPlacement() {
 	placement_name := this.GetString("placement")
-	placement, _ := models.QueryPlacementByName(placement_name)
-	if placement.ElementLimit < 0 {
-		placement.ElementLimit = 1000
-	}
-	elements, err := models.QueryLimitValidElementByPlaceName(placement_name, placement.ElementLimit)
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "placement": placement, "elements": elements}
-	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	placement, err := models.QueryPlacementByName(placement_name)
+	if err!=nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "系统异常"}
+		logs.Error(err.Error())
+	}else {
+		if placement.ElementLimit <= 0 {
+			placement.ElementLimit = 1000
+		}
+		elements, err := models.QueryLimitValidElementByPlaceName(placement_name, placement.ElementLimit)
+		if err == nil {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "placement": placement, "elements": elements}
+		} else {
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "系统异常"}
+		}
 	}
 	this.ServeJSON()
 }

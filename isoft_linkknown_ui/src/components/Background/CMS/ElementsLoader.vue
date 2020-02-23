@@ -39,6 +39,7 @@
         }
       },
       checkElementsResult: function (result) {
+        alert(result.status +""+result.placement);
         if (result == null || result.status !== "SUCCESS") {
           console.log("call filterElementByPlacement method error!");
         } else if (result.status === "SUCESS" && result.placement === null) {
