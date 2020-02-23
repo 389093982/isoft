@@ -22,7 +22,7 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work models.Work) 
 	}
 	startup.RunLogPool.JobQueue <- func() {
 		// 记录日志
-		models.InsertRunLogRecord(&models.RunLogRecord{
+		models.InsertRunlogRecord(&models.RunlogRecord{
 			AppId:           work.AppId,
 			TrackingId:      trackingId,
 			WorkId:          work.Id,

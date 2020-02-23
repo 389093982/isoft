@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/toolbox"
 	"isoft/isoft_utils/common/apppath"
 	"isoft/isoft_utils/common/fileutils"
 	"os"
-	"github.com/astaxie/beego/toolbox"
-	"time"
-	"github.com/astaxie/beego/orm"
 	"strconv"
+	"time"
 )
 
 func init() {
@@ -40,7 +40,7 @@ func init() {
 
 	//定时清理四张日志表
 	//cronExpress := "0/10 * * * * *"  //每隔10秒执行
-	cronExpress := "0 0 0 * * ?"  //每天凌晨0时0分0秒执行
+	cronExpress := "0 0 0 * * ?" //每天凌晨0时0分0秒执行
 	clearLogTask := toolbox.NewTask("clearLogTask", cronExpress, ClearLog)
 	toolbox.AddTask("clearLogTask", clearLogTask)
 	toolbox.StartTask()
@@ -55,25 +55,19 @@ func ClearLog() error {
 	preDays, _ := strconv.Atoi(beego.AppConfig.String("iwork.clearRunAndValidateLog.preDays"))
 	oldTime := now.AddDate(0, 0, -preDays)
 
-	logs.Info("开始清理日志表 run_log_detail")
-	filter := orm.NewOrm().QueryTable("run_log_detail").Filter("last_updated_time__lt", oldTime)
-	count, _ := filter.Count()
-	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	logs.Info("开始清理日志表 runlog_detail")
+	filter := orm.NewOrm().QueryTable("runlog_detail").Filter("last_updated_time__lt", oldTime)
 	delCount, _ := filter.Delete()
-	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 
-	logs.Info("开始清理日志表 validate_log_detail")
-	filter = orm.NewOrm().QueryTable("validate_log_detail").Filter("last_updated_time__lt", oldTime)
-	count, _ = filter.Count()
-	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	logs.Info("开始清理日志表 validatelog_detail")
+	filter = orm.NewOrm().QueryTable("validatelog_detail").Filter("last_updated_time__lt", oldTime)
 	delCount, _ = filter.Delete()
-	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 
-	logs.Info("开始清理日志表 validate_log_record")
-	filter = orm.NewOrm().QueryTable("validate_log_record").Filter("last_updated_time__lt", oldTime)
-	count, _ = filter.Count()
-	logs.Info("准备删除条数:"+strconv.Itoa(int(count)))
+	logs.Info("开始清理日志表 validatelog_record")
+	filter = orm.NewOrm().QueryTable("validatelog_record").Filter("last_updated_time__lt", oldTime)
 	delCount, _ = filter.Delete()
-	logs.Info("实际删除条数:"+strconv.Itoa(int(delCount)))
+	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 	return nil
 }

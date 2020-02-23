@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type RunLogRecord struct {
+type RunlogRecord struct {
 	Id              int64     `json:"id"`
 	AppId           int64     `json:"app_id"`
 	TrackingId      string    `json:"tracking_id"`
@@ -18,7 +18,7 @@ type RunLogRecord struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-type RunLogDetail struct {
+type RunlogDetail struct {
 	Id              int64     `json:"id"`
 	TrackingId      string    `json:"tracking_id" orm:"null"`
 	WorkStepName    string    `json:"work_step_name" orm:"null"`
@@ -31,17 +31,17 @@ type RunLogDetail struct {
 	LastUpdatedTime time.Time `json:"last_updated_time" orm:"null"`
 }
 
-func InsertRunLogRecord(record *RunLogRecord) (id int64, err error) {
+func InsertRunlogRecord(record *RunlogRecord) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(record)
 	return
 }
 
-func InsertMultiRunLogDetail(details []*RunLogDetail) (num int64, err error) {
+func InsertMultiRunlogDetail(details []*RunlogDetail) (num int64, err error) {
 	o := orm.NewOrm()
 	for _, detail := range details {
 		if detail.LogLevel == "ERROR" {
-			o.QueryTable("run_log_record").Filter("tracking_id", detail.TrackingId).Update(orm.Params{"LogLevel": "ERROR"})
+			o.QueryTable("runlog_record").Filter("tracking_id", detail.TrackingId).Update(orm.Params{"LogLevel": "ERROR"})
 			break
 		}
 	}
@@ -49,14 +49,14 @@ func InsertMultiRunLogDetail(details []*RunLogDetail) (num int64, err error) {
 	return
 }
 
-func QueryRunLogRecordWithTracking(tracking_id string) (runLogRecord RunLogRecord, err error) {
+func QueryRunlogRecordWithTracking(tracking_id string) (runLogRecord RunlogRecord, err error) {
 	o := orm.NewOrm()
-	err = o.QueryTable("run_log_record").Filter("tracking_id", tracking_id).One(&runLogRecord)
+	err = o.QueryTable("runlog_record").Filter("tracking_id", tracking_id).One(&runLogRecord)
 	return
 }
 
-func QueryRunLogRecordCount(workId int64, log_level string) (count int64, err error) {
-	qs := orm.NewOrm().QueryTable("run_log_record").Filter("work_id", workId)
+func QueryRunlogRecordCount(workId int64, log_level string) (count int64, err error) {
+	qs := orm.NewOrm().QueryTable("runlog_record").Filter("work_id", workId)
 	if log_level != "" {
 		qs = qs.Filter("log_level", log_level)
 	}
@@ -64,9 +64,9 @@ func QueryRunLogRecordCount(workId int64, log_level string) (count int64, err er
 	return
 }
 
-func QueryRunLogRecord(app_id int64, work_id int64, logLevel string, page int, offset int) (runLogRecords []RunLogRecord, counts int64, err error) {
+func QueryRunlogRecord(app_id int64, work_id int64, logLevel string, page int, offset int) (runLogRecords []RunlogRecord, counts int64, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("run_log_record")
+	qs := o.QueryTable("runlog_record")
 	if work_id > 0 {
 		work, _ := QueryWorkById(work_id, o)
 		qs = qs.Filter("work_name", work.WorkName)
@@ -84,14 +84,14 @@ func QueryRunLogRecord(app_id int64, work_id int64, logLevel string, page int, o
 	return
 }
 
-func QueryLastRunLogDetail(tracking_id string) (runLogDetails []RunLogDetail, err error) {
+func QueryLastRunlogDetail(tracking_id string) (runLogDetails []RunlogDetail, err error) {
 	o := orm.NewOrm()
 	// __startswith 多级 tracking_id 也查出来
-	_, err = o.QueryTable("run_log_detail").Filter("tracking_id__startswith", tracking_id).OrderBy("log_order").All(&runLogDetails)
+	_, err = o.QueryTable("runlog_detail").Filter("tracking_id__startswith", tracking_id).OrderBy("log_order").All(&runLogDetails)
 	return
 }
 
-type ValidateLogRecord struct {
+type ValidatelogRecord struct {
 	Id              int64     `json:"id"`
 	TrackingId      string    `json:"tracking_id"`
 	WorkId          int64     `json:"work_id"`
@@ -101,7 +101,7 @@ type ValidateLogRecord struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-type ValidateLogDetail struct {
+type ValidatelogDetail struct {
 	Id              int64     `json:"id"`
 	TrackingId      string    `json:"tracking_id"`
 	WorkId          int64     `json:"work_id"`
@@ -116,21 +116,21 @@ type ValidateLogDetail struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-func InsertValidateLogRecord(record *ValidateLogRecord) (id int64, err error) {
+func InsertValidatelogRecord(record *ValidatelogRecord) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(record)
 	return
 }
 
-func InsertMultiValidateLogDetail(details []*ValidateLogDetail) (num int64, err error) {
+func InsertMultiValidatelogDetail(details []*ValidatelogDetail) (num int64, err error) {
 	o := orm.NewOrm()
 	num, err = o.InsertMulti(len(details), &details)
 	return
 }
 
-func QueryLastValidateLogRecord(work_id int64) (record ValidateLogRecord, err error) {
+func QueryLastValidatelogRecord(work_id int64) (record ValidatelogRecord, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("validate_log_record")
+	qs := o.QueryTable("validatelog_record")
 	if work_id > 0 {
 		qs = qs.Filter("work_id", work_id)
 	}
@@ -138,10 +138,10 @@ func QueryLastValidateLogRecord(work_id int64) (record ValidateLogRecord, err er
 	return
 }
 
-func QueryLastValidateLogDetail(work_id int64) (details []ValidateLogDetail, err error) {
-	if record, err := QueryLastValidateLogRecord(work_id); err == nil {
+func QueryLastValidatelogDetail(work_id int64) (details []ValidatelogDetail, err error) {
+	if record, err := QueryLastValidatelogRecord(work_id); err == nil {
 		o := orm.NewOrm()
-		_, err = o.QueryTable("validate_log_detail").
+		_, err = o.QueryTable("validatelog_detail").
 			Filter("tracking_id", record.TrackingId).OrderBy("-work_id", "work_step_id").All(&details)
 	}
 	return

@@ -86,7 +86,7 @@ export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+
 export const FilterPageLogRecord = (work_id,logLevel,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageLogRecord", {work_id,logLevel,offset,current_page},'POST');
 
 // 获取最后一次运行日志详情
-export const GetLastRunLogDetail = (tracking_id) => ajax(BASE_URL+"/iwork/getLastRunLogDetail", {tracking_id},'POST');
+export const GetLastRunlogDetail = (tracking_id) => ajax(BASE_URL + "/iwork/getLastRunlogDetail", {tracking_id}, 'POST');
 
 // 获取相关流程
 export const GetRelativeWork = (work_id) => ajax(BASE_URL+"/iwork/getRelativeWork", {work_id},'POST');

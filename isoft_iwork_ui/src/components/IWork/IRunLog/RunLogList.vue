@@ -85,9 +85,9 @@
     methods:{
       loadLevel:function(logLevel){
         this.logLevel = logLevel;
-        this.refreshRunLogRecordList();
+        this.refreshRunlogRecordList();
       },
-      refreshRunLogRecordList:async function () {
+      refreshRunlogRecordList: async function () {
         const result = await FilterPageLogRecord(this.getWorkId(),this.logLevel,this.offset,this.current_page);
         if(result.status=="SUCCESS"){
           this.runLogRecords = result.runLogRecords;
@@ -96,23 +96,23 @@
       },
       handleChange(page){
         this.current_page = page;
-        this.refreshRunLogRecordList();
+        this.refreshRunlogRecordList();
       },
       handlePageSizeChange(pageSize){
         this.offset = pageSize;
-        this.refreshRunLogRecordList();
+        this.refreshRunlogRecordList();
       },
       getWorkId:function () {
         return this.workId > 0 ? this.workId : this.$route.query.work_id;
       },
     },
     mounted: function () {
-      this.refreshRunLogRecordList();
+      this.refreshRunlogRecordList();
     },
     watch:{
       // 监听路由是否变化
       '$route' (to, from) {
-        this.refreshRunLogRecordList();
+        this.refreshRunlogRecordList();
       }
     },
   }

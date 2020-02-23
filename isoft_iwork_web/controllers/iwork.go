@@ -61,10 +61,10 @@ func (this *WorkController) GetRelativeWork() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) GetLastRunLogDetail() {
+func (this *WorkController) GetLastRunlogDetail() {
 	tracking_id := this.GetString("tracking_id")
-	runLogRecord, _ := models.QueryRunLogRecordWithTracking(tracking_id)
-	runLogDetails, err := models.QueryLastRunLogDetail(tracking_id)
+	runLogRecord, _ := models.QueryRunlogRecordWithTracking(tracking_id)
+	runLogDetails, err := models.QueryLastRunlogDetail(tracking_id)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogDetails": runLogDetails, "runLogRecord": runLogRecord}
 	} else {
@@ -150,7 +150,7 @@ func (this *WorkController) FilterPageWorks() {
 			"status":            "SUCCESS",
 			"works":             result["works"],
 			"paginator":         result["paginator"],
-			"runLogRecordCount": GetRunLogRecordCount(result["works"].([]models.Work)),
+			"runLogRecordCount": GetRunlogRecordCount(result["works"].([]models.Work)),
 		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
@@ -286,15 +286,15 @@ func (this *WorkController) GetMetaInfo() {
 	this.ServeJSON()
 }
 
-func GetRunLogRecordCount(works []models.Work) interface{} {
+func GetRunlogRecordCount(works []models.Work) interface{} {
 	m := make(map[int64]map[string]int64, len(works))
 	ch := make(chan int64, len(works))
 	var lock sync.RWMutex
 	for _, work := range works {
 		go func(work models.Work) {
 			defer func() { ch <- work.Id }()
-			errorCount, _ := models.QueryRunLogRecordCount(work.Id, "ERROR")
-			allCount, _ := models.QueryRunLogRecordCount(work.Id, "")
+			errorCount, _ := models.QueryRunlogRecordCount(work.Id, "ERROR")
+			allCount, _ := models.QueryRunlogRecordCount(work.Id, "")
 			lock.Lock()
 			defer lock.Unlock()
 			m[work.Id] = map[string]int64{"errorCount": errorCount, "allCount": allCount}
