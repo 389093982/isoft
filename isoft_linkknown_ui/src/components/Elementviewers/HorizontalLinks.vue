@@ -8,11 +8,7 @@
       </span>
       </div>
       <div v-if="elements.length > minLen" style="float: right;width: 8%;margin-top: 3px">
-        <span style="cursor: pointer;font-size: 12px;color: grey" @click="changeShowMore()">
-          <span v-if="showMore"><Icon type="ios-arrow-down" /></span>
-          <span v-else><Icon type="ios-arrow-up" /></span>
-          查看更多
-        </span>
+        <show-more @changeShowMore="changeShowMore"></show-more>
       </div>
       <div style="clear: both"></div>
 
@@ -23,10 +19,11 @@
 <script>
   import ElementsLoader from "../Background/CMS/ElementsLoader"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
+  import ShowMore from "./showMore";
 
   export default {
     name: "HorizontalLinks",
-    components: {IBeautifulLink, ElementsLoader},
+    components: {ShowMore, IBeautifulLink, ElementsLoader},
     props: {
       placement_name: {
         type: String,
@@ -39,7 +36,6 @@
         elements: [],
         minLen:10,
         placement_label: '',
-        showMore:false,
       }
     },
     methods: {
@@ -51,10 +47,8 @@
         this.elements = elements;
         this.filter_elements = this.elements.slice(0,this.minLen);
       },
-      changeShowMore:function () {
-        this.showMore = !this.showMore;
-        this.showMore ? this.filter_elements = this.elements : this.filter_elements = this.elements.slice(0,this.minLen);
-
+      changeShowMore:function (showMore) {
+        showMore ? this.filter_elements = this.elements : this.filter_elements = this.elements.slice(0,this.minLen);
       }
     },
   }
