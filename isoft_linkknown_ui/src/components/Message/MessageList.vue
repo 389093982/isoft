@@ -2,6 +2,9 @@
   <div>
 
     <div v-if="hasLogin">
+
+      <h4>尊贵的 vip 用户，您享有本站所有的权益！</h4>
+
       <!-- 显示详细消息 -->
       <div v-if="showDetail" class="isoft_bg_white isoft_pd20" style="min-height: 300px;">
         <div v-for="(message, index) in messages">
@@ -38,6 +41,7 @@
   import {LoginAddr, QueryPageMessageList} from "../../api"
   import {CheckHasLogin} from "../../tools/index"
   import {deleteLoginInfo} from "../../tools/sso"
+  import {IsVip} from "../../tools/vip"
 
   export default {
     name: "MessageList",
@@ -49,6 +53,7 @@
     },
     data() {
       return {
+        isVip: false,
         // 当前页
         current_page: 1,
         // 总数
@@ -83,11 +88,12 @@
     mounted() {
       let result = CheckHasLogin();
       if (result) {
-        this.hasLogin = true
+        this.hasLogin = true;
         this.refreshMessageList();
       }else{
-        this.hasLogin = false
+        this.hasLogin = false;
       }
+      this.isVip = IsVip();
     }
   }
 </script>
