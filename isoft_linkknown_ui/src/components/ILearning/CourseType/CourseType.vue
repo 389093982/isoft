@@ -7,8 +7,8 @@
           <div>
             <div style="border-bottom: 2px solid #edf1f2;padding: 0px 0px 5px 0px;">
               <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程</a>
-              <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">
-                <IBeautifulLink style="font-size: 14px;">更多</IBeautifulLink>
+              <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;margin-right: 100px">
+                <IBeautifulLink style="font-size: 14px;"><show-more></show-more></IBeautifulLink>
               </a>
             </div>
             <div>
@@ -30,10 +30,11 @@
   import ISearch from "../../Common/search/ISearch"
   import IBeautifulCard from "../../Common/card/IBeautifulCard"
   import IBeautifulLink from "../../Common/link/IBeautifulLink"
+  import ShowMore from "../../Elementviewers/showMore";
 
   export default {
     name: "CourseType",
-    components: {ISearch, HotCourseType, TotalCourseType, IBeautifulCard, IBeautifulLink},
+    components: {ShowMore, ISearch, HotCourseType, TotalCourseType, IBeautifulCard, IBeautifulLink},
     data() {
       return {
         showCourseType: true,

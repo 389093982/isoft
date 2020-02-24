@@ -145,7 +145,7 @@
         // 每页记录数
         offset: 20,
         searchblogs: [],
-        search_type: '',
+        search_type: '_all',
         showLabel: '全部分类',
         search_user_name: '',
         userInfos: [],
