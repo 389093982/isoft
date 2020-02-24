@@ -28,7 +28,7 @@ func (this *WorkController) EditGlobalVar() {
 	id, err := this.GetInt64("id", -1)
 	name := this.GetString("name")
 	env_name := this.GetString("env_name")
-	value := this.GetString("value")
+	value := strings.TrimSpace(this.GetString("value"))
 	encrypt_flag, _ := this.GetBool("encrypt_flag", false)
 	if encrypt_flag {
 		value = iworkutil.EncodeToBase64StringSecurity(value)

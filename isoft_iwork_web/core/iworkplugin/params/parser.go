@@ -299,9 +299,9 @@ func (this *SimpleParser) parseParamVauleFromGlobalVar(app_id int64) interface{}
 	gvName := strings.TrimPrefix(this.paramVaule, "$Global.")
 	gvName = strings.TrimSuffix(gvName, ";")
 	if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, sysconfig.ENV_ONUSE)); ok {
-		return gv.(*models.GlobalVar).Value
+		return strings.TrimSpace(gv.(*models.GlobalVar).Value)
 	} else if gv, ok := memory.GlobalVarMap.Load(fmt.Sprintf("%d_%s_%s", app_id, gvName, "dev")); ok {
-		return gv.(*models.GlobalVar).Value
+		return strings.TrimSpace(gv.(*models.GlobalVar).Value)
 	} else {
 		panic(errors.New(fmt.Sprintf("can't find globalVar for %s", gvName)))
 	}
