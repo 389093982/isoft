@@ -180,7 +180,7 @@
           CheckHasLoginConfirmDialog2(this, function () {
             _this.showLabel = "我的博客";
             _this.search_user_name = GetLoginUserName();
-            this.refreshBlogList();
+            _this.refreshBlogList();
           });
         } else {
           this.showLabel = pattern;
