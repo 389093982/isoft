@@ -41,14 +41,14 @@
       <Col span="12">
         <div class="isoft_bg_white isoft_pd10 mr5" style="min-height: 600px;">
           <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
-            新用户可免费发布一条时长 30 天的广告，开通会员可发布 10 条广告
+            开通会员可免费发布三条广告，可实时查看广告访问记录
           </div>
 
           <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
 
           <div>
             <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
-              一站式监控广告访问效果
+              精准广告或商业合作请邮件联系 <a href="mailto:389093982@qq.com">链知网管理员 389093982@qq.com</a>
             </div>
 
             <div class="isoft_auto_with title">广告访问记录</div>
