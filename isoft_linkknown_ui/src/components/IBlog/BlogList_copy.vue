@@ -31,33 +31,35 @@
               <MoveLine/>
             </Row>
 
-            <!--下面展示一篇博客具体格式，按照三列，中间一列分两行-->
             <ul>
-              <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-                <Row style="margin-top: 15px">
-                  <Col span="2">
-                    <!--第一列 ：头像-->
-                    <router-link to="" style="float: left;">
-                      <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" />
-                      <Avatar size="large" v-else src="../../../static/images/404.jpg"/>
+              <li v-for="searchblog in searchblogs"
+                  style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
+                <Row>
+                  <Col span="12">
+                    <router-link to="" style="float: left;margin-right: 10px;">
+                      <Avatar size="small" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)"/>
+                      <Avatar size="small" v-else src="../../../static/images/404.jpg"/>
+                    </router-link>
+                    <!-- 使用v-bind动态绑定id传递给目标路径 -->
+                    <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                      <h4 class="isoft_inline_ellipsis">{{searchblog.blog_title}}</h4>
                     </router-link>
                   </Col>
-                  <Col span="16" style="position: relative;left: -12px;top: -3px">
-                    <!--第二列 ：分两行-->
-                    <Row>
-                      <!--第一行：所属分类 + 博客标题-->
-                      <!--<Tag v-if="searchblog.to_top > 0" color="error">置顶</Tag>-->
-                      <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name }}</a>
-                      <span v-if="searchblog.blog_status == -1" style="float: right;color: red;">审核不通过！</span>
-                      <span>&nbsp;</span>
-                      <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                        <span class="title_hover">{{searchblog.blog_title}}</span>
-                      </router-link>
-                      <!--博文描述-->
-                      <!--<span style="margin-left: 40px">{{searchblog.short_desc | filterLimitFunc}}</span>-->
-                    </Row>
-                    <Row>
-                      <!--第二行：作者 + 发布 + 更新时间 -->
+                  <Col span="12">
+                    <Tag v-if="searchblog.to_top > 0" color="error">置顶</Tag>
+                    <a style="color: rgba(43,0,206,0.4);font-weight: 600;" @click="chooseItem(searchblog.catalog_name)">所属分类：{{
+                      searchblog.catalog_name }}</a>
+
+                    <span v-if="searchblog.blog_status == -1" style="float: right;color: red;">审核不通过！</span>
+                  </Col>
+                </Row>
+                <p style="margin-bottom: 4px;font-size: 14px;color: #8a8a8a;line-height: 24px;">
+                  {{searchblog.short_desc | filterLimitFunc}}
+                </p>
+                <p>
+                  <Row>
+                    <Col span="17">
+                      <!--作者-->
                       <router-link to="">
                         <span style="color: #797776;">
                           <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
@@ -66,19 +68,22 @@
                       </router-link>
                       <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time"/></span>
                       <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time"/></span>
-                    </Row>
-                  </Col>
-                  <Col span="6">
-                    <!--第三列：-->
-                    <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span>阅读</span>
-                    </router-link>
-                    <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">0</span>条评论</span>
-                    </router-link>
-                    <a @click="blog_edit" class="isoft_font12" style="margin-left: 10px">我也要发布</a>
-                  </Col>
-                </Row>
+                    </Col>
+                    <Col span="2">
+                      <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                        <span class="isoft_font12"><span style="color: red;">{{searchblog.views}}</span>阅读</span>
+                      </router-link>
+                    </Col>
+                    <Col span="2">
+                      <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                        <span class="isoft_font12"><span style="color: red;">0</span>条评论</span>
+                      </router-link>
+                    </Col>
+                    <Col span="3">
+                      <a @click="blog_edit" class="isoft_font12">我也要发布</a>
+                    </Col>
+                  </Row>
+                </p>
               </li>
             </ul>
 
@@ -226,23 +231,6 @@
 
 <style scoped>
 
-  .type_hover{
-    font-size: 15px;color: #777;
-  }
-  .type_hover:hover{
-    font-size: 15px;color: rgba(119, 119, 119, 0.62);
-  }
-
-  .title_hover {
-    font-size: 15px;
-    color: #555;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
-  .title_hover:hover {
-    font-size: 15px;
-    color: red;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  }
 
   a {
     color: #3d3d3d;
