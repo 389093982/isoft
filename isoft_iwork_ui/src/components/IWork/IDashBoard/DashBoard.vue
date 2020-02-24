@@ -1,6 +1,6 @@
 <template>
   <div>
-    AAAAAAAAAAAAAAAAAAA
+    <a>数据库数据量监控</a>
   </div>
 </template>
 
