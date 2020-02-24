@@ -20,7 +20,7 @@
       <ul>
         <li v-for="(as, index) in answer_experts"
             style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-          <h4 style="color: red;">专家回答({{index+1}} 楼)</h4>
+          <h4 style="color: red;">专家回答({{ (current_page - 1) * offset + index + 1}} 楼)</h4>
           <p>{{as.answer}}</p>
           <Row>
             <Col span="6">
@@ -35,6 +35,10 @@
           </Row>
         </li>
       </ul>
+
+      <Page :total="total" :page-size="offset" show-total show-sizer
+            :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
     </div>
   </div>
 </template>
@@ -51,9 +55,23 @@
         showEditanswer: false,
         answer: '',
         answer_experts: [],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
       }
     },
     methods: {
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshAskanswerList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshAskanswerList();
+      },
       modifyGoodBadNumber: async function (answerId) {
         if (localStorage.getItem(this.GLOBAL.currentSite + "anser_expert" + answerId)) {
           this.$Message.success("您已经点过好评了!");
@@ -80,9 +98,14 @@
         }
       },
       refreshAskanswerList: async function () {
-        const result = await QueryPageAnswerExpertList({question_id: this.$route.query.id});
+        const result = await QueryPageAnswerExpertList({
+          current_page: this.current_page,
+          offset: this.offset,
+          question_id: this.$route.query.id
+        });
         if (result.status == "SUCCESS") {
           this.answer_experts = result.answer_experts;
+          this.total = result.paginator.totalcount;
         }
       }
     },
