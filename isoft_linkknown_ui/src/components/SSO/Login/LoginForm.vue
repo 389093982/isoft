@@ -60,7 +60,7 @@
       login: async function () {
         let redirectUrl = "";
         var arr = strSplit(window.location.href, "?redirectUrl=");
-        if (arr.length == 2) {
+        if (arr.length === 2) {
           redirectUrl = arr[1];
         }
         var username = this.username;
