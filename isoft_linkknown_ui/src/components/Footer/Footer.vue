@@ -4,6 +4,7 @@
       <div class="top">返回</div>
     </BackTop>
 
+    <!--友情链接-->
     <Row class="isoft_bg_white isoft_pd10">
       <FrindLink/>
     </Row>
