@@ -57,7 +57,7 @@
     },
     methods: {
       uploadComplete: function (result) {
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formValidate.linked_img = result.fileServerPath;
           this.$refs.fileUpload.hideModal();
         }
@@ -71,8 +71,9 @@
           if (valid) {
             const result = await EditAdvertisement(_this.formValidate.id, _this.formValidate.advertisement_label,
               _this.formValidate.linked_type, _this.formValidate.linked_refer, handleSpecial(_this.formValidate.linked_img));
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               _this.$Message.success('提交成功!');
+              _this.handleReset("formValidate");
               _this.$emit("handleSubmit");
             } else {
               _this.$Message.error('提交失败!');
@@ -87,7 +88,7 @@
       },
       initData: async function (id) {
         const result = await QueryAdvertisementById(id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formValidate.id = result.advertisement.id;
           this.formValidate.advertisement_label = result.advertisement.advertisement_label;
           this.formValidate.linked_type = result.advertisement.linked_type;

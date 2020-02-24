@@ -53,6 +53,10 @@
   border-bottom: 3px solid red;
 }
 
+.isoft_word_break {
+  word-wrap: break-word;
+}
+
 .isoft_auto_with {
   display: inline-block;
 }
