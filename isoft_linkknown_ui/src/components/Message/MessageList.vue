@@ -3,10 +3,14 @@
 
     <div v-if="hasLogin">
       <!-- 显示详细消息 -->
-      <div v-if="showDetail" class="isoft_bg_white isoft_pd10">
+      <div v-if="showDetail" class="isoft_bg_white isoft_pd20" style="min-height: 300px;">
         <div v-for="(message, index) in messages">
           {{message.message_text}}
         </div>
+
+        <Page :total="total" :page-size="offset" show-total show-sizer
+              :styles="{'text-align': 'center','margin-top': '10px'}"
+              @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
       </div>
 
       <!-- 显示简略消息 -->
@@ -45,16 +49,31 @@
     },
     data() {
       return {
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
         hasLogin:false,
         messages: [],
       }
     },
     methods: {
       refreshMessageList: async function () {
-        const result = await QueryPageMessageList({});
+        const result = await QueryPageMessageList({current_page: this.current_page, offset: this.offset});
         if (result.status === "SUCCESS") {
           this.messages = result.messages;
+          this.total = result.paginator.totalcount;
         }
+      },
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshMessageList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshMessageList();
       },
       cancelUser () {
         deleteLoginInfo();
