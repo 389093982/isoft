@@ -20,14 +20,16 @@
     </div>
 
 
-    <!--5个热门相关做成上2下3的布局-->
-    <div style="float: left;width: 70%">
+    <!--备注：下面5个热门相关做成上2下3的布局-->
+
+    <!--上二,7:3-->
+    <div style="float: left;width: 70%;height: 600px">
       <!--热门博客-->
       <div class="isoft_bg_white isoft_pd10 isoft_top5">
         <BlogRank/>
       </div>
     </div>
-    <div style="float: right;width: 30%">
+    <div style="float: right;width: 30%;height: 600px">
       <!--热门应用-->
       <div class="isoft_bg_white isoft_pd10 isoft_top5">
         <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
@@ -35,19 +37,20 @@
     </div>
     <div style="clear: both"></div>
 
-    <div style="float: left;width: 33%">
+    <!--下三，33:34:33-->
+    <div style="float: left;width: 33%;height: 600px">
       <!--热门书单-->
-      <div>
+      <div style="margin-top: 5px">
         <BookRank class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
-    <div style="float: left;width: 34%">
+    <div style="float: left;width: 34%;height: 600px">
       <!--热门产品-->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
         <IBeautifulTabLink/>
       </div>
     </div>
-    <div style="float: left;width: 33%">
+    <div style="float: left;width: 33%;height: 600px">
       <!-- 热门项目推荐 -->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
         <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
