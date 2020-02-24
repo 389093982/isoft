@@ -4,7 +4,7 @@
       <ul slot="content">
         <li v-for="(element, index) in elements">
             <span style="float:right;color: #999;font-size: 12px;"><Time :time="element.created_time" type="date"/></span>
-            <a :href="element.linked_refer">
+            <a target="_blank" :href="element.linked_refer">
               <img class="imgIcon" src="../../../assets/icon_b.png"/>{{element.element_label}}
               <img v-if="index < 5" src="../../../../static/images/smallicon/news.gif">
             </a>

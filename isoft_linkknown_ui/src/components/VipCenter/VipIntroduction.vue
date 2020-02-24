@@ -13,18 +13,6 @@
     <div>
       <Table stripe :columns="columns1" :data="data1"></Table>
     </div>
-    <div class="vipCenterDown">
-      <div class="demo-split">
-        <Split v-model="split1">
-          <div slot="left" class="demo-split-pane">
-            <a><p style="color: #ff6600">普通用户简介:</p></a>
-          </div>
-          <div slot="right" class="demo-split-pane">
-            <a><p style="color: #ff6600;font-size: 15px">会员介绍:</p></a>
-          </div>
-        </Split>
-      </div>
-    </div>
   </div>
 </template>
 <script>

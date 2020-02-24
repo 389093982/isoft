@@ -7,7 +7,9 @@
         <div style="font-size: 30px;margin: 25px 0 0 200px;color: rgba(128,128,128,0.58)">Stay hungry，Stay foolish</div>
       </div>
       <div style="float: left;width: 50%;padding: 15px 120px 0 0 ">
-        <ISearch @submitFunc="submitFunc"></ISearch>
+        <Affix :offset-top="60">
+          <ISearch @submitFunc="submitFunc"></ISearch>
+        </Affix>
       </div>
       <div style="clear: both"></div>
     </div>
