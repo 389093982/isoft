@@ -2,7 +2,7 @@ import {checkContainsInString, checkEmpty, setCookie} from "./index"
 
 const _checkAdminLogin = function () {
   let roleName = localStorage.getItem("roleName");
-  return roleName === "admin";
+  return roleName === "admin" && !_checkHasExpired();
 
 }
 
@@ -10,11 +10,19 @@ const _checkHasLogin = function () {
   let userName = localStorage.getItem("userName");
   var isLogin = localStorage.getItem("isLogin");
   var token = localStorage.getItem("tokenString");
-  return !checkEmpty(userName) && !checkEmpty(isLogin) && !checkEmpty(token) && isLogin === "isLogin";
+  return !checkEmpty(userName) && !checkEmpty(isLogin) && !checkEmpty(token) && isLogin === "isLogin" && !_checkHasExpired();
 };
 
+const _checkHasExpired = function () {
+  var expiredTime = localStorage.getItem("expiredTime");
+  if (expiredTime != null && new Date().getTime() < expiredTime) {
+    return false;
+  }
+  return true;
+}
+
 const _getLoginUserName = function () {
-  return localStorage.getItem("userName");
+  return _checkHasExpired() ? "" : localStorage.getItem("userName");
 };
 
 // sso 登陆拦截
@@ -52,10 +60,11 @@ const _deleteLoginInfo = function () {
   localStorage.removeItem("tokenString");
   localStorage.removeItem("userName");
   localStorage.removeItem("isLogin");
+  localStorage.removeItem("expiredTime");
 }
 
 const _getNickName = function () {
-  return localStorage.getItem("nickName");
+  return _checkHasExpired() ? "" : localStorage.getItem("nickName");
 }
 
 const _setLoginInfo = function (loginResult, username) {
@@ -64,6 +73,8 @@ const _setLoginInfo = function (loginResult, username) {
   localStorage.setItem("nickName", loginResult.nickName);
   localStorage.setItem("isLogin", "isLogin");
   localStorage.setItem("roleName", loginResult.roleName);
+  let expiredTime = new Date().getTime() + loginResult.expireSecond * 1000;     // 毫秒数
+  localStorage.setItem("expiredTime", expiredTime);
   setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 
