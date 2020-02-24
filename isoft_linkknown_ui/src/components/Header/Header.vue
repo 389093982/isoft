@@ -47,6 +47,10 @@
               <div class="message_detail">
                 <MessageList :show-detail="false"/>
               </div>
+              <div>
+                <!-- 会员权益 -->
+                <RechargeRight/>
+              </div>
             </div>
           </MenuItem>
           <MenuItem name="9" v-if="isAdmin()">
@@ -65,10 +69,11 @@
   import {LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import MessageList from "../Message/MessageList";
+  import RechargeRight from "../VipCenter/RechargeRight";
 
   export default {
     name: "Header",
-    components: {MessageList, IBeautifulLink},
+    components: {RechargeRight, MessageList, IBeautifulLink},
     data() {
       return {
         theme1: 'light',
