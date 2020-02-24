@@ -114,10 +114,10 @@
   .message:hover > .message_detail {
     padding: 5px 15px;
     position: absolute;
-    left: -100px;
+    left: -130px;
     display: block;
     max-height: 300px;
-    width: 300px;
+    width: 360px;
     background-color: white;
     box-shadow: 0 0 5px red;
   }

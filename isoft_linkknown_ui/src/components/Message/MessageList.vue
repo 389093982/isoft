@@ -1,12 +1,10 @@
 <template>
   <div>
-
     <div v-if="hasLogin">
-
-      <h4>尊贵的 vip 用户，您享有本站所有的权益！</h4>
-
       <!-- 显示详细消息 -->
       <div v-if="showDetail" class="isoft_bg_white isoft_pd20" style="min-height: 300px;">
+        <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
+
         <div v-for="(message, index) in messages">
           {{message.message_text}}
         </div>
@@ -18,6 +16,8 @@
 
       <!-- 显示简略消息 -->
       <div v-else style="font-size: 14px;line-height: 16px;color: black;padding: 10px;">
+        <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
+
         <div v-for="(message, index) in messages">
           <p style="margin: 5px 0px;">{{message.message_text}}</p>
         </div>
