@@ -10,7 +10,7 @@
             </Col>
             <Col span="20" style="padding: 10px;">
               <h3>{{book.book_name}}</h3>
-              <p>{{book.book_desc}}</p>
+              <p class="isoft_word_break">{{book.book_desc}}</p>
             </Col>
           </Row>
         </div>

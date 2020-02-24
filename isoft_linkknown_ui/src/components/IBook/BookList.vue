@@ -48,7 +48,7 @@
                                                                             type="relative"/></span>
                   </span>
                 </div>
-                <div style="font-size: 14px;color: #7d7d7d;">
+                <div class="isoft_word_break" style="font-size: 14px;color: #7d7d7d;">
                   {{book.book_desc}}
                 </div>
                 <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">

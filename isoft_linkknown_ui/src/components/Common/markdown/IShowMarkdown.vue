@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="markdown" v-html="compiledMarkdown"></div>
+    <div class="markdown isoft_word_break" v-html="compiledMarkdown"></div>
   </div>
 </template>
 

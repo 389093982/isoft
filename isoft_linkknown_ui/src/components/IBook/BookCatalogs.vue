@@ -49,7 +49,7 @@
 
             <div style="border-bottom: 1px solid #d7dde4;padding-bottom: 10px;">
               <h3 style="margin:10px 0;">简介</h3>
-              <p style="color: #333333;">{{bookInfo.book_desc}}</p>
+              <p class="isoft_word_break" style="color: #333333;">{{bookInfo.book_desc}}</p>
             </div>
 
             <div style="padding: 10px 0;">

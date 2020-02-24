@@ -64,6 +64,7 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcDemo": "switchCase($bool1,$val1,$bool2,$val2,$bool3,$val3)", "funcDesc": "bool 条件满足时返回 val"},
 		{"funcDemo": "true()", "funcDesc": "返回布尔 true 值"},
 		{"funcDemo": "false()", "funcDesc": "返回布尔 false 值"},
+		{"funcDemo": "int64($str)", "funcDesc": "将支持转为 int64"},
 	}
 }
 
@@ -403,4 +404,17 @@ func (t *IWorkFuncProxy) SwitchCase(args []interface{}) interface{} {
 		}
 	}
 	panic("所有条件都不满足")
+}
+
+func (t *IWorkFuncProxy) Int64(args []interface{}) interface{} {
+	if _arg, ok := args[0].(int64); ok {
+		return _arg
+	} else if _arg, ok := args[0].(int); ok {
+		return int64(_arg)
+	} else if _arg, ok := args[0].(string); ok {
+		if _arg, err := strconv.ParseInt(strings.TrimSpace(_arg), 10, 64); err == nil {
+			return _arg
+		}
+	}
+	panic(fmt.Sprintf("%v 转换成 int64 失败", args[0]))
 }

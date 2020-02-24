@@ -24,7 +24,9 @@
               <li v-for="(as, index) in asks"
                   style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <h4>{{as.short_desc}}</h4>
-                <p>{{as.question}}</p>
+                <div style="max-height: 240px;overflow:hidden;margin-bottom: 10px;">
+                  <IShowMarkdown :content="as.question"/>
+                </div>
                 <Row>
                   <Col span="8">
                     <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
@@ -67,10 +69,11 @@
   import ExpertWall from "./ExpertWall";
   import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, RenderUserInfoByNames} from "../../tools";
   import MoveLine from "../Common/decorate/MoveLine";
+  import IShowMarkdown from "../Common/markdown/IShowMarkdown"
 
   export default {
     name: "AskExpert",
-    components: {MoveLine, ExpertWall},
+    components: {MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
         // 当前页
