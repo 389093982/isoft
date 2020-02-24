@@ -8,7 +8,7 @@
       </span>
       </div>
       <div v-if="elements.length > minLen" style="float: right;width: 8%;margin-top: 3px">
-        <show-more @changeShowMore="changeShowMore" :showMore="showMore"></show-more>
+        <show-more @changeShowMore="changeShowMore"></show-more>
       </div>
       <div style="clear: both"></div>
 
@@ -36,7 +36,6 @@
         elements: [],
         minLen:10,
         placement_label: '',
-        showMore:false,
       }
     },
     methods: {
@@ -49,8 +48,7 @@
         this.filter_elements = this.elements.slice(0,this.minLen);
       },
       changeShowMore:function (showMore) {
-        this.showMore = showMore;
-        this.showMore ? this.filter_elements = this.elements : this.filter_elements = this.elements.slice(0,this.minLen);
+        showMore ? this.filter_elements = this.elements : this.filter_elements = this.elements.slice(0,this.minLen);
       }
     },
   }
