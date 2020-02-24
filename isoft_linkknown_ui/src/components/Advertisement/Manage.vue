@@ -1,52 +1,59 @@
 <template>
   <div>
-    <Row style="margin-bottom: 5px;">
-      <Col span="12" style="padding-right: 5px;">
-        <div class="isoft_bg_white isoft_pd10" style="height: 600px;">
-          <IBeautifulCard title="我的广告清单">
-            <div slot="content" style="padding: 10px;">
-              <div v-if="advertisements && advertisements.length > 0">
-                <Carousel @on-change="changeAdvIndex">
-                  <CarouselItem v-for="(advertisement,index) in advertisements">
-                    <div style="padding: 40px 20px 100px 20px;">
-                      <p>广告显示名称:{{advertisement.advertisement_label}}</p>
-                      <p>链接类型: {{advertisement.linked_type}}</p>
-                      <p>链接地址: {{advertisement.linked_refer}}</p>
-                      <p>显示图片:
-                        <img :src="advertisement.linked_img" style="width: 150px;height: 100px;"/>
-                      </p>
-                      <p>联系人：{{loginUserName}}</p>
-                      <p>广告状态:
-                        <span v-if="advertisement.is_valid === 1">
+    <div v-if="!isVip" style="text-align: center;margin-top: 50px;">
+      <OpenVipTip tip="无法发布广告"/>
+    </div>
+
+    <div v-else>
+      <Row>
+        <Col span="12">
+          <div class="isoft_bg_white isoft_pd10 isoft_mr10" style="height: 600px;">
+            <IBeautifulCard title="我的广告清单">
+              <div slot="content" style="padding: 10px;">
+                <div v-if="advertisements && advertisements.length > 0">
+                  <Carousel @on-change="changeAdvIndex">
+                    <CarouselItem v-for="(advertisement,index) in advertisements">
+                      <div style="padding: 40px 20px 100px 20px;">
+                        <p>广告显示名称:{{advertisement.advertisement_label}}</p>
+                        <p>链接类型: {{advertisement.linked_type}}</p>
+                        <p>链接地址: {{advertisement.linked_refer}}</p>
+                        <p>显示图片:
+                          <img :src="advertisement.linked_img" style="width: 150px;height: 100px;"/>
+                        </p>
+                        <p>联系人：{{loginUserName}}</p>
+                        <p>广告状态:
+                          <span v-if="advertisement.is_valid === 1">
                           <span v-if="checkDateDiff(advertisement.created_time)"
                                 class="hovered hvr-grow hoverLinkColor">已过期</span>
                           <span v-else class="hovered hvr-grow hoverLinkColor">已生效</span>
                         </span>
-                        <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
-                      </p>
-                      <p style="text-align: right;">
-                        <a @click="editAdvertisement(advertisement.id)">编辑</a>
-                      </p>
-                    </div>
-                  </CarouselItem>
-                </Carousel>
+                          <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
+                        </p>
+                        <p style="text-align: right;">
+                          <a @click="editAdvertisement(advertisement.id)">编辑</a>
+                        </p>
+                      </div>
+                    </CarouselItem>
+                  </Carousel>
+                </div>
+
+                <div v-else style="text-align: center;margin-top: 50px;">
+                  您还没有发布过广告,赶紧发布一条吧
+                </div>
               </div>
-
-              <div v-else style="text-align: center;margin-top: 50px;">您还没有发布过广告,赶紧发布一条吧</div>
+            </IBeautifulCard>
+          </div>
+        </Col>
+        <Col span="12">
+          <div class="isoft_bg_white isoft_pd10">
+            <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
+              开通会员可免费发布三条广告，可实时查看广告访问记录
             </div>
-          </IBeautifulCard>
-        </div>
-      </Col>
 
-      <Col span="12">
-        <div class="isoft_bg_white isoft_pd10 mr5" style="min-height: 600px;">
-          <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
-            开通会员可免费发布三条广告，可实时查看广告访问记录
+            <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
           </div>
 
-          <EditAdvertisement ref="editAdvertisement" @handleSubmit="handleAdvertisementSubmit"/>
-
-          <div>
+          <div class="isoft_bg_white isoft_pd10 isoft_top10">
             <div style="background-color: #eee;padding: 5px 20px;text-align: center;margin: 10px 0;">
               精准广告或商业合作请邮件联系 <a href="mailto:389093982@qq.com">链知网管理员 389093982@qq.com</a>
             </div>
@@ -56,27 +63,29 @@
               <AccessLog ref="adv_accesslog"/>
             </div>
           </div>
-        </div>
-      </Col>
-    </Row>
-
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 
 <script>
   import {GetPersonalAdvertisement} from "../../api"
   import {GetLoginUserName} from "../../tools"
+  import {IsVip} from "../../tools/vip"
   import EditAdvertisement from "./EditAdvertisement"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import {scrollTop} from "iview/src/utils/assist"
   import AccessLog from "./AccessLog";
+  import OpenVipTip from "../VipCenter/OpenVipTip";
 
   export default {
     name: "Manage",
-    components: {AccessLog, IBeautifulCard, EditAdvertisement},
+    components: {OpenVipTip, AccessLog, IBeautifulCard, EditAdvertisement},
     data() {
       return {
         advertisements: null,
+        isVip: false,
       }
     },
     methods: {
@@ -116,6 +125,7 @@
       }
     },
     mounted() {
+      this.isVip = IsVip();
       this.refreshPersonalAdvertisement();
     }
   }

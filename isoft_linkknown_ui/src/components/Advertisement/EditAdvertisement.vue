@@ -76,7 +76,7 @@
               _this.handleReset("formValidate");
               _this.$emit("handleSubmit");
             } else {
-              _this.$Message.error('提交失败!');
+              _this.$Message.error(result.errorMsg);
             }
           } else {
             _this.$Message.error('验证失败!');
