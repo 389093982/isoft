@@ -61,7 +61,7 @@
     <!--展示模块  目前是4个展示-->
     <show-modulars></show-modulars>
 
-    <!--您是不是想找-->
+    <!--发现-->
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
     </div>
