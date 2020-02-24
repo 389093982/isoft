@@ -7,34 +7,33 @@
     <div v-else>
       <Row>
         <Col span="12">
-          <div class="isoft_bg_white isoft_pd10 isoft_mr10" style="height: 600px;">
+          <div class="isoft_bg_white isoft_pd10 isoft_mr10" style="min-height: 600px;">
             <IBeautifulCard title="我的广告清单">
               <div slot="content" style="padding: 10px;">
                 <div v-if="advertisements && advertisements.length > 0">
-                  <Carousel @on-change="changeAdvIndex">
-                    <CarouselItem v-for="(advertisement,index) in advertisements">
-                      <div style="padding: 40px 20px 100px 20px;">
-                        <p>广告显示名称:{{advertisement.advertisement_label}}</p>
-                        <p>链接类型: {{advertisement.linked_type}}</p>
-                        <p>链接地址: {{advertisement.linked_refer}}</p>
-                        <p>显示图片:
-                          <img :src="advertisement.linked_img" style="width: 150px;height: 100px;"/>
-                        </p>
-                        <p>联系人：{{loginUserName}}</p>
-                        <p>广告状态:
-                          <span v-if="advertisement.is_valid === 1">
-                          <span v-if="checkDateDiff(advertisement.created_time)"
-                                class="hovered hvr-grow hoverLinkColor">已过期</span>
-                          <span v-else class="hovered hvr-grow hoverLinkColor">已生效</span>
-                        </span>
-                          <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
-                        </p>
-                        <p style="text-align: right;">
-                          <a @click="editAdvertisement(advertisement.id)">编辑</a>
-                        </p>
-                      </div>
-                    </CarouselItem>
-                  </Carousel>
+                  <div v-for="(advertisement,index) in advertisements"
+                       style="padding: 10px;border-bottom: 2px solid #eee;">
+                    <h4>{{index + 1}} 号广告位</h4>
+                    <p>广告显示名称:{{advertisement.advertisement_label}}</p>
+                    <p>链接类型: {{advertisement.linked_type}}</p>
+                    <p>链接地址: {{advertisement.linked_refer}}</p>
+                    <p>显示图片:
+                      <img :src="advertisement.linked_img" style="width: 150px;height: 100px;"/>
+                    </p>
+                    <p>联系人：{{loginUserName}}</p>
+                    <p>广告状态:
+                      <span v-if="advertisement.is_valid === 1">
+                      <span v-if="checkDateDiff(advertisement.created_time)"
+                            class="hovered hvr-grow hoverLinkColor">已过期</span>
+                      <span v-else class="hovered hvr-grow hoverLinkColor">已生效</span>
+                    </span>
+                      <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
+                    </p>
+                    <p style="text-align: right;">
+                      <IBeautifulLink class="mr5" @onclick="editAdvertisement(advertisement.id)">编辑</IBeautifulLink>
+                      <IBeautifulLink class="mr5" @onclick="showAdvAccesslog(index)">访问记录</IBeautifulLink>
+                    </p>
+                  </div>
                 </div>
 
                 <div v-else style="text-align: center;margin-top: 50px;">
@@ -95,9 +94,8 @@
         var difDay = (new Date() - dateStart) / (1000 * 60 * 60 * 24);
         return difDay > 30;
       },
-      changeAdvIndex: function (oldValue, value) {
+      showAdvAccesslog: function (index) {
         if (this.advertisements && this.advertisements.length > 0) {
-          let index = value;    // 索引
           this.$refs.adv_accesslog.refreshAdvstAccessLog(this.advertisements[index].id);
         }
       },
@@ -108,7 +106,7 @@
         const result = await GetPersonalAdvertisement();
         if (result.status === "SUCCESS") {
           this.advertisements = result.advertisements.slice(0, 10);
-          this.changeAdvIndex(null, 0);
+          this.showAdvAccesslog(0);
         } else {
           this.$Message.error(result.errorMsg);
         }
