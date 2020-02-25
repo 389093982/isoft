@@ -8,6 +8,8 @@ const BASE64STRING_PREFIX = "base64str_"
 
 const STRING_PREFIX = "str_"
 
+const INT_PREFIX = "int_"
+
 const BOOL_PREFIX = "bool_"
 
 const FOREACH_PREFIX = "iter_"

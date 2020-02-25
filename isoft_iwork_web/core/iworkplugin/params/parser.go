@@ -14,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -331,7 +332,10 @@ func (this *SimpleParser) parseParamValue(replaceMap ...map[string]interface{}) 
 		// 字符串
 		return this.paramVaule[1 : len(this.paramVaule)-1]
 	} else {
-		// 数字
+		// 数字, 默认转换成 int64
+		if int64Val, err := strconv.ParseInt(this.paramVaule, 10, 64); err == nil {
+			return int64Val
+		}
 		return this.paramVaule
 	}
 }

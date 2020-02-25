@@ -3,7 +3,7 @@ package interfaces
 import "net/http"
 
 type IFileUploadDownload interface {
-	SaveFile(suffixs []string) (tempFileName, fileName, tempFilePath string)
+	SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string, err error)
 	GetWriter() http.ResponseWriter
 	WriteResponseHeader(key, value string)
 }

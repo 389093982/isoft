@@ -88,7 +88,7 @@
         } else {
           this.$Notice.error({
             title: '文件上传失败',
-            desc: '文件 ' + file.name + ' 上传失败!'
+            desc: '文件 ' + file.name + ' 上传失败! ' + result.errorMsg
           });
         }
       },
