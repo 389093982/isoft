@@ -65,6 +65,7 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcDemo": "true()", "funcDesc": "返回布尔 true 值"},
 		{"funcDemo": "false()", "funcDesc": "返回布尔 false 值"},
 		{"funcDemo": "int64($str)", "funcDesc": "将支持转为 int64"},
+		{"funcDemo": "getByteSizeForMB($int64)", "funcDesc": "产生指定大小 MB 的字节数"},
 	}
 }
 
@@ -417,4 +418,11 @@ func (t *IWorkFuncProxy) Int64(args []interface{}) interface{} {
 		}
 	}
 	panic(fmt.Sprintf("%v 转换成 int64 失败", args[0]))
+}
+
+func (t *IWorkFuncProxy) GetByteSizeForMB(args []interface{}) interface{} {
+	if _arg, ok := args[0].(int64); ok {
+		return 1024 * 1024 * _arg
+	}
+	panic("参数错误，需要 int64 类型的数字")
 }
