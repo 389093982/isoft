@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10 clear" v-if="ask_expert">
+    <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
       <h4>{{ask_expert.short_desc}}</h4>
       <IShowMarkdown :content="ask_expert.question"/>
       <div style="text-align: right;">

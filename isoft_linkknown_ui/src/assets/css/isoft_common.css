@@ -226,3 +226,12 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
+/* hover 显示元素 */
+.isoft_hover_parent:hover .isoft_hover_item_show {
+  display: block;
+}
+
+.isoft_hover_item_show {
+  display: none;
+}

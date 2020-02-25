@@ -21,13 +21,13 @@
             </Row>
 
             <ul>
-              <li v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
+              <li class="isoft_hover_parent" v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
                 background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
                   <Col span="6" style="display: flex;vertical-align: middle;">
                     <div class="isoft_hoverColorGreen"
                          style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
-                      <p>88888{{as.answer_number}}</p>
+                      <p>{{as.answer_number}}</p>
                       <p>回答</p>
                     </div>
 
@@ -48,7 +48,7 @@
 
                     <div class="isoft_font12">
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
-                      <span class="showEdit" style="float: right;">
+                      <span class="isoft_hover_item_show" style="float: right;">
                         <span class="isoft_mr10">
                           <a v-if="showEdit(as.user_name)"
                              @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
@@ -190,13 +190,5 @@
 
   .search a:hover {
     color: #6cb0ca;
-  }
-
-  .showEdit {
-    display: none;
-  }
-
-  li:hover .showEdit {
-    display: block;
   }
 </style>
