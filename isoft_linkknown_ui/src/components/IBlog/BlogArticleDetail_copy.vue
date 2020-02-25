@@ -3,22 +3,23 @@
 
     <div v-if="blog" style="float: left;width: 70%;">
       <div style="margin: 10px;padding: 20px;min-height: 800px;background: #ffffff;">
-        <span style="margin-left: 8px;font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
-        <span style="font-size: 20px;margin-left: 50px"><b>{{blog.blog_title}}</b></span>
+        <h3>{{blog.blog_title}}</h3>
         <div style="border-bottom: 1px solid #eee;margin-top:20px;margin-bottom: 20px;">
           <Row style="margin: 10px;">
-            <Col span="24">
-              <!--作者:-->
-              <span v-if="renderNickName(blog.author)" style="color: #797776;">{{renderNickName(blog.author)}}</span>
-              <span v-else style="color: #797776;">{{blog.author}}</span>
-              <span style="color: #adaaa8"> • 发布于:<Time :time="blog.created_time"/></span>
-              <span style="color: #9b9896">, 更新于:<Time :time="blog.last_updated_time"/></span>
-              <span style="margin-left: 200px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
-              <span style="margin-left: 20px"><span style="color: rgba(255,0,0,0.65)">{{blog.edits}}</span> 次编辑</span>
-              <span>
-                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blog_edit', query: { id: blog.id }})">继续编辑
+            <Col span="18">
+              发布于:
+              <Time :time="blog.created_time" style="color:red;"/>&nbsp;
+              更新于:
+              <Time :time="blog.last_updated_time" style="color:red;"/>&nbsp;
+              作者:
+              <span v-if="renderNickName(blog.author)">{{renderNickName(blog.author)}}</span>
+              <span v-else>{{blog.author}}</span>
+            </Col>
+            <Col span="3">阅读次数 {{blog.views}}</Col>
+            <Col span="3">编辑次数 {{blog.edits}}
+              <Button type="success" size="small" v-if="editable"
+                      @click="$router.push({ path: '/iblog/blog_edit', query: { id: blog.id }})">编辑
               </Button>
-              </span>
             </Col>
           </Row>
         </div>
@@ -32,8 +33,10 @@
         <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>
       </div>
     </div>
-    <div style="float: left;width: 21%;margin: 10px 0 0 20px;min-height: 350px;background-color: white">
-      1234
+    <div style="float: right;width: 21%;">
+      <div style="margin: 10px 0 0 850px;min-height: 350px;background-color: white">
+        1234
+      </div>
     </div>
     <div style="clear: both;"></div>
 

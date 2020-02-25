@@ -2,21 +2,23 @@
   <div>
 
     <!--搜索框-->
-    <div style="width: 100%;height: 70px;">
+    <div style="width: 100%;height: 70px;background-color: white;border:1px solid wheat;border-radius: 50px">
       <div style="float: left;width: 50%">
         <div style="font-size: 30px;margin: 25px 0 0 200px;color: rgba(128,128,128,0.58)">Stay hungry，Stay foolish</div>
       </div>
       <div style="float: left;width: 50%;padding: 15px 120px 0 0 ">
-        <ISearch @submitFunc="submitFunc"></ISearch>
+        <Affix :offset-top="60">
+          <ISearch @submitFunc="submitFunc"></ISearch>
+        </Affix>
       </div>
       <div style="clear: both"></div>
     </div>
 
     <!--课程分类-->
-    <CourseType></CourseType>
+    <CourseType ></CourseType>
 
     <!--热门课程推荐-->
-    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+    <div class="isoft_bg_white isoft_pd10">
       <HotRecommend :show-display-icon="true"></HotRecommend>
     </div>
 

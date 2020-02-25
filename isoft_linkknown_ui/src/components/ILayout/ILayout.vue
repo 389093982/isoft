@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Layout :style="{minHeight: '550px'}"
-            style="background: linear-gradient(to right, rgba(0,7,255,0.04), rgba(255,0,249,0.04));">
-      <Header>
-        <Header/>
-      </Header>
+    <!--<Layout :style="{minHeight: '550px'}" style="background: linear-gradient(to right, rgba(0,7,255,0.04), rgba(255,0,249,0.04));">-->
+    <Layout :style="{minHeight: '550px'}" style="background-color: #e5e5e5">
+      <Affix :offset-top="0">
+        <Header></Header>
+      </Affix>
       <Content
         :style="{margin: '0px 50px 18px 50px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
         <router-view/>
