@@ -24,7 +24,8 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 	// fileServerAddr := "http://localhost:6001/api/files/"
 	fileServerAddr := this.TmpDataMap[iworkconst.STRING_PREFIX+"fileServerAddr"].(string)
 	suffixs := strings.Split(suffixStr, ",")
-	tempFileName, fileName, tempFilePath := fileUpload.SaveFile(suffixs)
+	file_size := this.TmpDataMap[iworkconst.INT_PREFIX+"file_size"].(int64)
+	tempFileName, fileName, tempFilePath := fileUpload.SaveFile(suffixs, file_size)
 	paramMap := map[string]interface{}{
 		"fileName":       fileName,
 		"tempFileName":   tempFileName,
@@ -44,7 +45,8 @@ func (this *DoReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 	paramMap := map[int][]string{
 		1: {iworkconst.BOOL_PREFIX + "calHash?", "是否计算hash值"},
 		2: {iworkconst.STRING_PREFIX + "suffixs", "上传文件支持的后缀名,*表示支持任意类型的后缀,多个后缀用逗号分隔"},
-		3: {iworkconst.STRING_PREFIX + "fileServerAddr", "上传文件服务器访问路径"},
+		3: {iworkconst.INT_PREFIX + "file_size", "上传文件大小"},
+		4: {iworkconst.STRING_PREFIX + "fileServerAddr", "上传文件服务器访问路径"},
 	}
 	choiceMap := map[string][]string{iworkconst.BOOL_PREFIX + "calHash?": {"`true`", "`false`"}}
 	return this.BPIS1(paramMap, choiceMap)

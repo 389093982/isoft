@@ -115,12 +115,15 @@ func (this *WorkController) WriteResponseHeader(key, value string) {
 	this.Ctx.ResponseWriter.Header().Add(key, value)
 }
 
-func (this *WorkController) SaveFile(suffixs []string) (tempFileName, fileName, tempFilePath string) {
+func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string) {
 	// 判断是否是文件上传
 	f, h, err := this.GetFile("file")
 	checkError(err)
 	if !stringutil.AnyOf("*", suffixs) && !stringutil.AnyOf(path.Ext(h.Filename), suffixs) {
-		panic("check upload file suffix error!")
+		panic("文件后缀不满足要求!")
+	}
+	if h.Size > file_size {
+		panic("文件大小超过上传限制!")
 	}
 	//关闭上传的文件，不然的话会出现临时文件不能清除的情况
 	defer f.Close()
