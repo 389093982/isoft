@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
-    <div style="float: left;width: 18%;background-color: white">
-      <div style="padding: 5px 0 0 80px ">
+    <div style="float: left;width: 18%;background-color: white;">
+      <div style="padding: 5px 0 -0px 80px ">
         <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 50px;"/>
       </div>
     </div>

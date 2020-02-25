@@ -62,9 +62,6 @@
           </FormItem>
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-            <Button type="error" v-if="formValidate.article_id > 0"
-                    style="margin-left: 8px" @click="handleDelete('formValidate')">删除该条目
-            </Button>
           </FormItem>
         </Form>
       </div>
