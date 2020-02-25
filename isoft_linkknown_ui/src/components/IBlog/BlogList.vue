@@ -42,7 +42,7 @@
                       <Avatar size="large" v-else src="../../../static/images/404.jpg"/>
                     </router-link>
                   </Col>
-                  <Col span="16" style="position: relative;left: -12px;top: -3px">
+                  <Col span="15" style="position: relative;left: -12px;top: -3px">
                     <!--第二列 ：分两行-->
                     <Row>
                       <!--第一行：所属分类 + 博客标题-->
@@ -68,13 +68,13 @@
                       <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time"/></span>
                     </Row>
                   </Col>
-                  <Col span="6">
+                  <Col span="7">
                     <!--第三列：-->
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span>阅读</span>
+                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
                     </router-link>
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">0</span>条评论</span>
+                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">0</span> 条评论</span>
                     </router-link>
                     <a @click="blog_edit" class="isoft_font12" style="margin-left: 10px">我也要发布</a>
                   </Col>
