@@ -35,7 +35,7 @@
                       <p>浏览</p>
                     </div>
                   </Col>
-                  <Col span="20">
+                  <Col span="20" style="line-height: 30px;">
                     <h4 class="isoft_inline_ellipsis" style="font-size: 16px;">{{as.short_desc}}</h4>
 
                     <div class="isoft_font12">
@@ -44,7 +44,7 @@
                         提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
                         <span v-else>{{as.user_name}}</span>
                       </span>
-                      <span style="float: right;">
+                      <span class="showEdit" style="float: right;">
                         <span class="mr5">
                           <a v-if="showEdit(as.user_name)"
                              @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
@@ -168,5 +168,13 @@
 
   .search a:hover {
     color: #6cb0ca;
+  }
+
+  .showEdit {
+    display: none;
+  }
+
+  li:hover .showEdit {
+    display: block;
   }
 </style>
