@@ -19,11 +19,11 @@
               <Col span="3" offset="4" style="text-align: center;">
                 <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></Col>
               <Col span="3" style="text-align: center;">
-                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}">热门博客</a></Col>
+                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></Col>
               <Col span="3" style="text-align: center;">
-                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}">我的博客</a></Col>
+                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></Col>
               <Col span="3" style="text-align: center;">
-                <a @click="blog_edit">我也要发布</a>
+                <a @click="blog_edit"><Icon type="ios-brush" />我也要发布</a>
               </Col>
               <Col span="3" style="text-align: center;">
                 <a @click="$router.push({path:'/expert/ask_expert'})"><span style="color: red;">(荐)</span>求问专家</a>
@@ -62,8 +62,8 @@
                           <span v-else>{{searchblog.author}}</span>
                         </span>
                       </router-link>
-                      <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time"/></span>
-                      <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time"/></span>
+                      <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time" :interval="1"/></span>
+                      <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time" :interval="1"/></span>
                     </Row>
                   </Col>
                   <Col span="7">
