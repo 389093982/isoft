@@ -21,7 +21,7 @@
             </Col>
             <Col span="12">
               <FormItem label="文章分类" prop="catalog_name">
-                <Select v-model="formValidate.catalog_name" filterable :on-open-change="refreshMyCatalogs()">
+                <Select v-model="formValidate.catalog_name" filterable @on-open-change="refreshMyCatalogs()">
                   <!-- 热门分类 -->
                   <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
                           :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}
