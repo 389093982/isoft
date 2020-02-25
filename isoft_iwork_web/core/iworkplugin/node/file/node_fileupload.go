@@ -1,6 +1,7 @@
 package file
 
 import (
+	"errors"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/param"
@@ -25,7 +26,14 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 	fileServerAddr := this.TmpDataMap[iworkconst.STRING_PREFIX+"fileServerAddr"].(string)
 	suffixs := strings.Split(suffixStr, ",")
 	file_size := this.TmpDataMap[iworkconst.INT_PREFIX+"file_size"].(int64)
-	tempFileName, fileName, tempFilePath := fileUpload.SaveFile(suffixs, file_size)
+	tempFileName, fileName, tempFilePath, err := fileUpload.SaveFile(suffixs, file_size)
+	if err != nil {
+		if catchError := this.TmpDataMap[iworkconst.BOOL_PREFIX+"throwInsensitiveError?"].(string); catchError == "true" {
+			panic(&interfaces.InsensitiveError{Error: errors.New(err.Error())})
+		} else {
+			panic(err)
+		}
+	}
 	paramMap := map[string]interface{}{
 		"fileName":       fileName,
 		"tempFileName":   tempFileName,
@@ -47,8 +55,12 @@ func (this *DoReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 		2: {iworkconst.STRING_PREFIX + "suffixs", "上传文件支持的后缀名,*表示支持任意类型的后缀,多个后缀用逗号分隔"},
 		3: {iworkconst.INT_PREFIX + "file_size", "上传文件大小"},
 		4: {iworkconst.STRING_PREFIX + "fileServerAddr", "上传文件服务器访问路径"},
+		5: {iworkconst.BOOL_PREFIX + "throwInsensitiveError?", "是否将可能出现的异常静默成脱敏后的异常？"},
 	}
-	choiceMap := map[string][]string{iworkconst.BOOL_PREFIX + "calHash?": {"`true`", "`false`"}}
+	choiceMap := map[string][]string{
+		iworkconst.BOOL_PREFIX + "calHash?":               {"`true`", "`false`"},
+		iworkconst.BOOL_PREFIX + "throwInsensitiveError?": {"`true`", "`false`"},
+	}
 	return this.BPIS1(paramMap, choiceMap)
 }
 

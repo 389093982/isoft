@@ -115,7 +115,12 @@ func (this *WorkController) WriteResponseHeader(key, value string) {
 	this.Ctx.ResponseWriter.Header().Add(key, value)
 }
 
-func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string) {
+func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string, err error) {
+	defer func() {
+		if err1 := recover(); err1 != nil {
+			err = errorutil.ToError(err1)
+		}
+	}()
 	// 判断是否是文件上传
 	f, h, err := this.GetFile("file")
 	checkError(err)
@@ -134,5 +139,5 @@ func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFil
 	tempFilePath = path.Join(sysconfig.FileSavePath, tempFileName)
 	err = this.SaveToFile("file", tempFilePath)
 	checkError(err)
-	return tempFileName, fileName, tempFilePath
+	return tempFileName, fileName, tempFilePath, nil
 }
