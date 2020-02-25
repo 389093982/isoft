@@ -37,21 +37,23 @@
                   </Col>
                   <Col span="20">
                     <h4 class="isoft_inline_ellipsis" style="font-size: 16px;">{{as.short_desc}}</h4>
-                    <span class="isoft_font12"><Time :time="as.last_updated_time" :interval="1"/></span>
-                    <span class="isoft_font12">
-                      提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
+
+                    <div class="isoft_font12">
+                      <span><Time :time="as.last_updated_time" :interval="1"/></span>
+                      <span>
+                        提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
                         <span v-else>{{as.user_name}}</span>
-                    </span>
-                    <div class="isoft_font12" style="text-align: right;">
-                      <span class="mr5">
-                        <a v-if="showEdit(as.user_name)"
-                           @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
                       </span>
-                      <span class="mr5">
-                        <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
+                      <span style="float: right;">
+                        <span class="mr5">
+                          <a v-if="showEdit(as.user_name)"
+                             @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
+                        </span>
+                          <span class="mr5">
+                          <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
+                        </span>
                       </span>
                     </div>
-
                   </Col>
                 </Row>
               </li>
