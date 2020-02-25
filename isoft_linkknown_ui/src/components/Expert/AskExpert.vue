@@ -21,22 +21,24 @@
             </Row>
 
             <ul>
-              <li v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 10px;
+              <li v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
                 background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
-                  <Col span="4" style="display: flex;">
-                    <div style="color: #00b500;text-align: center;margin-right: 10px;">
+                  <Col span="4" style="display: flex;vertical-align: middle;">
+                    <div class="isoft_hoverColorGreen"
+                         style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
                       <p>{{as.answer_number}}</p>
                       <p>回答</p>
                     </div>
 
-                    <div style="color: #696969;text-align: center;">
+                    <div style="color: #696969;text-align: center;line-height: 16px;margin: 10px 0 0 0;">
                       <p>99</p>
                       <p>浏览</p>
                     </div>
                   </Col>
                   <Col span="20" style="line-height: 30px;">
-                    <h4 class="isoft_inline_ellipsis" style="font-size: 16px;">{{as.short_desc}}</h4>
+                    <h4 class="isoft_inline_ellipsis" style="font-size: 16px;cursor: pointer;"
+                        @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</h4>
 
                     <div class="isoft_font12">
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
@@ -45,12 +47,15 @@
                         <span v-else>{{as.user_name}}</span>
                       </span>
                       <span class="showEdit" style="float: right;">
-                        <span class="mr5">
+                        <span class="isoft_mr10">
                           <a v-if="showEdit(as.user_name)"
                              @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
                         </span>
-                          <span class="mr5">
-                          <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
+                        <span>
+                          <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">
+                            <span class="isoft_hoverColorGreen" style="margin-right: 5px;">我来回答</span><span
+                            style="color: #818181;">回答问题可获得 2 积分</span>
+                          </a>
                         </span>
                       </span>
                     </div>

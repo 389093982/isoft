@@ -116,6 +116,14 @@
   color: red;
 }
 
+.isoft_hoverColorGreen {
+  color: #00b500;
+}
+
+.isoft_hoverColorGreen:hover {
+  color: #007a00;
+}
+
 .hoverLinkColor {
   color: #000;
 }
