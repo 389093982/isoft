@@ -59,9 +59,21 @@
               <CarouselItem>
                 <div class="demo-carousel">
                   <ul style="padding-left: 10px">
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源</div></li>
+                    <li>
+                      <div class="hvr-grow" style="cursor: pointer;color: blue"
+                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                      </div>
+                    </li>
+                    <li>
+                      <div class="hvr-grow" style="cursor: pointer;color: blue"
+                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                      </div>
+                    </li>
+                    <li>
+                      <div class="hvr-grow" style="cursor: pointer;color: blue"
+                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </CarouselItem>

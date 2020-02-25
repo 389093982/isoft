@@ -201,9 +201,9 @@ const MessageRouter = [{
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
     children: [
-      {path: 'resourceList', component: ResourceList},
-      {path: 'uploadResource', component: UploadResource},
-      {path: 'downloadResource', component: DownloadResource},
+      {path: 'list', component: ResourceList},
+      {path: 'upload', component: UploadResource},
+      {path: 'download', component: DownloadResource},
     ]
 }];
 
