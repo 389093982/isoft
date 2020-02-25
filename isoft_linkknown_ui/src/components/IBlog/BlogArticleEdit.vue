@@ -238,7 +238,6 @@
       if (this.$route.query.id != null) {
         this.refreshArticleDetail();
       }
-
       const result = await GetMyCatalogs();
       if (result.status === "SUCCESS") {
         this.mycatalogs = result.catalogs;

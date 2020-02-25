@@ -32,7 +32,7 @@
                     </div>
 
                     <div style="color: #696969;text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
-                      <p>999999</p>
+                      <p>{{as.view_number}}</p>
                       <p>浏览</p>
                     </div>
 
