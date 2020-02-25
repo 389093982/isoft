@@ -2,6 +2,9 @@
   <Row>
     <Col span="18">
       <div class="isoft_bg_white isoft_top10 isoft_pd20 isoft_mr10">
+
+        <div class="isoft_info_tip" style="margin: 5px 0 40px 0;">每个用户每日可上传资料文件三次，请不要频繁的上传呢，^_^，在此感谢您无私的奉献！</div>
+
         <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
           <FormItem label="分类名称" prop="resource_catalog">
             <Input v-model.trim="formInline.resource_catalog" placeholder="请您输入分类名称"></Input>

@@ -235,3 +235,9 @@
 .isoft_hover_item_show {
   display: none;
 }
+
+.isoft_info_tip {
+  text-align: center;
+  background-color: #eee;
+  padding: 5px 10px;
+}
