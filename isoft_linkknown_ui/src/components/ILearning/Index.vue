@@ -25,7 +25,7 @@
     <!--上二,7:3-->
     <div style="float: left;width: 70%;height: 600px">
       <!--热门博客-->
-      <div class="isoft_bg_white isoft_pd10 isoft_top5">
+      <div class="isoft_bg_white isoft_pd10 isoft_top5" style="margin-right: 4px">
         <BlogRank/>
       </div>
     </div>
@@ -40,13 +40,13 @@
     <!--下三，33:34:33-->
     <div style="float: left;width: 33%;height: 600px">
       <!--热门书单-->
-      <div style="margin-top: 5px">
+      <div style="margin-top: 5px;margin-right: 4px">
         <BookRank class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
     <div style="float: left;width: 34%;height: 600px">
       <!--热门产品-->
-      <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
+      <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;margin-right: 4px">
         <IBeautifulTabLink/>
       </div>
     </div>
