@@ -3,7 +3,7 @@
     <Row :gutter="10">
       <Col span="6">
         <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-             @click="$router.push({path:'/ilearning/index'})">
+             @click="$router.push({path:'/ilearning/boutiqueCourse'})">
           <Row>
             <Col span="8">
               <img src="../../../static/images/course.jpg" style="width: 52px;height: 52px;"/>

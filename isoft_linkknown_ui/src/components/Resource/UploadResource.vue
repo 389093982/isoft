@@ -44,7 +44,6 @@
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=resource&table_field=resource_path",
         formInline: {
-          id: -1,
           resource_catalog: '',
           resource_name: '',
           resource_desc: '',
@@ -71,7 +70,7 @@
         this.$refs.fileUpload.showModal();
       },
       uploadComplete: function (result) {
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formInline.resource_name = result.fileName;
           this.formInline.resource_path = result.fileServerPath;
         }
@@ -79,17 +78,11 @@
       handleSubmit: async function (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditResource({
-              id: this.formInline.id,
-              resource_catalog: this.formInline.resource_catalog,
-              resource_name: this.formInline.resource_name,
-              resource_desc: this.formInline.resource_desc,
-              resource_path: this.formInline.resource_path,
-            });
-            if (result.status == "SUCCESS") {
+            const result = await EditResource(this.formInline);
+            if (result.status === "SUCCESS") {
               this.$router.push({path: '/resource/list'});
             } else {
-              this.$Message.error("保存失败!");
+              this.$Message.error(result.errorMsg);
             }
           }
         })

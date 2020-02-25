@@ -21,32 +21,34 @@
             </Row>
 
             <ul>
-              <li v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
+              <li class="isoft_hover_parent" v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
                 background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
-                  <Col span="4" style="display: flex;vertical-align: middle;">
+                  <Col span="6" style="display: flex;vertical-align: middle;">
                     <div class="isoft_hoverColorGreen"
                          style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
                       <p>{{as.answer_number}}</p>
                       <p>回答</p>
                     </div>
 
-                    <div style="color: #696969;text-align: center;line-height: 16px;margin: 10px 0 0 0;">
-                      <p>99</p>
+                    <div style="color: #696969;text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
+                      <p>{{as.view_number}}</p>
                       <p>浏览</p>
                     </div>
+
+                    <div style="margin: 10px 0 0 0;">
+                      <img style="cursor: pointer;border-radius: 50%;"
+                           @click="$router.push({path:'/user/detail',query:{username:as.user_name}})"
+                           width="35" height="35" :src="renderUserIcon(as.user_name)" @error="defImg()">
+                    </div>
                   </Col>
-                  <Col span="20" style="line-height: 30px;">
+                  <Col span="18" style="line-height: 30px;">
                     <h4 class="isoft_inline_ellipsis" style="font-size: 16px;cursor: pointer;"
                         @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</h4>
 
                     <div class="isoft_font12">
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
-                      <span>
-                        提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
-                        <span v-else>{{as.user_name}}</span>
-                      </span>
-                      <span class="showEdit" style="float: right;">
+                      <span class="isoft_hover_item_show" style="float: right;">
                         <span class="isoft_mr10">
                           <a v-if="showEdit(as.user_name)"
                              @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
@@ -81,7 +83,13 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName, RenderNickName, RenderUserInfoByNames} from "../../tools";
+  import {
+    CheckHasLoginConfirmDialog2,
+    GetLoginUserName,
+    RenderNickName,
+    RenderUserIcon,
+    RenderUserInfoByNames
+  } from "../../tools";
   import MoveLine from "../Common/decorate/MoveLine";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
 
@@ -101,9 +109,15 @@
         search_type: '',
         search_user_name: '',
         userInfos: [],
+        defaultImg: require('../../assets/default.png'),
       }
     },
     methods: {
+      defImg() {
+        let img = event.srcElement;
+        img.src = this.defaultImg;
+        img.onerror = null; //防止闪图
+      },
       searchQuestion: function (pattern) {
         this.pattern = pattern;
         // 置空参数
@@ -156,6 +170,9 @@
           this.total = result.paginator.totalcount;
         }
       },
+      renderUserIcon: function (user_name) {
+        return RenderUserIcon(this.userInfos, user_name);
+      },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
       }
@@ -173,13 +190,5 @@
 
   .search a:hover {
     color: #6cb0ca;
-  }
-
-  .showEdit {
-    display: none;
-  }
-
-  li:hover .showEdit {
-    display: block;
   }
 </style>
