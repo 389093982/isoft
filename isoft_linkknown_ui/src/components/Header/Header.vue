@@ -1,11 +1,11 @@
 <template>
   <div class="layout">
-    <div style="float: left;width: 18%;background-color: white;">
-      <div style="padding: 5px 0 -0px 80px ">
+    <div style="float: left;width: 14%;background-color: white;">
+      <div style="padding: 5px 0 0 60px ">
         <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 50px;"/>
       </div>
     </div>
-    <div style="float: left;width: 82%;">
+    <div style="float: left;width: 86%;">
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <div class="layout-nav">
           <MenuItem name="1">
@@ -21,10 +21,10 @@
             <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
           </MenuItem>
           <MenuItem name="5">
-            <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/resource/list'})">热门资源</IBeautifulLink>
           </MenuItem>
           <MenuItem name="6">
-            <IBeautifulLink @onclick="$router.push({path:'/resource/list'})">热门资源</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
           </MenuItem>
           <Submenu name="7">
             <template slot="title">
@@ -37,6 +37,7 @@
                 <span v-if="isLogin()">重新</span><span>登录</span>
               </MenuItem>
               <MenuItem name="7-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
+              <MenuItem name="7-4" @onclick="$router.push({path:'/background/advise_list'})" v-if="isAdmin()">控制台</MenuItem>
             </MenuGroup>
           </Submenu>
           <MenuItem name="8">
@@ -53,8 +54,14 @@
               </div>
             </div>
           </MenuItem>
-          <MenuItem name="9" v-if="isAdmin()">
-            <IBeautifulLink @onclick="$router.push({path:'/background/advise_list'})">管理控制台</IBeautifulLink>
+          <MenuItem name="9">
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">发现</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="10">
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">我要赚钱</IBeautifulLink>
+          </MenuItem>
+          <MenuItem name="11">
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">商业合作</IBeautifulLink>
           </MenuItem>
         </div>
       </Menu>
