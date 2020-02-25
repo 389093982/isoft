@@ -46,15 +46,13 @@
                     <!--第二列 ：分两行-->
                     <Row>
                       <!--第一行：所属分类 + 博客标题-->
-                      <!--<Tag v-if="searchblog.to_top > 0" color="error">置顶</Tag>-->
                       <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name }}</a>
                       <span v-if="searchblog.blog_status == -1" style="float: right;color: red;">审核不通过！</span>
                       <span>&nbsp;</span>
                       <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
                         <span class="title_hover">{{searchblog.blog_title}}</span>
                       </router-link>
-                      <!--博文描述-->
-                      <!--<span style="margin-left: 40px">{{searchblog.short_desc | filterLimitFunc}}</span>-->
+                      <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
                     </Row>
                     <Row>
                       <!--第二行：作者 + 发布 + 更新时间 -->
