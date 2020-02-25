@@ -87,7 +87,7 @@
               resource_path: this.formInline.resource_path,
             });
             if (result.status == "SUCCESS") {
-              this.$router.push({path: '/resource/resourceList'});
+              this.$router.push({path: '/resource/list'});
             } else {
               this.$Message.error("保存失败!");
             }

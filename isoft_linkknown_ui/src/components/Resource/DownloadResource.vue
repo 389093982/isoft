@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="isoft_bg_white">
-      <div style="width: 100%;height: 100px;overflow: hidden;background-color: rgba(180,0,255,0.8);padding: 20px;">
+      <div class="bg01" style="width: 100%;height: 200px;overflow: hidden;padding: 20px;">
         <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">温馨提示：</p>
         <p class="isoft_font_white" style="margin-top: 5px;">
           开通会员，全站资源免费下载
@@ -40,7 +40,7 @@
       },
       refreshResourceInfo: async function (id) {
         const result = await GetResourceInfo({id: id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.resource = result.resource;
         } else {
           this.$Message.error(result.errorMsg);
@@ -54,5 +54,25 @@
 </script>
 
 <style scoped>
+  .bg01 {
+    animation: toggle_bg 30s infinite;
+  }
 
+  @keyframes toggle_bg {
+    0% {
+      background-image: url("../../../static/images/banner1.jpg");
+    }
+    25% {
+      background-image: url("../../../static/images/banner2.jpg");
+    }
+    50% {
+      background-image: url("../../../static/images/banner3.jpg");
+    }
+    75% {
+      background-image: url("../../../static/images/banner2.jpg");
+    }
+    100% {
+      background-image: url("../../../static/images/banner1.jpg");
+    }
+  }
 </style>

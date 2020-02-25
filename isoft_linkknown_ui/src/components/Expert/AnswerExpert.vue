@@ -2,7 +2,7 @@
   <div>
     <div class="isoft_bg_white isoft_pd10 clear" v-if="ask_expert">
       <h4>{{ask_expert.short_desc}}</h4>
-      <p>{{ask_expert.question}}</p>
+      <IShowMarkdown :content="ask_expert.question"/>
       <div style="text-align: right;">
         <a @click="showEditanswer = !showEditanswer">我来回答</a>
         <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>
@@ -46,9 +46,11 @@
 <script>
   import {EditAnswerExpert, ModifyGoodNumber, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
   import {checkEmpty} from "../../tools"
+  import IShowMarkdown from "../Common/markdown/IShowMarkdown"
 
   export default {
     name: "AnswerExpert",
+    components: {IShowMarkdown},
     data() {
       return {
         ask_expert: null,
