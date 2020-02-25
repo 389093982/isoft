@@ -21,30 +21,37 @@
             </Row>
 
             <ul>
-              <li v-for="(as, index) in asks"
-                  style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-                <h4>{{as.short_desc}}</h4>
-                <div style="max-height: 240px;overflow:hidden;margin-bottom: 10px;">
-                  <IShowMarkdown :content="as.question"/>
-                </div>
+              <li v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 10px;
+                background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
-                  <Col span="8">
-                    <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
+                  <Col span="4" style="display: flex;">
+                    <div style="color: #00b500;text-align: center;margin-right: 10px;">
+                      <p>{{as.answer_number}}</p>
+                      <p>回答</p>
+                    </div>
+
+                    <div style="color: #696969;text-align: center;">
+                      <p>99</p>
+                      <p>浏览</p>
+                    </div>
                   </Col>
-                  <Col span="8">
+                  <Col span="20">
+                    <h4 class="isoft_inline_ellipsis" style="font-size: 16px;">{{as.short_desc}}</h4>
+                    <span class="isoft_font12"><Time :time="as.last_updated_time" :interval="1"/></span>
                     <span class="isoft_font12">
                       提出人:<span v-if="renderNickName(as.user_name)">{{renderNickName(as.user_name)}}</span>
                         <span v-else>{{as.user_name}}</span>
                     </span>
-                  </Col>
-                  <Col span="8" style="text-align: right;">
-                    <span class="isoft_font12 mr5">
-                      <a v-if="showEdit(as.user_name)"
-                         @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
-                    </span>
-                    <span class="isoft_font12 mr5">
-                      <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
-                    </span>
+                    <div class="isoft_font12" style="text-align: right;">
+                      <span class="mr5">
+                        <a v-if="showEdit(as.user_name)"
+                           @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
+                      </span>
+                      <span class="mr5">
+                        <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">回答数({{as.answer_number}})</a>
+                      </span>
+                    </div>
+
                   </Col>
                 </Row>
               </li>

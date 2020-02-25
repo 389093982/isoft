@@ -15,11 +15,15 @@
       </div>
 
       <!-- 显示简略消息 -->
-      <div v-else style="font-size: 14px;line-height: 16px;color: black;padding: 10px;">
-        <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
+      <div v-else style="font-size: 14px;line-height: 16px;color: black;padding: 0 10px 15px 10px;">
+        <div style="height: 50px;line-height: 50px;border-bottom: 1px solid #D3D6D9;">
+          <h2 style="font-weight: bold;font-size: 14px;color: #1C1F21;" v-if="isVip">
+            尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a>
+          </h2>
+        </div>
 
-        <div v-for="(message, index) in messages">
-          <p style="margin: 5px 0px;">{{message.message_text}}</p>
+        <div style="margin: 10px 0;">
+          <p v-for="(message, index) in messages" style="margin: 8px 0px;">{{message.message_text}}</p>
         </div>
 
         <div style="text-align: right;" @click="$router.push({path: '/message/message_list'});">
