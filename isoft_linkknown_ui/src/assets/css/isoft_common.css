@@ -103,6 +103,11 @@
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 
+.isoft_font16 {
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
 .isoft_font_white {
   color: #fff;
 }
@@ -114,14 +119,6 @@
 .isoft_hover_red:hover {
   cursor: pointer;
   color: red;
-}
-
-.isoft_hoverColorGreen {
-  color: #00b500;
-}
-
-.isoft_hoverColorGreen:hover {
-  color: #007a00;
 }
 
 .hoverLinkColor {
@@ -327,4 +324,46 @@
 
 .isoft_hover_bottom:hover {
   border-bottom: 2px solid red;
+}
+
+.isoft_button_blue {
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  background: #3f89ec;
+  border: 0;
+  text-align: center;
+}
+
+.isoft_hover_top10:hover {
+  position: relative;
+  top: -10px;
+}
+
+.isoft_color_grey {
+  color: #818181;
+}
+
+.isoft_color_green1 {
+  color: #00c2b3;
+}
+
+.isoft_hover_color_green {
+  color: #00b500;
+}
+
+.isoft_hover_color_green:hover {
+  color: #007a00;
+}
+
+.isoft_hover_color_blue {
+  color: #155faa;
+}
+
+.isoft_hover_color_blue:hover {
+  color: #6cb0ca;
 }

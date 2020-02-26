@@ -6,6 +6,10 @@
     <span class="isoft_hover_bottom">hover 显示红色下边框</span>
     <span class="isoft_hover_red">hover 字体变成红色</span>
     <span class="isoft_hover_bottom isoft_hover_red">hover 字体变成红色,显示红色下边框</span>
+    <span class="isoft_color_grey">灰色字体</span>
+    <span class="isoft_color_green1 isoft_font16">绿色字体1</span>
+    <span class="isoft_hover_color_green">hover 字体绿色样式</span>
+    <span class="isoft_hover_color_blue">hover 字体蓝色样式</span>
 
     <!-- div 淡入淡出效果-->
     <div class="fadeToLeft">淡入淡出</div>
@@ -14,9 +18,17 @@
     <div class="fadeToBottom">淡入淡出</div>
 
     <!-- 边框样式 -->
-    <div class="isoft_title">
-      友情链接
-    </div>
+    <div class="isoft_title">友情链接</div>
+    <div class="isoft_title">友情链接</div>
+
+    <!-- 按钮样式 -->
+    <span class="isoft_button_blue">按钮样式</span>
+
+    <!-- 背景色 -->
+    <div class="isoft_info_tip">灰度背景色</div>
+
+    <!-- hover 偏移 -->
+    <div class="isoft_hover_top10">hover 向上偏移 10</div>
   </div>
 </template>
 

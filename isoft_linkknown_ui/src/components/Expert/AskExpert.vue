@@ -6,18 +6,23 @@
           <div class="isoft_bg_white isoft_pd10">
             <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="3" offset="3" style="text-align: center;">
-                <a @click="searchQuestion(1)" :style="{color: pattern === 1 ? 'red':''}">全部问题</a></Col>
-              <Col span="3" style="text-align: center;">
-                <a @click="searchQuestion(2)" :style="{color: pattern === 2 ? 'red':''}">已有答复</a></Col>
-              <Col span="3" style="text-align: center;">
-                <a @click="searchQuestion(3)" :style="{color: pattern === 3 ? 'red':''}">暂无答复</a></Col>
-              <Col span="3" style="text-align: center;">
-                <a @click="searchQuestion(4)" :style="{color: pattern === 4 ? 'red':''}">热门问题</a></Col>
-              <Col span="3" style="text-align: center;">
-                <router-link to="/expert/edit_question">我要提问</router-link>
+                <a class="isoft_hover_color_blue" @click="searchQuestion(1)" :style="{color: pattern === 1 ? 'red':''}">全部问题</a>
               </Col>
               <Col span="3" style="text-align: center;">
-                <a @click="searchQuestion(5)" :style="{color: pattern === 5 ? 'red':''}">我的问题</a></Col>
+                <a class="isoft_hover_color_blue" @click="searchQuestion(2)" :style="{color: pattern === 2 ? 'red':''}">已有答复</a>
+              </Col>
+              <Col span="3" style="text-align: center;">
+                <a class="isoft_hover_color_blue" @click="searchQuestion(3)" :style="{color: pattern === 3 ? 'red':''}">暂无答复</a>
+              </Col>
+              <Col span="3" style="text-align: center;">
+                <a class="isoft_hover_color_blue" @click="searchQuestion(4)" :style="{color: pattern === 4 ? 'red':''}">热门问题</a>
+              </Col>
+              <Col span="3" style="text-align: center;">
+                <a class="isoft_hover_color_blue" @click="$router.push({path:'/expert/edit_question'})">我要提问</a>
+              </Col>
+              <Col span="3" style="text-align: center;">
+                <a class="isoft_hover_color_blue" @click="searchQuestion(5)" :style="{color: pattern === 5 ? 'red':''}">我的问题</a>
+              </Col>
             </Row>
 
             <ul>
@@ -25,7 +30,7 @@
                 background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
                   <Col span="6" style="display: flex;vertical-align: middle;">
-                    <div class="isoft_hoverColorGreen"
+                    <div class="isoft_hover_color_green"
                          style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
                       <p>{{as.answer_number}}</p>
                       <p>回答</p>
@@ -55,8 +60,8 @@
                         </span>
                         <span>
                           <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">
-                            <span class="isoft_hoverColorGreen" style="margin-right: 5px;">我来回答</span><span
-                            style="color: #818181;">回答问题可获得 2 积分</span>
+                            <span class="isoft_hover_color_green" style="margin-right: 5px;">我来回答</span>
+                            <span class="isoft_color_grey">回答问题可获得 2 积分</span>
                           </a>
                         </span>
                       </span>
@@ -184,11 +189,5 @@
 </script>
 
 <style scoped>
-  .search a {
-    color: #155faa;
-  }
 
-  .search a:hover {
-    color: #6cb0ca;
-  }
 </style>

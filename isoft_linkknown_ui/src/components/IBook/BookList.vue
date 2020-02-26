@@ -64,7 +64,7 @@
 
               </Col>
               <Col span="4">
-                <div class="bookImg">
+                <div class="bookImg isoft_hover_top10">
                   <router-link :to="{path:'/ibook/book_catalogs',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
@@ -251,7 +251,6 @@
   .bookImg:hover {
     background-color: rgba(214, 214, 214, 0.5);
     border: 1px solid #d0cdd2;
-    top: -10px;
   }
 
   li a:hover {

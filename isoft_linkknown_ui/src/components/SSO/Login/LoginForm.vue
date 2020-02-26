@@ -31,7 +31,7 @@
         </div>
         <div style="clear: both"></div>
       </div>
-      <input id="submit" type="submit" value="登    录" @click="login">
+      <input class="isoft_button_blue" id="submit" type="submit" value="登    录" @click="login">
     </div>
 
     <div id="login_footer">
@@ -115,17 +115,8 @@
 
   #submit {
     width: 90%;
-    height: 40px;
     margin: 8px 0 0 15px ;
     margin-bottom: 20px;
-    display: block;
-    line-height: 40px;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    color: #fff;
-    background: #3f89ec;
-    border: 0;
   }
 
   #login_footer {
