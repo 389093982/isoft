@@ -88,38 +88,30 @@
     </div>
 
     <div id="section2" v-if="section === 'section2'" class="isoft_bg_white isoft_pd20 isoft_top5">
-      <p style="border-bottom: 1px solid #f0f0f0;">招聘岗位</p>
       <div v-if="showJobDetails.length > 0">
-        <Row style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
-          <Col span="4">工作名称</Col>
-          <Col span="4">工作年限</Col>
-          <Col span="6">工作地点</Col>
-          <Col span="3">薪酬范围</Col>
-          <Col span="3">时间</Col>
-          <Col span="2">操作</Col>
-        </Row>
-        <Row v-for="(jobDetail,index) in showJobDetails" style="padding: 15px 0px;border-bottom: 1px solid #f0f0f0;">
-          <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_name}}</Col>
-          <Col span="4" style="font-size: 16px;color: #656565;">{{jobDetail.job_age}}</Col>
-          <Col span="6">{{jobDetail.job_address}}</Col>
-          <Col span="3">
-            <span style="font-size: 16px;color: #393;">{{jobDetail.salary_range}}</span>
-          </Col>
-          <Col span="3">
-            <span><Time :time="jobDetail.last_updated_time" :interval="1"/></span>
-          </Col>
-          <Col span="2">
-            <span v-if="editable == 'true'">
+        <div v-for="(jobDetail,index) in showJobDetails" style="margin: 5px 0 10px 0;border: 1px solid #f0f0f0;">
+          <div style="display: flex;padding: 15px 25px;">
+            <div style="width: 50%;height: 50px;line-height: 25px;">
+              <p style="color: #00c2b3;font-size: 18px;">{{jobDetail.job_name}} [ {{jobDetail.job_age}} ]</p>
+              <p><span style="color: #fc703e;">{{jobDetail.salary_range}}</span></p>
+            </div>
+            <div style="width: 50%;height: 50px;line-height: 25px;">
+              <span v-if="editable == 'true'">
               <Button size="small"
                       @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
               <Button size="small"
                       @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
-            </span>
-            <span v-else>
-              <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
-            </span>
-          </Col>
-        </Row>
+              </span>
+              <span v-else>
+                <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
+              </span>
+            </div>
+          </div>
+          <div style="background-color: rgba(159,161,255,0.15);padding: 7px 25px;">
+            {{jobDetail.job_address}}
+            <Time :time="jobDetail.last_updated_time" :interval="1"/>
+          </div>
+        </div>
 
         <div class="isoft_top10" style="text-align: center;">
           <IBeautifulLink v-if="showJobDetails.length < allJobDetails.length" @onclick="showMore">查看更多职位
