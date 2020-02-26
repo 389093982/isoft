@@ -9,65 +9,83 @@
       </div>
     </div>
 
+    <!-- 公司主页 -->
     <div id="section1" v-if="section === 'section1'" class="isoft_top5">
-      <Row class="isoft_bg_white isoft_pd10">
-        <Col span="5">
-          <div class="bookImg">
-            <a>
-              <img v-if="formInline.corporate_logo" :src="formInline.corporate_logo" height="160px" width="180px"/>
-              <img v-else src="../../assets/default.png" height="160px" width="140px"/>
-            </a>
-          </div>
-        </Col>
-        <Col span="19">
-          <p>
-            <span>公司名称：{{formInline.corporate_name}}</span>
-          </p>
-          <p>
+      <!-- 有公司信息 -->
+      <div v-if="corporateInfo && corporateInfo.corporate_name">
+        <Row class="isoft_bg_white isoft_pd10">
+          <Col span="5">
+            <div class="bookImg">
+              <a>
+                <img v-if="corporateInfo.corporate_logo" :src="corporateInfo.corporate_logo" height="160px"
+                     width="180px"/>
+                <img v-else src="../../assets/default.png" height="160px" width="140px"/>
+              </a>
+            </div>
+          </Col>
+          <Col span="19">
+            <p>
+              <span>公司名称：{{corporateInfo.corporate_name}}</span>
+            </p>
+            <p>
             <span>公司主页：
-              <a :href="formInline.corporate_site" target="_blank">{{formInline.corporate_site}}</a>
+              <a :href="corporateInfo.corporate_site" target="_blank">{{corporateInfo.corporate_site}}</a>
             </span>
-          </p>
-          <p>
-            <span>公司规模：{{formInline.corporate_size}}</span>
-          </p>
-          <p>
+            </p>
+            <p>
+              <span>公司规模：{{corporateInfo.corporate_size}}</span>
+            </p>
+            <p>
             <span>招聘类型：
               <Tag v-for="(jobTypeTag, index) in jobTypeTags">{{jobTypeTag}}</Tag>
             </span>
-          </p>
-          <p>
+            </p>
+            <p>
             <span>详细类型：
               <Tag v-for="(jobTypeDetail, index) in jobTypeDetails">{{jobTypeDetail}}</Tag>
             </span>
-          </p>
-          <p>
+            </p>
+            <p>
             <span>薪酬范围：
                <Tag v-for="(salaryRange, index) in salaryRanges">{{salaryRange}}</Tag>
             </span>
-          </p>
-        </Col>
-        <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
-                v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
-        </Button>
-      </Row>
+            </p>
+          </Col>
+          <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
+                  v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
+          </Button>
+        </Row>
 
-      <div class="isoft_bg_white isoft_pd20 isoft_top5">
-        <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
-          公司简介：{{formInline.corporate_desc}}
+        <div class="isoft_bg_white isoft_pd20 isoft_top5">
+          <Row :gutter="10">
+            <Col span="16">
+              <div class="isoft_pd10" style="background-color: #fff;">
+                <div class="header" style="text-align: center;">公司简介</div>
+                {{corporateInfo.corporate_desc}}
+              </div>
+            </Col>
+            <Col span="8">
+              <div class="isoft_pd10" style="background-color: #fff;">
+                <div class="header" style="text-align: center;">职位简介</div>
+                {{corporateInfo.job_desc}}
+              </div>
+            </Col>
+          </Row>
         </div>
-        <div class="isoft_pd10" style="border-top: 2px solid rgba(255,8,0,0.3);">
-          职位简介：{{formInline.job_desc}}
+
+        <div class="isoft_bg_white isoft_pd10 isoft_top5">
+          <div>
+            公司福利：{{corporateInfo.corporate_welfare}}
+          </div>
+          <div>
+            公司地址：{{corporateInfo.corporate_address}}
+          </div>
         </div>
       </div>
-
-      <div class="isoft_bg_white isoft_pd10 isoft_top5">
-        <div>
-          公司福利：{{formInline.corporate_welfare}}
-        </div>
-        <div>
-          公司地址：{{formInline.corporate_address}}
-        </div>
+      <!-- 未填写公司主页 -->
+      <div v-else class="isoft_bg_white isoft_pd10">
+        您还未发布公司信息，
+        <Button @click="$router.push({path:'/job/corporate_edit'})">前去填写</Button>
       </div>
     </div>
 
@@ -96,7 +114,8 @@
             <span v-if="editable == 'true'">
               <Button size="small"
                       @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-              <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: formInline.id}})">新增</Button>
+              <Button size="small"
+                      @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
             </span>
             <span v-else>
               <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
@@ -111,6 +130,12 @@
           <a @click="$router.push({path:'/job/apply_list'})" style="float: right;">投递清单</a>
         </div>
       </div>
+      <div v-else>
+        您还创建岗位信息，
+        <Button size="small" @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">
+          前去创建
+        </Button>
+      </div>
     </div>
   </div>
 </template>
@@ -124,7 +149,7 @@
     data() {
       return {
         section: 'section1',
-        formInline: {
+        corporateInfo: {
           id: -1,
           corporate_name: '',
           corporate_site: '',
@@ -162,8 +187,7 @@
         let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
         const result = await QueryCorporateDetail({'id': id});
         if (result.status == "SUCCESS" && result.corporate_detail) {
-          this.formInline = result.corporate_detail;
-
+          this.corporateInfo = result.corporate_detail;
           this.allJobDetails = result.job_details;
           this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
           this.editable = result.editable;
@@ -182,13 +206,13 @@
     },
     computed: {
       jobTypeTags: function () {
-        return this.getSplitArray(this.formInline.job_type, '暂无分类');
+        return this.getSplitArray(this.corporateInfo.job_type, '暂无分类');
       },
       jobTypeDetails: function () {
-        return this.getSplitArray(this.formInline.job_type_detail, '暂无详细分类');
+        return this.getSplitArray(this.corporateInfo.job_type_detail, '暂无详细分类');
       },
       salaryRanges: function () {
-        return this.getSplitArray(this.formInline.salary_range, '暂无范围');
+        return this.getSplitArray(this.corporateInfo.salary_range, '暂无范围');
       },
     }
   }

@@ -26,7 +26,7 @@
         <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
           <Button @click="forwardResumeManage">简历管理</Button>
-          <Button @click="toEditCorporateDetail">发布招聘</Button>
+          <Button @click="toEditCorporateDetail">我要招聘</Button>
           <Button @click="toToudiDetail">投递清单</Button>
         </Col>
       </Row>
