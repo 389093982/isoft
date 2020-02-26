@@ -50,6 +50,9 @@
                <Tag v-for="(salaryRange, index) in salaryRanges">{{salaryRange}}</Tag>
             </span>
             </p>
+            <p>
+              公司地址: {{corporateInfo.corporate_address}}
+            </p>
           </Col>
           <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
                   v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
@@ -59,27 +62,22 @@
         <div class="isoft_bg_white isoft_pd20 isoft_top5">
           <Row :gutter="10">
             <Col span="16">
-              <div class="isoft_pd10" style="background-color: #fff;">
-                <div class="header" style="text-align: center;">公司简介</div>
+              <div class="isoft_pd10 fadeToRight" style="background-color: #fff;">
+                <div class="header" style="text-align: center;color: #00c2b3;">公司简介</div>
                 {{corporateInfo.corporate_desc}}
+              </div>
+              <div class="isoft_pd10 fadeToTop" style="background-color: #fff;">
+                <div class="header" style="text-align: center;color: #00c2b3;">公司福利</div>
+                {{corporateInfo.corporate_welfare}}
               </div>
             </Col>
             <Col span="8">
-              <div class="isoft_pd10" style="background-color: #fff;">
-                <div class="header" style="text-align: center;">职位简介</div>
+              <div class="isoft_pd10 fadeToLeft" style="background-color: #fff;">
+                <div class="header" style="text-align: center;color: #00c2b3;">职位简介</div>
                 {{corporateInfo.job_desc}}
               </div>
             </Col>
           </Row>
-        </div>
-
-        <div class="isoft_bg_white isoft_pd10 isoft_top5">
-          <div>
-            公司福利：{{corporateInfo.corporate_welfare}}
-          </div>
-          <div>
-            公司地址：{{corporateInfo.corporate_address}}
-          </div>
         </div>
       </div>
       <!-- 未填写公司主页 -->
