@@ -35,14 +35,6 @@
             </Col>
           </Row>
           <Row>
-            <Col span="24">
-              <FormItem label="简短描述" prop="short_desc">
-                <Input v-model="formValidate.short_desc" :maxlength="200" show-word-limit
-                       placeholder="请输入简短描述"></Input>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
             <Col span="12">
               <FormItem label="检索词条" prop="key_words">
                 <Input v-model="formValidate.key_words" :maxlength="200" show-word-limit
@@ -125,7 +117,6 @@
         formValidate: {
           article_id: -1,
           blog_title: '',
-          short_desc: '',
           key_words: '',
           catalog_name: '',
           content: "",
@@ -135,9 +126,6 @@
           blog_title: [
             {required: true, message: '文章标题不能为空', trigger: 'blur'}
           ],
-          // short_desc: [
-          //   { required: true, message: '简短描述不能为空', trigger: 'blur' }
-          // ],
           // key_words: [
           //   { required: true, message: '检索词条不能为空', trigger: 'blur' }
           // ],
@@ -207,7 +195,6 @@
             this.blog = result.blog;
             this.formValidate.article_id = result.blog.id;
             this.formValidate.blog_title = result.blog.blog_title;
-            this.formValidate.short_desc = result.blog.short_desc;
             this.formValidate.key_words = result.blog.key_words;
             this.formValidate.catalog_name = result.blog.catalog_name;
             this.formValidate.content = result.blog.content;

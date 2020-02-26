@@ -37,7 +37,7 @@
           </div>
 
             <div class="isoft_inline_ellipsis" style="padding:20px 0 0 0 ">
-              <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 5px;cursor: pointer" class="hvr-grow"><Icon type="ios-card-outline" style="font-size: 15px" />发布博客</div>
+              <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 5px;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
               <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 10px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
               <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 10px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
             </div>
