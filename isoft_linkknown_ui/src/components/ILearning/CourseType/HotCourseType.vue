@@ -7,7 +7,7 @@
         </Col>
         <Col span="22">
           <div v-for="(element,index) in levelOneElements" style="display: inline-block;margin: 0 5px 5px 5px;">
-            <a class="isoft_font12" @click="currentElement=element">{{element.element_label}}</a>
+            <span class="isoft_font12 isoft_hover_bottom isoft_hover_red" @click="currentElement=element">{{element.element_label}}</span>
           </div>
         </Col>
       </Row>
@@ -18,9 +18,10 @@
         <Col span="22">
           <div v-for="(element,index) in levelTwoElements" style="display: inline-block;margin: 0 5px 5px 5px;"
                v-if="currentElement != null && element.navigation_parent_id === currentElement.id">
-            <a class="isoft_font12" @click="chooseCourseType(currentElement.element_label, element.element_label)">
+            <span class="isoft_font12 isoft_hover_bottom isoft_hover_red"
+                  @click="chooseCourseType(currentElement.element_label, element.element_label)">
               {{element.element_label}}
-            </a>
+            </span>
           </div>
         </Col>
       </Row>
@@ -68,12 +69,5 @@
 </script>
 
 <style scoped>
-  a {
-    color: #657180;
-  }
 
-  a:hover {
-    color: red;
-    border-bottom: 2px solid red;
-  }
 </style>

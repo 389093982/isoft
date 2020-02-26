@@ -58,17 +58,15 @@ const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
 const MessageList = () => import("@/components/Message/MessageList");
 const Site = () => import("@/components/Site");
+const CssDemo = () => import("@/components/CssDemo");
 
 Vue.use(Router);
 
 function getRootRouters() {
   return [
     {path: '/', redirect: '/ilearning/index'},
-    {path: '/site', component: ILayout,
-      children: [
-        {path: 'index', component: Site},
-      ]
-    }
+    {path: '/css/demo', component: CssDemo,},
+    {path: '/site', component: ILayout, children: [{path: 'index', component: Site},]}
   ]
 }
 

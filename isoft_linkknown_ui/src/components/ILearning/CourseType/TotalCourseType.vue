@@ -7,7 +7,7 @@
         </Col>
         <Col span="22">
           <div v-for="course_type in course_types" style="display: inline-block;margin: 0 5px 5px 5px;">
-            <a class="isoft_font12" @click="loadSubCourseType(course_type)">{{course_type.course_type}}</a>
+            <span class="isoft_font12 isoft_hover_bottom isoft_hover_red" @click="loadSubCourseType(course_type)">{{course_type.course_type}}</span>
           </div>
         </Col>
       </Row>
@@ -17,7 +17,8 @@
         </Col>
         <Col span="22">
           <div v-for="sub_course_type in sub_course_types" style="display: inline-block;margin: 0 5px 5px 5px;">
-             <a class="isoft_font12" @click="chooseCourseType(current_course_type, sub_course_type.course_sub_type)">{{sub_course_type.course_sub_type}}</a>
+            <span class="isoft_font12 isoft_hover_bottom isoft_hover_red"
+                  @click="chooseCourseType(current_course_type, sub_course_type.course_sub_type)">{{sub_course_type.course_sub_type}}</span>
           </div>
         </Col>
       </Row>
@@ -64,12 +65,5 @@
 </script>
 
 <style scoped>
-  a {
-    color: #657180;
-  }
 
-  a:hover {
-    color: red;
-    border-bottom: 2px solid red;
-  }
 </style>
