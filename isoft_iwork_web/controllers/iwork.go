@@ -325,8 +325,6 @@ func (this *WorkController) ImportProject() {
 	logs.Info("start ImportProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
-	// 刷新内存,同时清理所有的内存 work 流程,第一次访问会再次加载
-	defer iworkcache.DeleteAllWorkCache(-1)
 	defer memory.FlushAll()
 	importProject()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

@@ -9,6 +9,9 @@ import (
 )
 
 func (this *WorkController) EditAppid() {
+	app_id, _ := this.GetInt64("app_id", -1)
+	// 刷新内存
+	defer memory.FlushAppId(app_id)
 	var appid models.AppId
 	appid.Id, _ = this.GetInt64("id", 0)
 	appid.AppName = this.GetString("app_name")
@@ -18,8 +21,6 @@ func (this *WorkController) EditAppid() {
 	appid.LastUpdatedBy = "SYSTEM"
 	appid.LastUpdatedTime = time.Now()
 	if _, err := models.InsertOrUpdateAppId(&appid); err == nil {
-		memory.ReloadAppId(appid.Id)
-		memory.FlushMemoryGlobalVar(appid.Id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

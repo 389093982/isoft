@@ -2,29 +2,49 @@ package memory
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/logs"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/models"
 	"strings"
 	"sync"
+	"time"
 )
 
+var appIdCacheMap sync.Map
+var appNameCacheMap sync.Map
 var GlobalVarMap sync.Map
 var ResourceMap sync.Map
 var FilterMap sync.Map
 
-func FlushAll() {
-	FlushMemoryGlobalVar(-1)
-	FlushMemoryResource(-1)
-	FlushMemoryFilter(-1)
+// 统计刷新内存所花费的时间
+func recordCostTimeLog(app_id int64, start time.Time) {
+	logs.Info("flush app_id for %d memory total cost time :%v ms", app_id, time.Now().Sub(start).Nanoseconds()/1e6)
 }
 
+func FlushAll() {
+	FlushAppId(-1)
+}
+
+func FlushAppId(app_id int64) {
+	defer recordCostTimeLog(app_id, time.Now())
+	// 刷新内存
+	FlushMemoryAppId(app_id)
+	FlushMemoryGlobalVar(app_id)
+	FlushMemoryResource(app_id)
+	FlushMemoryFilter(app_id)
+	// 同时清理所有的内存 work 流程,第一次访问会再次加载
+	iworkcache.DeleteAllWorkCache(app_id)
+}
+
+// 根据 app_id 刷新内存中的 filter
 func FlushMemoryFilter(app_id int64) {
 	filters, _ := models.QueryAllFilters(app_id)
 	for index, _ := range filters {
+		filterWorkName := string(filters[index].AppId) + "_" + filters[index].FilterWorkName
 		// 不存在则初始化并添加
 		// 存在则获取后添加
-		if fs, ok := FilterMap.LoadOrStore(string(filters[index].AppId)+"_"+filters[index].FilterWorkName, []*models.Filters{&filters[index]}); ok {
-			FilterMap.Store(string(filters[index].AppId)+"_"+filters[index].FilterWorkName, append(fs.([]*models.Filters), &filters[index]))
+		if fs, ok := FilterMap.LoadOrStore(filterWorkName, []*models.Filters{&filters[index]}); ok {
+			FilterMap.Store(filterWorkName, append(fs.([]*models.Filters), &filters[index]))
 		}
 	}
 }
@@ -51,10 +71,11 @@ func FlushMemoryResource(app_id int64) {
 	}
 }
 
-var appIdCacheMap sync.Map
-var appNameCacheMap sync.Map
-
-func ReloadAppId(app_id int64) {
+func FlushMemoryAppId(app_id int64) {
+	if appId, err := GetAppIdWithCache(app_id, ""); err == nil {
+		appIdCacheMap.Delete(app_id)
+		appNameCacheMap.Delete(appId.AppName)
+	}
 	GetAppIdWithCache(app_id, "")
 }
 

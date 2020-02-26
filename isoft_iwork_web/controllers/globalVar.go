@@ -25,6 +25,8 @@ func (this *WorkController) GlobalVarList() {
 
 func (this *WorkController) EditGlobalVar() {
 	app_id, _ := this.GetInt64("app_id", -1)
+	// 刷新内存
+	defer memory.FlushAppId(app_id)
 	id, err := this.GetInt64("id", -1)
 	name := this.GetString("name")
 	env_name := this.GetString("env_name")
@@ -52,7 +54,6 @@ func (this *WorkController) EditGlobalVar() {
 	}
 	_, err = models.InsertOrUpdateGlobalVar(globalVar, orm.NewOrm())
 	if err == nil {
-		flushMemoryGlobalVar(app_id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
@@ -76,22 +77,16 @@ func (this *WorkController) QueryEvnNameList() {
 
 func (this *WorkController) DeleteGlobalVarById() {
 	app_id, _ := this.GetInt64("app_id", -1)
+	// 刷新内存
+	defer memory.FlushAppId(app_id)
 	id, _ := this.GetInt64("id")
 	err := models.DeleteGlobalVarById(id)
 	if err == nil {
-		flushMemoryGlobalVar(app_id)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
-}
-
-func flushMemoryGlobalVar(app_id int64) {
-	// 刷新全局变量
-	memory.FlushMemoryGlobalVar(app_id)
-	// 刷新资源链接,资源链接可以使用了全局变量
-	memory.FlushMemoryResource(app_id)
 }
 
 func (this *WorkController) GetAllGlobalVars() {
