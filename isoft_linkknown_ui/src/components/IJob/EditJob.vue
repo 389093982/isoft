@@ -24,10 +24,10 @@
                 </Option>
               </Select>
             </FormItem>
-            <FormItem label="薪酬范围" prop="salary_range">
-              <Select v-model="formInline.salary_range">
-                <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
-                  {{salaryRange}}
+            <FormItem label="学历" prop="job_education">
+              <Select v-model="formInline.job_education">
+                <Option v-for="(education, index) in job_educations" :value="education" :key="education">
+                  {{education}}
                 </Option>
               </Select>
             </FormItem>
@@ -65,6 +65,7 @@
       return {
         jobAges: this.GLOBAL.jobAges,
         salaryRanges: this.GLOBAL.salaryRanges,
+        job_educations: this.GLOBAL.job_educations,
         formInline: {
           id: -1,
           corporate_id: -1,
@@ -72,6 +73,7 @@
           job_age: '',
           job_address: '',
           salary_range: '',
+          job_education: '',
         },
         ruleValidate: {
           job_name: [
@@ -113,15 +115,8 @@
       handleSubmit: async function (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditJobDetail(
-              this.formInline.id,
-              this.formInline.corporate_id,
-              this.formInline.job_name,
-              this.formInline.job_age,
-              this.formInline.job_address,
-              this.formInline.salary_range
-            );
-            if (result.status == "SUCCESS") {
+            const result = await EditJobDetail(this.formInline);
+            if (result.status === "SUCCESS") {
               this.$Message.success("保存成功！");
               this.$router.push({path: '/job/corporate_detail'});
             } else {
@@ -132,13 +127,8 @@
       },
       refreshJobDetail: async function (id) {
         const result = await QueryJobById(id);
-        if (result.status == "SUCCESS") {
-          this.formInline.id = result.jobDetail.id;
-          this.formInline.corporate_id = result.jobDetail.corporate_id;
-          this.formInline.job_name = result.jobDetail.job_name;
-          this.formInline.job_age = result.jobDetail.job_age;
-          this.formInline.job_address = result.jobDetail.job_address;
-          this.formInline.salary_range = result.jobDetail.salary_range;
+        if (result.status === "SUCCESS") {
+          this.formInline = result.jobDetail;
         }
       }
     },

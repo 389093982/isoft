@@ -151,11 +151,15 @@ func (this *MigrateExecutor) migrate() {
 }
 
 func (this *MigrateExecutor) checkExecuted(migrate_name, migrate_hash string) bool {
-	sql := `SELECT COUNT(*) FROM migrate_version WHERE migrate_name = ? and migrate_hash = ?`
+	sql := `SELECT success FROM migrate_version WHERE migrate_name = ? and migrate_hash = ?`
 	if row, err := this.QueryRowSQL(sql, migrate_name, migrate_hash); err == nil {
-		var datacount int64
-		if err := row.Scan(&datacount); err == nil && datacount > 0 {
-			return true
+		var success bool
+		if err := row.Scan(&success); err == nil {
+			if success {
+				return true
+			} else {
+				panic(fmt.Sprintf("迁移文件 %s 执行失败,执行状态 success = 0,请先进行回退处理！", migrate_name))
+			}
 		}
 	}
 	return false

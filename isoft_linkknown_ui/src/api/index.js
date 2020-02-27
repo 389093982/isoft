@@ -199,15 +199,7 @@ export const EditAdvertisement = (id, advertisement_label, linked_type, linked_r
 
 export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditCorporateDetail', params, 'GET');
 
-export const EditJobDetail = (id, corporate_id, job_name, job_age, job_address, salary_range) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditJobDetail', {
-    id,
-    corporate_id,
-    job_name,
-    job_age,
-    job_address,
-    salary_range
-  }, 'GET');
+export const EditJobDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditJobDetail', params, 'GET');
 
 export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCorporateDetail', params, 'GET');
 export const ApplyJob = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ApplyJob', params, 'GET');
