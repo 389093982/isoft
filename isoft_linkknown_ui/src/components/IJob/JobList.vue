@@ -32,21 +32,10 @@
       </Row>
 
       <div style="padding: 10px;">
-        <Row v-for="(job,index) in jobs" :gutter="10" v-if="job.corporate_name && job.job_name"
-             style="padding: 15px;border-bottom: 1px solid #d7dde4;">
-          <div style="cursor: pointer;" @click="showJobDetail(job)">
-            <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.corporate_name}}
-            </Col>
-            <Col span="4" class="isoft_inline_ellipsis" style="font-size: 16px;color: #656565;">{{job.job_name}}</Col>
-            <Col span="4" class="isoft_inline_ellipsis">{{job.job_age}}</Col>
-            <Col span="6" class="isoft_inline_ellipsis">{{job.job_address}}</Col>
-            <Col span="6" class="isoft_inline_ellipsis">
-              <span style="font-size: 16px;color: #393;">{{job.salary_range}}</span>
-              <span style="font-size: 14px;color: rgba(0,0,0,0.5);float: right;"><Time
-                :time="job.last_updated_time"/></span>
-            </Col>
-          </div>
-        </Row>
+
+        <div v-for="(job,index) in jobs">
+          <JobItem :job-detail="job"/>
+        </div>
 
         <Page :total="total" :page-size="offset" show-total show-sizer
               :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -61,10 +50,11 @@
   import {FilterPageJobList} from "../../api"
   import {checkEmpty, CheckHasLoginConfirmDialog, GetLoginUserName, strSplit} from "../../tools";
   import IAreaChooser from "../Common/IAreaChooser";
+  import JobItem from "./JobItem";
 
   export default {
     name: "JobList",
-    components: {IAreaChooser},
+    components: {JobItem, IAreaChooser},
     data() {
       return {
         salaryRanges: this.GLOBAL.salaryRanges,
