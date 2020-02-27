@@ -11,23 +11,28 @@
         </div>
         <div style="width: 50%;height: 50px;line-height: 25px;">
           <Row>
-            <Col span="18">
-              <p style="color: #00c2b3;font-size: 18px;">
-                <span class="isoft_point_cursor"
-                      @click="$router.push({path:'/job/corporate_detail', query:{corporate_id: jobDetail.corporate_id}})">{{jobDetail.corporate_name}}</span>
-                &nbsp;<span style="color: red;font-weight: bold;font-size: 12px;">保</span></p>
-              <p>
-                    <span v-for="(job_tag,index) in filterJobTags(jobDetail.job_tags)">
-                      <span v-if="index > 0">&nbsp;|&nbsp;</span>{{job_tag}}
-                    </span>
-              </p>
+            <Col span="18" style="display: flex;">
+              <div style="width: 15%">
+                <img :src="jobDetail.corporate_logo" style="width: 45px;height: 45px;border-radius: 10px;"/>
+              </div>
+              <div style="width: 85%;">
+                <p style="color: #00c2b3;font-size: 18px;">
+                  <span class="isoft_point_cursor"
+                        @click="$router.push({path:'/job/corporate_detail', query:{corporate_id: jobDetail.corporate_id}})">{{jobDetail.corporate_name}}</span>
+                  &nbsp;<span style="color: red;font-weight: bold;font-size: 12px;">保</span></p>
+                <p>
+                <span v-for="(job_tag,index) in filterJobTags(jobDetail.job_tags)">
+                  <span v-if="index > 0">&nbsp;|&nbsp;</span>{{job_tag}}
+                </span>
+                </p>
+              </div>
             </Col>
             <Col span="6">
               <span v-if="isLoginUserName(jobDetail.created_by)">
                 <Button size="small"
-                        @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.corporate_id}})">编辑</Button>
+                        @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.corporate_id}})">编辑岗位</Button>
                 <Button size="small"
-                        @click="$router.push({path:'/job/job_edit', query: {corporate_id: jobDetail.corporate_id}})">新增</Button>
+                        @click="$router.push({path:'/job/job_edit', query: {corporate_id: jobDetail.corporate_id}})">新增岗位</Button>
               </span>
               <span v-else>
                 <Button size="small" v-if="!isLoginUserName(jobDetail.created_by)"
@@ -64,7 +69,7 @@
     },
     data() {
       return {
-        editable: true,
+
       }
     },
     methods: {
@@ -77,6 +82,10 @@
           const result = await ApplyJob({job_id: job_id});
           if (result.status === "SUCCESS") {
             _this.$Message.success("投递成功!");
+            // 投递成功 1s 后进入投递详情页面
+            setTimeout(function () {
+              _this.$router.push({path: '/job/apply_list'});
+            }, 1000);
           } else {
             _this.$Message.error("投递失败!");
           }

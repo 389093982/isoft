@@ -67,7 +67,7 @@
 
 <script>
   import {EditCorporateDetail, fileUploadUrl, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, handleSpecial, strSplit} from "../../tools"
+  import {checkEmpty, GetLoginUserName, handleSpecial, strSplit} from "../../tools"
   import IAreaChooser from "../Common/IAreaChooser";
   import IFileUpload from "../Common/file/IFileUpload";
 
@@ -155,8 +155,16 @@
         })
       },
       refreshCorporateDetail: async function () {
-        const result = await QueryCorporateDetail();
-        if (result.status == "SUCCESS" && result.corporate_detail) {
+        let params = {};
+        if (!checkEmpty(GetLoginUserName())) {
+          // 根据当前登录用户名去查
+          params["user_name"] = GetLoginUserName();
+        } else {
+          // 否则不查
+          return;
+        }
+        const result = await QueryCorporateDetail(params);
+        if (result.status === "SUCCESS" && result.corporate_detail) {
           this.formInline = result.corporate_detail;
         }
       }

@@ -197,14 +197,14 @@ export const EditAdvertisement = (id, advertisement_label, linked_type, linked_r
   linked_img
 }, 'GET');
 
-export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditCorporateDetail', params, 'GET');
+export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditCorporateDetail', params, 'POST');
 
-export const EditJobDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditJobDetail', params, 'GET');
+export const EditJobDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditJobDetail', params, 'POST');
 
-export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCorporateDetail', params, 'GET');
-export const ApplyJob = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ApplyJob', params, 'GET');
+export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCorporateDetail', params, 'POST');
+export const ApplyJob = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ApplyJob', params, 'POST');
 
-export const QueryJobById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryJobById', {id}, 'GET');
+export const QueryJobById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryJobById', {id}, 'POST');
 
 export const EditResume = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditResume', params, "POST");
 

@@ -339,6 +339,19 @@
   text-align: center;
 }
 
+.isoft_button_green1 {
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  background: #00c2b3;
+  border: 0;
+  text-align: center;
+}
+
 .isoft_hover_top10:hover {
   position: relative;
   top: -10px;

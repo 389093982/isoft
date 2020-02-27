@@ -122,7 +122,7 @@
             const result = await EditJobDetail(this.formInline);
             if (result.status === "SUCCESS") {
               this.$Message.success("保存成功！");
-              this.$router.push({path: '/job/corporate_detail'});
+              this.$router.push({path: '/job/corporate_detail', query: {loc: 2}});
             } else {
               this.$Message.error(result.errorMsg);
             }
