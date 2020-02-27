@@ -25,7 +25,7 @@
         </div>
         <div v-else style="text-align: center;margin: 50px 0;">
           未找到 {{$route.query.search}} 的搜索结果,
-          <IBeautifulLink font-weight="bold" @onclick="$router.push({path:'/ilearning/index'})">试试找找其它资源
+          <IBeautifulLink font-weight="bold" @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">试试找找其它资源
           </IBeautifulLink>
         </div>
       </div>
