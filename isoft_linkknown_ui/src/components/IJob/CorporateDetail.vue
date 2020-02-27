@@ -96,21 +96,35 @@
               <p><span style="color: #fc703e;">{{jobDetail.salary_range}}</span> &nbsp;|&nbsp; 本科 &nbsp;|&nbsp;{{corporateInfo.corporate_size}}
               </p>
             </div>
-            <div style="width: 50%;height: 50px;line-height: 25px;text-align: right;">
-              <span v-if="editable == 'true'">
-              <Button size="small"
-                      @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-              <Button size="small"
-                      @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
-              </span>
-              <span v-else>
-                <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
-              </span>
+            <div style="width: 50%;height: 50px;line-height: 25px;">
+              <Row>
+                <Col span="18">
+                  <p style="color: #00c2b3;font-size: 18px;">阿里巴巴忽悠公司</p>
+                  <p>电子商务 &nbsp;|&nbsp; 实体企业 &nbsp;|&nbsp;测试工程师
+                  </p>
+                </Col>
+                <Col span="6">
+                  <span v-if="editable == 'true'">
+                    <Button size="small"
+                            @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
+                    <Button size="small"
+                            @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
+                  </span>
+                  <span v-else>
+                    <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
+                  </span>
+                </Col>
+              </Row>
             </div>
           </div>
-          <div style="background-color: rgba(159,161,255,0.15);padding: 7px 25px;">
-            {{jobDetail.job_address}}
-            <Time :time="jobDetail.last_updated_time" :interval="1"/>
+          <div style="background-color: rgba(200,194,255,0.15);padding: 7px 25px;display: flex;">
+            <div style="width: 60%;">
+              {{jobDetail.job_address}}
+              <Time :time="jobDetail.last_updated_time" :interval="1"/>
+            </div>
+            <div style="width: 40%;" class="isoft_inline_ellipsis">
+              福利待遇：通过通信及社交平台微信和 QQ 促进用户联系，并助其连接数字内容和生活服务，尽在弹指间。
+            </div>
           </div>
         </div>
 
