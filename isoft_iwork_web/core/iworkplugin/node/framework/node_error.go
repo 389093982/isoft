@@ -4,6 +4,8 @@ import (
 	"github.com/pkg/errors"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
+	"isoft/isoft_iwork_web/core/iworkdata/block"
+	"isoft/isoft_iwork_web/core/iworkdata/entry"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/models"
@@ -35,4 +37,30 @@ func (this *PanicErrorNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 		2: {iworkconst.STRING_PREFIX + "panic_errorMsg?", "抛出异常的信息,值为字符串类型!"},
 	}
 	return this.BPIS1(paramMap)
+}
+
+type CatchErrorNode struct {
+	node.BaseNode
+	BlockStep        *block.BlockStep
+	WorkStep         *models.WorkStep
+	BlockStepRunFunc func(args *interfaces.RunOneStepArgs) (receiver *entry.Receiver)
+}
+
+func (this *CatchErrorNode) Execute(trackingId string) {
+	// 未捕获到异常,则不执行子流程
+	if isNoError, ok := this.DataStore.DataNodeStoreMap["Error"].NodeOutputDataMap["isNoError"].(bool); ok && isNoError {
+		return
+	}
+	if this.BlockStep.HasChildren {
+		bsoRunner := node.BlockStepOrdersRunner{
+			ParentStepId: this.WorkStep.WorkStepId,
+			WorkCache:    this.WorkCache,
+			TrackingId:   trackingId,
+			LogWriter:    this.LogWriter,
+			Store:        this.DataStore, // 获取数据中心
+			Dispatcher:   this.Dispatcher,
+			RunOneStep:   this.BlockStepRunFunc,
+		}
+		bsoRunner.Run()
+	}
 }

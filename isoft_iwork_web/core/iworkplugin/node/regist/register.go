@@ -66,6 +66,7 @@ func GetNodeMeta() []map[string]string {
 		{"name": "parse_jwt", "icon": "md-hammer"},
 		{"name": "do_error_filter", "icon": "md-hammer"},
 		{"name": "send_mail", "icon": "md-hammer"},
+		{"name": "catch_error", "icon": "md-hammer"},
 	}
 }
 
@@ -104,13 +105,13 @@ func RegistNodes() {
 		framework.IFNode{},
 		framework.ElIfNode{},
 		framework.ElseNode{},
-		framework.EmptyNode{},
 		framework.DoErrorFilterNode{},
 		framework.DefineVarNode{},
 		framework.AssignVarNode{},
 		framework.MapNode{},
 		framework.ForeachNode{},
 		framework.PanicErrorNode{},
+		framework.CatchErrorNode{},
 		framework.TemplateNode{},
 		chiper.Base64EncodeNode{},
 		chiper.Base64DecodeNode{},

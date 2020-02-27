@@ -122,7 +122,7 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await EditResume(this.formInline);
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               this.$Message.success("保存成功！");
               this.$router.push({path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
             } else {
@@ -132,9 +132,11 @@
         })
       },
       refreshQueryResume: async function () {
-        const result = await QueryResume({user_name: GetLoginUserName()});
-        if (result.status == "SUCCESS") {
-          this.formInline = result.resume;
+        if (!checkEmpty(GetLoginUserName())) {
+          const result = await QueryResume({user_name: GetLoginUserName()});
+          if (result.status === "SUCCESS") {
+            this.formInline = result.resume;
+          }
         }
       },
       handleAreaSubmit: function (province, city, area) {
