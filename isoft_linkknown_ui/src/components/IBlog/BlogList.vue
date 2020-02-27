@@ -214,7 +214,7 @@
       // 内容超长则显示部分
       limitLenth:function (value) {
         if (value.length > 25) {
-          return value.slice(0,25) + ' . . .'
+          return value.slice(0,25) + ' · · ·'
         }else {
           return value
         }
