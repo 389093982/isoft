@@ -7,7 +7,7 @@
     </p>
     <p>
       <span>课程名称：{{course.course_name}}</span>
-      <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/index'})"
+      <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/boutiqueCourse'})"
             style="margin-left: 30px;">搜索同类资源</span>
       <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))"
             style="margin-left: 30px;">开课流程</span>
