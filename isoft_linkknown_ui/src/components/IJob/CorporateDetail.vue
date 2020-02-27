@@ -89,43 +89,8 @@
 
     <div id="section2" v-if="section === 'section2'" class="isoft_bg_white isoft_pd20 isoft_top5">
       <div v-if="showJobDetails.length > 0">
-        <div v-for="(jobDetail,index) in showJobDetails" style="margin: 5px 0 10px 0;border: 1px solid #f0f0f0;">
-          <div style="display: flex;padding: 15px 25px;">
-            <div style="width: 50%;height: 50px;line-height: 25px;">
-              <p style="color: #00c2b3;font-size: 18px;">{{jobDetail.job_name}} [ {{jobDetail.job_age}} ]</p>
-              <p><span style="color: #fc703e;">{{jobDetail.salary_range}}</span> &nbsp;|&nbsp; 本科 &nbsp;|&nbsp;{{corporateInfo.corporate_size}}
-              </p>
-            </div>
-            <div style="width: 50%;height: 50px;line-height: 25px;">
-              <Row>
-                <Col span="18">
-                  <p style="color: #00c2b3;font-size: 18px;">阿里巴巴忽悠公司</p>
-                  <p>电子商务 &nbsp;|&nbsp; 实体企业 &nbsp;|&nbsp;测试工程师
-                  </p>
-                </Col>
-                <Col span="6">
-                  <span v-if="editable == 'true'">
-                    <Button size="small"
-                            @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-                    <Button size="small"
-                            @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
-                  </span>
-                  <span v-else>
-                    <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
-                  </span>
-                </Col>
-              </Row>
-            </div>
-          </div>
-          <div style="background-color: rgba(200,194,255,0.15);padding: 7px 25px;display: flex;">
-            <div style="width: 60%;">
-              {{jobDetail.job_address}}
-              <Time :time="jobDetail.last_updated_time" :interval="1"/>
-            </div>
-            <div style="width: 40%;" class="isoft_inline_ellipsis">
-              福利待遇：通过通信及社交平台微信和 QQ 促进用户联系，并助其连接数字内容和生活服务，尽在弹指间。
-            </div>
-          </div>
+        <div v-for="(jobDetail,index) in showJobDetails">
+          <JobItem :job-detail="jobDetail"/>
         </div>
 
         <div class="isoft_top10" style="text-align: center;">
@@ -145,10 +110,12 @@
 
 <script>
   import {ApplyJob, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog2, goToTargetLink, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, goToTargetLink, strSplit} from "../../tools";
+  import JobItem from "./JobItem";
 
   export default {
     name: "CorporateDetail",
+    components: {JobItem},
     data() {
       return {
         section: 'section1',
@@ -191,8 +158,9 @@
       },
       refreshCorporateDetail: async function () {
         let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
-        const result = await QueryCorporateDetail({'id': id});
-        if (result.status == "SUCCESS" && result.corporate_detail) {
+        let user_name = !checkEmpty(GetLoginUserName()) ? GetLoginUserName() : "";
+        const result = await QueryCorporateDetail({id, user_name});
+        if (result.status === "SUCCESS" && result.corporate_detail) {
           this.corporateInfo = result.corporate_detail;
           this.allJobDetails = result.job_details;
           this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
@@ -200,12 +168,15 @@
         }
       },
       getSplitArray(str, defaultVal) {
+        return this.getSplitArray2(str, ",", defaultVal)
+      },
+      getSplitArray2(str, sep, defaultVal) {
         if (!checkEmpty(str)) {
-          return strSplit(str, ",");
+          return strSplit(str, sep);
         } else {
-          return [defaultVal];
+          return defaultVal ? [defaultVal] : [];
         }
-      }
+      },
     },
     mounted() {
       this.refreshCorporateDetail();

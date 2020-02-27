@@ -31,6 +31,9 @@
                 </Option>
               </Select>
             </FormItem>
+            <FormItem label="岗位标签" prop="job_tags">
+              <Input v-model.trim="formInline.job_tags" placeholder="多个标签用 | 分割,示例：软件开发|人工智能|已上市"></Input>
+            </FormItem>
             <FormItem>
               <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
               <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
@@ -74,6 +77,7 @@
           job_address: '',
           salary_range: '',
           job_education: '',
+          job_tags: '',
         },
         ruleValidate: {
           job_name: [

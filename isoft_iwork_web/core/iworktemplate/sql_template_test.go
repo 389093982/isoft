@@ -67,3 +67,19 @@ func Test_Template3(t *testing.T) {
 		panic(err)
 	}
 }
+
+func Test_Template4(t *testing.T) {
+	s := `{{ if gt .age 5 }}
+			age > 5
+		  {{ end }}`
+	//解析模板
+	tmpl, err := template.New("test").Parse(s)
+	if err != nil {
+		panic(err)
+	}
+	//数据驱动模板
+	err = tmpl.Execute(os.Stdout, map[string]interface{}{"age": 10})
+	if err != nil {
+		panic(err)
+	}
+}
