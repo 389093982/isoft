@@ -2,7 +2,7 @@
     <span style="cursor: pointer;font-size: 12px;color: grey" @click="changeShowMore()">
       <span v-if="showMore"><Icon type="ios-arrow-down" /></span>
       <span v-else><Icon type="ios-arrow-up" /></span>
-      查看更多
+      {{defaultDesc}}
     </span>
 </template>
 
@@ -12,6 +12,10 @@
 	    showMore:{
 	      type:Boolean,
         default:false,
+      },
+      defaultDesc:{
+	      type:String,
+        default:'查看更多'
       },
     },
 		name: "showMore",
