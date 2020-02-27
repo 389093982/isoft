@@ -7,6 +7,10 @@
       <div class="header" style="cursor:pointer;display: inline-block;"
            @click="section = 'section2'" :style="{color: section === 'section2' ? 'red':''}">招聘岗位
       </div>
+
+      <div class="header" style="cursor:pointer;display: inline-block;"
+           @click="$router.push({path:'/job/apply_list'})">投递清单
+      </div>
     </div>
 
     <!-- 公司主页 -->
@@ -25,33 +29,29 @@
           </Col>
           <Col span="19">
             <p>
-              <span>公司名称：{{corporateInfo.corporate_name}}</span>
+              <span><span class="isoft_color_grey">公司名称：</span><span class="hovered hvr-grow isoft_hover_red"
+                                                                     @click="goToTargetLink(corporateInfo.corporate_site)">{{corporateInfo.corporate_name}}</span></span>
             </p>
             <p>
-            <span>公司主页：
-              <a :href="corporateInfo.corporate_site" target="_blank">{{corporateInfo.corporate_site}}</a>
-            </span>
+              <span><span class="isoft_color_grey">公司规模：</span>{{corporateInfo.corporate_size}}</span>
             </p>
             <p>
-              <span>公司规模：{{corporateInfo.corporate_size}}</span>
-            </p>
-            <p>
-            <span>招聘类型：
+            <span><span class="isoft_color_grey">招聘类型：</span>
               <Tag v-for="(jobTypeTag, index) in jobTypeTags">{{jobTypeTag}}</Tag>
             </span>
             </p>
             <p>
-            <span>详细类型：
+            <span><span class="isoft_color_grey">详细类型：</span>
               <Tag v-for="(jobTypeDetail, index) in jobTypeDetails">{{jobTypeDetail}}</Tag>
             </span>
             </p>
             <p>
-            <span>薪酬范围：
+            <span><span class="isoft_color_grey">薪酬范围：</span>
                <Tag v-for="(salaryRange, index) in salaryRanges">{{salaryRange}}</Tag>
             </span>
             </p>
-            <p>
-              公司地址: {{corporateInfo.corporate_address}}
+            <p><span class="isoft_color_grey">公司地址:</span>
+              {{corporateInfo.corporate_address}}
             </p>
           </Col>
           <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
@@ -93,31 +93,44 @@
           <div style="display: flex;padding: 15px 25px;">
             <div style="width: 50%;height: 50px;line-height: 25px;">
               <p style="color: #00c2b3;font-size: 18px;">{{jobDetail.job_name}} [ {{jobDetail.job_age}} ]</p>
-              <p><span style="color: #fc703e;">{{jobDetail.salary_range}}</span></p>
+              <p><span style="color: #fc703e;">{{jobDetail.salary_range}}</span> &nbsp;|&nbsp; 本科 &nbsp;|&nbsp;{{corporateInfo.corporate_size}}
+              </p>
             </div>
             <div style="width: 50%;height: 50px;line-height: 25px;">
-              <span v-if="editable == 'true'">
-              <Button size="small"
-                      @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
-              <Button size="small"
-                      @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
-              </span>
-              <span v-else>
-                <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
-              </span>
+              <Row>
+                <Col span="18">
+                  <p style="color: #00c2b3;font-size: 18px;">阿里巴巴忽悠公司</p>
+                  <p>电子商务 &nbsp;|&nbsp; 实体企业 &nbsp;|&nbsp;测试工程师
+                  </p>
+                </Col>
+                <Col span="6">
+                  <span v-if="editable == 'true'">
+                    <Button size="small"
+                            @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.id}})">编辑</Button>
+                    <Button size="small"
+                            @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">新增</Button>
+                  </span>
+                  <span v-else>
+                    <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
+                  </span>
+                </Col>
+              </Row>
             </div>
           </div>
-          <div style="background-color: rgba(159,161,255,0.15);padding: 7px 25px;">
-            {{jobDetail.job_address}}
-            <Time :time="jobDetail.last_updated_time" :interval="1"/>
+          <div style="background-color: rgba(200,194,255,0.15);padding: 7px 25px;display: flex;">
+            <div style="width: 60%;">
+              {{jobDetail.job_address}}
+              <Time :time="jobDetail.last_updated_time" :interval="1"/>
+            </div>
+            <div style="width: 40%;" class="isoft_inline_ellipsis">
+              福利待遇：通过通信及社交平台微信和 QQ 促进用户联系，并助其连接数字内容和生活服务，尽在弹指间。
+            </div>
           </div>
         </div>
 
         <div class="isoft_top10" style="text-align: center;">
           <IBeautifulLink v-if="showJobDetails.length < allJobDetails.length" @onclick="showMore">查看更多职位
           </IBeautifulLink>
-
-          <a @click="$router.push({path:'/job/apply_list'})" style="float: right;">投递清单</a>
         </div>
       </div>
       <div v-else>
@@ -132,7 +145,7 @@
 
 <script>
   import {ApplyJob, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog2, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog2, goToTargetLink, strSplit} from "../../tools";
 
   export default {
     name: "CorporateDetail",
@@ -159,6 +172,9 @@
       }
     },
     methods: {
+      goToTargetLink: function (url) {
+        goToTargetLink(url);
+      },
       applyJob: function (job_id) {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, async function () {

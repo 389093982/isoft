@@ -136,6 +136,11 @@ export const CheckAdminLogin = () => checkAdminLogin();
 
 export const validateCron = (cron) => cronValidate(cron);
 
+export function goToTargetLink(url) {
+  // 打开新窗口跳转
+  window.open(url, '_blank');
+}
+
 // 字符串分割函数
 export function strSplit(str, sep) {
   return str.split(sep);
