@@ -88,7 +88,7 @@
         search: '',
         resources: null,
         resource_fl: ["java", "python", "php", "c", "c++", "vue"],
-        resource_filetypes: [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".zip", ".rar"],
+        resource_filetypes: [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf"],
         // 当前页
         current_page: 1,
         // 总数

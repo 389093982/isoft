@@ -24,6 +24,13 @@
                 </Option>
               </Select>
             </FormItem>
+            <FormItem label="薪酬范围" prop="salary_range">
+              <Select v-model="formInline.salary_range">
+                <Option v-for="(salaryRange, index) in salaryRanges" :value="salaryRange" :key="salaryRange">
+                  {{salaryRange}}
+                </Option>
+              </Select>
+            </FormItem>
             <FormItem>
               <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
               <Button type="success" @click="handleReturn" style="margin-right: 6px">返回</Button>
