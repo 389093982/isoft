@@ -88,6 +88,32 @@
       }
     },
     data() {
+      const checkBlogTitle = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('文章标题不能为空！'));
+        }else if(value.length>30){
+          callback(new Error('文章标题不能超过30个字符!'));
+        }else {
+          callback();
+        }
+      };
+      const checkKeyWords = (rule,value,callback) => {
+       if(value.length>20){
+          callback(new Error('检索词条不能超过20个字符!'));
+        }else {
+          callback();
+        }
+      };
+
+      const checkContent = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('文章内容不能为空！'));
+        }else if(value.length>20000){
+          callback(new Error('文章内容不能超过20000个字符!'));
+        }else {
+          callback();
+        }
+      };
       return {
         toolbars: {
           bold: true, // 粗体
@@ -124,16 +150,16 @@
         },
         ruleValidate: {
           blog_title: [
-            {required: true, message: '文章标题不能为空', trigger: 'blur'}
+            {required: true,validator: checkBlogTitle, trigger: 'blur'}
           ],
-          // key_words: [
-          //   { required: true, message: '检索词条不能为空', trigger: 'blur' }
-          // ],
-          // catalog_name: [
-          //   { required: true, type: 'number', message: '文章分类不能为空', trigger: 'blur' }
-          // ],
+          key_words: [
+            { required: false, validator: checkKeyWords, trigger: 'blur' }
+          ],
+          catalog_name: [
+            { required: true, message: '文章分类不能为空', trigger: 'blur' }
+          ],
           content: [
-            {required: true, message: '文章内容不能为空', trigger: 'blur'}
+            {required: true, validator:checkContent, trigger: 'blur'}
           ],
         },
       }
