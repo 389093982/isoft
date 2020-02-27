@@ -98,9 +98,11 @@
           <div>
             <div v-if="user">
               <div style="background-color: #ffffff;">
+                <!--用户相关的博文、课程、书本-->
                 <UserAbout :user-name="_userName"/>
               </div>
               <div class="isoft_top5" style="background-color: #ffffff;">
+                <!--他/她收藏的图书-->
                 <UserFavorite :user-name="_userName"/>
               </div>
             </div>
