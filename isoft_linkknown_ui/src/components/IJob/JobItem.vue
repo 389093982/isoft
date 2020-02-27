@@ -12,8 +12,10 @@
         <div style="width: 50%;height: 50px;line-height: 25px;">
           <Row>
             <Col span="18">
-              <p style="color: #00c2b3;font-size: 18px;">{{jobDetail.corporate_name}}&nbsp;<span
-                style="color: red;font-weight: bold;font-size: 12px;">保</span></p>
+              <p style="color: #00c2b3;font-size: 18px;">
+                <span class="isoft_point_cursor"
+                      @click="$router.push({path:'/job/corporate_detail', query:{corporate_id: jobDetail.corporate_id}})">{{jobDetail.corporate_name}}</span>
+                &nbsp;<span style="color: red;font-weight: bold;font-size: 12px;">保</span></p>
               <p>
                     <span v-for="(job_tag,index) in filterJobTags(jobDetail.job_tags)">
                       <span v-if="index > 0">&nbsp;|&nbsp;</span>{{job_tag}}
@@ -21,14 +23,15 @@
               </p>
             </Col>
             <Col span="6">
-              <span v-if="editable == 'true'">
+              <span v-if="isLoginUserName(jobDetail.created_by)">
                 <Button size="small"
                         @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.corporate_id}})">编辑</Button>
                 <Button size="small"
                         @click="$router.push({path:'/job/job_edit', query: {corporate_id: jobDetail.corporate_id}})">新增</Button>
               </span>
               <span v-else>
-                <Button size="small" @click="applyJob(jobDetail.id)">我要应聘</Button>
+                <Button size="small" v-if="!isLoginUserName(jobDetail.created_by)"
+                        @click="applyJob(jobDetail.id)">我要应聘</Button>
               </span>
             </Col>
           </Row>
@@ -48,7 +51,8 @@
 </template>
 
 <script>
-  import {checkEmpty, strSplit} from "../../tools"
+  import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, strSplit} from "../../tools"
+  import {ApplyJob} from "../../api";
 
   export default {
     name: "JobItem",
@@ -64,6 +68,20 @@
       }
     },
     methods: {
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
+      applyJob: function (job_id) {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, async function () {
+          const result = await ApplyJob({job_id: job_id});
+          if (result.status === "SUCCESS") {
+            _this.$Message.success("投递成功!");
+          } else {
+            _this.$Message.error("投递失败!");
+          }
+        });
+      },
       getSplitArray(str, defaultVal) {
         return this.getSplitArray2(str, ",", defaultVal)
       },

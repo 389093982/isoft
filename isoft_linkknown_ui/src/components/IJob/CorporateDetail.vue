@@ -55,7 +55,8 @@
             </p>
           </Col>
           <Button style="position: relative;float: right;right: 10px;bottom: 35px;"
-                  v-if="editable == 'true'" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
+                  v-if="isLoginUserName(corporateInfo.created_by)" @click="$router.push({path:'/job/corporate_edit'})">
+            前去编辑
           </Button>
         </Row>
 
@@ -109,8 +110,8 @@
 </template>
 
 <script>
-  import {ApplyJob, QueryCorporateDetail} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, goToTargetLink, strSplit} from "../../tools";
+  import {QueryCorporateDetail} from "../../api"
+  import {checkEmpty, GetLoginUserName, goToTargetLink, strSplit} from "../../tools";
   import JobItem from "./JobItem";
 
   export default {
@@ -135,36 +136,35 @@
         },
         allJobDetails: [],
         showJobDetails: [],
-        editable: 'false',
       }
     },
     methods: {
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
       goToTargetLink: function (url) {
         goToTargetLink(url);
-      },
-      applyJob: function (job_id) {
-        var _this = this;
-        CheckHasLoginConfirmDialog2(this, async function () {
-          const result = await ApplyJob({job_id: job_id});
-          if (result.status == "SUCCESS") {
-            _this.$Message.success("投递成功!");
-          } else {
-            _this.$Message.error("投递失败!");
-          }
-        });
       },
       showMore: function () {
         this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
       },
       refreshCorporateDetail: async function () {
-        let id = this.$route.query.corporate_id ? this.$route.query.corporate_id : -1;
-        let user_name = !checkEmpty(GetLoginUserName()) ? GetLoginUserName() : "";
-        const result = await QueryCorporateDetail({id, user_name});
+        let params = {};
+        if (this.$route.query.corporate_id && this.$route.query.corporate_id > 0) {
+          // 根据公司 id 去查
+          params["id"] = this.$route.query.corporate_id;
+        } else if (!checkEmpty(GetLoginUserName())) {
+          // 根据当前登录用户名去查
+          params["user_name"] = GetLoginUserName();
+        } else {
+          // 否则不查
+          return;
+        }
+        const result = await QueryCorporateDetail(params);
         if (result.status === "SUCCESS" && result.corporate_detail) {
           this.corporateInfo = result.corporate_detail;
           this.allJobDetails = result.job_details;
           this.showJobDetails = this.allJobDetails.slice(0, this.showJobDetails.length + 5);
-          this.editable = result.editable;
         }
       },
       getSplitArray(str, defaultVal) {
