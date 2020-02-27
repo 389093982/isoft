@@ -4,37 +4,38 @@
       <div style="min-height: 140px;background: linear-gradient(to right, rgb(176, 108, 239), rgba(176,108,239,0.13));
           background-size: cover;background-position: 50%;background-repeat: no-repeat;">
       </div>
-      <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px;">
-        <Col span="3" style="top:-100px;">
-          <div class="user_icon">
-            <img class="isoft_hover_red"
-                 style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
-                 width="150" height="150" :src="user.small_icon" @error="defImg()">
+      <div style="margin: 0 5px 0 5px ">
+        <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px 0 0 0 ;">
+          <Col span="3" style="top:-100px;">
+            <div class="user_icon">
+              <img class="isoft_hover_red"
+                   style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
+                   width="150" height="150" :src="user.small_icon" @error="defImg()">
 
-            <span class="user_icon_tip isoft_hover_red"
-                  style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
+              <span class="user_icon_tip isoft_hover_red"
+                    style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
               <span v-if="isLoginUserName(user.user_name)">头像单调无味？赶快来换张新颖的头像吧</span>
               <span v-else>这么漂亮的头像，我咋没有！立即去设置</span>
             </span>
 
-            <div class="user_icon_upload" style="margin: 0 0 0 40px;" v-if="isLoginUserName(user.user_name)">
-              <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
+              <div class="user_icon_upload" style="margin: 0 0 0 40px;" v-if="isLoginUserName(user.user_name)">
+                <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col span="13" style="padding: 10px 0 0 3px;">
-          <div>
-            <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
-          </div>
-          <div>
-            个性签名:
-            <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
-            <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
-            <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign" style="color: #ff6900"/>
-          </div>
-          <div>
-            加入时间：<Time :time="user.created_time" :interval="1"/>
-          </div>
+          </Col>
+          <Col span="13" style="padding: 10px 0 0 3px;">
+            <div>
+              <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
+            </div>
+            <div>
+              个性签名:
+              <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
+              <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
+              <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign" style="color: #ff6900"/>
+            </div>
+            <div>
+              加入时间：<Time :time="user.created_time" :interval="1"/>
+            </div>
 
             <div class="isoft_inline_ellipsis" style="padding:20px 0 0 0 ">
               <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 5px;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
@@ -42,54 +43,55 @@
               <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 10px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />我的书单</div>
             </div>
 
-        </Col>
-        <Col span="8" style="padding: 0 0 0 3px">
-          <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
-            <p slot="title">
-              <Icon type="md-ribbon" style="font-size: 20px"/>
-              会员权益
-            </p>
-            <a href="#" slot="extra" @click.prevent="changeLimit">
-              <Icon type="ios-loop-strong"></Icon>
-              <span style="color: red;font-size: 15px" class="hvr-grow" @click="$router.push({path:'/vipcenter/vipIntroduction'})">
+          </Col>
+          <Col span="8" style="padding: 0 0 0 3px">
+            <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
+              <p slot="title">
+                <Icon type="md-ribbon" style="font-size: 20px"/>
+                会员权益
+              </p>
+              <a href="#" slot="extra" @click.prevent="changeLimit">
+                <Icon type="ios-loop-strong"></Icon>
+                <span style="color: red;font-size: 15px" class="hvr-grow" @click="$router.push({path:'/vipcenter/vipIntroduction'})">
                 <Icon type="md-arrow-round-forward" />开通会员
               </span>
-            </a>
-            <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="6000">
-              <CarouselItem>
-                <div class="demo-carousel">
-                  <ul style="padding-left: 10px">
-                    <li>
-                      <div class="hvr-grow" style="cursor: pointer;color: blue"
-                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
-                      </div>
-                    </li>
-                    <li>
-                      <div class="hvr-grow" style="cursor: pointer;color: blue"
-                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
-                      </div>
-                    </li>
-                    <li>
-                      <div class="hvr-grow" style="cursor: pointer;color: blue"
-                           @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </CarouselItem>
-              <CarouselItem>
-                <div class="demo-carousel">
-                  <ul style="padding-left: 10px">
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
-                    <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
-                  </ul>
-                </div>
-              </CarouselItem>
-            </Carousel>
-          </Card>
-        </Col>
-      </Row>
+              </a>
+              <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="6000">
+                <CarouselItem>
+                  <div class="demo-carousel">
+                    <ul style="padding-left: 10px">
+                      <li>
+                        <div class="hvr-grow" style="cursor: pointer;color: blue"
+                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                        </div>
+                      </li>
+                      <li>
+                        <div class="hvr-grow" style="cursor: pointer;color: blue"
+                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                        </div>
+                      </li>
+                      <li>
+                        <div class="hvr-grow" style="cursor: pointer;color: blue"
+                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div class="demo-carousel">
+                    <ul style="padding-left: 10px">
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
+                    </ul>
+                  </div>
+                </CarouselItem>
+              </Carousel>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </div>
 
     <div class="isoft_top5" style="min-height: 450px;">
