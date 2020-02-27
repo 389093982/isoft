@@ -2,8 +2,7 @@
   <span v-if="course">
     <p style="color: #d6241e;">
       浏览量：{{course.watch_number}}
-      课程分数：<Rate disabled show-text allow-half :v-model="course.score"/>
-      &nbsp; <span>如何提升得分？</span>
+      <!--课程分数：<Rate disabled show-text allow-half :v-model="course.score"/><span>如何提升得分？</span>-->
     </p>
     <p>
       <span>课程名称：{{course.course_name}}</span>
