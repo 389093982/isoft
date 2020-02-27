@@ -4,7 +4,7 @@
     <div v-if="blog" style="float: left;width: 70%;">
       <div style="margin: 10px;padding: 20px;min-height: 800px;background: #ffffff;">
         <span style="margin-left: 8px;font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
-        <span style="font-size: 20px;margin-left: 50px"><b>{{blog.blog_title}}</b></span>
+        <span style="font-size: 16px;margin-left: 30px"><b>{{blog.blog_title}}</b></span>
         <div style="border-bottom: 1px solid #eee;margin-top:20px;margin-bottom: 20px;">
           <Row style="margin: 10px;">
             <Col span="24">

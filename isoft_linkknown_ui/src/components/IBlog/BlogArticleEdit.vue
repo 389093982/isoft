@@ -91,8 +91,8 @@
       const checkBlogTitle = (rule,value,callback) => {
         if (value === '') {
           callback(new Error('文章标题不能为空！'));
-        }else if(value.length>50){
-          callback(new Error('文章标题不能超过50个字符!'));
+        }else if(value.length>40){
+          callback(new Error('文章标题不能超过40个字符!'));
         }else {
           callback();
         }
