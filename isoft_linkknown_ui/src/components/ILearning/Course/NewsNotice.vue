@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <IBeautifulCard :title="placement_label">
+    <IBeautifulCardOrange :title="placement_label">
       <ul slot="content">
         <li v-for="(element, index) in elements">
             <span style="float:right;color: #999;font-size: 12px;"><Time :time="element.created_time" type="date"/></span>
@@ -12,18 +12,18 @@
       </ul>
       <span slot="header_right">
     </span>
-    </IBeautifulCard>
+    </IBeautifulCardOrange>
   </ElementsLoader>
 </template>
 
 <script>
-  import IBeautifulCard from "../../Common/card/IBeautifulCard"
+  import IBeautifulCardOrange from "../../Common/card/IBeautifulCardOrange"
   import ElementsLoader from "../../Background/CMS/ElementsLoader"
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
 
   export default {
     name: "NewsNotice",
-    components: {IBeautifulLink, IBeautifulCard, ElementsLoader},
+    components: {IBeautifulLink, IBeautifulCardOrange, ElementsLoader},
     props: {
       placement_name: {
         type: String,

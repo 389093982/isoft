@@ -19,7 +19,7 @@
 
 <script>
   export default {
-    name: "IBeautifulCard",
+    name: "IBeautifulCardBlue",
     props: {
       title: {
         type: String,
@@ -45,7 +45,7 @@
     padding: 0 15px;
     font-size: 16px;
     text-align: left;
-    background: linear-gradient(to right, rgba(255, 0, 0, 0.17), rgba(255, 0, 0, 0.03));
+    background: linear-gradient(to right, rgba(17, 27, 255, 0.44), rgba(132, 146, 255, 0.1));
   }
 
   .leftHeaderLeft {
