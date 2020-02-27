@@ -1,5 +1,5 @@
 <SqlMigrate>
-	<Id>86</Id>
+	<Id>87</Id>
 	<AppId>5</AppId>
 	<MigrateName>20200225134636_ALTER_ask_expert.sql</MigrateName>
 	<MigrateSql>alter table ask_expert add column view_number int(11) NOT NULL DEFAULT 0 COMMENT &#39;浏览次数&#39;;</MigrateSql>

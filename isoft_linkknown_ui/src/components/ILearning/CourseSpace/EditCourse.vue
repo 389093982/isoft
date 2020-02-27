@@ -10,22 +10,22 @@
 
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="课程名称" prop="course_name">
-        <Input v-model.trim="formValidate.course_name" placeholder="Enter course name..."/>
+        <Input v-model.trim="formValidate.course_name" placeholder="请输入课程名称"/>
       </FormItem>
       <FormItem label="课程类型" prop="course_type">
         <Row>
-          <Col span="20"><Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input></Col>
+          <Col span="20"><Input v-model="formValidate.course_type" placeholder="请输入课程类型"></Input></Col>
           <Col span="4">
             <ChooseHotCourseType @chooseCourseType="chooseCourseType"/>
           </Col>
         </Row>
       </FormItem>
       <FormItem label="课程子类型" prop="course_sub_type">
-        <Input v-model.trim="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
+        <Input v-model.trim="formValidate.course_sub_type" placeholder="请输入课程子类型"></Input>
       </FormItem>
       <FormItem label="课程描述" prop="course_short_desc">
         <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="6"
-               placeholder="Enter course short desc..."></Input>
+               placeholder="请输入课程描述"></Input>
       </FormItem>
       <FormItem label="自定义标签语" prop="course_label">
         <Input v-model.trim="formValidate.course_label" placeholder="多个标签语用 / 分割"></Input>
@@ -48,6 +48,42 @@
     name: "EditCourse",
     components: {IBeautifulCard, ChooseHotCourseType},
     data() {
+      const checkCourseName = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('课程名称不能为空！'));
+        }else if(value.length>20){
+          callback(new Error('课程名称不能超过20个字符!'));
+        }else {
+          callback();
+        }
+      };
+      const checkCourseType = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('课程类型不能为空！'));
+        }else if(value.length>20){
+          callback(new Error('课程类型不能超过20个字符!'));
+        }else {
+          callback();
+        }
+      };
+      const checkCourseSubType = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('课程子类型不能为空！'));
+        }else if(value.length>20){
+          callback(new Error('课程子类型不能超过20个字符!'));
+        }else {
+          callback();
+        }
+      };
+      const checkCourseShortDesc = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('课程描述不能为空！'));
+        }else if(value.length>200){
+          callback(new Error('课程描述不能超过200个字符!'));
+        }else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           id: -1,
@@ -59,16 +95,16 @@
         },
         ruleValidate: {
           course_name: [
-            {required: true, message: '课程名称不能为空', trigger: 'blur'}
+            {required: true,validator: checkCourseName,  trigger: 'blur'}
           ],
           course_type: [
-            {required: true, message: '课程类型不能为空', trigger: 'blur'}
+            {required: true,validator:checkCourseType, trigger: 'blur'}
           ],
           course_sub_type: [
-            {required: true, message: '课程子类型不能为空', trigger: 'blur'}
+            {required: true,validator:checkCourseSubType, trigger: 'blur'}
           ],
           course_short_desc: [
-            {required: true, message: '课程描述不能为空', trigger: 'blur'}
+            {required: true, validator:checkCourseShortDesc, trigger: 'blur'}
           ],
         },
       }
@@ -78,7 +114,7 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await EditCourse(this.formValidate);
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
               this.$router.push({path: "/ilearning/course_space/myCourseList"});
             } else {
