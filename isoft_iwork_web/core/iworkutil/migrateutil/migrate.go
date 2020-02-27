@@ -244,6 +244,8 @@ func MigrateToDB(app_id int64, trackingId, dsn string, forceClean bool) (err err
 	}()
 
 	if err = executor.ping(); err == nil {
+		//关闭连接
+		defer executor.db.Close()
 		// 加载所有的迁移资源文件
 		executor.loadAllMigrate(app_id)
 		executor.initial()
