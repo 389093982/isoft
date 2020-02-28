@@ -52,6 +52,7 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcDemo": "getNotEmpty($var1,$var2)", "funcDesc": "从参数列表中获取第一个非空值"},
 		{"funcDemo": "fmtSprintf($formatStr,$var)", "funcDesc": "字符串格式化操作,如 fmt.Sprintf(`%03d`, a)"},
 		{"funcDemo": "formatNowTimeToYYYYMMDD()", "funcDesc": "当前日期格式化成 YYYYMMSS 格式"},
+		{"funcDemo": "parseTimestampStrToDate($str)", "funcDesc": "将字符串转行成日期"},
 		{"funcDemo": "bcryptGenerateFromPassword($password)", "funcDesc": "对密码进行加密,密码对比时需要使用 bcryptCompareHashAndPassword 进行对比"},
 		{"funcDemo": "bcryptCompareHashAndPassword($hashedPassword, $password)", "funcDesc": "密码对比,密文密码($hashedPassword)和明文($password)对比,返回是否相等"},
 		{"funcDemo": "generateMap($key1, $value1, $key2, $value2)", "funcDesc": "产生 map 对象"},
@@ -130,6 +131,18 @@ func (t *IWorkFuncProxy) SliceLen(args []interface{}) interface{} {
 
 func (t *IWorkFuncProxy) FormatNowTimeToYYYYMMDD(args []interface{}) interface{} {
 	return time.Now().Format("20060102")
+}
+
+func (t *IWorkFuncProxy) ParseTimestampStrToDate(args []interface{}) interface{} {
+	timestamp := args[0].(string)
+	ts, err := strconv.ParseInt(timestamp, 10, 64)
+	if err == nil {
+		//时间戳 to 时间
+		tm := time.Unix(ts/1e3, 0)
+		return tm.Local()
+	} else {
+		panic(err)
+	}
 }
 
 func (t *IWorkFuncProxy) FmtSprintf(args []interface{}) interface{} {
