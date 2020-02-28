@@ -4,7 +4,7 @@
       <div class="isoft_bg_white isoft_pd10 isoft_mr10">
         <div
           style="width:100%;text-align: center;background: rgba(220,220,220,0.28);margin: 10px 0 10px 0;padding: 10px;cursor: pointer;">
-          <p style="font-size: 20px;" class="hovered hvr-grow hoverLinkColor">您搜索的课程是 {{$route.query.search}}</p>
+          <p style="font-size: 20px;" class="hovered hvr-grow hoverLinkColor">您搜索的课程是 :  "  {{$route.query.search}}  "</p>
         </div>
 
         <div v-if="courses.length > 0">

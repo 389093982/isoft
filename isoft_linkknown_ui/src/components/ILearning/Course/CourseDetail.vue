@@ -49,7 +49,7 @@
 
       <Col span="8">
         <div class="isoft_bg_white">
-          <UserAbout :userName="course.course_author"/>
+          <UserAbout :userName="course.course_author" :titleLimitLenth="10"/>
         </div>
         <div class="isoft_bg_white">
           <HotUser style="margin-left: 2px;"/>
