@@ -87,7 +87,7 @@
               _this.$router.push({path: '/job/apply_list'});
             }, 1000);
           } else {
-            _this.$Message.error("投递失败!");
+            _this.$Message.error(result.errorMsg);
           }
         });
       },

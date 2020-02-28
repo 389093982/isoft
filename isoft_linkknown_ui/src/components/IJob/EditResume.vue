@@ -84,7 +84,6 @@
   import IAreaChooser from "../Common/IAreaChooser"
   import {checkEmpty, copyObj, GetLoginUserName, strSplit} from "../../tools";
   import {genValidator, validateAge, validateEmail, validatePhone} from "../../tools/regex";
-  import {deepCopy} from "iview";
 
   export default {
     name: "EditResume",

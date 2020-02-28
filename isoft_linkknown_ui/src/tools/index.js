@@ -12,6 +12,10 @@ export const checkEmpty = function checkEmpty(checkStr) {
   return false;
 };
 
+export const checkNotEmpty = function checkNotEmpty(checkStr) {
+  return !checkEmpty(checkStr);
+};
+
 // 判断值 value 是否是列表 validList 中
 export function oneOf(value, validList) {
   for (let i = 0; i < validList.length; i++) {
