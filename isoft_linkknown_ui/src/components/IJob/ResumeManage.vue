@@ -18,7 +18,7 @@
           </Col>
           <Col span="12">
             <p>参加工作时间:{{resume.job_start_time}}</p>
-            <p>联系方式：{{resume.contact}}</p>
+            <p>手机号：{{resume.contact}}</p>
             <p>邮箱:{{resume.email}}</p>
             <p>出生年月:{{resume.birthday}}</p>
             <p>期望薪资:{{resume.expectant_salary}}</p>

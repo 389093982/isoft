@@ -20,8 +20,8 @@
             <FormItem label="期望薪资" prop="expectant_salary">
               <Input v-model.trim="formInline.expectant_salary" placeholder="请您输入期望薪资"></Input>
             </FormItem>
-            <FormItem label="联系方式" prop="contact">
-              <Input v-model.trim="formInline.contact" placeholder="请您输入联系方式"></Input>
+            <FormItem label="手机号" prop="contact">
+              <Input v-model.trim="formInline.contact" placeholder="请您输入手机号"></Input>
             </FormItem>
             <FormItem label="头像" prop="head_img">
               <Input v-model.trim="formInline.head_img" placeholder="请上传个人头像"></Input>
@@ -49,7 +49,7 @@
               <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
             </FormItem>
             <FormItem label="邮箱" prop="email">
-              <Input v-model.trim="formInline.email" placeholder="请您输入邮箱"></Input>
+              <Input v-model.trim="formInline.email" type="email" placeholder="请您输入邮箱"></Input>
             </FormItem>
             <FormItem label="当前状况" prop="current_situation">
               <Input v-model.trim="formInline.current_situation" placeholder="请您输入当前状况"></Input>
@@ -69,7 +69,9 @@
           <Input type="textarea" :rows="8" v-model.trim="formInline.personal_hobbies" placeholder="请您输入个人爱好"></Input>
         </FormItem>
         <FormItem>
-          <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">保存简历</Button>
+          <div class="isoft_button_green1" style="width: 250px;margin: 0 auto;"
+               @click="handleSubmit('formInline')">保存简历
+          </div>
         </FormItem>
       </Form>
     </div>
@@ -80,6 +82,7 @@
   import {EditResume, QueryResume} from "../../api"
   import IAreaChooser from "../Common/IAreaChooser"
   import {checkEmpty, GetLoginUserName, strSplit} from "../../tools";
+  import {genValidator, validateEmail, validatePhone} from "../../tools/regex";
 
   export default {
     name: "EditResume",
@@ -112,7 +115,8 @@
             {required: true, message: '姓名不能为空!', trigger: 'blur'}
           ],
           contact: [
-            {required: true, message: '联系方式不能为空!', trigger: 'blur'}
+            {required: true, message: '手机号不能为空!', trigger: 'blur'},
+            {validator: genValidator(validatePhone, "手机号不正确!"), trigger: 'blur'}
           ],
           sex: [
             {required: true, message: '性别不能为空!', trigger: 'blur'}
@@ -128,6 +132,10 @@
           ],
           age: [
             {required: true, message: '年龄不能为空!', trigger: 'blur'}
+          ],
+          email: [
+            {required: true, message: '邮箱不能为空!', trigger: 'blur'},
+            {validator: genValidator(validateEmail, "邮箱格式不正确!"), trigger: 'blur'}
           ],
         },
       }
