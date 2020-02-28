@@ -47,7 +47,7 @@
           <Col span="8" style="padding: 0 0 0 3px">
             <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
               <p slot="title" style="height: 25px">
-                <Icon class="VIPicon" type="md-ribbon"/>
+                <Icon class="VIPicon" @click="$router.push({path:'/vipcenter/vipIntroduction'})" type="md-ribbon"/>
                 会员权益
               </p>
               <a href="#" slot="extra" @click.prevent="changeLimit">
@@ -228,6 +228,7 @@
   .VIPicon{
     color: #ff6900;
     font-size: 20px;
+    cursor: pointer;
 
     position:relative;
     animation-name:myfirst;
