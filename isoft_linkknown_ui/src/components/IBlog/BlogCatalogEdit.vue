@@ -2,11 +2,11 @@
   <div style="margin: 20px;">
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70">
       <FormItem label="分类名称" prop="catalog_name">
-        <Input v-model="formValidate.catalog_name" maxlength="50" show-word-limit placeholder="Enter catalog name..."/>
+        <Input v-model="formValidate.catalog_name" maxlength="50" show-word-limit placeholder="请输入分类名称..."/>
       </FormItem>
       <FormItem label="分类简介" prop="catalog_desc">
         <Input v-model="formValidate.catalog_desc" maxlength="200" show-word-limit type="textarea" :rows="4"
-               placeholder="Enter catalog desc..."></Input>
+               placeholder="请输入分类简介..."></Input>
       </FormItem>
       <FormItem>
         <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
