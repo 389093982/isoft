@@ -72,7 +72,7 @@
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
                     </router-link>
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">0</span> 条评论</span>
+                      <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">{{searchblog.comments}}</span> 条评论</span>
                     </router-link>
                     <a @click="blog_edit" class="isoft_font12" style="margin-left: 10px">我也要发布</a>
                   </Col>
