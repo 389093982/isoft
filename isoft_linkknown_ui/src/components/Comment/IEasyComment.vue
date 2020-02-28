@@ -8,7 +8,7 @@
     <div style="margin-top: 30px;">
       <div class="comment_title">
       <span style="text-align: right;">
-        <a href="javascript:;" @click="refreshComment('all')">评论列表</a>
+        <a href="javascript:;">评论列表</a>
       </span>
       </div>
       <!-- 评论列表 -->

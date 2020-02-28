@@ -9,11 +9,8 @@
         </router-link>
       </p>
       <p>
-        <span v-if="comment.comment_type == 'comment'">
+        <span>
           回复
-        </span>
-        <span v-else>
-          提问
         </span>
         <router-link to="">
           <Avatar icon="ios-person" size="small"/>

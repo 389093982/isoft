@@ -2,7 +2,7 @@
   <div class="layout">
     <div style="float: left;width: 14%;background-color: white;">
       <div style="padding: 5px 0 0 60px ">
-        <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 49px;"/>
+        <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 49px;cursor: pointer" @click="$router.push({path:'/ilearning/index'})"/>
       </div>
     </div>
     <div style="float: left;width: 86%;">
