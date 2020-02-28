@@ -8,14 +8,7 @@
     <div style="margin-top: 30px;">
       <div class="comment_title">
       <span style="text-align: right;">
-        <a href="javascript:;" @click="refreshComment('all')">全部</a>
-        <Divider type="vertical"/>
-        <a href="javascript:;" @click="refreshComment('comment')">评论</a>
-        <Divider type="vertical"/>
-        <a href="javascript:;" @click="refreshComment('question')">提问</a>
-      </span>
-        <span style="float: right;">
-        <a href="javascript:;">更多评论话题</a>
+        <a href="javascript:;" @click="refreshComment('all')">评论列表</a>
       </span>
       </div>
       <!-- 评论列表 -->

@@ -3,7 +3,7 @@
     <Row>
       <!-- 评论表单 -->
       <Col span="14" style="padding-right: 10px;">
-        <Input v-model.trim="content" type="textarea" :rows="8" placeholder="发表你的评论信息！"/>
+        <Input v-model.trim="content" type="textarea" :rows="6" placeholder="发表你的评论信息！"/>
         <Button size="small" type="success" style="margin: 5px;float: right;" @click="submitComment('comment')">发表评论</Button>
       </Col>
       <Col span="10" style="border: 1px solid #e9e9e9;font-size:12px;padding: 10px;">
@@ -11,8 +11,7 @@
         <p>1、请勿在评论中发表违法违规信息</p>
         <p>2、谢绝人身攻击、地域歧视、刷屏、广告等恶性言论</p>
         <p>3、所有评论均代表玩家本人意见，不代表官方立场</p>
-        <p>4、用户发表的评论，经管理员审核后方可显示</p>
-        <p>5、如果您有任何疑问，请在此以评论方式留言给我们</p>
+        <p>4、如果您有任何疑问，请在此以评论方式留言给我们</p>
       </Col>
     </Row>
   </div>
