@@ -4,35 +4,38 @@
       <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
         <Row>
           <Col span="12">
-            <FormItem label="头像" prop="head_img">
-              <Input v-model.trim="formInline.head_img" placeholder="请上传个人头像"></Input>
-            </FormItem>
             <FormItem label="姓名" prop="user_name">
               <Input v-model.trim="formInline.user_name" placeholder="请您输入姓名"></Input>
             </FormItem>
-            <FormItem label="年龄" prop="age">
-              <InputNumber :max="100" :min="1" v-model="formInline.age" style="width: 100%;"></InputNumber>
+            <FormItem label="出生年月" prop="birthday">
+              <Input v-model.trim="formInline.birthday" placeholder="请您输入出生年月"></Input>
             </FormItem>
+            <FormItem label="毕业学校" prop="graduate_school">
+              <Input v-model.trim="formInline.graduate_school" placeholder="请您输入毕业学校"></Input>
+            </FormItem>
+            <FormItem label="参加工作时间" prop="job_start_time">
+              <DatePicker v-model="formInline.job_start_time" type="date" placeholder="请选择参加工作时间"
+                          format="yyyy-MM-dd" style="width: 100%;"></DatePicker>
+            </FormItem>
+            <FormItem label="期望薪资" prop="expectant_salary">
+              <Input v-model.trim="formInline.expectant_salary" placeholder="请您输入期望薪资"></Input>
+            </FormItem>
+            <FormItem label="联系方式" prop="contact">
+              <Input v-model.trim="formInline.contact" placeholder="请您输入联系方式"></Input>
+            </FormItem>
+            <FormItem label="头像" prop="head_img">
+              <Input v-model.trim="formInline.head_img" placeholder="请上传个人头像"></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
             <FormItem label="性别" prop="sex">
               <Select v-model="formInline.sex">
                 <Option value="男" key="1">男</Option>
                 <Option value="女" key="2">女</Option>
               </Select>
             </FormItem>
-            <FormItem label="参加工作时间" prop="job_start_time">
-              <DatePicker v-model="formInline.job_start_time" type="date" placeholder="请选择参加工作时间"
-                          format="yyyy-MM-dd" style="width: 100%;"></DatePicker>
-            </FormItem>
-            <FormItem label="联系方式" prop="contact">
-              <Input v-model.trim="formInline.contact" placeholder="请您输入联系方式"></Input>
-            </FormItem>
-            <FormItem label="邮箱" prop="email">
-              <Input v-model.trim="formInline.email" placeholder="请您输入邮箱"></Input>
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="出生年月" prop="birthday">
-              <Input v-model.trim="formInline.birthday" placeholder="请您输入出生年月"></Input>
+            <FormItem label="年龄" prop="age">
+              <InputNumber :max="100" :min="1" v-model="formInline.age" style="width: 100%;"></InputNumber>
             </FormItem>
             <FormItem label="学历" prop="education">
               <Input v-model.trim="formInline.education" placeholder="请您输入学历"></Input>
@@ -40,16 +43,13 @@
             <FormItem label="就业状态" prop="employment_status">
               <Input v-model.trim="formInline.employment_status" placeholder="请您输入就业状态"></Input>
             </FormItem>
-            <FormItem label="毕业学校" prop="graduate_school">
-              <Input v-model.trim="formInline.graduate_school" placeholder="请您输入毕业学校"></Input>
-            </FormItem>
-            <FormItem label="期望薪资" prop="expectant_salary">
-              <Input v-model.trim="formInline.expectant_salary" placeholder="请您输入期望薪资"></Input>
-            </FormItem>
             <FormItem label="期望地点" prop="job_area">
               <Input readonly="readonly" v-model.trim="formInline.job_area" placeholder="请您输入期望地点"
                      @on-focus="handleFocus('areaChooser')"></Input>
               <IAreaChooser ref="areaChooser" title="地区选择" @handleSubmit="handleAreaSubmit"/>
+            </FormItem>
+            <FormItem label="邮箱" prop="email">
+              <Input v-model.trim="formInline.email" placeholder="请您输入邮箱"></Input>
             </FormItem>
             <FormItem label="当前状况" prop="current_situation">
               <Input v-model.trim="formInline.current_situation" placeholder="请您输入当前状况"></Input>
@@ -107,7 +107,29 @@
           current_situation: '',
           personal_hobbies: '',
         },
-        ruleValidate: {},
+        ruleValidate: {
+          user_name: [
+            {required: true, message: '姓名不能为空!', trigger: 'blur'}
+          ],
+          contact: [
+            {required: true, message: '联系方式不能为空!', trigger: 'blur'}
+          ],
+          sex: [
+            {required: true, message: '性别不能为空!', trigger: 'blur'}
+          ],
+          birthday: [
+            {required: true, message: '出生年月不能为空!', trigger: 'blur'}
+          ],
+          education: [
+            {required: true, message: '学历不能为空!', trigger: 'blur'}
+          ],
+          graduate_school: [
+            {required: true, message: '毕业学校不能为空!', trigger: 'blur'}
+          ],
+          age: [
+            {required: true, message: '年龄不能为空!', trigger: 'blur'}
+          ],
+        },
       }
     },
     methods: {
