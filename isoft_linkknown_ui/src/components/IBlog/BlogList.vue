@@ -50,7 +50,7 @@
                       <span v-if="searchblog.blog_status == -1" style="float: right;color: red;">审核不通过！</span>
                       <span>&nbsp;</span>
                       <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-                        <span class="title_hover">{{searchblog.blog_title | limitLenth}}</span>
+                        <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
                       </router-link>
                       <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
                     </Row>
@@ -212,9 +212,9 @@
     },
     filters: {
       // 内容超长则显示部分
-      limitLenth:function (value) {
-        if (value.length > 25) {
-          return value.slice(0,25) + ' · · ·'
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
         }else {
           return value
         }

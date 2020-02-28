@@ -6,7 +6,7 @@
       <span v-if="nick_name">{{nick_name}}</span>
       <span v-else>{{getUserName()}}</span>
     </IBeautifulLink>&nbsp;&nbsp;
-    <IBeautifulLink style="font-size: 12px;float: right;" @onclick="$router.push({path:'/user/detail'})">个人中心
+    <IBeautifulLink style="font-size: 12px;float: right;margin-right: 18%" @onclick="$router.push({path:'/user/detail'})">个人中心
     </IBeautifulLink>
 
     <div style="margin-top: 5px;">
@@ -20,7 +20,7 @@
           <Row v-for="(blog,index) in blogs" style="line-height: 28px;height: 28px;">
             <Col span="12" class="isoft_inline_ellipsis">
               <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
-                {{blog.blog_title}}
+                {{blog.blog_title | titleLimitFunc(titleLimitLenth)}}
               </IBeautifulLink>
             </Col>
             <Col span="6" class="isoft_inline_ellipsis">
@@ -97,6 +97,10 @@
         type: String,
         default: ''
       },
+      titleLimitLenth:{
+        type:Number,
+        default:25,
+      },
     },
     data() {
       return {
@@ -170,7 +174,17 @@
     },
     mounted() {
       this.refreshUserInfo();
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      titleLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 
