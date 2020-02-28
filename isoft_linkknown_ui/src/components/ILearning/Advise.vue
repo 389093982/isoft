@@ -5,9 +5,6 @@
       <Col span="12">
         <h3>您的意见或建议是我们前进的动力</h3>
       </Col>
-      <!--<Col span="12" style="text-align: right;">-->
-        <!--<span>邀请好友赢取 VIP</span>&nbsp;&nbsp;&nbsp;<span>提出意见建议吐槽赢取 VIP</span>-->
-      <!--</Col>-->
     </Row>
     <Tabs size="small">
       <TabPane label="意见">
@@ -59,8 +56,11 @@
           result = await InsertAdvise({'advise_type':type,'advise':this.complaints});
         }
 
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success("提交成功!感谢您的反馈 ^_^");
+          //清空内容
+          this.complaints='';
+          this.advise='';
         }else{
           this.$Message.error(result.errorMsg);
         }

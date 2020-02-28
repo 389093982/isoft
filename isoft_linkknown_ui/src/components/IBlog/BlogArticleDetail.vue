@@ -33,7 +33,7 @@
       </div>
     </div>
     <div style="float: left;width: 21%;margin: 10px 0 0 20px;min-height: 350px;background-color: white">
-      1234
+      这一块待定...
     </div>
     <div style="clear: both;"></div>
 

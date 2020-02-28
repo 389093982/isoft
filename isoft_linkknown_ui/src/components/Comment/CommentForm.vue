@@ -4,10 +4,7 @@
       <!-- 评论表单 -->
       <Col span="14" style="padding-right: 10px;">
         <Input v-model.trim="content" type="textarea" :rows="8" placeholder="发表你的评论信息！"/>
-        <Button size="small" type="success" style="margin: 5px;float: right;" @click="submitComment('comment')">发表评论
-        </Button>
-        <Button size="small" type="error" style="margin: 5px;float: right;" @click="submitComment('question')">我要提问
-        </Button>
+        <Button size="small" type="success" style="margin: 5px;float: right;" @click="submitComment('comment')">发表评论</Button>
       </Col>
       <Col span="10" style="border: 1px solid #e9e9e9;font-size:12px;padding: 10px;">
         <p>发表评论需知：</p>
@@ -52,6 +49,7 @@
               _this.theme_type, comment_type, _this.refer_user_name);
             if (result.status == "SUCCESS") {
               _this.$Message.success("发表成功!");
+              _this.content = '';
               // 调用父组件的 refreshComment 方法
               _this.$emit('refreshComment', 'all');
             }
