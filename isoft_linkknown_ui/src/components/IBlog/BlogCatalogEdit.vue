@@ -21,6 +21,15 @@
   export default {
     name: "BlogCatalogEdit",
     data() {
+      const checkCatalogName = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('博客分类不能为空！'));
+        }else if (value.indexOf("官方")!=-1){
+          callback(new Error('分类名称不能含有 ‘官方’ 二字 ！'));
+        }else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           catalog_name: '',
@@ -28,7 +37,7 @@
         },
         ruleValidate: {
           catalog_name: [
-            {required: true, message: '分类名称不能为空', trigger: 'blur'}
+            {required: true, validator:checkCatalogName, trigger: 'blur'}
           ],
           catalog_desc: [
             {required: true, message: '分类描述不能为空', trigger: 'blur'}
