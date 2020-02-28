@@ -57,6 +57,7 @@ const AskExpert = () => import("@/components/Expert/AskExpert");
 const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
 const MessageList = () => import("@/components/Message/MessageList");
+const BusinessIntroduce = () => import("@/components/Bussiness/Introduce");
 const Site = () => import("@/components/Site");
 const CssDemo = () => import("@/components/CssDemo");
 
@@ -196,6 +197,13 @@ const MessageRouter = [{
     ]
 }];
 
+const BusinessRouter = [{
+  path: '/business', component: ILayout,
+  children: [
+    {path: 'introduce', component: BusinessIntroduce},
+  ]
+}];
+
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
     children: [
@@ -229,6 +237,7 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, VipCenterReouter);
   allRouters = joinArray(allRouters, ResourceRouter);
   allRouters = joinArray(allRouters, MessageRouter);
+  allRouters = joinArray(allRouters, BusinessRouter);
   allRouters = joinArray(allRouters, getRootRouters());
   return allRouters;
 }

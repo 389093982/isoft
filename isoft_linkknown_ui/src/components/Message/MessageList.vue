@@ -16,13 +16,13 @@
 
       <!-- 显示简略消息 -->
       <div v-else style="font-size: 14px;line-height: 16px;color: black;padding: 0 10px 15px 10px;">
-        <div style="height: 50px;line-height: 50px;border-bottom: 1px solid #D3D6D9;">
-          <h2 style="font-weight: bold;font-size: 14px;color: #1C1F21;" v-if="isVip">
+        <div v-if="isVip" style="height: 50px;line-height: 50px;border-bottom: 1px solid #D3D6D9;">
+          <h2 style="font-weight: bold;font-size: 14px;color: #1C1F21;">
             尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a>
           </h2>
         </div>
 
-        <div style="margin: 10px 0;">
+        <div class="isoft_font12" style="margin: 10px 0;">
           <p v-for="(message, index) in messages" style="margin: 8px 0px;">{{message.message_text}}</p>
         </div>
 
@@ -70,7 +70,8 @@
     },
     methods: {
       refreshMessageList: async function () {
-        const result = await QueryPageMessageList({current_page: this.current_page, offset: this.offset});
+        let offset = this.showDetail ? this.offset : 5;
+        const result = await QueryPageMessageList({current_page: this.current_page, offset: offset});
         if (result.status === "SUCCESS") {
           this.messages = result.messages;
           this.total = result.paginator.totalcount;

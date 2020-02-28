@@ -61,7 +61,7 @@
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">我要赚钱</IBeautifulLink>
           </MenuItem>
           <MenuItem name="11">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">商业合作</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/business/introduce'})">商业合作</IBeautifulLink>
           </MenuItem>
         </div>
       </Menu>
