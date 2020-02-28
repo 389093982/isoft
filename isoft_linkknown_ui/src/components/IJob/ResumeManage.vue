@@ -38,7 +38,7 @@
         <p class="isoft_text_rows">其它优势:{{resume.other_characters}}</p>
         <p class="isoft_text_rows">个人爱好:{{resume.personal_hobbies}}</p>
 
-        <div class="isoft_button_green1" style="width: 200px;margin: 0 auto;margin-top: 50px;"
+        <div v-if="isLoginUserName" class="isoft_button_green1" style="width: 200px;margin: 0 auto;margin-top: 50px;"
              @click="$router.push({path:'/job/resume_edit'})">编辑简历
         </div>
       </div>
