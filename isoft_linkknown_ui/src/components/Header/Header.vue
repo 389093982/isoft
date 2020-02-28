@@ -55,7 +55,7 @@
             </div>
           </MenuItem>
           <MenuItem name="9">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">发现</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/found/list'})">发现</IBeautifulLink>
           </MenuItem>
           <MenuItem name="10">
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">我要赚钱</IBeautifulLink>

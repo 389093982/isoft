@@ -1,31 +1,19 @@
 <template>
-  <div style="padding:20px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;">
-    <div>
-      <IndexCarousel/>
+  <div class="isoft_bg_white isoft_pd20" style="min-height: 500px;">
+    <div style="margin: 10px 0;border-bottom: 2px solid #bcbcbc;">
+      <span class="isoft_font_header" @click="$router.push({path:'/found/list/discount'})">新闻</span>
+      <span class="isoft_font_header" @click="$router.push({path:'/found/list/activity'})">活动</span>
     </div>
     <div>
-      <IBeautifulTabLink/>
-    </div>
-    <div>
-      <Row :gutter="10">
-        <Col span="12">
-          <IndexCarousel/>
-        </Col>
-        <Col span="12">
-          <IndexCarousel/>
-        </Col>
-      </Row>
+      <router-view/>
     </div>
   </div>
 </template>
 
 <script>
-  import IndexCarousel from "../ILearning/IndexCarousel";
-  import IBeautifulTabLink from "../Common/link/IBeautifulTabLink";
 
   export default {
     name: "FoundList",
-    components: {IBeautifulTabLink, IndexCarousel}
   }
 </script>
 

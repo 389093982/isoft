@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GraphicLink :placement_name="GLOBAL.placement_discount_list"/>
+    <GraphicLink :placement_name="GLOBAL.placement_found_news_list"/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
   import GraphicLink from "../Background/CMS/GraphicLink";
 
   export default {
-    name: "DiscountList",
+    name: "NewsList",
     components: {GraphicLink}
   }
 </script>

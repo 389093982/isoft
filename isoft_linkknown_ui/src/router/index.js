@@ -32,7 +32,7 @@ const VideoPay = () => import("@/components/ILearning/Course/VideoPay");
 const CourseSearch = () => import("@/components/ILearning/Course/CourseSearch");
 const AdviseList = () => import("@/components/Background/AdviseList");
 const FoundList = () => import("@/components/IFound/FoundList");
-const DiscountList = () => import("@/components/IFound/DiscountList");
+const NewsList = () => import("@/components/IFound/NewsList");
 const ActivityList = () => import("@/components/IFound/ActivityList");
 const GoodList = () => import("@/components/IGood/GoodList");
 const GoodEdit = () => import("@/components/IGood/GoodEdit");
@@ -171,11 +171,14 @@ const IAdvertisement = [{
 }];
 
 const IFoundReouter = [{
-  path: '/ifound', component: ILayout,
+  path: '/found', component: ILayout,
     children: [
-      {path: 'found_list', component: FoundList},
-      {path: 'discount_list', component: DiscountList},
-      {path: 'activity_list', component: ActivityList},
+      {
+        path: 'list', component: FoundList, children: [
+          {path: 'activity', component: ActivityList},
+          {path: 'discount', component: NewsList},
+        ]
+      },
     ]
 }];
 

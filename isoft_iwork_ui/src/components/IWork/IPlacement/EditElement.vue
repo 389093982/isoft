@@ -43,7 +43,7 @@
           </FormItem>
           <FormItem prop="imgpath" v-show="checkShow('imgpath')" label="图片">
             <Input type="text" readonly="readonly" v-model="formInline.imgpath" placeholder="imgpath" style="width: 80%;"/>
-            <IFileUpload @uploadComplete="uploadComplete" action="/api/iwork/httpservice/isoft_linkknown_api/fileUpload"
+            <IFileUpload @uploadComplete="uploadComplete" :action="fileUploadUrl"
                          uploadLabel="上传"/>
           </FormItem>
           <div class="remark" v-show="showRemark && checkShow('linked_refer')">备注：linked_refer:链接地址、链接关键词等</div>
@@ -89,6 +89,7 @@
         }
       };
       return {
+        fileUploadUrl: '/api/iwork/httpservice/isoft_linkknown_api/fileUpload' + "?table_name=element&table_field=img_path",
         placement_types:{
           'all':['placement_name','element_name','element_label','navigation_level','navigation_parent_id','content','imgpath','linked_refer','md_content'],
           'text_link':['placement_name','element_name','element_label','linked_refer'],
