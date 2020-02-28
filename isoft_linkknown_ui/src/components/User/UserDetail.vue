@@ -46,8 +46,8 @@
           </Col>
           <Col span="8" style="padding: 0 0 0 3px">
             <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
-              <p slot="title">
-                <Icon type="md-ribbon" style="font-size: 20px"/>
+              <p slot="title" style="height: 25px">
+                <Icon class="VIPicon" type="md-ribbon"/>
                 会员权益
               </p>
               <a href="#" slot="extra" @click.prevent="changeLimit">
@@ -225,6 +225,42 @@
 </script>
 
 <style scoped>
+  .VIPicon{
+    color: #ff6900;
+    font-size: 20px;
+
+    position:relative;
+    animation-name:myfirst;
+    animation-duration:8s;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+    animation-play-state:running;
+    /* Safari and Chrome: */
+    -webkit-animation-name:myfirst;
+    -webkit-animation-duration:8s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-direction:alternate;
+    -webkit-animation-play-state:running;
+  }
+
+  @keyframes myfirst
+  {
+    0%   {color:red; left:0px; top:0px;}
+    25%  {color:yellow; left:230px; top:0px;}
+    50%  {color:blue; left:230px; top:10px;}
+    75%  {color:green; left:0px; top:10px;}
+    100% {color:red; left:0px; top:0px;}
+  }
+
+  @-webkit-keyframes myfirst /* Safari and Chrome */
+  {
+    0%   {color:red; left:0px; top:0px;}
+    25%  {color:yellow; left:230px; top:0px;}
+    50%  {color:blue; left:230px; top:10px;}
+    75%  {color:green; left:0px; top:10px;}
+    100% {color:red; left:0px; top:0px;}
+  }
+
   .focus:focus {
     background-color: #ffffff;
     border-color: #2c5bff;
