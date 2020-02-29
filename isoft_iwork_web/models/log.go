@@ -31,6 +31,13 @@ type RunlogDetail struct {
 	LastUpdatedTime time.Time `json:"last_updated_time" orm:"null"`
 }
 
+// 多字段索引
+func (this *RunlogDetail) TableIndex() [][]string {
+	return [][]string{
+		[]string{"Id", "TrackingId"},
+	}
+}
+
 func InsertRunlogRecord(record *RunlogRecord) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(record)
