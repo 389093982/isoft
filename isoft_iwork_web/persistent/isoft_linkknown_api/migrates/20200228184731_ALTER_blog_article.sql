@@ -1,5 +1,5 @@
 <SqlMigrate>
-	<Id>90</Id>
+	<Id>91</Id>
 	<AppId>5</AppId>
 	<MigrateName>20200228184731_ALTER_blog_article.sql</MigrateName>
 	<MigrateSql>alter table blog_article add column comments bigint(11) NOT NULL DEFAULT 0;</MigrateSql>

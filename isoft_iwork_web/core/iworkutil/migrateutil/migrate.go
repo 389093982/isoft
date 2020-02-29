@@ -79,12 +79,12 @@ func (this *MigrateExecutor) checkHistory() {
 	for index, migrateName := range migrateNames {
 		if migrateName == this.migrates[index].MigrateName {
 			if migrateHashs[index] != this.migrates[index].MigrateHash {
-				errorMsg := `fatal match error, history migrate_name for %s's hash is %s, but %s was found at migrate_index %d, please check why the file has been modified!`
-				panic(errors.New(fmt.Sprintf(errorMsg, migrateName, migrateHashs[index], this.migrates[index].MigrateHash, index)))
+				errorMsg := `致命错误,检测历史执行记录校验失败, 位置 %d, 历史执行记录 migrate_version 表中迁移文件名称 %s 的 hash 值是 %s, 但是 sql_migrate 表中的迁移文件 hash 值是 %s,请检查为啥内容被篡改！`
+				panic(errors.New(fmt.Sprintf(errorMsg, index+1, migrateName, migrateHashs[index], this.migrates[index].MigrateHash)))
 			}
 		} else {
-			panic(errors.New(fmt.Sprintf("fatal match error, history migrate_name is %s, but %s was found at at migrate_index %d",
-				migrateName, this.migrates[index].MigrateName, index)))
+			panic(errors.New(fmt.Sprintf("致命错误,检测历史执行记录校验失败,位置 %d, 历史执行记录 migrate_version 表中迁移文件名称是 %s, 但是 sql_migrate 表中的是 %s",
+				index+1, migrateName, this.migrates[index].MigrateName)))
 		}
 	}
 	return
