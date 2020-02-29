@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="isoft_pd10">
-      <div class="isoft_title">他/她收藏的图书</div>
+      <div class="isoft_title">{{userName===loginUserName()?'我收藏的图书':'作者收藏的图书'}}</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
         <div v-for="(book, index) in books">
           <Row style="border:1px solid #eee;margin-bottom: 10px;">
@@ -22,6 +22,7 @@
 <script>
   import {GetUserFavoriteList, QueryBookListByIds} from "../../api"
   import {checkEmpty} from "../../tools"
+  import {GetLoginUserName} from "../../tools";
 
   export default {
     name: "UserFavorite",
@@ -60,7 +61,10 @@
           this.book_collects = result.favorites;
           this.refreshBookList();
         }
-      }
+      },
+      loginUserName:function(){
+        return GetLoginUserName()
+      },
     },
     mounted() {
       if (checkEmpty(this.user_name)) {
