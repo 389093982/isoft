@@ -339,6 +339,20 @@
   text-align: center;
 }
 
+.isoft_button_red1 {
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  background: #ff5c00;
+  border: 0;
+  text-align: center;
+}
+
+
 .isoft_button_green1 {
   height: 40px;
   display: block;

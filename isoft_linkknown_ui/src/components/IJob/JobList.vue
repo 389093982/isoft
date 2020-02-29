@@ -21,13 +21,19 @@
       </Row>
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top10" style="border-top: 2px solid rgba(255,8,0,0.3);">
+    <div class="isoft_bg_white isoft_pd20 isoft_top10">
       <Row>
-        <Col span="12">搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}</Col>
+        <Col span="12" style="padding: 0 0 0 10px;">
+          搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}
+          <Button style="float: right;" @click="toToudiDetail">投递清单</Button>
+        </Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
-          <Button @click="forwardResumeManage">简历管理</Button>
-          <Button @click="toEditCorporateDetail">我要招聘</Button>
-          <Button @click="toToudiDetail">投递清单</Button>
+          <div>
+            <span class="isoft_button_theme1"
+                  @click="forwardResumeManage">我是应聘者 - 管理我的简历</span>
+            <span class="isoft_button_theme2"
+                  @click="toEditCorporateDetail">我是招聘者 - 我来发起招聘</span>
+          </div>
         </Col>
       </Row>
 
@@ -137,5 +143,33 @@
     padding: 2px 5px;
     margin: 2px 10px 2px 0px;
     border: 1px solid rgba(191, 191, 191, 0.34);
+  }
+
+  .isoft_button_theme1 {
+    padding: 10px 20px;
+    border: 1px solid #ff6c38;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ff6c38;
+    cursor: pointer;
+  }
+
+  .isoft_button_theme1:hover {
+    color: white;
+    background-color: #ff6c38;
+  }
+
+  .isoft_button_theme2 {
+    padding: 10px 20px;
+    border: 1px solid #ff9d4b;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ff9d4b;
+    cursor: pointer;
+  }
+
+  .isoft_button_theme2:hover {
+    color: white;
+    background-color: #ff9d4b;
   }
 </style>

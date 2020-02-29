@@ -24,6 +24,7 @@
     <!-- 按钮样式 -->
     <span class="isoft_button_blue">按钮样式</span>
     <span class="isoft_button_green1">按钮样式</span>
+    <span class="isoft_button_red1">按钮样式</span>
 
     <!-- 背景色 -->
     <div class="isoft_info_tip">灰度背景色</div>
