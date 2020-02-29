@@ -8,7 +8,7 @@
     </IBeautifulLink>&nbsp;&nbsp;
     <IBeautifulLink style="font-size: 12px;float: right;margin:16px 18% 0 0 " @onclick="$router.push({path:'/user/detail'})">
       <div v-if="userName===loginUserName()"></div>
-      <div v-else><Icon type="ios-arrow-forward" /><i>我的个人中心</i></div>
+      <div v-else class="ToMyCenter"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></div>
     </IBeautifulLink>
 
     <div style="margin-top: 5px;">
@@ -194,5 +194,40 @@
 </script>
 
 <style scoped>
+  .ToMyCenter{
+    color: #ff6900;
+    font-size: 12px;
+    cursor: pointer;
 
+    position:relative;
+    animation-name:myfirst;
+    animation-duration:6s;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+    animation-play-state:running;
+    /* Safari and Chrome: */
+    -webkit-animation-name:myfirst;
+    -webkit-animation-duration:6s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-direction:alternate;
+    -webkit-animation-play-state:running;
+  }
+
+  @keyframes myfirst
+  {
+    0%   {color:red; left:0px; top:0px;}
+    25%  {color:yellow; left:0px; top:0px;}
+    50%  {color:blue; left:0px; top:0px;}
+    75%  {color:green; left:0px; top:0px;}
+    100% {color:red; left:0px; top:0px;}
+  }
+
+  @-webkit-keyframes myfirst /* Safari and Chrome */
+  {
+    0%   {color:red; left:0px; top:0px;}
+    25%  {color:yellow; left:0px; top:0px;}
+    50%  {color:blue; left:0px; top:0px;}
+    75%  {color:green; left:0px; top:0px;}
+    100% {color:red; left:0px; top:0px;}
+  }
 </style>

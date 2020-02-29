@@ -38,7 +38,7 @@
             <div>
               加入时间：<Time :time="user.created_time" :interval="1"/>
             </div>
-             <div>
+             <div v-if="isLoginUserName(user.user_name)">
                <div @click="" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
                <div @click="$router.push({ path: '/sso/forget?pattern=2'})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
                <br><br>
