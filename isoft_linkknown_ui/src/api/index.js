@@ -87,7 +87,7 @@ export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft
 export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ChangeVideoOrder", params, 'GET');
 
 // 显示课程详细信息
-export const ShowCourseDetail = (course_id) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail2", {course_id}, 'GET');
+export const ShowCourseDetail = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail2", params, 'GET');
 export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 
 // 切换收藏点赞
