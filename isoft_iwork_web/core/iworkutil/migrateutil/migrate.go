@@ -54,7 +54,7 @@ func (this *MigrateExecutor) executeForceClean() error {
 }
 
 func (this *MigrateExecutor) getAllMigrateVersions() ([]string, []string) {
-	sql := `SELECT migrate_name, migrate_hash FROM migrate_version order by created_time asc`
+	sql := `SELECT migrate_name, migrate_hash FROM migrate_version order by id asc`
 	rows, err := this.db.Query(sql)
 	errorutil.CheckError(err)
 	defer rows.Close()
