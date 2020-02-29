@@ -16,9 +16,12 @@
             <Col span="16">
               <CourseMeta v-if="course && course.course_author" :course="course"/>
               <p>
-                <a href="javascript:;" v-if="course_collect===true" @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
+                <a href="javascript:;" v-if="course_collect === true"
+                   @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
                 <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect', '收藏')">加入收藏</a>&nbsp;
-                <a href="javascript:;" v-if="course_parise===true" @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
+
+                <a href="javascript:;" v-if="course_praise === true"
+                   @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
                 <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise', '点赞')">我要点赞</a>
               </p>
             </Col>
@@ -61,7 +64,7 @@
 </template>
 
 <script>
-  import {ShowCourseDetail, ToggleFavorite} from "../../../api"
+  import {IsFavorite, ShowCourseDetail, ToggleFavorite} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import UserAbout from "../../User/UserAbout"
@@ -84,7 +87,7 @@
         // 课程收藏
         course_collect: false,
         // 课程点赞
-        course_parise: false,
+        course_praise: false,
       }
     },
     methods: {
@@ -117,19 +120,31 @@
           if (result.status === "SUCCESS") {
             this.course = result.course;
             this.cVideos = result.cVideos;
-            this.course_collect = result.course_collect;
-            this.course_parise = result.course_parise;
+            this.refreshFavoriteStatus();
           }
         } finally {
           this.isLoading = false;
+        }
+      },
+      refreshFavoriteStatus: async function () {
+        if (checkHasLogin() && this.course) {
+          let result = await IsFavorite({favorite_id: this.course.id, favorite_type: "course_collect"});
+          if (result.status === "SUCCESS") {
+            this.course_collect = result.isFavorite;
+          }
+
+          result = await IsFavorite({favorite_id: this.course.id, favorite_type: "course_praise"});
+          if (result.status === "SUCCESS") {
+            this.course_praise = result.isFavorite;
+          }
         }
       },
       toggle_favorite: async function (favorite_id, favorite_type, message) {
         if (checkHasLogin()) {
           const result = await ToggleFavorite({favorite_id, favorite_type});
           if (result.status === "SUCCESS") {
+            this.refreshFavoriteStatus();
             this.$Message.success(message + "成功!");
-            this.refreshCourseDetail();
           }
         }else {
           CheckHasLoginConfirmDialog(this, {path: "/ilearning/course_detail?course_id="+this.$route.query.course_id});
