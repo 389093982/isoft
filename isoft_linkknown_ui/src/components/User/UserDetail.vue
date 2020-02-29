@@ -15,11 +15,11 @@
               <span class="user_icon_tip isoft_hover_red"
                     style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
               <span v-if="isLoginUserName(user.user_name)">头像单调无味？赶快来换张新颖的头像吧</span>
-              <span v-else>这么漂亮的头像，我咋没有！立即去设置</span>
+              <span v-else @click="$router.push({path:'/user/detail'})">这么漂亮的头像，我咋没有！<span style="color: rgba(0,0,255,0.74)">立即去设置</span></span>
             </span>
 
               <div class="user_icon_upload" style="margin: 0 0 0 40px;" v-if="isLoginUserName(user.user_name)">
-                <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传头像"/>
+                <IFileUpload ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
               </div>
               <!--设置-->
               <div><Icon type="ios-cog" style="font-size: 30px" /></div>
