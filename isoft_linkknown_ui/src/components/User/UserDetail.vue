@@ -8,22 +8,21 @@
         <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px 0 0 0 ;">
           <Col span="3" style="top:-80px;">
             <div class="user_icon">
+              <!--头像照片-->
               <img class="isoft_hover_red"
                    style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
                    width="120" height="120" :src="user.small_icon" @error="defImg()">
 
-              <span class="user_icon_tip isoft_hover_red"
-                    style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
-              <span v-if="isLoginUserName(user.user_name)">头像单调无味？赶快来换张新颖的头像吧</span>
-              <span v-else @click="$router.push({path:'/user/detail'})">这么漂亮的头像，我咋没有！<span style="color: rgba(0,0,255,0.74)">立即去设置</span></span>
-            </span>
+              <!--头像上方文字提示-->
+              <span class="user_icon_tip isoft_hover_red" style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
+                <span v-if="isLoginUserName(user.user_name)">头像单调无味？赶快来换张新颖的头像吧</span>
+                <span v-else @click="$router.push({path:'/user/detail'})">这么漂亮的头像，我咋没有！<span style="color: rgba(0,0,255,0.74)">立即去设置</span></span>
+              </span>
 
+              <!--修改头像-->
               <div class="user_icon_upload" style="margin: 0 0 0 12px;" v-if="isLoginUserName(user.user_name)">
                 <UploadHeadSculpture ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
               </div>
-
-              <!--头像下面的竖列菜单-->
-
             </div>
           </Col>
           <Col span="13" style="padding: 10px 0 0 3px;">
@@ -39,12 +38,13 @@
             <div>
               加入时间：<Time :time="user.created_time" :interval="1"/>
             </div>
-
-            <div v-if="isLoginUserName(user.user_name)" class="isoft_inline_ellipsis" style="padding:20px 0 0 0 ">
-              <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>我的信息</div>
-              <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
-              <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
-              <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
+             <div>
+               <div @click="" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
+               <div @click="$router.push({ path: '/sso/forget?pattern=2'})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
+               <br><br>
+               <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
+               <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
+               <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
             </div>
 
           </Col>

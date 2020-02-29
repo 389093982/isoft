@@ -17,7 +17,7 @@
           {{VerifyCodeButtonDesc}}
         </Button>
       </FormItem>
-      <FormItem label="修改密码" prop="passwd">
+      <FormItem label="新密码" prop="passwd">
         <Input v-model.trim="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
       </FormItem>
       <FormItem label="确认密码" prop="repasswd">

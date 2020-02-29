@@ -125,7 +125,7 @@
     width: 100%;
     height: 60px;
     line-height: 60px;
-    background: #f0f6ff;
+    background: white;
     padding: 0 28px;
   }
 
