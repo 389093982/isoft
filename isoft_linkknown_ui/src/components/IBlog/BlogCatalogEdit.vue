@@ -25,7 +25,9 @@
         if (value === '') {
           callback(new Error('博客分类不能为空！'));
         }else if (value.indexOf("官方")!=-1){
-          callback(new Error('分类名称不能含有 ‘官方’ 二字 ！'));
+          callback(new Error('分类名称不能含有 ‘官方’！'));
+        }else if (value.indexOf("热门博客")!=-1){
+          callback(new Error('分类名称不能含有‘热门博客’！'));
         }else {
           callback();
         }

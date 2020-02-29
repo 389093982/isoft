@@ -73,6 +73,7 @@
   import axios from 'axios'
   import CatalogList from "./CatalogList";
   import RandomAdmt from "../Advertisement/RandomAdmt";
+  import {CheckAdminLogin} from "../../tools/index"
 
   export default {
     name: "BlogArticleEdit",
@@ -231,7 +232,19 @@
       refreshHotCatalogItems: async function () {
         const result = await FilterElementByPlacement(this.GLOBAL.placement_host_recommend_blog_tpyes);
         if (result.status === "SUCCESS") {
-          this.hotCatalogItems = result.elements;
+          //判断是否有admin权限，如果没有那么剔除“官方博客”这一类别
+          if (this.isAdmin()) {
+            this.hotCatalogItems = result.elements;
+          }else {
+            for(let j = 0; j<result.elements.length; j++) {
+              let element = result.elements[j];
+              if (element.element_label.toString().indexOf("官方博客")!=-1 || element.element_label.toString().indexOf("热门博客")!=-1){
+                continue;
+              } else{
+                this.hotCatalogItems.push(element)
+              }
+            }
+          }
         }
       },
       refreshMyCatalogs: async function () {
@@ -239,7 +252,10 @@
         if (result.status === "SUCCESS") {
           this.mycatalogs = result.catalogs;
         }
-      }
+      },
+      isAdmin: function () {
+        return CheckAdminLogin();
+      },
     },
     mounted: async function () {
       // 加载热门分类
