@@ -1,7 +1,7 @@
 <SqlMigrate>
 	<Id>88</Id>
 	<AppId>5</AppId>
-	<MigrateName>20200225105420_ALTER_blog_article.sql</MigrateName>
+	<MigrateName>20200227104553_ALTER_blog_article.sql</MigrateName>
 	<MigrateSql>alter table blog_article drop column short_desc;</MigrateSql>
 	<MigrateHash>kzbiJ/h8iuOQjBC+dxzaYCaylA1AOeQENp/b8asZsg8=</MigrateHash>
 	<Effective>true</Effective>
