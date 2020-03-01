@@ -3,12 +3,12 @@
     <IBeautifulCard title="用户排行榜">
       <div slot="content" style="padding: 10px;">
         <Row v-for="(user,index) in users" :gutter="10">
-          <Col span="4">
+          <Col span="3">
             <img style="cursor: pointer;border-radius: 50%; border: 1px solid grey;"
                  @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
                  width="30" height="30" :src="user.small_icon" @error="defImg()" :title="'邮箱：' +user.user_name">
           </Col>
-          <Col span="12" class="isoft_inline_ellipsis" style="font-size: 12px;">
+          <Col span="13" class="isoft_inline_ellipsis" style="font-size: 12px;margin: 4px 0 0 0 ">
             <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">
               {{user.nick_name}}
             </IBeautifulLink>

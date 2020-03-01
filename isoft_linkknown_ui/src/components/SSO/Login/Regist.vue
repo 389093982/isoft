@@ -66,6 +66,15 @@
           }
         };
       };
+      const checkNickName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('昵称不能为空!'));
+        } else if (value.length>10) {
+          callback(new Error('昵称? 请不要超过10个字符哦'));
+        } else {
+          callback();
+        }
+      };
       // 确认密码校验 validatePassCheck
       const validatePassCheck = (rule, value, callback) => {
         if (value === '') {
@@ -107,7 +116,7 @@
             {required: true, validator: checkEmptyValidator("验证码不能为空!"), trigger: 'blur'}
           ],
           nickname: [
-            {required: true, validator: checkEmptyValidator("用户昵称不能为空!"), trigger: 'blur'}
+            {required: true, validator: checkNickName, trigger: 'blur'}
           ],
           passwd: [
             {required: true, validator: checkPassRuleValidator, trigger: 'blur'},
