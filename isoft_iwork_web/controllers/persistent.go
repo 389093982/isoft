@@ -111,7 +111,7 @@ func persistentGlobalVarsToFile(appids []models.AppId) {
 }
 
 func persistentQuartzsToFile(appids []models.AppId) {
-	metas, _ := models.QueryAllCronMeta()
+	metas, _ := models.QueryAllCronMeta(-1)
 	for _, meta := range metas {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, meta.AppId))
 		filepath := path.Join(_persistentDirPath, "quartzs", fmt.Sprintf(`%s.quartz`, meta.TaskName))

@@ -23,8 +23,8 @@
       </TabPane>
     </Tabs>
     <div>
+      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 50px;">保存场景</Button>
       <Button type="success" size="small" @click="handleAdd">新增场景</Button>
-      <Button type="info" size="small" @click="handleSubmit">保存场景</Button>
     </div>
   </div>
 </template>

@@ -59,9 +59,12 @@ func QueryCronMeta(app_id int64, condArr map[string]string, page int, offset int
 	return
 }
 
-func QueryAllCronMeta(enable ...bool) (metas []CronMeta, err error) {
+func QueryAllCronMeta(app_id int64, enable ...bool) (metas []CronMeta, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("cron_meta")
+	if app_id > 0 {
+		qs = qs.Filter("app_id", app_id)
+	}
 	if len(enable) > 0 {
 		qs = qs.Filter("enable", enable[0])
 	}
