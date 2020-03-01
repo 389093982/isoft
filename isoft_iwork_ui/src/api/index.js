@@ -159,7 +159,7 @@ export const ExecuteAuditTask = (task_name, sql_str) => ajax(BASE_URL+"/iwork/ex
 
 export const EditAuditTaskTarget = (task_name, update_cases) => ajax(BASE_URL+"/iwork/editAuditTaskTarget", {task_name, update_cases},'POST');
 
-export const GetAuditHandleData = (task_name, current_page, offset) => ajax(BASE_URL+"/iwork/getAuditHandleData", {task_name, current_page, offset},'POST');
+export const GetAuditHandleData = (params) => ajax(BASE_URL + "/iwork/getAuditHandleData", params, 'POST');
 
 // 占位符、页面元素模块
 export const FilterElements = (offset,current_page,placement_name, search) => ajax(BASE_URL+'/iwork/filterPageElement',{offset,current_page,placement_name, search},'GET');
