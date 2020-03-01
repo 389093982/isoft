@@ -4,7 +4,7 @@
       <div slot="content" style="padding: 10px;">
         <Row v-for="(user,index) in users" :gutter="10">
           <Col span="4">
-            <img style="cursor: pointer;border-radius: 50%;"
+            <img style="cursor: pointer;border-radius: 50%; border: 1px solid grey;"
                  @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
                  width="30" height="30" :src="user.small_icon" @error="defImg()" :title="'邮箱：' +user.user_name">
           </Col>

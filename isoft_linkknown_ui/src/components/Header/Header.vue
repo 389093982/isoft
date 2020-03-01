@@ -1,11 +1,11 @@
 <template>
   <div class="layout">
-    <div style="float: left;width: 14%;background-color: white;">
-      <div style="padding: 5px 0 0 60px ">
+    <div style="float: left;width: 12%;background-color: white;">
+      <div style="padding: 5px 0 0 50px ">
         <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 49px;cursor: pointer" @click="$router.push({path:'/ilearning/index'})"/>
       </div>
     </div>
-    <div style="float: left;width: 86%;">
+    <div style="float: left;width: 88%;">
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <div class="layout-nav">
           <MenuItem name="1">
@@ -28,7 +28,11 @@
           </MenuItem>
           <Submenu name="7">
             <template slot="title">
-              <span v-if="loginUserName">{{loginUserName}}</span>
+              <!--头像照片-->
+              <img class="isoft_hover_red" v-if="isLogin()"
+                   style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative;top: 5px"
+                   width="20" height="20" :src="small_icon" @error="defImg()">
+              <span v-if="loginUserNickName">{{loginUserNickName | filterLimitFunc(5)}}</span>
               <span v-else>未登录</span>
             </template>
             <MenuGroup title="账号管理">
@@ -71,9 +75,9 @@
 </template>
 
 <script>
-  import {CheckAdminLogin, CheckHasLogin} from '../../tools/index'
+  import {CheckAdminLogin, CheckHasLogin,GetLoginUserName} from '../../tools/index'
   import {deleteLoginInfo, getNickName} from "../../tools/sso"
-  import {LoginAddr} from "../../api"
+  import {LoginAddr,GetUserDetail} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import MessageList from "../Message/MessageList";
   import RechargeRight from "../VipCenter/RechargeRight";
@@ -84,7 +88,8 @@
     data() {
       return {
         theme1: 'light',
-        loginUserName: '',
+        loginUserNickName: '',
+        small_icon:'',
       }
     },
     methods: {
@@ -96,13 +101,31 @@
       },
       cancelUser() {
         deleteLoginInfo();
-        this.loginUserName = "";
+        this.loginUserNickName = "";
+        this.small_icon = "";
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
+      },
+      querySamllIcon: async function () {
+        const result = await GetUserDetail(GetLoginUserName());
+        if (result.status === "SUCCESS") {
+          this.small_icon = result.user.small_icon;
+        }
       }
     },
     mounted: function () {
       if (CheckHasLogin()) {
-        this.loginUserName = getNickName();
+        this.loginUserNickName = getNickName();
+        this.querySamllIcon();
+      }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + '..'
+        }else {
+          return value
+        }
       }
     },
   }

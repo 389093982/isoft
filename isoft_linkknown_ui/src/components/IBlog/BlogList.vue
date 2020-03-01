@@ -38,8 +38,8 @@
                   <Col span="2">
                     <!--第一列 ：头像-->
                     <router-link to="" style="float: left;">
-                      <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" />
-                      <Avatar size="large" v-else src="../../../static/images/404.jpg"/>
+                      <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" style="border: 1px solid grey;" />
+                      <Avatar size="large" v-else src="../../../static/images/404.jpg" style="border: 1px solid grey;"/>
                     </router-link>
                   </Col>
                   <Col span="15" style="position: relative;left: -12px;top: -3px">

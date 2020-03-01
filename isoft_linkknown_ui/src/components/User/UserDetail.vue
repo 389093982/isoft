@@ -10,7 +10,7 @@
             <div class="user_icon">
               <!--头像照片-->
               <img class="isoft_hover_red"
-                   style="cursor: pointer;border: 2px solid rgba(197,197,197,0.2);border-radius:50%;"
+                   style="cursor: pointer;border: 2px solid grey;border-radius:50%;"
                    width="120" height="120" :src="user.small_icon" @error="defImg()">
 
               <!--头像上方文字提示-->
@@ -220,8 +220,8 @@
     filters: {
       // 内容超长则显示部分
       filterLimitFunc: function (value) {
-        if (value && value.length > 200) {
-          value = value.substring(0, 200) + '...';
+        if (value && value.length > 50) {
+          value = value.substring(0, 50) + '...';
         }
         return value;
       },
