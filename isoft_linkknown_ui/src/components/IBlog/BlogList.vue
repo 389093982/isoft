@@ -37,7 +37,7 @@
                 <Row style="margin-top: 15px">
                   <Col span="2">
                     <!--第一列 ：头像-->
-                    <router-link to="" style="float: left;">
+                    <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}" style="float: left;">
                       <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" style="border: 1px solid grey;" />
                       <Avatar size="large" v-else src="../../../static/images/404.jpg" style="border: 1px solid grey;"/>
                     </router-link>
@@ -56,7 +56,7 @@
                     </Row>
                     <Row>
                       <!--第二行：作者 + 发布 + 更新时间 -->
-                      <router-link to="">
+                      <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}">
                         <span style="color: #797776;">
                           <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
                           <span v-else>{{searchblog.author}}</span>
