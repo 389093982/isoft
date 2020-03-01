@@ -13,7 +13,7 @@
           <Col span="6">创建时间</Col>
         </Row>
         <Row v-for="(catalog,index) in catalogs" style="line-height: 28px;height: 28px;">
-          <Col span="18" class="isoft_inline_ellipsis">{{ catalog.catalog_name }}</Col>
+          <Col span="18" class="isoft_inline_ellipsis">{{ catalog.catalog_name | filterLimitFunc(10)}}</Col>
           <Col span="6" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
         </Row>
       </span>
@@ -61,7 +61,17 @@
       hasLogin: function () {
         return CheckHasLogin();
       }
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 

@@ -60,7 +60,7 @@
                 <Icon type="md-arrow-round-forward" />开通会员
               </span>
               </a>
-              <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="6000">
+              <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
                 <CarouselItem>
                   <div class="demo-carousel">
                     <ul style="padding-left: 10px">
