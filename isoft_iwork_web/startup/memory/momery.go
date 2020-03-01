@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_iwork_web/startup/task"
 	"strings"
 	"sync"
 	"time"
@@ -34,6 +35,8 @@ func FlushAppId(app_id int64) {
 	FlushMemoryFilter(app_id)
 	// 同时清理所有的内存 work 流程,第一次访问会再次加载
 	iworkcache.DeleteAllWorkCache(app_id)
+	// 刷新定时任务
+	task.RefreshCronTask(app_id)
 }
 
 // 根据 app_id 刷新内存中的 filter

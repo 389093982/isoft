@@ -3,6 +3,7 @@ package iworklog
 import (
 	"fmt"
 	"isoft/isoft_iwork_web/core/iworkconst"
+	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup"
 	"isoft/isoft_iwork_web/startup/sysconfig"
@@ -52,7 +53,7 @@ func (this *CacheLoggerWriter) flush() {
 		copy(caches, this.caches) // 值拷贝
 		startup.RunLogPool.JobQueue <- func() {
 			if _, err := models.InsertMultiRunlogDetail(caches); err != nil {
-				fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@" + err.Error())
+				logutil.Error(`jobQueue write runlog error: %s`, err.Error())
 			}
 		}
 	}

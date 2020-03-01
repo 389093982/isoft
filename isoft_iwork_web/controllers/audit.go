@@ -62,15 +62,25 @@ func (this *WorkController) GetAuditHandleData() {
 	taskName := this.GetString("task_name")
 	current_page, _ := this.GetInt64("current_page")
 	offset, _ := this.GetInt64("offset")
+	case_name := this.GetString("case_name")
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
 	resource, _ := models.QueryResourceByName(app_id, taskDetail.ResourceName)
 	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
-	_, rowDatas0, err1 := sqlutil.QuerySql(strings.Replace(taskDetail.QuerySql, "*", "count(*) as totalcount", -1),
+
+	// 智能审核系统第三步获取审核数据,根据不同场景查询不同数据,默认查询全部数据
+	filterSql := taskDetail.QuerySql
+	for _, updateCase := range taskDetail.UpdateCases {
+		if updateCase.CaseName == case_name && strings.TrimSpace(updateCase.QuerySql) != "" {
+			filterSql = updateCase.QuerySql
+		}
+	}
+
+	_, rowDatas0, err1 := sqlutil.QuerySql(strings.Replace(filterSql, "*", "count(*) as totalcount", -1),
 		[]interface{}{}, resource.ResourceDsn)
-	_, rowDatas, err2 := sqlutil.QuerySql(fmt.Sprintf(`%s limit ?,?`, taskDetail.QuerySql), []interface{}{(current_page - 1) * offset, offset}, resource.ResourceDsn)
-	if err1 == nil && err2 == nil && len(rowDatas) > 0 {
+	_, rowDatas, err2 := sqlutil.QuerySql(fmt.Sprintf(`%s limit ?,?`, filterSql), []interface{}{(current_page - 1) * offset, offset}, resource.ResourceDsn)
+	if err1 == nil && err2 == nil {
 		this.Data["json"] = &map[string]interface{}{
 			"status":     "SUCCESS",
 			"rowDatas":   rowDatas,

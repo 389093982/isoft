@@ -1,7 +1,16 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10" style="padding-top: 20px;">
-      <Row :gutter="10">
+    <div class="isoft_bg_white isoft_pd20">
+      <div style="text-align: right;">
+        <span class="isoft_button_theme1"
+              @click="forwardResumeManage">我是应聘者 - 管理我的简历</span>
+        <span class="isoft_button_theme2"
+              @click="toEditCorporateDetail">我是招聘者 - 我来发起招聘</span>
+      </div>
+    </div>
+
+    <div class="isoft_bg_white isoft_pd20 isoft_top10">
+      <Row :gutter="10" style="margin-bottom: 10px;">
         <Col span="8"><Input v-model="jobInfoSearch" placeholder="输入职位或者公司关键词搜索您感兴趣的职位"/></Col>
         <Col span="6">
           <Input v-model="jobPlaceSearch" placeholder="北京、上海、广州、深圳" @on-focus="handleFocus('areaChooser')"/>
@@ -19,21 +28,13 @@
           <Button type="default" @click="clearSearch">清空</Button>
         </Col>
       </Row>
-    </div>
 
-    <div class="isoft_bg_white isoft_pd20 isoft_top10">
       <Row>
         <Col span="12" style="padding: 0 0 0 10px;">
-          搜索职位:{{jobInfoSearch}} {{jobPlaceSearch}} {{jobSalaySearch}}
-          <Button style="float: right;" @click="toToudiDetail">投递清单</Button>
+          搜索职位:{{jobInfoSearch}} &nbsp;&nbsp;&nbsp; {{jobPlaceSearch}} &nbsp;&nbsp;&nbsp; {{jobSalaySearch}}
         </Col>
         <Col span="12" style="text-align: right;padding-right: 25px;">
-          <div>
-            <span class="isoft_button_theme1"
-                  @click="forwardResumeManage">我是应聘者 - 管理我的简历</span>
-            <span class="isoft_button_theme2"
-                  @click="toEditCorporateDetail">我是招聘者 - 我来发起招聘</span>
-          </div>
+          <Button style="float: right;" @click="toToudiDetail">投递清单</Button>
         </Col>
       </Row>
 

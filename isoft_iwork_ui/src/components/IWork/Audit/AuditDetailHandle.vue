@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div>
+      <Tag><span @click="filterAuditData('')" :style="{color: case_name === '' ? 'red' : ''}">全部</span></Tag>
+      <Tag v-for="(update_case, index) in update_cases">
+        <span @click="filterAuditData(update_case.case_name)"
+              :style="{color: case_name === update_case.case_name ? 'red' : ''}">{{update_case.case_name}}</span>
+      </Tag>
+    </div>
+
     <div v-for="rowData in rowDatas" style="border:1px solid rgba(199,199,199,0.4);margin: 5px;padding: 10px;">
       <Row>
         <Scroll height="200">
@@ -24,8 +32,8 @@
 </template>
 
 <script>
-  import {GetAuditHandleData,QueryTaskDetail,ExecuteAuditTask} from "../../../api"
-  import {getMatchArrForString,startsWith} from "../../../tools"
+  import {ExecuteAuditTask, GetAuditHandleData, QueryTaskDetail} from "../../../api"
+  import {getMatchArrForString, startsWith} from "../../../tools"
 
   export default {
     name: "AuditDetailHandle",
@@ -41,9 +49,14 @@
         offset:10,
         search:"",
         update_cases:[],
+        case_name: '',
       }
     },
     methods:{
+      filterAuditData: function (case_name) {
+        this.case_name = case_name;
+        this.refreshHandleData();
+      },
       handleChange(page){
         this.current_page = page;
         this.refreshHandleData();
@@ -53,7 +66,12 @@
         this.refreshHandleData();
       },
       refreshHandleData:async function () {
-        const result = await GetAuditHandleData(this.$route.query.task_name, this.current_page, this.offset);
+        const result = await GetAuditHandleData({
+          task_name: this.$route.query.task_name,
+          current_page: this.current_page,
+          offset: this.offset,
+          case_name: this.case_name,
+        });
         if(result.status == "SUCCESS"){
           this.rowDatas = result.rowDatas;
           this.colNames = JSON.parse(result.colNames);

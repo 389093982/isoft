@@ -13,7 +13,6 @@ import (
 	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_iwork_web/startup/sysconfig"
 	_ "isoft/isoft_iwork_web/startup/sysconfig"
-	"isoft/isoft_iwork_web/startup/task"
 	_ "net/http/pprof"
 )
 
@@ -24,10 +23,11 @@ func main() {
 	beego.InsertFilter("/api/iwork/httpservice/*", beego.BeforeExec, filter.FilterFunc)
 	beego.InsertFilter("/*", beego.BeforeExec, filter.IPFilterFunc)
 
-	memory.FlushAll()
 	iworkpool.LoadAndCachePool()
 	regist.RegistNodes()
-	task.RegisterCronTask()
+
+	memory.FlushAll()
+
 	beego.SetStaticPath("/api/iwork/files", sysconfig.FileSavePath)
 
 	beego.Run()
