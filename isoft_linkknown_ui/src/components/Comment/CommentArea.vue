@@ -7,12 +7,12 @@
         <!--第一列：头像-->
         <Col span="2">
           <div v-if="parent_id===0">
-            <router-link to="">
+            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
               <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative; top:5px" width=40px height=40px :src=comment.small_icon @error="defImg()">
             </router-link>
           </div>
           <div v-else style="margin: 12px 0 0 15px ">
-            <router-link to="">
+            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
               <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" width=25px height=25px :src=comment.small_icon @error="defImg()">
             </router-link>
           </div>
@@ -20,8 +20,12 @@
         <!--第二列： 第一行用户名，第二行评论内容-->
         <Col span="15" style="position: relative;left: -15px">
           <Row>
-            <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.nick_name}}</span>
-            <router-link to="">{{comment.refer_user_name}}</router-link>
+            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
+              <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.nick_name}}</span>
+            </router-link>
+            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
+              {{comment.refer_user_name}}
+            </router-link>
           </Row>
           <Row>
             <span v-if="parent_id === 0" style="color: rgb(121, 119, 118)"><code>评论</code>:</span>
