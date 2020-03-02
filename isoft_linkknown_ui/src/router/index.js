@@ -18,6 +18,7 @@ const BookList = () => import("@/components/IBook/BookList");
 const BookCatalogs = () => import("@/components/IBook/BookCatalogs");
 const BookArticleDetail = () => import("@/components/IBook/BookArticleDetail");
 const UserDetail = () => import("@/components/User/UserDetail");
+const UserInfo = () => import("@/components/User/UserInfo");
 const UserGuide = () => import("@/components/User/UserGuide");
 const ILearningIndex = () => import("@/components/ILearning/Index");
 const BoutiqueCourse = () => import("@/components/ILearning/boutiqueCourse");
@@ -135,6 +136,7 @@ const IUserReouter = [{
   path: '/user', component: ILayout,
     children: [
       {path: 'detail', component: UserDetail},
+      {path: 'info', component: UserInfo},
       {path: 'guide', component: UserGuide},
       {path: 'mine/detail', component: UserDetail},
     ]

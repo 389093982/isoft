@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <CommentForm :parent_id="parent_id" :theme_pk="theme_pk" :theme_type="theme_type"
+      <CommentForm :org_parent_id="org_parent_id" :parent_id="parent_id" :theme_pk="theme_pk" :theme_type="theme_type"
                    :refer_user_name="refer_user_name" @refreshComment="refreshComment"/>
     </div>
 
@@ -12,8 +12,7 @@
       </span>
       </div>
       <!-- 评论列表 -->
-      <CommentArea ref="commentArea" v-if="theme_pk > 0" :parent_id="0" :theme_pk="theme_pk"
-                   :theme_type="theme_type"></CommentArea>
+      <CommentArea ref="commentArea" v-if="theme_pk > 0" :parent_id="0" :theme_pk="theme_pk" :theme_type="theme_type"></CommentArea>
     </div>
   </div>
 </template>
@@ -42,6 +41,7 @@
     },
     data() {
       return {
+        org_parent_id:0,
         // 父评论 id
         parent_id: 0,
         // 提交评论内容

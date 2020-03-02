@@ -24,7 +24,7 @@
   export default {
     name: "CommentForm",
     // 父组件传递给子组件的字段
-    props: ["parent_id", "theme_pk", "theme_type", "refer_user_name"],
+    props: ["org_parent_id","parent_id", "theme_pk", "theme_type", "refer_user_name"],
     data() {
       return {
         content: "",
@@ -38,19 +38,18 @@
           return;
         }
         CheckHasLoginConfirmDialog2(_this, async function () {
-          if (_this.content == undefined || _this.content.length < 10) {
+          if (_this.content == undefined || _this.content.length < 1) {
             _this.$Notice.error({
               title: '温馨提示',
-              desc: "评论信息过短,需要10个字符以上！"
+              desc: "评论信息过短,需要1个字符以上！"
             });
           } else {
-            const result = await AddComment(_this.parent_id, _this.content, _this.theme_pk,
-              _this.theme_type, comment_type, _this.refer_user_name);
+            const result = await AddComment(_this.org_parent_id,_this.parent_id, _this.content, _this.theme_pk,_this.theme_type, comment_type, _this.refer_user_name);
             if (result.status == "SUCCESS") {
               _this.$Message.success("发表成功!");
               _this.content = '';
               // 调用父组件的 refreshComment 方法
-              _this.$emit('refreshComment', 'all');
+              _this.$emit('refreshComment', "all");
             }
           }
         });

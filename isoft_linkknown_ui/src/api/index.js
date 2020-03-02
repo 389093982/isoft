@@ -96,8 +96,9 @@ export const IsFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_
 export const GetUserFavoriteList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList", params, 'GET');
 
 // 添加评论
-export const AddComment = (parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment2', {
+export const AddComment = (org_parent_id,parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) =>
+  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment', {
+    org_parent_id,
     parent_id,
     content,
     theme_pk,
@@ -115,6 +116,24 @@ export const FilterComment = (theme_pk, theme_type, parent_id, comment_type, off
     comment_type,
     offset,
     current_page
+  }, 'GET');
+
+// 获取一级评论列表
+export const FilterCommentFirstLevel = (theme_pk, theme_type, comment_type, offset, current_page) =>
+  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', {
+    theme_pk,
+    theme_type,
+    comment_type,
+    offset,
+    current_page
+  }, 'GET');
+
+// 获取二级子评论列表
+export const FilterCommentSecondLevel = (theme_pk, theme_type,org_parent_id) =>
+  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel', {
+    theme_pk,
+    theme_type,
+    org_parent_id,
   }, 'GET');
 
 // 获取所有课程类型

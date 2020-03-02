@@ -2,14 +2,13 @@
   <div>
 
     <div v-for="(comment,index) in comments" style="margin-bottom:5px;padding: 10px;border: 1px solid #e9e9e9;">
-      <div v-if="comment.parent_id === 0" class="Floor"># {{total - (current_page - 1) * offset - index}}楼</div>
       <!--评论分两行-->
       <Row>
         <!--第一行 第一列：头像-->
         <Col span="2">
-          <div>
-            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
-              <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative; top:5px" width=40px height=40px :src=comment.small_icon @error="defImg()">
+          <div style="margin: 12px 0 0 15px ">
+            <router-link :to="{path:'/user/detail',query:{username:comment.created_user_account}}">
+              <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" width=25px height=25px :src=comment.created_user_small_icon @error="defImg()">
             </router-link>
           </div>
         </Col>
@@ -18,14 +17,18 @@
           <!--第一行：用户名-->
           <Row>
             <Col span="20">
-              <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
-                <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.nick_name}}</span>
+              <router-link :to="{path:'/user/detail',query:{username:comment.created_user_account}}">
+                <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.created_user_nick_name}}</span>
               </router-link>
             </Col>
           </Row>
           <!--第二行：内容-->
           <Row>
             <Col span="19">
+              <span v-if="comment.depth === 1" style="color: rgb(121, 119, 118)"></span>
+              <span v-else style="color: rgb(121, 119, 118)"><code>回复&nbsp;</code>
+                <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.refer_nick_name}}</span>&nbsp;:&nbsp;
+              </span>
               <span style="color: #555;font-size: 14px">{{comment.content}}</span>
             </Col>
           </Row>
@@ -43,9 +46,7 @@
             <span>
               <a @click="replyComment(comment.id,comment.created_by)" style="color: rgb(173, 170, 168);">
                 <span>
-                  <span style="font-size: 15px">·</span>
-                  <span v-if="comment.sub_amount>0">({{comment.sub_amount}})</span>
-                  回复
+                  <span style="font-size: 15px">·</span>回复
                 </span>
               </a>
             </span>
@@ -53,19 +54,14 @@
           <!--第二列: 点赞、删除-->
           <Col span="6">
             <Icon type="md-heart-outline"  style="font-size: 20px;cursor: pointer;color: rgb(173, 170, 168)"/>&nbsp;&nbsp;&nbsp;
-            <span v-if="isLoginUserName(comment.user_name)">
+            <span v-if="isLoginUserName(comment.created_user_account)">
               <Icon type="ios-trash-outline" style="font-size: 18px;cursor: pointer;color: rgb(173, 170, 168)"/>
             </span>
           </Col>
         </i>
       </Row>
 
-      <!-- 二级评论区域 -->
-      <SonCommentArea v-if="comment.parent_id===0" :parent_user_name="comment.nick_name" :org_parent_id="comment.id" :parent_id="comment.id" :parent_comment="comment" :theme_pk="theme_pk" :theme_type="theme_type" :key="comment.id" @refreshComment="refreshComment" />
     </div>
-
-    <!-- 顶级评论支持分页 -->
-    <Page v-if="parent_id === 0 && total > 0" :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
     <!-- 评论表单 -->
     <Modal v-model="showCommentForm" width="800" title="回复" :mask-closable="false">
@@ -76,15 +72,30 @@
 </template>
 
 <script>
-  import {FilterCommentFirstLevel} from "../../api/index"
-  import CommentForm from "./CommentForm"
+  import {FilterCommentSecondLevel} from "../../api/index"
   import {GetLoginUserName} from "../../tools"
-  import SonCommentArea from "./SonCommentArea";
+  import CommentForm from "./CommentForm";
 
   export default {
-    name: "CommentArea",
+    name: "SonCommentArea",
     // 评论清单
     props: {
+      parent_user_name: {
+        type: String,
+        default: "",
+      },
+      org_parent_id: {
+        type: Number,
+        default: -1,
+      },
+      parent_id: {
+        type: Number,
+        default: -1,
+      },
+      parent_comment: {
+        type: Object,
+        default: null,
+      },
       theme_pk: {
         type: Number,
         default: -1,
@@ -94,20 +105,11 @@
         default: "",
       },
     },
-    components: {SonCommentArea, CommentForm},
+    components: { CommentForm},
     data() {
       return {
-        // 当前页
-        current_page: 1,
-        // 总数
-        total: 0,
-        // 每页记录数
-        offset: 10,
         comments: [],
         showCommentForm: false,
-        org_parent_id: 0,
-        parent_id: 0,
-        refer_user_name: "",
       }
     },
     methods: {
@@ -119,18 +121,20 @@
         this.offset = pageSize;
         this.refreshComment();
       },
-      // 刷新当前父级评论对应的评论列表
       refreshComment: async function (comment_type) {
-        const result = await FilterCommentFirstLevel(this.theme_pk, this.theme_type, comment_type, this.offset, this.current_page);
+        const result = await FilterCommentSecondLevel(this.theme_pk, this.theme_type,this.org_parent_id);
         if (result.status === "SUCCESS") {
           this.showCommentForm = false;
           this.comments = result.comments;
-          this.total = result.paginator.totalcount;
+        }
+
+        // CommentForm调SonCommentArea,  SonCommentArea再调CommentArea,  但是父组件刷新，这里做个传值判断是否继续调父组件，否则会成死循环
+        if (comment_type === 'all') {
+          this.$emit('refreshComment',comment_type);
         }
       },
-      // 回复评论,两个参数分别是被评论id,被评论人
+      // 回复评论,两个参数分别一级评论的id,被评论人
       replyComment: function (id, refer_user_name) {
-        this.org_parent_id = id;
         this.parent_id = id;
         this.refer_user_name = refer_user_name;
         this.showCommentForm = true;
@@ -150,12 +154,5 @@
 </script>
 
 <style scoped>
-  .Floor {
-    color: #109e16;
-    font-size: 15px;
-  }
-  a {
-    color: red;
-    margin-right: 10px;
-  }
+
 </style>
