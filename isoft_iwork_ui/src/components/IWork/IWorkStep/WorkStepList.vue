@@ -478,12 +478,14 @@
         this.$refs.workStepBaseInfo.showWorkStepBaseInfo(this.$route.query.work_id, work_step_id);
       },
       getExtraStr:function (workstep) { // 显示额外信息
-        if(workstep.work_step_input != ""){
+        if (workstep.work_step_input !== "") {
           var paramInputSchema = JSON.parse(workstep.work_step_input);
-          for(var i=0; i<paramInputSchema.ParamInputSchemaItems.length; i++){
-            var item = paramInputSchema.ParamInputSchemaItems[i];
-            if(item.ParamName == "bool_expression"){
-              return item.ParamValue;
+          if (paramInputSchema.ParamInputSchemaItems != null) {
+            for (var i = 0; i < paramInputSchema.ParamInputSchemaItems.length; i++) {
+              var item = paramInputSchema.ParamInputSchemaItems[i];
+              if (item.ParamName === "bool_expression") {
+                return item.ParamValue;
+              }
             }
           }
         }
@@ -491,13 +493,13 @@
       },
       refreshWorkDetail:async function(){
         const result = await QueryWorkDetail(this.$route.query.work_id);
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.work = result.work;
         }
       },
       refreshNodeMetas:async function () {
         const result = await GetMetaInfo("nodeMetas");
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.nodeMetas = result.nodeMetas;
           // 提交 action
           this.$store.dispatch('commitSetNodeMetas',{"nodeMetas":result.nodeMetas});
@@ -505,10 +507,10 @@
       },
       getErrorOrTotalCount:function (workId, flag) {
         var key = Object.keys(this.runLogRecordCount).filter(function (key) {
-          return key == workId;
+          return key === workId;
         })[0];
         if(key){
-          return flag == "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
+          return flag === "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
         }
       }
     },

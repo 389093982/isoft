@@ -61,7 +61,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getLastRunlogDetail", wc, wc.GetLastRunlogDetail, "get,post:GetLastRunlogDetail")
 	registRouter("/api/iwork/httpservice/:app_name/:work_name", wc, wc.PublishSerivce, "get,post:PublishSerivce")
 	registRouter("/api/iwork/getRelativeWork", wc, wc.GetRelativeWork, "get,post:GetRelativeWork")
-	registRouter("/api/iwork/buildIWorkDL", wc, wc.BuildIWorkDL, "get,post:BuildIWorkDL")
 	registRouter("/api/iwork/validateWork", wc, wc.ValidateWork, "get,post:ValidateWork")
 	registRouter("/api/iwork/refactorWorkStepInfo", wc, wc.RefactorWorkStepInfo, "get,post:RefactorWorkStepInfo")
 	registRouter("/api/iwork/batchChangeIndent", wc, wc.BatchChangeIndent, "get,post:BatchChangeIndent")

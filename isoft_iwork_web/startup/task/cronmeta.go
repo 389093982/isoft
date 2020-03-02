@@ -39,7 +39,7 @@ type Job struct {
 	meta *models.CronMeta
 }
 
-// 运行 job 的方法
+// 运行 job 的方法c
 func (this *Job) Run() (err error) {
 	logutil.Info("执行定时任务开始: %d - %s", this.meta.AppId, this.meta.TaskName)
 	defer logutil.Info("执行定时任务结束: %d - %s", this.meta.AppId, this.meta.TaskName)
