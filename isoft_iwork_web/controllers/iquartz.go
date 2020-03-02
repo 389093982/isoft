@@ -4,11 +4,14 @@ import (
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_iwork_web/startup/memory"
 	"isoft/isoft_utils/common/pageutil"
 	"time"
 )
 
-func (this *WorkController) EditQuartz() {
+func (this *WorkController) ToggleQuartzStatus() {
+	app_id, _ := this.GetInt64("app_id", -1)
+	defer memory.FlushAppId(app_id)
 	task_name := this.GetString("task_name")
 	operate := this.GetString("operate")
 	var err error
@@ -31,10 +34,12 @@ func (this *WorkController) EditQuartz() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) AddQuartz() {
+func (this *WorkController) EditQuartz() {
 	app_id, _ := this.GetInt64("app_id", -1)
+	defer memory.FlushAppId(app_id)
 	var meta models.CronMeta
 	meta.AppId = app_id
+	meta.Id, _ = this.GetInt64("id", 0)
 	meta.TaskName = this.Input().Get("task_name")
 	meta.TaskType = this.Input().Get("task_type")
 	meta.CronStr = this.Input().Get("cron_str")

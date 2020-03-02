@@ -9,13 +9,21 @@ import (
 	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/dipool/pool"
+	"strings"
 )
 
 func init() {
-
+	toolbox.StartTask()
 }
 
 func RefreshCronTask(app_id int64) {
+	// 先删除旧的任务
+	for k, _ := range toolbox.AdminTaskList {
+		if strings.HasPrefix(k, fmt.Sprintf("%d-", app_id)) {
+			toolbox.DeleteTask(k)
+		}
+	}
+	// 再导入新的任务
 	if metas, err := models.QueryAllCronMeta(app_id, true); err == nil {
 		for _, meta := range metas {
 			tk := toolbox.NewTask(fmt.Sprintf(`%d-%s`, app_id, meta.TaskName), meta.CronStr, func() error {
@@ -26,7 +34,7 @@ func RefreshCronTask(app_id int64) {
 			})
 			toolbox.AddTask(fmt.Sprintf(`%d-%s`, app_id, meta.TaskName), tk)
 		}
-		toolbox.StartTask()
+
 	}
 }
 

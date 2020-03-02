@@ -30,9 +30,9 @@ func init() {
 
 func loadloadIWorkerRouterDetail() {
 	wc := &controllers.WorkController{}
-	registRouter("/api/iwork/addQuartz", wc, wc.AddQuartz, "get,post:AddQuartz")
-	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
 	registRouter("/api/iwork/editQuartz", wc, wc.EditQuartz, "get,post:EditQuartz")
+	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
+	registRouter("/api/iwork/toggleQuartzStatus", wc, wc.ToggleQuartzStatus, "get,post:ToggleQuartzStatus")
 
 	registRouter("/api/iwork/deleteAppid", wc, wc.DeleteAppid, "get,post:DeleteAppid")
 	registRouter("/api/iwork/editAppid", wc, wc.EditAppid, "get,post:EditAppid")

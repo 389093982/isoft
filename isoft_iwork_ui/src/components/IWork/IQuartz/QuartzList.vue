@@ -2,7 +2,7 @@
   <div style="margin: 10px;">
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
-      <QuartzAdd slot="left" @handleSuccess="refreshQuartzList"/>
+      <QuartzEdit ref="quartzEdit" slot="left" @handleSuccess="refreshQuartzList"/>
       <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
@@ -23,15 +23,15 @@
 </template>
 
 <script>
-  import {formatDate} from "../../../tools/index"
-  import {QuartzList,QueryWorkDetail,EditQuartz} from "../../../api"
+  import {copyObj, formatDate} from "../../../tools/index"
+  import {QuartzList, QueryWorkDetail, ToggleQuartzStatus} from "../../../api"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
-  import QuartzAdd from "./QuartzAdd"
+  import QuartzEdit from "./QuartzEdit"
 
   export default {
     name: "QuartzList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,QuartzAdd},
+    components: {ISimpleLeftRightRow, ISimpleSearch, QuartzEdit},
     data(){
       return {
         // 当前页
@@ -82,10 +82,24 @@
           {
             title: '操作',
             key: 'operate',
-            width: 280,
+            width: 300,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$refs.quartzEdit.initData(copyObj(this.quartzs[params.index]));
+                    }
+                  }
+                }, '编辑'),
                 h('Button', {
                   props: {
                     type: 'success',
@@ -96,7 +110,7 @@
                   },
                   on: {
                     click: () => {
-                      this.editQuartz(this.quartzs[params.index]['task_name'], "start");
+                      this.toggleQuartzStatus(this.quartzs[params.index]['task_name'], "start");
                     }
                   }
                 }, '启用'),
@@ -110,7 +124,7 @@
                   },
                   on: {
                     click: () => {
-                      this.editQuartz(this.quartzs[params.index]['task_name'], "stop");
+                      this.toggleQuartzStatus(this.quartzs[params.index]['task_name'], "stop");
                     }
                   }
                 }, '停用'),
@@ -124,7 +138,7 @@
                   },
                   on: {
                     click: () => {
-                      this.editQuartz(this.quartzs[params.index]['task_name'], "delete");
+                      this.toggleQuartzStatus(this.quartzs[params.index]['task_name'], "delete");
                     }
                   }
                 }, '删除'),
@@ -174,8 +188,8 @@
         this.search = data;
         this.refreshQuartzList();
       },
-      editQuartz:async function (task_name, operate){
-        const result = await EditQuartz(task_name, operate);
+      toggleQuartzStatus: async function (task_name, operate) {
+        const result = await ToggleQuartzStatus(task_name, operate);
         if(result.status == "SUCCESS"){
           this.refreshQuartzList();
         }else{

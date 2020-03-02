@@ -25,11 +25,11 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
-  import {AddQuartz} from "../../../api/index"
+  import {EditQuartz} from "../../../api/index"
   import {validateCron} from "../../../tools/index"
 
   export default {
-    name: "QuartzAdd",
+    name: "QuartzEdit",
     components:{ISimpleBtnTriggerModal},
     data(){
       const _validateCron = (rule, value, callback) => {
@@ -43,6 +43,7 @@
       };
       return {
         formValidate: {
+          id: 0,
           task_name: '',
           task_type: '',
           cron_str: '',
@@ -64,9 +65,8 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddQuartz(this.formValidate.task_name,
-              this.formValidate.task_type,this.formValidate.cron_str);
-            if(result.status == "SUCCESS"){
+            const result = await EditQuartz(this.formValidate);
+            if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
               this.$refs.triggerModal.hideModal();
@@ -81,6 +81,10 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
+      initData(formdata) {
+        this.formValidate = formdata;
+        this.$refs.triggerModal.triggerClick();
+      }
     }
   }
 </script>
