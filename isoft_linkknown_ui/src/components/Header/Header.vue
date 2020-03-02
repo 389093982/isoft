@@ -28,12 +28,15 @@
           </MenuItem>
           <Submenu name="7">
             <template slot="title">
-              <!--头像照片-->
-              <img class="isoft_hover_red" v-if="isLogin()"
-                   style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative;top: 5px"
-                   width="20" height="20" :src="small_icon" @error="defImg()">
-              <span v-if="loginUserNickName">{{loginUserNickName | filterLimitFunc(5)}}</span>
-              <span v-else>未登录</span>
+              <span v-if="loginUserNickName">
+                <!--头像照片-->
+                <img v-if="small_icon.length>0" class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative;top: 5px" width="20" height="20" :src="small_icon" @error="defImg()">
+                <Avatar v-else icon="ios-person" size="small" style="padding: 0 0 0 5px ;margin: 0 2px 2px 0 " />
+                {{loginUserNickName | filterLimitFunc(5)}}
+              </span>
+              <span v-else>
+                <Avatar icon="ios-person" size="small" style="padding: 0 0 0 5px ;margin: 0 2px 2px 0 " />未登录
+              </span>
             </template>
             <MenuGroup title="账号管理">
               <MenuItem name="7-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
