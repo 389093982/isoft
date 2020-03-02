@@ -30,9 +30,9 @@ func init() {
 
 func loadloadIWorkerRouterDetail() {
 	wc := &controllers.WorkController{}
-	registRouter("/api/iwork/addQuartz", wc, wc.AddQuartz, "get,post:AddQuartz")
-	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
 	registRouter("/api/iwork/editQuartz", wc, wc.EditQuartz, "get,post:EditQuartz")
+	registRouter("/api/iwork/filterPageQuartz", wc, wc.FilterPageQuartz, "get,post:FilterPageQuartz")
+	registRouter("/api/iwork/toggleQuartzStatus", wc, wc.ToggleQuartzStatus, "get,post:ToggleQuartzStatus")
 
 	registRouter("/api/iwork/deleteAppid", wc, wc.DeleteAppid, "get,post:DeleteAppid")
 	registRouter("/api/iwork/editAppid", wc, wc.EditAppid, "get,post:EditAppid")
@@ -61,7 +61,6 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getLastRunlogDetail", wc, wc.GetLastRunlogDetail, "get,post:GetLastRunlogDetail")
 	registRouter("/api/iwork/httpservice/:app_name/:work_name", wc, wc.PublishSerivce, "get,post:PublishSerivce")
 	registRouter("/api/iwork/getRelativeWork", wc, wc.GetRelativeWork, "get,post:GetRelativeWork")
-	registRouter("/api/iwork/buildIWorkDL", wc, wc.BuildIWorkDL, "get,post:BuildIWorkDL")
 	registRouter("/api/iwork/validateWork", wc, wc.ValidateWork, "get,post:ValidateWork")
 	registRouter("/api/iwork/refactorWorkStepInfo", wc, wc.RefactorWorkStepInfo, "get,post:RefactorWorkStepInfo")
 	registRouter("/api/iwork/batchChangeIndent", wc, wc.BatchChangeIndent, "get,post:BatchChangeIndent")

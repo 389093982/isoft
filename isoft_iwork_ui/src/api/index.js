@@ -10,10 +10,13 @@ const BASE_URL = '/api'
 export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageQuartz", {offset,current_page,search},'POST');
 
 // 编辑 quartz
-export const EditQuartz = (task_name, operate) => ajax(BASE_URL+"/iwork/editQuartz", {task_name, operate},'POST');
+export const ToggleQuartzStatus = (task_name, operate) => ajax(BASE_URL + "/iwork/toggleQuartzStatus", {
+  task_name,
+  operate
+}, 'POST');
 
 // 添加 quartz 记录
-export const AddQuartz = (task_name,task_type,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,cron_str},'POST');
+export const EditQuartz = (params) => ajax(BASE_URL + "/iwork/editQuartz", params, 'POST');
 
 export const DeleteAppid = (params) => ajax(BASE_URL + "/iwork/deleteAppid", params, 'POST');
 export const EditAppid = (params) => ajax(BASE_URL + "/iwork/editAppid", params, 'POST');
@@ -145,7 +148,7 @@ export const SaveProject = () => ajax(BASE_URL+"/iwork/saveProject", {},'POST');
 
 export const ImportProject = () => ajax(BASE_URL+"/iwork/importProject", {},'POST');
 
-export const EditAuditTask = (task_name, task_desc) => ajax(BASE_URL+"/iwork/editAuditTask", {task_name, task_desc},'POST');
+export const EditAuditTask = (params) => ajax(BASE_URL + "/iwork/editAuditTask", params, 'POST');
 
 export const QueryPageAuditTask = (offset,current_page) => ajax(BASE_URL+"/iwork/queryPageAuditTask", {offset,current_page},'POST');
 

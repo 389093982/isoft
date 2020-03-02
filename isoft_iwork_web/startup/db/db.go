@@ -65,6 +65,7 @@ func registerModel() {
 	orm.RegisterModel(new(models.AuditTask))
 	orm.RegisterModel(new(models.Placement))
 	orm.RegisterModel(new(models.Element))
+	orm.RegisterModel(new(models.DbMonitor))
 }
 
 // 自动建表

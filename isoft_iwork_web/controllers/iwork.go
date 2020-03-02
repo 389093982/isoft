@@ -28,24 +28,6 @@ type WorkController struct {
 	interfaces.IFileUploadDownload
 }
 
-func (this *WorkController) BuildIWorkDL() {
-	//dls := make([]*IWorkDL,0)
-	//works := iwork.GetAllWorkInfo()
-	//for _, work := range works{
-	//	dl := &IWorkDL{}
-	//	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
-	//	for _, step := range steps{
-	//		if step.WorkStepType == "work_start"{
-	//			dl.RequestInfo = step.WorkStepInput
-	//		}
-	//		if step.WorkStepType == "work_end"{
-	//			dl.ResponseInfo = step.WorkStepOutput
-	//		}
-	//	}
-	//	dls = append(dls, dl)
-	//}
-}
-
 func (this *WorkController) GetRelativeWork() {
 	work_id, _ := this.GetInt64("work_id")
 	serviceArgs := map[string]interface{}{"work_id": work_id}

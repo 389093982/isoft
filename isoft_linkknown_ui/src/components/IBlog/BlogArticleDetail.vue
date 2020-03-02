@@ -59,7 +59,7 @@
     methods: {
       refreshArticleDetail: async function () {
         const result = await ShowBlogArticleDetail(this.$route.query.blog_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.userInfos = await RenderUserInfoByName(result.blog.author);
           this.blog = result.blog;
         }

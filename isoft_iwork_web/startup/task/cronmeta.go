@@ -9,13 +9,17 @@ import (
 	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_iwork_web/startup/dipool/pool"
+	"strings"
 )
 
-func init() {
-
-}
-
 func RefreshCronTask(app_id int64) {
+	// 先删除旧的任务
+	for k, _ := range toolbox.AdminTaskList {
+		if strings.HasPrefix(k, fmt.Sprintf("%d-", app_id)) {
+			toolbox.DeleteTask(k)
+		}
+	}
+	// 再导入新的任务
 	if metas, err := models.QueryAllCronMeta(app_id, true); err == nil {
 		for _, meta := range metas {
 			tk := toolbox.NewTask(fmt.Sprintf(`%d-%s`, app_id, meta.TaskName), meta.CronStr, func() error {
@@ -26,8 +30,8 @@ func RefreshCronTask(app_id int64) {
 			})
 			toolbox.AddTask(fmt.Sprintf(`%d-%s`, app_id, meta.TaskName), tk)
 		}
-		toolbox.StartTask()
 	}
+	toolbox.StartTask()
 }
 
 // 执行任务的 job
@@ -35,7 +39,7 @@ type Job struct {
 	meta *models.CronMeta
 }
 
-// 运行 job 的方法
+// 运行 job 的方法c
 func (this *Job) Run() (err error) {
 	logutil.Info("执行定时任务开始: %d - %s", this.meta.AppId, this.meta.TaskName)
 	defer logutil.Info("执行定时任务结束: %d - %s", this.meta.AppId, this.meta.TaskName)

@@ -27,12 +27,12 @@
     methods:{
       refreshAllResource:async function () {
         const result = await GetAllResource("db");
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.resources = result.resources;
         }
       },
       chooseResource:function () {
-        this.currentResource = this.resources.filter(resource => resource.resource_dsn == this.choose_resource_dsn)[0];
+        this.currentResource = this.resources.filter(resource => resource.resource_dsn === this.choose_resource_dsn)[0];
       }
     },
     mounted:function () {

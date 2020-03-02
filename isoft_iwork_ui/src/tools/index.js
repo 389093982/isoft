@@ -151,3 +151,7 @@ export function checkFastClick(){
   timestamp1 = timestamp2;  // 记录上一次点击时间
   return diff < 2000;
 }
+
+export function copyObj(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
