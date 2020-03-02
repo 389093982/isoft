@@ -18,10 +18,11 @@ import (
 
 func (this *WorkController) EditAuditTask() {
 	app_id, _ := this.GetInt64("app_id", -1)
-	id, err := this.GetInt64("id", -1)
+	id, _ := this.GetInt64("id", 0)
 	taskName := this.GetString("task_name")
 	taskDesc := this.GetString("task_desc")
 	task := &models.AuditTask{
+		Id:              id,
 		AppId:           app_id,
 		TaskName:        taskName,
 		TaskDesc:        taskDesc,
@@ -30,10 +31,7 @@ func (this *WorkController) EditAuditTask() {
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	}
-	if err == nil && id > 0 {
-		task.Id = id
-	}
-	_, err = models.InsertOrUpdateAuditTask(task, orm.NewOrm())
+	_, err := models.InsertOrUpdateAuditTask(task, orm.NewOrm())
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {

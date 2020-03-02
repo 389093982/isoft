@@ -7,7 +7,7 @@
       title="编辑审核任务"
       :mask-closable="false"
       :footer-hide="true">
-      <AuditTaskEdit @handleSucess="handleAuditEdit"/>
+      <AuditTaskEdit ref="auditTaskEdit" @handleSucess="handleAuditEdit"/>
     </Modal>
 
 
@@ -19,10 +19,11 @@
 </template>
 
 <script>
-  import {QueryPageAuditTask,DeleteAuditTask} from "../../../api"
+  import {DeleteAuditTask, QueryPageAuditTask} from "../../../api"
   import AuditTaskEdit from "./AuditTaskEdit"
+  import {copyObj} from "../../../tools"
 
-    export default {
+  export default {
       name: "AuditTaskList",
       components:{AuditTaskEdit},
       data(){
@@ -48,7 +49,7 @@
                 return h('div', [
                   h('Button', {
                     props: {
-                      type: 'success',
+                      type: 'info',
                       size: 'small'
                     },
                     style: {
@@ -56,10 +57,11 @@
                     },
                     on: {
                       click: () => {
-                        this.$router.push({ path: '/iwork/audit_detail', query: { task_name: this.tasks[params.index].task_name }});
+                        this.$refs.auditTaskEdit.initData(copyObj(this.tasks[params.index]));
+                        this.showAuditEdit = true;
                       }
                     }
-                  }, '详情编辑'),
+                  }, '编辑'),
                   h('Button', {
                     props: {
                       type: 'error',
@@ -83,6 +85,23 @@
                       }
                     }
                   }, '删除'),
+                  h('Button', {
+                    props: {
+                      type: 'success',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px',
+                    },
+                    on: {
+                      click: () => {
+                        this.$router.push({
+                          path: '/iwork/audit_detail',
+                          query: {task_name: this.tasks[params.index].task_name}
+                        });
+                      }
+                    }
+                  }, '详情编辑'),
                 ]);
               }
             },
@@ -101,14 +120,14 @@
         },
         refreshAllAuditTask:async function (){
           const result = await QueryPageAuditTask(this.offset, this.current_page);
-          if(result.status == "SUCCESS"){
+          if (result.status === "SUCCESS") {
             this.tasks = result.tasks;
             this.total = result.paginator.totalcount;
           }
         },
         deleteAuditTask:async function(task_name){
           const result = await DeleteAuditTask(task_name);
-          if(result.status == "SUCCESS"){
+          if (result.status === "SUCCESS") {
             this.$Message.success("删除成功!");
             this.refreshAllAuditTask();
           }else{

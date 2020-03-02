@@ -36,6 +36,7 @@
       };
       return {
         formInline: {
+          id: 0,
           task_name: '',
           task_desc: ''
         },
@@ -54,10 +55,11 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditAuditTask(this.formInline.task_name, this.formInline.task_desc);
-            if(result.status == "SUCCESS"){
+            const result = await EditAuditTask(this.formInline);
+            if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
               this.$emit("handleSucess");
+              this.formInline.id = 0;
               this.$refs[name].resetFields();
             }else{
               this.$Message.error('提交失败!');
@@ -66,6 +68,9 @@
             this.$Message.error('校验失败!');
           }
         })
+      },
+      initData: function (formdata) {
+        this.formInline = formdata;
       }
     }
   }

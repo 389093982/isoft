@@ -12,10 +12,6 @@ import (
 	"strings"
 )
 
-func init() {
-	toolbox.StartTask()
-}
-
 func RefreshCronTask(app_id int64) {
 	// 先删除旧的任务
 	for k, _ := range toolbox.AdminTaskList {
@@ -34,8 +30,8 @@ func RefreshCronTask(app_id int64) {
 			})
 			toolbox.AddTask(fmt.Sprintf(`%d-%s`, app_id, meta.TaskName), tk)
 		}
-
 	}
+	toolbox.StartTask()
 }
 
 // 执行任务的 job

@@ -79,6 +79,7 @@
         })
       },
       handleReset (name) {
+        this.formValidate.id = 0;
         this.$refs[name].resetFields();
       },
       initData(formdata) {
