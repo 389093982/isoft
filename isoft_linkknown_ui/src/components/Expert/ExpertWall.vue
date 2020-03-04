@@ -26,12 +26,23 @@
 
     <div class="isoft_bg_white isoft_pd10 isoft_top5">
       <IBeautifulCard title="提问达人">
-        <div slot="content">
-          <div v-for="(user,index) in users3">
-            <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
-            <span v-else>{{user.user_name}}</span>
-            累计提问次数：{{user.question_numbers}}
-          </div>
+        <div slot="content" style="padding: 10px;">
+          <Row v-for="(user,index) in users3" :gutter="10">
+            <Col span="3">
+              <img style="cursor: pointer;border-radius: 50%; border: 1px solid grey; position: relative;top: -3px"
+                   @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
+                   width="30" height="30" :src="user.small_icon" @error="defImg()">
+            </Col>
+            <Col span="8" style="position: relative;left: -5px">
+              <span @click="$router.push({path:'/user/detail',query:{username:user.user_name}})" style="cursor: pointer">
+                <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
+                <span v-else>{{user.user_name}}</span>
+              </span>
+            </Col>
+            <Col span="8">
+              累计提问次数：{{user.question_numbers}}
+            </Col>
+          </Row>
         </div>
       </IBeautifulCard>
     </div>
