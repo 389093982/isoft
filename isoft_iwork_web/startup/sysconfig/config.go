@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"isoft/isoft_iwork_web/core/iworkutil/fileutil"
 	"isoft/isoft_iwork_web/core/iworkutil/stringutil"
+	"isoft/isoft_iwork_web/startup/db"
 	"strings"
 )
 
@@ -15,6 +16,7 @@ var (
 	PERSISTENT_DIR             string // iwork 框架持久化文件所在目录
 	INTERNAL_ERROR_MSG         string // iwork 框架内部出错默认提示文字
 	IWORK_DBMONITOR_CRON       string // DB 监控频率 cron 表达式
+	IWORK_DB_DSN               string
 )
 
 func init() {
@@ -27,4 +29,5 @@ func init() {
 	PERSISTENT_DIR = strings.TrimSpace(beego.AppConfig.String("iwork.persistent.dir"))
 	INTERNAL_ERROR_MSG = stringutil.GetString(beego.AppConfig.String("iwork.internal.errorMsg"), "InternalError", true)
 	IWORK_DBMONITOR_CRON = stringutil.GetString(beego.AppConfig.String("iwork.dbmonitor.cron"), "0 0 * * * ?", true)
+	IWORK_DB_DSN = db.Dsn
 }

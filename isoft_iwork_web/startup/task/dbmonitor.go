@@ -20,10 +20,18 @@ func init() {
 func RunDBWatcher() {
 	tk := toolbox.NewTask("RunDBWatcher", sysconfig.IWORK_DBMONITOR_CRON, func() error {
 		resources := models.QueryAllResource(-1, "db")
+		resources = append(resources, models.Resource{
+			AppId:        0,
+			ResourceName: "iwork_db",
+			ResourceDsn:  sysconfig.IWORK_DB_DSN,
+		})
+		// 每一次调度 timer 都是一样的
+		timer := time.Now()
 		for _, resource := range resources {
 			watcher := new(DBWatcher)
 			watcher.Dsn = watcher.GlobalVarParserWarpper(resource.AppId, resource.ResourceDsn)
 			watcher.resource = &resource
+			watcher.timer = timer
 			watcher.Run()
 		}
 		return nil
@@ -34,6 +42,7 @@ func RunDBWatcher() {
 type DBWatcher struct {
 	resource *models.Resource
 	Dsn      string
+	timer    time.Time
 }
 
 func (this *DBWatcher) Run() {
@@ -50,7 +59,7 @@ func (this *DBWatcher) Run() {
 			ResourceName:    this.resource.ResourceName,
 			TableName:       tableName,
 			DataCount:       datacount,
-			LastUpdatedTime: time.Now(),
+			LastUpdatedTime: this.timer,
 		}
 		models.InsertDBMonitor(monitor, orm.NewOrm())
 	}
