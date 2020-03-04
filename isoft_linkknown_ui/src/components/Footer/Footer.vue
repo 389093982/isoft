@@ -38,7 +38,7 @@
     </Row>
 
     <Row>
-      <div style="width: 100%;height: 255px;padding: 30px 0 0 3px;text-align: center ;background-color: white">
+      <div style="width: 100%;height: 255px;padding: 30px 0 0 3px;text-align: center ;background-color: rgb(229, 229, 229)">
         <div style="border-top: 1px solid gainsboro;">
           <div style="margin-top: 30px">
             <a href="http://www.beian.miit.gov.cn/" target="_blank" class="hovered hoverLinkColor mr5">ICP备案号:2020627762077</a>
