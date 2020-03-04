@@ -44,6 +44,8 @@
               desc: "评论信息过短,需要1个字符以上！"
             });
           } else {
+            // 修改换行符，等取出来的时候，在换回去
+            _this.content=  _this.content.replace(/\r|\n|\r\n/g,"<br/>");
             const result = await AddComment(_this.org_parent_id,_this.parent_id, _this.content, _this.theme_pk,_this.theme_type, comment_type, _this.refer_user_name);
             if (result.status == "SUCCESS") {
               _this.$Message.success("发表成功!");

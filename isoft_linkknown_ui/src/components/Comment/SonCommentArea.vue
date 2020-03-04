@@ -29,7 +29,7 @@
               <span v-else style="color: rgb(121, 119, 118)"><code>回复&nbsp;</code>
                 <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.refer_nick_name}}</span>&nbsp;:&nbsp;
               </span>
-              <span style="color: #555;font-size: 14px">{{comment.content}}</span>
+              <span style="color: #555;font-size: 14px" v-html="comment.content"></span>
             </Col>
           </Row>
         </Col>

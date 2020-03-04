@@ -26,7 +26,7 @@
           <!--第二行：内容-->
           <Row>
             <Col span="19">
-              <span style="color: #555;font-size: 14px">{{comment.content}}</span>
+              <span style="color: #555;font-size: 14px;" v-html="comment.content"></span>
             </Col>
           </Row>
         </Col>

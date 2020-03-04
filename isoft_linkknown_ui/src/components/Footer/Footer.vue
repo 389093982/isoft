@@ -38,11 +38,13 @@
     </Row>
 
     <Row>
-      <div style="width: 100%;height: 200px;padding: 30px 0 0 3px;text-align: center ">
-        <div style="margin-top: 30px">
-          <a href="http://www.beian.miit.gov.cn/" target="_blank" class="hovered hoverLinkColor mr5">ICP备案号:2020627762077</a>
+      <div style="width: 100%;height: 255px;padding: 30px 0 0 3px;text-align: center ;background-color: white">
+        <div style="border-top: 1px solid gainsboro;">
+          <div style="margin-top: 30px">
+            <a href="http://www.beian.miit.gov.cn/" target="_blank" class="hovered hoverLinkColor mr5">ICP备案号:2020627762077</a>
+          </div>
+          <!--<p style="margin: 40px;">Copyright © 2019-2020 LinkKnown 版权所有</p>-->
         </div>
-        <!--<p style="margin: 40px;">Copyright © 2019-2020 LinkKnown 版权所有</p>-->
       </div>
     </Row>
   </div>

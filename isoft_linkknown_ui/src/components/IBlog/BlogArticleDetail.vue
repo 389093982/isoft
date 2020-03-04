@@ -33,41 +33,42 @@
       </div>
     </div>
 
-      <div style="float:right;width: 21%;position: fixed;top: 80px;right: 100px;background-color: white;border-radius: 5px;text-align: center">
-        <div style="min-height: 355px;">
-          <div style="width: 86%;margin: 18px 0 18px 18px;">
-            <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">
-              <Icon type="md-arrow-dropup" style="font-size: 25px;" />
+    <!--右侧点赞板-->
+    <div style="float:right;width: 21%;position: fixed;top: 80px;right: 100px;background-color: white;border-radius: 5px;text-align: center">
+      <div style="min-height: 355px;">
+        <div style="width: 86%;margin: 18px 0 18px 18px;">
+          <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">
+            <Icon type="md-arrow-dropup" style="font-size: 25px;" />
+          </div>
+          <div>
+            <Icon type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer" />
+            <div style="position: relative;top: -10px">168个赞</div>
+          </div>
+          <div style="margin: 20px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+            <div style="margin-bottom: 20px">
+              <ButtonGroup>
+                <Button><Icon type="ios-eye" style="font-size: 20px" />关注</Button>
+                <Button><Icon type="md-bookmark" style="font-size: 20px" />收藏</Button>
+              </ButtonGroup>
             </div>
-            <div>
-              <Icon type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer" />
-              <div style="position: relative;top: -10px">168个赞</div>
+          </div>
+          <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+            <div style="margin-bottom: 5px">
+             <img src="../../../static/images/blogShare/微博.png" height="18" width="18" style="cursor: pointer"/>
+             <img src="../../../static/images/blogShare/微信.png" height="18" width="18" style="cursor: pointer"/>
             </div>
-            <div style="margin: 20px 0 0 0 ;border-bottom: 1px solid gainsboro;">
-              <div style="margin-bottom: 20px">
-                <ButtonGroup>
-                  <Button><Icon type="ios-eye" style="font-size: 20px" />关注</Button>
-                  <Button><Icon type="md-bookmark" style="font-size: 20px" />收藏</Button>
-                </ButtonGroup>
-              </div>
+          </div>
+          <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+            <div style="margin-bottom: 10px">
+              共 88 个回复
             </div>
-            <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
-              <div style="margin-bottom: 5px">
-               <img src="../../../static/images/blogShare/微博.png" height="18" width="18" style="cursor: pointer"/>
-               <img src="../../../static/images/blogShare/微信.png" height="18" width="18" style="cursor: pointer"/>
-              </div>
-            </div>
-            <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
-              <div style="margin-bottom: 10px">
-                共 88 个回复
-              </div>
-            </div>
-            <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;margin-top: 18px;cursor: pointer">
-              <Icon type="md-arrow-dropdown" style="font-size: 25px;" />
-            </div>
+          </div>
+          <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;margin-top: 18px;cursor: pointer">
+            <Icon type="md-arrow-dropdown" style="font-size: 25px;" />
           </div>
         </div>
       </div>
+    </div>
 
     <div style="clear: both"></div>
 
