@@ -2,7 +2,7 @@
   <div>
 
     <div v-if="blog" style="float: left;width: 70%;">
-      <div style="margin: 10px;padding: 20px;min-height: 800px;background: #ffffff;">
+      <div style="margin: 10px;padding: 20px;width:100%;min-height: 800px;background: #ffffff;">
         <span style="margin-left: 8px;font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
         <span style="font-size: 16px;margin-left: 30px"><b>{{blog.blog_title}}</b></span>
         <div style="border-bottom: 1px solid #eee;margin-top:20px;margin-bottom: 20px;">
@@ -32,10 +32,44 @@
         <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>
       </div>
     </div>
-    <div style="float: left;width: 21%;margin: 10px 0 0 20px;min-height: 350px;background-color: white">
-      这一块待定...
-    </div>
-    <div style="clear: both;"></div>
+
+      <div style="float:right;width: 21%;position: fixed;top: 80px;right: 100px;background-color: white;border-radius: 5px;text-align: center">
+        <div style="min-height: 355px;">
+          <div style="width: 86%;margin: 18px 0 18px 18px;">
+            <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">
+              <Icon type="md-arrow-dropup" style="font-size: 25px;" />
+            </div>
+            <div>
+              <Icon type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer" />
+              <div style="position: relative;top: -10px">168个赞</div>
+            </div>
+            <div style="margin: 20px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+              <div style="margin-bottom: 20px">
+                <ButtonGroup>
+                  <Button><Icon type="ios-eye" style="font-size: 20px" />关注</Button>
+                  <Button><Icon type="md-bookmark" style="font-size: 20px" />收藏</Button>
+                </ButtonGroup>
+              </div>
+            </div>
+            <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+              <div style="margin-bottom: 5px">
+               <img src="../../../static/images/blogShare/微博.png" height="18" width="18" style="cursor: pointer"/>
+               <img src="../../../static/images/blogShare/微信.png" height="18" width="18" style="cursor: pointer"/>
+              </div>
+            </div>
+            <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
+              <div style="margin-bottom: 10px">
+                共 88 个回复
+              </div>
+            </div>
+            <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;margin-top: 18px;cursor: pointer">
+              <Icon type="md-arrow-dropdown" style="font-size: 25px;" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div style="clear: both"></div>
 
   </div>
 </template>

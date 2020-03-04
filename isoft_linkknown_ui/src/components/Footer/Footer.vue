@@ -9,7 +9,7 @@
       <FrindLink/>
     </Row>
 
-    <Row class="isoft_bg_white isoft_pd10" style="margin-top: 8px;">
+    <Row class="isoft_bg_white isoft_pd10" style="border-top: 1px solid gainsboro">
       <Col span="4" style="padding: 50px;">
         <dl>
           <dd>新手帮助</dd>
