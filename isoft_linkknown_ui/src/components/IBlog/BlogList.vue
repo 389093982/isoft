@@ -10,6 +10,7 @@
       <Row>
         <Col span="17" style="padding: 0 8px 0 0;">
           <div class="isoft_bg_white isoft_pd10">
+
             <Row class="_search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="5" style="font-size: 20px;color: #333;">
                 <!-- 占据内容 -->
@@ -31,6 +32,12 @@
               <MoveLine/>
             </Row>
 
+            <div>
+              <Spin fix size="large" v-if="isLoading">
+                <div class="isoft_loading"></div>
+              </Spin>
+            </div>
+
             <!--下面展示一篇博客具体格式，按照三列，中间一列分两行-->
             <ul>
               <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
@@ -47,7 +54,7 @@
                     <Row>
                       <!--第一行：所属分类 + 博客标题-->
                       <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name}}</a>
-                      <span v-if="searchblog.blog_status == -1" style="float: right;color: red;">审核不通过！</span>
+                      <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
                       <span>&nbsp;</span>
                       <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
                         <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
@@ -128,6 +135,7 @@
     components: {MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser},
     data() {
       return {
+        isLoading: true,
         // 当前页
         current_page: 1,
         // 总数
@@ -187,17 +195,23 @@
         this.refreshBlogList();
       },
       refreshBlogList: async function () {
-        var search_type = this.search_type;
-        const result = await queryPageBlog({
-          offset: this.offset,
-          current_page: this.current_page,
-          search_type: search_type,
-          search_user_name: this.search_user_name,
-        });
-        if (result.status === "SUCCESS") {
-          this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
-          this.searchblogs = result.blogs;
-          this.total = result.paginator.totalcount;
+        this.isLoading = true;
+        try {
+          var search_type = this.search_type;
+          const result = await queryPageBlog({
+            offset: this.offset,
+            current_page: this.current_page,
+            search_type: search_type,
+            search_user_name: this.search_user_name,
+          });
+          if (result.status === "SUCCESS") {
+
+            this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
+            this.searchblogs = result.blogs;
+            this.total = result.paginator.totalcount;
+          }
+        } finally {
+          this.isLoading = false;
         }
       },
       renderNickName: function (user_name) {
