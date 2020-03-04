@@ -23,7 +23,7 @@
           </Row>
         </div>
 
-        <div style="border-bottom: 1px solid #eee;min-height: 200px;">
+        <div style="border-bottom: 1px solid #eee;min-height: 150px;">
           <IShowMarkdown v-if="blog.content" :content="blog.content"/>
           <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
         </div>

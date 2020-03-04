@@ -43,7 +43,12 @@
               title: '温馨提示',
               desc: "评论信息过短,需要1个字符以上！"
             });
-          } else {
+          }else if (_this.content == undefined || _this.content.length > 255){
+            _this.$Notice.error({
+              title: '温馨提示',
+              desc: "评论信息过长,不能超过255个字符！"
+            });
+          }  else {
             // 修改换行符，等取出来的时候，用v-html展示
             _this.content=  _this.content.replace(/\r|\n|\r\n/g,"<br/>");
             const result = await AddComment(_this.org_parent_id,_this.parent_id, _this.content, _this.theme_pk,_this.theme_type, comment_type, _this.refer_user_name);
