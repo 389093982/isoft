@@ -96,7 +96,7 @@
       refreshCourseDetail: async function (course_id) {
         this.isLoading = true;
         try {
-          const result = await ShowCourseDetail(course_id);
+          const result = await ShowCourseDetail({course_id});
           if (result.status == "SUCCESS") {
             this.cVideos = result.cVideos;
           }

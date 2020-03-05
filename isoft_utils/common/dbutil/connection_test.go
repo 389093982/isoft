@@ -1,7 +1,9 @@
 package dbutil
 
 import (
+	"database/sql"
 	"fmt"
+	"net/url"
 	"testing"
 )
 
@@ -21,4 +23,13 @@ func Test_Connection(t *testing.T) {
 	} else {
 		fmt.Println("successful...")
 	}
+}
+
+func Test_Connection2(t *testing.T) {
+	fmt.Println(url.QueryEscape("Asia/Shanghai"))
+	db, err := sql.Open("mysql", "linker:Linker2020@tcp(127.0.0.1:3306)/isoft_linkknown?allowNativePasswords=true&charset=utf8&loc=Asia%2FShanghai")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(db.Ping())
 }

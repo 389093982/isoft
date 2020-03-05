@@ -48,8 +48,8 @@
 </template>
 <script>
   import IAreaChooser from "../Common/IAreaChooser";
-  import {checkEmpty, GetLoginUserName} from "../../tools"
-  import {GetUserDetail,UpdateUserDetail} from "../../api"
+  import {checkEmpty, copyObj, GetLoginUserName} from "../../tools"
+  import {GetUserDetail, UpdateUserDetail} from "../../api"
 
   export default {
     name: "UserInfo",
@@ -114,28 +114,32 @@
       GetUserDetail:async function () {
         const result = await GetUserDetail(GetLoginUserName());
         if (result.status === "SUCCESS") {
-          this.formValidate.nick_name = result.user.nick_name;
-          this.formValidate.gender = result.user.gender;
+          this.formValidate = result.user;
+          // this.formValidate.nick_name = result.user.nick_name;
+          // this.formValidate.gender = result.user.gender;
           this.formValidate.birthday = result.user.birthday==='0000-00-00'?'':result.user.birthday;
-          this.formValidate.role_name = result.user.role_name;
-          this.formValidate.user_points = result.user.user_points;
-          this.formValidate.vip_level = result.user.vip_level;
-          this.formValidate.vip_expired_time = result.user.vip_expired_time;
-          this.formValidate.current_residence = result.user.current_residence;
-          this.formValidate.hometown = result.user.hometown;
+          // this.formValidate.role_name = result.user.role_name;
+          // this.formValidate.user_points = result.user.user_points;
+          // this.formValidate.vip_level = result.user.vip_level;
+          // this.formValidate.vip_expired_time = result.user.vip_expired_time;
+          // this.formValidate.current_residence = result.user.current_residence;
+          // this.formValidate.hometown = result.user.hometown;
         }
       },
       handleSubmit: function(name){
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            let params = {
-              "user_name":GetLoginUserName(),
-              "nick_name":this.formValidate.nick_name,
-              "gender":this.formValidate.gender,
-              "birthday":this.formValidate.birthday,
-              "current_residence":this.formValidate.current_residence,
-              "hometown":this.formValidate.hometown,
-            };
+            // let params = {
+            //   "user_name":GetLoginUserName(),
+            //   "nick_name":this.formValidate.nick_name,
+            //   "gender":this.formValidate.gender,
+            //   "birthday":this.formValidate.birthday,
+            //   "current_residence":this.formValidate.current_residence,
+            //   "hometown":this.formValidate.hometown,
+            // };
+            let params = copyObj(this.formValidate);
+            params.user_name = GetLoginUserName();
+            params.birthday = new Date(params.birthday).getTime();
             const result = await UpdateUserDetail(params);
             if (result.status === "SUCCESS") {
               this.$Message.success('保存成功!');

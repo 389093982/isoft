@@ -17,7 +17,7 @@
         </Select>
       </FormItem>
       <FormItem label="变量值" prop="value">
-        <Input v-model.trim="formValidate.value" placeholder="请输入变量值"></Input>
+        <Input type="textarea" :rows="3" v-model.trim="formValidate.value" placeholder="请输入变量值"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
