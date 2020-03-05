@@ -78,9 +78,9 @@
 </template>
 
 <script>
-  import {CheckAdminLogin, CheckHasLogin,GetLoginUserName} from '../../tools/index'
+  import {CheckAdminLogin, CheckHasLogin, GetLoginUserName} from '../../tools/index'
   import {deleteLoginInfo, getNickName} from "../../tools/sso"
-  import {LoginAddr,GetUserDetail} from "../../api"
+  import {GetUserDetail, LoginAddr} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import MessageList from "../Message/MessageList";
   import RechargeRight from "../VipCenter/RechargeRight";
@@ -93,9 +93,15 @@
         theme1: 'light',
         loginUserNickName: '',
         small_icon:'',
+        defaultImg: require('../../assets/default.png'),
       }
     },
     methods: {
+      defImg() {
+        let img = event.srcElement;
+        img.src = this.defaultImg;
+        img.onerror = null; //防止闪图
+      },
       isAdmin: function () {
         return CheckAdminLogin();
       },

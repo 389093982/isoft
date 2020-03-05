@@ -13,17 +13,18 @@
       </div>
 
       <div class="isoft_pd10">
-        <p class="isoft_top10">
+        <div class="isoft_top10">
           热门分类：
-          <Tag><span @click="searchResource('')">全部</span></Tag>
-          <Tag v-for="(fl, index) in resource_fl"><span @click="searchResource(fl)">{{fl}}</span></Tag>
-        </p>
-        <p class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
+          <div class="isoft_tag2 mr5" @click="searchResource('')">全部</div>
+          <div class="isoft_tag2 mr5" v-for="(fl, index) in resource_fl" @click="searchResource(fl)">{{fl}}</div>
+        </div>
+        <div class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
           文件格式：
-          <Tag><span @click="searchResource('')">全部</span></Tag>
-          <Tag v-for="(filetype, index) in resource_filetypes"><span
-            @click="searchResource(filetype)">{{filetype}}</span></Tag>
-        </p>
+          <div class="isoft_tag2 mr5" @click="searchResource('')">全部</div>
+          <div v-for="(filetype, index) in resource_filetypes"
+               class="isoft_tag2 mr5" @click="searchResource(filetype)">{{filetype}}
+          </div>
+        </div>
       </div>
 
       <p class="isoft_font14" style="padding:15px;font-weight: 600;">

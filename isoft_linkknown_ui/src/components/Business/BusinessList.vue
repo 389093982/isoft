@@ -17,19 +17,19 @@
     <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10 isoft_mg10" style="border: 1px solid #eee;">
       <div style="display: flex;">
         <div style="width: 40%;">
-          <router-link :to="{path:'/business/detail',query:{id:good.id}}">
-            <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
-              <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
-                <div class="demo-carousel">
-                  <img :src="good_image" width="100%" height="250px"/>
-                </div>
-              </CarouselItem>
-            </Carousel>
-          </router-link>
+          <Carousel autoplay dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
+            <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
+              <div class="demo-carousel">
+                <img :src="good_image" width="100%" height="250px"/>
+              </div>
+            </CarouselItem>
+          </Carousel>
         </div>
         <div style="width: 60%;padding: 0 50px;">
           <div style="width: 100%;word-wrap:break-word;word-break:break-all;overflow: hidden;">
-            <p class="p1line label">商品名称：{{good.good_name}}</p>
+            <p class="p1line label">
+              商品名称：<span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
+            </p>
             <div style="margin: 10px 0;">
               <span class="tag">一年免费维护</span>
               <span class="tag">一年免费维护</span>

@@ -10,27 +10,37 @@
     <span class="isoft_color_green1 isoft_font16">绿色字体1</span>
     <span class="isoft_hover_color_green">hover 字体绿色样式</span>
     <span class="isoft_hover_color_blue">hover 字体蓝色样式</span>
+    <br/>
 
     <!-- div 淡入淡出效果-->
     <div class="fadeToLeft">淡入淡出</div>
     <div class="fadeToRight">淡入淡出</div>
     <div class="fadeToTop">淡入淡出</div>
     <div class="fadeToBottom">淡入淡出</div>
+    <br/>
 
     <!-- 边框样式 -->
     <div class="isoft_title">友情链接</div>
-    <div class="isoft_title">友情链接</div>
+    <br/>
 
     <!-- 按钮样式 -->
     <span class="isoft_button_blue">按钮样式</span>
     <span class="isoft_button_green1">按钮样式</span>
     <span class="isoft_button_red1">按钮样式</span>
+    <br/>
 
     <!-- 背景色 -->
     <div class="isoft_info_tip">灰度背景色</div>
+    <br/>
 
     <!-- hover 偏移 -->
     <div class="isoft_hover_top10">hover 向上偏移 10</div>
+    <br/>
+
+    <!-- tag 标签清单 -->
+    <div class="isoft_tag1">tag 标签样式1</div>
+    <div class="isoft_tag1 isoft_hover_red">tag 标签样式1</div>
+    <div class="isoft_tag2">tag 标签样式2</div>
   </div>
 </template>
 
