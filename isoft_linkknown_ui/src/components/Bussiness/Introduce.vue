@@ -55,13 +55,7 @@
               <span>28岁</span>
             </div>
 
-            <div style="    font-size: 14px;
-    color: #666;
-    padding-left: 15px;
-    line-height: 40px;
-    height: 40px;
-    background: #f0f0f0;
-    font-weight: 700;">入驻前：
+            <div class="bgcolor1">入驻前：
             </div>
 
             <div style="margin: 10px 0;">
@@ -77,13 +71,7 @@
               <span class="tag">营销策划</span>
             </div>
 
-            <div style="    font-size: 14px;
-    color: #666;
-    padding-left: 15px;
-    line-height: 40px;
-    height: 40px;
-    background: #eef6ff;
-    font-weight: 700;">入驻后：
+            <div class="bgcolor2">入驻后：
             </div>
             <div style="margin: 10px 0;">
               <p style="color: #999;"><span style="color: black;">身份：</span><span style="color: blue;">TOP10服务商</span>
@@ -110,13 +98,7 @@
               <span>28岁</span>
             </div>
 
-            <div style="    font-size: 14px;
-    color: #666;
-    padding-left: 15px;
-    line-height: 40px;
-    height: 40px;
-    background: #f0f0f0;
-    font-weight: 700;">入驻前：
+            <div class="bgcolor1">入驻前：
             </div>
 
             <div style="margin: 10px 0;">
@@ -132,13 +114,7 @@
               <span class="tag">营销策划</span>
             </div>
 
-            <div style="    font-size: 14px;
-    color: #666;
-    padding-left: 15px;
-    line-height: 40px;
-    height: 40px;
-    background: #eef6ff;
-    font-weight: 700;">入驻后：
+            <div class="bgcolor2">入驻后：
             </div>
             <div style="margin: 10px 0;">
               <p style="color: #999;"><span style="color: black;">身份：</span><span style="color: blue;">TOP10服务商</span>
@@ -152,7 +128,7 @@
         </div>
       </div>
 
-      <div style="font-size: 30px;text-align: center;">孵化公司超过 10 万家，他们的故事都很精彩</div>
+      <div style="font-size: 30px;text-align: center;margin-top: 50px;">孵化公司超过 10 万家，他们的故事都很精彩</div>
       <div class="isoft_button_blue" style="width: 300px;margin: 20px auto;">查看更多创业故事</div>
     </div>
   </div>
@@ -200,5 +176,25 @@
     text-align: center;
     padding: 0 5px;
     font-weight: 100;
+  }
+
+  .bgcolor1 {
+    font-size: 14px;
+    color: #666;
+    padding-left: 15px;
+    line-height: 40px;
+    height: 40px;
+    background: #f0f0f0;
+    font-weight: 700;
+  }
+
+  .bgcolor2 {
+    font-size: 14px;
+    color: #666;
+    padding-left: 15px;
+    line-height: 40px;
+    height: 40px;
+    background: #eef6ff;
+    font-weight: 700;
   }
 </style>
