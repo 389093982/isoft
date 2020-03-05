@@ -133,7 +133,10 @@
         this.formValidate.course_sub_type = course_sub_type;
       },
       refreshCourseInfo: async function (course_id) {
-        const result = await ShowCourseDetail(course_id);
+        let params = {
+          "course_id":course_id,
+        };
+        const result = await ShowCourseDetail(params);
         if (result.status == "SUCCESS") {
           this.formValidate = result.course;
         }
