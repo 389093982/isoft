@@ -7,7 +7,7 @@
         <!--首页轮播图-->
         <IndexCarousel></IndexCarousel>
       </div>
-      <div style="float: left;width: 30%;">
+      <div style="float: left;width: 30%;position: relative;top: -5px;">
         <!--新闻公告-->
         <NewsNotice :placement_name="GLOBAL.placement_Index_news_list"/>
       </div>
@@ -62,7 +62,7 @@
     <show-modulars></show-modulars>
 
     <!--发现-->
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
+    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;position: relative;left: -15px">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
     </div>
   </div>
