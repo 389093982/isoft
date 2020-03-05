@@ -52,7 +52,7 @@
   import {GetLoginUserName} from "../../tools"
 
   export default {
-    name: "GoodEdit",
+    name: "BusinessEdit",
     components: {IFileUpload},
     data() {
       return {
@@ -128,7 +128,7 @@
               _this.formValidate.good_price, _this.formValidate.good_seller,
               _this.formValidate.seller_contact, JSON.stringify(_this.formValidate.good_images));
             if (result.status == "SUCCESS") {
-              this.$router.push({path: '/igood/good_list'});
+              this.$router.push({path: '/business/list'});
             } else {
               _this.$Message.error('提交失败!');
             }
