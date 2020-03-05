@@ -35,10 +35,6 @@ const AdviseList = () => import("@/components/Background/AdviseList");
 const FoundList = () => import("@/components/IFound/FoundList");
 const NewsList = () => import("@/components/IFound/NewsList");
 const ActivityList = () => import("@/components/IFound/ActivityList");
-const GoodList = () => import("@/components/IGood/GoodList");
-const GoodEdit = () => import("@/components/IGood/GoodEdit");
-const GoodDetail = () => import("@/components/IGood/GoodDetail");
-const PayConfirm = () => import("@/components/IGood/PayConfirm");
 const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const Recharge = () => import("@/components/VipCenter/Recharge");
@@ -58,7 +54,9 @@ const AskExpert = () => import("@/components/Expert/AskExpert");
 const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
 const MessageList = () => import("@/components/Message/MessageList");
-const BusinessIntroduce = () => import("@/components/Bussiness/Introduce");
+const BusinessIntroduce = () => import("@/components/Business/Introduce");
+const BusinessList = () => import("@/components/Business/BusinessList");
+const BusinessEdit = () => import("@/components/Business/BusinessEdit");
 const Site = () => import("@/components/Site");
 const CssDemo = () => import("@/components/CssDemo");
 
@@ -184,17 +182,6 @@ const IFoundReouter = [{
     ]
 }];
 
-const IGoodReouter = [{
-  path: '/igood', component: ILayout,
-    children: [
-      {path: 'good_list', component: GoodList},
-      {path: 'mine/good_list', component: GoodList},
-      {path: 'mine/good_edit', component: GoodEdit},
-      {path: 'good_detail', component: GoodDetail},
-      {path: 'pay_confirm', component: PayConfirm},
-    ]
-}];
-
 const MessageRouter = [{
   path: '/message', component: ILayout,
     children: [
@@ -206,6 +193,10 @@ const BusinessRouter = [{
   path: '/business', component: ILayout,
   children: [
     {path: 'introduce', component: BusinessIntroduce},
+    {path: 'list', component: BusinessList},
+    {path: 'edit', component: BusinessEdit},
+    // {path: 'good_detail', component: GoodDetail},
+    // {path: 'pay_confirm', component: PayConfirm},
   ]
 }];
 
@@ -232,7 +223,6 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, IJob);
   allRouters = joinArray(allRouters, IAdvertisement);
   allRouters = joinArray(allRouters, IFoundReouter);
-  allRouters = joinArray(allRouters, IGoodReouter);
   allRouters = joinArray(allRouters, IUserReouter);
   allRouters = joinArray(allRouters, ILearningRouter);
   allRouters = joinArray(allRouters, IBlogRouter);

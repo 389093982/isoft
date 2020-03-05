@@ -129,7 +129,9 @@
       </div>
 
       <div style="font-size: 30px;text-align: center;margin-top: 50px;">孵化公司超过 10 万家，他们的故事都很精彩</div>
-      <div class="isoft_button_blue" style="width: 300px;margin: 20px auto;">查看更多创业故事</div>
+      <div class="isoft_button_blue" style="width: 300px;margin: 20px auto;"
+           @click="$router.push({path:'/business/list'})">查看更多创业故事
+      </div>
     </div>
   </div>
 </template>
