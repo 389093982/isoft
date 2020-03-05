@@ -4,10 +4,10 @@
       <div style="float: left;width: 92%">
         <span style="font-size: 20px;margin-right: 15px"><B><Icon type="md-search" style="font-size: 30px" />{{placement_label}}</B></span>
         <span v-for="element in filter_elements" style="margin-left: 10px">
-        <IBeautifulLink @onclick="openLink(element)">{{element.element_label}}</IBeautifulLink>
-      </span>
+          <IBeautifulLink @onclick="openLink(element)">{{element.element_label}}</IBeautifulLink>
+        </span>
       </div>
-      <div v-if="elements.length > minLen" style="float: right;width: 8%;margin-top: 3px">
+      <div v-if="elements.length > minLen" style="float: right;width: 6%;margin-top: 3px">
         <show-more @changeShowMore="changeShowMore"></show-more>
       </div>
       <div style="clear: both"></div>
