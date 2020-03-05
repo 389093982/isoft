@@ -67,8 +67,8 @@
           <div style="width: 50%;">
             <div style="margin-bottom: 20px;">
               <span style="font-size: 18px;">擅长</span>
-              <span class="tag">平面设计</span>
-              <span class="tag">营销策划</span>
+              <span class="isoft_tag1">平面设计</span>
+              <span class="isoft_tag1">营销策划</span>
             </div>
 
             <div class="bgcolor2">入驻后：
@@ -110,8 +110,8 @@
           <div style="width: 50%;">
             <div style="margin-bottom: 20px;">
               <span style="font-size: 18px;">擅长</span>
-              <span class="tag">平面设计</span>
-              <span class="tag">营销策划</span>
+              <span class="isoft_tag1">平面设计</span>
+              <span class="isoft_tag1">营销策划</span>
             </div>
 
             <div class="bgcolor2">入驻后：
@@ -165,19 +165,6 @@
   .business .text2 {
     font-size: 22px;
     line-height: 80px;
-  }
-
-  .tag {
-    display: inline-block;
-    background-color: #f0f0f0;
-    border-radius: 3px;
-    height: 24px;
-    line-height: 24px;
-    font-size: 12px;
-    color: #333;
-    text-align: center;
-    padding: 0 5px;
-    font-weight: 100;
   }
 
   .bgcolor1 {
