@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="blog" style="float: left;width: 70%;">
+    <div v-if="blog" style="float: left;width: 72%;margin-left: 40px">
       <div style="margin: 10px;padding: 20px;width:100%;min-height: 800px;background: #ffffff;">
         <span style="margin-left: 8px;font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
         <span style="font-size: 16px;margin-left: 30px"><b>{{blog.blog_title}}</b></span>
@@ -34,7 +34,7 @@
     </div>
 
     <!--右侧点赞板-->
-    <div style="float:right;width: 21%;position: fixed;top: 80px;right: 100px;background-color: white;border-radius: 5px;text-align: center">
+    <div style="float:right;width: 18%;position: fixed;top: 80px;right: 55px;background-color: white;border-radius: 5px;text-align: center">
       <div style="min-height: 355px;">
         <div style="width: 86%;margin: 18px 0 18px 18px;">
           <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">
@@ -54,8 +54,8 @@
           </div>
           <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
             <div style="margin-bottom: 5px">
-             <img src="../../../static/images/blogShare/微博.png" height="18" width="18" style="cursor: pointer"/>
-             <img src="../../../static/images/blogShare/微信.png" height="18" width="18" style="cursor: pointer"/>
+             <img src="../../../static/images/blogShare/sina.png" height="18" width="18" style="cursor: pointer"/>
+             <img src="../../../static/images/blogShare/wechat.png" height="18" width="18" style="cursor: pointer"/>
             </div>
           </div>
           <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">

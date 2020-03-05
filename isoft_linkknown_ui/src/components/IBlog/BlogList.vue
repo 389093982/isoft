@@ -35,7 +35,7 @@
 
             <!--移动的小球-->
             <div style="width: 60%;height:1px;border-bottom: 1px solid #e6e6e6;">
-              <MoveLine style="position: relative;top: -14px;"/>
+              <MoveLine style="position: relative;top: -20px;"/>
             </div>
 
             <!--加载圈圈-->
