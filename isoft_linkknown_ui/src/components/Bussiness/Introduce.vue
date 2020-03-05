@@ -19,31 +19,31 @@
       </p>
 
       <div style="text-align: center;margin-top: 50px;">
-        <span style="font-size: 18px;border: 2px solid white;padding: 10px 30px;">免费入驻</span>
+        <span class="isoft_hover_red" style="font-size: 18px;border: 2px solid white;padding: 10px 30px;">免费入驻</span>
       </div>
     </div>
 
     <div class="business isoft_bg_white" style="padding: 30px 200px;display: flex;text-align: center;">
       <div style="width: 300px;">
-        <img style="border-radius: 50%;width: 65px;height: 65px;margin: 20px;" src="../../assets/default.png"/>
-        <p class="text2">注册链知网账号</p>
+        <img class="img" src="../../../static/images/business/zhuce.png"/>
+        <p class="text2 isoft_hover_red isoft_hover_top10">注册链知网账号</p>
       </div>
       <div style="width: 300px;">
-        <img style="border-radius: 50%;width: 65px;height: 65px;margin: 20px;" src="../../assets/default.png"/>
-        <p class="text2">认证并获取资格</p>
+        <img class="img" src="../../../static/images/business/shiming.png"/>
+        <p class="text2 isoft_hover_red isoft_hover_top10">实名认证并获取资格</p>
       </div>
       <div style="width: 300px;">
-        <img style="border-radius: 50%;width: 65px;height: 65px;margin: 20px;" src="../../assets/default.png"/>
-        <p class="text2">发布您的作品或需求赚钱</p>
+        <img class="img" src="../../../static/images/business/xuqiu.png"/>
+        <p class="text2 isoft_hover_red isoft_hover_top10">发布您的作品或需求赚钱</p>
       </div>
     </div>
 
-    <div style="padding: 20px 100px 30px 100px;margin: 0 auto;">
+    <div style="padding: 50px 100px 30px 100px;margin: 0 auto;">
       <div style="font-size: 30px;text-align: center;">
         优秀合作伙伴
       </div>
 
-      <div class="isoft_bg_white" style="margin: 80px;padding: 25px;min-height: 250px;display: flex;">
+      <div class="isoft_bg_white" style="margin: 20px 80px;padding: 25px;min-height: 250px;display: flex;">
         <div style="width: 20%;">
           <img style="width: 80%;height: 200px;" src="../../assets/default.png"/>
         </div>
@@ -98,7 +98,7 @@
       </div>
 
 
-      <div class="isoft_bg_white" style="margin: 80px;padding: 25px;min-height: 250px;display: flex;">
+      <div class="isoft_bg_white" style="margin: 20px 80px;padding: 25px;min-height: 250px;display: flex;">
         <div style="width: 20%;">
           <img style="width: 80%;height: 200px;" src="../../assets/default.png"/>
         </div>
@@ -176,9 +176,17 @@
     border-bottom: 1px solid white;
   }
 
+  .business .img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    padding: 5px;
+    background-color: rgba(255, 182, 192, 0.15);
+  }
+
   .business .text2 {
     font-size: 22px;
-    line-height: 100px;
+    line-height: 80px;
   }
 
   .tag {
