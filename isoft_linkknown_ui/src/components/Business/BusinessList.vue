@@ -6,7 +6,7 @@
         <IBeautifulLink @onclick="$router.push({path:'/business/list'})">热销商品</IBeautifulLink>
       </Col>
       <Col span="3">
-        <IBeautifulLink @onclick="$router.push({path:'/business/list',query:{type:'mine'}})">我的店铺商品
+        <IBeautifulLink @onclick="showMyBusiness">我的店铺商品
         </IBeautifulLink>
       </Col>
       <Col span="2">
@@ -14,39 +14,44 @@
       </Col>
     </Row>
 
-    <div style="margin: 0 20px;">
-      <Row :gutter="10">
-        <Col span="12" v-for="good in goods" class="isoft_top10 isoft_pd10">
-          <Row style="margin-bottom: 10px;">
-            <Col span="10" style="text-align: center;">
-              <router-link :to="{path:'/business/detail',query:{id:good.id}}">
-                <!-- 长度大于 2 排除空数组 [] -->
-                <img v-if="good.good_images.length > 2" :src="good.good_images | filterFirst" width="160px"
-                     height="180px"/>
-                <img v-else src="../../assets/default.png" width="180px" height="180px"/>
-              </router-link>
-            </Col>
-            <Col span="14" style="height: 200px;">
-              <div style="width: 100%;word-wrap:break-word;word-break:break-all;overflow: hidden;">
-                <p class="p1line">商品名称：{{good.good_name}}</p>
-                <p class="p3line isoft_font12">商品描述：{{good.good_desc}}</p>
-                <p>商品价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
-                <p>卖家姓名：{{good.good_seller}}</p>
-                <p>卖家联系方式：{{good.seller_contact}}</p>
-              </div>
-              <div style="position: absolute;right: 0;bottom: 0;">
-                <Button v-if="editable(good)"
-                        @click="$router.push({path:'/business/edit',query:{id:good.id}})">
-                  编辑商品
-                </Button>
-                <span v-else>
-                  <Button size="small" @click="payConfirm(good)">立即购买</Button>
-                </span>
-              </div>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+    <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10 isoft_mg10" style="border: 1px solid #eee;">
+      <div style="display: flex;">
+        <div style="width: 40%;">
+          <router-link :to="{path:'/business/detail',query:{id:good.id}}">
+            <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
+              <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
+                <div class="demo-carousel">
+                  <img :src="good_image" width="100%" height="250px"/>
+                </div>
+              </CarouselItem>
+            </Carousel>
+          </router-link>
+        </div>
+        <div style="width: 60%;padding: 0 50px;">
+          <div style="width: 100%;word-wrap:break-word;word-break:break-all;overflow: hidden;">
+            <p class="p1line label">商品名称：{{good.good_name}}</p>
+            <div style="margin: 10px 0;">
+              <span class="tag">一年免费维护</span>
+              <span class="tag">一年免费维护</span>
+              <span class="tag">一年免费维护</span>
+              <span class="tag">一年免费维护</span>
+            </div>
+            <p class="p3line isoft_font14" style="color: #999;">商品描述：{{good.good_desc}}</p>
+            <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
+            <p>优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
+            <p>卖家姓名：{{good.good_seller}}</p>
+            <p>卖家联系方式：{{good.seller_contact}}</p>
+          </div>
+          <div>
+            <Button v-if="editable(good)" @click="$router.push({path:'/business/edit',query:{id:good.id}})">
+              编辑商品
+            </Button>
+            <span v-else>
+              <Button size="small" @click="payConfirm(good)">立即购买</Button>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +59,7 @@
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {GoodList, NewOrder} from "../../api"
-  import {CheckHasLogin, GetLoginUserName} from "../../tools"
+  import {CheckHasLogin, CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
 
   export default {
     name: "GoodList",
@@ -66,9 +71,18 @@
       }
     },
     methods: {
+      parseGoodImages: function (good_images) {
+        return JSON.parse(good_images);
+      },
+      showMyBusiness: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$router.push({path: '/business/list', query: {type: 'mine'}});
+        });
+      },
       payConfirm: async function (good) {
         const result = await NewOrder(good.id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$router.push({
             path: '/business/pay_confirm',
             query: {"good_id": good.id, "orderCode": result.orderCode}
@@ -77,18 +91,12 @@
       },
       refreshGoodList: async function () {
         const result = await GoodList();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.goods = result.goods;
         }
       },
       editable: function (good) {
-        return this.$route.query.type == 'mine' && CheckHasLogin() && GetLoginUserName() == good.good_seller;
-      }
-    },
-    filters: {
-      filterFirst: function (good_images) {
-        let arr = JSON.parse(good_images);
-        return arr[0];
+        return this.$route.query.type === 'mine' && CheckHasLogin() && GetLoginUserName() === good.good_seller;
       }
     },
     mounted() {
@@ -101,5 +109,13 @@
 </script>
 
 <style scoped>
+  .label {
+    font-size: 16px;
+  }
 
+  .tag {
+    color: orangered;
+    background-color: rgba(238, 4, 0, 0.2);
+    padding: 5px 10px;
+  }
 </style>
