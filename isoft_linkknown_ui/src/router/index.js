@@ -57,6 +57,8 @@ const MessageList = () => import("@/components/Message/MessageList");
 const BusinessIntroduce = () => import("@/components/Business/Introduce");
 const BusinessList = () => import("@/components/Business/BusinessList");
 const BusinessEdit = () => import("@/components/Business/BusinessEdit");
+const BusinessDetail = () => import("@/components/Business/BusinessDetail");
+const PayConfirm = () => import("@/components/Business/PayConfirm");
 const Site = () => import("@/components/Site");
 const CssDemo = () => import("@/components/CssDemo");
 
@@ -195,8 +197,8 @@ const BusinessRouter = [{
     {path: 'introduce', component: BusinessIntroduce},
     {path: 'list', component: BusinessList},
     {path: 'edit', component: BusinessEdit},
-    // {path: 'good_detail', component: GoodDetail},
-    // {path: 'pay_confirm', component: PayConfirm},
+    {path: 'detail', component: BusinessDetail},
+    {path: 'pay_confirm', component: PayConfirm},
   ]
 }];
 

@@ -36,7 +36,7 @@
               </div>
               <div style="position: absolute;right: 0;bottom: 0;">
                 <Button v-if="editable(good)"
-                        @click="$router.push({path:'/business/mine/good_edit',query:{id:good.id}})">
+                        @click="$router.push({path:'/business/edit',query:{id:good.id}})">
                   编辑商品
                 </Button>
                 <span v-else>

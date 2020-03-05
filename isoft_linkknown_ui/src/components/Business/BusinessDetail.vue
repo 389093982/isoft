@@ -34,7 +34,7 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
 
   export default {
-    name: "GoodDetail",
+    name: "BusinessDetail",
     components: {IBeautifulLink},
     data() {
       return {
