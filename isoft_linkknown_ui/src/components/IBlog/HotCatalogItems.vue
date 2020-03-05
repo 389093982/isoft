@@ -1,18 +1,17 @@
 <template>
-  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement"
-                  style="margin-left: 50px;margin-right: 50px;">
+  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" style="margin-left: 240px;margin-right: 60px;">
     <Row>
-      <Col span="2" style="text-align: center;padding-top: 25px;">
+      <Col span="2" style="text-align: center;padding-top: 15px;">
         <a href="javascript:;" @click="previous" v-show="showPrevious"><img src="/static/images/arrow_left.png"/></a>
       </Col>
-      <Col span="5" v-for="element in getCurrentPage">
+      <Col span="4" v-for="element in getCurrentPage">
         <a href="javascript:;" style="color: #999;" @click="chooseItem(element.linked_refer)">
-          <div class="item" style="padding:10px; height: 100px;">
+          <div class="item" style="padding:10px; height: 80px;">
             <Row :gutter="10">
               <Col span="6">
                 <img :src="element.img_path" :alt="element.element_label" width="40px" height="40px" @error="defImg()"/>
               </Col>
-              <Col span="18" style="padding-left: 5px;">
+              <Col span="17" offset="1" style="padding-left: 5px;">
                 <p class="share_catalog_name">{{element.element_label}}</p>
                 <p style="font-size: 12px;">{{element.content}}</p>
               </Col>
@@ -20,7 +19,7 @@
           </div>
         </a>
       </Col>
-      <Col span="2" style="text-align: center;padding-top: 25px;">
+      <Col span="2" style="text-align: center;padding-top: 15px;">
         <a href="javascript:;" @click="next" v-show="showNext"><img src="/static/images/arrow_right.png"/></a>
       </Col>
     </Row>
