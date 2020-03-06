@@ -25,7 +25,7 @@
               </Col>
               <Col span="5" offset="2">
                 <Affix :offset-top="68">
-                  <ISearch @submitFunc="submitFunc" style="position: relative;top: -8px;"></ISearch>
+                  <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top: -8px;"></ISearch>
                 </Affix>
               </Col>
               <!--<Col span="2" style="text-align: center;">-->
@@ -154,6 +154,7 @@
         search_user_name: '',
         userInfos: [],
         pattern: 1,           // 按钮选中的模式
+        search_data:'',
       }
     },
     methods: {
@@ -192,6 +193,16 @@
           this.refreshBlogList();
         }
       },
+      searchDataHasChange:function(search_data){
+        this.search_data = search_data;
+      },
+      submitFunc:async function (search_data) {
+        this.search_data = search_data;
+        if (search_data.length === 0) {
+          return false;
+        }
+        this.refreshBlogList();
+      },
       handleChange(page) {
         this.current_page = page;
         this.refreshBlogList();
@@ -209,6 +220,7 @@
             current_page: this.current_page,
             search_type: search_type,
             search_user_name: this.search_user_name,
+            search_data:this.search_data,
           });
           if (result.status === "SUCCESS") {
 

@@ -21,7 +21,12 @@
       submitFunc: function () {
         this.$emit("submitFunc", this.search_data);
       }
-    }
+    },
+    watch:{
+      search_data:function () {
+        this.$emit("searchDataHasChange", this.search_data);
+      }
+    },
   }
 </script>
 
