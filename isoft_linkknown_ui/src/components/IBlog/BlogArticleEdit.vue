@@ -15,8 +15,8 @@
           <Row>
             <Col span="12">
               <FormItem label="文章标题" prop="blog_title">
-                <Input v-model="formValidate.blog_title" :maxlength="200" show-word-limit
-                       placeholder="请输入文章标题"/>
+                <Input v-if="this.$route.query.id != null" readonly v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
+                <Input v-else v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
               </FormItem>
             </Col>
             <Col span="12">
@@ -273,5 +273,4 @@
 </script>
 
 <style scoped>
-
 </style>
