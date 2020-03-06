@@ -5,16 +5,19 @@
       <Col span="16">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="产品类型" prop="good_type">
-            <Input v-model.trim="formValidate.good_type" placeholder="请选择产品类型"/>
+            <Input v-model.trim="formValidate.good_type" placeholder="请输入产品类型,示例：服务类|广告服务|广告制作"/>
           </FormItem>
-          <FormItem label="商品名称" prop="good_name">
-            <Input v-model.trim="formValidate.good_name" placeholder="请输入商品名称"/>
+          <FormItem label="产品名称" prop="good_name">
+            <Input v-model.trim="formValidate.good_name" placeholder="请输入产品名称"/>
           </FormItem>
-          <FormItem label="商品描述" prop="good_desc">
-            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入商品描述"/>
+          <FormItem label="产品标签" prop="good_tag">
+            <Input v-model.trim="formValidate.good_tag" placeholder="请输入产品标签,示例：服务类|广告服务|广告制作"/>
           </FormItem>
-          <FormItem label="商品金额" prop="good_price">
-            <Input v-model.trim="formValidate.good_price" placeholder="请选择商品金额"/>
+          <FormItem label="产品描述" prop="good_desc">
+            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入产品描述"/>
+          </FormItem>
+          <FormItem label="产品金额" prop="good_price">
+            <Input v-model.trim="formValidate.good_price" placeholder="请选择产品金额"/>
           </FormItem>
           <FormItem label="卖家姓名" prop="good_seller">
             <Input v-model.trim="formValidate.good_seller" :readonly="true"/>
@@ -23,7 +26,7 @@
             <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
           </FormItem>
 
-          <FormItem label="商品图片" prop="good_images">
+          <FormItem label="产品图片" prop="good_images">
             <Scroll height="160">
               <span style="height: 140px;">
                 <img v-for="good_image in formValidate.good_images" :src="good_image"
@@ -49,7 +52,7 @@
 <script>
   import IFileUpload from "../Common/file/IFileUpload";
   import {fileUploadUrl, GetGoodDetail, GoodEdit} from "../../api"
-  import {GetLoginUserName} from "../../tools"
+  import {copyObj, GetLoginUserName} from "../../tools"
 
   export default {
     name: "BusinessEdit",
@@ -59,7 +62,9 @@
         fileUploadUrl: fileUploadUrl + "?table_name=good&table_field=good_images",
         formValidate: {
           good_id: -1,
+          good_type: '',
           good_name: '',
+          good_tag: '',
           good_desc: '',
           good_price: 0,     // 负数表示暂无报价
           good_images: [],
@@ -67,14 +72,20 @@
           seller_contact: '',
         },
         ruleValidate: {
+          good_type: [
+            {required: true, message: '产品类型不能为空', trigger: 'blur'}
+          ],
           good_name: [
-            {required: true, message: '商品名称不能为空', trigger: 'blur'}
+            {required: true, message: '产品名称不能为空', trigger: 'blur'}
+          ],
+          good_tag: [
+            {required: true, message: '产品标签不能为空', trigger: 'blur'}
           ],
           good_desc: [
-            {required: true, message: '商品描述不能为空', trigger: 'blur'}
+            {required: true, message: '产品描述不能为空', trigger: 'blur'}
           ],
           good_price: [
-            {required: true, message: '商品价格不能为空', trigger: 'blur'}
+            {required: true, message: '产品价格不能为空', trigger: 'blur'}
           ],
           seller_contact: [
             {required: true, message: '卖家联系方式不能为空', trigger: 'blur'}
@@ -102,7 +113,7 @@
       },
       handleSubmit: function (name) {
         if (this.formValidate.good_desc.length < 50) {
-          this.$Message.error('商品描述太短，不能少于 50 个字符!');
+          this.$Message.error('产品描述太短，不能少于 50 个字符!');
           return;
         }
         if (this.formValidate.good_images.length == 0) {
@@ -112,10 +123,9 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await GoodEdit(_this.formValidate.good_id,
-              _this.formValidate.good_name, _this.formValidate.good_desc,
-              _this.formValidate.good_price, _this.formValidate.good_seller,
-              _this.formValidate.seller_contact, JSON.stringify(_this.formValidate.good_images));
+            let params = copyObj(_this.formValidate);
+            params.good_images = JSON.stringify(_this.formValidate.good_images);
+            const result = await GoodEdit(params);
             if (result.status == "SUCCESS") {
               this.$router.push({path: '/business/list'});
             } else {
@@ -129,13 +139,7 @@
       refreshGoodDetail: async function (good_id) {
         const result = await GetGoodDetail(good_id);
         if (result.status == "SUCCESS") {
-          this.formValidate.good_id = result.good.id;
-          this.formValidate.good_name = result.good.good_name;
-          this.formValidate.good_desc = result.good.good_desc;
-          this.formValidate.good_desc = result.good.good_desc;
-          this.formValidate.good_price = result.good.good_price;
-          this.formValidate.good_seller = result.good.good_seller;
-          this.formValidate.seller_contact = result.good.seller_contact;
+          this.formValidate = result.good;
           this.formValidate.good_images = JSON.parse(result.good.good_images);
         }
       }

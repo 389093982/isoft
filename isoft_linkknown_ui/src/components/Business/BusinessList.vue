@@ -31,10 +31,7 @@
               商品名称：<span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
             </p>
             <div style="margin: 10px 0;">
-              <span class="isoft_tag3">一年免费维护</span>
-              <span class="isoft_tag3">一年免费维护</span>
-              <span class="isoft_tag3">一年免费维护</span>
-              <span class="isoft_tag3">一年免费维护</span>
+              <span class="isoft_tag3" v-for="(tag, index) in parseTag(good.good_tag)">{{tag}}</span>
             </div>
             <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
             <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
@@ -60,7 +57,7 @@
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {GoodList, NewOrder} from "../../api"
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
+  import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, strSplit} from "../../tools"
 
   export default {
     name: "GoodList",
@@ -72,6 +69,9 @@
       }
     },
     methods: {
+      parseTag: function (good_tag) {
+        return strSplit(good_tag, "|").filter(tag => !checkEmpty(tag));
+      },
       parseGoodImages: function (good_images) {
         return JSON.parse(good_images);
       },
