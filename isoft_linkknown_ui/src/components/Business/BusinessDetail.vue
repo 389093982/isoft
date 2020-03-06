@@ -22,7 +22,7 @@
             <div>卖家联系方式：{{good.seller_contact}}</div>
           </div>
           <div style="text-align: right;">
-            <Button>立即购买</Button>
+            <span class="isoft_button_red2 isoft_point_cursor">立即购买</span>
           </div>
         </div>
       </div>

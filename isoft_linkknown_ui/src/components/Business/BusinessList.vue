@@ -43,9 +43,10 @@
             <p>卖家联系方式：{{good.seller_contact}}</p>
           </div>
           <div>
-            <Button v-if="editable(good)" @click="$router.push({path:'/business/edit',query:{id:good.id}})">
+            <span class="isoft_button_red2 isoft_point_cursor" v-if="isLoginUserName(good.good_seller)"
+                  @click="$router.push({path:'/business/edit',query:{id:good.id}})">
               编辑商品
-            </Button>
+            </span>
             <span v-else>
               <span class="isoft_button_red2 isoft_point_cursor" @click="payConfirm(good)">立即购买</span>
             </span>
@@ -59,7 +60,7 @@
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {GoodList, NewOrder} from "../../api"
-  import {CheckHasLogin, CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
+  import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
 
   export default {
     name: "GoodList",
@@ -77,7 +78,7 @@
       showMyBusiness: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/business/list', query: {type: 'mine'}});
+          _this.$router.push({path: '/business/list'});
         });
       },
       payConfirm: async function (good) {
@@ -95,9 +96,9 @@
           this.goods = result.goods;
         }
       },
-      editable: function (good) {
-        return this.$route.query.type === 'mine' && CheckHasLogin() && GetLoginUserName() === good.good_seller;
-      }
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
+      },
     },
     mounted() {
       this.refreshGoodList();

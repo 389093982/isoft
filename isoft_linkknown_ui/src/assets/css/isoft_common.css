@@ -355,10 +355,7 @@
 }
 
 .isoft_button_red2 {
-  margin-right: 0;
-  float: left;
-  overflow: hidden;
-  position: relative;
+  display: inline-block;
   width: 178px;
   background-color: #ffeded;
   border: 1px solid #FF0036;
