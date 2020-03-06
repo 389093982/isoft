@@ -11,7 +11,7 @@
             <Input v-model.trim="formValidate.good_name" placeholder="请输入产品名称"/>
           </FormItem>
           <FormItem label="产品标签" prop="good_tag">
-            <Input v-model.trim="formValidate.good_tag" placeholder="请输入产品标签,示例：服务类|广告服务|广告制作"/>
+            <Input v-model.trim="formValidate.good_tag" placeholder="请输入产品标签,示例：专业|高水准|精品"/>
           </FormItem>
           <FormItem label="产品描述" prop="good_desc">
             <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入产品描述"/>
