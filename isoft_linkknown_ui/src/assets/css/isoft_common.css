@@ -352,6 +352,21 @@
   text-align: center;
 }
 
+.isoft_button_red2 {
+  margin-right: 0;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  width: 178px;
+  background-color: #ffeded;
+  border: 1px solid #FF0036;
+  color: #FF0036;
+  font-family: 'Microsoft Yahei';
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  font-size: 16px;
+}
 
 .isoft_button_green1 {
   height: 40px;
@@ -373,6 +388,14 @@
 
 .isoft_color_grey {
   color: #818181;
+}
+
+.isoft_color_grey2 {
+  color: #919191;
+}
+
+.isoft_color_grey3 {
+  color: #9c9c9c;
 }
 
 .isoft_color_green1 {
@@ -419,4 +442,14 @@
   text-align: center;
   padding: 0 5px;
   font-weight: 100;
+}
+
+.isoft_tag3 {
+  font-size: 12px;
+  background: #f3f5f7;
+  line-height: 20px;
+  color: #f01414;
+  padding: 4px 8px;
+  margin-right: 8px;
+  display: inline-block;
 }

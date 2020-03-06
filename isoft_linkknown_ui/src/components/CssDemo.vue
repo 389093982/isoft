@@ -7,6 +7,8 @@
     <span class="isoft_hover_red">hover 字体变成红色</span>
     <span class="isoft_hover_bottom isoft_hover_red">hover 字体变成红色,显示红色下边框</span>
     <span class="isoft_color_grey">灰色字体</span>
+    <span class="isoft_color_grey2">灰色字体2</span>
+    <span class="isoft_color_grey3">灰色字体3</span>
     <span class="isoft_color_green1 isoft_font16">绿色字体1</span>
     <span class="isoft_hover_color_green">hover 字体绿色样式</span>
     <span class="isoft_hover_color_blue">hover 字体蓝色样式</span>
@@ -27,7 +29,8 @@
     <span class="isoft_button_blue">按钮样式</span>
     <span class="isoft_button_green1">按钮样式</span>
     <span class="isoft_button_red1">按钮样式</span>
-    <br/>
+    <span class="isoft_button_red2">按钮样式</span>
+    <br/><br/><br/>
 
     <!-- 背景色 -->
     <div class="isoft_info_tip">灰度背景色</div>
@@ -41,6 +44,7 @@
     <div class="isoft_tag1">tag 标签样式1</div>
     <div class="isoft_tag1 isoft_hover_red">tag 标签样式1</div>
     <div class="isoft_tag2">tag 标签样式2</div>
+    <div class="isoft_tag3">tag 标签样式3</div>
   </div>
 </template>
 

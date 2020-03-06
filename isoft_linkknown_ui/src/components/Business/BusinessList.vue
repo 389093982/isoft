@@ -31,12 +31,12 @@
               商品名称：<span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
             </p>
             <div style="margin: 10px 0;">
-              <span class="tag">一年免费维护</span>
-              <span class="tag">一年免费维护</span>
-              <span class="tag">一年免费维护</span>
-              <span class="tag">一年免费维护</span>
+              <span class="isoft_tag3">一年免费维护</span>
+              <span class="isoft_tag3">一年免费维护</span>
+              <span class="isoft_tag3">一年免费维护</span>
+              <span class="isoft_tag3">一年免费维护</span>
             </div>
-            <p class="p3line isoft_font14" style="color: #999;">商品描述：{{good.good_desc}}</p>
+            <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
             <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
             <p>优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
             <p>卖家姓名：{{good.good_seller}}</p>
@@ -47,7 +47,7 @@
               编辑商品
             </Button>
             <span v-else>
-              <Button size="small" @click="payConfirm(good)">立即购买</Button>
+              <span class="isoft_button_red2 isoft_point_cursor" @click="payConfirm(good)">立即购买</span>
             </span>
           </div>
         </div>
@@ -111,11 +111,5 @@
 <style scoped>
   .label {
     font-size: 16px;
-  }
-
-  .tag {
-    color: orangered;
-    background-color: rgba(238, 4, 0, 0.2);
-    padding: 5px 10px;
   }
 </style>
