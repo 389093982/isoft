@@ -26,8 +26,8 @@
           </Carousel>
         </div>
         <div style="width: 60%;padding: 0 50px;">
-          <div style="width: 100%;word-wrap:break-word;word-break:break-all;overflow: hidden;">
-            <p class="p1line label">
+          <div>
+            <p class="isoft_inline_ellipsis isoft_font16">
               商品名称：<span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
             </p>
             <div style="margin: 10px 0;">
@@ -109,7 +109,5 @@
 </script>
 
 <style scoped>
-  .label {
-    font-size: 16px;
-  }
+
 </style>

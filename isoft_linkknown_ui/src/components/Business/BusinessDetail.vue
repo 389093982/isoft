@@ -1,8 +1,8 @@
 <template>
   <div style="margin:15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
     <div v-if="good" style="padding: 50px;">
-      <Row :gutter="10">
-        <Col span="10">
+      <div style="display: flex;">
+        <div style="width: 40%;">
           <img :src="good_images[index]" width="100%" height="400px"/>
           <p style="text-align: center;">
             <Icon style="float: left;margin-top: 10px;" size="50" type="ios-arrow-back" @click="showPrefix"/>
@@ -11,20 +11,21 @@
             </a>
             <Icon style="float: right;margin-top: 10px;" size="50" type="ios-arrow-forward" @click="showNext"/>
           </p>
-        </Col>
-        <Col span="14">
-          <div style="min-height: 400px;width: 100%;word-wrap:break-word;word-break:break-all;overflow: hidden;">
-            <p>商品名称：<span><IBeautifulLink>{{good.good_name}}</IBeautifulLink></span></p>
-            <p>商品描述：<span><IBeautifulLink :in-line="false">{{good.good_desc}}</IBeautifulLink></span></p>
-            <p>商品价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
-            <p>卖家姓名：{{good.good_seller}}</p>
-            <p>卖家联系方式：{{good.seller_contact}}</p>
+        </div>
+        <div style="width: 60%;">
+          <div>
+            <p class="isoft_inline_ellipsis isoft_font16">商品名称：<span class="isoft_hover_red">{{good.good_name}}</span>
+            </p>
+            <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
+            <div>商品价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></div>
+            <div>卖家姓名：{{good.good_seller}}</div>
+            <div>卖家联系方式：{{good.seller_contact}}</div>
           </div>
           <div style="text-align: right;">
             <Button>立即购买</Button>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
   </div>
 </template>

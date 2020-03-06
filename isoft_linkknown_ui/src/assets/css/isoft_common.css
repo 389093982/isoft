@@ -209,6 +209,8 @@
 
 /* 文字超过三行显示省略号 */
 .p3line {
+  word-wrap: break-word;
+  word-break: break-all;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
