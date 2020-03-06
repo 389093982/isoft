@@ -32,12 +32,8 @@
         this.isShow = true;
       },
       ok () {
-        // this.isShow = false;
-        // this.$emit("confirmDelete")
+        this.$emit("confirmDelete")
       },
-      cancel(){
-        // this.isShow = false;
-      }
     }
 	}
 </script>
