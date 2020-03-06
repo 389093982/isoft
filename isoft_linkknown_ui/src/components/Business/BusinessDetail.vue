@@ -21,7 +21,8 @@
             <div>卖家姓名：{{good.good_seller}}</div>
             <div>卖家联系方式：{{good.seller_contact}}</div>
           </div>
-          <div style="text-align: right;">
+          <div style="position: absolute;bottom: 30px;right: 100px;">
+            <span class="isoft_button_red2 isoft_point_cursor">在线咨询</span>
             <span class="isoft_button_red2 isoft_point_cursor">立即购买</span>
           </div>
         </div>
