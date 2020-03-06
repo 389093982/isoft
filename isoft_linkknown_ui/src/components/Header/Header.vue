@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div style="float: left;width: 8%;background-color: white;">
+  <div style="display: flex;">
+    <div style="width: 8%;background-color: white;">
       <div style="padding: 5px 0 0 0 ">
         <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 49px;cursor: pointer" @click="$router.push({path:'/ilearning/index'})"/>
       </div>
     </div>
-    <div style="float: left;width: 92%;">
+    <div style="width: 92%;">
       <Menu mode="horizontal" :theme="theme1" active-name="1">
-        <div class="layout-nav">
+        <div>
           <MenuItem name="1">
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">链知首页</IBeautifulLink>
           </MenuItem>
@@ -76,7 +76,6 @@
         </div>
       </Menu>
     </div>
-    <div style="clear: both"></div>
   </div>
 </template>
 
@@ -144,11 +143,6 @@
 </script>
 
 <style scoped>
-  .layout-nav {
-    float: left;
-    width: 200%;
-  }
-
   .message_detail {
     display: none;
   }

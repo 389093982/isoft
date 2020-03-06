@@ -10,7 +10,7 @@
         </IBeautifulLink>
       </Col>
       <Col span="2">
-        <IBeautifulLink @onclick="$router.push({path:'/business/edit'})">发布商品</IBeautifulLink>
+        <IBeautifulLink @onclick="$router.push({path:'/business/edit'})">发布服务或商品</IBeautifulLink>
       </Col>
     </Row>
 

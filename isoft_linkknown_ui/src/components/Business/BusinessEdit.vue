@@ -4,20 +4,23 @@
     <Row style="padding: 50px;">
       <Col span="16">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+          <FormItem label="产品类型" prop="good_type">
+            <Input v-model.trim="formValidate.good_type" placeholder="请选择产品类型"/>
+          </FormItem>
           <FormItem label="商品名称" prop="good_name">
-            <Input v-model.trim="formValidate.good_name" placeholder="Enter good_name..."/>
+            <Input v-model.trim="formValidate.good_name" placeholder="请输入商品名称"/>
           </FormItem>
           <FormItem label="商品描述" prop="good_desc">
-            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="Enter good_desc..."/>
+            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入商品描述"/>
           </FormItem>
           <FormItem label="商品金额" prop="good_price">
-            <Input v-model.trim="formValidate.good_price" placeholder="Enter good_price..."/>
+            <Input v-model.trim="formValidate.good_price" placeholder="请选择商品金额"/>
           </FormItem>
           <FormItem label="卖家姓名" prop="good_seller">
             <Input v-model.trim="formValidate.good_seller" :readonly="true"/>
           </FormItem>
           <FormItem label="卖家联系方式" prop="seller_contact">
-            <Input v-model.trim="formValidate.seller_contact" placeholder="Enter seller_contact..."/>
+            <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
           </FormItem>
 
           <FormItem label="商品图片" prop="good_images">
@@ -33,9 +36,6 @@
 
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-            <Button type="error" v-if="formValidate.article_id > 0"
-                    style="margin-left: 8px" @click="handleDelete('formValidate')">删除该条目
-            </Button>
           </FormItem>
         </Form>
       </Col>
@@ -99,17 +99,6 @@
           _good_images.push(result.fileServerPath);
           this.$set(this.formValidate, "good_images", _good_images);
         }
-      },
-      handleDelete: async function (name) {
-        // if(this.formValidate.article_id > 0){
-        //   const result = await ArticleDelete(this.formValidate.article_id);
-        //   if(result.status == "SUCCESS"){
-        //     this.$refs[name].resetFields();
-        //     if(this.successEmit){
-        //       this.$emit("successEmitFunc");
-        //     }
-        //   }
-        // }
       },
       handleSubmit: function (name) {
         if (this.formValidate.good_desc.length < 50) {
