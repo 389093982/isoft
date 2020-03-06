@@ -28,16 +28,21 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <BusinessDetail2/>
+    </div>
   </div>
 </template>
 
 <script>
   import {GetGoodDetail} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
+  import BusinessDetail2 from "./BusinessDetail2";
 
   export default {
     name: "BusinessDetail",
-    components: {IBeautifulLink},
+    components: {BusinessDetail2, IBeautifulLink},
     data() {
       return {
         good: null,
@@ -58,7 +63,7 @@
       },
       refreshGoodDetail: async function (good_id) {
         const result = await GetGoodDetail(good_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.good = result.good;
           this.good_images = JSON.parse(result.good.good_images);
           for (var i = 0; i < this.good_images.length; i++) {

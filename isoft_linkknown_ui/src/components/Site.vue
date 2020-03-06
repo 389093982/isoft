@@ -6,7 +6,7 @@
     <a @click="$router.push({path:'/advertisement/apply'})" class="hovered hvr-grow hoverLinkColor mr5">广告位招租</a>
     <a @click="$router.push({path:'/user/detail',query:{username:'mine'}})" class="hovered hvr-grow hoverLinkColor mr5">个人中心</a>
     <a @click="$router.push({ path: '/ilearning/course_space'})" class="hovered hvr-grow hoverLinkColor">我的课程空间</a>
-    <a @click="$router.push({ path: '/business/good_list'})" class="hovered hvr-grow hoverLinkColor">我要赚钱</a>
+    <a @click="$router.push({ path: '/business/list'})" class="hovered hvr-grow hoverLinkColor">我要赚钱</a>
     <a @click="$router.push({ path: '/ifound/discount_list'})" class="hovered hvr-grow hoverLinkColor">聚优惠</a>
     <a @click="$router.push({ path: '//ifound/activity_list'})" class="hovered hvr-grow hoverLinkColor">聚活动</a>
     <a @click="$router.push({ path: '/ifound/activity_list'})" class="hovered hvr-grow hoverLinkColor">商业合作</a>
