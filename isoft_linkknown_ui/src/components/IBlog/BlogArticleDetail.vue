@@ -26,7 +26,7 @@
         </div>
 
         <!--是否确认删除博客-->
-        <IsComfirmDelete ref="showModal"></IsComfirmDelete>
+        <IsComfirmDelete ref="comfirmDelete" @confirmDelete="deleteBlog" content="博客一经删除，无法复原，确认删除?"></IsComfirmDelete>
 
         <div style="border-bottom: 1px solid #eee;min-height: 150px;">
           <IShowMarkdown v-if="blog.content" :content="blog.content"/>
@@ -95,7 +95,6 @@
       return {
         blog: null,
         userInfos: [],
-        isShow:false,
       }
     },
     methods: {
@@ -110,7 +109,7 @@
         return RenderNickName(this.userInfos, user_name);
       },
       showDeleteModal:function(){
-        this.isShow = true;
+        this.$refs.comfirmDelete.showModal();
       },
       deleteBlog: async function () {
         const result = await ArticleDelete(this.$route.query.blog_id);
