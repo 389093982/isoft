@@ -28,9 +28,6 @@
                   <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top: -8px;"></ISearch>
                 </Affix>
               </Col>
-              <!--<Col span="2" style="text-align: center;">-->
-                <!--<a @click="$router.push({path:'/expert/ask_expert'})"><span style="color: red;">(荐)</span>求问专家</a>-->
-              <!--</Col>-->
             </Row>
 
             <!--移动的小球-->
