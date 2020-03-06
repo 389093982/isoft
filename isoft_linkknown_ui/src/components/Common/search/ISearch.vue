@@ -45,7 +45,6 @@
     color: #333;
     font-size: 14px;
     transition: all ease-in 500ms;
-    border: 2px solid #ffa952;
   }
 
   .search_input:focus {

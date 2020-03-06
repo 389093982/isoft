@@ -9,9 +9,8 @@
       <Row>
         <Col span="24" style="padding: 0 8px 0 0;">
           <div class="isoft_bg_white">
-            <!--这里特别注释一下，这一行加了position: relative;left: -15px， 因为下面第一列offset=3和4都不适合，为了居中这里做了整行偏移-->
             <Row class="_search" style="padding: 12px;height: 50px; position: relative;left: -15px">
-              <Col span="3" offset="4" style="font-size: 20px;color: #333;">
+              <Col span="3" offset="3" style="font-size: 20px;color: #333;">
                 <span >{{showLabel}}</span>
               </Col>
               <Col span="2"  style="text-align: center;">
@@ -47,7 +46,7 @@
               <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row style="margin-top: 12px">
                   <!--博客左侧预留空间-->
-                  <Col span="4">
+                  <Col span="3">
                     &nbsp;
                   </Col>
                   <Col span="1">
@@ -91,16 +90,18 @@
                     </router-link>
                   </Col>
                   <!--博客右侧预留空间-->
-                  <Col span="5">
+                  <Col span="6">
                     &nbsp;
                   </Col>
                 </Row>
               </li>
             </ul>
 
-            <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts"
-                  :styles="{'text-align': 'center','margin-top': '10px'}"
-                  @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+            <div style="padding-bottom: 10px">
+              <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts"
+                    :styles="{'text-align': 'center','margin-top': '10px'}"
+                    @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+            </div>
           </div>
         </Col>
       </Row>
@@ -143,8 +144,8 @@
         // 总数
         total: 0,
         // 每页记录数
-        offset: 100,
-        pageSizeOpts:[100, 200, 300, 400],
+        offset: 20,
+        pageSizeOpts:[20, 30, 40, 50],
         searchblogs: [],
         search_type: '_all',
         showLabel: '全部分类',

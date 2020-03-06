@@ -16,12 +16,17 @@
               <span style="margin-left: 200px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
               <span style="margin-left: 20px"><span style="color: rgba(255,0,0,0.65)">{{blog.edits}}</span> 次编辑</span>
               <span>
-                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blog_edit', query: { id: blog.id }})">继续编辑
-              </Button>
+                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blog_edit', query: { id: blog.id }})">继续编辑</Button>
+              </span>
+              <span>
+                <Button type="error" size="small" v-if="editable" @click="showDeleteModal">删除博客</Button>
               </span>
             </Col>
           </Row>
         </div>
+
+        <!--是否确认删除博客-->
+        <IsComfirmDelete ref="showModal"></IsComfirmDelete>
 
         <div style="border-bottom: 1px solid #eee;min-height: 150px;">
           <IShowMarkdown v-if="blog.content" :content="blog.content"/>
@@ -76,19 +81,21 @@
 </template>
 
 <script>
-  import {ShowBlogArticleDetail} from "../../api"
+  import {ShowBlogArticleDetail,ArticleDelete} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
   import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
+  import IsComfirmDelete from "./IsComfirmDelete";
 
   export default {
     name: "BlogArticleDetail",
-    components: {MoveLine, IShowMarkdown, IEasyComment},
+    components: {IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
     data() {
       return {
         blog: null,
         userInfos: [],
+        isShow:false,
       }
     },
     methods: {
@@ -101,7 +108,17 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
-      }
+      },
+      showDeleteModal:function(){
+        this.isShow = true;
+      },
+      deleteBlog: async function () {
+        const result = await ArticleDelete(this.$route.query.blog_id);
+        if (result.status === "SUCCESS") {
+          this.$router.push({path:'/iblog/blog_list'});
+          this.$Message.info("删除成功！");
+        }
+      },
     },
     mounted: function () {
       this.refreshArticleDetail();

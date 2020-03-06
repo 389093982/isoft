@@ -182,17 +182,6 @@
           this.$refs.md.$img2Url(pos, result.data.fileServerPath);
         })
       },
-      handleDelete: async function (name) {
-        if (this.formValidate.article_id > 0) {
-          const result = await ArticleDelete(this.formValidate.article_id);
-          if (result.status === "SUCCESS") {
-            this.$refs[name].resetFields();
-            if (this.successEmit) {
-              this.$emit("successEmitFunc");
-            }
-          }
-        }
-      },
       handleSubmit: function (name) {
         var _this = this;
         this.$refs[name].validate(async (valid) => {
