@@ -35,17 +35,26 @@
 
     <a href="javascript:;" style="color:#f55e13;font-family: Arial;font-weight: 700;"
        @click="uploadVideoFunc">上传/更新视频</a>
+
+    <!--暂时只有admin用户才可以上传视频-->
+    <i-simple-confirm-modal ref="isSimpleConfirmModal" modalWidth="300" modalTitle="温馨提示:">
+      <slot>
+        上传视频需联系管理员
+      </slot>
+    </i-simple-confirm-modal>
+
   </span>
 </template>
 
 <script>
   import IFileUpload from "../../Common/file/IFileUpload";
   import {ChangeVideoOrder, DeleteVideo, fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
-  import {handleSpecial} from "../../../tools";
+  import {handleSpecial,CheckAdminLogin} from "../../../tools";
+  import ISimpleConfirmModal from "../../../../../isoft_iwork_ui/src/components/Common/modal/ISimpleConfirmModal";
 
   export default {
     name: "UploadVideo",
-    components: {IFileUpload},
+    components: {ISimpleConfirmModal, IFileUpload},
     // 当前需要上传视频的课程
     props: ["course"],
     data() {
@@ -105,9 +114,16 @@
         }
       },
       uploadVideoFunc: function () {
-        this.showDialog = true;
-        this.refreshCourseDetail(this.course.id);
-      }
+        if (this.isAdmin()) {
+          this.showDialog = true;
+          this.refreshCourseDetail(this.course.id);
+        }else {
+          this.$refs.isSimpleConfirmModal.showModal();
+        }
+      },
+      isAdmin: function () {
+        return CheckAdminLogin();
+      },
     },
   }
 </script>
