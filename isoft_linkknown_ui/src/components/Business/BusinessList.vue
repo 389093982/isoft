@@ -14,10 +14,11 @@
       </Col>
     </Row>
 
-    <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10 isoft_mg10" style="border: 1px solid #eee;">
+    <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10"
+         style="margin: 10px 100px;border: 1px solid #eee;">
       <div style="display: flex;">
         <div style="width: 40%;">
-          <Carousel autoplay dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
+          <Carousel autoplay dots="outside" trigger="hover" :autoplay-speed="4000">
             <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
               <div class="demo-carousel">
                 <img :src="good_image" width="100%" height="250px"/>
@@ -25,7 +26,7 @@
             </CarouselItem>
           </Carousel>
         </div>
-        <div style="width: 60%;padding: 0 50px;">
+        <div style="width: 60%;padding: 0 50px;" :class="index % 2 === 0 ? 'item_border1': 'item_border2'">
           <div>
             <p class="isoft_inline_ellipsis isoft_font16">
               商品名称：<span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
@@ -110,5 +111,33 @@
 </script>
 
 <style scoped>
+  .item_border1::before {
+    content: '';
+    float: left;
+    margin-top: 25%;
+    margin-left: -30px;
+    border-left: 3px solid #53b66d;
+    transition: all 300ms ease-in-out;
+    height: 0;
+  }
 
+  .item_border1:hover::before {
+    margin-top: 0;
+    height: 100%;
+  }
+
+  .item_border2::before {
+    content: '';
+    float: left;
+    margin-top: 25%;
+    margin-left: -30px;
+    border-left: 3px solid #718cbc;
+    transition: all 300ms ease-in-out;
+    height: 0;
+  }
+
+  .item_border2:hover::before {
+    margin-top: 0;
+    height: 100%;
+  }
 </style>
