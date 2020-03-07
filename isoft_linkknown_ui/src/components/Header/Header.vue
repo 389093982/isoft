@@ -34,13 +34,13 @@
                 <!--头像照片-->
                 <img v-if="small_icon.length>0" class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative;top: 5px" width="20" height="20" :src="small_icon" @error="defImg()">
                 <Avatar v-else icon="ios-person" size="small" style="padding: 0 0 0 5px ;margin: 0 2px 2px 0 " />
-                {{loginUserNickName | filterLimitFunc(5)}}
+                {{loginUserNickName | filterLimitFunc(4)}}
               </span>
               <span v-else>
                 <Avatar icon="ios-person" size="small" style="padding: 0 0 0 5px ;margin: 0 2px 2px 0 " />未登录
               </span>
             </template>
-            <MenuGroup title="账号管理">
+            <MenuGroup :title="loginUserNickName | filterLimitFunc(10)">
               <MenuItem name="8-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
               <MenuItem name="8-2" @click.native="cancelUser">
                 <span v-if="isLogin()">重新</span><span>登录</span>

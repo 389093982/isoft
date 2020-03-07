@@ -41,7 +41,7 @@
                       <p>浏览</p>
                     </div>
 
-                    <div style="margin: 10px 0 0 0;">
+                    <div style="margin: 10px 0 0 60px;">
                       <img style="cursor: pointer;border-radius: 50%;"
                            @click="$router.push({path:'/user/detail',query:{username:as.user_name}})"
                            width="35" height="35" :src="renderUserIcon(as.user_name)" @error="defImg()">

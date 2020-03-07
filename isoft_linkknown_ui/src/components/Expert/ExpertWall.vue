@@ -4,9 +4,15 @@
       <IBeautifulCard title="专家墙">
         <div slot="content">
           <div v-for="(user,index) in users2">
-            <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
-            <span v-else>{{user.user_name}}</span>
-            累计好评次数：{{user.good_numbers}}
+            <Row>
+              <Col span="11" offset="1">
+                <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
+                <span v-else>{{user.user_name}}</span>
+              </Col>
+              <Col span="12">
+                累计好评次数：{{user.good_numbers}}
+              </Col>
+            </Row>
           </div>
         </div>
       </IBeautifulCard>
@@ -16,9 +22,15 @@
       <IBeautifulCard title="答疑勤兵">
         <div slot="content">
           <div v-for="(user,index) in users">
-            <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
-            <span v-else>{{user.user_name}}</span>
-            累计解答次数：{{user.count}}
+            <Row>
+              <Col span="11" offset="1">
+                <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
+                <span v-else>{{user.user_name}}</span>
+              </Col>
+              <Col span="12">
+                累计解答次数：{{user.count}}
+              </Col>
+            </Row>
           </div>
         </div>
       </IBeautifulCard>
