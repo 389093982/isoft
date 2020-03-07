@@ -30,10 +30,12 @@
     <span class="isoft_button_green1">按钮样式</span>
     <span class="isoft_button_red1">按钮样式</span>
     <span class="isoft_button_red2">按钮样式</span>
+    <span class="isoft_button_red_small">按钮样式 small</span>
     <br/><br/><br/>
 
     <!-- 背景色 -->
     <div class="isoft_info_tip">灰度背景色</div>
+    <div class="isoft_info_tip2">淡红色背景</div>
     <br/>
 
     <!-- hover 偏移 -->

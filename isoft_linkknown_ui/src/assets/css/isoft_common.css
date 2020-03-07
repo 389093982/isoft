@@ -241,6 +241,13 @@
   padding: 5px 10px;
 }
 
+.isoft_info_tip2 {
+  text-align: center;
+  background-color: rgba(255, 222, 211, 0.5);
+  padding: 5px 10px;
+}
+
+
 .fadeToLeft {
   position: relative;
   animation: fadeToLeft_dh 0.2s infinite;
@@ -365,6 +372,23 @@
   line-height: 38px;
   text-align: center;
   font-size: 16px;
+}
+
+.isoft_button_red_small {
+  display: inline-block;
+  padding: 0 10px;
+  background-color: #ff6900;
+  color: white;
+  font-family: 'Microsoft Yahei';
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.isoft_button_red_small:hover {
+  background-color: #E55E00;
 }
 
 .isoft_button_green1 {
