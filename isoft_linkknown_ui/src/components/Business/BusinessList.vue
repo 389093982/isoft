@@ -14,7 +14,8 @@
       </Col>
     </Row>
 
-    <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10 isoft_mg10" style="border: 1px solid #eee;">
+    <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10"
+         style="margin: 10px 100px;border: 1px solid #eee;">
       <div style="display: flex;">
         <div style="width: 40%;">
           <Carousel autoplay dots="outside" trigger="hover" :autoplay-speed="4000">
