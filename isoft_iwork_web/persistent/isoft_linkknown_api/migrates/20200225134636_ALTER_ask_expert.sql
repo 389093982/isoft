@@ -8,5 +8,5 @@
 	<CreatedBy>SYSTEM</CreatedBy>
 	<CreatedTime>2020-02-25T13:46:36+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-25T13:46:36+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-03-07T09:45:37+08:00</LastUpdatedTime>
 </SqlMigrate>
