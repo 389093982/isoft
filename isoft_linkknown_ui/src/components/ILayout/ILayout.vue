@@ -6,7 +6,7 @@
         <Header></Header>
       </Affix>
       <Content
-        :style="{margin: '0px 0px 18px 0px', paddingTop: '5px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
+        :style="{margin: '0px 0px 18px 0px', paddingTop: '3px', minHeight: '550px', lineHeight: '24px', fontSize: '14px'}">
         <router-view/>
       </Content>
       <Footer></Footer>

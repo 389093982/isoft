@@ -1,15 +1,14 @@
 <template>
   <div style="display: flex;">
-    <div style="width: 8%;background-color: white;">
-      <div style="padding: 5px 0 0 0 ">
-        <img src="../../../static/images/linkknown_logo02.png" style="width: 100px;height: 49px;cursor: pointer" @click="$router.push({path:'/ilearning/index'})"/>
-      </div>
-    </div>
-    <div style="width: 92%;">
+    <div style="width: 100%;">
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <div>
+          <MenuItem name="0">
+              <img width="80" height="35" src="../../../static/images/linkknown_logo02.png" @error="defImg()"
+                   style="cursor: pointer;position: relative;top: 14px;left: 14px">
+          </MenuItem>
           <MenuItem name="1">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">链知首页</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">首页</IBeautifulLink>
           </MenuItem>
           <MenuItem name="2">
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">精品课程</IBeautifulLink>

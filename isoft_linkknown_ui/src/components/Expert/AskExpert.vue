@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <Row class="isoft_top10">
+      <Row>
         <Col span="16" style="padding-right: 5px;">
           <div class="isoft_bg_white isoft_pd10">
             <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
@@ -48,8 +48,8 @@
                     </div>
                   </Col>
                   <Col span="18" style="line-height: 30px;">
-                    <h4 class="isoft_inline_ellipsis" style="font-size: 16px;cursor: pointer;"
-                        @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</h4>
+                    <div class="title_hover" style="font-size: 16px;cursor: pointer;"
+                        @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</div>
 
                     <div class="isoft_font12">
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
@@ -189,5 +189,14 @@
 </script>
 
 <style scoped>
-
+  .title_hover {
+    font-size: 15px;
+    color: #555;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  .title_hover:hover {
+    font-size: 15px;
+    color: red;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
 </style>
