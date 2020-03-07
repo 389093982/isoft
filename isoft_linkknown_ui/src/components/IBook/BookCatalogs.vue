@@ -25,27 +25,26 @@
                 </div>
               </Col>
               <Col span="8">
-                <div>阅读xx 评论xx</div>
+                <div>{{bookInfo.views}} 次阅读 ,&nbsp;&nbsp;{{bookInfo.comments}} 次评论</div>
               </Col>
             </Row>
           </div>
 
           <div style="padding: 10px 0;">
-            <div style="text-align: right;">
-              <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
-              <Button v-if="!isCollected"
-                      @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')">收藏</Button>
-              <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')">已收藏</Button>
-
-              </span>
-
-              <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/book_edit',
-                query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑
-              </Button>
-              <Button @click="$router.push({path:'/ibook/book_detail',
-                query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读
-              </Button>
-            </div>
+            <Row>
+              <Col span="4">&nbsp;</Col>
+              <Col span="12">&nbsp;</Col>
+              <Col span="8">
+                <div>
+                  <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
+                    <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')">收藏</Button>
+                    <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')">已收藏</Button>
+                  </span>
+                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/book_edit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
+                  <Button @click="$router.push({path:'/ibook/book_detail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
+                 </div>
+              </Col>
+            </Row>
 
             <div style="border-bottom: 1px solid #d7dde4;padding-bottom: 10px;">
               <h3 style="margin:10px 0;">简介</h3>
@@ -67,8 +66,7 @@
       <Col span="18">
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
           <!-- 评论模块 -->
-          <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type"
-                        style="margin-top: 50px;"/>
+          <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
         </div>
       </Col>
       <Col span="6" class="isoft_bg_white isoft_pd10">
