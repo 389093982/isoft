@@ -6,57 +6,60 @@
     </div>
 
     <div class="isoft_top5">
-      <Row>
-        <Col span="24" style="padding: 0 8px 0 0;">
-          <div class="isoft_bg_white">
-            <Row class="_search" style="padding: 12px;height: 50px; position: relative;left: -15px">
-              <Col span="3" offset="3" style="font-size: 20px;color: #333;">
-                <span >{{showLabel}}</span>
-              </Col>
-              <Col span="2"  style="text-align: center;">
-                <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></Col>
-              <Col span="2" style="text-align: center;">
-                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></Col>
-              <Col span="2" style="text-align: center;">
-                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></Col>
-              <Col span="2" style="text-align: center;">
-                <a @click="blog_edit"><Icon type="ios-brush" />我也要发布</a>
-              </Col>
-              <Col span="5" offset="2">
-                <Affix :offset-top="68">
-                  <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top: -8px;"></ISearch>
-                </Affix>
-              </Col>
-            </Row>
+      <div class="isoft_bg_white">
 
-            <!--移动的小球-->
-            <div style="width: 60%;height:1px;border-bottom: 1px solid #e6e6e6;">
-              <MoveLine style="position: relative;top: -20px;"/>
-            </div>
+        <!--全部分类、热门博客、我的博客、我也要发布-->
+        <Row class="_search" style="padding: 12px;height: 50px; position: relative;left: -20px">
+          <Col span="3" offset="3" style="font-size: 20px;color: #333;">
+            <span >{{showLabel}}</span>
+          </Col>
+          <Col span="2"  style="text-align: center;">
+            <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></Col>
+          <Col span="2" style="text-align: center;">
+            <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></Col>
+          <Col span="2" style="text-align: center;">
+            <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></Col>
+          <Col span="2" style="text-align: center;">
+            <a @click="blog_edit"><Icon type="ios-brush" />我也要发布</a>
+          </Col>
+          <Col span="5" offset="2">
+            <Affix :offset-top="68">
+              <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top: -8px;"></ISearch>
+            </Affix>
+          </Col>
+        </Row>
 
-            <!--加载圈圈-->
-            <div>
-              <Spin fix size="large" v-if="isLoading">
-                <div class="isoft_loading"></div>
-              </Spin>
-            </div>
+        <!--移动的小球-->
+        <div style="width: 60%;height:1px;border-bottom: 1px solid #e6e6e6;">
+          <MoveLine style="position: relative;top: -25px;"/>
+        </div>
 
+        <!--加载圈圈-->
+        <div>
+          <Spin fix size="large" v-if="isLoading">
+            <div class="isoft_loading"></div>
+          </Spin>
+        </div>
+
+        <!--下面是三列-->
+        <Row style="padding: 12px;">
+          <Col span="2">
+            <!--博客左侧预留空间-->
+            &nbsp;
+          </Col>
+          <Col span="16">
             <!--下面展示一篇博客具体格式，按照三列，中间一列分两行-->
             <ul>
               <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-                <Row style="margin-top: 12px">
-                  <!--博客左侧预留空间-->
-                  <Col span="3">
-                    &nbsp;
-                  </Col>
-                  <Col span="1">
+                <Row style="margin-top: 10px">
+                  <Col span="2" offset="1">
                     <!--第一列 ：头像-->
                     <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}" style="float: left;">
                       <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" style="border: 1px solid grey;" />
                       <Avatar size="large" v-else src="../../../static/images/404.jpg" style="border: 1px solid grey;"/>
                     </router-link>
                   </Col>
-                  <Col span="10" style="position: relative;top: -3px;">
+                  <Col span="16" style="position: relative;top: -3px;left: -18px">
                     <!--第二列 ：分两行-->
                     <Row>
                       <!--第一行：所属分类 + 博客标题-->
@@ -71,16 +74,16 @@
                     <Row>
                       <!--第二行：作者 + 发布 + 更新时间 -->
                       <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}">
-                        <span style="color: #797776;border-bottom: 1px solid #797776;">
-                          <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
-                          <span v-else>{{searchblog.author}}</span>
-                        </span>
+                    <span style="color: #797776;border-bottom: 1px solid #797776;">
+                      <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
+                      <span v-else>{{searchblog.author}}</span>
+                    </span>
                       </router-link>
                       <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time" :interval="1"/></span>
                       <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time" :interval="1"/></span>
                     </Row>
                   </Col>
-                  <Col span="4">
+                  <Col span="5">
                     <!--第三列：-->
                     <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
@@ -89,22 +92,24 @@
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">{{searchblog.comments}}</span> 条评论</span>
                     </router-link>
                   </Col>
-                  <!--博客右侧预留空间-->
-                  <Col span="6">
-                    &nbsp;
-                  </Col>
                 </Row>
               </li>
             </ul>
+            &nbsp;
+          </Col>
+          <Col span="6">
+            <!--博客右侧-->
+            <HotUser></HotUser>
+            <CatalogList></CatalogList>
+          </Col>
+        </Row>
 
-            <div style="padding-bottom: 10px">
-              <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts"
-                    :styles="{'text-align': 'center','margin-top': '10px'}"
-                    @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
-            </div>
-          </div>
-        </Col>
-      </Row>
+        <!--分页-->
+        <div style="padding-bottom: 10px">
+          <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts" :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+        </div>
+
+      </div>
     </div>
 
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 8px;">

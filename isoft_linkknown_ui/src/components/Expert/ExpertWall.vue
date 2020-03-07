@@ -5,11 +5,11 @@
         <div slot="content">
           <div v-for="(user,index) in users2">
             <Row>
-              <Col span="11" offset="1">
+              <Col span="13" offset="1">
                 <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
                 <span v-else>{{user.user_name}}</span>
               </Col>
-              <Col span="12">
+              <Col span="10">
                 累计好评次数：{{user.good_numbers}}
               </Col>
             </Row>
@@ -23,11 +23,11 @@
         <div slot="content">
           <div v-for="(user,index) in users">
             <Row>
-              <Col span="11" offset="1">
+              <Col span="13" offset="1">
                 <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
                 <span v-else>{{user.user_name}}</span>
               </Col>
-              <Col span="12">
+              <Col span="10">
                 累计解答次数：{{user.count}}
               </Col>
             </Row>
@@ -45,13 +45,13 @@
                    @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
                    width="30" height="30" :src="user.small_icon" @error="defImg()">
             </Col>
-            <Col span="8" style="position: relative;left: -5px">
+            <Col span="11" style="position: relative;left: -5px">
               <span @click="$router.push({path:'/user/detail',query:{username:user.user_name}})" style="cursor: pointer">
                 <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
                 <span v-else>{{user.user_name}}</span>
               </span>
             </Col>
-            <Col span="8">
+            <Col span="10">
               累计提问次数：{{user.question_numbers}}
             </Col>
           </Row>
