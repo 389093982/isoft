@@ -31,6 +31,7 @@
     <span class="isoft_button_red1">按钮样式</span>
     <span class="isoft_button_red2">按钮样式</span>
     <span class="isoft_button_red_small">按钮样式 small</span>
+    <span class="isoft_button_red3">按钮样式</span>
     <br/><br/><br/>
 
     <!-- 背景色 -->

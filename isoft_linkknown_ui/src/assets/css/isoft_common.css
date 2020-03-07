@@ -374,6 +374,23 @@
   font-size: 16px;
 }
 
+.isoft_button_red3 {
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  background: #ff5c00;
+  border: 0;
+  text-align: center;
+}
+
+.isoft_button_red3:hover {
+  background: #f01414;
+}
+
 .isoft_button_red_small {
   display: inline-block;
   padding: 0 10px;

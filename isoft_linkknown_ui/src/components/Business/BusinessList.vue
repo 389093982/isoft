@@ -39,7 +39,7 @@
                   优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>
                   <span style="font-size: 12px;color: #999;float: right;" class="cjl">
                     <span class="amount">成交量:0</span>
-                    <span class="info">专业的事找专业的人，<a @click="alert('我没啥擅长的~');">我要发挥我的专长</a></span>
+                    <span class="info">专业的事找专业的人，<a @click="showExpertise">我要发挥我的专长</a></span>
                   </span>
                 </p>
                 <p>卖家姓名：{{good.good_seller}}</p>
@@ -76,6 +76,10 @@
       </div>
     </div>
 
+    <div>
+      <!-- 专长 -->
+      <Expertise ref="expertise"/>
+    </div>
   </div>
 </template>
 
@@ -83,10 +87,11 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {GoodList, NewOrder} from "../../api"
   import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, strSplit} from "../../tools"
+  import Expertise from "./Expertise";
 
   export default {
     name: "GoodList",
-    components: {IBeautifulLink},
+    components: {Expertise, IBeautifulLink},
     data() {
       return {
         showGoodEditModal: false,
@@ -94,6 +99,9 @@
       }
     },
     methods: {
+      showExpertise: function () {
+        this.$refs.expertise.showModal();
+      },
       getLabel: function (good, index) {
         return "链知网，让赚钱变得更简单一些";
       },

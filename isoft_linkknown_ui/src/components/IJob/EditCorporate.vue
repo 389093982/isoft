@@ -137,6 +137,7 @@
         }
       },
       handleReturn: function () {
+        showModal
         this.$router.push({path: '/job/corporate_detail'});
       },
       handleSubmit: function (name) {
