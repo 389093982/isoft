@@ -1,7 +1,7 @@
 <template>
   <span v-if="course">
     <p style="color: #d6241e;">
-      浏览量：{{course.watch_number}}
+      浏览量：{{course.watch_number}}  ,  评论数：{{course.comments}}
     </p>
     <p>
       <span>课程名称：{{course.course_name}}</span>

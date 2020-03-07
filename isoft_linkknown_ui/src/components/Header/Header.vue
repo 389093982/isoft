@@ -40,7 +40,7 @@
                 <Avatar icon="ios-person" size="small" style="padding: 0 0 0 5px ;margin: 0 2px 2px 0 " />未登录
               </span>
             </template>
-            <MenuGroup :title="loginUserNickName | filterLimitFunc(10)">
+            <MenuGroup title="账户管理">
               <MenuItem name="8-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
               <MenuItem name="8-2" @click.native="cancelUser">
                 <span v-if="isLogin()">重新</span><span>登录</span>
