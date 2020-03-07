@@ -1,18 +1,12 @@
 <template>
   <div style="margin:15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
-    <!-- 内外边距：上右下左 -->
-    <Row style="padding: 15px 10px 10px 25px;">
-      <Col span="2">
-        <IBeautifulLink @onclick="$router.push({path:'/business/list'})">热销商品</IBeautifulLink>
-      </Col>
-      <Col span="3">
-        <IBeautifulLink @onclick="showMyBusiness">我的店铺商品
-        </IBeautifulLink>
-      </Col>
-      <Col span="2">
-        <IBeautifulLink @onclick="$router.push({path:'/business/edit'})">发布服务或商品</IBeautifulLink>
-      </Col>
-    </Row>
+    <div style="display: flex;padding: 15px 150px;text-align: center;">
+      <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
+      <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
+      <div style="width: 20%;" @click="$router.push({path:'/business/edit'})">发布服务或商品</div>
+      <span style="width: 40%;text-align: right;"
+            class="hovered hvr-grow hoverLinkColor isoft_point_cursor">上链知网，总有心发现</span>
+    </div>
 
     <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10"
          style="margin: 10px 100px;border: 1px solid #eee;">
@@ -20,8 +14,11 @@
         <div style="width: 40%;">
           <Carousel autoplay dots="outside" trigger="hover" :autoplay-speed="4000">
             <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
-              <div class="demo-carousel">
-                <img :src="good_image" width="100%" height="250px"/>
+              <div class="carousel">
+                <img :src="good_image" width="100%" height="250px" style="border: 3px solid rgba(188,238,204,0.24);"/>
+                <div style="position: relative;">
+                  <div class="carousel_label">{{getLabel(good, index)}}</div>
+                </div>
               </div>
             </CarouselItem>
           </Carousel>
@@ -70,6 +67,9 @@
       }
     },
     methods: {
+      getLabel: function (good, index) {
+        return "链知网，让赚钱变得更简单一些";
+      },
       parseTag: function (good_tag) {
         return strSplit(good_tag, "|").filter(tag => !checkEmpty(tag));
       },
@@ -111,6 +111,26 @@
 </script>
 
 <style scoped>
+  .carousel .carousel_label {
+    display: none;
+    margin: 4px;
+    padding: 2px 0 0 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    transition: all ease-in 1s;
+  }
+
+  .carousel:hover .carousel_label {
+    display: block;
+    top: -55px;
+  }
+
   .item_border1::before {
     content: '';
     float: left;
