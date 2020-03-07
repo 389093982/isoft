@@ -37,9 +37,20 @@
                 <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
                 <p>
                   优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>
-                  <span style="font-size: 12px;color: #999;float: right;" class="cjl">
-                    <span class="amount">成交量:0</span>
-                    <span class="info">专业的事找专业的人，<a @click="showExpertise">我要发挥我的专长</a></span>
+
+                  <span style="font-size: 12px;color: #999;float: right;">
+                    <span class="pl">
+                      <span style="cursor: pointer;" class="amount" @mouseenter="showComment(good, true)"
+                            @mouseout="showComment(good, false)">
+                        评论数:0
+                        <BusinessComment v-if="good.$showComment" style="position: absolute;z-index: 999;"/>
+                      </span>
+                    </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="cjl">
+                      <span class="amount">成交量:0</span>
+                      <span class="info">专业的事找专业的人，<a @click="showExpertise">我要发挥我的专长</a></span>
+                    </span>
                   </span>
                 </p>
                 <p>卖家姓名：{{good.good_seller}}</p>
@@ -88,10 +99,11 @@
   import {GoodList, NewOrder} from "../../api"
   import {checkEmpty, CheckHasLoginConfirmDialog2, GetLoginUserName, strSplit} from "../../tools"
   import Expertise from "./Expertise";
+  import BusinessComment from "./BusinessComment";
 
   export default {
     name: "GoodList",
-    components: {Expertise, IBeautifulLink},
+    components: {BusinessComment, Expertise, IBeautifulLink},
     data() {
       return {
         showGoodEditModal: false,
@@ -99,6 +111,9 @@
       }
     },
     methods: {
+      showComment: function (good, flag) {
+        this.$set(good, '$showComment', flag);
+      },
       showExpertise: function () {
         this.$refs.expertise.showModal();
       },
@@ -201,7 +216,7 @@
   }
 
   .cjl:hover .info {
-    display: block;
+    display: inline-block;
   }
 
   .cjl:hover .amount {
