@@ -222,7 +222,6 @@
   .pl .amount .comment {
     display: none;
   }
-
   .pl .amount:hover .comment {
     display: block;
   }

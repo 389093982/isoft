@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="isoft_bg_white isoft_mg10 isoft_pd20">
     <div v-if="good">
       <Row>
-        <Col span="12"><img :src="good_images[0]" width="100%" height="400px"/></Col>
-        <Col span="12">{{good.good_desc}}</Col>
+        <GoodMeta :good="good"/>
       </Row>
       <Row style="text-align: right;" v-if="orderInfo">
         <Button v-if="orderInfo.payment_status == 1">付款</Button>
@@ -14,13 +13,14 @@
 
 <script>
   import {GetGoodDetail, GetOrderDetail} from "../../api"
+  import GoodMeta from "./GoodMeta";
 
   export default {
     name: "PayConfirm",
+    components: {GoodMeta},
     data() {
       return {
         good: null,
-        good_images: [],   // 商品图片
         orderInfo: null,
       }
     },
@@ -29,7 +29,6 @@
         const result = await GetGoodDetail(this.$route.query.good_id);
         if (result.status == "SUCCESS") {
           this.good = result.good;
-          this.good_images = JSON.parse(result.good.good_images);
         }
       },
       refreshOrderInfo: async function () {
