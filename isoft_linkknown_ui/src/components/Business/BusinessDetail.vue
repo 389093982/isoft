@@ -8,7 +8,7 @@
     </GoodMeta>
 
     <div>
-      <BusinessDetail2/>
+      <BusinessDecorate/>
     </div>
   </div>
 </template>
@@ -16,13 +16,13 @@
 <script>
   import {GetGoodDetail} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import BusinessDetail2 from "./BusinessDetail2";
+  import BusinessDecorate from "./BusinessDecorate";
   import GoodMeta from "./GoodMeta";
   import GoodShortcut from "./GoodShortcut";
 
   export default {
     name: "BusinessDetail",
-    components: {GoodShortcut, GoodMeta, BusinessDetail2, IBeautifulLink},
+    components: {GoodShortcut, GoodMeta, BusinessDecorate, IBeautifulLink},
     data() {
       return {
         good: null,

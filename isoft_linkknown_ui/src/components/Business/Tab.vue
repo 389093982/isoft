@@ -55,7 +55,7 @@
   }
 
   .tab-content div {
-    padding: 5px 20px;
+    padding: 5px 8px;
     min-height: 100px;
   }
 </style>
