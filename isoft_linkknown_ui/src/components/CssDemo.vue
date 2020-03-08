@@ -37,6 +37,7 @@
     <!-- 背景色 -->
     <div class="isoft_info_tip">灰度背景色</div>
     <div class="isoft_info_tip2">淡红色背景</div>
+    <div class="isoft_info_tip3">淡红色背景</div>
     <br/>
 
     <!-- hover 偏移 -->

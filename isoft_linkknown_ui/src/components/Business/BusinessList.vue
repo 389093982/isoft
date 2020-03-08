@@ -1,5 +1,5 @@
 <template>
-  <div style="margin:15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
+  <div style="margin:0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
     <div style="display: flex;padding: 15px 150px;text-align: center;">
       <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
       <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
@@ -35,6 +35,10 @@
           <p style="font-weight: bold;padding: 10px 20px;">
             <span class="isoft_button_red1" @click="$router.push({path:'/ilearning/advise'})">我要好好提提意见></span>
           </p>
+        </div>
+
+        <div style="margin-top: 10px;padding: 0 3px;" class="isoft_info_tip3">
+          <span style="color: red;"><span>规则</span>&nbsp;|&nbsp;<span>入驻</span></span><span>入驻链知网，成为创业合作伙伴</span>
         </div>
       </div>
     </div>

@@ -247,6 +247,18 @@
   padding: 5px 10px;
 }
 
+.isoft_info_tip3 {
+  background: #fff7eb;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  color: #333;
+  box-sizing: border-box;
+  margin-top: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
 
 .fadeToLeft {
   position: relative;
