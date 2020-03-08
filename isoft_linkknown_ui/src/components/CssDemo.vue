@@ -48,6 +48,7 @@
     <div class="isoft_tag1 isoft_hover_red">tag 标签样式1</div>
     <div class="isoft_tag2">tag 标签样式2</div>
     <div class="isoft_tag3">tag 标签样式3</div>
+    <div class="isoft_tag4">tag 标签样式4</div>
   </div>
 </template>
 
