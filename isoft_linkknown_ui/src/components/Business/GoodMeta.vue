@@ -31,9 +31,13 @@
               优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>
               <GoodShortcut/>
             </p>
-            <div>商品价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></div>
             <div>卖家姓名：{{good.good_seller}}</div>
-            <div>卖家联系方式：{{good.seller_contact}}</div>
+            <div>
+              卖家联系方式：{{good.seller_contact}}
+              <div style="float: right;">
+                <span class="isoft_button_red_small">免费咨询</span>
+              </div>
+            </div>
           </div>
 
           <slot name="footer"></slot>

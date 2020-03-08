@@ -20,9 +20,6 @@
                   </span>
                 <span v-else class="isoft_button_red2 isoft_point_cursor" @click="payConfirm(good)">立即购买</span>
               </div>
-              <div style="width: 50%;text-align: right;">
-                <span class="isoft_button_red_small">免费咨询</span>
-              </div>
             </div>
           </GoodMeta>
         </div>
