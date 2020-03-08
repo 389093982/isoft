@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: "BusinessComment"
+    name: "BusinessComment",
   }
 </script>
 
