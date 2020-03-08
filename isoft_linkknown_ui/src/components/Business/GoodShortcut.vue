@@ -3,7 +3,7 @@
     <span class="pl">
       <div style="cursor: pointer;display: inline-block;" class="amount">
         评论数:0
-        <BusinessComment class="comment" style="position: absolute;z-index: 999;"/>
+        <BusinessComment class="comment" style="position: absolute;margin-left: -70px;z-index: 999;"/>
       </div>
     </span>
     &nbsp;&nbsp;&nbsp;&nbsp;
