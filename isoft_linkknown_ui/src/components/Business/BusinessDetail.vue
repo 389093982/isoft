@@ -1,11 +1,13 @@
 <template>
-  <div style="margin:15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
-    <GoodMeta v-if="good" :good="good"/>
+  <div
+    style="margin:15px;padding:50px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
+    <GoodMeta v-if="good" :good="good">
+      <div slot="footer" style="text-align: right;margin-right: 100px;">
+        <span class="isoft_button_red2 isoft_point_cursor">在线咨询</span>
+        <span class="isoft_button_red2 isoft_point_cursor">立即购买</span>
+      </div>
+    </GoodMeta>
 
-    <div style="position: absolute;bottom: 30px;right: 100px;">
-      <span class="isoft_button_red2 isoft_point_cursor">在线咨询</span>
-      <span class="isoft_button_red2 isoft_point_cursor">立即购买</span>
-    </div>
     <div>
       <BusinessDetail2/>
     </div>
@@ -17,10 +19,11 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import BusinessDetail2 from "./BusinessDetail2";
   import GoodMeta from "./GoodMeta";
+  import GoodShortcut from "./GoodShortcut";
 
   export default {
     name: "BusinessDetail",
-    components: {GoodMeta, BusinessDetail2, IBeautifulLink},
+    components: {GoodShortcut, GoodMeta, BusinessDetail2, IBeautifulLink},
     data() {
       return {
         good: null,

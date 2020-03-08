@@ -1,13 +1,10 @@
 <template>
   <div class="isoft_bg_white isoft_mg10 isoft_pd20">
-    <div v-if="good">
-      <Row>
-        <GoodMeta :good="good"/>
-      </Row>
-      <Row style="text-align: right;" v-if="orderInfo">
+    <GoodMeta v-if="good" :good="good">
+      <div slot="footer" v-if="orderInfo" style="text-align: right;">
         <Button v-if="orderInfo.payment_status == 1">付款</Button>
-      </Row>
-    </div>
+      </div>
+    </GoodMeta>
   </div>
 </template>
 
@@ -27,13 +24,13 @@
     methods: {
       refreshGoodDetail: async function () {
         const result = await GetGoodDetail(this.$route.query.good_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.good = result.good;
         }
       },
       refreshOrderInfo: async function () {
         const result = await GetOrderDetail(this.$route.query.orderCode);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.orderInfo = result.orderInfo;
         }
       }
