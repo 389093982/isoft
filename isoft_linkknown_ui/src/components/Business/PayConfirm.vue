@@ -1,8 +1,8 @@
 <template>
   <div class="isoft_bg_white isoft_mg10 isoft_pd20">
     <GoodMeta v-if="good" :good="good">
-      <div slot="footer" v-if="orderInfo" style="text-align: right;">
-        <Button v-if="orderInfo.payment_status == 1">付款</Button>
+      <div slot="footer" v-if="orderInfo">
+        <span v-if="orderInfo.payment_status === 1" class="isoft_button_red2 isoft_point_cursor">付款</span>
       </div>
     </GoodMeta>
   </div>
