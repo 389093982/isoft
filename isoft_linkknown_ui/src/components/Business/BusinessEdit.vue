@@ -1,8 +1,8 @@
 <template>
   <div style="margin: 0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
 
-    <Row style="padding: 50px;">
-      <Col span="16">
+    <div style="display: flex;padding: 50px;">
+      <div style="width: 70%;padding: 0 50px 0 0;">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="产品类型" prop="good_type">
             <Input v-model.trim="formValidate.good_type" placeholder="请输入产品类型,示例：服务类|广告服务|广告制作"/>
@@ -41,11 +41,23 @@
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
           </FormItem>
         </Form>
-      </Col>
-      <Col span="8">
-        AAAAAAAAAAAAAA
-      </Col>
-    </Row>
+      </div>
+
+      <div style="width: 30%;">
+        <div>
+          <span>1</span>
+          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">发布服务或产品</span>
+        </div>
+        <div>
+          <span>2</span>
+          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">装饰店铺</span>
+        </div>
+        <div>
+          <span>3</span>
+          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">完善认证资格</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -95,7 +107,7 @@
     },
     methods: {
       convertObjToArr(obj) {
-        if (typeof obj == typeof []) {
+        if (typeof obj === typeof []) {
           return obj;
         }
         let arr = [];
@@ -105,7 +117,7 @@
         return arr;
       },
       uploadComplete(result, file) {
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           let _good_images = this.convertObjToArr(this.formValidate.good_images);
           _good_images.push(result.fileServerPath);
           this.$set(this.formValidate, "good_images", _good_images);
@@ -116,7 +128,7 @@
           this.$Message.error('产品描述太短，不能少于 50 个字符!');
           return;
         }
-        if (this.formValidate.good_images.length == 0) {
+        if (this.formValidate.good_images.length === 0) {
           this.$Message.error('必须上传一张图片!');
           return;
         }
@@ -126,7 +138,7 @@
             let params = copyObj(_this.formValidate);
             params.good_images = JSON.stringify(_this.formValidate.good_images);
             const result = await GoodEdit(params);
-            if (result.status == "SUCCESS") {
+            if (result.status === "SUCCESS") {
               this.$router.push({path: '/business/list'});
             } else {
               _this.$Message.error('提交失败!');
@@ -138,7 +150,7 @@
       },
       refreshGoodDetail: async function (good_id) {
         const result = await GetGoodDetail(good_id);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formValidate = result.good;
           this.formValidate.good_images = JSON.parse(result.good.good_images);
         }
@@ -146,7 +158,7 @@
     },
     mounted() {
       this.formValidate.good_seller = GetLoginUserName();
-      if (this.$route.query.id != undefined && this.$route.query.id > 0) {
+      if (this.$route.query.id > 0) {
         this.refreshGoodDetail(this.$route.query.id);
       }
     }

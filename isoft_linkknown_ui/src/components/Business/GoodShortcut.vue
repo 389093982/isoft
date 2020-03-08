@@ -1,5 +1,11 @@
 <template>
   <span style="font-size: 12px;color: #999;float: right;">
+    <span class="rd" style="margin-right: 13px;">
+      <div style="cursor: pointer;display: inline-block;">
+        热度:99
+      </div>
+    </span>
+
     <span class="pl">
       <div style="cursor: pointer;display: inline-block;" class="amount">
         评论数:0
