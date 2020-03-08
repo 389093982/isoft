@@ -29,7 +29,8 @@
                 <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="(bookCatalog, index) in bookCatalogs">
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)" style="padding-left: 10px;">
                     <span style="color: rgba(115,179,137,0.91);">{{bookCatalog.catalog_order}} -</span>
-                    <span :style="{color: catalogOrder === bookCatalog.catalog_order ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
+                    <span
+                      :style="{color: curEditCatalogId === bookCatalog.id ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
                   </span>
                   <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
                         padding: 3px 10px;background-color: #eee;border-radius: 5px;">
@@ -61,7 +62,6 @@
     BookCatalogEdit,
     BookCatalogList,
     ChangeCatalogOrder,
-    ChangeCatalogOrderByLoop,
     DeleteBookCatalog,
     ShowBookCatalogDetail
   } from "../../api";
@@ -83,12 +83,13 @@
         }
       };
       return {
+        curEditCatalogId: -1,
         tempOrgCatalogOrder:-1,
         modalTarget:'',
         bookCatalogs: [],
         formValidate: {
-          id: -1,             //book_catalog表里的id
-          catalogName: '',  //书本名称
+          id: -1,               // book_catalog表里的id
+          catalogName: '',      //书本名称
           catalogOrder: -1,     // 当前编辑的文章索引
         },
         ruleValidate: {
@@ -155,6 +156,7 @@
         this.$refs[name].resetFields();
       },
       editBookArticle: function (bookCatalogId) {
+        this.curEditCatalogId = bookCatalogId;
         this.catalogOrder = bookCatalogId.catalogOrder;
         this.$refs.bookArticleEdit.refreshBookArticleDetail(bookCatalogId);
       },
