@@ -1,6 +1,6 @@
 <template>
   <div
-    style="margin:15px;padding:50px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
+    style="margin:0 15px;padding:50px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
     <GoodMeta v-if="good" :good="good">
       <div slot="footer">
         <span class="isoft_button_red2 isoft_point_cursor">立即购买</span>
