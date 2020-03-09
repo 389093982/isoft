@@ -1,7 +1,9 @@
 <template>
   <div style="border: 1px solid #eee;margin: 50px;padding: 50px;">
     <div v-if="decorate">{{decorate.decorate_name}}</div>
-    <div v-else style="text-align: right;"><span>常用装饰位</span><span>新增装饰位 <Icon type="md-add"/></span></div>
+    <div v-else style="text-align: right;">
+      <span class="isoft_hover_red" @click="editDecorate"><Icon type="md-add"/>暂无装修,快速新建</span>
+    </div>
 
     <div v-if="decorate">
       <Row :gutter="10" style="text-align: center;">
@@ -98,16 +100,16 @@
           }
         })
       },
-      refreshDecorate: async function () {
+      editDecorate: async function () {
         let params = {
           'referer_type': this.referer_type,
           'referer_id': this.referer_id,
-          'decorate_name': 'decorate_name',
-          'decorate_icon': 'decorate_icon',
+          'decorate_name': '默认装修位',
+          'decorate_icon': '',
         }
         const result = await EditDecorate(params);
         if (result.status === "SUCCESS") {
-          alert(JSON.stringify(result));
+          this.refreshLoadDecorateData();
         }
       },
       refreshLoadDecorateData: async function () {
@@ -133,7 +135,6 @@
     },
     mounted() {
       this.refreshLoadDecorateData();
-      // this.refreshDecorate();
     }
   }
 </script>
