@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
-      <h4>{{ask_expert.short_desc}}</h4>
+      <span style="font-size: 14px"><b>{{ask_expert.short_desc}}</b></span>
+      <i style="margin-left: 30px">{{ask_expert.answer_number}}次回答,  {{ask_expert.view_number}}次浏览</i>
       <IShowMarkdown :content="ask_expert.question"/>
       <div style="text-align: left;">
         <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>&nbsp;&nbsp;
