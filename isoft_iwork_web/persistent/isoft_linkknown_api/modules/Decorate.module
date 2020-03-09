@@ -1,0 +1,10 @@
+<Module>
+	<Id>24</Id>
+	<AppId>5</AppId>
+	<ModuleName>Decorate</ModuleName>
+	<ModuleDesc>装饰系统</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-03-09T15:24:12+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-03-09T15:24:12+08:00</LastUpdatedTime>
+</Module>
