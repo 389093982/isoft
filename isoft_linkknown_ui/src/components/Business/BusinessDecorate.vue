@@ -25,8 +25,6 @@
         <span class="isoft_tag4">交付准时（167）</span>
       </div>
       <div slot="tabPane3">
-        <img style="width: 80%;height: 450px;"
-             src="https://homesitetask.zbjimg.com/homesite/task/流量营销.jpg/origine/2f23cacd-9b1c-42a0-9267-9138eba349ed"/>
         <span v-if="decorate_items" v-for="(decorate_item, index) in decorate_items">
           {{decorate_item.decorate_text}}
         </span>
@@ -56,7 +54,7 @@
     },
     methods: {
       refreshLoadDecorateItems: async function () {
-        const result = await LoadDecorateItems({referer_type: "business_decorate", referer_id: this.good.id});
+        const result = await LoadDecorateItems({referer_type: "business_decorate", referer_id: this.good.id, index: 0});
         if (result.status === "SUCCESS") {
           this.decorate = result.decorate;
           this.decorate_items = result.decorate_items;
