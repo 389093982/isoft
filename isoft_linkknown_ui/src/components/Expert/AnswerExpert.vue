@@ -3,9 +3,12 @@
     <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
       <h4>{{ask_expert.short_desc}}</h4>
       <IShowMarkdown :content="ask_expert.question"/>
-      <div style="text-align: right;">
-        <a @click="showEditanswer = !showEditanswer">我来回答</a>
-        <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>
+      <div style="text-align: left;">
+        <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>&nbsp;&nbsp;
+        <span class="showTousu">
+          <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
+          <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
+        </span>
       </div>
 
       <div v-if="showEditanswer">
@@ -121,5 +124,11 @@
 </script>
 
 <style scoped>
+  .showTousu:hover .willComplaint{
+    display: inline;
+  }
+  .willComplaint{
+    display: none;
+  }
 
 </style>
