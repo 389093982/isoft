@@ -56,8 +56,15 @@
           <span>3</span>
           <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">完善认证资格</span>
         </div>
+
+        <div>
+          <span>4</span>
+          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">装饰店铺</span>
+        </div>
       </div>
     </div>
+
+    <Decorate/>
   </div>
 </template>
 
@@ -65,10 +72,11 @@
   import IFileUpload from "../Common/file/IFileUpload";
   import {fileUploadUrl, GetGoodDetail, GoodEdit} from "../../api"
   import {copyObj, GetLoginUserName} from "../../tools"
+  import Decorate from "../Decorate/Decorate";
 
   export default {
     name: "BusinessEdit",
-    components: {IFileUpload},
+    components: {Decorate, IFileUpload},
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=good&table_field=good_images",
