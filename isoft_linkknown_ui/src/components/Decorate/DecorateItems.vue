@@ -9,11 +9,8 @@
       </Row>
       <Row :gutter="10" v-for="(item, index) in formDynamic.items" :key="index">
         <Col span="6">
-          <FormItem :prop="'items.' + index + '.media_path'"
-                    :rules="{required: true, message: '图片/视频[' + index +']不能为空！', trigger: 'blur'}">
-            <Input v-model.trim="item.media_path" placeholder="请选择图片/视频" readonly
-                   @on-focus="uploadMedia(index)"></Input>
-          </FormItem>
+          <img width="220px" height="160px" :src="item.media_path" @error="defImg()"
+               class="isoft_point_cursor" title="点击图片换一张" @click="uploadMedia(index)"/>
         </Col>
         <Col span="9">
           <FormItem :prop="'items.' + index + '.decorate_text'"
@@ -61,20 +58,26 @@
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=decorate_item&table_field=media_path",
+        defaultImg: require('../../assets/default.png'),
         fileUploadIndex: -1,
         formDynamic: {
           items: [
-            {
-              id: 0,
-              media_path: '',
-              decorate_text: '',
-              link_href: '',
-            }
+            // {
+            //   id: 0,
+            //   media_path: '',
+            //   decorate_text: '',
+            //   link_href: '',
+            // }
           ]
         },
       }
     },
     methods: {
+      defImg() {
+        let img = event.srcElement;
+        img.src = this.defaultImg;
+        img.onerror = null; //防止闪图
+      },
       uploadMedia: function (index) {
         this.fileUploadIndex = index;
         this.$refs.fileUpload.showModal();
