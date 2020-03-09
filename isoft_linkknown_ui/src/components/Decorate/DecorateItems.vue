@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {EditDecorateItem, LoadDecorateData} from "../../api"
+  import {EditDecorateItem, LoadDecorateItems} from "../../api"
 
   export default {
     name: "DecorateItems",
@@ -78,8 +78,8 @@
           link_href: '',
         });
       },
-      refreshLoadDecorateData: async function () {
-        const result = await LoadDecorateData({
+      refreshLoadDecorateItems: async function () {
+        const result = await LoadDecorateItems({
           decorate_id: this.decorate.id,
           referer_type: this.decorate.referer_type,
           referer_id: this.decorate.referer_id
@@ -99,7 +99,7 @@
         const result = await EditDecorateItem(params);
         if (result.status === "SUCCESS") {
           this.$Message.success("保存成功！");
-          this.refreshLoadDecorateData();
+          this.refreshLoadDecorateItems();
         } else {
           this.$Message.error(result.errorMsg);
         }
@@ -107,12 +107,12 @@
     },
     mounted() {
       if (this.decorate) {
-        this.refreshLoadDecorateData();
+        this.refreshLoadDecorateItems();
       }
     },
     watch: {
       decorate: function () {
-        this.refreshLoadDecorateData();
+        this.refreshLoadDecorateItems();
       }
     }
   }

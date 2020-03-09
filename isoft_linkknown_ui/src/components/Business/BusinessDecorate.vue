@@ -37,7 +37,7 @@
 
 <script>
   import Tab from "./Tab";
-  import {LoadDecorateData} from "../../api"
+  import {LoadDecorateItems} from "../../api"
 
   export default {
     name: "BusinessDecorate",
@@ -55,8 +55,8 @@
       }
     },
     methods: {
-      refreshLoadDecorateData: async function () {
-        const result = await LoadDecorateData({referer_type: "business_decorate", referer_id: this.good.id});
+      refreshLoadDecorateItems: async function () {
+        const result = await LoadDecorateItems({referer_type: "business_decorate", referer_id: this.good.id});
         if (result.status === "SUCCESS") {
           this.decorate = result.decorate;
           this.decorate_items = result.decorate_items;
@@ -64,7 +64,7 @@
       }
     },
     mounted() {
-      this.refreshLoadDecorateData();
+      this.refreshLoadDecorateItems();
     }
   }
 </script>

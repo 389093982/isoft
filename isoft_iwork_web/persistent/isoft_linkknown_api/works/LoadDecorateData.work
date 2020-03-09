@@ -2,7 +2,7 @@
 	<work>
 		<Id>414</Id>
 		<AppId>5</AppId>
-		<WorkName>LoadDecorateData</WorkName>
+		<WorkName>LoadDecorateItems</WorkName>
 		<WorkDesc>加载装饰系统数据</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Decorate</ModuleName>
