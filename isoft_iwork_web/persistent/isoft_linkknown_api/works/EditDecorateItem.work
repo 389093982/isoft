@@ -1,9 +1,9 @@
-<workdl work_id="413">
+<workdl work_id="415">
 	<work>
-		<Id>413</Id>
+		<Id>415</Id>
 		<AppId>5</AppId>
-		<WorkName>EditDecorate</WorkName>
-		<WorkDesc>编辑装饰表</WorkDesc>
+		<WorkName>EditDecorateItem</WorkName>
+		<WorkDesc>编辑装饰项</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Decorate</ModuleName>
 		<CacheResult>false</CacheResult>
@@ -11,15 +11,15 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</work>
 	<steps>
-		<Id>1893</Id>
-		<WorkId>413</WorkId>
+		<Id>1905</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>1</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>start</WorkStepName>
 		<WorkStepDesc>start节点</WorkStepDesc>
 		<WorkStepType>work_start</WorkStepType>
 		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;referer_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;referer_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_icon&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;media_path&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_text&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;link_href&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>id</paramName>
@@ -31,7 +31,7 @@
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
-		<paramName>referer_type</paramName>
+		<paramName>decorate_id</paramName>
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
@@ -40,7 +40,7 @@
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
-		<paramName>referer_id</paramName>
+		<paramName>media_path</paramName>
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
@@ -49,7 +49,7 @@
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
-		<paramName>decorate_name</paramName>
+		<paramName>decorate_text</paramName>
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
@@ -58,7 +58,7 @@
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
-		<paramName>decorate_icon</paramName>
+		<paramName>link_href</paramName>
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
@@ -67,7 +67,7 @@
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
-		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;referer_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;referer_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_icon&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;media_path&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;decorate_text&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;link_href&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
 		<work_step_output_xml><![CDATA[<paramOutputSchema>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
@@ -76,27 +76,27 @@
 	</paramOutputSchemaItem>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
-		<paramName>referer_type</paramName>
+		<paramName>decorate_id</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
-		<paramName>referer_id</paramName>
+		<paramName>media_path</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
-		<paramName>decorate_name</paramName>
+		<paramName>decorate_text</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
-		<paramName>decorate_icon</paramName>
+		<paramName>link_href</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
 </paramOutputSchema>]]></work_step_output_xml>
 		<IsDefer>false</IsDefer>
-		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;id&#34;,&#34;paramMappingDefault&#34;:&#34;0&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;referer_type&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;referer_id&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;decorate_name&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;decorate_icon&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;id&#34;,&#34;paramMappingDefault&#34;:&#34;0&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;decorate_id&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;media_path&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;decorate_text&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;link_href&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
 		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
 	<ParamMappingName></ParamMappingName>
 	<ParamMappingDefault></ParamMappingDefault>
@@ -108,8 +108,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1899</Id>
-		<WorkId>413</WorkId>
+		<Id>1911</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>2</WorkStepId>
 		<WorkSubId>222</WorkSubId>
 		<WorkStepName>work_sub_getUserInfoFromRequest</WorkStepName>
@@ -149,8 +149,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1895</Id>
-		<WorkId>413</WorkId>
+		<Id>1908</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>3</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>if_Exist</WorkStepName>
@@ -190,15 +190,15 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1897</Id>
-		<WorkId>413</WorkId>
+		<Id>1909</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>4</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_Update</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
 		<WorkStepType>sql_execute</WorkStepType>
 		<WorkStepIndent>1</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;仅供批量插入数据时使用&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行sql语句&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;update decorate set referer_type=?,referer_id=?,decorate_name=?,decorate_icon=?,last_updated_time=now() where id = ? and last_updated_by=?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$start.referer_id;\n$start.decorate_name;\n$start.decorate_icon;\n$start.id;\n$work_sub_getUserInfoFromRequest.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_affected?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行 sql 影响条数为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;仅供批量插入数据时使用&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行sql语句&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;update decorate_item set decorate_id=?,media_path=?,decorate_text=?,link_href=?,last_updated_time=now() where id = ? and last_updated_by=?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$start.decorate_id;\n$start.media_path;\n$start.decorate_text;\n$start.link_href;\n$start.id;\n$work_sub_getUserInfoFromRequest.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_affected?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行 sql 影响条数为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>iter_batch_data?</paramName>
@@ -215,7 +215,7 @@
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
-		<paramValue>update decorate set referer_type=?,referer_id=?,decorate_name=?,decorate_icon=?,last_updated_time=now() where id = ? and last_updated_by=?</paramValue>
+		<paramValue>update decorate_item set decorate_id=?,media_path=?,decorate_text=?,link_href=?,last_updated_time=now() where id = ? and last_updated_by=?</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -224,7 +224,7 @@
 		<repeatable>true</repeatable>
 		<foreachRefer>iter_batch_data?</foreachRefer>
 		<pureText>false</pureText>
-		<paramValue>$start.referer_id;&#xA;$start.decorate_name;&#xA;$start.decorate_icon;&#xA;$start.id;&#xA;$work_sub_getUserInfoFromRequest.userName;&#xA;</paramValue>
+		<paramValue>$start.decorate_id;&#xA;$start.media_path;&#xA;$start.decorate_text;&#xA;$start.link_href;&#xA;$start.id;&#xA;$work_sub_getUserInfoFromRequest.userName;&#xA;</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -272,8 +272,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1896</Id>
-		<WorkId>413</WorkId>
+		<Id>1907</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>5</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>else_Not</WorkStepName>
@@ -297,15 +297,15 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1898</Id>
-		<WorkId>413</WorkId>
+		<Id>1910</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>6</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_Insert</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
 		<WorkStepType>sql_execute</WorkStepType>
 		<WorkStepIndent>1</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;仅供批量插入数据时使用&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行sql语句&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;insert into decorate(referer_type,referer_id,decorate_name,decorate_icon,last_updated_by,last_updated_time) values(?,?,?,?,?,now())&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$start.referer_type;\n$start.referer_id;\n$start.decorate_name;\n$start.decorate_icon;\n$work_sub_getUserInfoFromRequest.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_affected?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行 sql 影响条数为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;仅供批量插入数据时使用&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行sql语句&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;insert into decorate_item(decorate_id,media_path,decorate_text,link_href,last_updated_by,last_updated_time) values(?,?,?,?,?,now())&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;iter_batch_data?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$start.decorate_id;\n$start.media_path;\n$start.decorate_text;\n$start.link_href;\n$work_sub_getUserInfoFromRequest.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_affected?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;执行 sql 影响条数为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>iter_batch_data?</paramName>
@@ -322,7 +322,7 @@
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
-		<paramValue>insert into decorate(referer_type,referer_id,decorate_name,decorate_icon,last_updated_by,last_updated_time) values(?,?,?,?,?,now())</paramValue>
+		<paramValue>insert into decorate_item(decorate_id,media_path,decorate_text,link_href,last_updated_by,last_updated_time) values(?,?,?,?,?,now())</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -331,7 +331,7 @@
 		<repeatable>true</repeatable>
 		<foreachRefer>iter_batch_data?</foreachRefer>
 		<pureText>false</pureText>
-		<paramValue>$start.referer_type;&#xA;$start.referer_id;&#xA;$start.decorate_name;&#xA;$start.decorate_icon;&#xA;$work_sub_getUserInfoFromRequest.userName;&#xA;</paramValue>
+		<paramValue>$start.decorate_id;&#xA;$start.media_path;&#xA;$start.decorate_text;&#xA;$start.link_href;&#xA;$work_sub_getUserInfoFromRequest.userName;&#xA;</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -379,8 +379,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1894</Id>
-		<WorkId>413</WorkId>
+		<Id>1906</Id>
+		<WorkId>415</WorkId>
 		<WorkStepId>7</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>end</WorkStepName>

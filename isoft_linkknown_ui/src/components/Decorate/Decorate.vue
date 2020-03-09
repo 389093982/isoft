@@ -43,6 +43,8 @@
 </template>
 
 <script>
+  import {EditDecorate, EditDecorateItem, LoadDecorateData} from "../../api"
+
   export default {
     name: "Decorate",
     data() {
@@ -84,6 +86,45 @@
           }
         })
       },
+      refreshDecorate: async function () {
+        let params = {
+          'referer_type': 'referer_type_test',
+          'referer_id': 1,
+          'decorate_name': 'decorate_name',
+          'decorate_icon': 'decorate_icon',
+        }
+        const result = await EditDecorate(params);
+        if (result.status === "SUCCESS") {
+          alert(JSON.stringify(result));
+        }
+      },
+      refreshLoadDecorateData: async function () {
+        let params = {
+          'referer_type': 'referer_type_test',
+          'referer_id': 1,
+        }
+        const result = await LoadDecorateData(params);
+        if (result.status === "SUCCESS") {
+          alert(JSON.stringify(result));
+        }
+      },
+      refreshDecorateItem: async function () {
+        let params = {
+          'decorate_id': 1,
+          'media_path': 'media_path',
+          'decorate_text': 'decorate_text',
+          'link_href': 'link_href',
+        }
+        const result = await EditDecorateItem(params);
+        if (result.status === "SUCCESS") {
+          alert(JSON.stringify(result));
+        }
+      }
+    },
+    mounted() {
+      this.refreshDecorate();
+      this.refreshLoadDecorateData();
+      this.refreshDecorateItem();
     }
   }
 </script>
