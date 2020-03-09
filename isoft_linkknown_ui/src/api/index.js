@@ -48,7 +48,8 @@ export const ChangeCatalogOrder = (params) => ajax(BASE_URL + '/iwork/httpservic
 
 export const EditDecorate = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditDecorate', params, 'POST');
 export const EditDecorateItem = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditDecorateItem', params, 'POST');
-export const LoadDecorateData = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadDecorateData', params, 'POST');
+export const LoadAllDecorates = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadAllDecorates', params, 'POST');
+export const LoadDecorateItems = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadDecorateItems', params, 'POST');
 
 export const GoodEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GoodEdit', params, 'POST');
 export const GoodList = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GoodList', {}, 'POST');

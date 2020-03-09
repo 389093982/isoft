@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <Decorate v-if="$route.query.id > 0" referer_type="business_decorate" :refer_id="$route.query.id"/>
+    <Decorate v-if="$route.query.id > 0" referer_type="business_decorate" :referer_id="$route.query.id"/>
   </div>
 </template>
 

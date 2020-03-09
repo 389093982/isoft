@@ -8,7 +8,7 @@
     </GoodMeta>
 
     <div>
-      <BusinessDecorate/>
+      <BusinessDecorate v-if="good" :good="good"/>
     </div>
   </div>
 </template>
