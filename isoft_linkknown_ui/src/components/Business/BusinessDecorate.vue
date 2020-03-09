@@ -27,6 +27,9 @@
       <div slot="tabPane3">
         <img style="width: 80%;height: 450px;"
              src="https://homesitetask.zbjimg.com/homesite/task/流量营销.jpg/origine/2f23cacd-9b1c-42a0-9267-9138eba349ed"/>
+        <span v-if="decorate_items" v-for="(decorate_item, index) in decorate_items">
+          {{decorate_item.decorate_text}}
+        </span>
       </div>
     </Tab>
   </div>
@@ -34,10 +37,35 @@
 
 <script>
   import Tab from "./Tab";
+  import {LoadDecorateData} from "../../api"
 
   export default {
     name: "BusinessDecorate",
-    components: {Tab}
+    components: {Tab},
+    props: {
+      good: {
+        type: Object,
+        default: null,
+      }
+    },
+    data() {
+      return {
+        decorate: null,
+        decorate_items: null,
+      }
+    },
+    methods: {
+      refreshLoadDecorateData: async function () {
+        const result = await LoadDecorateData({referer_type: "business_decorate", referer_id: this.good.id});
+        if (result.status === "SUCCESS") {
+          this.decorate = result.decorate;
+          this.decorate_items = result.decorate_items;
+        }
+      }
+    },
+    mounted() {
+      this.refreshLoadDecorateData();
+    }
   }
 </script>
 
