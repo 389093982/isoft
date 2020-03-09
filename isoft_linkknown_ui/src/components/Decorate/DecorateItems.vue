@@ -11,7 +11,8 @@
         <Col span="6">
           <FormItem :prop="'items.' + index + '.media_path'"
                     :rules="{required: true, message: '图片/视频[' + index +']不能为空！', trigger: 'blur'}">
-            <Input v-model.trim="item.media_path" placeholder="请选择图片/视频"></Input>
+            <Input v-model.trim="item.media_path" placeholder="请选择图片/视频" readonly
+                   @on-focus="uploadMedia(index)"></Input>
           </FormItem>
         </Col>
         <Col span="9">
@@ -33,6 +34,10 @@
           </div>
         </Col>
       </Row>
+
+      <IFileUpload ref="fileUpload" :show-button="false" :auto-hide-modal="true" :multiple="false"
+                   :format="['jpg','jpeg','png','gif']" @uploadComplete="uploadComplete" :action="fileUploadUrl"
+                   uploadLabel="上传图片/视频"/>
     </Form>
 
     <div v-else @click="handleAdd" class="isoft_button_green1" style="width: 400px;margin: 0 auto;">您还没有装修项，立马创建</div>
@@ -40,10 +45,13 @@
 </template>
 
 <script>
-  import {EditDecorateItem, LoadDecorateItems} from "../../api"
+  import {EditDecorateItem, fileUploadUrl, LoadDecorateItems} from "../../api"
+  import IFileUpload from "../Common/file/IFileUpload";
+  import {handleSpecial} from "../../tools";
 
   export default {
     name: "DecorateItems",
+    components: {IFileUpload},
     props: {
       decorate: {
         type: Object,
@@ -52,7 +60,8 @@
     },
     data() {
       return {
-        index: 1,   // 动态表单有多少项
+        fileUploadUrl: fileUploadUrl + "?table_name=decorate_item&table_field=media_path",
+        fileUploadIndex: -1,
         formDynamic: {
           items: [
             {
@@ -60,13 +69,21 @@
               media_path: '',
               decorate_text: '',
               link_href: '',
-              index: 1,
             }
           ]
         },
       }
     },
     methods: {
+      uploadMedia: function (index) {
+        this.fileUploadIndex = index;
+        this.$refs.fileUpload.showModal();
+      },
+      uploadComplete: function (result) {
+        if (result.status === "SUCCESS") {
+          this.formDynamic.items[this.fileUploadIndex].media_path = handleSpecial(result.fileServerPath);
+        }
+      },
       handleRemove(index) {
         this.formDynamic.items.splice(index, 1);
       },
