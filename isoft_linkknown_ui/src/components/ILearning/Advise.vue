@@ -69,7 +69,9 @@
         let user_name = this.$route.query.user_name;
         let ask_id = this.$route.query.ask_id;
         let short_desc = this.$route.query.short_desc;
-        this.advise = "我要投诉用户: " + user_name + ",     发布的问题(ask_id="+ask_id+"):   ‘ " + short_desc + " ’";
+        if(user_name!==undefined && ask_id!==undefined && short_desc!==undefined){
+          this.advise = "我要投诉用户: " + user_name + ",     发布的问题(ask_id="+ask_id+"):   ‘ " + short_desc + " ’";
+        }
       }
     },
     mounted:function () {
