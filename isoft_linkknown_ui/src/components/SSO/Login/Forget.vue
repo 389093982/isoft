@@ -12,10 +12,8 @@
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
-        <Button type="success" size="small" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag"
-                style="position: absolute;margin-left: 10px;margin-top: 3px;">
-          {{VerifyCodeButtonDesc}}
-        </Button>
+        <Button type="text" size="small" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag"
+                style="position: absolute;margin-left: -105px;margin-top: 5px;">{{VerifyCodeButtonDesc}}</Button>
       </FormItem>
       <FormItem label="新密码" prop="passwd">
         <Input v-model.trim="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
@@ -79,7 +77,7 @@
       return {
         VerDisableFlag: false,
         totalTime: 30,
-        VerifyCodeButtonDesc: '获取验证码',
+        VerifyCodeButtonDesc: '点击获取验证码',
         formValidate: {
           username: '',
           verifycode: '',
@@ -124,6 +122,8 @@
         })
       },
       createVerifyCode: async function (username) {
+        // 点击后就应该置灰
+        this.VerDisableFlag = true;
         const result = await CreateVerifyCode(username);
         if (result.status == "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
@@ -135,7 +135,7 @@
             this.VerifyCodeButtonDesc = this.totalTime + 's后重新获取';
             if (this.totalTime < 0) {//当倒计时小于0时清除定时器
               window.clearInterval(clock);
-              this.VerifyCodeButtonDesc = '获取验证码';
+              this.VerifyCodeButtonDesc = '点击获取验证码';
               this.VerDisableFlag = false;
               this.totalTime = 30
             }
