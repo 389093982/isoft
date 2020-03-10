@@ -3,8 +3,7 @@
   <Modal
     v-model="isShow"
     :title="title"
-    @on-ok="ok"
-    @on-cancel="cancel">
+    @on-ok="ok">
     <p>{{content}}</p>
   </Modal>
 </template>
