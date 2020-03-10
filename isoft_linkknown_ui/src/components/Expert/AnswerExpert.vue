@@ -1,49 +1,60 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
-      <span style="font-size: 14px"><b>{{ask_expert.short_desc}}</b></span>
-      <code style="margin-left: 30px;color: #adaaa8">[{{ask_expert.answer_number}}次回答,  {{ask_expert.view_number}}次浏览]</code>
-      <IShowMarkdown :content="ask_expert.question"/>
-      <div style="text-align: left;">
-        <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>&nbsp;&nbsp;
-        <span class="showTousu">
-          <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
-          <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
-        </span>
-      </div>
 
-      <div v-if="showEditanswer">
-        <Input type="textarea" :rows="10" v-model.trim="answer"/>
-        <Button size="small" style="float: right;margin: 10px 0;" type="success"
-                @click="EditAnswerExpert">提交
-        </Button>
+    <div style="float: left;width: 70%">
+      <div style="width: 90%;margin:0 0 0 30px;background-color: white ">
+        <div style="margin: 0 0 0 50px ">
+          <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
+            <span style="font-size: 14px"><b>{{ask_expert.short_desc}}</b></span>
+            <code style="margin-left: 30px;color: #adaaa8">[{{ask_expert.answer_number}}次回答,  {{ask_expert.view_number}}次浏览]</code>
+            <IShowMarkdown :content="ask_expert.question"/>
+            <div style="text-align: left;">
+              <a @click="$router.push({path:'/expert/ask_expert'})">返回问题列表</a>&nbsp;&nbsp;
+              <span class="showTousu">
+            <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
+            <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
+          </span>
+            </div>
+            <div v-if="showEditanswer" style="width: 80%">
+              <Input type="textarea" :rows="5" v-model.trim="answer"/>
+              <Button size="small" style="float: right;margin: 10px 0;" type="success" @click="EditAnswerExpert">提交</Button>
+            </div>
+          </div>
+          <div class="isoft_bg_white isoft_top10 isoft_pd10">
+            <ul>
+              <li v-for="(as, index) in answer_experts"
+                  style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
+                <!--<h4 style="color: red;">专家回答({{ (current_page - 1) * offset + index + 1}} 楼)</h4>-->
+                <h4 style="color: red;">专家回答({{total - (current_page - 1) * offset - index}} 楼)</h4>
+                <p>{{as.answer}}</p>
+                <Row>
+                  <Col span="6">
+                    <span class="isoft_font12">回答人：{{as.user_name}}</span>
+                  </Col>
+                  <Col span="6" class="isoft_font12">
+                    <span class="isoft_font12">回答时间:<Time :time="as.last_updated_time" :interval="1"/></span>
+                  </Col>
+                  <Col span="6" class="isoft_font12">
+                    <span style="cursor: pointer;" @click="modifyGoodBadNumber(as.id)">好评({{as.good_number}})</span>
+                  </Col>
+                </Row>
+              </li>
+            </ul>
+
+            <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="isoft_bg_white isoft_top10 isoft_pd10">
-      <ul>
-        <li v-for="(as, index) in answer_experts"
-            style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-          <h4 style="color: red;">专家回答({{ (current_page - 1) * offset + index + 1}} 楼)</h4>
-          <p>{{as.answer}}</p>
-          <Row>
-            <Col span="6">
-              <span class="isoft_font12">回答人：{{as.user_name}}</span>
-            </Col>
-            <Col span="6" class="isoft_font12">
-              <span class="isoft_font12">提出时间:<Time :time="as.last_updated_time" :interval="1"/></span>
-            </Col>
-            <Col span="6" class="isoft_font12">
-              <span style="cursor: pointer;" @click="modifyGoodBadNumber(as.id)">好评({{as.good_number}})</span>
-            </Col>
-          </Row>
-        </li>
-      </ul>
-
-      <Page :total="total" :page-size="offset" show-total show-sizer
-            :styles="{'text-align': 'center','margin-top': '10px'}"
-            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+    <div style="float: left;width: 30%">
+      <div style="position: relative;left: -50px;">
+        <ExpertWall></ExpertWall>
+      </div>
     </div>
+
+    <div style="clear: both"></div>
+
   </div>
 </template>
 
@@ -51,10 +62,11 @@
   import {EditAnswerExpert, ModifyGoodNumber, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
   import {checkEmpty} from "../../tools"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
+  import ExpertWall from "./ExpertWall";
 
   export default {
     name: "AnswerExpert",
-    components: {IShowMarkdown},
+    components: {ExpertWall, IShowMarkdown},
     data() {
       return {
         ask_expert: null,
@@ -84,21 +96,23 @@
           return;
         }
         const result = await ModifyGoodNumber({id: answerId});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.refreshAskanswerList();
           localStorage.setItem(this.GLOBAL.currentSite + "anser_expert" + answerId, true);
         }
       },
       refreshQuestionDetail: async function (id) {
         const result = await ShowAskExpertDetail({id: id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.ask_expert = result.ask_expert;
         }
       },
       EditAnswerExpert: async function () {
         if (!checkEmpty(this.answer)) {
           const result = await EditAnswerExpert({question_id: this.ask_expert.id, answer: this.answer});
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
+            this.$Message.success("提交成功");
+            this.answer = '';
             this.refreshAskanswerList();
           }
         }
@@ -109,7 +123,7 @@
           offset: this.offset,
           question_id: this.$route.query.id
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.answer_experts = result.answer_experts;
           this.total = result.paginator.totalcount;
         }
