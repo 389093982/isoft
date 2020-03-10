@@ -12,8 +12,8 @@
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
-        <Button type="text" size="small" @click="getVerifyCode('formValidate')" :disabled="VerDisableFlag"
-                style="position: absolute;margin-left: -105px;margin-top: 5px;">{{VerifyCodeButtonDesc}}</Button>
+        <span @click="getVerifyCode('formValidate')"
+                style="cursor: pointer;position: absolute;margin-left: -105px;margin-top: 2px;" :style="{color: VerifyCodeButtonDesc !== '点击获取验证码' ? '#adaaa8': '#777'}">{{VerifyCodeButtonDesc}}</span>
       </FormItem>
       <FormItem label="用户昵称" prop="nickname">
           <Input v-model.trim="formValidate.nickname" placeholder="请输入用户昵称"></Input>
@@ -95,7 +95,6 @@
         }
       };
       return {
-        VerDisableFlag: false,
         totalTime: 30,
         VerifyCodeButtonDesc: '点击获取验证码',
         formValidate: {
@@ -133,6 +132,10 @@
         this.$refs[name].validateField('username', async (err) => {
           if (!err) {
             // 校验通过则进行注册
+            if (this.VerifyCodeButtonDesc !== '点击获取验证码') {
+              return false;
+            }
+            this.VerifyCodeButtonDesc =  '发送中...';
             this.createVerifyCode(this.formValidate.username);
           } else {
             this.$Message.error('信息校验失败!');
@@ -140,13 +143,10 @@
         });
       },
       createVerifyCode: async function (username) {
-        // 点击后就应该置灰
-        this.VerDisableFlag = true;
         const result = await CreateVerifyCode(username);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
           //这里进行30秒的置灰设置
-          this.VerDisableFlag = true;
           this.VerifyCodeButtonDesc = this.totalTime + 's后重新获取';//展示30
           let clock = window.setInterval(() => {
             this.totalTime--;
@@ -154,7 +154,6 @@
             if (this.totalTime < 0) {//当倒计时小于0时清除定时器
               window.clearInterval(clock);
               this.VerifyCodeButtonDesc = '点击获取验证码';
-              this.VerDisableFlag = false;
               this.totalTime = 30
             }
           }, 1000);
@@ -173,14 +172,14 @@
         })
       },
       regist: async function () {
-        var _this = this;
+        let _this = this;
         const result = await Regist({
           username: this.formValidate.username,
           passwd: this.formValidate.passwd,
           nickname: this.formValidate.nickname,
           verifyCode: this.formValidate.verifycode,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success('注册成功!');
           // 注册成功延迟 2s 跳往登录页面
           setTimeout(function () {
@@ -188,9 +187,9 @@
           }, 2000);
 
         } else {
-          if (result.errorMsg == "regist_exist") {
+          if (result.errorMsg === "regist_exist") {
             this.$Message.error("该用户已经被注册!");
-          } else if (result.errorMsg == "regist_failed") {
+          } else if (result.errorMsg === "regist_failed") {
             this.$Message.error("注册失败,请联系管理员获取账号!");
           } else {
             this.$Message.error(result.errorMsg);

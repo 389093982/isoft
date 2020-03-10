@@ -1,21 +1,21 @@
 <template>
   <div>
+
     <div id="header">
-      <div class="login-link" id="login_link" style="position: absolute;top: 25px;right: 100px;">
+      <div class="login-link" id="login_link" style="position: absolute;top: 15px;right: 120px;">
         <span style="font-size: 15px;font-weight: inherit;">已有账号,前去<a href="/sso/login/">登录</a></span>
       </div>
     </div>
-    <div style="height: 20px;display: block;width:100%;background: linear-gradient(to right, red, blue);opacity:0.1;">
-    </div>
 
-    <Row>
+    <div style="height: 5px;display: block;width:100%;background: linear-gradient(to right, red, blue);opacity:0.1;"></div>
+
+    <Row style="position: relative;top: -30px;">
       <Col span="14">
-        <Forget v-if="$route.query.pattern && $route.query.pattern == 2"/>
+        <Forget v-if="$route.query.pattern && $route.query.pattern === 2"/>
         <Regist v-else/>
       </Col>
-      <Col span="8">
-        <div style="margin: 40px 0px;min-height: 400px;padding:25px;
-          background: linear-gradient(to right, rgba(255, 0, 0, 0.05), rgba(0, 0, 255, 0.06));">
+      <Col span="8" style="margin-top: 20px">
+        <div style="margin: 40px 0;min-height: 360px;padding:25px;background: linear-gradient(to right, rgba(255, 0, 0, 0.05), rgba(0, 0, 255, 0.06));">
           <h3 style="color: #7800ff;padding: 5px;">
             <Icon type="ios-paper"></Icon>
             账号注册协议
@@ -30,7 +30,12 @@
         </div>
       </Col>
     </Row>
-    <LoginFooter/>
+
+    <div style="position: relative;">
+      <hr style="color: rgba(128,128,128,0.13)">
+      <LoginFooter/>
+    </div>
+
   </div>
 </template>
 
@@ -53,7 +58,7 @@
   #header {
     background-color: rgb(255, 255, 255);
     text-align: center;
-    height: 70px;
+    height: 50px;
     padding: 5px;
   }
 
