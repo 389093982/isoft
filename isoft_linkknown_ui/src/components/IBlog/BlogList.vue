@@ -74,10 +74,10 @@
                     <Row>
                       <!--第二行：作者 + 发布 + 更新时间 -->
                       <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}">
-                    <span style="color: #797776;border-bottom: 1px solid #797776;">
-                      <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
-                      <span v-else>{{searchblog.author}}</span>
-                    </span>
+                        <span style="color: #797776;border-bottom: 1px solid #797776;">
+                          <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
+                          <span v-else>{{searchblog.author}}</span>
+                        </span>
                       </router-link>
                       <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time" :interval="1"/></span>
                       <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time" :interval="1"/></span>

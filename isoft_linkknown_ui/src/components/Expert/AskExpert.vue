@@ -30,8 +30,7 @@
                 background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <Row>
                   <Col span="6" style="display: flex;vertical-align: middle;">
-                    <div class="isoft_hover_color_green"
-                         style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
+                    <div class="isoft_hover_color_green" style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
                       <p>{{as.answer_number}}</p>
                       <p>回答</p>
                     </div>
@@ -48,15 +47,14 @@
                     </div>
                   </Col>
                   <Col span="18" style="line-height: 30px;">
-                    <div class="title_hover" style="font-size: 16px;cursor: pointer;"
-                        @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</div>
 
+                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</div>
                     <div class="isoft_font12">
+                      <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
                       <span class="isoft_hover_item_show" style="float: right;">
                         <span class="isoft_mr10">
-                          <a v-if="showEdit(as.user_name)"
-                             @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
+                          <a v-if="showEdit(as.user_name)" @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
                         </span>
                         <span>
                           <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">

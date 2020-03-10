@@ -25,17 +25,26 @@
               <li v-for="(as, index) in answer_experts"
                   style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
                 <!--<h4 style="color: red;">专家回答({{ (current_page - 1) * offset + index + 1}} 楼)</h4>-->
-                <h4 style="color: red;">专家回答({{total - (current_page - 1) * offset - index}} 楼)</h4>
-                <p>{{as.answer}}</p>
+                <h4 style="color: red;">专家回答( # {{total - (current_page - 1) * offset - index}}楼 )</h4>
                 <Row>
-                  <Col span="6">
-                    <span class="isoft_font12">回答人：{{as.user_name}}</span>
+                  <Col span="2" style="position: relative;top: 6px">
+                    <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})" class="isoft_font12">
+                      <span><img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" width=30px height=30px :src=as.small_icon @error="defImg()"></span>
+                    </span>
                   </Col>
-                  <Col span="6" class="isoft_font12">
-                    <span class="isoft_font12">回答时间:<Time :time="as.last_updated_time" :interval="1"/></span>
-                  </Col>
-                  <Col span="6" class="isoft_font12">
-                    <span style="cursor: pointer;" @click="modifyGoodBadNumber(as.id)">好评({{as.good_number}})</span>
+                  <Col span="22" style="position: relative;left: -20px">
+                    <Row>
+                      <span style="font-size: 13px;color: #777">{{as.nick_name}}</span><span> : " {{as.answer}} "</span>
+                    </Row>
+                    <Row>
+                      <Col span="20"><span class="isoft_font12" style="color: #adaaa8">
+                        回答于 : <Time :time="as.last_updated_time" :interval="1"/></span>
+                      </Col>
+                      <Col span="4"><span style="cursor: pointer;" @click="modifyGoodBadNumber(as.id)">
+                        <Icon type="md-heart-outline"  style="font-size: 20px;cursor: pointer;color: rgb(173, 170, 168)"/>&nbsp;
+                        好评({{as.good_number}})</span>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </li>
