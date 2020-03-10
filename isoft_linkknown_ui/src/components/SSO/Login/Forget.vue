@@ -101,31 +101,20 @@
     },
     methods: {
       getVerifyCode: function (name) {
-        if (this.VerifyCodeButtonDesc !== '点击获取验证码') {
-          return false;
-        }
-        this.VerifyCodeButtonDesc =  '发送中...';
         this.$refs[name].validateField('username', async (err) => {
           if (!err) {
             // 校验通过则进行注册
+            if (this.VerifyCodeButtonDesc !== '点击获取验证码') {
+              return false;
+            }
+            this.VerifyCodeButtonDesc =  '发送中...';
             this.createVerifyCode(this.formValidate.username);
           } else {
             this.$Message.error('信息校验失败!');
           }
         });
       },
-      handleSubmit: function (name) {
-        this.$refs[name].validate(async (valid) => {
-          if (valid) {
-            // 校验通过则进行注册
-            this.modifyPwd();
-          } else {
-            this.$Message.error('信息校验失败!');
-          }
-        })
-      },
       createVerifyCode: async function (username) {
-        // 点击后就应该置灰
         const result = await CreateVerifyCode(username);
         if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
@@ -144,10 +133,20 @@
           this.$Message.error(result.errorMsg);
         }
       },
+      handleSubmit: function (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            // 校验通过则进行注册
+            this.modifyPwd();
+          } else {
+            this.$Message.error('信息校验失败!');
+          }
+        })
+      },
       modifyPwd: async function () {
-        var _this = this;
+        let _this = this;
         const result = await ModifyPwd(this.formValidate.username, this.formValidate.passwd, this.formValidate.verifycode);
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success("密码修改成功!");
           // 注册成功延迟 2s 跳往登录页面
           setTimeout(function () {

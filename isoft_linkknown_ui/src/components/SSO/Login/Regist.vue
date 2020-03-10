@@ -129,13 +129,13 @@
     },
     methods: {
       getVerifyCode: function (name) {
-        if (this.VerifyCodeButtonDesc !== '点击获取验证码') {
-          return false;
-        }
-        this.VerifyCodeButtonDesc =  '发送中...';
         this.$refs[name].validateField('username', async (err) => {
           if (!err) {
             // 校验通过则进行注册
+            if (this.VerifyCodeButtonDesc !== '点击获取验证码') {
+              return false;
+            }
+            this.VerifyCodeButtonDesc =  '发送中...';
             this.createVerifyCode(this.formValidate.username);
           } else {
             this.$Message.error('信息校验失败!');
@@ -143,7 +143,6 @@
         });
       },
       createVerifyCode: async function (username) {
-        // 点击后就应该置灰
         const result = await CreateVerifyCode(username);
         if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
@@ -173,14 +172,14 @@
         })
       },
       regist: async function () {
-        var _this = this;
+        let _this = this;
         const result = await Regist({
           username: this.formValidate.username,
           passwd: this.formValidate.passwd,
           nickname: this.formValidate.nickname,
           verifyCode: this.formValidate.verifycode,
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success('注册成功!');
           // 注册成功延迟 2s 跳往登录页面
           setTimeout(function () {
@@ -188,9 +187,9 @@
           }, 2000);
 
         } else {
-          if (result.errorMsg == "regist_exist") {
+          if (result.errorMsg === "regist_exist") {
             this.$Message.error("该用户已经被注册!");
-          } else if (result.errorMsg == "regist_failed") {
+          } else if (result.errorMsg === "regist_failed") {
             this.$Message.error("注册失败,请联系管理员获取账号!");
           } else {
             this.$Message.error(result.errorMsg);
