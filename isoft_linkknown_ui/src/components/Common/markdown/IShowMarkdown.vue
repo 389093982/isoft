@@ -44,8 +44,8 @@
         var arr = htmlStr.match(imgReg);
         for (var i = 0; i < arr.length; i++) {
           var src = arr[i].match(srcReg);
-          // src[0] src="http://xxxxx.jpg?width=100px&amp;height=200px"
-          // src[1] http://xxxxx.jpg?width=100px&amp;height=200px
+          // src[0] src="http://xxxxx.jpg?width=100px&height=200px"
+          // src[1] http://xxxxx.jpg?width=100px&height=200px
           // 提取图片链接地址中的尺寸
           let imgSize = this.parseImgSize(src[1]);
           if (imgSize.width && imgSize.height) {
