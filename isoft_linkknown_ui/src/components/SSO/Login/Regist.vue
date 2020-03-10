@@ -13,7 +13,7 @@
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
         <span @click="getVerifyCode('formValidate')"
-                style="cursor: pointer;position: absolute;margin-left: -105px;margin-top: 2px;" :style="{color: VerifyCodeButtonDesc !== '点击获取验证码' ? '#adaaa8': ''}">{{VerifyCodeButtonDesc}}</span>
+                style="cursor: pointer;position: absolute;margin-left: -105px;margin-top: 2px;" :style="{color: VerifyCodeButtonDesc !== '点击获取验证码' ? '#adaaa8': '#777'}">{{VerifyCodeButtonDesc}}</span>
       </FormItem>
       <FormItem label="用户昵称" prop="nickname">
           <Input v-model.trim="formValidate.nickname" placeholder="请输入用户昵称"></Input>
