@@ -1,9 +1,15 @@
 <template>
   <div style="margin:0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
-    <div style="display: flex;padding: 15px 150px;text-align: center;">
+    <div style="display: flex;padding: 15px 150px 0 150px;text-align: center;">
       <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
       <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
-      <div style="width: 20%;" @click="$router.push({path:'/business/edit'})">发布服务或商品</div>
+      <show-more default-desc="搜索" @changeShowMore="showSearch = !showSearch"></show-more>
+      <div v-show="showSearch">
+        <span v-for="(goodType, index) in goodTypes" style="margin: 0 10px;">{{goodType}}</span>
+      </div>
+      <div style="position: absolute;right: 50px;margin-top: -10px;" class="isoft_button_red2"
+           @click="$router.push({path:'/business/edit'})">我要发布
+      </div>
     </div>
 
     <div style="display: flex;">
@@ -50,12 +56,15 @@
   import {GoodList, NewOrder} from "../../api"
   import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
   import GoodMeta from "./GoodMeta";
+  import ShowMore from "../Elementviewers/showMore";
 
   export default {
     name: "GoodList",
-    components: {GoodMeta, IBeautifulLink},
+    components: {ShowMore, GoodMeta, IBeautifulLink},
     data() {
       return {
+        showSearch: false,                  // 显示搜索
+        goodTypes: this.GLOBAL.goodTypes,   // 商品类型
         showGoodEditModal: false,
         goods: [],
       }

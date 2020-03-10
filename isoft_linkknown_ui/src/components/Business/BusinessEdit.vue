@@ -5,7 +5,9 @@
       <div style="width: 70%;padding: 0 50px 0 0;">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="产品类型" prop="good_type">
-            <Input v-model.trim="formValidate.good_type" placeholder="请输入产品类型,示例：服务类|广告服务|广告制作"/>
+            <Select v-model="formValidate.good_type">
+              <Option v-for="(goodType, index) in goodTypes" :value="goodType" :key="index">{{goodType}}</Option>
+            </Select>
           </FormItem>
           <FormItem label="产品名称" prop="good_name">
             <Input v-model.trim="formValidate.good_name" placeholder="请输入产品名称"/>
@@ -80,6 +82,7 @@
     data() {
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=good&table_field=good_images",
+        goodTypes: this.GLOBAL.goodTypes,
         formValidate: {
           good_id: -1,
           good_type: '',

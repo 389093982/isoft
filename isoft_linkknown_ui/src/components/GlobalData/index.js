@@ -16,6 +16,7 @@ const salaryRanges = ['1k-5k', '5k-10k', '5k-15k', '5k-20k', '10k-15k', '10-20k'
 const job_educations = ['本科', '研究生', '博士'];
 const corporateSizes = ['1-10人', '10-20人', '20-50人', '50-100人', '100-500人', '500-2000人', '2000以上'];
 const jobTypes = ['前端工程师', '后端工程师', '研发经理', '软件工程师', '安卓开发工程师', '架构负责人'];
+const goodTypes = ['活动', '公告', '服务', '商品', '其它'];
 const currentSite = "_isoft_linkknown_ui";
 const isoft_unifiedpay_order = "ws://localhost:6002/wechatPayApi/Order";
 
@@ -36,6 +37,7 @@ export default {
   jobAges,
   salaryRanges,
   job_educations,
+  goodTypes,
   corporateSizes,
   jobTypes,
   currentSite,
