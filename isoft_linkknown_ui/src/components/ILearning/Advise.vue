@@ -9,13 +9,13 @@
     <Tabs size="small">
       <TabPane label="意见">
         <div style="text-align: right;">
-          <Input v-model.trim="advise" type="textarea" :rows="8" placeholder="请输入您的意见我们也会虚心接受奥！"></Input>
+          <Input v-model.trim="advise" type="textarea" :rows="8" placeholder="请输入您的意见我们也会虚心接受奥！" :readonly="readonly"></Input>
           <Button type="success" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise('advise')">提交意见</Button>
         </div>
       </TabPane>
       <TabPane label="吐槽">
         <div style="text-align: right;">
-          <Input v-model.trim="complaints" type="textarea" :rows="8" placeholder="请输入您的吐槽内容..."></Input>
+          <Input v-model.trim="complaints" type="textarea" :rows="8" placeholder="请输入您的吐槽内容..." :readonly="readonly"></Input>
           <Button type="warning" style="width: 100px;margin: 10px 0 0 0;" @click="submitAdvise('complaints')">提交吐槽</Button>
         </div>
       </TabPane>
@@ -37,6 +37,7 @@
       return {
         advise: '',
         complaints:'',
+        readonly:false,
       }
     },
     methods: {
@@ -70,6 +71,7 @@
         let ask_id = this.$route.query.ask_id;
         let short_desc = this.$route.query.short_desc;
         if(user_name!==undefined && ask_id!==undefined && short_desc!==undefined){
+          this.readonly = true;
           this.advise = "我要投诉用户: " + user_name + ",     发布的问题(ask_id="+ask_id+"):   ‘ " + short_desc + " ’";
         }
       }
