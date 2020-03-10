@@ -1,13 +1,13 @@
 <template>
   <div style="margin:0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
-    <div style="display: flex;padding: 15px 150px 0 150px;text-align: center;">
+    <div style="display: flex;padding: 20px 150px 5px 150px;text-align: center;">
       <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
       <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
       <show-more default-desc="搜索" @changeShowMore="showSearch = !showSearch"></show-more>
       <div v-show="showSearch">
         <span v-for="(goodType, index) in goodTypes" style="margin: 0 10px;">{{goodType}}</span>
       </div>
-      <div style="position: absolute;right: 50px;margin-top: -10px;" class="isoft_button_red2"
+      <div style="position: absolute;right: 50px;margin-top: -10px;" class="isoft_point_cursor isoft_button_red2"
            @click="$router.push({path:'/business/edit'})">我要发布
       </div>
     </div>
