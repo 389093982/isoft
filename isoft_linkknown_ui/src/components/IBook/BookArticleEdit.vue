@@ -82,7 +82,7 @@
           headers: {'Content-Type': 'multipart/form-data'},
         }).then((result) => {
           // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          this.$refs.md.$img2Url(pos, result.data.fileServerPath);
+          this.$refs.md.$img2Url(pos, result.data.fileServerPath+'?width=500px&height=300px');
         })
       },
       refreshBookArticleDetail: async function (book_catalog_id) {

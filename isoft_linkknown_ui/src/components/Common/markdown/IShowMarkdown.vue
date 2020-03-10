@@ -42,15 +42,17 @@
         //匹配src属性
         var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
         var arr = htmlStr.match(imgReg);
-        for (var i = 0; i < arr.length; i++) {
-          var src = arr[i].match(srcReg);
-          // src[0] src="http://xxxxx.jpg?width=100px&height=200px"
-          // src[1] http://xxxxx.jpg?width=100px&height=200px
-          // 提取图片链接地址中的尺寸
-          let imgSize = this.parseImgSize(src[1]);
-          if (imgSize.width && imgSize.height) {
-            let replaceUrl = src[0] + "' width='" + imgSize.width + "' height='" + imgSize.height + "'";
-            _htmlStr = _htmlStr.replace(src[0], replaceUrl);
+        if (arr !== null && arr.length>0) {
+          for (var i = 0; i < arr.length; i++) {
+            var src = arr[i].match(srcReg);
+            // src[0] src="http://xxxxx.jpg?width=100px&height=200px"
+            // src[1] http://xxxxx.jpg?width=100px&height=200px
+            // 提取图片链接地址中的尺寸
+            let imgSize = this.parseImgSize(src[1]);
+            if (imgSize.width && imgSize.height) {
+              let replaceUrl = src[0] + "' width='" + imgSize.width + "' height='" + imgSize.height + "'";
+              _htmlStr = _htmlStr.replace(src[0], replaceUrl);
+            }
           }
         }
         return _htmlStr;
