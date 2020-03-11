@@ -1,6 +1,6 @@
-<workdl work_id="414">
+<workdl work_id="417">
 	<work>
-		<Id>414</Id>
+		<Id>417</Id>
 		<AppId>5</AppId>
 		<WorkName>LoadDecorateItems</WorkName>
 		<WorkDesc>加载装饰系统数据</WorkDesc>
@@ -11,8 +11,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</work>
 	<steps>
-		<Id>1900</Id>
-		<WorkId>414</WorkId>
+		<Id>1914</Id>
+		<WorkId>417</WorkId>
 		<WorkStepId>1</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>start</WorkStepName>
@@ -95,7 +95,7 @@
 	</steps>
 	<steps>
 		<Id>1918</Id>
-		<WorkId>414</WorkId>
+		<WorkId>417</WorkId>
 		<WorkStepId>2</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>template_sql</WorkStepName>
@@ -149,8 +149,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1902</Id>
-		<WorkId>414</WorkId>
+		<Id>1920</Id>
+		<WorkId>417</WorkId>
 		<WorkStepId>3</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_query_Decorate</WorkStepName>
@@ -334,7 +334,7 @@
 	</steps>
 	<steps>
 		<Id>1917</Id>
-		<WorkId>414</WorkId>
+		<WorkId>417</WorkId>
 		<WorkStepId>4</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>if_Exist</WorkStepName>
@@ -374,8 +374,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1903</Id>
-		<WorkId>414</WorkId>
+		<Id>1921</Id>
+		<WorkId>417</WorkId>
 		<WorkStepId>5</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_query_DecorateItem</WorkStepName>
@@ -558,8 +558,8 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>1901</Id>
-		<WorkId>414</WorkId>
+		<Id>1922</Id>
+		<WorkId>417</WorkId>
 		<WorkStepId>6</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>end</WorkStepName>
