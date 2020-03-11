@@ -48,7 +48,7 @@
                   </Col>
                   <Col span="18" style="line-height: 30px;">
 
-                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc}}</div>
+                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
                     <div class="isoft_font12">
                       <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
@@ -182,7 +182,17 @@
     },
     mounted() {
       this.refreshAskExperts();
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 

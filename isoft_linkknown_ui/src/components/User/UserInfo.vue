@@ -1,7 +1,34 @@
 <template>
   <div>
 
-    <div style="width: 40%;height: auto;margin: 20px 0 0 350px;">
+    <!--帽子抽屉-->
+    <Drawer title="我的帽子" placement="left" v-model="hatDrawer" width="14">
+      <div class="hovered hvr-grow hoverLinkColor" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
+        <span @click="removeHat()">摘下帽子</span>
+      </div><hr><br>
+      <img @click="chooseHat('hat03')" class="hvr-grow" style="cursor: pointer" src="../../../static/images/vipHat/hat01.png" width="150" height="50" @error="defImg()"/>
+    </Drawer>
+
+    <!--帽子&头像-->
+    <div style="float:left;width: 33%;">
+      <div style="margin: 150px 0 0 248px ">
+        <!--更换帽子-->
+        <div style="position: relative;top: -50px;" v-if="formValidate.vip_level>0">
+          <Button icon="ios-cloud-upload-outline" @click="hatDrawer=true">更换帽子</Button>
+        </div>
+        <div>
+          <!--帽子和头像-->
+          <HatAndFacePicture :src="formValidate.small_icon" :vip_level="formValidate.vip_level" :hat_in_use="formValidate.hat_in_use"></HatAndFacePicture>
+        </div>
+        <!--修改头像-->
+        <div style="position:relative;top: -20px;">
+          <UploadHeadSculpture ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
+        </div>
+      </div>
+    </div>
+
+    <!--用户详细信息-->
+    <div style="float:left;width: 40%;height: auto;margin-top: 20px;">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="昵称" prop="nick_name">
           <Input v-model="formValidate.nick_name" placeholder="请输入您的昵称"></Input>
@@ -43,17 +70,20 @@
         </FormItem>
       </Form>
     </div>
+    <div style="clear: both"></div>
 
   </div>
 </template>
 <script>
   import IAreaChooser from "../Common/IAreaChooser";
   import {checkEmpty, copyObj, GetLoginUserName} from "../../tools"
-  import {GetUserDetail, UpdateUserDetail} from "../../api"
+  import {GetUserDetail, UpdateUserDetail,UpdateUserIcon,fileUploadUrl} from "../../api"
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import UploadHeadSculpture from "../Common/file/UploadHeadSculpture";
 
   export default {
     name: "UserInfo",
-    components: { IAreaChooser},
+    components: {UploadHeadSculpture, HatAndFacePicture, IAreaChooser},
     data () {
       const checkNickName = (rule, value, callback) => {
         if (value === '') {
@@ -65,7 +95,12 @@
         }
       };
       return {
+        hatDrawer:false,
+        fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
         formValidate:{
+          hat:'',
+          hat_in_use:'',
+          small_icon:'',
           nick_name: '',
           gender: '',
           birthday: '',
@@ -87,6 +122,23 @@
       }
     },
     methods: {
+      removeHat:function(){
+        this.formValidate.hat_in_use = 'N';
+      },
+      chooseHat:function(hat){
+        this.formValidate.hat_in_use = 'Y';
+        this.formValidate.hat=hat;
+      },
+      uploadComplete: async function (data) {
+        if (data.status === "SUCCESS") {
+          this.$refs.fileUpload.hideModal();
+          let uploadFilePath = data.fileServerPath;
+          const result = await UpdateUserIcon(GetLoginUserName(), uploadFilePath);
+          if (result.status === "SUCCESS") {
+            this.GetUserDetail();
+          }
+        }
+      },
       handleCurrentResidenceAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {
             this.formValidate.current_residence = province;
@@ -115,28 +167,12 @@
         const result = await GetUserDetail(GetLoginUserName());
         if (result.status === "SUCCESS") {
           this.formValidate = result.user;
-          // this.formValidate.nick_name = result.user.nick_name;
-          // this.formValidate.gender = result.user.gender;
           this.formValidate.birthday = result.user.birthday==='0000-00-00'?'':result.user.birthday;
-          // this.formValidate.role_name = result.user.role_name;
-          // this.formValidate.user_points = result.user.user_points;
-          // this.formValidate.vip_level = result.user.vip_level;
-          // this.formValidate.vip_expired_time = result.user.vip_expired_time;
-          // this.formValidate.current_residence = result.user.current_residence;
-          // this.formValidate.hometown = result.user.hometown;
         }
       },
       handleSubmit: function(name){
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            // let params = {
-            //   "user_name":GetLoginUserName(),
-            //   "nick_name":this.formValidate.nick_name,
-            //   "gender":this.formValidate.gender,
-            //   "birthday":this.formValidate.birthday,
-            //   "current_residence":this.formValidate.current_residence,
-            //   "hometown":this.formValidate.hometown,
-            // };
             let params = copyObj(this.formValidate);
             params.user_name = GetLoginUserName();
             params.birthday = new Date(params.birthday).getTime();

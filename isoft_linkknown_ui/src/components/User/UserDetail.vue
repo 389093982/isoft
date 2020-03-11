@@ -6,26 +6,14 @@
       </div>
       <div style="margin: 0 5px 0 5px ">
         <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px 0 0 0 ;">
-          <Col span="3" style="top:-80px;">
-            <div class="user_icon">
-              <!--头像照片-->
-              <img class="isoft_hover_red"
-                   style="cursor: pointer;border: 2px solid grey;border-radius:50%;"
-                   width="120" height="120" :src="user.small_icon" @error="defImg()">
-
-              <!--头像上方文字提示-->
-              <span class="user_icon_tip isoft_hover_red" style="size: 12px;background-color: #dbdbdb;padding: 3px 10px;border-radius: 5px;">
-                <span v-if="isLoginUserName(user.user_name)">头像单调无味？赶快来换张新颖的头像吧</span>
-                <span v-else @click="$router.push({path:'/user/detail'})">这么漂亮的头像，我咋没有！<span style="color: rgba(0,0,255,0.74)">立即去设置</span></span>
-              </span>
-
-              <!--修改头像-->
-              <div class="user_icon_upload" style="margin: 0 0 0 12px;" v-if="isLoginUserName(user.user_name)">
-                <UploadHeadSculpture ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
-              </div>
+          <Col span="3" offset="1" style="top:-70px;">
+            <div>
+              <!--帽子 & 头像-->
+              <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use"></HatAndFacePicture>
+              <!--<HatAndFacePicture :src="user.small_icon" :src_size="40" :hat_width="40" :hat_height="10" :hat_relative_left="-1" :hat_relative_top="-55" :vip_level="user.vip_level"></HatAndFacePicture>-->
             </div>
           </Col>
-          <Col span="13" style="padding: 10px 0 0 3px;">
+          <Col span="12" style="padding: 10px 0 0 3px;">
             <div>
               <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
             </div>
@@ -133,7 +121,7 @@
 </template>
 
 <script>
-  import {EditUserSignature, fileUploadUrl, GetUserDetail, UpdateUserIcon} from "../../api"
+  import {EditUserSignature, GetUserDetail, UpdateUserIcon} from "../../api"
   import HotUser from "./HotUser"
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -141,13 +129,13 @@
   import ForwardLogin from "../SSO/ForwardLogin";
   import UserFavorite from "./UserFavorite";
   import UploadHeadSculpture from "../Common/file/UploadHeadSculpture";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "UserDetail",
-    components: {UploadHeadSculpture, UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
+    components: {HatAndFacePicture, UploadHeadSculpture, UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
         user: null,
         isLoading: true,
         defaultImg: require('../../assets/default.png'),
@@ -173,16 +161,6 @@
         let img = event.srcElement;
         img.src = this.defaultImg;
         img.onerror = null; //防止闪图
-      },
-      uploadComplete: async function (data) {
-        if (data.status === "SUCCESS") {
-          this.$refs.fileUpload.hideModal();
-          let uploadFilePath = data.fileServerPath;
-          const result = await UpdateUserIcon(GetLoginUserName(), uploadFilePath);
-          if (result.status === "SUCCESS") {
-            this.refreshUserDetail();
-          }
-        }
       },
       getUserName: function () {
         return !checkEmpty(this.$route.query.username) ? this.$route.query.username : GetLoginUserName();
