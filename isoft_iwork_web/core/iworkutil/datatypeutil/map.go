@@ -29,6 +29,9 @@ func GetMapValueSlice(m interface{}, s interface{}) interface{} {
 }
 
 func CombineMap(m, m1 map[string]interface{}) map[string]interface{} {
+	if m == nil || m1 == nil {
+		return m
+	}
 	for k, v := range m1 {
 		m[k] = v
 	}
