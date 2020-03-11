@@ -62,11 +62,11 @@
     components: {vueQr},
     data() {
       return {
-        openingTime_choice_one:' 1个月 / ¥60 ',
-        openingTime_choice_two:' 3个月 / ¥150 ',
-        openingTime_choice_three:' 6个月 / ¥240 ',
-        openingTime_choice_four:' 1年 / ¥360 ',
-        openingTime: ' 1个月 / ¥60 ',
+        openingTime_choice_one:' 1个月 / ¥12 ',
+        openingTime_choice_two:' 3个月 / ¥30 ',
+        openingTime_choice_three:' 6个月 / ¥50 ',
+        openingTime_choice_four:' 1年 / ¥80 ',
+        openingTime: ' 1个月 / ¥12 ',
         tempChoice: '',
         lastTimeChoice:'',
         payType: '微信支付',
