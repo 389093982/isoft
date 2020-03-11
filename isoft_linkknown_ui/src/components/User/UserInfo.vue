@@ -16,12 +16,12 @@
         <div style="position: relative;top: -50px;" v-if="formValidate.vip_level>0">
           <Button icon="ios-cloud-upload-outline" @click="hatDrawer=true">更换帽子</Button>
         </div>
+        <!--帽子和头像-->
         <div>
-          <!--帽子和头像-->
           <HatAndFacePicture :src="formValidate.small_icon" :vip_level="formValidate.vip_level" :hat_in_use="formValidate.hat_in_use"></HatAndFacePicture>
         </div>
         <!--修改头像-->
-        <div style="position:relative;top: -20px;">
+        <div style="position: absolute;top: 380px;">
           <UploadHeadSculpture ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
         </div>
       </div>

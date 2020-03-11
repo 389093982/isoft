@@ -1,15 +1,18 @@
 <template>
 	<div>
 
-    <div>
+    <div v-if="src">
       <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" :width=src_size :height=src_size :src=src @error="defImg()">
+    </div>
+    <div v-else>
+      <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" :width=src_size :height=src_size src="../../../../static/images/404.jpg" @error="defImg()">
     </div>
 
     <!--帽子 & 头像-->
-    <div v-if="vip_level>0 && hat_in_use==='Y'" :style="{position: 'relative',left:hat_relative_left+'px',top:hat_relative_top+'px'}">
+    <div v-if="vip_level>0 && hat_in_use==='Y'" :style="{position: 'relative',width:0,height:0,left:hat_relative_left+'px',top:hat_relative_top+'px'}">
       <img src="../../../../static/images/vipHat/hat01.png" :width=hat_width :height=hat_height @error="defImg()"/>
     </div>
-    <div v-else>
+    <div v-else :style="{position: 'relative',width:0,height:0,left:hat_relative_left+'px',top:hat_relative_top+'px'}">
     <img src="../../../../static/images/vipHat/emptyHat.png" :width=hat_width :height=hat_height @error="defImg()"/>
     </div>
 

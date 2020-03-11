@@ -130,7 +130,27 @@ export const RenderNickName = function (userInfos, user_name) {
     }
   }
   return user_name;
-}
+};
+
+export const RenderVipLevel = function (userInfos, user_name) {
+  if (userInfos != null) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);
+    if (user_names != null && user_names.length > 0) {
+      return user_names[0].vip_level;
+    }
+  }
+  return user_name;
+};
+
+export const RenderHatInUse = function (userInfos, user_name) {
+  if (userInfos != null) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);
+    if (user_names != null && user_names.length > 0) {
+      return user_names[0].hat_in_use;
+    }
+  }
+  return user_name;
+};
 
 export const CheckSSOLogin = (to, from, next) => checkSSOLogin(to, from, next);
 export const CheckNotLogin = () => checkNotLogin();

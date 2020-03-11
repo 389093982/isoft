@@ -1,15 +1,20 @@
 <template>
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;min-height: 350px;">
-    <IBeautifulLink>
-      <img style="cursor: pointer;border-radius: 50%;border: 1px solid grey;"
-           width="30" height="30" :src="user_small_icon" @error="defImg()">
-      <span v-if="nick_name">{{nick_name}}</span>
-      <span v-else>{{getUserName()}}</span>
-    </IBeautifulLink>&nbsp;&nbsp;
-    <IBeautifulLink style="font-size: 12px;float: right;margin:16px 18% 0 0 " @onclick="$router.push({path:'/user/detail'})">
-      <div v-if="userName===loginUserName()"></div>
-      <div v-else class="ToMyCenter"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></div>
-    </IBeautifulLink>
+    <Row>
+        <span @click="$router.push({path:'/user/detail',query:{username:getUserName()}})">
+          <HatAndFacePicture :src="user_small_icon" :vip_level="vip_level" :hat_in_use="hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-45" ></HatAndFacePicture>
+        </span>
+        <div style="position: absolute;top: 5px;left: 40px">
+          <span>
+            <span v-if="nick_name">{{nick_name}}</span>
+            <span v-else>{{getUserName()}}</span>
+          </span>
+          <span style="margin-left: 200px">
+            <span v-if="userName===loginUserName()"></span>
+            <span v-else class="ToMyCenter" @click="$router.push({path:'/user/detail'})"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></span>
+          </span>
+        </div>
+    </Row>
 
     <div style="margin-top: 5px;">
       <Tabs :animated="false">
@@ -90,10 +95,11 @@
   import {GetCourseListByUserName, GetUserDetail, queryPageBlog, QueryPageBookList} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink"
   import {checkEmpty, GetLoginUserName} from "../../tools"
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "UserAbout",
-    components: {IBeautifulLink},
+    components: {HatAndFacePicture, IBeautifulLink},
     props: {
       userName: {
         type: String,
@@ -115,6 +121,9 @@
         // 当前 user 对应头像信息
         user_small_icon: '',
         nick_name: '',
+        vip_level:'',
+        hat:'',
+        hat_in_use:'',
         defaultImg: require('../../assets/default.png'),
       }
     },
@@ -144,6 +153,9 @@
         if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
           this.nick_name = result.user.nick_name;
+          this.vip_level = result.user.vip_level;
+          this.hat = result.user.hat;
+          this.hat_in_use = result.user.hat_in_use;
         }
       },
       refreshQueryPageBookList: async function () {

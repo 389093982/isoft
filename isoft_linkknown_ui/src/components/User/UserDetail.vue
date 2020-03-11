@@ -10,7 +10,6 @@
             <div>
               <!--帽子 & 头像-->
               <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use"></HatAndFacePicture>
-              <!--<HatAndFacePicture :src="user.small_icon" :src_size="40" :hat_width="40" :hat_height="10" :hat_relative_left="-1" :hat_relative_top="-55" :vip_level="user.vip_level"></HatAndFacePicture>-->
             </div>
           </Col>
           <Col span="12" style="padding: 10px 0 0 3px;">

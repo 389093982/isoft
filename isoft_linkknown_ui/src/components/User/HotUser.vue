@@ -4,9 +4,9 @@
       <div slot="content" style="padding: 10px;">
         <Row v-for="(user,index) in users" :gutter="10">
           <Col span="3">
-            <img style="cursor: pointer;border-radius: 50%; border: 1px solid grey;"
-                 @click="$router.push({path:'/user/detail',query:{username:user.user_name}})"
-                 width="30" height="30" :src="user.small_icon" @error="defImg()">
+            <span @click="$router.push({path:'/user/detail',query:{username:user.user_name}})" >
+              <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-45" ></HatAndFacePicture>
+            </span>
           </Col>
           <Col span="13" class="isoft_inline_ellipsis" style="font-size: 12px;margin: 4px 0 0 0 ">
             <IBeautifulLink @onclick="$router.push({path:'/user/detail',query:{username:user.user_name}})">
@@ -26,10 +26,11 @@
   import {GetHotUsers} from "../../api"
   import IBeautifulCard from "../../components/Common/card/IBeautifulCard";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "HotUser",
-    components: {IBeautifulLink, IBeautifulCard},
+    components: {HatAndFacePicture, IBeautifulLink, IBeautifulCard},
     data() {
       return {
         users: [],
@@ -44,7 +45,7 @@
       },
       refreshHotUsers: async function () {
         const result = await GetHotUsers();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.users = result.users;
         }
       }

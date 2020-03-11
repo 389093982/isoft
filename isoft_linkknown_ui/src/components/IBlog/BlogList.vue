@@ -55,8 +55,7 @@
                   <Col span="2" offset="1">
                     <!--第一列 ：头像-->
                     <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}" style="float: left;">
-                      <Avatar size="large" v-if="renderUserIcon(searchblog.author)" :src="renderUserIcon(searchblog.author)" style="border: 1px solid grey;" />
-                      <Avatar size="large" v-else src="../../../static/images/404.jpg" style="border: 1px solid grey;"/>
+                      <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="40" :hat_height="10" hat_relative_left="0" hat_relative_top="-55" ></HatAndFacePicture>
                     </router-link>
                   </Col>
                   <Col span="16" style="position: relative;top: -3px;left: -18px">
@@ -133,14 +132,19 @@
     GetLoginUserName,
     RenderNickName,
     RenderUserIcon,
+    RenderVipLevel,
+    RenderHatInUse,
     RenderUserInfoByNames
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
   import ISimpleSearch from "../../../../isoft_iwork_ui/src/components/Common/search/ISimpleSearch";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "BlogList",
-    components: {MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
+    components: {
+      HatAndFacePicture,
+      MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
         isLoading: true,
@@ -240,7 +244,13 @@
       },
       renderUserIcon: function (user_name) {
         return RenderUserIcon(this.userInfos, user_name);
-      }
+      },
+      renderVipLevel: function (user_name) {
+        return RenderVipLevel(this.userInfos, user_name);
+      },
+      renderHatInUse: function (user_name) {
+        return RenderHatInUse(this.userInfos, user_name);
+      },
     },
     mounted: function () {
       this.refreshBlogList();
