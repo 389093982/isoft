@@ -21,9 +21,6 @@
           <FormItem label="产品金额" prop="good_price">
             <Input v-model.trim="formValidate.good_price" placeholder="请选择产品金额"/>
           </FormItem>
-          <FormItem label="卖家姓名" prop="good_seller">
-            <Input v-model.trim="formValidate.good_seller" :readonly="true"/>
-          </FormItem>
           <FormItem label="卖家联系方式" prop="seller_contact">
             <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
           </FormItem>

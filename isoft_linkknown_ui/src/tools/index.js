@@ -99,6 +99,32 @@ export const RenderUserInfoByName = async function (user_name) {
   });
 };
 
+// 根据用户名查询用户昵称,并且将昵称拼装在原来的数组中
+export const FillUserNickNameInfoByNames = async function (arrs, attrName) {
+  // 获取所有的用户名
+  let user_names = MapAttrsForArray(arrs, attrName);
+  // 去重并发送请求
+  user_names = Array.from(new Set(user_names));
+  const result = await GetUserInfoByNames({usernames: user_names.join(",")});
+  let userInfos = [];
+  if (result.status === "SUCCESS") {
+    userInfos = result.users;
+  }
+  // 拼装填充用户昵称
+  for (var i = 0; i < arrs.length; i++) {
+    let item = arrs[i];
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === item[attrName]);
+    if (user_names != null && user_names.length > 0) {
+      item["_nick_name"] = user_names[0].nick_name;
+    }
+    arrs[i] = item;
+  }
+  // 返回原始数组
+  return new Promise(function (resolve, reject) {
+    resolve(arrs);
+  });
+};
+
 export const RenderUserInfoByNames = async function (arrs, attrName) {
   let user_names = MapAttrsForArray(arrs, attrName);
   user_names = Array.from(new Set(user_names));

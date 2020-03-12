@@ -6,8 +6,7 @@
           <Carousel autoplay dots="outside" trigger="hover" :autoplay-speed="4000">
             <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
               <div class="carousel">
-                <img :src="good_image" width="100%" height="250px"
-                     style="border: 3px solid rgba(188,238,204,0.24);"/>
+                <img :src="good_image" width="100%" height="250px"/>
                 <div style="position: relative;">
                   <div class="carousel_label">{{getLabel()}}</div>
                 </div>
@@ -31,7 +30,7 @@
               优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>
               <GoodShortcut/>
             </p>
-            <div>卖家姓名：{{good.good_seller}}</div>
+            <div>卖家姓名：{{good._nick_name}}</div>
             <div>
               卖家联系方式：{{good.seller_contact}}
               <div style="float: right;">
@@ -77,7 +76,6 @@
 <style scoped>
   .carousel .carousel_label {
     display: none;
-    margin: 4px;
     padding: 2px 0 0 10px;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -86,13 +84,12 @@
     line-height: 40px;
     text-align: center;
     position: absolute;
-    top: 0px;
     transition: all ease-in 1s;
   }
 
   .carousel:hover .carousel_label {
     display: block;
-    top: -55px;
+    bottom: 8px;
   }
 
   .item_border1::before {

@@ -167,7 +167,7 @@
           search_type: this.search_type,
           search_user_name: this.search_user_name
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.userInfos = await RenderUserInfoByNames(result.asks, 'user_name');
           this.asks = result.asks;
           this.total = result.paginator.totalcount;

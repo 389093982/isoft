@@ -14,7 +14,7 @@
 
     <div style="display: flex;">
       <div style="width: 80%;">
-        <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd10"
+        <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
              style="margin: 10px;border: 1px solid #eee;">
 
           <GoodMeta :good="good">
@@ -54,7 +54,7 @@
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import {GoodList, NewOrder} from "../../api"
-  import {CheckHasLoginConfirmDialog2, GetLoginUserName} from "../../tools"
+  import {CheckHasLoginConfirmDialog2, FillUserNickNameInfoByNames, GetLoginUserName} from "../../tools"
   import GoodMeta from "./GoodMeta";
   import ShowMore from "../Elementviewers/showMore";
 
@@ -88,7 +88,8 @@
       refreshGoodList: async function () {
         const result = await GoodList();
         if (result.status === "SUCCESS") {
-          this.goods = result.goods;
+          const goods = await FillUserNickNameInfoByNames(result.goods, "good_seller");
+          this.goods = goods;
         }
       },
       isLoginUserName: function (user_name) {
