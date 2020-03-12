@@ -88,8 +88,7 @@
       refreshGoodList: async function () {
         const result = await GoodList();
         if (result.status === "SUCCESS") {
-          const goods = await FillUserNickNameInfoByNames(result.goods, "good_seller");
-          this.goods = goods;
+          this.goods = await FillUserNickNameInfoByNames(result.goods, "good_seller");
         }
       },
       isLoginUserName: function (user_name) {

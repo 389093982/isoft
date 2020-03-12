@@ -100,6 +100,15 @@ export const RenderUserInfoByName = async function (user_name) {
 };
 
 // 根据用户名查询用户昵称,并且将昵称拼装在原来的数组中
+export const FillUserNickNameInfoByName = async function (item, attrName) {
+  const items = FillUserNickNameInfoByNames([item], attrName);
+  // 返回原始数组
+  return new Promise(function (resolve, reject) {
+    resolve(items[0]);
+  });
+};
+
+// 根据用户名查询用户昵称,并且将昵称拼装在原来的数组中
 export const FillUserNickNameInfoByNames = async function (arrs, attrName) {
   // 获取所有的用户名
   let user_names = MapAttrsForArray(arrs, attrName);
@@ -116,6 +125,7 @@ export const FillUserNickNameInfoByNames = async function (arrs, attrName) {
     let user_names = userInfos.filter(userinfo => userinfo.user_name === item[attrName]);
     if (user_names != null && user_names.length > 0) {
       item["_nick_name"] = user_names[0].nick_name;
+      item["_small_icon"] = user_names[0].small_icon;
     }
     arrs[i] = item;
   }

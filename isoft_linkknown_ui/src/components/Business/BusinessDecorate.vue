@@ -23,6 +23,9 @@
         <span class="isoft_tag4">交付准时（167）</span>
         <span class="isoft_tag4">交付准时（167）</span>
         <span class="isoft_tag4">交付准时（167）</span>
+
+        <!-- 评论模块 -->
+        <IEasyComment :theme_pk="1" theme_type="business_theme_type" style="margin-top: 50px;"/>
       </div>
       <div slot="tabPane3">
         <span v-if="decorate_items" v-for="(decorate_item, index) in decorate_items">
@@ -35,11 +38,12 @@
 
 <script>
   import Tab from "./Tab";
+  import IEasyComment from "../Comment/IEasyComment"
   import {LoadDecorateItems} from "../../api"
 
   export default {
     name: "BusinessDecorate",
-    components: {Tab},
+    components: {Tab, IEasyComment},
     props: {
       good: {
         type: Object,
