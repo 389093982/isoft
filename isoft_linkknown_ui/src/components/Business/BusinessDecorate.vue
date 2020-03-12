@@ -8,21 +8,7 @@
       <div slot="tabPane1">tabPane1</div>
       <div slot="tabPane2">
         <p>用户体验：</p>
-        <span class="isoft_tag4">沟通顺畅（167）</span>
-        <span class="isoft_tag4">专业水平高（167）</span>
-        <span class="isoft_tag4">严谨认真（117）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（117）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（168）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
-        <span class="isoft_tag4">交付准时（167）</span>
+        <VoteTags referer_type="vote_business" referer_id="1111"/>
 
         <!-- 评论模块 -->
         <IEasyComment :theme_pk="1" theme_type="business_theme_type" style="margin-top: 50px;"/>
@@ -40,10 +26,11 @@
   import Tab from "./Tab";
   import IEasyComment from "../Comment/IEasyComment"
   import {LoadDecorateItems} from "../../api"
+  import VoteTags from "../Decorate/VoteTags";
 
   export default {
     name: "BusinessDecorate",
-    components: {Tab, IEasyComment},
+    components: {VoteTags, Tab, IEasyComment},
     props: {
       good: {
         type: Object,
@@ -63,7 +50,7 @@
           this.decorate = result.decorate;
           this.decorate_items = result.decorate_items;
         }
-      }
+      },
     },
     mounted() {
       this.refreshLoadDecorateItems();

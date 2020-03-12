@@ -51,6 +51,8 @@ export const EditDecorateItem = (params) => ajax(BASE_URL + '/iwork/httpservice/
 export const LoadAllDecorates = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadAllDecorates', params, 'POST');
 export const LoadDecorateItems = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadDecorateItems', params, 'POST');
 
+export const UpdateVoteTag = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateVoteTag', params, 'POST');
+export const FilterVoteTags = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterVoteTags', params, 'POST');
 export const GoodEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GoodEdit', params, 'POST');
 export const GoodList = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GoodList', {}, 'POST');
 export const NewOrder = (good_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/NewOrder', {good_id}, 'POST');
