@@ -50,6 +50,7 @@
     <div class="isoft_tag2">tag 标签样式2</div>
     <div class="isoft_tag3">tag 标签样式3</div>
     <div class="isoft_tag4">tag 标签样式4</div>
+    <div class="isoft_tag5">tag 标签样式5</div>
   </div>
 </template>
 

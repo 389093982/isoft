@@ -7,7 +7,7 @@
 
       <div slot="tabPane1">tabPane1</div>
       <div slot="tabPane2">
-        <p>用户体验：</p>
+        <p>用户印象：</p>
         <VoteTags referer_type="vote_business" referer_id="1111"/>
 
         <!-- 评论模块 -->

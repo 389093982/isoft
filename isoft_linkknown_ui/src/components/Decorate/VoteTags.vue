@@ -1,6 +1,7 @@
 <template>
   <span>
-    <span class="isoft_tag4" @click="updateVoteTag(tag)"
+    <span class="isoft_point_cursor" :class="hoverIndex === index ? 'isoft_tag5' : 'isoft_tag4'"
+          @click="updateVoteTag(tag)" @mouseover="mouseover(index)"
           v-for="(tag, index) in voteTags">{{tag}}（{{parseTagNum(tag)}}）</span>
   </span>
 </template>
@@ -16,21 +17,21 @@
         default: '',
       },
       referer_id: {
-        type: String,
+        type: [String, Number],
         default: '',
       },
-      tag_name: {
-        type: String,
-        default: '',
-      }
     },
     data() {
       return {
         voteTags: this.GLOBAL.voteTags,
         vTags: [],
+        hoverIndex: -1,
       }
     },
     methods: {
+      mouseover: function (index) {
+        this.hoverIndex = index;
+      },
       parseTagNum: function (tag_name) {
         let fTags = this.vTags.filter(tag => tag.tag_name === tag_name);
         return fTags != null && fTags.length > 0 ? fTags[0].vote_number : 0;

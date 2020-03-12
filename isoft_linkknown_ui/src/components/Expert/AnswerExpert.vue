@@ -20,6 +20,10 @@
               <Button size="small" style="float: right;margin: 10px 0;" type="success" @click="EditAnswerExpert">提交</Button>
             </div>
           </div>
+
+          <p>用户印象：</p>
+          <VoteTags :referer_type="answerExpert" :referer_id="ask_expert.id"/>
+
           <div class="isoft_bg_white isoft_top10 isoft_pd10">
             <ul>
               <li v-for="(as, index) in answer_experts"
@@ -72,10 +76,11 @@
   import {checkEmpty} from "../../tools"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import ExpertWall from "./ExpertWall";
+  import VoteTags from "../Decorate/VoteTags";
 
   export default {
     name: "AnswerExpert",
-    components: {ExpertWall, IShowMarkdown},
+    components: {VoteTags, ExpertWall, IShowMarkdown},
     data() {
       return {
         ask_expert: null,
