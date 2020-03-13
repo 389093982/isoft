@@ -11,7 +11,7 @@
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/index'})">首页</IBeautifulLink>
           </MenuItem>
           <MenuItem name="2">
-            <IBeautifulLink @onclick="$router.push({path:'/ilearning/boutiqueCourse'})">精品课程</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/ilearning/jingpinCourse'})">精品课程</IBeautifulLink>
           </MenuItem>
           <MenuItem name="3">
             <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>

@@ -41,7 +41,7 @@
   import ShowModulars from "./ShowModulars";
 
   export default {
-    name: "BoutiqueCourse",
+    name: "JingpinCourse",
     components: {
       CourseType,
       ShowModulars,
