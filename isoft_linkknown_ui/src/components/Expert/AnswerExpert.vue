@@ -28,12 +28,13 @@
             <ul>
               <li v-for="(as, index) in answer_experts"
                   style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-                <!--<h4 style="color: red;">专家回答({{ (current_page - 1) * offset + index + 1}} 楼)</h4>-->
                 <h4 style="color: red;">专家回答( # {{total - (current_page - 1) * offset - index}}楼 )</h4>
                 <Row>
                   <Col span="2" style="position: relative;top: 6px">
                     <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})" class="isoft_font12">
-                      <span><img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" width=30px height=30px :src=as.small_icon @error="defImg()"></span>
+                      <span>
+                        <HatAndFacePicture :src="as.small_icon" :vip_level="as.vip_level" :hat_in_use="as.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-46" ></HatAndFacePicture>
+                      </span>
                     </span>
                   </Col>
                   <Col span="22" style="position: relative;left: -20px">
@@ -77,10 +78,11 @@
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import ExpertWall from "./ExpertWall";
   import VoteTags from "../Decorate/VoteTags";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "AnswerExpert",
-    components: {VoteTags, ExpertWall, IShowMarkdown},
+    components: {HatAndFacePicture, VoteTags, ExpertWall, IShowMarkdown},
     data() {
       return {
         ask_expert: null,

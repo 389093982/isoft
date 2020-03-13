@@ -40,10 +40,8 @@
                       <p>浏览</p>
                     </div>
 
-                    <div style="margin: 10px 0 0 60px;">
-                      <img style="cursor: pointer;border-radius: 50%;"
-                           @click="$router.push({path:'/user/detail',query:{username:as.user_name}})"
-                           width="35" height="35" :src="renderUserIcon(as.user_name)" @error="defImg()">
+                    <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">
+                      <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" hat_relative_left="2" hat_relative_top="-56" ></HatAndFacePicture>
                     </div>
                   </Col>
                   <Col span="18" style="line-height: 30px;">
@@ -91,14 +89,17 @@
     GetLoginUserName,
     RenderNickName,
     RenderUserIcon,
+    RenderVipLevel,
+    RenderHatInUse,
     RenderUserInfoByNames
   } from "../../tools";
   import MoveLine from "../Common/decorate/MoveLine";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "AskExpert",
-    components: {MoveLine, ExpertWall, IShowMarkdown},
+    components: {HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
         // 当前页
@@ -178,6 +179,12 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
+      },
+      renderVipLevel: function (user_name) {
+        return RenderVipLevel(this.userInfos, user_name);
+      },
+      renderHatInUse: function (user_name) {
+        return RenderHatInUse(this.userInfos, user_name);
       }
     },
     mounted() {

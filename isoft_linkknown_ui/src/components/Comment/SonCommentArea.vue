@@ -8,7 +8,7 @@
         <Col span="2">
           <div style="margin: 12px 0 0 15px ">
             <router-link :to="{path:'/user/detail',query:{username:comment.created_user_account}}">
-              <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" width=25px height=25px :src=comment.created_user_small_icon @error="defImg()">
+              <HatAndFacePicture :src="comment.created_user_small_icon" :vip_level="comment.created_user_vip_level" :hat_in_use="comment.created_user_hat_in_use" :src_size="25" :hat_width="21" :hat_height="7" hat_relative_left="2" hat_relative_top="-44" ></HatAndFacePicture>
             </router-link>
           </div>
         </Col>
@@ -75,6 +75,7 @@
   import {FilterCommentSecondLevel} from "../../api/index"
   import {GetLoginUserName} from "../../tools"
   import CommentForm from "./CommentForm";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "SonCommentArea",
@@ -105,7 +106,7 @@
         default: "",
       },
     },
-    components: { CommentForm},
+    components: {HatAndFacePicture, CommentForm},
     data() {
       return {
         comments: [],

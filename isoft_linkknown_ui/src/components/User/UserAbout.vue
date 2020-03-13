@@ -2,7 +2,7 @@
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;min-height: 350px;">
     <Row>
         <span @click="$router.push({path:'/user/detail',query:{username:getUserName()}})">
-          <HatAndFacePicture :src="user_small_icon" :vip_level="vip_level" :hat_in_use="hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-45" ></HatAndFacePicture>
+          <HatAndFacePicture :src="user_small_icon" :vip_level="vip_level" :hat_in_use="hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-46" ></HatAndFacePicture>
         </span>
         <div style="position: absolute;top: 5px;left: 40px">
           <span>

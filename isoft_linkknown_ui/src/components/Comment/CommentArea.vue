@@ -9,7 +9,7 @@
         <Col span="2">
           <div>
             <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
-              <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%; position: relative; top:5px" width=40px height=40px :src=comment.small_icon @error="defImg()">
+              <HatAndFacePicture :src="comment.small_icon" :vip_level="comment.vip_level" :hat_in_use="comment.hat_in_use" :src_size="40" :hat_width="36" :hat_height="10" hat_relative_left="2" hat_relative_top="-56" ></HatAndFacePicture>
             </router-link>
           </div>
         </Col>
@@ -80,6 +80,7 @@
   import CommentForm from "./CommentForm"
   import {GetLoginUserName} from "../../tools"
   import SonCommentArea from "./SonCommentArea";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "CommentArea",
@@ -94,7 +95,7 @@
         default: "",
       },
     },
-    components: {SonCommentArea, CommentForm},
+    components: {HatAndFacePicture, SonCommentArea, CommentForm},
     data() {
       return {
         // 当前页

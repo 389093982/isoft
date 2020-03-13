@@ -3,11 +3,13 @@
 
     <!--帽子抽屉-->
     <Drawer title="我的帽子" placement="left" v-model="hatDrawer" width="14">
-      <div class="hovered hvr-grow hoverLinkColor" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
-        <span @click="removeHat()">摘下帽子</span>
-      </div><hr><br>
-      <img @click="chooseHat('hat03')" class="hvr-grow" style="cursor: pointer" src="../../../static/images/vipHat/hat01.png" width="150" height="50" @error="defImg()"/>
-    </Drawer>
+      <div style="text-align: center">
+        <div class="hovered hvr-grow hoverLinkColor" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
+          <span @click="removeHat()">摘下帽子</span>
+        </div><hr><br><br>
+        <img @click="chooseHat('hat01')" class="hvr-grow" style="cursor: pointer" src="../../../static/images/vipHat/hat01.png" width="80" height="20" @error="defImg()"/>
+      </div>
+     </Drawer>
 
     <!--帽子&头像-->
     <div style="float:left;width: 33%;">

@@ -55,7 +55,7 @@
                   <Col span="2" offset="1">
                     <!--第一列 ：头像-->
                     <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}" style="float: left;">
-                      <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="40" :hat_height="10" hat_relative_left="0" hat_relative_top="-55" ></HatAndFacePicture>
+                      <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" hat_relative_left="2" hat_relative_top="-56" ></HatAndFacePicture>
                     </router-link>
                   </Col>
                   <Col span="16" style="position: relative;top: -3px;left: -18px">

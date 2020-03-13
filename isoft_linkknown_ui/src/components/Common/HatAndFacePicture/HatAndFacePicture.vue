@@ -10,7 +10,7 @@
 
     <!--帽子 & 头像-->
     <div v-if="vip_level>0 && hat_in_use==='Y'" :style="{position: 'relative',width:0,height:0,left:hat_relative_left+'px',top:hat_relative_top+'px'}">
-      <img src="../../../../static/images/vipHat/hat01.png" :width=hat_width :height=hat_height @error="defImg()"/>
+      <img src="../../../../static/images/vipHat/hat01.png" :width=hat_width :height=hat_height @error="defImg()" style="cursor: pointer"/>
     </div>
     <div v-else :style="{position: 'relative',width:0,height:0,left:hat_relative_left+'px',top:hat_relative_top+'px'}">
     <img src="../../../../static/images/vipHat/emptyHat.png" :width=hat_width :height=hat_height @error="defImg()"/>
