@@ -173,14 +173,13 @@ const IAdvertisement = [{
 
 const IFoundReouter = [{
   path: '/found', component: ILayout,
-    children: [
-      {
-        path: 'list', component: FoundList, children: [
-          {path: 'activity', component: ActivityList},
-          {path: 'discount', component: NewsList},
-        ]
-      },
-    ]
+    children: [{
+        path: 'list', component: FoundList,
+          children: [
+            {path: 'activity', component: ActivityList},
+            {path: 'discount', component: NewsList},
+          ]
+     },]
 }];
 
 const MessageRouter = [{
@@ -192,13 +191,13 @@ const MessageRouter = [{
 
 const BusinessRouter = [{
   path: '/business', component: ILayout,
-  children: [
-    {path: 'introduce', component: BusinessIntroduce},
-    {path: 'list', component: BusinessList},
-    {path: 'edit', component: BusinessEdit},
-    {path: 'detail', component: BusinessDetail},
-    {path: 'payConfirm', component: PayConfirm},
-  ]
+    children: [
+      {path: 'introduce', component: BusinessIntroduce},
+      {path: 'list', component: BusinessList},
+      {path: 'edit', component: BusinessEdit},
+      {path: 'detail', component: BusinessDetail},
+      {path: 'payConfirm', component: PayConfirm},
+    ]
 }];
 
 const ResourceRouter = [{
