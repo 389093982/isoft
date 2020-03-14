@@ -8,7 +8,7 @@
         <span v-for="(goodType, index) in goodTypes" style="margin: 0 10px;">{{goodType}}</span>
       </div>
       <div style="position: absolute;right: 50px;margin-top: -10px;" class="isoft_point_cursor isoft_button_red2"
-           @click="$router.push({path:'/business/edit'})">我要发布
+           @click="publishBusiness">我要发布
       </div>
     </div>
 
@@ -70,6 +70,12 @@
       }
     },
     methods: {
+      publishBusiness: function () {
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$router.push({path: '/business/edit'})
+        });
+      },
       showMyBusiness: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
