@@ -1,13 +1,16 @@
 <template>
   <div>
 
+    <div style="float: left;width: 20%;">
+      <img src="../../../../static/images/linkknown_logo02.png" style="width: 80px;height: 35px;margin: 13px 0 0 50px"/>
+    </div>
     <div id="header">
-      <div class="login-link" id="login_link" style="position: absolute;top: 15px;right: 120px;">
+      <div class="login-link" id="login_link" style="position: absolute;top: 20px;right: 120px;">
         <span style="font-size: 15px;font-weight: inherit;">已有账号,前去<a href="/sso/login/">登录</a></span>
       </div>
     </div>
 
-    <div style="height: 5px;display: block;width:100%;background: linear-gradient(to right, red, blue);opacity:0.1;"></div>
+    <div style="height: 5px;display: block;width:100%;background: linear-gradient(to right, red, blue);opacity:0.1;margin-top: 8px"></div>
 
     <Row style="position: relative;top: -30px;">
       <Col span="14">
@@ -31,7 +34,7 @@
       </Col>
     </Row>
 
-    <div style="position: relative;">
+    <div>
       <hr style="color: rgba(128,128,128,0.13)">
       <LoginFooter/>
     </div>
