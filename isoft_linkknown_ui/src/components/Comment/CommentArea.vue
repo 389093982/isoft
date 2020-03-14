@@ -53,7 +53,7 @@
           <!--第二列: 点赞、删除-->
           <Col span="6">
             <Icon type="md-heart-outline"  style="font-size: 20px;cursor: pointer;color: rgb(173, 170, 168)"/>&nbsp;&nbsp;&nbsp;
-            <span v-if="isLoginUserName(comment.user_name)">
+            <span v-if="isLoginUserName(comment.user_name)" @click="deleteComment(1,comment.id,comment.theme_pk,comment.theme_type)">
               <Icon type="ios-trash-outline" style="font-size: 18px;cursor: pointer;color: rgb(173, 170, 168)"/>
             </span>
           </Col>
@@ -64,7 +64,7 @@
       <SonCommentArea v-if="comment.parent_id===0" :parent_user_name="comment.nick_name" :org_parent_id="comment.id" :parent_id="comment.id" :parent_comment="comment" :theme_pk="theme_pk" :theme_type="theme_type" :key="comment.id" @refreshComment="refreshComment" />
     </div>
 
-    <!-- 顶级评论支持分页 -->
+    <!-- 一级评论支持分页 -->
     <Page v-if="parent_id === 0 && total > 0" :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
     <!-- 评论表单 -->
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-  import {FilterCommentFirstLevel} from "../../api/index"
+  import {FilterCommentFirstLevel,deleteComment} from "../../api/index"
   import CommentForm from "./CommentForm"
   import {GetLoginUserName} from "../../tools"
   import SonCommentArea from "./SonCommentArea";
@@ -139,6 +139,20 @@
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
       },
+      // 删除评论
+      deleteComment:async function (level,id,theme_pk,theme_type) {
+        let params = {
+          "level":level,
+          "id":id,
+          "theme_pk":theme_pk,
+          "theme_type":theme_type
+        };
+        const result = await deleteComment(params);
+        if (result.status === "SUCCESS") {
+          this.refreshComment();
+          this.$Message.success("删除成功！")
+        }
+      }
     },
     mounted: function () {
       this.refreshComment();

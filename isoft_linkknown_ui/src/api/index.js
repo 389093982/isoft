@@ -106,17 +106,6 @@ export const AddComment = (org_parent_id,parent_id, content, theme_pk, theme_typ
     refer_user_name
   }, 'GET');
 
-// 获取评论列表
-export const FilterComment = (theme_pk, theme_type, parent_id, comment_type, offset, current_page) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterComment2', {
-    theme_pk,
-    theme_type,
-    parent_id,
-    comment_type,
-    offset,
-    current_page
-  }, 'GET');
-
 // 获取一级评论列表
 export const FilterCommentFirstLevel = (theme_pk, theme_type, comment_type, offset, current_page) =>
   ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', {
@@ -134,6 +123,9 @@ export const FilterCommentSecondLevel = (theme_pk, theme_type,org_parent_id) =>
     theme_type,
     org_parent_id,
   }, 'GET');
+
+//删除评论
+export const deleteComment = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/deleteComment", params, 'POST');
 
 // 获取所有课程类型
 export const GetAllCourseType = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetAllCourseType2", {}, 'GET');

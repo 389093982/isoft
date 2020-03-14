@@ -54,7 +54,7 @@
           <!--第二列: 点赞、删除-->
           <Col span="6">
             <Icon type="md-heart-outline"  style="font-size: 20px;cursor: pointer;color: rgb(173, 170, 168)"/>&nbsp;&nbsp;&nbsp;
-            <span v-if="isLoginUserName(comment.created_user_account)">
+            <span v-if="isLoginUserName(comment.created_user_account)" @click="deleteComment(2,comment.id,comment.org_parent_id)">
               <Icon type="ios-trash-outline" style="font-size: 18px;cursor: pointer;color: rgb(173, 170, 168)"/>
             </span>
           </Col>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-  import {FilterCommentSecondLevel} from "../../api/index"
+  import {FilterCommentSecondLevel,deleteComment} from "../../api/index"
   import {GetLoginUserName} from "../../tools"
   import CommentForm from "./CommentForm";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
@@ -143,6 +143,20 @@
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
       },
+      // 删除评论
+      deleteComment:async function (level,id,org_parent_id) {
+        let params = {
+          "level":level,
+          "id":id,
+          "org_parent_id":org_parent_id
+        };
+        const result = await deleteComment(params);
+        if (result.status === "SUCCESS") {
+          this.refreshComment();
+          this.$Message.success("删除成功！");
+          this.$emit('refreshComment','all');
+        }
+      }
     },
     mounted: function () {
       this.refreshComment();
