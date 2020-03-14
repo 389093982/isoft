@@ -14,6 +14,10 @@
           </FormItem>
           <FormItem label="产品标签" prop="good_tag">
             <Input v-model.trim="formValidate.good_tag" placeholder="请输入产品标签,示例：专业|高水准|精品"/>
+
+            <div style="margin: 10px 0;">
+              <span class="isoft_tag3" v-for="(tag, index) in parseTag(formValidate.good_tag)">{{tag}}</span>
+            </div>
           </FormItem>
           <FormItem label="产品描述" prop="good_desc">
             <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入产品描述"/>
@@ -70,7 +74,7 @@
 <script>
   import IFileUpload from "../Common/file/IFileUpload";
   import {fileUploadUrl, GetGoodDetail, GoodEdit} from "../../api"
-  import {copyObj, GetLoginUserName} from "../../tools"
+  import {checkEmpty, copyObj, GetLoginUserName, strSplit} from "../../tools"
   import Decorate from "../Decorate/Decorate";
 
   export default {
@@ -162,7 +166,10 @@
           this.formValidate = result.good;
           this.formValidate.good_images = JSON.parse(result.good.good_images);
         }
-      }
+      },
+      parseTag: function (good_tag) {
+        return strSplit(good_tag, "|").filter(tag => !checkEmpty(tag));
+      },
     },
     mounted() {
       this.formValidate.good_seller = GetLoginUserName();
