@@ -8,7 +8,7 @@
     <Row>
       <Col span="6" style="padding-right: 5px;">
         <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 600px;">
-          <Button @click="$router.push({path:'/ibook/book_list'})">全部书单</Button>
+          <Button @click="$router.push({path:'/ibook/bookList'})">全部书单</Button>
           <dl>
             <dd><h3>{{$route.query.book_name}}</h3></dd>
             <dt v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">

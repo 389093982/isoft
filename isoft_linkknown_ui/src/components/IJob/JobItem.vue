@@ -18,7 +18,7 @@
               <div style="width: 85%;">
                 <p style="color: #00c2b3;font-size: 18px;">
                   <span class="isoft_point_cursor"
-                        @click="$router.push({path:'/job/corporate_detail', query:{corporate_id: jobDetail.corporate_id}})">{{jobDetail.corporate_name}}</span>
+                        @click="$router.push({path:'/job/corporateDetail', query:{corporate_id: jobDetail.corporate_id}})">{{jobDetail.corporate_name}}</span>
                   &nbsp;<span style="color: red;font-weight: bold;font-size: 12px;">保</span></p>
                 <p>
                 <span v-for="(job_tag,index) in filterJobTags(jobDetail.job_tags)">
@@ -30,9 +30,9 @@
             <Col span="6">
               <span v-if="isLoginUserName(jobDetail.created_by)">
                 <Button size="small"
-                        @click="$router.push({path:'/job/job_edit', query: {job_id: jobDetail.corporate_id}})">编辑岗位</Button>
+                        @click="$router.push({path:'/job/jobEdit', query: {job_id: jobDetail.corporate_id}})">编辑岗位</Button>
                 <Button size="small"
-                        @click="$router.push({path:'/job/job_edit', query: {corporate_id: jobDetail.corporate_id}})">新增岗位</Button>
+                        @click="$router.push({path:'/job/jobEdit', query: {corporate_id: jobDetail.corporate_id}})">新增岗位</Button>
               </span>
               <span v-else>
                 <Button size="small" v-if="!isLoginUserName(jobDetail.created_by)"
@@ -84,7 +84,7 @@
             _this.$Message.success("投递成功!");
             // 投递成功 1s 后进入投递详情页面
             setTimeout(function () {
-              _this.$router.push({path: '/job/apply_list'});
+              _this.$router.push({path: '/job/applyList'});
             }, 1000);
           } else {
             _this.$Message.error(result.errorMsg);

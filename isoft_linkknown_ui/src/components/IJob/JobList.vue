@@ -79,7 +79,7 @@
     },
     methods: {
       forwardResumeManage: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
+        CheckHasLoginConfirmDialog(this, {path: '/job/resumeManage', query: {'user_name': GetLoginUserName()}});
       },
       handleAreaSubmit: function (province, city, area) {
         if (checkEmpty(city)) {
@@ -124,13 +124,13 @@
         this.jobSalaySearch = "";
       },
       showJobDetail: function (job) {
-        this.$router.push({path: '/job/corporate_detail', query: {'corporate_id': job.corporate_id}});
+        this.$router.push({path: '/job/corporateDetail', query: {'corporate_id': job.corporate_id}});
       },
       toToudiDetail: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/job/apply_list'});
+        CheckHasLoginConfirmDialog(this, {path: '/job/applyList'});
       },
       toEditCorporateDetail: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/job/corporate_detail'});
+        CheckHasLoginConfirmDialog(this, {path: '/job/corporateDetail'});
       }
     },
     mounted() {

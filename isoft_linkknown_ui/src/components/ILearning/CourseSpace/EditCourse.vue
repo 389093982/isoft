@@ -116,7 +116,7 @@
             const result = await EditCourse(this.formValidate);
             if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
-              this.$router.push({path: "/ilearning/course_space/myCourseList"});
+              this.$router.push({path: "/ilearning/courseSpace/myCourseList"});
             } else {
               this.$Message.error('提交失败!');
             }

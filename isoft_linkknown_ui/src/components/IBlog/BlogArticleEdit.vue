@@ -192,7 +192,7 @@
               if (this.successEmit) {
                 this.$emit("successEmitFunc");
               } else {
-                this.$router.push({path: '/iblog/blog_list'});
+                this.$router.push({path: '/iblog/blogList'});
               }
             } else {
               _this.$Message.error('提交失败!');

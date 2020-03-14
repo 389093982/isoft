@@ -8,7 +8,7 @@
       <a href="#">商家入驻</a> |
       <a href="#">广告服务</a> |
       <a href="#">友情链接</a> |
-      <a href="#" @click="$router.push({path:'/iblog/blog_list'})">链知博客</a> |
+      <a href="#" @click="$router.push({path:'/iblog/blogList'})">链知博客</a> |
       <a href="#">更多</a>
     </p>
     <p style="line-height: 25px;">Copyright © 2019-2020 LinkKnown 版权所有</p>

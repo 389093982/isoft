@@ -20,7 +20,7 @@
           <Col span="2" style="text-align: center;">
             <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></Col>
           <Col span="2" style="text-align: center;">
-            <a @click="blog_edit"><Icon type="ios-brush" />我也要发布</a>
+            <a @click="blogEdit"><Icon type="ios-brush" />我也要发布</a>
           </Col>
           <Col span="5" offset="2">
             <Affix :offset-top="68">
@@ -65,7 +65,7 @@
                       <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name}}</a>
                       <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
                       <span>&nbsp;</span>
-                      <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                      <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
                         <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(27)}}</span>
                       </router-link>
                       <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
@@ -84,10 +84,10 @@
                   </Col>
                   <Col span="5">
                     <!--第三列：-->
-                    <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                    <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
                     </router-link>
-                    <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
+                    <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">{{searchblog.comments}}</span> 条评论</span>
                     </router-link>
                   </Col>
@@ -165,10 +165,10 @@
       }
     },
     methods: {
-      blog_edit: function () {
+      blogEdit: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/iblog/blog_edit'});
+          _this.$router.push({path: '/iblog/blogEdit'});
         });
       },
       chooseItem: function (pattern) {

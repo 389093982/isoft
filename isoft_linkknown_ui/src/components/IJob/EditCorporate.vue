@@ -138,7 +138,7 @@
       },
       handleReturn: function () {
         showModal
-        this.$router.push({path: '/job/corporate_detail'});
+        this.$router.push({path: '/job/corporateDetail'});
       },
       handleSubmit: function (name) {
         this.$refs[name].validate(async (valid) => {
@@ -146,7 +146,7 @@
             const result = await EditCorporateDetail(this.formInline);
             if (result.status == "SUCCESS") {
               this.$Message.success("保存成功！");
-              this.$router.push({path: '/job/corporate_detail'});
+              this.$router.push({path: '/job/corporateDetail'});
             } else {
               this.$Message.error(result.errorMsg);
             }

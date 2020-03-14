@@ -77,40 +77,39 @@ const ILearningRouter = [{
     children: [
       {path: 'index', component: ILearningIndex,},
       {path: 'jingpinCourse', component: JingpinCourse,},
-      {path: 'course_space', component: CourseSpace,
-        redirect: '/ilearning/course_space/myCourseList',
+      {path: 'courseSpace', component: CourseSpace,
+        redirect: '/ilearning/courseSpace/myCourseList',
         children: [
           {path: 'editCourse', component: EditCourse,},
           {path: 'myCourseList', component: MyCourseList,},
           {path: 'RecentlyViewed', component: RecentlyViewed,},
         ]
       },
-      {path: 'course_detail', component: CourseDetail,},
-      {path: 'video_play', component: VideoPay,},
+      {path: 'courseDetail', component: CourseDetail,},
+      {path: 'videoPlay', component: VideoPay,},
       {path: 'advise', component: Advise,},
       {path: 'about', component: About,},
-      {path: 'course_search', component: CourseSearch,},
+      {path: 'courseSearch', component: CourseSearch,},
     ]
 }];
 
 const IBlogRouter = [{
   path: '/iblog', component: ILayout,
     children: [
-      {path: 'blog_index', component: IBlog},
-      {path: 'blog_list', component: BlogList},
-      {path: 'blog_detail', component: BlogArticleDetail},
-      {path: 'blog_edit', component: BlogArticleEdit},
+      {path: 'blogIndex', component: IBlog},
+      {path: 'blogList', component: BlogList},
+      {path: 'blogDetail', component: BlogArticleDetail},
+      {path: 'blogEdit', component: BlogArticleEdit},
     ]
 }];
 
 const IBookRouter = [{
   path: '/ibook', component: ILayout,
     children: [
-      {path: 'book_list', component: BookList},
-      {path: 'book_detail', component: BookArticleDetail},
-      {path: 'book_edit', component: BookCatalogEdit},
-      {path: 'book_list', component: BookList},
-      {path: 'book_catalogs', component: BookCatalogs},
+      {path: 'bookList', component: BookList},
+      {path: 'bookDetail', component: BookArticleDetail},
+      {path: 'bookEdit', component: BookCatalogEdit},
+      {path: 'bookCatalogs', component: BookCatalogs},
     ]
 }];
 
@@ -126,7 +125,7 @@ const ISSOReouter = [{
 const ICMSReouter = [{
   path: '/background', component: ICMSLayout,
     children: [
-      {path: 'advise_list', component: AdviseList},
+      {path: 'adviseList', component: AdviseList},
       {path: 'sso/appRegist', component: AppRegist},
       {path: 'sso/loginRecord', component: LoginRecord},
     ]
@@ -145,9 +144,9 @@ const IUserReouter = [{
 const IExpert = [{
   path: '/expert', component: ILayout,
     children: [
-      {path: 'ask_expert', component: AskExpert},
-      {path: 'answer_expert', component: AnswerExpert},
-      {path: 'edit_question', component: EditQuestion},
+      {path: 'askExpert', component: AskExpert},
+      {path: 'answerExpert', component: AnswerExpert},
+      {path: 'editQuestion', component: EditQuestion},
     ]
 }];
 
@@ -155,12 +154,12 @@ const IJob = [{
   path: '/job', component: ILayout,
     children: [
       {path: 'jobList', component: JobList},
-      {path: 'resume_manage', component: ResumeManage},
-      {path: 'corporate_detail', component: CorporateDetail},
-      {path: 'corporate_edit', component: EditCorporate},
-      {path: 'job_edit', component: EditJob},
-      {path: 'resume_edit', component: EditResume},
-      {path: 'apply_list', component: JobApplyList},
+      {path: 'resumeManage', component: ResumeManage},
+      {path: 'corporateDetail', component: CorporateDetail},
+      {path: 'corporateEdit', component: EditCorporate},
+      {path: 'jobEdit', component: EditJob},
+      {path: 'resumeEdit', component: EditResume},
+      {path: 'applyList', component: JobApplyList},
     ]
 }];
 
@@ -187,7 +186,7 @@ const IFoundReouter = [{
 const MessageRouter = [{
   path: '/message', component: ILayout,
     children: [
-      {path: 'message_list', component: MessageList},
+      {path: 'messageList', component: MessageList},
     ]
 }];
 
@@ -198,7 +197,7 @@ const BusinessRouter = [{
     {path: 'list', component: BusinessList},
     {path: 'edit', component: BusinessEdit},
     {path: 'detail', component: BusinessDetail},
-    {path: 'pay_confirm', component: PayConfirm},
+    {path: 'payConfirm', component: PayConfirm},
   ]
 }];
 

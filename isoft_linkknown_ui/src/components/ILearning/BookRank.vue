@@ -1,7 +1,7 @@
 <template>
   <div style="padding-top: 10px;">
     <h2 class="good_rank">热门书单</h2>
-    <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/book_catalogs', query:{'book_id': book.id}})">
+    <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>
         <Col span="17">

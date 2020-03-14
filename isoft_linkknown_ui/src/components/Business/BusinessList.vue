@@ -80,7 +80,7 @@
         const result = await NewOrder(good.id);
         if (result.status === "SUCCESS") {
           this.$router.push({
-            path: '/business/pay_confirm',
+            path: '/business/payConfirm',
             query: {"good_id": good.id, "orderCode": result.orderCode}
           });
         }

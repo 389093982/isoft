@@ -32,7 +32,7 @@
           </Col>
           <Col span="5">
             <div class="isoft_button_green1" style="width: 200px;margin: 0 auto;"
-                 @click="$router.push({path:'/job/resume_manage', query:{'user_name': job_apply.user_name}})">查看简历
+                 @click="$router.push({path:'/job/resumeManage', query:{'user_name': job_apply.user_name}})">查看简历
             </div>
           </Col>
         </Row>

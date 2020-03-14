@@ -67,13 +67,13 @@
         if (search_data.length === 0) {
           return false;
         }
-        this.$router.push({path: '/ilearning/course_search', query: {search:search_data}});
+        this.$router.push({path: '/ilearning/courseSearch', query: {search:search_data}});
       },
       chooseCourseType: function (course_type, course_sub_type) {
         // params是路由的一部分
         // query是拼接在url后面的参数
         // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
-        this.$router.push({path: '/ilearning/course_search', query: {search: course_sub_type}});
+        this.$router.push({path: '/ilearning/courseSearch', query: {search: course_sub_type}});
       },
       toggle: function (data) {
         alert(data);

@@ -29,9 +29,9 @@
                <div @click="$router.push({ path: '/user/info'})" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
                <div @click="$router.push({ path: '/sso/forget?pattern=2'})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
                <br><br>
-               <div @click="$router.push({ path: '/iblog/blog_edit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
-               <div @click="$router.push({ path: '/ilearning/course_space'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
-               <div @click="$router.push({path:'/ibook/book_list'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
+               <div @click="$router.push({ path: '/iblog/blogEdit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
+               <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
+               <div @click="$router.push({path:'/ibook/bookList'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
             </div>
 
           </Col>

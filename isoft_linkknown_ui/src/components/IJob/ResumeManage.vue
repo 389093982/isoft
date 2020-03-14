@@ -39,7 +39,7 @@
         <p class="isoft_text_rows">个人爱好:{{resume.personal_hobbies}}</p>
 
         <div v-if="isLoginUserName" class="isoft_button_green1" style="width: 200px;margin: 0 auto;margin-top: 50px;"
-             @click="$router.push({path:'/job/resume_edit'})">编辑简历
+             @click="$router.push({path:'/job/resumeEdit'})">编辑简历
         </div>
       </div>
 
@@ -48,7 +48,7 @@
           <div class="isoft_loading"></div>
         </Spin>
         <div v-else-if="isLoginUserName" class="isoft_button_green1" style="width: 500px;margin: 0 auto;"
-             @click="$router.push({path:'/job/resume_edit'})">您还未创建简历，前去创建
+             @click="$router.push({path:'/job/resumeEdit'})">您还未创建简历，前去创建
         </div>
         <div v-else style="text-align: center;margin-top: 50px;"><h3>该用户太懒，一封简历也没留下</h3></div>
       </div>

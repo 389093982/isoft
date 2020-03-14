@@ -19,7 +19,7 @@
                 评论/建议管理
               </template>
               <MenuItem name="3-1">
-                <router-link to="/background/advise_list">意见建议列表</router-link>
+                <router-link to="/background/adviseList">意见建议列表</router-link>
               </MenuItem>
             </Submenu>
             <Submenu name="4">

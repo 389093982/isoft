@@ -17,7 +17,7 @@
       </Col>
       <Col span="6">
         <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-             @click="$router.push({path:'/iblog/blog_list'})">
+             @click="$router.push({path:'/iblog/blogList'})">
           <Row>
             <Col span="8">
               <img src="../../../static/images/blog.jpg" style="width: 52px;height: 52px;"/>
@@ -31,7 +31,7 @@
       </Col>
       <Col span="6">
         <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-             @click="$router.push({path:'/ibook/book_list'})">
+             @click="$router.push({path:'/ibook/bookList'})">
           <Row>
             <Col span="8">
               <img src="../../../static/images/book.jpg" style="width: 52px;height: 52px;"/>

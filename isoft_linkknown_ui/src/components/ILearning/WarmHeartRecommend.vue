@@ -23,7 +23,7 @@
           <HoverBigImg v-for="(course, index) in display_courses"
                        class="hoverBorderShadow" width="100%" height="98px"
                        :src-img="course.small_image" style="float: left;margin: 0 10px 10px 0;"
-                       @onclick="$router.push({path:'/ilearning/course_detail', query:{course_id: course.id}})"/>
+                       @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
         </div>
       </Col>
     </Row>

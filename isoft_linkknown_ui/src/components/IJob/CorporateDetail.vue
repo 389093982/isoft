@@ -9,7 +9,7 @@
       </div>
 
       <div class="header" style="cursor:pointer;display: inline-block;"
-           @click="$router.push({path:'/job/apply_list'})">投递清单
+           @click="$router.push({path:'/job/applyList'})">投递清单
       </div>
     </div>
 
@@ -23,7 +23,7 @@
           <div class="isoft_loading"></div>
         </Spin>
         <div v-else class="isoft_button_green1" style="width: 500px;margin: 0 auto;"
-             @click="$router.push({path:'/job/corporate_edit'})">您还未创建公司信息，前去创建
+             @click="$router.push({path:'/job/corporateEdit'})">您还未创建公司信息，前去创建
         </div>
       </div>
     </div>
@@ -47,11 +47,11 @@
         <span v-else>
           <div v-if="corporateInfo && corporateInfo.corporate_name">
             <div class="isoft_button_green1" style="width: 500px;margin: 0 auto;"
-                 @click="$router.push({path:'/job/job_edit', query: {corporate_id: corporateInfo.id}})">您还未创建岗位信息，前去创建</div>
+                 @click="$router.push({path:'/job/jobEdit', query: {corporate_id: corporateInfo.id}})">您还未创建岗位信息，前去创建</div>
           </div>
           <div v-else>
             <div class="isoft_button_green1" style="width: 500px;margin: 0 auto;"
-                 @click="$router.push({path:'/job/corporate_edit'})">您还未创建公司信息，前去创建</div>
+                 @click="$router.push({path:'/job/corporateEdit'})">您还未创建公司信息，前去创建</div>
           </div>
         </span>
       </div>

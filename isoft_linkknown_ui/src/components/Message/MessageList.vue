@@ -26,7 +26,7 @@
           <p v-for="(message, index) in messages" style="margin: 8px 0px;">{{message.message_text}}</p>
         </div>
 
-        <div style="text-align: right;" @click="$router.push({path: '/message/message_list'});">
+        <div style="text-align: right;" @click="$router.push({path: '/message/messageList'});">
           <Button size="small" type="success">查看更多</Button>
         </div>
       </div>

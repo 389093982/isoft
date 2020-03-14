@@ -5,15 +5,15 @@
         <IBeautifulCard title="我的课程空间">
           <div slot="content">
             <p style="padding: 5px 5px 5px 20px;">
-              <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_space/editCourse'})">我要开课
+              <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseSpace/editCourse'})">我要开课
               </IBeautifulLink>
             </p>
             <p style="padding: 5px 5px 5px 20px;">
-              <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_space/myCourseList'})">我的课程
+              <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseSpace/myCourseList'})">我的课程
               </IBeautifulLink>
             </p>
             <p style="padding: 5px 5px 5px 20px;">
-              <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_space/recentlyViewed'})">最近浏览
+              <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseSpace/recentlyViewed'})">最近浏览
               </IBeautifulLink>
             </p>
           </div>

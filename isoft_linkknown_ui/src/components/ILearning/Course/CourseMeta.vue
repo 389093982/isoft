@@ -22,7 +22,7 @@
     </p>
 
     <span v-if="showCourseSpace" class="isoft_hover_red forwardCourseSpace"
-          @click="$router.push($router.push({ path: '/ilearning/course_space'}))">进入我的课程空间</span>
+          @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</span>
   </span>
 </template>
 

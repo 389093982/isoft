@@ -6,7 +6,7 @@
       </Col>
       <Col span="6" style="padding: 10px;">
         <!-- 前往热门博客 -->
-        <router-link to="/iblog/blog_list">热门博客</router-link>
+        <router-link to="/iblog/blogList">热门博客</router-link>
         <ShowMyBlog/>
       </Col>
     </Row>

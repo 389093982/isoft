@@ -1,7 +1,7 @@
 <template>
   <Row :gutter="20" style="padding-top: 20px;">
     <Col span="12" v-for="history in historys">
-      <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:history.history_link}})">
+      <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:history.history_link}})">
         {{history.history_desc}}
       </IBeautifulLink>
       <span style="float: right;font-size: 12px;"><Time :time="history.last_updated_time" :interval="1"/></span>
@@ -27,7 +27,7 @@
     },
     methods: {
       searchFunc: function (data) {
-        this.$router.push({path: '/ilearning/course_search', query: {search: data}});
+        this.$router.push({path: '/ilearning/courseSearch', query: {search: data}});
       },
       async refreshRecentlyViewed() {
         const data = await ShowCourseHistory(this.offset, this.current_page);

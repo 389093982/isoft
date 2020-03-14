@@ -41,7 +41,7 @@ const _checkSSOLogin = function (to, from, next) {
 
 const _mustLogin = function (target) {
   // 注册必须要登录的地址白名单
-  return target.indexOf("/ilearning/course_space") >= 0;
+  return target.indexOf("/ilearning/courseSpace") >= 0;
 }
 
 const _mustAdminLogin = function (target) {

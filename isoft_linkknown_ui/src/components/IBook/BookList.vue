@@ -32,7 +32,7 @@
           <div style="min-height: 450px;">
             <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
               <Col span="18">
-                <div class="bookName" @click="$router.push({path:'/ibook/book_catalogs',query:{book_id:book.id}})">
+                <div class="bookName" @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </div>
                 <div>
@@ -57,14 +57,14 @@
                   <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
                   <IBeautifulLink class="isoft_mr10"
-                                  @onclick="$router.push({path:'/ibook/book_catalogs',query:{book_id:book.id}})">编辑文章
+                                  @onclick="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">编辑文章
                   </IBeautifulLink>
                 </div>
 
               </Col>
               <Col span="4">
                 <div class="bookImg isoft_hover_top10">
-                  <router-link :to="{path:'/ibook/book_catalogs',query:{book_id:book.id}}">
+                  <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../../static/images/404.jpg" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">

@@ -26,12 +26,12 @@
           </Row>
           <Row v-for="(blog,index) in blogs" style="line-height: 28px;height: 28px;">
             <Col span="12" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogDetail',query:{blog_id:blog.id}})">
                 {{blog.blog_title | titleLimitFunc(titleLimitLenth)}}
               </IBeautifulLink>
             </Col>
             <Col span="6" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_detail',query:{blog_id:blog.id}})">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogDetail',query:{blog_id:blog.id}})">
                 {{blog.catalog_name}}
               </IBeautifulLink>
             </Col>
@@ -48,19 +48,19 @@
           </Row>
           <Row v-for="course in courses" :gutter="10" style="line-height: 28px;height: 28px;">
             <Col span="8" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
+              <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
                 {{course.course_name}}
               </IBeautifulLink>
             </Col>
             <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink
-                @onclick="$router.push({ path:'/ilearning/course_search', query: { search: course.course_type }})">
+                @onclick="$router.push({ path:'/ilearning/courseSearch', query: { search: course.course_type }})">
                 {{course.course_type}}
               </IBeautifulLink>
             </Col>
             <Col span="8" class="isoft_inline_ellipsis">
               <IBeautifulLink
-                @onclick="$router.push({ path: '/ilearning/course_search', query: { search: course.course_sub_type }})">
+                @onclick="$router.push({ path: '/ilearning/courseSearch', query: { search: course.course_sub_type }})">
                 {{course.course_sub_type}}
               </IBeautifulLink>
             </Col>
@@ -75,7 +75,7 @@
           <Row v-for="(book,index) in books">
             <Row style="line-height: 28px;height: 28px;">
               <Col span="8" class="isoft_inline_ellipsis">
-                <IBeautifulLink @onclick="$router.push({path:'/ibook/book_detail',query:{book_id:book.id}})">
+                <IBeautifulLink @onclick="$router.push({path:'/ibook/bookDetail',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </IBeautifulLink>
               </Col>

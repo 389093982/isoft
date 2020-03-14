@@ -6,7 +6,7 @@
         <div slot="content" style="padding: 20px;">
           <Row v-for="course in courses">
             <div class="isoft_inline_ellipsis isoft_hover_red"
-                 @onclick="$router.push({path:'/ilearning/course_detail',query:{course_id:course.id}})">
+                 @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
               {{course.course_name}}
             </div>
           </Row>
@@ -19,7 +19,7 @@
       <div slot="content" style="min-height:350px;padding: 10px;">
         <ul class="clear">
           <li v-for="course in courses">
-            <router-link :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">
+            <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
               <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
               <img v-else src="../../../assets/default.png" height="100" width="155"/>
               <!-- 播放图标 -->

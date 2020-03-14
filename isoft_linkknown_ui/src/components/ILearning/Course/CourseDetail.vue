@@ -31,7 +31,7 @@
           <Row style="margin: 10px 0;min-height: 200px;">
             <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin: 0px 10px;padding: 10px;">
               <IBeautifulLink>第 {{index + 1}} 集：{{cVideo.video_name}}</IBeautifulLink>
-              <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
+              <router-link :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
                 <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
             </div>
@@ -147,7 +147,7 @@
             this.$Message.success(message + "成功!");
           }
         }else {
-          CheckHasLoginConfirmDialog(this, {path: "/ilearning/course_detail?course_id="+this.$route.query.course_id});
+          CheckHasLoginConfirmDialog(this, {path: "/ilearning/courseDetail?course_id="+this.$route.query.course_id});
         }
       },
     },

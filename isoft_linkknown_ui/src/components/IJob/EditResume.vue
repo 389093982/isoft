@@ -175,7 +175,7 @@
             const result = await EditResume(params);
             if (result.status === "SUCCESS") {
               this.$Message.success("保存成功！");
-              this.$router.push({path: '/job/resume_manage', query: {'user_name': GetLoginUserName()}});
+              this.$router.push({path: '/job/resumeManage', query: {'user_name': GetLoginUserName()}});
             } else {
               this.$Message.error("保存失败!");
             }

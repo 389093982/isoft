@@ -1,5 +1,5 @@
 <template>
-  <div id="course_search" style="height: 45px;">
+  <div style="height: 45px;">
     <div style="position: relative;float: right;">
       <div id="_search">
         <input class="search_input" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" @keyup.enter="submitFunc">

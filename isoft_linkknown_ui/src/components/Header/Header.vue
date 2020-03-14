@@ -14,13 +14,13 @@
             <IBeautifulLink @onclick="$router.push({path:'/ilearning/jingpinCourse'})">精品课程</IBeautifulLink>
           </MenuItem>
           <MenuItem name="3">
-            <IBeautifulLink @onclick="$router.push({path:'/iblog/blog_list'})">话题博客</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/iblog/blogList'})">话题博客</IBeautifulLink>
           </MenuItem>
           <MenuItem name="4">
-            <IBeautifulLink @onclick="$router.push({path:'/expert/ask_expert'})">求问专家</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/expert/askExpert'})">求问专家</IBeautifulLink>
           </MenuItem>
           <MenuItem name="5">
-            <IBeautifulLink @onclick="$router.push({path:'/ibook/book_list'})">热门书单</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/ibook/bookList'})">热门书单</IBeautifulLink>
           </MenuItem>
           <MenuItem name="6">
             <IBeautifulLink @onclick="$router.push({path:'/resource/list'})">热门资源</IBeautifulLink>
@@ -46,7 +46,7 @@
                 <span v-if="isLogin()">重新</span><span>登录</span>
               </MenuItem>
               <MenuItem name="8-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
-              <MenuItem name="8-4" @click.native="$router.push({path:'/background/advise_list'})" v-if="isAdmin()">控制台</MenuItem>
+              <MenuItem name="8-4" @click.native="$router.push({path:'/background/adviseList'})" v-if="isAdmin()">控制台</MenuItem>
             </MenuGroup>
           </Submenu>
           <MenuItem name="9">

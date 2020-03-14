@@ -40,8 +40,8 @@
                     <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')">收藏</Button>
                     <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')">已收藏</Button>
                   </span>
-                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/book_edit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
-                  <Button @click="$router.push({path:'/ibook/book_detail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
+                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
+                  <Button @click="$router.push({path:'/ibook/bookDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
                  </div>
               </Col>
             </Row>

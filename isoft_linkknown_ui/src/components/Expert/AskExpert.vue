@@ -18,7 +18,7 @@
                 <a class="isoft_hover_color_blue" @click="searchQuestion(4)" :style="{color: pattern === 4 ? 'red':''}">热门问题</a>
               </Col>
               <Col span="3" style="text-align: center;">
-                <a class="isoft_hover_color_blue" @click="$router.push({path:'/expert/edit_question'})">我要提问</a>
+                <a class="isoft_hover_color_blue" @click="$router.push({path:'/expert/editQuestion'})">我要提问</a>
               </Col>
               <Col span="3" style="text-align: center;">
                 <a class="isoft_hover_color_blue" @click="searchQuestion(5)" :style="{color: pattern === 5 ? 'red':''}">我的问题</a>
@@ -46,16 +46,16 @@
                   </Col>
                   <Col span="18" style="line-height: 30px;">
 
-                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
+                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
                     <div class="isoft_font12">
                       <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
                       <span class="isoft_hover_item_show" style="float: right;">
                         <span class="isoft_mr10">
-                          <a v-if="showEdit(as.user_name)" @click="$router.push({path:'/expert/edit_question', query: {id : as.id}})">编辑</a>
+                          <a v-if="showEdit(as.user_name)" @click="$router.push({path:'/expert/editQuestion', query: {id : as.id}})">编辑</a>
                         </span>
                         <span>
-                          <a @click="$router.push({path:'/expert/answer_expert', query:{id : as.id}})">
+                          <a @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">
                             <span class="isoft_hover_color_green" style="margin-right: 5px;">我来回答</span>
                             <span class="isoft_color_grey">回答问题可获得 2 积分</span>
                           </a>

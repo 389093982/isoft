@@ -38,7 +38,7 @@
         </p>
 
         <div class="isoft_button_green1" style="width: 200px;position: absolute; bottom: -10px;right: 10px;"
-             v-if="isLoginUserName(corporateInfo.created_by)" @click="$router.push({path:'/job/corporate_edit'})">前去编辑
+             v-if="isLoginUserName(corporateInfo.created_by)" @click="$router.push({path:'/job/corporateEdit'})">前去编辑
         </div>
       </Col>
     </Row>
