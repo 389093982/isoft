@@ -39,7 +39,7 @@
     </div>
 
     <!--右侧点赞板-->
-    <div style="float:right;width: 18%;position: fixed;top: 80px;right: 55px;background-color: white;border-radius: 5px;text-align: center">
+    <div style="float:right;width: 18%;position: fixed;top: 80px;right: 65px;background-color: white;border-radius: 5px;text-align: center">
       <div style="min-height: 355px;">
         <div style="width: 86%;margin: 18px 0 18px 18px;">
           <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">

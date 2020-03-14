@@ -16,12 +16,10 @@
             <Col span="16">
               <CourseMeta v-if="course && course.course_author" :course="course"/>
               <p>
-                <a href="javascript:;" v-if="course_collect === true"
-                   @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
+                <a href="javascript:;" v-if="course_collect === true" @click="toggle_favorite(course.id,'course_collect', '取消收藏')">取消收藏</a>
                 <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect', '收藏')">加入收藏</a>&nbsp;
 
-                <a href="javascript:;" v-if="course_praise === true"
-                   @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
+                <a href="javascript:;" v-if="course_praise === true" @click="toggle_favorite(course.id,'course_praise', '取消点赞')">取消点赞</a>
                 <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise', '点赞')">我要点赞</a>
               </p>
             </Col>
