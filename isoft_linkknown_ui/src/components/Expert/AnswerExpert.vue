@@ -33,7 +33,7 @@
                   <Col span="2" style="position: relative;top: 6px">
                     <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})" class="isoft_font12">
                       <span>
-                        <HatAndFacePicture :src="as.small_icon" :vip_level="as.vip_level" :hat_in_use="as.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" hat_relative_left="0" hat_relative_top="-46" ></HatAndFacePicture>
+                        <HatAndFacePicture :src="as.small_icon" :vip_level="as.vip_level" :hat_in_use="as.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
                       </span>
                     </span>
                   </Col>

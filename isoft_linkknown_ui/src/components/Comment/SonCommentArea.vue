@@ -8,7 +8,7 @@
         <Col span="2">
           <div style="margin: 12px 0 0 15px ">
             <router-link :to="{path:'/user/detail',query:{username:comment.created_user_account}}">
-              <HatAndFacePicture :src="comment.created_user_small_icon" :vip_level="comment.created_user_vip_level" :hat_in_use="comment.created_user_hat_in_use" :src_size="25" :hat_width="21" :hat_height="7" hat_relative_left="2" hat_relative_top="-44" ></HatAndFacePicture>
+              <HatAndFacePicture :src="comment.created_user_small_icon" :vip_level="comment.created_user_vip_level" :hat_in_use="comment.created_user_hat_in_use" :src_size="25" :hat_width="21" :hat_height="7" :hat_relative_left="2" :hat_relative_top="-44" ></HatAndFacePicture>
             </router-link>
           </div>
         </Col>

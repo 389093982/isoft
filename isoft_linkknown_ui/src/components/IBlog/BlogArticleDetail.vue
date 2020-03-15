@@ -46,14 +46,22 @@
             <Icon type="md-arrow-dropup" style="font-size: 25px;" />
           </div>
           <div>
-            <Icon type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer" />
-            <div style="position: relative;top: -10px">168个赞</div>
+            <Icon v-if="blog_praise===true" @click="toggle_favorite(blog.id,'blog_praise', '取消点赞')" class="hvr-grow" type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer;color: #cc0000" />
+            <Icon v-else type="md-heart" @click="toggle_favorite(blog.id,'blog_praise', '点赞')" class="hvr-grow" style="font-size: 50px;margin-top: 30px ;cursor: pointer" />
+            <div style="position: relative;top: -10px">{{blog_praise_counts}}个赞</div>
           </div>
           <div style="margin: 20px 0 0 0 ;border-bottom: 1px solid gainsboro;">
             <div style="margin-bottom: 20px">
               <ButtonGroup>
                 <Button><Icon type="ios-eye" style="font-size: 20px" />关注</Button>
-                <Button><Icon type="md-bookmark" style="font-size: 20px" />收藏</Button>
+                <Button>
+                  <span v-if="blog_collect===true" style="color: #ff6900" @click="toggle_favorite(blog.id,'blog_collect', '取消收藏')">
+                    <Icon type="md-bookmark" style="font-size: 20px" />已收藏
+                  </span>
+                  <span v-else @click="toggle_favorite(blog.id,'blog_collect', '收藏')">
+                    <Icon type="md-bookmark" style="font-size: 20px" />收藏
+                  </span>
+                </Button>
               </ButtonGroup>
             </div>
           </div>
@@ -65,7 +73,7 @@
           </div>
           <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
             <div style="margin-bottom: 10px">
-              共 88 个回复
+              共 {{blog.comments}} 条评论
             </div>
           </div>
           <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;margin-top: 18px;cursor: pointer">
@@ -81,10 +89,10 @@
 </template>
 
 <script>
-  import {ShowBlogArticleDetail,ArticleDelete} from "../../api"
+  import {ShowBlogArticleDetail,ArticleDelete,IsFavorite,ToggleFavorite,queryFavoriteCount} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
   import IsComfirmDelete from "./IsComfirmDelete";
 
@@ -95,6 +103,12 @@
       return {
         blog: null,
         userInfos: [],
+        // 博客点赞
+        blog_praise: false,
+        // 收藏博客
+        blog_collect: false,
+        //点赞数量
+        blog_praise_counts:0,
       }
     },
     methods: {
@@ -103,6 +117,36 @@
         if (result.status === "SUCCESS") {
           this.userInfos = await RenderUserInfoByName(result.blog.author);
           this.blog = result.blog;
+          this.refreshFavoriteStatus();
+        }
+      },
+      refreshFavoriteStatus: async function () {
+        let result = await queryFavoriteCount({favorite_id:this.blog.id, favorite_type:'blog_praise'});
+        if (result.status === "SUCCESS") {
+          this.blog_praise_counts = result.counts;
+        }
+
+        if (CheckHasLogin() && this.blog) {
+          let result = await IsFavorite({favorite_id: this.blog.id, favorite_type: "blog_praise"});
+          if (result.status === "SUCCESS") {
+            this.blog_praise = result.isFavorite;
+          }
+
+          result = await IsFavorite({favorite_id: this.blog.id, favorite_type: "blog_collect"});
+          if (result.status === "SUCCESS") {
+            this.blog_collect = result.isFavorite;
+          }
+        }
+      },
+      toggle_favorite: async function (favorite_id, favorite_type, message) {
+        if (CheckHasLogin()) {
+          const result = await ToggleFavorite({favorite_id, favorite_type});
+          if (result.status === "SUCCESS") {
+            this.refreshFavoriteStatus();
+            this.$Message.success(message + "成功!");
+          }
+        }else {
+          CheckHasLoginConfirmDialog(this, {path: "/iblog/blogDetail?blog_id="+this.$route.query.blog_id});
         }
       },
       renderNickName: function (user_name) {

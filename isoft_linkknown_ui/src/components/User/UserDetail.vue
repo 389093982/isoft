@@ -7,7 +7,7 @@
       <div style="margin: 0 5px 0 5px ">
         <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px 0 0 0 ;">
           <Col span="3" offset="1" style="top:-70px;">
-            <div @click="$router.push({ path: '/user/info'})">
+            <div @click="toUserInfo(user.user_name)">
               <!--帽子 & 头像-->
               <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use"></HatAndFacePicture>
             </div>
@@ -143,6 +143,11 @@
       }
     },
     methods: {
+      toUserInfo:function(user_name){
+        if (this.isLoginUserName(user_name)) {
+          this.$router.push({ path: '/user/info'})
+        }
+      },
       handleEditSignFlag: async function () {
         const result = await EditUserSignature({"user_signature": this.user_signature});
         if (result.status === "SUCCESS") {

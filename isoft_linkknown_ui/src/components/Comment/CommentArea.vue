@@ -9,7 +9,7 @@
         <Col span="2">
           <div>
             <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
-              <HatAndFacePicture :src="comment.small_icon" :vip_level="comment.vip_level" :hat_in_use="comment.hat_in_use" :src_size="40" :hat_width="36" :hat_height="10" hat_relative_left="2" hat_relative_top="-56" ></HatAndFacePicture>
+              <HatAndFacePicture :src="comment.small_icon" :vip_level="comment.vip_level" :hat_in_use="comment.hat_in_use" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
             </router-link>
           </div>
         </Col>

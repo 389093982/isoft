@@ -41,7 +41,7 @@
                     </div>
 
                     <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">
-                      <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" hat_relative_left="2" hat_relative_top="-56" ></HatAndFacePicture>
+                      <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
                     </div>
                   </Col>
                   <Col span="18" style="line-height: 30px;">

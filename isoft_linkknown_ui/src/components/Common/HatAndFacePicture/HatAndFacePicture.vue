@@ -55,13 +55,13 @@
       },
       //帽子自左移动
       hat_relative_left:{
-        type:String,
-        default:'5'
+        type:Number,
+        default:5
       },
       //帽子自上移动
       hat_relative_top:{
-        type:String,
-        default:'-100'
+        type:Number,
+        default:-100
       },
 
     },
