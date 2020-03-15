@@ -3,13 +3,8 @@
     <div class="isoft_bg_white">
       <div class="bg01" style="width: 100%;height: 200px;overflow: hidden;padding: 20px;">
         <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
-        <p class="isoft_font_white" style="margin-top: 5px;">
-          许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。
-        </p>
-        <p class="isoft_font_white" style="cursor:pointer;text-align: right;"
-           @click="uploadResource">
-          上传资源赚钱
-        </p>
+        <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
+        <p class="isoft_font_white" style="cursor:pointer;text-align: center;margin-left: 660px" @click="uploadResource">上传资源赚钱</p>
       </div>
 
       <div class="isoft_pd10">

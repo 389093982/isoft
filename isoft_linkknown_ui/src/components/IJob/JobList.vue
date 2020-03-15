@@ -33,7 +33,7 @@
         <Col span="12" style="padding: 0 0 0 10px;">
           搜索职位:{{jobInfoSearch}} &nbsp;&nbsp;&nbsp; {{jobPlaceSearch}} &nbsp;&nbsp;&nbsp; {{jobSalaySearch}}
         </Col>
-        <Col span="12" style="text-align: right;padding-right: 25px;">
+        <Col span="12" style="text-align: right;padding-right: 56px;">
           <Button style="float: right;" @click="toToudiDetail">投递清单</Button>
         </Col>
       </Row>

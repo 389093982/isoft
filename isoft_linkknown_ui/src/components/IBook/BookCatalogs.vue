@@ -37,8 +37,14 @@
               <Col span="8">
                 <div>
                   <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
-                    <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')">收藏</Button>
-                    <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')">已收藏</Button>
+                    <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')" style="color: grey">
+                      <Icon type="md-bookmark" style="font-size: 20px;"/>
+                      收藏
+                    </Button>
+                    <Button v-else @click="toggle_favorite($route.query.book_id,'book_collect', '取消收藏图书')" style="color: #ff6900">
+                      <Icon type="md-bookmark" style="font-size: 20px;"/>
+                      已收藏
+                    </Button>
                   </span>
                   <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
                   <Button @click="$router.push({path:'/ibook/bookDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
@@ -127,6 +133,7 @@
           this.userInfos = await RenderUserInfoByName(result.bookInfo.created_by);
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
+          this.isFavorite(this.bookInfo.id,"book_collect");
         }
       },
       renderNickName: function (user_name) {
