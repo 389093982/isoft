@@ -5,7 +5,7 @@
         <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
         <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
         <Button type="default" ghost style="cursor:pointer;text-align: center;margin-left: 860px" @click="uploadResource">
-          上传资源赚钱
+          <Icon type="md-cloud-upload" style="font-size: 20px" />上传资源赚钱
         </Button>
       </div>
 
@@ -37,14 +37,12 @@
             <Row style="margin-top: 15px">
               <Col span="12"><h4>{{resource.resource_name}}</h4></Col>
               <Col span="8" style="font-size: 15px;color: #777;"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
-              <!--立刻下载-->
+              <!--进入下载-->
               <Col span="4">
-                <Tooltip content="立即下载" placement="top-start">
-                  <a @click="downloadResource(resource)"><Icon type="ios-cloud-download" style="font-size: 20px"/></a>
-                </Tooltip>
+                <a @click="downloadResource(resource)">进入下载</a>
               </Col>
             </Row>
-            <p style="color: #9b9896;font-size: 12px">描述：{{resource.resource_desc}}</p>
+            <p style="color: #9b9896;font-size: 12px">描述：{{resource.resource_desc | filterLimitFunc(50)}}</p>
             <p>
               <Row style="color: #adaaa8;font-size: 12px;margin-bottom: 15px">
                 <Col span="4"><span>下载所需积分：{{resource.points}}</span></Col>
@@ -52,13 +50,13 @@
                 <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
                 <Col span="12">
                   <!--内容与描述不符-->
-                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">
                     <Icon type="ios-thumbs-down-outline" style="font-size: 15px" /> ({{resource.not_recommend}})
                   </IBeautifulLink>
                   <!--进度条-->
                   <Progress :stroke-width="5" :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
                   <!--推荐-->
-                  <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">
                     <Icon type="ios-thumbs-up-outline" style="font-size: 15px" /> ({{resource.recommend}})
                   </IBeautifulLink>
                 </Col>
@@ -108,7 +106,7 @@
       calProgress: function (recommendNum, not_recommendNum) {    // 计算推荐比例进度
         return recommendNum + not_recommendNum > 0 ? Math.ceil(100 * (recommendNum / (recommendNum + not_recommendNum))) : 100;
       },
-      recommandResource: async function (resource_id, recommendNum, not_recommendNum) {
+      recommandResource: async function (resource_id, not_recommendNum, recommendNum) {
         var _this = this;
         if (checkFastClick()) {
           _this.$Message.error("点击过快,请稍后重试!");
@@ -165,7 +163,17 @@
     },
     mounted() {
       this.refreshResourceList();
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 

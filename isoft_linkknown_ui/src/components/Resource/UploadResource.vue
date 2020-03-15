@@ -63,8 +63,8 @@
       const checkResourceDesc = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('描述信息不能为空!'));
-        } else if (value.length>50) {
-          callback(new Error('描述信息请不要超过50个字符'));
+        } else if (value.length>255) {
+          callback(new Error('描述信息请不要超过255个字符'));
         } else {
           callback();
         }
