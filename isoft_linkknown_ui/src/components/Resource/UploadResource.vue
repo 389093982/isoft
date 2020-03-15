@@ -10,10 +10,8 @@
             <Input v-model.trim="formInline.resource_catalog" placeholder="请您输入分类名称"></Input>
           </FormItem>
           <FormItem label="文件路径" prop="resource_path">
-            <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径"
-                   @on-focus="handleFocus"/>
-            <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete"
-                         :action="fileUploadUrl" uploadLabel="上传"/>
+            <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径" @on-focus="handleFocus"/>
+            <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传"/>
           </FormItem>
           <FormItem label="文件名称" prop="resource_name">
             <Input readonly="readonly" v-model.trim="formInline.resource_name" placeholder="请您选择文件名称"></Input>
@@ -44,6 +42,33 @@
     name: "UploadResource",
     components: {RandomAdmt, IFileUpload},
     data() {
+      const checkResourceCatalog = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('分类名称不能为空!'));
+        } else if (value.length>10) {
+          callback(new Error('分类名称请不要超过10个字符'));
+        } else {
+          callback();
+        }
+      };
+      const checkResourceName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('文件名称不能为空!'));
+        } else if (value.length>30) {
+          callback(new Error('文件名称请不要超过30个字符'));
+        } else {
+          callback();
+        }
+      };
+      const checkResourceDesc = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('描述信息不能为空!'));
+        } else if (value.length>50) {
+          callback(new Error('描述信息请不要超过50个字符'));
+        } else {
+          callback();
+        }
+      };
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=resource&table_field=resource_path",
         formInline: {
@@ -54,16 +79,16 @@
         },
         ruleValidate: {
           resource_catalog: [
-            {required: true, message: '分类名称不能为空!', trigger: 'blur'},
-          ],
-          resource_name: [
-            {required: true, message: '文件名称不能为空!', trigger: 'blur'},
-          ],
-          resource_desc: [
-            {required: true, message: '描述信息不能为空!', trigger: 'blur'},
+            {required: true, validator:checkResourceCatalog, trigger: 'change'},
           ],
           resource_path: [
-            {required: true, message: '文件路径不能为空!', trigger: 'blur'},
+            {required: true, message: '文件路径不能为空!', trigger: 'change'},
+          ],
+          resource_name: [
+            {required: true, validator:checkResourceName, trigger: 'change'},
+          ],
+          resource_desc: [
+            {required: true, validator:checkResourceDesc, trigger: 'change'},
           ],
         }
       }

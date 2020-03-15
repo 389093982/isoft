@@ -1,28 +1,29 @@
 <template>
   <div>
     <div class="isoft_bg_white">
-      <div class="bg01" style="width: 100%;height: 200px;overflow: hidden;padding: 20px;">
+      <div class="bg01" style="width: 100%;height: 150px;overflow: hidden;padding: 30px;">
         <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
         <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
-        <p class="isoft_font_white" style="cursor:pointer;text-align: center;margin-left: 660px" @click="uploadResource">上传资源赚钱</p>
+        <Button type="default" ghost style="cursor:pointer;text-align: center;margin-left: 860px" @click="uploadResource">
+          上传资源赚钱
+        </Button>
       </div>
 
-      <div class="isoft_pd10">
+      <div style="padding: 10px 0 10px 30px ">
         <div class="isoft_top10">
           热门分类：
-          <div class="isoft_tag2 mr5" @click="searchResource('')">全部</div>
-          <div class="isoft_tag2 mr5" v-for="(fl, index) in resource_fl" @click="searchResource(fl)">{{fl}}</div>
+          <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
+          <div class="isoft_tag2 mr5" v-for="(fl, index) in resource_fl" @click="searchResource(fl)"  style="cursor: pointer">{{fl}}</div>
         </div>
         <div class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
           文件格式：
-          <div class="isoft_tag2 mr5" @click="searchResource('')">全部</div>
-          <div v-for="(filetype, index) in resource_filetypes"
-               class="isoft_tag2 mr5" @click="searchResource(filetype)">{{filetype}}
+          <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
+          <div v-for="(filetype, index) in resource_filetypes" class="isoft_tag2 mr5" @click="searchResource(filetype)"  style="cursor: pointer">{{filetype}}
           </div>
         </div>
       </div>
 
-      <p class="isoft_font14" style="padding:15px;font-weight: 600;">
+      <p class="tip_hover">
         大家都在寻找适合自己的资源，我们为您
         <span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>
         以下资源：
@@ -33,33 +34,39 @@
       <Col span="18">
         <div class="isoft_bg_white isoft_top10 isoft_pd20" style="margin-right: 10px;">
           <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
-            <Row>
-              <Col span="6"><h4>{{resource.resource_name}}</h4></Col>
-              <Col span="18"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
+            <Row style="margin-top: 15px">
+              <Col span="12"><h4>{{resource.resource_name}}</h4></Col>
+              <Col span="8" style="font-size: 15px;color: #777;"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
+              <!--立刻下载-->
+              <Col span="4">
+                <Tooltip content="立即下载" placement="top-start">
+                  <a @click="downloadResource(resource)"><Icon type="ios-cloud-download" style="font-size: 20px"/></a>
+                </Tooltip>
+              </Col>
             </Row>
-            <p>介绍：{{resource.resource_desc}}</p>
+            <p style="color: #9b9896;font-size: 12px">描述：{{resource.resource_desc}}</p>
             <p>
-              <Row class="isoft_font12">
-                <Col span="4"><span>下载所需积分：<span style="color:red;">{{resource.points}}</span> </span></Col>
-                <Col span="4">上传时间：<span style="color:red;"><Time :time="resource.last_updated_time"
-                                                                  :interval="1"/></span>
-                </Col>
+              <Row style="color: #adaaa8;font-size: 12px;margin-bottom: 15px">
+                <Col span="4"><span>下载所需积分：{{resource.points}}</span></Col>
+                <Col span="4">上传时间：<Time :time="resource.last_updated_time" :interval="1"/></Col>
                 <Col span="4"><span>已下载：<span style="color:red;">{{resource.downloads}}</span> 次 </span></Col>
-                <Col span="4"><a @click="downloadResource(resource)">立刻下载</a></Col>
-                <Col span="8">
-                  <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">推荐 ({{resource.recommend}})
-                  </IBeautifulLink>&nbsp;&nbsp;&nbsp;
-                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">内容与描述不符 ({{resource.not_recommend}})
+                <Col span="12">
+                  <!--内容与描述不符-->
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 0, 1)">
+                    <Icon type="ios-thumbs-down-outline" style="font-size: 15px" /> ({{resource.not_recommend}})
                   </IBeautifulLink>
-                  <Progress :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
+                  <!--进度条-->
+                  <Progress :stroke-width="5" :percent="calProgress(resource.recommend, resource.not_recommend)" style="width: 200px;"/>
+                  <!--推荐-->
+                  <IBeautifulLink @onclick="recommandResource(resource.id, 1, 0)">
+                    <Icon type="ios-thumbs-up-outline" style="font-size: 15px" /> ({{resource.recommend}})
+                  </IBeautifulLink>
                 </Col>
               </Row>
             </p>
           </div>
 
-          <Page :total="total" :page-size="offset" show-total show-sizer
-                :styles="{'text-align': 'center','margin-top': '10px'}"
-                @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+          <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
         </div>
       </Col>
       <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
@@ -127,7 +134,7 @@
             this.refreshResourceList();
           }
         } else {
-          this.$Message.error("您已经评价过！");
+          this.$Message.error("您已经点评过！");
         }
       },
       uploadResource: function () {
@@ -163,6 +170,19 @@
 </script>
 
 <style scoped>
+  .tip_hover {
+    font-size: 15px;
+    padding: 10px 0 10px 30px ;
+    color: #555;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  .tip_hover:hover {
+    font-size: 15px;
+    padding: 10px 0 10px 30px ;
+    color: red;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
   .bg01 {
     animation: toggle_bg 30s infinite;
   }
