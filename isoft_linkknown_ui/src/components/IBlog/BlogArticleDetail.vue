@@ -42,8 +42,8 @@
     <div style="float:right;width: 18%;position: fixed;top: 80px;right: 65px;background-color: white;border-radius: 5px;text-align: center">
       <div style="min-height: 355px;">
         <div style="width: 86%;margin: 18px 0 18px 18px;">
-          <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;cursor: pointer">
-            <Icon type="md-arrow-dropup" style="font-size: 25px;" />
+          <div class="TOTOP" @click="toTop()">
+            <Icon type="md-arrow-dropup" style="font-size: 25px;"/>
           </div>
           <div>
             <Icon v-if="blog_praise===true" @click="toggle_favorite(blog.id,'blog_praise', '取消点赞')" class="hvr-grow" type="md-heart" style="font-size: 50px;margin-top: 30px ;cursor: pointer;color: #cc0000" />
@@ -76,7 +76,7 @@
               共 {{blog.comments}} 条评论
             </div>
           </div>
-          <div style="height:auto;border: 1px solid gainsboro;border-radius: 5px;margin-top: 18px;cursor: pointer">
+          <div class="TOBOTTOM" @click="toBottom()">
             <Icon type="md-arrow-dropdown" style="font-size: 25px;" />
           </div>
         </div>
@@ -109,6 +109,8 @@
         blog_collect: false,
         //点赞数量
         blog_praise_counts:0,
+        //右侧-上下速度控制
+        speed:40,
       }
     },
     methods: {
@@ -162,6 +164,26 @@
           this.$Message.info("删除成功！");
         }
       },
+      toTop:function () {
+        //参数speed表示间隔的幅度大小，以此来控制速度
+        document.documentElement.scrollTop -= this.speed;
+        if (document.documentElement.scrollTop > 0) {
+          var c = setTimeout(()=>this.toTop(this.speed),16);
+        }else {
+          clearTimeout(c);
+        }
+      },
+    toBottom:function () {
+      let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      let scrollHeight = document.documentElement.scrollHeight;
+      let height = scrollHeight - clientHeight; //超出窗口上界的值就是底部的scrolTop的值
+      document.documentElement.scrollTop += this.speed;
+      if (document.documentElement.scrollTop < height-320) {//这里减320，是为了不用到底部
+        var c = setTimeout(()=>this.toBottom(this.speed),16);
+      }else {
+        clearTimeout(c);
+      }
+  },
     },
     mounted: function () {
       this.refreshArticleDetail();
@@ -175,4 +197,16 @@
 </script>
 
 <style scoped>
+  .TOTOP{
+    height:auto;border: 1px solid gainsboro;color: #5e5e5e;border-radius: 5px;cursor: pointer
+  }
+  .TOTOP:hover{
+    height:auto;border: 1px solid #ff730e;color: #ff6900;border-radius: 5px;cursor: pointer
+  }
+  .TOBOTTOM{
+    height:auto;border: 1px solid gainsboro;color: #5e5e5e;border-radius: 5px;margin-top: 18px;cursor: pointer
+  }
+  .TOBOTTOM:hover{
+    height:auto;border: 1px solid #ff730e;color: #ff6900;border-radius: 5px;margin-top: 18px;cursor: pointer
+  }
 </style>
