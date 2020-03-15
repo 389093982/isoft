@@ -7,7 +7,7 @@
         <div class="hovered hvr-grow hoverLinkColor" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
           <span @click="removeHat()">摘下帽子</span>
         </div><hr><br><br>
-        <Tooltip max-width="200" content="我要再提醒你一次，金箍戴上之后你再也不是个凡人，人世间的情欲不能再沾半点。如果动心这个金箍就会在你头上越收越紧，苦不堪言！只有好好学习，来本站多蹭热量才是王道哦^_^">
+        <Tooltip max-width="200" content="我要再提醒你一次，金箍戴上之后你再也不是个凡人，人世间的情欲不能再沾半点。如果动心这个金箍就会在你头上越收越紧，苦不堪言！只有好好学习，来链知网多蹭热量才是王道哦^_^">
           <img @click="chooseHat('hat01')" class="hvr-grow" style="cursor: pointer" src="../../../static/images/vipHat/hat01.png" width="80" height="20" @error="defImg()"/>
         </Tooltip>
       </div>
@@ -17,8 +17,11 @@
     <div style="float:left;width: 33%;">
       <div style="margin: 150px 0 0 248px ">
         <!--更换帽子-->
-        <div style="position: relative;top: -50px;" v-if="formValidate.vip_level>0">
+        <div v-if="formValidate.vip_level>0" style="position: relative;top: -50px;">
           <Button @click="hatDrawer=true"><i style="color: #E8B66E">vip</i> · 更换帽子</Button>
+        </div>
+        <div v-else style="position: relative;top: -50px;visibility:hidden">
+          <Button>隐藏按钮</Button>
         </div>
         <!--帽子和头像-->
         <div>
