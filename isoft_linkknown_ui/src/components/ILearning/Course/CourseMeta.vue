@@ -21,8 +21,10 @@
       <span class="isoft_tag3" v-for="(clabel, index) in clabels">{{clabel}}</span>
     </p>
 
-    <span v-if="showCourseSpace" class="isoft_hover_red forwardCourseSpace"
-          @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</span>
+    <div style="width: 50%;float: right;margin-top: -30px;">
+        <span v-if="showCourseSpace" class="isoft_button_blue"
+              @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</span>
+    </div>
   </span>
 </template>
 
@@ -72,31 +74,5 @@
 </script>
 
 <style scoped>
-  .forwardCourseSpace {
-    background-color: #d6eecb;
-    padding: 8px 12px;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
 
-    animation: move_dh_1 5s infinite;
-  }
-
-  @keyframes move_dh_1 {
-    0% {
-      transform: rotateY(0deg)
-    }
-    25% {
-      transform: rotateY(10deg)
-    }
-    50% {
-      transform: rotateY(20deg)
-    }
-    75% {
-      transform: rotateY(10deg)
-    }
-    100% {
-      transform: rotateY(0deg)
-    }
-  }
 </style>
