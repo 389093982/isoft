@@ -29,19 +29,35 @@
             <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
           </FormItem>
 
-          <FormItem label="产品图片" prop="good_images">
-            <Scroll height="160">
-              <span style="height: 140px;">
-                <img v-for="good_image in formValidate.good_images" :src="good_image"
-                     width="120px" height="90px" style="margin: 5px;"/>
-              </span>
-            </Scroll>
-            <IFileUpload ref="fileUpload" :auto-hide-modal="true" btn-size="small"
-                         @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传图片"/>
+          <FormItem label="是否有图" prop="good_images">
+            <RadioGroup v-model="existImgs">
+              <Radio label="无图"></Radio>
+              <Radio label="有图"></Radio>
+            </RadioGroup>
+            <span style="color: red;">
+              <span v-if="existImgs === '有图'">上传图片越多，越能吸引他人兴趣哦~</span>
+              <span v-else>没有图片，太孤单啦~</span>
+            </span>
+            <span v-if="existImgs === '有图'">
+              <Scroll height="160">
+                <span style="height: 140px;">
+                  <img v-for="good_image in formValidate.good_images" :src="good_image"
+                       width="120px" height="90px" style="margin: 5px;"/>
+                </span>
+              </Scroll>
+              <div v-if="formValidate.good_images && formValidate.good_images.length > 0"
+                   style="border-top: 1px solid #eee;padding: 10px;margin-top: 10px;color: red;">大部分用户都上传三张以上图片哦，继续加油吧！</div>
+
+              <IFileUpload ref="fileUpload" :auto-hide-modal="true" btn-size="small"
+                           @uploadComplete="uploadComplete" :action="fileUploadUrl"
+                           :uploadLabel="formValidate.good_images && formValidate.good_images.length > 0 ? '继续添加' : '上传图片'"/>
+            </span>
           </FormItem>
 
           <FormItem>
-            <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+            <div style="width: 50%;margin: 0 auto;">
+              <span class="isoft_button_blue" @click="handleSubmit('formValidate')">提交</span>
+            </div>
           </FormItem>
         </Form>
       </div>
@@ -84,6 +100,7 @@
       return {
         fileUploadUrl: fileUploadUrl + "?table_name=good&table_field=good_images",
         goodTypes: this.GLOBAL.goodTypes,
+        existImgs: "有图",
         formValidate: {
           good_id: -1,
           good_type: '',
@@ -138,10 +155,6 @@
       handleSubmit: function (name) {
         if (this.formValidate.good_desc.length < 50) {
           this.$Message.error('产品描述太短，不能少于 50 个字符!');
-          return;
-        }
-        if (this.formValidate.good_images.length === 0) {
-          this.$Message.error('必须上传一张图片!');
           return;
         }
         var _this = this;
