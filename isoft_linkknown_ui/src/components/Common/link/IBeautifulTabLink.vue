@@ -39,6 +39,9 @@
                 itemTitle: '热门',
                 items: [
                   {item_label: 'iwork 低代码开发框架', item_desc: '快速高效、上手简单的敏捷开发工具', item_link: 'https://www.baidu.com',},
+                  {item_label: 'iwork 低代码开发框架', item_desc: '快速高效、上手简单的敏捷开发工具', item_link: 'https://www.baidu.com',},
+                  {item_label: 'iwork 低代码开发框架', item_desc: '快速高效、上手简单的敏捷开发工具', item_link: 'https://www.baidu.com',},
+                  {item_label: 'iwork 低代码开发框架', item_desc: '快速高效、上手简单的敏捷开发工具', item_link: 'https://www.baidu.com',},
                 ],
               },
             ]

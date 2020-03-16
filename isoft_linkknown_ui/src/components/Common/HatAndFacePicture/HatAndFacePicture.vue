@@ -25,7 +25,7 @@
     props:{
 		  // vip等级
       vip_level:{
-        type:Number,
+        type: [Number, String],
         default:0
       },
       //头像size
