@@ -18,7 +18,7 @@
     <p>课程简介：{{course.course_short_desc}}</p>
     <p>课程集数：{{course.course_number}}</p>
     <p v-if="course.course_label">标签语：
-      <Tag v-for="(clabel, index) in clabels">{{clabel}}</Tag>
+      <span class="isoft_tag3" v-for="(clabel, index) in clabels">{{clabel}}</span>
     </p>
 
     <span v-if="showCourseSpace" class="isoft_hover_red forwardCourseSpace"
