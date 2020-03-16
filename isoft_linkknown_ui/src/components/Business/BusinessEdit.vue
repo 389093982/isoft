@@ -4,26 +4,26 @@
     <div style="display: flex;padding: 50px;">
       <div style="width: 70%;padding: 0 50px 0 0;">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-          <FormItem label="产品类型" prop="good_type">
-            <Select v-model="formValidate.good_type">
+          <FormItem label="发布类型" prop="good_type">
+            <Select v-model="formValidate.good_type" :disabled="$route.query.id > 0">
               <Option v-for="(goodType, index) in goodTypes" :value="goodType" :key="index">{{goodType}}</Option>
             </Select>
           </FormItem>
-          <FormItem label="产品名称" prop="good_name">
-            <Input v-model.trim="formValidate.good_name" placeholder="请输入产品名称"/>
+          <FormItem label="发布名称" prop="good_name">
+            <Input v-model.trim="formValidate.good_name" placeholder="请输入发布名称"/>
           </FormItem>
-          <FormItem label="产品标签" prop="good_tag">
-            <Input v-model.trim="formValidate.good_tag" placeholder="请输入产品标签,示例：专业|高水准|精品"/>
+          <FormItem label="发布标签" prop="good_tag">
+            <Input v-model.trim="formValidate.good_tag" placeholder="请输入发布标签,示例：专业|高水准|精品"/>
 
             <div style="margin: 10px 0;">
               <span class="isoft_tag3" v-for="(tag, index) in parseTag(formValidate.good_tag)">{{tag}}</span>
             </div>
           </FormItem>
-          <FormItem label="产品描述" prop="good_desc">
-            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入产品描述"/>
+          <FormItem label="发布描述" prop="good_desc">
+            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入发布描述"/>
           </FormItem>
-          <FormItem label="产品金额" prop="good_price">
-            <Input v-model.trim="formValidate.good_price" placeholder="请选择产品金额"/>
+          <FormItem v-if="formValidate.good_type === '商品'" label="发布金额" prop="good_price">
+            <Input v-model.trim="formValidate.good_price" placeholder="请选择发布金额"/>
           </FormItem>
           <FormItem label="卖家联系方式" prop="seller_contact">
             <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
@@ -68,7 +68,7 @@
       <div style="width: 30%;">
         <div>
           <span>1</span>
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">发布服务或产品</span>
+          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">发布服务或发布</span>
         </div>
         <div>
           <span>2</span>
@@ -118,19 +118,19 @@
         },
         ruleValidate: {
           good_type: [
-            {required: true, message: '产品类型不能为空', trigger: 'blur'}
+            {required: true, message: '发布类型不能为空', trigger: 'blur'}
           ],
           good_name: [
-            {required: true, message: '产品名称不能为空', trigger: 'blur'}
+            {required: true, message: '发布名称不能为空', trigger: 'blur'}
           ],
           good_tag: [
-            {required: true, message: '产品标签不能为空', trigger: 'blur'}
+            {required: true, message: '发布标签不能为空', trigger: 'blur'}
           ],
           good_desc: [
-            {required: true, message: '产品描述不能为空', trigger: 'blur'}
+            {required: true, message: '发布描述不能为空', trigger: 'blur'}
           ],
           good_price: [
-            {required: true, message: '产品价格不能为空', trigger: 'blur'}
+            {required: true, message: '发布价格不能为空', trigger: 'blur'}
           ],
           seller_contact: [
             {required: true, message: '卖家联系方式不能为空', trigger: 'blur'}
@@ -158,7 +158,7 @@
       },
       handleSubmit: function (name) {
         if (this.formValidate.good_desc.length < 50) {
-          this.$Message.error('产品描述太短，不能少于 50 个字符!');
+          this.$Message.error('发布描述太短，不能少于 50 个字符!');
           return;
         }
         var _this = this;
