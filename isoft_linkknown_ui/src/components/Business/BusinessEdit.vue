@@ -53,6 +53,9 @@
                            :uploadLabel="formValidate.good_images && formValidate.good_images.length > 0 ? '继续添加' : '上传图片'"/>
             </span>
           </FormItem>
+          <FormItem label="亮点介绍" prop="highlights">
+            <Input v-model.trim="formValidate.highlights" type="textarea" :rows="5" placeholder="请用心填写亮点介绍，会有更好的推广效果奥"/>
+          </FormItem>
 
           <FormItem>
             <div style="width: 50%;margin: 0 auto;">
@@ -109,6 +112,7 @@
           good_desc: '',
           good_price: 0,     // 负数表示暂无报价
           good_images: [],
+          highlights: '',
           good_seller: '',
           seller_contact: '',
         },
