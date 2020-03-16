@@ -26,7 +26,7 @@
     <div style="float: left;width: 70%;height: 600px">
       <!--热门博客-->
       <div class="isoft_bg_white isoft_pd10 isoft_top5" style="margin-right: 4px">
-        <BlogRank/>
+        <IBeautifulTabLink/>
       </div>
     </div>
     <div style="float: right;width: 30%;height: 600px">
@@ -47,7 +47,7 @@
     <div style="float: left;width: 34%;height: 600px">
       <!--热门产品-->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;margin-right: 4px">
-        <IBeautifulTabLink/>
+        <BlogRank/>
       </div>
     </div>
     <div style="float: left;width: 33%;height: 600px">
