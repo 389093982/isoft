@@ -10,6 +10,7 @@
     <span class="isoft_color_grey2">灰色字体2</span>
     <span class="isoft_color_grey3">灰色字体3</span>
     <span class="isoft_color_green1 isoft_font16">绿色字体1</span>
+    <span class="isoft_color_grey3 isoft_font16">灰色字体</span>
     <span class="isoft_hover_color_green">hover 字体绿色样式</span>
     <span class="isoft_hover_color_blue">hover 字体蓝色样式</span>
     <br/>

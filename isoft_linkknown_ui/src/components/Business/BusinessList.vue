@@ -11,7 +11,6 @@
            @click="publishBusiness">我要发布
       </div>
     </div>
-
     <div style="display: flex;">
       <div style="width: 80%;">
         <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
@@ -72,8 +71,10 @@
     methods: {
       publishBusiness: function () {
         var _this = this;
-        CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/business/edit'})
+        this.$store.dispatch('CheckHasLoginConfirmDialog3', {
+          "callback": function () {
+            _this.$router.push({path: '/business/edit'});
+          }
         });
       },
       showMyBusiness: function () {
@@ -105,7 +106,7 @@
       this.refreshGoodList();
     },
     watch: {
-      '$route': 'refreshGoodList'
+      '$route': 'refreshGoodList',
     },
   }
 </script>
