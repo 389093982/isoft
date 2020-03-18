@@ -46,7 +46,6 @@ export const ShowBookCatalogDetail = (id) => ajax(BASE_URL + '/iwork/httpservice
 export const DeleteBookCatalog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeleteBookCatalog', params, 'POST');
 export const ChangeCatalogOrder = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ChangeCatalogOrder', params, 'POST');
 
-export const EditDecorate = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditDecorate', params, 'POST');
 export const EditDecorateItem = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditDecorateItem', params, 'POST');
 export const LoadAllDecorates = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadAllDecorates', params, 'POST');
 export const LoadDecorateItems = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadDecorateItems', params, 'POST');

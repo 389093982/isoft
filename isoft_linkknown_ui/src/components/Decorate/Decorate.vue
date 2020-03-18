@@ -6,10 +6,6 @@
             :class="decorate && decorate.id === _decorate.id ? 'active': ''" @click="decorate = _decorate">
           {{_decorate.decorate_name}}
         </li>
-        <li style="float: right;" @click="editDecorate">
-          <Icon type="md-add"/>
-          快速新建装修位
-        </li>
       </ul>
     </div>
 
@@ -20,7 +16,7 @@
 </template>
 
 <script>
-  import {EditDecorate, LoadAllDecorates} from "../../api"
+  import {LoadAllDecorates} from "../../api"
   import DecorateItems from "./DecorateItems";
 
   export default {
@@ -34,34 +30,25 @@
       referer_id: {
         type: String,
         default: '',
+      },
+      decorate_names: {
+        type: Array,
+        default: ['默认装饰位'],
       }
     },
     data() {
       return {
-        decMaxLen: 5,  // 装修位最大数量
         decorates: null,   // 所有装修位
         decorate: null,    // 当前正在编辑的装修位
       }
     },
     methods: {
-      editDecorate: async function () {
-        if (this.decorates && this.decorates.length >= this.decMaxLen) {
-          this.$Message.error("装修位超过最大数量!");
-          return;
-        }
-        let params = {
-          'referer_type': this.referer_type,
-          'referer_id': this.referer_id,
-          'decorate_name': '默认装修位',
-          'decorate_icon': '',
-        }
-        const result = await EditDecorate(params);
-        if (result.status === "SUCCESS") {
-          this.refreshLoadAllDecorates();
-        }
-      },
       refreshLoadAllDecorates: async function () {
-        const result = await LoadAllDecorates({referer_type: this.referer_type, referer_id: this.referer_id});
+        const result = await LoadAllDecorates({
+          referer_type: this.referer_type,
+          referer_id: this.referer_id,
+          decorate_names: this.decorate_names.join(",")
+        });
         if (result.status === "SUCCESS") {
           this.decorates = result.decorates;
           // 初始选中第一个
