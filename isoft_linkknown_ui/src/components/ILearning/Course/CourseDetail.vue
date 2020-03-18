@@ -14,6 +14,7 @@
               </div>
             </Col>
             <Col span="16">
+              <!--课程详情介绍-->
               <CourseMeta v-if="course && course.course_author" :course="course"/>
               <p>
                 <a href="javascript:;" v-if="course_collect === true" @click="toggle_favorite(course.id,'course_collect', '取消收藏')" style="color: #ff6900">
@@ -39,8 +40,8 @@
           <hr style="margin-top: 10px;">
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin: 0px 10px;padding: 10px;">
-              <IBeautifulLink>第 {{index + 1}} 集：{{cVideo.video_name}}</IBeautifulLink>
+            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(173, 170, 168, 0.39)':''}" @click="clickCourse(index)">
+              <span>第 {{index + 1}} 集：{{cVideo.video_name}}</span>
               <router-link :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
                 <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
@@ -49,7 +50,6 @@
               <div class="isoft_loading"></div>
             </Spin>
           </Row>
-          <hr>
         </div>
 
         <div class="isoft_bg_white isoft_top5 isoft_pd20" style="min-height: 600px;">
@@ -98,6 +98,7 @@
         course_collect: false,
         // 课程点赞
         course_praise: false,
+        clickIndex:0,
       }
     },
     methods: {
@@ -160,6 +161,9 @@
           CheckHasLoginConfirmDialog(this, {path: "/ilearning/courseDetail?course_id="+this.$route.query.course_id});
         }
       },
+      clickCourse:function (index) {
+        this.clickIndex = index;
+      }
     },
     mounted: function () {
       this.refreshCourseDetail(this.$route.query.course_id);
@@ -198,7 +202,7 @@
   }
 
   .video_item:hover {
-    background-color: rgba(218, 16, 0, 0.05);
+    background-color: rgba(173, 170, 168, 0.19);
     cursor: pointer;
   }
 </style>

@@ -1,23 +1,42 @@
 <template>
   <span v-if="course">
     <p style="color: #d6241e;">
-      浏览量：{{course.watch_number}}  ,  评论数：{{course.comments}}
+      浏览量 : {{course.watch_number}}  ,  评论数 : {{course.comments}}
     </p>
     <p>
-      <span>课程名称：{{course.course_name}}</span>
-      <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/jingpinCourse'})"
-            style="margin-left: 30px;">搜索同类资源</span>
-      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))"
-            style="margin-left: 30px;">开课流程</span>
+      <span>
+        <span style="color: #777">课程名称 : </span>
+        <span style="color: #9b9896">{{course.course_name}}</span>
+      </span>
+      <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/jingpinCourse'})" style="margin-left: 30px;">
+        搜索同类资源
+      </span>
+      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))" style="margin-left: 30px;">
+        开课流程
+      </span>
     </p>
-    <p>作者：
-      <span v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
+    <p>
+      <span style="color: #777">作者 : </span>
+      <span style="color: #9b9896" v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
     </p>
-    <p>课程类型：{{course.course_type}}</p>
-    <p>课程子类型：{{course.course_sub_type}}</p>
-    <p>课程简介：{{course.course_short_desc}}</p>
-    <p>课程集数：{{course.course_number}}</p>
-    <p v-if="course.course_label">标签语：
+    <p>
+      <span style="color: #777">课程类型 : </span>
+      <span style="color: #9b9896">{{course.course_type}}</span>
+    </p>
+    <p>
+      <span style="color: #777">课程子类型 : </span>
+      <span style="color: #9b9896">{{course.course_sub_type}}</span>
+    </p>
+    <p>
+      <span style="color: #777">课程简介 :  </span>
+      <span style="color: #9b9896">{{course.course_short_desc}}</span>
+    </p>
+    <p>
+      <span style="color: #777">课程集数 : </span>
+      <span style="color: #9b9896">{{course.course_number}}</span>
+    </p>
+    <p v-if="course.course_label">
+      <span style="color: #777">标签语 :    </span>
       <span class="isoft_tag3" v-for="(clabel, index) in clabels">{{clabel}}</span>
     </p>
 
