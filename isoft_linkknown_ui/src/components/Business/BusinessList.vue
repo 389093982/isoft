@@ -71,10 +71,8 @@
     methods: {
       publishBusiness: function () {
         var _this = this;
-        this.$store.dispatch('CheckHasLoginConfirmDialog3', {
-          "callback": function () {
-            _this.$router.push({path: '/business/edit'});
-          }
+        CheckHasLoginConfirmDialog2(this, function () {
+          _this.$router.push({path: '/business/edit'});
         });
       },
       showMyBusiness: function () {
