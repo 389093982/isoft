@@ -23,11 +23,19 @@
         </div>
       </div>
 
-      <p class="tip_hover">
-        大家都在寻找适合自己的资源，我们为您
-        <span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>
-        以下资源：
-      </p>
+      <div style="padding: 10px 0 0 30px ">
+        <Row>
+          <Col span="10">
+            <span class="tip_hover">
+              大家都在寻找适合自己的资源，我们为您<span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>以下资源
+            </span>
+          </Col>
+          <Col span="14">
+            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;left: -330px;top:-8px"></ISearch>
+          </Col>
+        </Row>
+      </div>
+
     </div>
 
     <Row>
@@ -80,10 +88,11 @@
   import {FilterPageResourceList, RecommendResource} from "../../api"
   import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
   import RandomAdmt from "../Advertisement/RandomAdmt";
+  import ISearch from "../Common/search/ISearch"
 
   export default {
     name: "ResourceList",
-    components: {RandomAdmt},
+    components: {RandomAdmt,ISearch},
     data() {
       return {
         search: '',
@@ -99,6 +108,10 @@
       }
     },
     methods: {
+      submitFunc:function(search_data){
+        this.search = search_data;
+        this.refreshResourceList();
+      },
       searchResource: function (search) {
         this.search = search;
         this.refreshResourceList();
@@ -180,13 +193,11 @@
 <style scoped>
   .tip_hover {
     font-size: 15px;
-    padding: 10px 0 10px 30px ;
     color: #555;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
   .tip_hover:hover {
     font-size: 15px;
-    padding: 10px 0 10px 30px ;
     color: red;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
