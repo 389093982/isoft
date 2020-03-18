@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10">
+    <div class="isoft_bg_white">
       <IBeautifulCard title="专家墙">
         <div slot="content" style="padding: 10px;">
           <Row v-for="(user,index) in users2" :gutter="10">
@@ -23,7 +23,7 @@
       </IBeautifulCard>
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+    <div class="isoft_bg_white isoft_top5">
       <IBeautifulCard title="答疑勤兵">
         <div slot="content" style="padding: 10px;">
           <Row v-for="(user,index) in users" :gutter="10">
@@ -46,7 +46,7 @@
       </IBeautifulCard>
     </div>
 
-    <div class="isoft_bg_white isoft_pd10 isoft_top5">
+    <div class="isoft_bg_white isoft_top5">
       <IBeautifulCard title="提问达人">
         <div slot="content" style="padding: 10px;">
           <Row v-for="(user,index) in users3" :gutter="10">

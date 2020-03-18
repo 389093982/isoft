@@ -31,7 +31,6 @@
   import HotRecommend from "./Course/HotRecommend"
   import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
-  import IBeautifulTabLink from "../Common/link/IBeautifulTabLink"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks"
   import IHotRecommand from "../Common/recommend/IHotRecommand"
   import IndexCarousel from "./IndexCarousel";
@@ -54,7 +53,6 @@
       HotRecommend,
       NewsNotice,
       ToolBox,
-      IBeautifulTabLink,
       ISearch,
     },
     data() {
