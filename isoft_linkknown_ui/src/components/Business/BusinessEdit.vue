@@ -4,6 +4,11 @@
     <div style="display: flex;padding: 50px;">
       <div style="width: 70%;padding: 0 50px 0 0;">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+
+          <div class="isoft_info_tip isoft_font14 isoft_color_grey3" style="margin-bottom: 10px;">
+            商品&nbsp;/&nbsp;服务基本信息
+          </div>
+
           <FormItem label="发布类型" prop="good_type">
             <Select v-model="formValidate.good_type" :disabled="$route.query.id > 0">
               <Option v-for="(goodType, index) in goodTypes" :value="goodType" :key="index">{{goodType}}</Option>
@@ -12,6 +17,15 @@
           <FormItem label="发布名称" prop="good_name">
             <Input v-model.trim="formValidate.good_name" placeholder="请输入发布名称"/>
           </FormItem>
+          <FormItem label="发布描述" prop="good_desc">
+            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入发布描述"/>
+          </FormItem>
+          <FormItem v-if="formValidate.good_type === '商品'" label="发布金额" prop="good_price">
+            <Input v-model.trim="formValidate.good_price" placeholder="请选择发布金额"/>
+          </FormItem>
+
+          <div class="isoft_info_tip isoft_font14 isoft_color_grey3" style="margin: 10px 0;">特色装扮</div>
+
           <FormItem label="发布标签" prop="good_tag">
             <Input v-model.trim="formValidate.good_tag" placeholder="请输入发布标签,示例：专业|高水准|精品"/>
 
@@ -19,16 +33,6 @@
               <span class="isoft_tag3" v-for="(tag, index) in parseTag(formValidate.good_tag)">{{tag}}</span>
             </div>
           </FormItem>
-          <FormItem label="发布描述" prop="good_desc">
-            <Input v-model.trim="formValidate.good_desc" type="textarea" :rows="5" placeholder="请输入发布描述"/>
-          </FormItem>
-          <FormItem v-if="formValidate.good_type === '商品'" label="发布金额" prop="good_price">
-            <Input v-model.trim="formValidate.good_price" placeholder="请选择发布金额"/>
-          </FormItem>
-          <FormItem label="卖家联系方式" prop="seller_contact">
-            <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
-          </FormItem>
-
           <FormItem label="是否有图" prop="good_images">
             <RadioGroup v-model="existImgs">
               <Radio label="无图"></Radio>
@@ -57,6 +61,12 @@
             <Input v-model.trim="formValidate.highlights" type="textarea" :rows="5" placeholder="请用心填写亮点介绍，会有更好的推广效果奥"/>
           </FormItem>
 
+          <div class="isoft_info_tip isoft_font14 isoft_color_grey3" style="margin: 10px 0;">更多信息</div>
+
+          <FormItem label="卖家联系方式" prop="seller_contact">
+            <Input v-model.trim="formValidate.seller_contact" placeholder="请输入卖家联系方式"/>
+          </FormItem>
+
           <FormItem>
             <div style="width: 50%;margin: 0 auto;">
               <span class="isoft_button_blue" @click="handleSubmit('formValidate')">提交</span>
@@ -83,10 +93,19 @@
           <span>4</span>
           <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">装饰店铺</span>
         </div>
+
+        <div>
+          猜你喜欢
+        </div>
+
+        <div>
+          优惠专栏
+        </div>
       </div>
     </div>
 
-    <Decorate v-if="$route.query.id > 0" referer_type="business_decorate" :referer_id="$route.query.id"/>
+    <Decorate v-if="$route.query.id > 0" referer_type="business_decorate" :referer_id="$route.query.id"
+              :decorate_names="['商品详情装饰位']"/>
   </div>
 </template>
 

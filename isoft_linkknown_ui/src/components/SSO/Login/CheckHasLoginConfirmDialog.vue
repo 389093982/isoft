@@ -8,11 +8,7 @@
       </div>
       <div class="content">
         <p class="isoft_color_grey3 isoft_font16">您还未登录！前往登录？</p>
-
-        <div style="text-align: right;">
-          <span>注册</span>
-          <span>忘记密码？</span>
-        </div>
+        <span class="isoft_point_cursor" style="float: right;">注册账号</span>
       </div>
       <div class="footer">
         <div class="isoft_button_blue" style="width: 40%;position:absolute;left: 20px;" @click="cancel">取消</div>
@@ -77,7 +73,7 @@
     left: 0;
     right: 0;
     width: 400px;
-    height: 300px;
+    height: 220px;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
@@ -91,14 +87,15 @@
 
   .header {
     padding: 0 20px;
-    background-color: rgba(0, 181, 0, 0.15);
+    background-color: rgb(107, 103, 255);
     height: 60px;
     line-height: 60px;
+    color: white;
   }
 
   .content {
     padding: 30px 20px;
-    height: 180px;
+    height: 100px;
   }
 
   .footer {

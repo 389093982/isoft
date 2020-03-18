@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <IBeautifulCardGreen :title="placement_label">
+    <IBeautifulCard :title="placement_label">
       <div slot="content">
         <ul v-if="elements.length > 0">
           <li v-for="element in elements" class="li">
@@ -15,17 +15,17 @@
         </p>
         <div style="clear: both;"></div>
       </div>
-    </IBeautifulCardGreen>
+    </IBeautifulCard>
   </ElementsLoader>
 </template>
 
 <script>
   import ElementsLoader from "./ElementsLoader"
-  import IBeautifulCardGreen from "../../Common/card/IBeautifulCardGreen"
+  import IBeautifulCard from "../../Common/card/IBeautifulCard"
 
   export default {
     name: "ToolBox",
-    components: {IBeautifulCardGreen, ElementsLoader},
+    components: {IBeautifulCard, ElementsLoader},
     props: {
       placement_name: {
         type: String,

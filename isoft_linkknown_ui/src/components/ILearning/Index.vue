@@ -25,13 +25,13 @@
     <!--上二,7:3-->
     <div style="float: left;width: 70%;height: 600px">
       <!--热门博客-->
-      <div class="isoft_bg_white isoft_pd10 isoft_top5" style="margin-right: 4px">
+      <div class="isoft_bg_white isoft_top5" style="margin-right: 4px">
         <IBeautifulTabLink/>
       </div>
     </div>
     <div style="float: right;width: 30%;height: 600px">
       <!--热门应用-->
-      <div class="isoft_bg_white isoft_pd10 isoft_top5">
+      <div class="isoft_bg_white isoft_top5">
         <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
       </div>
     </div>

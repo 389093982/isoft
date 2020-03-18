@@ -1,5 +1,5 @@
 <template>
-  <IBeautifulCardPurple :title="pData.title">
+  <IBeautifulCard :title="pData.title">
     <div slot="content" style="padding: 20px;">
       <Tabs :animated="false">
         <TabPane :label="itemData.itemTitle" v-for="(itemData, index) in pData.pItemData">
@@ -11,16 +11,16 @@
         </TabPane>
       </Tabs>
     </div>
-  </IBeautifulCardPurple>
+  </IBeautifulCard>
 </template>
 
 <script>
   import IBeautifulHoverBox from "./IBeautifulHoverBox"
-  import IBeautifulCardPurple from "../../Common/card/IBeautifulCardPurple"
+  import IBeautifulCard from "../../Common/card/IBeautifulCard"
 
   export default {
     name: "IBeautifulTabLink",
-    components: {IBeautifulHoverBox, IBeautifulCardPurple},
+    components: {IBeautifulHoverBox, IBeautifulCard},
     data() {
       return {
         current_index: 0,
