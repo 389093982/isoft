@@ -105,7 +105,7 @@
     </div>
 
     <Decorate v-if="$route.query.id > 0" referer_type="business_decorate" :referer_id="$route.query.id"
-              :decorate_names="['商品详情装饰位']"/>
+              :decorate_names="['商品详情装饰位','商品详情装饰位2222']"/>
   </div>
 </template>
 

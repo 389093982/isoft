@@ -10,7 +10,7 @@
             <!--鼠标移动过去的时候显示全部文字,也很简单,给title赋值就可以了-->
             <div style="width: 150px;color: green;text-align: right;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"
               :title="item.ParamName">
-              {{item.ParamName}}
+              {{item.ParamName}}&nbsp;&nbsp;<span v-if="item.PureText">(P)</span>
             </div>
           </td>
           <td>
