@@ -44,14 +44,17 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	current_page := this.TmpDataMap[iworkconst.NUMBER_PREFIX+"current_page?"]
 	page_size := this.TmpDataMap[iworkconst.NUMBER_PREFIX+"page_size?"]
 
+	txm := this.DataStore.TxManger.(*node.TxManager)
+	txm.FirstBegin(dataSourceName)
+
 	isPage := false
 	if current_page != nil && page_size != nil {
 		_current_page := pageutil.GetSafePageNo(datatypeutil.InterfaceConvertToInt64(current_page))
 		_page_size := pageutil.GetSafePageSize(datatypeutil.InterfaceConvertToInt64(page_size))
 		if _current_page > 0 && _page_size > 0 { // 正数才表示分页
-			totalcount = sqlutil.QuerySelectCount(total_sql, sql_binding, dataSourceName)
+			totalcount = sqlutil.QuerySelectCountWithTx(total_sql, sql_binding, txm.Tx)
 			sql_binding = append(sql_binding, (_current_page-1)*_page_size, _page_size)
-			datacounts, rowDatas = sqlutil.Query(limit_sql, sql_binding, dataSourceName)
+			datacounts, rowDatas = sqlutil.QueryWithTx(limit_sql, sql_binding, txm.Tx)
 			// 存储分页信息
 			paginator := pageutil.Paginator(int(_current_page), int(_page_size), totalcount)
 			paramMap[iworkconst.COMPLEX_PREFIX+"paginator"] = paginator
@@ -62,7 +65,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 		}
 	}
 	if !isPage {
-		datacounts, rowDatas = sqlutil.Query(sql, sql_binding, dataSourceName)
+		datacounts, rowDatas = sqlutil.QueryWithTx(sql, sql_binding, txm.Tx)
 	}
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
