@@ -2,13 +2,14 @@ package sql
 
 import (
 	"errors"
+	"fmt"
 	"isoft/isoft_iwork_web/core/interfaces"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
+	"isoft/isoft_iwork_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iwork_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iwork_web/models"
-	"reflect"
 	"strings"
 )
 
@@ -49,27 +50,9 @@ func (this *SQLExecuteNode) checkPanicNoAffectedMsg(affected int64) {
 
 func (this *SQLExecuteNode) modifySqlInsertWithBatch(tmpDataMap map[string]interface{}, sql string) string {
 	if batch_data := tmpDataMap[iworkconst.FOREACH_PREFIX+"batch_data?"]; batch_data != nil {
-		t := reflect.TypeOf(batch_data)
-		v := reflect.ValueOf(batch_data)
-		if t.Kind() == reflect.Slice {
-			if v.Len() > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
-				// 最后一个左括号索引
-				index1 := strings.LastIndex(sql, "(")
-				// 最后一个右括号索引
-				index2 := strings.LastIndex(sql, ")")
-				// value 填充子句
-				valueSql := sql[index1:(index2 + 1)]
-				// newValueArr 等于 value 填充子句复制 _batch_number 份
-				newValueArr := make([]string, 0)
-				for i := 0; i < v.Len(); i++ {
-					newValueArr = append(newValueArr, valueSql)
-				}
-				newValueSql := strings.Join(newValueArr, ",")
-				// 进行替换,相当于 () 替换成 (),(),(),()...
-				sql = strings.Replace(sql, valueSql, newValueSql, -1)
-			}
-		}
-
+		values := sql[strings.Index(sql, "BATCH[")+len("BATCH[") : strings.Index(sql, "]")]
+		replaceValues := strings.Repeat(values+",", datatypeutil.InterfaceConvertToInt(batch_data))
+		sql = strings.ReplaceAll(sql, fmt.Sprintf("BATCH[%s]", values), replaceValues[:len(replaceValues)-1])
 	}
 	return sql
 }
