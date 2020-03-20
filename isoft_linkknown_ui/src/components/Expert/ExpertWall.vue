@@ -1,27 +1,5 @@
 <template>
   <div>
-    <div class="isoft_bg_white isoft_pd10">
-      <IBeautifulCard title="等你来答">
-        <div slot="content" style="padding: 10px;">
-          <Row v-for="(user,index) in users2" :gutter="10">
-            <Col span="3">
-              <span @click="$router.push({path:'/user/detail',query:{username:user.user_name}})">
-                <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
-              </span>
-            </Col>
-            <Col span="11" style="position: relative;left: -5px">
-              <span @click="$router.push({path:'/user/detail',query:{username:user.user_name}})" style="cursor: pointer">
-                <span v-if="renderNickName(user.user_name)">{{renderNickName(user.user_name)}}</span>
-                <span v-else>{{user.user_name}}</span>
-              </span>
-            </Col>
-            <Col span="10">
-              累计好评次数：{{user.good_numbers}}
-            </Col>
-          </Row>
-        </div>
-      </IBeautifulCard>
-    </div>
 
     <div class="isoft_bg_white isoft_pd10">
       <IBeautifulCard title="专家墙">

@@ -248,6 +248,7 @@ export const EditAnswerExpert = (params) => ajax(BASE_URL + '/iwork/httpservice/
 export const QueryPageAnswerExpertList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAnswerExpertList', params, "POST");
 export const ModifyGoodNumber = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ModifyGoodNumber', params, "POST");
 export const QueryExpertWallList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryExpertWallList', params, "POST");
+export const QueryWaitYourAnswerList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryWaitYourAnswerList', params, "POST");
 
 export const QueryRechargeRight = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryRechargeRight', params, "POST");
 
