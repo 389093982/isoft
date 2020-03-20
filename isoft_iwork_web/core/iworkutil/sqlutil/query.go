@@ -44,6 +44,19 @@ func QuerySql(sql string, sql_binding []interface{}, dataSourceName string) (
 	return
 }
 
+func QueryWithTx(sqlstring string, sql_binding []interface{}, tx *sql.Tx) (
+	datacounts int64, rowDatas []map[string]interface{}) {
+	stmt, err := tx.Prepare(sqlstring)
+	errorutil.CheckError(err)
+	rows, err := stmt.Query(sql_binding...)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	datacounts, rowDatas = parseRows(rows)
+	return
+}
+
 func Query(sql string, sql_binding []interface{}, dataSourceName string) (
 	datacounts int64, rowDatas []map[string]interface{}) {
 	stmt := QueryStmt(sql, dataSourceName)
@@ -99,6 +112,17 @@ func scanRowData(rows *sql.Rows, colSize int) []sql.RawBytes {
 	}
 	rows.Scan(scanArgs...)
 	return colValues
+}
+
+// 查询sql总数据量
+func QuerySelectCountWithTx(sqlstring string, sql_binding []interface{}, tx *sql.Tx) (datacounts int64) {
+	stmt, err := tx.Prepare(sqlstring)
+	errorutil.CheckError(err)
+	defer stmt.Close()
+	row := stmt.QueryRow(sql_binding...)
+	err = row.Scan(&datacounts)
+	errorutil.CheckError(err)
+	return
 }
 
 // 查询sql总数据量

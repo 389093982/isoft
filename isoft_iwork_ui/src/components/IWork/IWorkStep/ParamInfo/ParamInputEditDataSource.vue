@@ -2,13 +2,16 @@
   <Tabs type="card" name="tab_dataSource" :value="current_tab" @on-click="currentTabChanged" :animated="false">
     <TabPane label="前置节点输出参数" name="tab_output" tab="tab_dataSource">
       <Scroll height="400">
-        <Tree v-if="data1" :data="data1" show-checkbox ref="tree1" :render="renderContent"></Tree>
+        <Tree v-if="data1.treeArr" :data="data1.treeArr" show-checkbox ref="tree1" :render="renderContent"></Tree>
       </Scroll>
     </TabPane>
     <TabPane label="快捷函数" name="tab_funcs" tab="tab_dataSource">
       <Scroll height="400">
         <ul>
-          <Tree v-if="data2" :data="data2" show-checkbox ref="tree2" :render="renderContent"></Tree>
+          <span v-for="(data, index) in data2">
+            <span style="background-color: #eee;padding: 5px 10px;">{{data.funcType}}</span>
+            <Tree v-if="data.treeArr" :data="data.treeArr" show-checkbox ref="tree2" :render="renderContent"></Tree>
+          </span>
         </ul>
       </Scroll>
     </TabPane>
@@ -170,15 +173,21 @@
           appendChildrens(preParamOutputSchemaTreeNode,topTreeNode);
           treeArr.push(topTreeNode);
         }
-        return treeArr;
+        return {treeArr};
       },
       data2:function () {
-        // tree 对应的 arr
-        let treeArr = [];
-        for(var i=0; i<this.funcs.length; i++){
-          treeArr.push({title:this.funcs[i].funcDemo});
-        }
-        return treeArr;
+        // 不同 funcType 类型的 func 存储为 arr 中的一个对象
+        let arr = [];
+        // 获取所有的 funcType
+        let funcTypes = Array.from(new Set(this.funcs.map(fc => fc.funcType)));
+        funcTypes.forEach(funcType => {
+          // tree 对应的 arr
+          let treeArr = this.funcs.filter(fc => fc.funcType === funcType).map(fc => {
+            return {title: fc.funcDemo}
+          });
+          arr.push({funcType, treeArr});
+        });
+        return arr;
       },
     },
     mounted(){

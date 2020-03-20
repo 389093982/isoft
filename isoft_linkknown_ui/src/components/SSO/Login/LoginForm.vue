@@ -43,7 +43,7 @@
 
 <script>
   import {Login} from "../../../api"
-  import {checkEmpty, strSplit} from "../../../tools"
+  import {checkEmpty, checkNotEmpty, strSplit} from "../../../tools"
   import {setLoginInfo} from "../../../tools/sso"
 
   export default {
@@ -82,6 +82,8 @@
         var result = await Login(username, passwd, decodeURIComponent(redirectUrl));
         if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
           setLoginInfo(result, username);
+          localStorage.setItem("__userName", this.username);
+          localStorage.setItem("__passwd", this.passwd);
           if (!checkEmpty(result.redirectUrl)) {
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;
@@ -93,7 +95,15 @@
           this.errorMsg = result.errorMsg;
         }
       },
-
+      fillMemoryLoginInfo: function () {
+        if (checkNotEmpty(localStorage.getItem("__userName")) && checkNotEmpty(localStorage.getItem("__passwd"))) {
+          this.username = localStorage.getItem("__userName");
+          this.passwd = localStorage.getItem("__passwd");
+        }
+      }
+    },
+    mounted() {
+      this.fillMemoryLoginInfo();
     }
   }
 </script>
