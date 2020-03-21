@@ -10,7 +10,10 @@
               <h4 class="isoft_inline_ellipsis">课程名称：{{course.course_name}}</h4>
               <div class="course_img">
                 <img :src="course.small_image" width="180" height="120" @error="defImg()"/>
-                <div class="course_name">{{course.course_name}}</div>
+                <div class="course_name">
+                  <span class="move_course_name">{{course.course_name}}</span>
+                </div>
+                <div class="ico_play"></div>
               </div>
             </Col>
             <Col span="16">
@@ -208,5 +211,25 @@
   .video_item:hover {
     background-color: rgba(199, 196, 193, 0.12);
     cursor: pointer;
+  }
+
+   .ico_play {
+     background: url(../../../assets/ico_play.png) no-repeat;
+     background-size: 20px;
+     position: absolute;
+     top: 125px;
+     left: 150px;
+     width: 20px;
+     height: 20px;
+   }
+
+  .move_course_name{
+    position:relative;
+    animation: move 3s linear infinite;
+  }
+
+  @keyframes move {
+    0%   {left:130px;}
+    100% {left:-130px;}
   }
 </style>
