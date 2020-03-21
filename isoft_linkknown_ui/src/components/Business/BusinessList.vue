@@ -1,6 +1,7 @@
 <template>
-  <div style="margin:0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
-    <div style="display: flex;padding: 20px 150px 5px 150px;text-align: center;">
+  <div style="margin:0 15px;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
+    <div class="isoft_bg_white"
+         style="display: flex;padding: 20px 150px 20px 150px;margin-bottom:5px;text-align: center;">
       <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
       <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
       <show-more default-desc="搜索" @changeShowMore="showSearch = !showSearch"></show-more>
@@ -11,8 +12,8 @@
            @click="publishBusiness">我要发布
       </div>
     </div>
-    <div style="display: flex;">
-      <div style="width: 80%;">
+    <div class="isoft_bg_white" style="display: flex;">
+      <div style="width: 75%;">
         <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
              style="margin: 10px;border: 1px solid #eee;">
 
@@ -29,7 +30,7 @@
           </GoodMeta>
         </div>
       </div>
-      <div style="width: 20%;padding: 0 10px 0 0;">
+      <div style="width: 25%;padding: 0 10px 0 0;">
         <div style="margin-top: 10px;" class="isoft_info_tip">
           <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">上链知网，总有心发现</span>
         </div>
