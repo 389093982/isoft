@@ -1,11 +1,25 @@
 <template>
   <div>
     <Tab :tab-counts="3" style="margin-top: 30px;">
-      <div slot="titlePane1">保障服务</div>
+      <div slot="titlePane1">店铺信息</div>
       <div slot="titlePane2">用户评价</div>
-      <div slot="titlePane3">店铺信息</div>
+      <div slot="titlePane3">保障服务</div>
 
-      <div slot="tabPane1">tabPane1</div>
+      <div slot="tabPane1">
+        <!-- 店铺信息 -->
+        <span v-if="decorate_items" v-for="(decorate_item, index) in decorate_items">
+          <div style="display: flex;">
+            <div>
+              <img v-if="decorate_item.media_path" :src="decorate_item.media_path" width="220px" height="160px"/>
+            </div>
+            <div>
+              {{decorate_item.decorate_text}}
+            </div>
+          </div>
+          <span>
+          </span>
+        </span>
+      </div>
       <div slot="tabPane2">
         <p>用户印象：</p>
         <VoteTags referer_type="vote_business" referer_id="1111"/>
@@ -13,11 +27,7 @@
         <!-- 评论模块 -->
         <IEasyComment :theme_pk="1" theme_type="business_theme_type" style="margin-top: 50px;"/>
       </div>
-      <div slot="tabPane3">
-        <span v-if="decorate_items" v-for="(decorate_item, index) in decorate_items">
-          {{decorate_item.decorate_text}}
-        </span>
-      </div>
+      <div slot="tabPane3">tabPane3</div>
     </Tab>
   </div>
 </template>

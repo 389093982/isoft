@@ -93,11 +93,12 @@
           {
             title: 'id',
             key: 'id',
-            width: 50,
+            width: 100,
           },
           {
             title: 'migrate_name',
             key: 'migrate_name',
+            width: 350,
           },
           {
             title: 'effective',
