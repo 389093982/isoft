@@ -13,7 +13,7 @@
       </div>
     </div>
     <div style="display: flex;justify-content:space-between;">
-      <div class="isoft_bg_white" style="width: 74.5%;">
+      <div class="isoft_bg_white" style="width: 74.5%;padding-bottom: 10px;">
         <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
              style="margin: 10px;border: 1px solid #eee;">
 
@@ -29,6 +29,10 @@
             </div>
           </GoodMeta>
         </div>
+
+        <Page :total="total" :page-size="offset" show-total show-sizer
+              :styles="{'text-align': 'center','margin-top': '10px'}"
+              @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
       </div>
       <div class="isoft_bg_white" style="width: 25%;padding: 0 10px;">
         <div style="margin-top: 10px;" class="isoft_info_tip">
@@ -67,6 +71,12 @@
         goodTypes: this.GLOBAL.goodTypes,   // 商品类型
         showGoodEditModal: false,
         goods: [],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 10,
       }
     },
     methods: {
@@ -92,13 +102,22 @@
         }
       },
       refreshGoodList: async function () {
-        const result = await GoodList();
+        const result = await GoodList({offset: this.offset, current_page: this.current_page});
         if (result.status === "SUCCESS") {
           this.goods = await FillUserNickNameInfoByNames(result.goods, "good_seller");
+          this.total = result.paginator.totalcount;
         }
       },
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
+      },
+      handleChange(page) {
+        this.current_page = page;
+        this.refreshGoodList();
+      },
+      handlePageSizeChange(pageSize) {
+        this.offset = pageSize;
+        this.refreshGoodList();
       },
     },
     mounted() {

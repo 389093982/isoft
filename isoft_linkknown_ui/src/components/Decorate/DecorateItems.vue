@@ -14,13 +14,13 @@
         </Col>
         <Col span="9">
           <FormItem :prop="'items.' + index + '.decorate_text'"
-                    :rules="{required: true, message: '文本描述[' + index +']不能为空！', trigger: 'blur'}">
-            <Input type="textarea" :rows="3" v-model.trim="item.decorate_text" placeholder="请输入文本描述"></Input>
+                    :rules="{required: true, message: '文本描述不能为空！', trigger: 'blur'}">
+            <Input type="textarea" :rows="7" v-model.trim="item.decorate_text" placeholder="请输入文本描述"></Input>
           </FormItem>
         </Col>
         <Col span="9">
           <FormItem :prop="'items.' + index + '.link_href'"
-                    :rules="{required: true, message: '链接地址[' + index +']不能为空！', trigger: 'blur'}">
+                    :rules="{required: true, message: '链接地址不能为空！', trigger: 'blur'}">
             <Input v-model.trim="item.link_href" placeholder="请输入链接地址"></Input>
           </FormItem>
 
