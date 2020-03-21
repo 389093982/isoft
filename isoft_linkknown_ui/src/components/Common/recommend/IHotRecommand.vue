@@ -1,5 +1,5 @@
 <template>
-  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
+  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" :style="{'min-height':minHeight+'px'}">
     <div>
       <div style="width: 92%">
         <div style="clear: both;"></div>
@@ -23,6 +23,10 @@
     name: "IHotRecommand",
     components: {ShowMore, ElementsLoader},
     props: {
+      minHeight:{
+        type:Number,
+        default:0,
+      },
       placement_name: {
         type: String,
         default: '',

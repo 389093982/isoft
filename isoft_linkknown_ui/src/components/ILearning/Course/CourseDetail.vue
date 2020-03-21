@@ -41,7 +41,7 @@
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
             <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(173, 170, 168, 0.39)':''}" @click="clickCourse(index)">
-              <span>第 {{index + 1}} 集：{{cVideo.video_name}}</span>
+              <span :style="{color:index===clickIndex?'green':''}">第 {{index + 1}} 集：{{cVideo.video_name}}</span>
               <router-link :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
                 <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>

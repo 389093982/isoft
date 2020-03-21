@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <IBeautifulCard :title="placement_label" theme="blue">
+    <IBeautifulCard :minHeight="400" :title="placement_label" theme="orange">
       <ul slot="content">
         <li v-for="(element, index) in elements">
             <span style="float:right;color: #999;font-size: 12px;"><Time :time="element.created_time" type="date"/></span>

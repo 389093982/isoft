@@ -2,7 +2,7 @@
   <div>
 
     <!--高度这里就设置400px-->
-    <div style="height: 400px;">
+    <div>
       <div style="float: left;width: 70%;">
         <!--首页轮播图-->
         <IndexCarousel></IndexCarousel>
@@ -23,13 +23,13 @@
     <!--备注：下面5个热门相关做成上2下3的布局-->
 
     <!--上二,7:3-->
-    <div style="float: left;width: 70%;height: 600px">
+    <div style="float: left;width: 70%;">
       <!--热门产品-->
       <div class="isoft_bg_white isoft_top5" style="margin-right: 4px">
         <IBeautifulTabLink/>
       </div>
     </div>
-    <div style="float: right;width: 30%;height: 600px">
+    <div style="float: right;width: 30%;">
       <!--热门app-->
       <div class="isoft_bg_white isoft_top5">
         <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
@@ -38,22 +38,22 @@
     <div style="clear: both"></div>
 
     <!--下三，33:34:33-->
-    <div style="float: left;width: 33%;height: 600px">
+    <div style="float: left;width: 33%;">
       <!--热门书单-->
-      <div style="margin-top: 5px;margin-right: 4px">
+      <div style="margin: 5px 4px 0 0">
         <BookRank class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
-    <div style="float: left;width: 34%;height: 600px">
+    <div style="float: left;width: 34%;">
       <!--热门博客-->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;margin-right: 4px">
         <BlogRank/>
       </div>
     </div>
-    <div style="float: left;width: 33%;height: 600px">
+    <div style="float: left;width: 33%;">
       <!-- 热门项目推荐 -->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;">
-        <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod"/>
+        <IHotRecommand :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
       </div>
     </div>
     <div style="clear: both"></div>

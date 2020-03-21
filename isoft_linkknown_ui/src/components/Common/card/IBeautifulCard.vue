@@ -1,6 +1,6 @@
 <template>
   <div class="box_bg">
-    <div class="box_area">
+    <div class="box_area" :style="{'min-height':minHeight+'px'}">
       <slot name="header">
         <div class="title" :class="titleColorClass">
           <span class="leftHeaderLeft" style="float: left;">
@@ -23,6 +23,10 @@
   export default {
     name: "IBeautifulCard",
     props: {
+      minHeight:{
+        type:Number,
+        default:0,
+      },
       title: {
         type: String,
         default: '默认标题',
