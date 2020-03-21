@@ -24,13 +24,13 @@
 
     <!--上二,7:3-->
     <div style="float: left;width: 70%;height: 600px">
-      <!--热门博客-->
+      <!--热门产品-->
       <div class="isoft_bg_white isoft_top5" style="margin-right: 4px">
         <IBeautifulTabLink/>
       </div>
     </div>
     <div style="float: right;width: 30%;height: 600px">
-      <!--热门应用-->
+      <!--热门app-->
       <div class="isoft_bg_white isoft_top5">
         <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
       </div>
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div style="float: left;width: 34%;height: 600px">
-      <!--热门产品-->
+      <!--热门博客-->
       <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;margin-right: 4px">
         <BlogRank/>
       </div>
