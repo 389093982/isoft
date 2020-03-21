@@ -63,6 +63,7 @@
 
     <div style="float: left;width: 30%">
       <div style="position: relative;left: -50px;">
+        <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
         <ExpertWall></ExpertWall>
       </div>
     </div>
@@ -79,10 +80,11 @@
   import ExpertWall from "./ExpertWall";
   import VoteTags from "../Decorate/VoteTags";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import WaitYourAnswer from "./WaitYourAnswer";
 
   export default {
     name: "AnswerExpert",
-    components: {HatAndFacePicture, VoteTags, ExpertWall, IShowMarkdown},
+    components: {WaitYourAnswer, HatAndFacePicture, VoteTags, ExpertWall, IShowMarkdown},
     data() {
       return {
         ask_expert: null,

@@ -73,7 +73,8 @@
           </div>
         </Col>
         <Col span="8">
-          <ExpertWall/>
+          <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
+          <ExpertWall></ExpertWall>
         </Col>
       </Row>
     </div>
@@ -96,10 +97,11 @@
   import MoveLine from "../Common/decorate/MoveLine";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import WaitYourAnswer from "./WaitYourAnswer";
 
   export default {
     name: "AskExpert",
-    components: {HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
+    components: {WaitYourAnswer, HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
         // 当前页
