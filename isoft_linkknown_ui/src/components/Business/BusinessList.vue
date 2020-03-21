@@ -12,8 +12,8 @@
            @click="publishBusiness">我要发布
       </div>
     </div>
-    <div class="isoft_bg_white" style="display: flex;">
-      <div style="width: 75%;">
+    <div style="display: flex;justify-content:space-between;">
+      <div class="isoft_bg_white" style="width: 74.5%;">
         <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
              style="margin: 10px;border: 1px solid #eee;">
 
@@ -30,7 +30,7 @@
           </GoodMeta>
         </div>
       </div>
-      <div style="width: 25%;padding: 0 10px 0 0;">
+      <div class="isoft_bg_white" style="width: 25%;padding: 0 10px;">
         <div style="margin-top: 10px;" class="isoft_info_tip">
           <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">上链知网，总有心发现</span>
         </div>

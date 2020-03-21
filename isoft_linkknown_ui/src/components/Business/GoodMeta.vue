@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-if="good">
-      <div style="display: flex;">
-        <div style="width: 40%;">
+      <div style="display: flex;justify-content:space-between;">
+        <div :style="{'width': good.good_images ? '40%':'0'}">
           <Carousel autoplay dots="outside" trigger="hover" :autoplay-speed="4000">
             <CarouselItem v-for="(good_image, index) in parseGoodImages(good.good_images)">
               <div class="carousel">
@@ -15,7 +15,8 @@
           </Carousel>
         </div>
 
-        <div style="width: 60%;padding: 0 20px;" class="item_border1">
+        <div :style="{'width':good.good_images ? '59%' : '100%'}" style="padding: 0 20px;"
+             :class="good.good_images ? 'item_border1' : ''">
           <div>
             <p class="isoft_inline_ellipsis isoft_font16">商品名称：
               <span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
@@ -47,7 +48,7 @@
 </template>
 
 <script>
-  import {checkEmpty, strSplit} from "../../tools"
+  import {checkEmpty, checkNotEmpty, strSplit} from "../../tools"
   import GoodShortcut from "./GoodShortcut"
 
   export default {
@@ -67,7 +68,7 @@
         return strSplit(good_tag, "|").filter(tag => !checkEmpty(tag));
       },
       parseGoodImages: function (good_images) {
-        return JSON.parse(good_images);
+        return checkNotEmpty(good_images) ? JSON.parse(good_images) : [];
       },
     }
   }

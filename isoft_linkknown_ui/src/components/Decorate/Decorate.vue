@@ -28,7 +28,7 @@
         default: '',
       },
       referer_id: {
-        type: String,
+        type: [String, Number],
         default: '',
       },
       decorate_names: {
