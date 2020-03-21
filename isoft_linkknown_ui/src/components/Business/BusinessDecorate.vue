@@ -45,7 +45,11 @@
     },
     methods: {
       refreshLoadDecorateItems: async function () {
-        const result = await LoadDecorateItems({referer_type: "business_decorate", referer_id: this.good.id, index: 0});
+        const result = await LoadDecorateItems({
+          referer_type: "business_decorate",
+          referer_id: this.good.id,
+          decorate_name: '商品详情装饰位'
+        });
         if (result.status === "SUCCESS") {
           this.decorate = result.decorate;
           this.decorate_items = result.decorate_items;
