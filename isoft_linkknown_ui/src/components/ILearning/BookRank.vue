@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 10px;">
+  <div style="padding-top: 10px; min-height: 628px" >
     <h2 class="good_rank">热门书单</h2>
     <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>

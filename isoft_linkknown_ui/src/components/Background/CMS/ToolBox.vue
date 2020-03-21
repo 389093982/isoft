@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <IBeautifulCard :title="placement_label">
+    <IBeautifulCard :title="placement_label"  :minHeight="600">
       <div slot="content">
         <ul v-if="elements.length > 0">
           <li v-for="element in elements" class="li">

@@ -1,5 +1,5 @@
 <template>
-  <IBeautifulCard :title="pData.title">
+  <IBeautifulCard :title="pData.title" :minHeight="600">
     <div slot="content" style="padding: 20px;">
       <Tabs :animated="false">
         <TabPane :label="itemData.itemTitle" v-for="(itemData, index) in pData.pItemData">
