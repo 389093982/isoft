@@ -11,8 +11,8 @@
         <span class="isoft_point_cursor" style="float: right;">注册账号</span>
       </div>
       <div class="footer">
-        <div class="isoft_button_blue" style="width: 40%;position:absolute;left: 20px;" @click="cancel">取消</div>
         <div class="isoft_button_blue" style="width: 40%;position:absolute;right: 20px;" @click="submit">确认</div>
+        <div class="isoft_button_blue" style="width: 40%;position:absolute;left: 20px;" @click="cancel">取消</div>
       </div>
     </div>
   </div>

@@ -62,6 +62,8 @@
         </div>
 
         <div class="isoft_bg_white isoft_top5 isoft_pd20" style="min-height: 600px;">
+          <p>学者印象：</p>
+          <VoteTags v-if="course.id > 0" referer_type="course_theme_type" :referer_id="course.id"/>
           <!-- 评论模块 -->
           <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
         </div>
@@ -91,10 +93,11 @@
   import CourseMeta from "./CourseMeta";
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
   import {CheckHasLoginConfirmDialog} from "../../../tools/index"
+  import VoteTags from "../../Decorate/VoteTags";
 
   export default {
     name: "CourseDetail",
-    components: {CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser},
+    components: {CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
     data() {
       return {
         isLoading: true,

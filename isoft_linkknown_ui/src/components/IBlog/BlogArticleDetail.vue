@@ -33,6 +33,9 @@
           <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
         </div>
 
+        <p>博友印象：</p>
+        <VoteTags v-if="blog.id > 0" referer_type="blog_theme_type" :referer_id="blog.id"/>
+
         <!-- 评论模块 -->
         <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>
       </div>
@@ -95,10 +98,11 @@
   import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
   import IsComfirmDelete from "./IsComfirmDelete";
+  import VoteTags from "../Decorate/VoteTags";
 
   export default {
     name: "BlogArticleDetail",
-    components: {IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
+    components: {VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
     data() {
       return {
         blog: null,
