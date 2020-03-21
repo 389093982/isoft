@@ -3,7 +3,7 @@
     <ul slot="content">
       <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogDetail', query:{'blog_id': blog.id}})">
         <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
-        <IBeautifulLink>{{blog.blog_title}} - {{blog.short_desc}}</IBeautifulLink>
+        <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
       </li>
     </ul>
   </IBeautifulCard>
@@ -31,7 +31,17 @@
     },
     mounted() {
       this.refreshCustomTagBlog();
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 
