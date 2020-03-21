@@ -37,7 +37,12 @@
                    uploadLabel="上传图片/视频"/>
     </Form>
 
-    <div v-else @click="handleAdd" class="isoft_button_green1" style="width: 400px;margin: 0 auto;">您还没有装修项，立马创建</div>
+    <span v-else>
+      <Spin fix size="large" v-if="isLoading">
+        <div class="isoft_loading"></div>
+      </Spin>
+      <div v-else @click="handleAdd" class="isoft_button_green1" style="width: 400px;margin: 0 auto;">您还没有装修项，立马创建</div>
+    </span>
   </div>
 </template>
 
@@ -57,6 +62,7 @@
     },
     data() {
       return {
+        isLoading: true,
         fileUploadUrl: fileUploadUrl + "?table_name=decorate_item&table_field=media_path",
         defaultImg: require('../../assets/default.png'),
         fileUploadIndex: -1,
@@ -99,13 +105,18 @@
         });
       },
       refreshLoadDecorateItems: async function () {
-        const result = await LoadDecorateItems({
-          decorate_id: this.decorate.id,
-          referer_type: this.decorate.referer_type,
-          referer_id: this.decorate.referer_id
-        });
-        if (result.status === "SUCCESS") {
-          this.formDynamic.items = result.decorate_items;
+        try {
+          this.isLoading = true;
+          const result = await LoadDecorateItems({
+            decorate_name: this.decorate.decorate_name,
+            referer_type: this.decorate.referer_type,
+            referer_id: this.decorate.referer_id
+          });
+          if (result.status === "SUCCESS") {
+            this.formDynamic.items = result.decorate_items ? result.decorate_items : [];
+          }
+        } finally {
+          this.isLoading = false;
         }
       },
       handleSave: async function (index) {
