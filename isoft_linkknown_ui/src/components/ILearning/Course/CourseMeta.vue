@@ -6,7 +6,7 @@
     <p>
       <span>
         <span style="color: #777">课程名称 : </span>
-        <span style="color: #9b9896">{{course.course_name}}</span>
+        <span class="courseDes">{{course.course_name}}</span>
       </span>
       <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/jingpinCourse'})" style="margin-left: 30px;">
         搜索同类资源
@@ -17,23 +17,23 @@
     </p>
     <p>
       <span style="color: #777">作者 : </span>
-      <span style="color: #9b9896" v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
+      <span class="courseDes" v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
     </p>
     <p>
       <span style="color: #777">课程类型 : </span>
-      <span style="color: #9b9896">{{course.course_type}}</span>
+      <span class="courseDes">{{course.course_type}}</span>
     </p>
     <p>
       <span style="color: #777">课程子类型 : </span>
-      <span style="color: #9b9896">{{course.course_sub_type}}</span>
+      <span class="courseDes">{{course.course_sub_type}}</span>
     </p>
     <p>
       <span style="color: #777">课程简介 :  </span>
-      <span style="color: #9b9896">{{course.course_short_desc}}</span>
+      <span class="courseDes">{{course.course_short_desc}}</span>
     </p>
     <p>
       <span style="color: #777">课程集数 : </span>
-      <span style="color: #9b9896">{{course.course_number}}</span>
+      <span class="courseDes">{{course.course_number}}</span>
     </p>
     <p v-if="course.course_label">
       <span style="color: #777">标签语 :    </span>
@@ -93,5 +93,13 @@
 </script>
 
 <style scoped>
+  .courseDes{
+    color: #9b9896;
+    cursor: pointer;
+  }
+  .courseDes:hover{
+    color: #777;
+    cursor: pointer;
+  }
 
 </style>

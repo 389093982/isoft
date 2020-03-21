@@ -40,8 +40,12 @@
           <hr style="margin-top: 10px;">
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(173, 170, 168, 0.39)':''}" @click="clickCourse(index)">
-              <span :style="{color:index===clickIndex?'green':''}">第 {{index + 1}} 集：{{cVideo.video_name}}</span>
+            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
+              <span style="color: #9b9896">
+                <span :style="{color:index===clickIndex?'green':''}">
+                  第 {{index + 1}} 集：{{cVideo.video_name}}
+                </span>
+              </span>
               <router-link :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
                 <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
@@ -202,7 +206,7 @@
   }
 
   .video_item:hover {
-    background-color: rgba(173, 170, 168, 0.19);
+    background-color: rgba(199, 196, 193, 0.12);
     cursor: pointer;
   }
 </style>
