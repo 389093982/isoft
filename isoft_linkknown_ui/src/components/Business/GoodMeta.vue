@@ -26,6 +26,7 @@
               <span class="isoft_tag3" v-for="(tag, index) in parseTag(good.good_tag)">{{tag}}</span>
             </div>
             <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
+            <p class="p3line isoft_font14">亮点特色：<span class="isoft_color_grey3">{{good.highlights}}</span></p>
             <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
             <p>
               优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>

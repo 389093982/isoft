@@ -83,6 +83,7 @@
 
   li {
     float: left;
+    margin: 0 10px;
     padding: 10px 9px 0;
     width: 175px;
     border: 1px solid #FFFFFF;
