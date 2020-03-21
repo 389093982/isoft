@@ -80,6 +80,7 @@ func (this *WorkController) ResponseUploadFile(receiver *entry.Receiver) {
 		tmpDataMap := data.(map[string]interface{})
 		receiver.TmpDataMap["fileName"] = tmpDataMap["fileName"].(string) // 将临时文件的数据刷新成正式数据
 		receiver.TmpDataMap["fileServerPath"] = tmpDataMap["fileServerPath"].(string)
+		receiver.TmpDataMap["duration"] = tmpDataMap["duration"].(int64)
 		receiver.TmpDataMap["status"] = "SUCCESS"
 		if errorMsg, ok := tmpDataMap["errorMsg?"].(string); ok {
 			receiver.TmpDataMap["errorMsg"] = errorMsg

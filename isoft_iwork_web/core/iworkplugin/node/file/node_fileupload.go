@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/fileutils"
 	"isoft/isoft_utils/common/hashutil"
 	"isoft/isoft_utils/common/stringutil"
 	"path"
@@ -40,9 +41,11 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 		"fileExt":        path.Ext(fileName),
 		"tempFilePath":   tempFilePath,
 		"fileServerAddr": fileServerAddr,
+		"duration":       fileutils.GetMP4FileDuration(tempFilePath),
 	}
 	if calHash := this.TmpDataMap[iworkconst.BOOL_PREFIX+"calHash?"].(string); calHash == "true" {
 		hash, _ := hashutil.CalculateHashWithFile(tempFilePath)
+
 		paramMap["hash"] = hash
 		paramMap["handleSpecialHash"], _ = stringutil.ReplaceAllString(hash, "/", "-")
 	}
@@ -65,7 +68,7 @@ func (this *DoReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 }
 
 func (this *DoReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"fileName", "tempFileName", "fileExt", "tempFilePath", "fileServerAddr"})
+	return this.BPOS1([]string{"fileName", "tempFileName", "fileExt", "tempFilePath", "fileServerAddr", "duration"})
 }
 
 func (this *DoReceiveFileNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
@@ -91,6 +94,7 @@ func (this *DoResponseReceiveFileNode) Execute(trackingId string) {
 	this.TmpDataMap["fileName"] = this.TmpDataMap["fileName"]
 	this.TmpDataMap["fileServerPath"] = this.TmpDataMap["fileServerPath"]
 	this.TmpDataMap["errorMsg"] = this.TmpDataMap["errorMsg?"]
+	this.TmpDataMap["duration"] = this.TmpDataMap["duration?"]
 	this.DataStore.CacheDatas(iworkconst.DO_RESPONSE_RECEIVE_FILE, map[string]interface{}{iworkconst.DO_RESPONSE_RECEIVE_FILE: this.TmpDataMap})
 	// 直接提交 dataStore
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, this.TmpDataMap)
@@ -100,11 +104,12 @@ func (this *DoResponseReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels
 	paramMap := map[int][]string{
 		1: {"fileName", "最终的上传文件名称"},
 		2: {"fileServerPath", "最终的服务器地址"},
-		3: {"errorMsg?", "异常信息"},
+		3: {"duration?", "视频时长"},
+		4: {"errorMsg?", "异常信息"},
 	}
 	return this.BPIS1(paramMap)
 }
 
 func (this *DoResponseReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"fileName", "fileServerPath", "errorMsg"})
+	return this.BPOS1([]string{"fileName", "fileServerPath", "duration", "errorMsg"})
 }

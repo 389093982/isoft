@@ -49,7 +49,7 @@
 <script>
   import IFileUpload from "../../Common/file/IFileUpload";
   import {ChangeVideoOrder, DeleteVideo, fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
-  import {handleSpecial,CheckAdminLogin} from "../../../tools";
+  import {CheckAdminLogin, handleSpecial} from "../../../tools";
   import ISimpleConfirmModal from "../../../../../isoft_iwork_ui/src/components/Common/modal/ISimpleConfirmModal";
 
   export default {
@@ -68,7 +68,7 @@
     methods: {
       handleChangeVideoOrder: async function (id, id2) {
         const result = await ChangeVideoOrder({id: id, id2: id2});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success("操作成功!");
           this.refreshCourseDetail(this.course.id);
         } else {
@@ -77,7 +77,7 @@
       },
       handleDeleteVideo: async function (id) {
         const result = await DeleteVideo({course_id: this.course.id, id: id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.$Message.success("删除成功!");
           this.refreshCourseDetail(this.course.id);
         } else {
@@ -85,16 +85,17 @@
         }
       },
       uploadComplete: async function (data) {
-        if (data.status == "SUCCESS") {
+        if (data.status === "SUCCESS") {
           let uploadFilePath = data.fileServerPath;     // uploadFilePath 使用 hash 值时含有特殊字符 + 等需要转义
           let courseId = this.course.id;
           let filename = data.fileName;      // 上传文件名称
           const result = await UploadVideo({
             id: courseId,
             video_name: filename,
-            video_path: handleSpecial(uploadFilePath)
+            video_path: handleSpecial(uploadFilePath),
+            duration: data.duration,
           });
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.refreshCourseDetail(courseId);
             this.$emit('uploadComplete');
           } else {
@@ -106,7 +107,7 @@
         this.isLoading = true;
         try {
           const result = await ShowCourseDetail({course_id});
-          if (result.status == "SUCCESS") {
+          if (result.status === "SUCCESS") {
             this.cVideos = result.cVideos;
           }
         } finally {

@@ -74,7 +74,7 @@
         this.$Message.error("文件格式不合法!");
       },
       uploadComplete(result, file) {
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           result.extraData = this.extraData;  // 返回 extraData
           // 父子组件通信
           this.$emit('uploadComplete', result);

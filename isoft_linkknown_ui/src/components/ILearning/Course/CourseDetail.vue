@@ -49,8 +49,10 @@
                   第 {{index + 1}} 集：{{cVideo.video_name}}
                 </span>
               </span>
-              <router-link :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
-                <Button style="float: right;" size="small" type="success" class="hovered hvr-grow">立即播放</Button>
+              <router-link style="float: right;"
+                           :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
+                <span class="isoft_font12 isoft_color_grey isoft_mr10" v-if="cVideo.duration > 0">时长&nbsp;{{cVideo.duration}}&nbsp;s</span>
+                <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
             </div>
             <Spin fix size="large" v-if="isLoading">
