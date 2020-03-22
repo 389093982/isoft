@@ -5,7 +5,10 @@
     <Button type="warning" size="small" v-if="placement" @click="showPlacementTypeDesc = !showPlacementTypeDesc">
       当前占位符类型:{{placement.placement_type}}
     </Button>
-    <p v-for="(value, key) in placement_types" v-show="showPlacementTypeDesc"><span style="display:inline-block;width: 100px;">{{key}}:</span><Tag v-for="(val, index) in value">{{val}}</Tag></p>
+    <p v-for="(value, key) in placement_types" v-show="showPlacementTypeDesc"><span
+      style="display:inline-block;width: 100px;">{{key}}:</span>
+      <Tag v-for="(val, index) in value">{{val}}</Tag>
+    </p>
 
     <Form ref="formInline" :model="formInline" :rules="ruleInline" :label-width="100">
       <Row>
@@ -19,8 +22,10 @@
             <Input type="text" v-model="formInline.element_label" placeholder="element_label"/>
           </FormItem>
           <FormItem prop="navigation_parent_id" v-show="checkShow('navigation_parent_id')" label="父级关联 id">
-            <Input type="text" readonly="readonly" v-model="formInline.navigation_parent_id" placeholder="navigation_parent_id" style="width: 80%;"/>
-            <Poptip v-model="visible_choose_element" placement="left-start" width="400" @on-popper-show="showChooseElement">
+            <Input type="text" readonly="readonly" v-model="formInline.navigation_parent_id"
+                   placeholder="navigation_parent_id" style="width: 80%;"/>
+            <Poptip v-model="visible_choose_element" placement="left-start" width="400"
+                    @on-popper-show="showChooseElement">
               <a href="javascript:;">选择父级</a>
               <div slot="content" style="width: 100%;">
                 <Tag style="margin: 5px;float: left;" v-for="element in elements">
@@ -39,10 +44,12 @@
             <Input type="text" v-model="formInline.element_name" placeholder="element_name"/>
           </FormItem>
           <FormItem prop="navigation_level" v-show="checkShow('navigation_level')" label="导航级别">
-            <Input type="text" readonly="readonly" v-model="formInline.navigation_level" placeholder="navigation_level"/>
+            <Input type="text" readonly="readonly" v-model="formInline.navigation_level"
+                   placeholder="navigation_level"/>
           </FormItem>
           <FormItem prop="imgpath" v-show="checkShow('imgpath')" label="图片">
-            <Input type="text" readonly="readonly" v-model="formInline.imgpath" placeholder="imgpath" style="width: 80%;"/>
+            <Input type="text" readonly="readonly" v-model="formInline.imgpath" placeholder="imgpath"
+                   style="width: 80%;"/>
             <IFileUpload @uploadComplete="uploadComplete" :action="fileUploadUrl"
                          uploadLabel="上传"/>
           </FormItem>
@@ -54,7 +61,7 @@
       </Row>
       <Row>
         <FormItem prop="md_content" v-show="checkShow('md_content')" label="markdown内容">
-          <mavon-editor v-model="formInline.md_content" :toolbars="toolbars" :ishljs = "true" style="z-index: 1;"/>
+          <mavon-editor v-model="formInline.md_content" :toolbars="toolbars" :ishljs="true" style="z-index: 1;"/>
         </FormItem>
       </Row>
       <Row>
@@ -73,12 +80,12 @@
   import Element from "./Element"
   import IFileUpload from "../../Common/file/IFileUpload"
   import {EditElement, FilterElementByPlacement, QueryElementById, QueryPlacementByName} from "../../../api"
-  import {checkEmpty, oneOf} from "../../../tools"
+  import {checkEmpty, handleSpecial, oneOf} from "../../../tools"
 
   export default {
     name: "EditElement",
-    components:{IBaseChooser,Placement,Element,IFileUpload},
-    data(){
+    components: {IBaseChooser, Placement, Element, IFileUpload},
+    data() {
       const _validateElementName = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('元素名称不能为空!'));
@@ -90,16 +97,16 @@
       };
       return {
         fileUploadUrl: '/api/iwork/httpservice/isoft_linkknown_api/fileUpload' + "?table_name=element&table_field=img_path",
-        placement_types:{
-          'all':['placement_name','element_name','element_label','navigation_level','navigation_parent_id','content','imgpath','linked_refer','md_content'],
-          'text_link':['placement_name','element_name','element_label','linked_refer'],
-          'text_event':['placement_name','element_name','element_label','navigation_level','navigation_parent_id','content','imgpath','linked_refer','md_content'],
-          'img_text_link':['placement_name','element_name','element_label'],
-          'img_text_event':['placement_name','element_name','element_label','navigation_level','navigation_parent_id','content','imgpath','linked_refer','md_content'],
+        placement_types: {
+          'all': ['placement_name', 'element_name', 'element_label', 'navigation_level', 'navigation_parent_id', 'content', 'imgpath', 'linked_refer', 'md_content'],
+          'text_link': ['placement_name', 'element_name', 'element_label', 'linked_refer'],
+          'text_event': ['placement_name', 'element_name', 'element_label', 'navigation_level', 'navigation_parent_id', 'content', 'imgpath', 'linked_refer', 'md_content'],
+          'img_text_link': ['placement_name', 'element_name', 'element_label'],
+          'img_text_event': ['placement_name', 'element_name', 'element_label', 'navigation_level', 'navigation_parent_id', 'content', 'imgpath', 'linked_refer', 'md_content'],
         },
-        showPlacementTypeDesc:false,
-        showRemark:true,
-        placement:null,
+        showPlacementTypeDesc: false,
+        showRemark: true,
+        placement: null,
         toolbars: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -121,14 +128,14 @@
           save: true, // 保存（触发events中的save事件）
           navigation: true // 导航目录
         },
-        visible_choose_element:false,
-        elements:[],
+        visible_choose_element: false,
+        elements: [],
         formInline: {
-          placement:'',
+          placement: '',
           element_label: '',
-          element_name:'',
-          navigation_level:0,  // 元素层级
-          navigation_parent_id:0,   // 父级元素 id
+          element_name: '',
+          navigation_level: 0,  // 元素层级
+          navigation_parent_id: 0,   // 父级元素 id
           content: '',
           imgpath: '',
           linked_refer: '',
@@ -136,28 +143,27 @@
         },
         ruleInline: {
           element_name: [
-            { required: true, validator: _validateElementName,  trigger: 'blur' }
+            {required: true, validator: _validateElementName, trigger: 'blur'}
           ],
           element_label: [
-            { required: true, message: 'Please fill in the element_label.', trigger: 'blur' },
+            {required: true, message: 'Please fill in the element_label.', trigger: 'blur'},
           ],
         }
       }
     },
-    methods:{
-      checkShow:function(name){
+    methods: {
+      checkShow: function (name) {
         return this.placement != null && oneOf(name, this.placement_types[this.placement.placement_type]);
       },
       handleSubmit() {
         this.$refs['formInline'].validate(async (valid) => {
           if (valid) {
             let id = this.$route.query.id == undefined ? 0 : this.$route.query.id;
-            const result = await EditElement(id, this.formInline.placement, this.formInline.element_name, this.formInline.navigation_level,
-              this.formInline.navigation_parent_id, this.formInline.element_label, this.formInline.content, this.formInline.md_content,
-              this.formInline.imgpath, this.formInline.linked_refer);
-            if(result.status=="SUCCESS"){
+            this.formInline.id = id;
+            const result = await EditElement(this.formInline);
+            if (result.status == "SUCCESS") {
               this.$Message.success('提交成功!');
-            }else{
+            } else {
               this.$Message.error('提交失败!' + result.errorMsvg);
             }
           } else {
@@ -165,30 +171,30 @@
           }
         })
       },
-      handleGoBack:function(){
-        this.$router.push({ path: '/iwork/elementList', query: { placement_name: this.formInline.placement }});
+      handleGoBack: function () {
+        this.$router.push({path: '/background/elementList', query: {placement_name: this.formInline.placement}});
       },
-      chooseElement:function(element){
+      chooseElement: function (element) {
         this.formInline.navigation_level = element.navigation_level + 1;
         this.formInline.navigation_parent_id = element.id;
         this.visible_choose_element = false;
       },
-      showChooseElement:async function(){
-        if(!checkEmpty(this.formInline.placement)){
+      showChooseElement: async function () {
+        if (!checkEmpty(this.formInline.placement)) {
           const result = await FilterElementByPlacement(this.formInline.placement);
-          if(result.status == "SUCCESS"){
+          if (result.status == "SUCCESS") {
             this.elements = result.elements;
           }
         }
       },
       uploadComplete: function (result) {
-        if(result.status == "SUCCESS"){
-          this.formInline.imgpath = result.fileServerPath;
+        if (result.status == "SUCCESS") {
+          this.formInline.imgpath = handleSpecial(result.fileServerPath);
         }
       },
-      refreshElement:async function (id) {
+      refreshElement: async function (id) {
         const result = await QueryElementById(id);
-        if(result.status == "SUCCESS"){
+        if (result.status == "SUCCESS") {
           let element = result.element;
           this.formInline.placement = element.placement;
           this.formInline.element_name = element.element_name;
@@ -199,16 +205,16 @@
           this.formInline.linked_refer = element.linked_refer;
         }
       },
-      refreshPlacement:async function (placement_name) {
+      refreshPlacement: async function (placement_name) {
         const result = await QueryPlacementByName(placement_name);
-        if(result.status == "SUCCESS"){
+        if (result.status == "SUCCESS") {
           this.placement = result.placement;
         }
       }
     },
-    mounted(){
+    mounted() {
       this.formInline.placement = this.$route.query.placement_name;
-      if(this.$route.query.id != undefined && this.$route.query.id > 0){
+      if (this.$route.query.id != undefined && this.$route.query.id > 0) {
         this.refreshElement(this.$route.query.id);
       }
       this.refreshPlacement(this.$route.query.placement_name);
@@ -217,7 +223,7 @@
 </script>
 
 <style scoped>
-  .remark{
+  .remark {
     text-align: right;
     color: green;
     font-size: 12px;

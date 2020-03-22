@@ -3,7 +3,7 @@
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <div slot="left">
-        <Button type="success" size="small" @click="$router.push({ path: '/iwork/placementEdit'})"
+        <Button type="success" size="small" @click="$router.push({ path: '/background/placementEdit'})"
                 v-if="!this.chooserMode">新增占位符
         </Button>
       </div>
@@ -13,7 +13,8 @@
     </ISimpleLeftRightRow>
 
     <Table border :columns="columns1" :data="placements" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+    <Page :total="total" :page-size="offset" show-total show-sizer
+          :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
 </template>
@@ -29,22 +30,22 @@
   export default {
     name: "Placement",
     components: {ISimpleLeftRightRow, ISimpleConfirmModal, IKeyValueForm, ISimpleSearch, IFileUpload},
-    props:{
-      chooserMode:{ // 选择模式
+    props: {
+      chooserMode: { // 选择模式
         type: Boolean,
         default: false,
       }
     },
-    data(){
+    data() {
       return {
         // 当前页
-        current_page:1,
+        current_page: 1,
         // 总数
-        total:0,
+        total: 0,
         // 每页记录数
-        offset:10,
+        offset: 10,
         // 搜索条件
-        search:"",
+        search: "",
         placements: [],
         columns1: [
           {
@@ -72,8 +73,8 @@
             key: 'operate',
             width: 250,
             fixed: 'right',
-            render: (h,params)=> {
-              return h('div',[
+            render: (h, params) => {
+              return h('div', [
                 h('Button', {
                   props: {
                     type: 'success',
@@ -81,7 +82,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: this.chooserMode ? 'undefined': 'none',      // 选择模式显示
+                    display: this.chooserMode ? 'undefined' : 'none',      // 选择模式显示
                   },
                   on: {
                     click: () => {
@@ -96,7 +97,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !this.chooserMode ? 'undefined': 'none',   // 非选择模式显示
+                    display: !this.chooserMode ? 'undefined' : 'none',   // 非选择模式显示
                   },
                   on: {
                     click: () => {
@@ -111,11 +112,14 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !this.chooserMode ? 'undefined': 'none',   // 非选择模式显示
+                    display: !this.chooserMode ? 'undefined' : 'none',   // 非选择模式显示
                   },
                   on: {
                     click: () => {
-                      this.$router.push({ path: '/iwork/placementEdit', query: { id: this.placements[params.index].id }});
+                      this.$router.push({
+                        path: '/background/placementEdit',
+                        query: {id: this.placements[params.index].id}
+                      });
                     }
                   }
                 }, '编辑'),
@@ -126,7 +130,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !this.chooserMode ? 'undefined': 'none',   // 非选择模式显示
+                    display: !this.chooserMode ? 'undefined' : 'none',   // 非选择模式显示
                   },
                   on: {
                     click: () => {
@@ -141,11 +145,14 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !this.chooserMode ? 'undefined': 'none',   // 非选择模式显示
+                    display: !this.chooserMode ? 'undefined' : 'none',   // 非选择模式显示
                   },
                   on: {
                     click: () => {
-                      this.$router.push({path:'/iwork/elementList',query:{ placement_name: this.placements[params.index].placement_name }});
+                      this.$router.push({
+                        path: '/background/elementList',
+                        query: {placement_name: this.placements[params.index].placement_name}
+                      });
                     }
                   }
                 }, '元素管理'),
@@ -155,48 +162,52 @@
         ],
       }
     },
-    methods:{
-      copyPlacement:async function(id){
+    methods: {
+      copyPlacement: async function (id) {
         const result = await CopyPlacement(id);
-        if(result.status == "SUCCESS"){
+        if (result.status == "SUCCESS") {
           this.$Message.success("复制成功！");
           this.refreshPlacementList();
-        }else{
+        } else {
           this.$Message.error(result.errorMsg);
         }
       },
-      refreshPlacementList:async function () {
-        const result = await FilterPlacement(this.offset,this.current_page,this.search);
-        if(result.status=="SUCCESS"){
+      refreshPlacementList: async function () {
+        const result = await FilterPlacement({
+          offset: this.offset,
+          current_page: this.current_page,
+          search: this.search
+        });
+        if (result.status == "SUCCESS") {
           this.placements = result.placements;
           this.total = result.paginator.totalcount;
         }
       },
-      handleSearch(data){
+      handleSearch(data) {
         this.offset = 10;
         this.current_page = 1;
         this.search = data;
         this.refreshPlacementList();
       },
-      handleChange(page){
+      handleChange(page) {
         this.current_page = page;
         this.refreshPlacementList();
       },
-      handlePageSizeChange(pageSize){
+      handlePageSizeChange(pageSize) {
         this.offset = pageSize;
         this.refreshPlacementList();
       },
-      deletePlacementById: function(id){
+      deletePlacementById: function (id) {
         var _this = this;
         _this.$Modal.confirm({
           title: '删除',
           content: '确认删除该条数据吗？请谨慎操作！',
           onOk: async () => {
             const result = await DeletePlacementById(id);
-            if(result.status == "SUCCESS"){
+            if (result.status == "SUCCESS") {
               _this.$Message.success("删除成功！");
               _this.refreshPlacementList();
-            }else{
+            } else {
               _this.$Message.error(result.errorMsg);
             }
           },
@@ -206,7 +217,7 @@
         });
       }
     },
-    mounted(){
+    mounted() {
       this.refreshPlacementList();
     }
   }

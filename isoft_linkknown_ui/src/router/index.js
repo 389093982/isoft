@@ -61,6 +61,10 @@ const BusinessDetail = () => import("@/components/Business/BusinessDetail");
 const PayConfirm = () => import("@/components/Business/PayConfirm");
 const Site = () => import("@/components/Site");
 const CssDemo = () => import("@/components/CssDemo");
+const Element = () => import("@/components/Background/IPlacement/Element");
+const EditElement = () => import("@/components/Background/IPlacement/EditElement");
+const Placement = () => import("@/components/Background/IPlacement/Placement");
+const EditPlacement = () => import("@/components/Background/IPlacement/EditPlacement");
 
 Vue.use(Router);
 
@@ -128,6 +132,10 @@ const ICMSReouter = [{
       {path: 'adviseList', component: AdviseList},
       {path: 'sso/appRegist', component: AppRegist},
       {path: 'sso/loginRecord', component: LoginRecord},
+      {path: 'elementEdit', component: EditElement},
+      {path: 'elementList', component: Element},
+      {path: 'placementList', component: Placement},
+      {path: 'placementEdit', component: EditPlacement},
     ]
 }];
 

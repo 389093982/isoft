@@ -106,15 +106,6 @@
                 <router-link to="/iwork/audit">内容审核系统</router-link>
               </MenuItem>
             </Submenu>
-            <Submenu name="7">
-              <template slot="title">
-                <Icon type="ios-barcode"></Icon>
-                内容管理
-              </template>
-              <MenuItem name="7-1">
-                <router-link to="/iwork/placementList">占位符管理</router-link>
-              </MenuItem>
-            </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '24px'}">

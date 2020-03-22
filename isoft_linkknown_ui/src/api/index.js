@@ -144,8 +144,6 @@ export const GetAllCourseSubType = (course_type) => ajax(BASE_URL + '/iwork/http
 // 课程搜索
 export const SearchCourseList = (search) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList2', {search}, 'GET');
 
-export const FilterElementByPlacement = (placement) => ajax(BASE_URL + '/iwork/filterElementByPlacement', {placement}, 'GET');
-
 // 登录接口
 export const Login = (username, passwd, redirectUrl) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin2", {
   username,
@@ -251,6 +249,26 @@ export const QueryExpertWallList = (params) => ajax(BASE_URL + '/iwork/httpservi
 export const QueryWaitYourAnswerList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryWaitYourAnswerList', params, "POST");
 
 export const QueryRechargeRight = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryRechargeRight', params, "POST");
+
+// 占位符、页面元素模块
+export const FilterElements = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageElement', params, 'POST');
+export const EditElement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditElement', params, 'POST');
+
+export const UpdateElementStatus = (id, status) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateElementStatus', {
+  id,
+  status
+}, 'POST');
+export const EditPlacement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditPlacement', params, 'POST');
+
+export const QueryPlacementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPlacementByIdOrName', {id}, 'POST');
+export const QueryPlacementByName = (placement_name) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPlacementByIdOrName', {placement_name}, 'POST');
+export const FilterPlacement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPagePlacement', params, 'POST');
+export const CopyElement = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/CopyElement', {id}, 'POST');
+export const FilterElementByPlacement = (placement) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement', {placement}, 'POST');
+export const DeletePlacementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeletePlacementById', {id}, 'POST');
+export const CopyPlacement = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/CopyPlacement', {id}, 'POST');
+export const QueryElementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryElementById', {id}, 'POST');
+
 
 export const fileUploadUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/fileUpload"
 export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay"

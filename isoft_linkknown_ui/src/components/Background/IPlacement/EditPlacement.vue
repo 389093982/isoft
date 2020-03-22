@@ -43,12 +43,12 @@
 </template>
 
 <script>
-  import {EditPlacement,QueryPlacementById} from "../../../api"
+  import {EditPlacement, QueryPlacementById} from "../../../api"
 
   export default {
     name: "EditPlacement",
-    data(){
-      const _validatePlacementName = (rule, value, callback) =>  {
+    data() {
+      const _validatePlacementName = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('占位符名称不能为空!'));
         } else if (value.indexOf("placement_") < 0) {
@@ -58,50 +58,50 @@
         }
       };
       return {
-        showRemark:true,
+        showRemark: true,
         formInline: {
-          placement_name:'',
-          placement_desc:'',
-          placement_label:'',
-          element_limit:'-1',
-          placement_type:'',
+          placement_name: '',
+          placement_desc: '',
+          placement_label: '',
+          element_limit: '-1',
+          placement_type: '',
         },
         ruleInline: {
           placement_name: [
-            { required: true, validator: _validatePlacementName,  trigger: 'blur' },
+            {required: true, validator: _validatePlacementName, trigger: 'blur'},
           ],
           placement_desc: [
-            { required: true, message: 'Please fill in the placement_desc.', trigger: 'blur' },
+            {required: true, message: 'Please fill in the placement_desc.', trigger: 'blur'},
           ],
           placement_label: [
-            { required: true, message: 'Please fill in the placement_label.', trigger: 'blur' },
+            {required: true, message: 'Please fill in the placement_label.', trigger: 'blur'},
           ],
         }
       }
     },
-    methods:{
+    methods: {
       handleSubmit() {
         this.$refs['formInline'].validate(async (valid) => {
           if (valid) {
             let id = this.$route.query.id == undefined ? 0 : this.$route.query.id;
-              const result = await EditPlacement(id, this.formInline.placement_name, this.formInline.placement_desc,
-                this.formInline.placement_label, this.formInline.element_limit, this.formInline.placement_type);
-              if(result.status == "SUCCESS"){
-                this.$Message.success('提交成功!');
-              }else{
-                this.$Message.error(result.errorMsg);
-              }
+            this.formInline.id = id;
+            const result = await EditPlacement(this.formInline);
+            if (result.status == "SUCCESS") {
+              this.$Message.success('提交成功!');
             } else {
+              this.$Message.error(result.errorMsg);
+            }
+          } else {
             this.$Message.error('校验不通过!');
           }
         })
       },
-      handleGoBack:function(){
-        this.$router.push({ path: '/iwork/placementList'});
+      handleGoBack: function () {
+        this.$router.push({path: '/background/placementList'});
       },
-      refreshPlacement:async function (id) {
+      refreshPlacement: async function (id) {
         const result = await QueryPlacementById(id);
-        if(result.status == "SUCCESS"){
+        if (result.status == "SUCCESS") {
           let placement = result.placement;
           this.formInline.placement_name = placement.placement_name;
           this.formInline.placement_desc = placement.placement_desc;
@@ -111,8 +111,8 @@
         }
       }
     },
-    mounted(){
-      if(this.$route.query.id != undefined && this.$route.query.id > 0){
+    mounted() {
+      if (this.$route.query.id != undefined && this.$route.query.id > 0) {
         this.refreshPlacement(this.$route.query.id);
       }
     }
@@ -120,7 +120,7 @@
 </script>
 
 <style scoped>
-  .remark{
+  .remark {
     text-align: right;
     color: green;
     font-size: 12px;
