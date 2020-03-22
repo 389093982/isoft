@@ -43,10 +43,10 @@
       }
     },
     watch: {
-      loginCallback: function (callback, callback2) {
+      loginCallback: function (newCallBack, oldCallBack) {
         if (CheckHasLogin()) {
           this.showNotLogin = false;
-          callback2();
+          newCallBack();
         } else {
           this.showNotLogin = true;
         }
