@@ -35,8 +35,8 @@
               </Col>
               <Col span="8">
                 <div>
-                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
-                  <Button @click="$router.push({path:'/ibook/bookDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
+                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookCatalogEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
+                  <Button @click="$router.push({path:'/ibook/bookArticleDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
                   <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
                     <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')" style="color: grey">
                       <Icon type="md-bookmark" style="font-size: 20px;"/>

@@ -72,7 +72,7 @@
   import IFileUpload from "../Common/file/IFileUpload";
 
   export default {
-    name: "EditCorporate",
+    name: "CorporateEdit",
     components: {IFileUpload, IAreaChooser},
     data() {
       return {

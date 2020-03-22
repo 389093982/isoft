@@ -1,7 +1,7 @@
 <template>
   <IBeautifulCard title="热门博客"  :minHeight="600">
     <ul slot="content">
-      <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogDetail', query:{'blog_id': blog.id}})">
+      <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
         <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
         <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
       </li>

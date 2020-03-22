@@ -96,7 +96,6 @@
 
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
           <RandomAdmt/>
-          <RandomAdmt/>
         </div>
       </Col>
     </Row>

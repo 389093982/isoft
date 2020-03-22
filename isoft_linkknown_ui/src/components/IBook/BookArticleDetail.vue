@@ -26,7 +26,7 @@
         <div style="height: 125px;border-bottom: 1px solid #eee;">
           <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
           <span style="background-color: rgb(249, 236, 236);color: rgb(202, 12, 22);padding: 3px 5px;">原创</span>
-          <a class="isoft_mr10" v-if="created_by" @click="$router.push({path:'/user/detail',query:{username:created_by}})">
+          <a class="isoft_mr10" v-if="created_by" @click="$router.push({path:'/user/userDetail',query:{username:created_by}})">
             <span v-if="renderNickName(created_by)">{{renderNickName(created_by)}}</span>
             <span v-else>{{created_by}}</span>
           </a>

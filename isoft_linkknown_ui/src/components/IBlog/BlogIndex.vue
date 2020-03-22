@@ -17,7 +17,7 @@
   import ShowMyBlog from "./MyBlog/ShowMyBlog"
 
   export default {
-    name: "IBlog",
+    name: "BlogIndex",
     components: {ShowMyBlog},
   }
 </script>

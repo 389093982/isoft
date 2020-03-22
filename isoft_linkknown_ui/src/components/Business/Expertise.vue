@@ -9,7 +9,7 @@
                      placeholder="如果您有充足的业余时间，如果您有充足的资源，如果你想通过副业赚钱，请写下您的专长"></Input>
             </FormItem>
             <div style="width: 83%;float: right;">
-              <span class="isoft_button_red3" @click="$router.push({path:'/business/edit'})">免费发布服务</span>
+              <span class="isoft_button_red3" @click="$router.push({path:'/business/businessEdit'})">免费发布服务</span>
             </div>
           </Form>
         </div>

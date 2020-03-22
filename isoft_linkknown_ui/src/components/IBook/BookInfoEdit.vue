@@ -4,6 +4,7 @@
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="图书名称" prop="book_name">
         <Input v-model.trim="formValidate.book_name" placeholder="请输入书名"></Input>
+        <span hidden="hidden"><Input placeholder="test input"></Input></span>
       </FormItem>
       <FormItem label="图书描述" prop="book_desc">
         <Input v-model.trim="formValidate.book_desc" type="textarea" :rows="4" placeholder="请输入描述"></Input>

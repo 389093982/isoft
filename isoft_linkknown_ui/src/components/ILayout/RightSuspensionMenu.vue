@@ -6,19 +6,19 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/user/guide'})">
+    <div class="itemArea" @click="$router.push({path:'/user/userGuide'})">
       <Icon type="logo-reddit" :size="28"/>
       <p>帮助中心</p>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/site/index'})">
+    <div class="itemArea" @click="$router.push({path:'/site/siteIndex'})">
       <Icon type="ios-radio-outline" :size="28"/>
       <p>站点导航</p>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/advertisement/apply'})">
+    <div class="itemArea" @click="$router.push({path:'/advertisement/advApply'})">
       <Icon type="ios-cog-outline" :size="28"/>
       <p>广告</p>
     </div>
@@ -30,7 +30,7 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/user/detail'})">
+    <div class="itemArea" @click="$router.push({path:'/user/userDetail'})">
       <Icon type="ios-person-add-outline" :size="28"/>
       <p>个人中心</p>
     </div>

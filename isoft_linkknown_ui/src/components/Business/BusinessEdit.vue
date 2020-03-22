@@ -188,7 +188,7 @@
               JSON.stringify(_this.formValidate.good_images) : '';
             const result = await GoodEdit(params);
             if (result.status === "SUCCESS") {
-              this.$router.push({path: '/business/list'});
+              this.$router.push({path: '/business/businessList'});
             } else {
               _this.$Message.error('提交失败!');
             }

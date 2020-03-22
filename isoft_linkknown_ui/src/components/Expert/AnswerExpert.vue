@@ -22,7 +22,7 @@
           </div>
 
           <p>用户印象：</p>
-          <VoteTags referer_type="answerExpert" :referer_id="ask_expert.id"/>
+          <VoteTags v-if="ask_expert.id>0" referer_type="answerExpert" :referer_id="ask_expert.id"/>
 
           <div class="isoft_bg_white isoft_top10 isoft_pd10">
             <ul>
@@ -31,7 +31,7 @@
                 <h4 style="color: red;">专家回答( # {{total - (current_page - 1) * offset - index}}楼 )</h4>
                 <Row>
                   <Col span="2" style="position: relative;top: 6px">
-                    <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})" class="isoft_font12">
+                    <span style="cursor: pointer" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})" class="isoft_font12">
                       <span>
                         <HatAndFacePicture :src="as.small_icon" :vip_level="as.vip_level" :hat_in_use="as.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
                       </span>

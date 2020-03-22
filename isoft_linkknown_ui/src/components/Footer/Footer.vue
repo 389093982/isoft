@@ -29,7 +29,7 @@
         <dl>
           <dd>关于我们</dd>
           <dt @click="$router.push({path:'/job/jobList'})">人才招聘</dt>
-          <dt @click="$router.push({path:'/advertisement/apply'})">广告服务</dt>
+          <dt @click="$router.push({path:'/advertisement/advApply'})">广告服务</dt>
         </dl>
       </Col>
       <Col span="4">

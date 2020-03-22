@@ -8,7 +8,7 @@
         <!--第一行 第一列：头像-->
         <Col span="2">
           <div>
-            <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
+            <router-link :to="{path:'/user/userDetail',query:{username:comment.user_name}}">
               <HatAndFacePicture :src="comment.small_icon" :vip_level="comment.vip_level" :hat_in_use="comment.hat_in_use" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
             </router-link>
           </div>
@@ -18,7 +18,7 @@
           <!--第一行：用户名-->
           <Row>
             <Col span="20">
-              <router-link :to="{path:'/user/detail',query:{username:comment.user_name}}">
+              <router-link :to="{path:'/user/userDetail',query:{username:comment.user_name}}">
                 <span style="color: rgba(119, 119, 119, 0.62);font-size: 13px">{{comment.nick_name}}</span>
               </router-link>
             </Col>

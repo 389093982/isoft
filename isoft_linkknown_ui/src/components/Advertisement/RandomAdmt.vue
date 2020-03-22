@@ -2,7 +2,7 @@
   <div v-if="advertisements && advertisements.length > 0" style="margin-top: 5px;">
     <div style="text-align:right;font-size: 12px;" v-if="showRightText">
       热门广告推荐 &nbsp;&nbsp;&nbsp;
-      <a @click="$router.push({path:'/advertisement/manage'})">我也要发布广告</a>
+      <a @click="$router.push({path:'/advertisement/advManage'})">我也要发布广告</a>
     </div>
     <div class="clear">
       <div style="display:inline-block;">

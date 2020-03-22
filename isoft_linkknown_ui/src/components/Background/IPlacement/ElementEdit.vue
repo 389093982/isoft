@@ -76,14 +76,14 @@
 
 <script>
   import IBaseChooser from "../../Common/IBaseChooser"
-  import Placement from "./Placement"
-  import Element from "./Element"
+  import Placement from "./PlacementList"
+  import Element from "./ElementList"
   import IFileUpload from "../../Common/file/IFileUpload"
   import {EditElement, FilterElementByPlacement, QueryElementById, QueryPlacementByName} from "../../../api"
   import {checkEmpty, handleSpecial, oneOf} from "../../../tools"
 
   export default {
-    name: "EditElement",
+    name: "ElementEdit",
     components: {IBaseChooser, Placement, Element, IFileUpload},
     data() {
       const _validateElementName = (rule, value, callback) => {

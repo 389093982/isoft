@@ -13,6 +13,7 @@
               </FormItem>
               <FormItem label="文章名称" prop="catalogName">
                 <Input v-model.trim="formValidate.catalogName" placeholder="文章名称"></Input>
+                <span hidden="hidden"><Input placeholder="test input"></Input></span>
               </FormItem>
               <FormItem>
                 <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>

@@ -1,7 +1,7 @@
 <template>
   <div class="section01">
     <span v-for="(blog, index) in blogs" style="cursor: pointer;"
-          @click="$router.push({path:'/iblog/blogDetail', query:{'blog_id': blog.id}})">
+          @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <p :style="{'background-color': (index==0 ? '#eeeeee':'')}"><img src="../../assets/icon_b.png"/><a>{{blog.blog_title}}</a></p>
     </span>
   </div>

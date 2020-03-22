@@ -149,10 +149,10 @@
         }
       },
       uploadResource: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/resource/upload'});
+        CheckHasLoginConfirmDialog(this, {path: '/resource/resourceUpload'});
       },
       downloadResource: function (resource) {
-        CheckHasLoginConfirmDialog(this, {path: '/resource/download', query: {id: resource.id}});
+        CheckHasLoginConfirmDialog(this, {path: '/resource/resourceDownload', query: {id: resource.id}});
       },
       refreshResourceList: async function () {
         const result = await FilterPageResourceList({

@@ -19,7 +19,7 @@
              :class="good.good_images ? 'item_border1' : ''">
           <div>
             <p class="isoft_inline_ellipsis isoft_font16">商品名称：
-              <span class="isoft_hover_red" @click="$router.push({path:'/business/detail',query:{id:good.id}})">{{good.good_name}}</span>
+              <span class="isoft_hover_red" @click="$router.push({path:'/business/userDetail',query:{id:good.id}})">{{good.good_name}}</span>
             </p>
 
             <div style="margin: 10px 0;">

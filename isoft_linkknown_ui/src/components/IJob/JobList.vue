@@ -127,7 +127,7 @@
         this.$router.push({path: '/job/corporateDetail', query: {'corporate_id': job.corporate_id}});
       },
       toToudiDetail: function () {
-        CheckHasLoginConfirmDialog(this, {path: '/job/applyList'});
+        CheckHasLoginConfirmDialog(this, {path: '/job/jobApplyList'});
       },
       toEditCorporateDetail: function () {
         CheckHasLoginConfirmDialog(this, {path: '/job/corporateDetail'});

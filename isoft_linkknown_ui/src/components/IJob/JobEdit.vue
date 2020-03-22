@@ -55,7 +55,7 @@
   import IAreaChooser from "../Common/IAreaChooser";
 
   export default {
-    name: "EditJob",
+    name: "JobEdit",
     components: {IAreaChooser},
     data() {
       const _validateJobName = (rule, value, callback) => {

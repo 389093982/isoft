@@ -86,7 +86,7 @@
   import {genValidator, validateAge, validateEmail, validatePhone} from "../../tools/regex";
 
   export default {
-    name: "EditResume",
+    name: "ResumeEdit",
     components: {IAreaChooser},
     data() {
       return {
