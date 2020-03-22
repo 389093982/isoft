@@ -56,6 +56,11 @@
             width: 150
           },
           {
+            title: 'element_label',
+            key: 'element_label',
+            width: 150
+          },
+          {
             title: 'status',
             key: 'status',
             width: 100,

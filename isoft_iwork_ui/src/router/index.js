@@ -21,11 +21,6 @@ const DashBoard = () => import("@/components/IWork/IDashBoard/DashBoard");
 const IModuleList = () => import("@/components/IWork/IModule/IModuleList");
 const IFilterList = () => import("@/components/IWork/IFilter/IFilterList");
 
-const Element = () => import("@/components/IWork/IPlacement/Element");
-const EditElement = () => import("@/components/IWork/IPlacement/EditElement");
-const Placement = () => import("@/components/IWork/IPlacement/Placement");
-const EditPlacement = () => import("@/components/IWork/IPlacement/EditPlacement");
-
 Vue.use(Router);
 
 const IWorkRouter = [
@@ -54,10 +49,6 @@ const IWorkRouter = [
       {path: 'dashboard',component: DashBoard},
       {path: 'audit',component: AuditTaskList},
       {path: 'audit_detail',component: AuditDetail},
-      {path: 'elementEdit',component: EditElement},
-      {path: 'elementList',component: Element},
-      {path: 'placementList',component: Placement},
-      {path: 'placementEdit',component: EditPlacement},
     ]
   }
 ];
