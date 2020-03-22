@@ -5,7 +5,9 @@
       <div v-if="showDetail" class="isoft_bg_white isoft_pd20" style="min-height: 300px;">
         <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
 
-        <div v-for="(message, index) in messages">
+        <div v-for="(message, index) in messages" style="margin: 5px 0;">
+          <span class="isoft_color_green1">【系统消息】</span>
+          <Time class="isoft_color_grey3" :time="message.last_updated_time" :interval="1"/> &nbsp;
           {{message.message_text}}
         </div>
 
