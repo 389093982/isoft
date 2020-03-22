@@ -214,7 +214,7 @@
   }
 
   .video_item:hover {
-    background-color: rgba(199, 196, 193, 0.12);
+    background-color: rgba(176, 173, 171, 0.15);
     cursor: pointer;
   }
 
