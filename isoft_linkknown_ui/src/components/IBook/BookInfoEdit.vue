@@ -6,7 +6,7 @@
         <Input v-model.trim="formValidate.book_name" placeholder="请输入书名"></Input>
       </FormItem>
       <FormItem label="图书描述" prop="book_desc">
-        <Input v-model.trim="formValidate.book_desc" type="textarea" :rows="8" placeholder="请输入描述"></Input>
+        <Input v-model.trim="formValidate.book_desc" type="textarea" :rows="4" placeholder="请输入描述"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
@@ -25,6 +25,24 @@
     name: "BookInfoEdit",
     components: {ISimpleConfirmModal},
     data() {
+      const checkBookName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('图书名称不能为空!'));
+        } else if (value.length>20) {
+          callback(new Error('图书名称不要超过20个字符哦'));
+        } else {
+          callback();
+        }
+      };
+      const checkBookDesc = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('图书描述不能为空!'));
+        } else if (value.length<20 || value.length>120) {
+          callback(new Error('图书描述需20-120个字符'));
+        } else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           id: 0,     // 图书 id,为 0 是表示新增图书
@@ -33,10 +51,10 @@
         },
         ruleValidate: {
           book_name: [
-            {required: true, message: '图书名称不能为空!', trigger: 'blur'}
+            {required: true, validator:checkBookName, trigger: 'change'}
           ],
           book_desc: [
-            {required: true, message: '图书描述不能为空!', trigger: 'blur'}
+            {required: true, validator:checkBookDesc, trigger: 'change'}
           ],
         },
       }

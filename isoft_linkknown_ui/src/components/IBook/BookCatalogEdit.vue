@@ -2,11 +2,10 @@
   <div>
     <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
     </Alert>
-    <Row :gutter="10">
+    <Row :gutter="10" style="min-height: 500px;background-color: white">
       <Col span="6">
-        <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
+        <div style="background-color: #fff;padding: 20px;border: 1px rgba(140,137,135,0.29) solid;">
           <Button @click="addBookCatalog" long>新建文章</Button>
-
           <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 文章标题" :modal-width="600" :footer-hide="true">
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
               <FormItem v-if="modalTarget==='edit'" label="序号" prop="catalogOrder">
@@ -22,15 +21,14 @@
             </Form>
           </ISimpleConfirmModal>
 
-          <div style="margin-top: 5px;min-height: 250px;">
+          <div style="margin-top: 5px;min-height: 480px;">
             <div v-if="bookCatalogs && bookCatalogs.length > 0">
               <dl>
                 <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
                 <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="(bookCatalog, index) in bookCatalogs">
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)" style="padding-left: 10px;">
                     <span style="color: rgba(115,179,137,0.91);">{{bookCatalog.catalog_order}} -</span>
-                    <span
-                      :style="{color: curEditCatalogId === bookCatalog.id ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
+                    <span :style="{color: curEditCatalogId === bookCatalog.id ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
                   </span>
                   <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
                         padding: 3px 10px;background-color: #eee;border-radius: 5px;">
@@ -49,8 +47,7 @@
         </div>
       </Col>
       <Col span="18">
-        <BookArticleEdit ref="bookArticleEdit" :success-emit="true"
-                         @successEmitFunc="refreshBookCatalogListWithRefresh"/>
+        <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogListWithRefresh"/>
       </Col>
     </Row>
   </div>
@@ -137,7 +134,7 @@
             });
 
             //修改序号
-            if (this.tempOrgCatalogOrder != this.formValidate.catalogOrder) {
+            if (this.tempOrgCatalogOrder !== this.formValidate.catalogOrder) {
               const changeOrderResult = await ChangeCatalogOrder({book_id:parseInt(this.$route.query.book_id), catalog_order_base: this.tempOrgCatalogOrder, catalog_order_target: this.formValidate.catalogOrder});
             }
 

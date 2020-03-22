@@ -31,39 +31,8 @@
 
           <div style="min-height: 450px;">
             <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
-              <Col span="18">
-                <div class="bookName" @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
-                  {{book.book_name}}
-                </div>
-                <div>
-                  <span>作者：
-                    <span v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
-                    <span v-else>{{book.created_by}}</span>
-                  </span>
-                  <span style="margin-left: 10px;">
-                    创建时间：<span style="color: red;"><Time :time="book.created_time" type="relative"/></span>
-                  </span>
-                  <span style="margin-left: 10px;">
-                    最后更新于:<span style="color: red;margin-left: 10px;"><Time :time="book.last_updated_time" type="relative"/></span>
-                  </span>
-                </div>
-                <div class="isoft_word_break" style="font-size: 14px;color: #7d7d7d;">
-                  {{book.book_desc}}
-                </div>
-                <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
-                  <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true"
-                               :extra-data="book" @uploadComplete="uploadComplete"
-                               :action="fileUploadUrl" uploadLabel="换张图片"/>
-                  <IBeautifulLink class="isoft_mr10" @onclick="deleteBook(book.id)">删除</IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10" @onclick="showBookEditModal2(book)">修改信息</IBeautifulLink>
-                  <IBeautifulLink class="isoft_mr10"
-                                  @onclick="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">编辑文章
-                  </IBeautifulLink>
-                </div>
-
-              </Col>
-              <Col span="4">
-                <div class="bookImg isoft_hover_top10">
+              <Col span="4" offset="2">
+                <div class="bookImg isoft_hover_top5">
                   <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../assets/default.png" height="160px" width="140px"/>
@@ -74,11 +43,47 @@
                   </router-link>
                 </div>
               </Col>
+              <Col span="12" offset="1" style="margin-top: 10px">
+                <div class="bookName" @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
+                  << {{book.book_name}} >>
+                </div>
+                <div>
+                  <Row>
+                    <span style="margin-left: 10px;">
+                      <span style="color: #777">作者:</span>
+                      <span class="bookDetail" v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
+                      <span class="bookDetail" v-else>{{book.created_by}}</span>
+                    </span>
+                  </Row>
+                  <Row>
+                    <span style="margin-left: 10px;">
+                      <span style="color: #777">创建于:</span>
+                      <span class="bookDetail"><Time :time="book.created_time" type="relative"/></span>
+                    </span>
+                  </Row>
+                  <Row>
+                    <span style="margin-left: 10px;">
+                      <span style="color: #777">更新于:</span>
+                      <span class="bookDetail"><Time :time="book.last_updated_time" type="relative"/></span>
+                    </span>
+                  </Row>
+                </div>
+                <div class="isoft_word_break" style="font-size: 14px;color: #7d7d7d;margin-left: 10px;">
+                  <span style="color: #777">本书简介:</span>
+                  <span class="bookDetail" style="font-size: 12px">{{book.book_desc}}</span>
+                </div>
+                <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
+                  <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true" :extra-data="book" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
+                  <Button @click="showDeleteModal(book.id)">删除</Button>
+                  <Button @click="showBookEditModal2(book)">修改信息</Button>
+                  <Button @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">编辑书本</Button>
+                </div>
+              </Col>
             </Row>
 
-            <Page :total="total" :page-size="offset" show-total show-sizer
-                  :styles="{'text-align': 'center','margin-top': '10px'}"
-                  @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+            <IsComfirmDelete ref="comfirmDelete" @confirmDelete="toDelBook()" content="书本一经删除，无法复原，确认删除?"></IsComfirmDelete>
+
+            <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
 
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
@@ -116,10 +121,12 @@
     RenderUserInfoByNames
   } from "../../tools";
   import BookInfoEdit from "./BookInfoEdit";
+  import IsComfirmDelete from "../IBlog/IsComfirmDelete";
 
   export default {
     name: "BookList",
     components: {
+      IsComfirmDelete,
       BookInfoEdit,
       RandomAdmt,
       IndexCarousel, HotUser, IBeautifulLink, IBeautifulCard, ISimpleConfirmModal, IFileUpload
@@ -136,6 +143,7 @@
         books: [],
         userInfos: [],
         pattern: '_all',
+        delBookId:'',
       }
     },
     methods: {
@@ -149,6 +157,13 @@
       handlePageSizeChange(pageSize) {
         this.offset = pageSize;
         this.refreshBookList();
+      },
+      showDeleteModal:function(book_id){
+        this.delBookId = book_id;
+        this.$refs.comfirmDelete.showModal();
+      },
+      toDelBook:function(){
+        this.deleteBook(this.delBookId)
       },
       deleteBook: async function (book_id) {
         if (checkFastClick()) {
@@ -226,8 +241,7 @@
   .bookName {
     cursor: pointer;
     color: #474747;
-    font-size: 19px;
-    font-weight: 700;
+    font-size: 17px;
   }
 
   .bookName:hover {
@@ -270,4 +284,14 @@
     border-radius: 1px;
     padding: 1px 4px;
   }
+
+  .bookDetail{
+    color: #9b9896;
+    cursor: pointer;
+  }
+  .bookDetail:hover{
+    color: #777;
+    cursor: pointer;
+  }
+
 </style>

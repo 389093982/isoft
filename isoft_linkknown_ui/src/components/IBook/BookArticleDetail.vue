@@ -5,31 +5,33 @@
       <Icon type="md-close" style="float: right;margin: 5px;cursor: pointer;" @click="showTip = false"/>
     </div>
 
-    <Row>
+    <Row style="min-height: 500px;background-color: white">
       <Col span="6" style="padding-right: 5px;">
-        <div style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 600px;">
+        <div style="background-color: #fff;padding: 20px;">
           <Button @click="$router.push({path:'/ibook/bookList'})">全部书单</Button>
-          <dl>
-            <dd><h3>{{$route.query.book_name}}</h3></dd>
-            <dt v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
-              &nbsp;&nbsp;<span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;<span
-              @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
-            </dt>
-          </dl>
+          <div>
+            <dl>
+              <dd>
+                <span class="bookName">{{$route.query.book_name}}</span>
+              </dd>
+              <dt v-for="(bookCatalog, index) in bookCatalogs" class="isoft_hover_red isoft_inline_ellipsis">
+                &nbsp;&nbsp;<span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;
+                <span @click="showDetail(bookCatalog.id, index)" :style="{color: viewIndex === index ? 'red':''}">{{bookCatalog.catalog_name}}</span>
+              </dt>
+            </dl>
+          </div>
         </div>
       </Col>
-      <Col span="18" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;min-height: 500px;">
+      <Col span="16" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;">
         <div style="height: 125px;border-bottom: 1px solid #eee;">
-          <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;
-            color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
+          <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
           <span style="background-color: rgb(249, 236, 236);color: rgb(202, 12, 22);padding: 3px 5px;">原创</span>
-          <a class="isoft_mr10" v-if="created_by"
-             @click="$router.push({path:'/user/detail',query:{username:created_by}})">
+          <a class="isoft_mr10" v-if="created_by" @click="$router.push({path:'/user/detail',query:{username:created_by}})">
             <span v-if="renderNickName(created_by)">{{renderNickName(created_by)}}</span>
             <span v-else>{{created_by}}</span>
           </a>
-          <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于{{last_updated_time}}</span>
-          <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数 {{views}}</span>
+          <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于: {{last_updated_time}}</span>
+          <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数: {{views}}</span>
         </div>
 
         <div ref="scrollArticleArea" style="min-height: 400px;padding: 15px 5px 60px 5px;">
@@ -46,14 +48,14 @@
             <Col span="12">
               <div class="move_dh isoft_inline_ellipsis isoft_point_cursor" v-if="viewIndex > 0"
                    @click="readPrefixOrNextArticle(viewIndex - 1)">
-                上一篇 {{prevCatalogName}}
+                上一篇: {{prevCatalogName}}
               </div>
             </Col>
             <Col span="12">
               <div class="move_dh isoft_inline_ellipsis isoft_point_cursor"
                    v-if="bookCatalogs && viewIndex < bookCatalogs.length - 1"
                    @click="readPrefixOrNextArticle(viewIndex + 1)">
-                下一篇 {{nextCatalogName}}
+                下一篇: {{nextCatalogName}}
               </div>
             </Col>
           </Row>
@@ -65,8 +67,6 @@
         </div>
       </Col>
     </Row>
-
-    <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
   </div>
 </template>
 
@@ -179,6 +179,12 @@
 <style scoped>
   .move_dh {
     animation: move_dh_1 5s infinite;
+  }
+
+  .bookName {
+    cursor: pointer;
+    color: #474747;
+    font-size: 14px;
   }
 
   @keyframes move_dh_1 {

@@ -2,40 +2,41 @@
   <div>
     <div class="isoft_bg_white isoft_pd10">
       <Row v-if="bookInfo" style="min-height: 400px;">
+        <!--左侧图书图片-->
         <Col span="4" style="text-align: center;">
           <img :src="bookInfo.book_img" style="cursor: pointer;" height="160px" width="140px" @error="defImg()"/>
-
-          <div class="isoft_font isoft_font12"
-               style="background-color: #eee;padding: 2px 10px;border-radius: 3px;display: inline-block;">推荐图书
+          <div class="isoft_font isoft_font12" style="background-color: #eee;padding: 2px 10px;border-radius: 3px;display: inline-block;">
+            推荐图书
           </div>
         </Col>
-        <Col span="20">
+        <!--右侧描述-->
+        <Col span="14">
           <div style="border-bottom: 1px solid #d7dde4;padding: 10px 0;">
-            <h2>{{bookInfo.book_name}}</h2>
+            <!--第一行书名、阅读和评论次数-->
             <Row>
-              <Col span="4">
-                <div>
-                  <Time :time="bookInfo.last_updated_time" :interval="1" type="datetime"/>
-                </div>
-              </Col>
-              <Col span="12">
-                <div>
-                  <span v-if="renderNickName(bookInfo.created_by)">{{renderNickName(bookInfo.created_by)}}</span>
-                  <span v-else>{{bookInfo.created_by}}</span>（作者）
-                </div>
+              <Col span="16">
+                <span class="bookName"><< {{bookInfo.book_name}} >></span>
               </Col>
               <Col span="8">
-                <div>{{bookInfo.views}} 次阅读 ,&nbsp;&nbsp;{{bookInfo.comments}} 次评论</div>
+                <div style="margin-left: 5px">{{bookInfo.views}}&nbsp;&nbsp;次阅读 ,&nbsp;&nbsp;&nbsp;&nbsp;{{bookInfo.comments}}&nbsp;&nbsp;次评论</div>
               </Col>
             </Row>
-          </div>
-
-          <div style="padding: 10px 0;">
+            <!--第二行：最后更新时间、作者-->
             <Row>
-              <Col span="4">&nbsp;</Col>
-              <Col span="12">&nbsp;</Col>
+              <Col span="6">
+                <div style="font-size: 12px">
+                  作者:
+                  <span v-if="bookInfo.created_by">{{renderNickName(bookInfo.created_by)}}</span>
+                  <span v-else>{{bookInfo.created_by}}</span>
+                </div>
+              </Col>
+              <Col span="10">
+                创建于:<Time :time="bookInfo.created_time" :interval="1" type="datetime" style="font-size: 12px"/>
+              </Col>
               <Col span="8">
                 <div>
+                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
+                  <Button @click="$router.push({path:'/ibook/bookDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
                   <span v-if="isDifferentLoginUserName(bookInfo.book_author)">
                     <Button v-if="!isCollected" @click="toggle_favorite($route.query.book_id,'book_collect', '收藏图书')" style="color: grey">
                       <Icon type="md-bookmark" style="font-size: 20px;"/>
@@ -46,17 +47,16 @@
                       已收藏
                     </Button>
                   </span>
-                  <Button v-if="isLoginUserName(bookInfo.book_author)" @click="$router.push({path:'/ibook/bookEdit', query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">前去编辑</Button>
-                  <Button @click="$router.push({path:'/ibook/bookDetail',query:{book_id: $route.query.book_id, book_name: bookInfo.book_name}})">在线阅读</Button>
-                 </div>
+                </div>
               </Col>
             </Row>
+          </div>
 
+          <div style="padding: 10px 0;">
             <div style="border-bottom: 1px solid #d7dde4;padding-bottom: 10px;">
               <h3 style="margin:10px 0;">简介</h3>
               <p class="isoft_word_break" style="color: #333333;">{{bookInfo.book_desc}}</p>
             </div>
-
             <div style="padding: 10px 0;">
               <h3 style="margin:10px 0;">文章列表</h3>
               <p v-for="(bookCatalog, index) in bookCatalogs" style="color: #333333;font-size: 15px;">
@@ -154,5 +154,9 @@
 </script>
 
 <style scoped>
-
+  .bookName {
+    cursor: pointer;
+    color: #474747;
+    font-size: 17px;
+  }
 </style>
