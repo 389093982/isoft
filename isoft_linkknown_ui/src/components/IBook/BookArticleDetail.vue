@@ -6,7 +6,7 @@
     </div>
 
     <Row style="min-height: 500px;background-color: white">
-      <Col span="6" style="padding-right: 5px;">
+      <Col span="5" style="padding-right: 5px;">
         <div style="background-color: #fff;padding: 20px;">
           <Button @click="$router.push({path:'/ibook/bookList'})">全部书单</Button>
           <div>

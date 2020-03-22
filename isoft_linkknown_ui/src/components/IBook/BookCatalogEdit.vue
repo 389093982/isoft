@@ -3,7 +3,7 @@
     <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
     </Alert>
     <Row :gutter="10" style="min-height: 500px;background-color: white">
-      <Col span="6">
+      <Col span="5">
         <div style="background-color: #fff;padding: 20px;border: 1px rgba(140,137,135,0.29) solid;">
           <Button @click="addBookCatalog" long>新建文章</Button>
           <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 文章标题" :modal-width="600" :footer-hide="true">
@@ -24,7 +24,7 @@
           <div style="margin-top: 5px;min-height: 480px;">
             <div v-if="bookCatalogs && bookCatalogs.length > 0">
               <dl>
-                <dt><span style="color: green;font-weight: bold;">书名：{{$route.query.book_name}}</span></dt>
+                <dt><span class="bookName">{{$route.query.book_name}}</span></dt>
                 <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="(bookCatalog, index) in bookCatalogs">
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)" style="padding-left: 10px;">
                     <span style="color: rgba(115,179,137,0.91);">{{bookCatalog.catalog_order}} -</span>
@@ -197,6 +197,13 @@
 </script>
 
 <style scoped>
+
+  .bookName {
+    cursor: pointer;
+    color: #474747;
+    font-size: 14px;
+  }
+
   .bookCatalogs .bookCatalogIcon {
     display: none;
   }

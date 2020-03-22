@@ -28,8 +28,8 @@
       const checkBookName = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('图书名称不能为空!'));
-        } else if (value.length>20) {
-          callback(new Error('图书名称不要超过20个字符哦'));
+        } else if (value.length>15) {
+          callback(new Error('图书名称不要超过15个字符哦'));
         } else {
           callback();
         }
