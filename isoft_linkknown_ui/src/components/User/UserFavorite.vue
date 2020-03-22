@@ -3,17 +3,22 @@
     <div class="isoft_pd10">
       <div class="isoft_title">{{userName===loginUserName()?'我收藏的图书':'作者收藏的图书'}}</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
-        <div v-for="(book, index) in books">
           <Row style="border:1px solid #eee;margin-bottom: 10px;">
-            <Col span="4" style="text-align: center;padding: 10px;">
-              <img :src="book.book_img" @error="defImg()" style="width: 100px; height: 130px;"/>
+            <div v-for="(book, index) in books">
+            <Col span="6">
+              <div class="bookImg isoft_hover_top5">
+                <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
+                  <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
+                  <img v-else src="../../assets/default.png" height="160px" width="140px"/>
+                  <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <span class="book_label">精品</span>
+                    <span>{{book.book_name}}</span>
+                  </p>
+                </router-link>
+              </div>
             </Col>
-            <Col span="20" style="padding: 10px;">
-              <h3>{{book.book_name}}</h3>
-              <p class="isoft_word_break">{{book.book_desc}}</p>
-            </Col>
+            </div>
           </Row>
-        </div>
       </div>
     </div>
   </div>
@@ -75,5 +80,35 @@
 </script>
 
 <style scoped>
+
+  .bookImg {
+    padding: 10px 9px 4px;
+    width: 160px;
+    background-color: rgba(234, 234, 234, 0.5);
+    border: 1px solid #FFFFFF;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bookImg:hover {
+    background-color: rgba(214, 214, 214, 0.5);
+    border: 1px solid #d0cdd2;
+  }
+
+  .bookImg .book_label {
+    color: #FF9628;
+    border: 1px solid #FF9628;
+    border-radius: 1px;
+    padding: 1px 4px;
+  }
+
+  .bookImg:hover .book_label {
+    color: #FF9628;
+    border: 1px solid #ffffff;
+    background-color: white;
+    border-radius: 1px;
+    padding: 1px 4px;
+  }
+
 
 </style>
