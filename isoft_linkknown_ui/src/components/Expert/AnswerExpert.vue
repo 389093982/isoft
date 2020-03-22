@@ -87,7 +87,7 @@
     components: {WaitYourAnswer, HatAndFacePicture, VoteTags, ExpertWall, IShowMarkdown},
     data() {
       return {
-        ask_expert: null,
+        ask_expert: '',
         showEditanswer: false,
         answer: '',
         answer_experts: [],

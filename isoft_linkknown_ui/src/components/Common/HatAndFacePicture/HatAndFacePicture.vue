@@ -5,7 +5,7 @@
       <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" :width=src_size :height=src_size :src=src @error="defImg()">
     </div>
     <div v-else>
-      <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" :width=src_size :height=src_size src="../../../../static/images/404.jpg" @error="defImg()">
+      <img class="isoft_hover_red" style="cursor: pointer;border: 1px solid grey;border-radius:50%;" :width=src_size :height=src_size src="../../../assets/default.png" @error="defImg()">
     </div>
 
     <!--帽子 & 头像-->
