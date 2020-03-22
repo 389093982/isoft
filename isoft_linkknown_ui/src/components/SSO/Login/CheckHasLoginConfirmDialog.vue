@@ -7,12 +7,12 @@
         <span class="isoft_font16">温馨提示：</span>
       </div>
       <div class="content">
-        <p class="isoft_color_grey3 isoft_font16">您还未登录！前往登录？</p>
-        <span class="isoft_point_cursor" style="float: right;">注册账号</span>
+        <p class="isoft_color_grey3 isoft_font16">您还未登录！前往登录?</p>
+        <span @click="toRegist()" class="isoft_point_cursor" style="float: right;"><a style="margin-right: 10px">注册账号</a></span>
       </div>
       <div class="footer">
-        <div class="isoft_button_blue" style="width: 40%;position:absolute;right: 20px;" @click="submit">确认</div>
-        <div class="isoft_button_blue" style="width: 40%;position:absolute;left: 20px;" @click="cancel">取消</div>
+        <div class="isoft_button_blue" style="width: 40%;position:absolute;left: 20px;" @click="submit">确认</div>
+        <div class="isoft_button_blue" style="width: 40%;position:absolute;right: 20px;" @click="cancel">取消</div>
       </div>
     </div>
   </div>
@@ -35,6 +35,10 @@
       submit: function () {
         this.showNotLogin = false;
         window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
+      },
+      toRegist:function () {
+        this.showNotLogin = false;
+        this.$router.push({path:'/sso/regist',query:{pattern:1}})
       }
     },
     computed: {
@@ -56,6 +60,14 @@
 </script>
 
 <style scoped>
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
   .shade {
     position: fixed;
     top: 0;
