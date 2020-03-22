@@ -26,7 +26,7 @@
     data(){
       return {
         paramMappingName:"",
-        recommend_fields: ["status", "result", "errorMsg", "current_page", "offset", "paginator"],
+        recommend_fields: ["status", "result", "errorMsg", "current_page", "offset", "paginator", "id"],
         choosed_recommend_fields:[],
       }
     },

@@ -45,6 +45,15 @@
                 <router-link to="/background/sso/appRegist">注册管理</router-link>
               </MenuItem>
             </Submenu>
+            <Submenu name="6">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                内容发布
+              </template>
+              <MenuItem name="6-1">
+                <router-link to="/background/placementList">占位符管理</router-link>
+              </MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Content

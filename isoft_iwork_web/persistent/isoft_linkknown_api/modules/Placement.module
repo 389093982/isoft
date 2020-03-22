@@ -1,0 +1,10 @@
+<Module>
+	<Id>25</Id>
+	<AppId>5</AppId>
+	<ModuleName>Placement</ModuleName>
+	<ModuleDesc>占位符模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-03-22T13:06:30+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-03-22T13:06:30+08:00</LastUpdatedTime>
+</Module>
