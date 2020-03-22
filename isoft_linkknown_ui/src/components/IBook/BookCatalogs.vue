@@ -71,6 +71,10 @@
     <Row class="isoft_top10">
       <Col span="18">
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
+
+          <p>读者印象：</p>
+          <VoteTags v-if="bookInfo.id > 0" referer_type="book_theme_type" :referer_id="bookInfo.id"/>
+
           <!-- 评论模块 -->
           <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
         </div>
@@ -89,10 +93,11 @@
   import IEasyComment from "../Comment/IEasyComment"
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {checkEmpty, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
+  import VoteTags from "../Decorate/VoteTags";
 
   export default {
     name: "BookCatalogs",
-    components: {RandomAdmt, IEasyComment},
+    components: {VoteTags, RandomAdmt, IEasyComment},
     data() {
       return {
         bookInfo: null,
