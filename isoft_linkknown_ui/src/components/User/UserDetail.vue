@@ -26,10 +26,10 @@
               加入时间：<Time :time="user.created_time" :interval="1"/>
             </div>
              <div v-if="isLoginUserName(user.user_name)">
-               <div @click="$router.push({ path: '/user/info'})" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
+               <div @click="$router.push({ path: '/user/userInfo'})" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
                <div @click="$router.push({ path: '/sso/forget?pattern=2'})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
                <br><br>
-               <div @click="$router.push({ path: '/iblog/blogEdit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
+               <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
                <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
                <div @click="$router.push({path:'/ibook/bookList'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
             </div>
@@ -53,17 +53,17 @@
                     <ul style="padding-left: 10px">
                       <li>
                         <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
                         </div>
                       </li>
                       <li>
                         <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
                         </div>
                       </li>
                       <li>
                         <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/list'})">订阅本站优秀热门资源
+                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
                         </div>
                       </li>
                     </ul>
@@ -72,9 +72,9 @@
                 <CarouselItem>
                   <div class="demo-carousel">
                     <ul style="padding-left: 10px">
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/apply'})">本站广告推广</div></li>
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
+                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
                     </ul>
                   </div>
                 </CarouselItem>
@@ -145,7 +145,7 @@
     methods: {
       toUserInfo:function(user_name){
         if (this.isLoginUserName(user_name)) {
-          this.$router.push({ path: '/user/info'})
+          this.$router.push({ path: '/user/userInfo'})
         }
       },
       handleEditSignFlag: async function () {

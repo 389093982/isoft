@@ -9,7 +9,7 @@ const AppRegist = () => import("@/components/SSO/AppRegist");
 const LoginRecord = () => import("@/components/SSO/LoginRecord");
 const IEmptyLayout = () => import("@/components/ILayout/IEmptyLayout");
 const ICMSLayout = () => import("@/components/ILayout/ICMSLayout");
-const IBlog = () => import("@/components/IBlog/IBlog");
+const BlogIndex = () => import("@/components/IBlog/BlogIndex");
 const BlogList = () => import("@/components/IBlog/BlogList");
 const BlogArticleDetail = () => import("@/components/IBlog/BlogArticleDetail");
 const BlogArticleEdit = () => import("@/components/IBlog/BlogArticleEdit");
@@ -43,13 +43,13 @@ const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
 const ResumeManage = () => import("@/components/IJob/ResumeManage");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
-const EditCorporate = () => import("@/components/IJob/EditCorporate");
-const EditJob = () => import("@/components/IJob/EditJob");
-const EditResume = () => import("@/components/IJob/EditResume");
+const CorporateEdit = () => import("@/components/IJob/CorporateEdit");
+const JobEdit = () => import("@/components/IJob/JobEdit");
+const ResumeEdit = () => import("@/components/IJob/ResumeEdit");
 const JobApplyList = () => import("@/components/IJob/JobApplyList");
 const ResourceList = () => import("@/components/Resource/ResourceList");
-const UploadResource = () => import("@/components/Resource/UploadResource");
-const DownloadResource = () => import("@/components/Resource/DownloadResource");
+const ResourceUpload = () => import("@/components/Resource/ResourceUpload");
+const ResourceDownload = () => import("@/components/Resource/ResourceDownload");
 const AskExpert = () => import("@/components/Expert/AskExpert");
 const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
@@ -59,20 +59,24 @@ const BusinessList = () => import("@/components/Business/BusinessList");
 const BusinessEdit = () => import("@/components/Business/BusinessEdit");
 const BusinessDetail = () => import("@/components/Business/BusinessDetail");
 const PayConfirm = () => import("@/components/Business/PayConfirm");
-const Site = () => import("@/components/Site");
+const SiteIndex = () => import("@/components/SiteIndex");
 const CssDemo = () => import("@/components/CssDemo");
-const Element = () => import("@/components/Background/IPlacement/Element");
-const EditElement = () => import("@/components/Background/IPlacement/EditElement");
-const Placement = () => import("@/components/Background/IPlacement/Placement");
-const EditPlacement = () => import("@/components/Background/IPlacement/EditPlacement");
+const ElementList = () => import("@/components/Background/IPlacement/ElementList");
+const ElementEdit = () => import("@/components/Background/IPlacement/ElementEdit");
+const PlacementList = () => import("@/components/Background/IPlacement/PlacementList");
+const PlacementEdit = () => import("@/components/Background/IPlacement/PlacementEdit");
 
 Vue.use(Router);
 
 function getRootRouters() {
   return [
     {path: '/', redirect: '/ilearning/index'},
-    {path: '/css/demo', component: CssDemo,},
-    {path: '/site', component: ILayout, children: [{path: 'index', component: Site},]}
+    {path: '/css/cssDemo', component: CssDemo,},
+    {path: '/site', component: ILayout,
+      children: [
+        {path: 'siteIndex', component: SiteIndex},
+      ]
+    }
   ]
 }
 
@@ -86,7 +90,7 @@ const ILearningRouter = [{
         children: [
           {path: 'editCourse', component: EditCourse,},
           {path: 'myCourseList', component: MyCourseList,},
-          {path: 'RecentlyViewed', component: RecentlyViewed,},
+          {path: 'recentlyViewed', component: RecentlyViewed,},
         ]
       },
       {path: 'courseDetail', component: CourseDetail,},
@@ -100,10 +104,10 @@ const ILearningRouter = [{
 const IBlogRouter = [{
   path: '/iblog', component: ILayout,
     children: [
-      {path: 'blogIndex', component: IBlog},
+      {path: 'blogIndex', component: BlogIndex},
       {path: 'blogList', component: BlogList},
-      {path: 'blogDetail', component: BlogArticleDetail},
-      {path: 'blogEdit', component: BlogArticleEdit},
+      {path: 'blogArticleDetail', component: BlogArticleDetail},
+      {path: 'blogArticleEdit', component: BlogArticleEdit},
     ]
 }];
 
@@ -111,8 +115,8 @@ const IBookRouter = [{
   path: '/ibook', component: ILayout,
     children: [
       {path: 'bookList', component: BookList},
-      {path: 'bookDetail', component: BookArticleDetail},
-      {path: 'bookEdit', component: BookCatalogEdit},
+      {path: 'bookArticleDetail', component: BookArticleDetail},
+      {path: 'bookCatalogEdit', component: BookCatalogEdit},
       {path: 'bookCatalogs', component: BookCatalogs},
     ]
 }];
@@ -132,20 +136,20 @@ const ICMSReouter = [{
       {path: 'adviseList', component: AdviseList},
       {path: 'sso/appRegist', component: AppRegist},
       {path: 'sso/loginRecord', component: LoginRecord},
-      {path: 'elementEdit', component: EditElement},
-      {path: 'elementList', component: Element},
-      {path: 'placementList', component: Placement},
-      {path: 'placementEdit', component: EditPlacement},
+      {path: 'elementEdit', component: ElementEdit},
+      {path: 'elementList', component: ElementList},
+      {path: 'placementList', component: PlacementList},
+      {path: 'placementEdit', component: PlacementEdit},
     ]
 }];
 
 const IUserReouter = [{
   path: '/user', component: ILayout,
     children: [
-      {path: 'detail', component: UserDetail},
-      {path: 'info', component: UserInfo},
-      {path: 'guide', component: UserGuide},
-      {path: 'mine/detail', component: UserDetail},
+      {path: 'userDetail', component: UserDetail},
+      {path: 'userInfo', component: UserInfo},
+      {path: 'userGuide', component: UserGuide},
+      {path: 'mine/userDetail', component: UserDetail},
     ]
 }];
 
@@ -164,18 +168,18 @@ const IJob = [{
       {path: 'jobList', component: JobList},
       {path: 'resumeManage', component: ResumeManage},
       {path: 'corporateDetail', component: CorporateDetail},
-      {path: 'corporateEdit', component: EditCorporate},
-      {path: 'jobEdit', component: EditJob},
-      {path: 'resumeEdit', component: EditResume},
-      {path: 'applyList', component: JobApplyList},
+      {path: 'corporateEdit', component: CorporateEdit},
+      {path: 'jobEdit', component: JobEdit},
+      {path: 'resumeEdit', component: ResumeEdit},
+      {path: 'jobApplyList', component: JobApplyList},
     ]
 }];
 
 const IAdvertisement = [{
   path: '/advertisement', component: ILayout,
     children: [
-      {path: 'apply', component: AdvApply},
-      {path: 'manage', component: AdvManage},
+      {path: 'advApply', component: AdvApply},
+      {path: 'advManage', component: AdvManage},
     ]
 }];
 
@@ -184,8 +188,8 @@ const IFoundReouter = [{
     children: [{
         path: 'list', component: FoundList,
           children: [
-            {path: 'activity', component: ActivityList},
-            {path: 'discount', component: NewsList},
+            {path: 'activityList', component: ActivityList},
+            {path: 'newsList', component: NewsList},
           ]
      },]
 }];
@@ -200,10 +204,10 @@ const MessageRouter = [{
 const BusinessRouter = [{
   path: '/business', component: ILayout,
     children: [
-      {path: 'introduce', component: BusinessIntroduce},
-      {path: 'list', component: BusinessList},
-      {path: 'edit', component: BusinessEdit},
-      {path: 'detail', component: BusinessDetail},
+      {path: 'businessIntroduce', component: BusinessIntroduce},
+      {path: 'businessList', component: BusinessList},
+      {path: 'businessEdit', component: BusinessEdit},
+      {path: 'businessDetail', component: BusinessDetail},
       {path: 'payConfirm', component: PayConfirm},
     ]
 }];
@@ -211,9 +215,9 @@ const BusinessRouter = [{
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
     children: [
-      {path: 'list', component: ResourceList},
-      {path: 'upload', component: UploadResource},
-      {path: 'download', component: DownloadResource},
+      {path: 'resourceList', component: ResourceList},
+      {path: 'resourceUpload', component: ResourceUpload},
+      {path: 'resourceDownload', component: ResourceDownload},
     ]
 }];
 

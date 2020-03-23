@@ -9,7 +9,7 @@
       </div>
 
       <div class="header" style="cursor:pointer;display: inline-block;"
-           @click="$router.push({path:'/job/applyList'})">投递清单
+           @click="$router.push({path:'/job/jobApplyList'})">投递清单
       </div>
     </div>
 

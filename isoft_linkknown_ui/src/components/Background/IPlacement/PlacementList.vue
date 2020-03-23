@@ -28,7 +28,7 @@
   import {CopyPlacement, DeletePlacementById, FilterPlacement} from "../../../api"
 
   export default {
-    name: "Placement",
+    name: "PlacementList",
     components: {ISimpleLeftRightRow, ISimpleConfirmModal, IKeyValueForm, ISimpleSearch, IFileUpload},
     props: {
       chooserMode: { // 选择模式

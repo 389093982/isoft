@@ -24,7 +24,7 @@
           <Button type="default" style="color: rgba(255,115,14,0.61)" @click="downloadResource(resource)">
             <Icon type="md-cloud-download" style="font-size: 20px"/>&nbsp;立刻下载
           </Button>
-          <Button type="default" style="color: rgba(255,115,14,0.61)" @click="$router.push({path:'/resource/list'})">
+          <Button type="default" style="color: rgba(255,115,14,0.61)" @click="$router.push({path:'/resource/resourceList'})">
             <Icon type="ios-undo" style="font-size: 20px"/>&nbsp;返回
           </Button>
         </Col>
@@ -48,7 +48,7 @@
   import {CheckHasLoginConfirmDialog} from "../../tools/index"
 
   export default {
-    name: "DownloadResource",
+    name: "ResourceDownload",
     data() {
       return {
         resource: null,

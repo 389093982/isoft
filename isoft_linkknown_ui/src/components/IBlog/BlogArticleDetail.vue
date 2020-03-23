@@ -16,7 +16,7 @@
               <span style="margin-left: 200px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
               <span style="margin-left: 20px"><span style="color: rgba(255,0,0,0.65)">{{blog.edits}}</span> 次编辑</span>
               <span>
-                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blogEdit', query: { id: blog.id }})">继续编辑</Button>
+                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blogArticleEdit', query: { id: blog.id }})">继续编辑</Button>
               </span>
               <span>
                 <Button type="error" size="small" v-if="editable" @click="showDeleteModal">删除博客</Button>
@@ -152,7 +152,7 @@
             this.$Message.success(message + "成功!");
           }
         }else {
-          CheckHasLoginConfirmDialog(this, {path: "/iblog/blogDetail?blog_id="+this.$route.query.blog_id});
+          CheckHasLoginConfirmDialog(this, {path: "/iblog/blogArticleDetail?blog_id="+this.$route.query.blog_id});
         }
       },
       renderNickName: function (user_name) {

@@ -25,7 +25,7 @@
 
 
   export default {
-    name: "Element",
+    name: "ElementList",
     components: {ISimpleLeftRightRow, MultiClickButton, ISimpleSearch},
     data() {
       var _this = this;

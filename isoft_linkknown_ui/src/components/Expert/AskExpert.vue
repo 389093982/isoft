@@ -40,7 +40,7 @@
                       <p>浏览</p>
                     </div>
 
-                    <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">
+                    <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">
                       <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
                     </div>
                   </Col>
@@ -48,7 +48,7 @@
 
                     <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
                     <div class="isoft_font12">
-                      <span style="cursor: pointer" @click="$router.push({path:'/user/detail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
+                      <span style="cursor: pointer" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
                       <span><Time :time="as.last_updated_time" :interval="1"/></span>
                       <span class="isoft_hover_item_show" style="float: right;">
                         <span class="isoft_mr10">

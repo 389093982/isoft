@@ -54,7 +54,7 @@
                 <Row style="margin-top: 10px">
                   <Col span="2" offset="1">
                     <!--第一列 ：头像-->
-                    <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}" style="float: left;">
+                    <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;">
                       <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
                     </router-link>
                   </Col>
@@ -65,14 +65,14 @@
                       <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name}}</a>
                       <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
                       <span>&nbsp;</span>
-                      <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
+                      <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
                         <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(27)}}</span>
                       </router-link>
                       <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
                     </Row>
                     <Row>
                       <!--第二行：作者 + 发布 + 更新时间 -->
-                      <router-link :to="{path:'/user/detail',query:{username:searchblog.author}}">
+                      <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}">
                         <span style="color: #797776;border-bottom: 1px solid #797776;">
                           <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
                           <span v-else>{{searchblog.author}}</span>
@@ -84,10 +84,10 @@
                   </Col>
                   <Col span="5">
                     <!--第三列：-->
-                    <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
+                    <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
                     </router-link>
-                    <router-link :to="{path:'/iblog/blogDetail',query:{blog_id:searchblog.id}}">
+                    <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
                       <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">{{searchblog.comments}}</span> 条评论</span>
                     </router-link>
                   </Col>
@@ -168,7 +168,7 @@
       blogEdit: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/iblog/blogEdit'});
+          _this.$router.push({path: '/iblog/blogArticleEdit'});
         });
       },
       chooseItem: function (pattern) {

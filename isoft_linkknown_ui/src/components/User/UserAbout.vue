@@ -1,7 +1,7 @@
 <template>
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;min-height: 350px;">
     <Row>
-        <span @click="$router.push({path:'/user/detail',query:{username:getUserName()}})">
+        <span @click="$router.push({path:'/user/userDetail',query:{username:getUserName()}})">
           <HatAndFacePicture :src="user_small_icon" :vip_level="vip_level" :hat_in_use="hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
         </span>
         <div style="position: absolute;top: 5px;left: 40px">
@@ -11,7 +11,7 @@
           </span>
           <span style="margin-left: 200px">
             <span v-if="userName===loginUserName()"></span>
-            <span v-else class="ToMyCenter" @click="$router.push({path:'/user/detail'})"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></span>
+            <span v-else class="ToMyCenter" @click="$router.push({path:'/user/userDetail'})"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></span>
           </span>
         </div>
     </Row>
@@ -26,12 +26,12 @@
           </Row>
           <Row v-for="(blog,index) in blogs" style="line-height: 28px;height: 28px;">
             <Col span="12" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogDetail',query:{blog_id:blog.id}})">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogArticleDetail',query:{blog_id:blog.id}})">
                 {{blog.blog_title | titleLimitFunc(titleLimitLenth)}}
               </IBeautifulLink>
             </Col>
             <Col span="6" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogDetail',query:{blog_id:blog.id}})">
+              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogArticleDetail',query:{blog_id:blog.id}})">
                 {{blog.catalog_name}}
               </IBeautifulLink>
             </Col>
@@ -75,7 +75,7 @@
           <Row v-for="(book,index) in books">
             <Row style="line-height: 28px;height: 28px;">
               <Col span="8" class="isoft_inline_ellipsis">
-                <IBeautifulLink @onclick="$router.push({path:'/ibook/bookDetail',query:{book_id:book.id}})">
+                <IBeautifulLink @onclick="$router.push({path:'/ibook/bookArticleDetail',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </IBeautifulLink>
               </Col>

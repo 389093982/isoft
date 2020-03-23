@@ -2,7 +2,7 @@
   <div style="margin:0 15px;border: 1px solid #e6e6e6;border-radius: 4px;min-height: 500px;">
     <div class="isoft_bg_white"
          style="display: flex;padding: 20px 150px 20px 150px;margin-bottom:5px;text-align: center;">
-      <div style="width: 20%;" @click="$router.push({path:'/business/list'})">热销商品</div>
+      <div style="width: 20%;" @click="$router.push({path:'/business/businessList'})">热销商品</div>
       <div style="width: 20%;" @click="showMyBusiness">我的店铺商品</div>
       <show-more default-desc="搜索" @changeShowMore="showSearch = !showSearch"></show-more>
       <div v-show="showSearch">
@@ -21,7 +21,7 @@
             <div slot="footer" style="display: flex;margin-top: 10px;">
               <div style="width: 50%;">
                   <span class="isoft_button_red2 isoft_point_cursor" v-if="isLoginUserName(good.good_seller)"
-                        @click="$router.push({path:'/business/edit',query:{id:good.id}})">
+                        @click="$router.push({path:'/business/businessEdit',query:{id:good.id}})">
                     编辑商品
                   </span>
                 <span v-else class="isoft_button_red2 isoft_point_cursor" @click="payConfirm(good)">立即购买</span>
@@ -83,13 +83,13 @@
       publishBusiness: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/business/edit'});
+          _this.$router.push({path: '/business/businessEdit'});
         });
       },
       showMyBusiness: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
-          _this.$router.push({path: '/business/list'});
+          _this.$router.push({path: '/business/businessList'});
         });
       },
       payConfirm: async function (good) {

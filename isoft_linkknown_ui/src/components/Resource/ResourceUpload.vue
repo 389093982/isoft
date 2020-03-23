@@ -39,7 +39,7 @@
   import RandomAdmt from "../Advertisement/RandomAdmt";
 
   export default {
-    name: "UploadResource",
+    name: "ResourceUpload",
     components: {RandomAdmt, IFileUpload},
     data() {
       const checkResourceCatalog = (rule, value, callback) => {
@@ -108,7 +108,7 @@
           if (valid) {
             const result = await EditResource(this.formInline);
             if (result.status === "SUCCESS") {
-              this.$router.push({path: '/resource/list'});
+              this.$router.push({path: '/resource/resourceList'});
             } else {
               this.$Message.error(result.errorMsg);
             }

@@ -84,7 +84,7 @@
             _this.$Message.success("投递成功!");
             // 投递成功 1s 后进入投递详情页面
             setTimeout(function () {
-              _this.$router.push({path: '/job/applyList'});
+              _this.$router.push({path: '/job/jobApplyList'});
             }, 1000);
           } else {
             _this.$Message.error(result.errorMsg);

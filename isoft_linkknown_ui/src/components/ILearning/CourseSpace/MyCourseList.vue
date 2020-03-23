@@ -6,11 +6,10 @@
           <h4 class="isoft_inline_ellipsis">课程名称：{{myCourse.course_name}}</h4>
           <p>
             <img v-if="myCourse.small_image" :src="myCourse.small_image" height="120" width="180"/>
-            <img v-else src="../../../../static/images/course/course_default.png" height="120" width="180"/>
+            <img v-else src="../../../assets/default.png" height="120" width="180"/>
           </p>
           <p>
-            <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true"
-                         @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
+            <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
           </p>
         </Col>
         <Col span="16">

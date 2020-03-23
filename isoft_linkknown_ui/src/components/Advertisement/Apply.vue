@@ -38,7 +38,7 @@
     },
     methods: {
       manageAdvertisement: function () {
-        CheckHasLoginConfirmDialog(this, {path: "/advertisement/manage"});
+        CheckHasLoginConfirmDialog(this, {path: "/advertisement/advManage"});
       }
     }
   }

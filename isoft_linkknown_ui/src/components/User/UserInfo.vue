@@ -186,7 +186,7 @@
             const result = await UpdateUserDetail(params);
             if (result.status === "SUCCESS") {
               this.$Message.success('保存成功!');
-              this.$router.push({path:"/user/detail"});
+              this.$router.push({path:"/user/userDetail"});
             }
           }
         })

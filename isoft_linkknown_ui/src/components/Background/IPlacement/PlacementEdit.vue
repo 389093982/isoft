@@ -46,7 +46,7 @@
   import {EditPlacement, QueryPlacementById} from "../../../api"
 
   export default {
-    name: "EditPlacement",
+    name: "PlacementEdit",
     data() {
       const _validatePlacementName = (rule, value, callback) => {
         if (value === '') {

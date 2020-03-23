@@ -23,7 +23,7 @@
             <IBeautifulLink @onclick="$router.push({path:'/ibook/bookList'})">热门书单</IBeautifulLink>
           </MenuItem>
           <MenuItem name="6">
-            <IBeautifulLink @onclick="$router.push({path:'/resource/list'})">热门资源</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
           </MenuItem>
           <MenuItem name="7">
             <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
@@ -41,7 +41,7 @@
               </span>
             </template>
             <MenuGroup title="账户管理">
-              <MenuItem name="8-1" @click.native="$router.push({path:'/user/detail'})">个人中心</MenuItem>
+              <MenuItem name="8-1" @click.native="$router.push({path:'/user/userDetail'})">个人中心</MenuItem>
               <MenuItem name="8-2" @click.native="cancelUser">
                 <span v-if="isLogin()">重新</span><span>登录</span>
               </MenuItem>
@@ -67,10 +67,10 @@
             <IBeautifulLink @onclick="$router.push({path:'/found/list'})">发现</IBeautifulLink>
           </MenuItem>
           <MenuItem name="11">
-            <IBeautifulLink @onclick="$router.push({path:'/business/list'})">我要赚钱</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/business/businessList'})">我要赚钱</IBeautifulLink>
           </MenuItem>
           <MenuItem name="12">
-            <IBeautifulLink @onclick="$router.push({path:'/business/introduce'})">商业合作</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/business/businessIntroduce'})">商业合作</IBeautifulLink>
           </MenuItem>
         </div>
       </Menu>

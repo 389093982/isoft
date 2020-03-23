@@ -11,7 +11,7 @@
       <span class="isoft_hover_red" @click="$router.push({path:'/ilearning/jingpinCourse'})" style="margin-left: 30px;">
         搜索同类资源
       </span>
-      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/guide'}))" style="margin-left: 30px;">
+      <span class="isoft_hover_red" @click="$router.push($router.push({ path: '/user/userGuide'}))" style="margin-left: 30px;">
         开课流程
       </span>
     </p>
