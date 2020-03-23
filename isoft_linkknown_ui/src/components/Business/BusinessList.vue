@@ -17,7 +17,7 @@
         <div v-for="(good, index) in goods" class="isoft_top10 isoft_pd20"
              style="margin: 10px;border: 1px solid #eee;">
 
-          <GoodMeta :good="good">
+          <GoodMeta :good="good" :show-highlights="false">
             <div slot="footer" style="display: flex;margin-top: 10px;">
               <div style="width: 50%;">
                   <span class="isoft_button_red2 isoft_point_cursor" v-if="isLoginUserName(good.good_seller)"

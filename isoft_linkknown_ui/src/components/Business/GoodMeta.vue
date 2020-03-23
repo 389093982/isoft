@@ -18,15 +18,22 @@
         <div :style="{'width':good.good_images ? '59%' : '100%'}" style="padding: 0 20px;"
              :class="good.good_images ? 'item_border1' : ''">
           <div>
-            <p class="isoft_inline_ellipsis isoft_font16">商品名称：
-              <span class="isoft_hover_red" @click="$router.push({path:'/business/userDetail',query:{id:good.id}})">{{good.good_name}}</span>
-            </p>
+            <div class="isoft_tip_parent">
+              <div class="isoft_inline_ellipsis isoft_font16">
+                商品名称：<span class="isoft_hover_red"
+                           @click="$router.push({path:'/business/businessDetail',query:{id:good.id}})">{{good.good_name}}</span>
+              </div>
+              <div v-if="!showHighlights" class="isoft_tip isoft_font14" style="width: 500px;">
+                亮点特色：<span class="isoft_color_grey3 isoft_font12">{{good.highlights}}</span>
+              </div>
+            </div>
 
             <div style="margin: 10px 0;">
               <span class="isoft_tag3" v-for="(tag, index) in parseTag(good.good_tag)">{{tag}}</span>
             </div>
             <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
-            <p class="p3line isoft_font14">亮点特色：<span class="isoft_color_grey3">{{good.highlights}}</span></p>
+            <p v-if="showHighlights" class="p3line isoft_font14">亮点特色：<span class="isoft_color_grey3">{{good.highlights}}</span>
+            </p>
             <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
             <p>
               优惠价格：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span>
@@ -59,6 +66,10 @@
       good: {
         type: Object,
         default: null,
+      },
+      showHighlights: {
+        type: Boolean,
+        default: true,
       }
     },
     methods: {
@@ -122,5 +133,21 @@
   .item_border2:hover::before {
     margin-top: 0;
     height: 100%;
+  }
+
+  .isoft_tip_parent {
+
+  }
+
+  .isoft_tip {
+    position: absolute;
+    border: 1px solid #eee;
+    padding: 20px;
+    background-color: white;
+    display: none;
+  }
+
+  .isoft_tip_parent:hover > .isoft_tip {
+    display: block;
   }
 </style>
