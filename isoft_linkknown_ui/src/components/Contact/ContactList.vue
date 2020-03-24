@@ -24,10 +24,18 @@
               <div v-else>
                 <div :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'"
                      v-for="(msg, index) in contactMessages">
-                  <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
-                  <span class="contact">
-                    <span v-if="msg.user_name === $route.query.userName">{{msg._nick_name}}</span>
-                    <span v-else>我</span> ~~ {{msg.message_text}}</span>
+                  <p style="margin-bottom: 5px;">
+                    <span v-if="msg.user_name !== $route.query.userName">我
+                      <span class="isoft_font12 isoft_color_grey"><Time :time="msg.last_updated_time"
+                                                                        :interval="1"/></span>
+                    </span>
+                    <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                    <span v-if="msg.user_name === $route.query.userName">{{msg._nick_name}}
+                      <span class="isoft_font12 isoft_color_grey"><Time :time="msg.last_updated_time"
+                                                                        :interval="1"/></span>
+                    </span>
+                  </p>
+                  <span class="contact">{{msg.message_text}}</span>
                 </div>
               </div>
             </div>
@@ -195,12 +203,12 @@
   }
 
   .ask {
-    text-align: left;
+    text-align: right;
     margin-bottom: 15px;
   }
 
   .answer {
-    text-align: right;
+    text-align: left;
     margin-bottom: 15px;
   }
 
