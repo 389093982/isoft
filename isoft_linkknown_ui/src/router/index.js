@@ -60,6 +60,7 @@ const BusinessList = () => import("@/components/Business/BusinessList");
 const BusinessEdit = () => import("@/components/Business/BusinessEdit");
 const BusinessDetail = () => import("@/components/Business/BusinessDetail");
 const PayConfirm = () => import("@/components/Business/PayConfirm");
+const ContactList = () => import("@/components/Contact/ContactList");
 const SiteIndex = () => import("@/components/SiteIndex");
 const CssDemo = () => import("@/components/CssDemo");
 const ElementList = () => import("@/components/Background/IPlacement/ElementList");
@@ -214,6 +215,13 @@ const BusinessRouter = [{
     ]
 }];
 
+const ContactRouter = [{
+  path: '/contact', component: ILayout,
+  children: [
+    {path: 'contactList', component: ContactList},
+  ]
+}];
+
 const ResourceRouter = [{
   path: '/resource', component: ILayout,
     children: [
@@ -247,6 +255,7 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, ResourceRouter);
   allRouters = joinArray(allRouters, MessageRouter);
   allRouters = joinArray(allRouters, BusinessRouter);
+  allRouters = joinArray(allRouters, ContactRouter);
   allRouters = joinArray(allRouters, getRootRouters());
   return allRouters;
 }
