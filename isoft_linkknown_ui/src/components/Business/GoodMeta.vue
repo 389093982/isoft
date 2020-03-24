@@ -29,7 +29,7 @@
             </div>
 
             <div style="margin: 10px 0;">
-              <span class="isoft_tag3" v-for="(tag, index) in parseTag(good.good_tag)">{{tag}}</span>
+              <TagRender :tags="parseTag(good.good_tag)"/>
             </div>
             <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
             <p v-if="showHighlights && good.highlights" class="p3line isoft_font14">亮点特色：<span
@@ -59,10 +59,11 @@
 <script>
   import {checkEmpty, checkNotEmpty, strSplit} from "../../tools"
   import GoodShortcut from "./GoodShortcut"
+  import TagRender from "../Common/TagRender";
 
   export default {
     name: "GoodMeta",
-    components: {GoodShortcut},
+    components: {TagRender, GoodShortcut},
     props: {
       good: {
         type: Object,

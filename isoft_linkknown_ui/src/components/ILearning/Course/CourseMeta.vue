@@ -37,7 +37,7 @@
     </p>
     <p v-if="course.course_label">
       <span style="color: #777">标签语 :    </span>
-      <span class="isoft_tag3" v-for="(clabel, index) in clabels">{{clabel}}</span>
+      <TagRender :tags="clabels"/>
     </p>
 
     <div style="width: 50%;float: right;margin-top: -30px;">
@@ -51,10 +51,11 @@
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
   import {GetUserDetail} from "../../../api"
   import {checkEmpty, strSplit} from "../../../tools"
+  import TagRender from "../../Common/TagRender";
 
   export default {
     name: "CourseMeta",
-    components: {IBeautifulLink},
+    components: {TagRender, IBeautifulLink},
     props: {
       course: {
         type: Object,
