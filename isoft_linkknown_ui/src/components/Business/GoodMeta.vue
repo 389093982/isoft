@@ -23,16 +23,17 @@
                 商品名称：<span class="isoft_hover_red"
                            @click="$router.push({path:'/business/businessDetail',query:{id:good.id}})">{{good.good_name}}</span>
               </div>
-              <div v-if="!showHighlights" class="isoft_tip isoft_font14" style="width: 500px;">
+              <div v-if="!showHighlights && good.highlights" class="isoft_tip isoft_font14" style="width: 500px;">
                 亮点特色：<span class="isoft_color_grey3 isoft_font12">{{good.highlights}}</span>
               </div>
             </div>
 
             <div style="margin: 10px 0;">
-              <span class="isoft_tag3" v-for="(tag, index) in parseTag(good.good_tag)">{{tag}}</span>
+              <TagRender :tags="parseTag(good.good_tag)"/>
             </div>
             <p class="p3line isoft_font14">商品描述：<span class="isoft_color_grey3">{{good.good_desc}}</span></p>
-            <p v-if="showHighlights" class="p3line isoft_font14">亮点特色：<span class="isoft_color_grey3">{{good.highlights}}</span>
+            <p v-if="showHighlights && good.highlights" class="p3line isoft_font14">亮点特色：<span
+              class="isoft_color_grey3">{{good.highlights}}</span>
             </p>
             <p>商品原价：<span style="color: red;font-weight: bold;">￥{{good.good_price}}</span></p>
             <p>
@@ -58,10 +59,11 @@
 <script>
   import {checkEmpty, checkNotEmpty, strSplit} from "../../tools"
   import GoodShortcut from "./GoodShortcut"
+  import TagRender from "../Common/TagRender";
 
   export default {
     name: "GoodMeta",
-    components: {GoodShortcut},
+    components: {TagRender, GoodShortcut},
     props: {
       good: {
         type: Object,
@@ -141,13 +143,32 @@
 
   .isoft_tip {
     position: absolute;
+    padding: 10px;
     border: 1px solid #eee;
-    padding: 20px;
+    border-radius: 5px;
     background-color: white;
     display: none;
   }
 
   .isoft_tip_parent:hover > .isoft_tip {
     display: block;
+    animation: moveTop 2s infinite;
+    animation-iteration-count: 1;
   }
+
+  @keyframes moveTop {
+    0% {
+      border: 1px solid #cfeec9;
+      margin-top: 10px;
+    }
+    50% {
+      border: 1px solid #c0c6ee;
+      margin-top: 5px;
+    }
+    100% {
+      border: 1px solid #eee;
+      margin-top: 0;
+    }
+  }
+
 </style>
