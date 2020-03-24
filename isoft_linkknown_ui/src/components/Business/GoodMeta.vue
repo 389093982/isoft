@@ -44,7 +44,7 @@
             <div>
               卖家联系方式：{{good.seller_contact}}
               <div style="float: right;">
-                <span class="isoft_button_red_small">免费咨询</span>
+                <span class="isoft_button_red_small" @click="$router.push({path:'/contact/contactList'})">免费咨询</span>
               </div>
             </div>
           </div>
