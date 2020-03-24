@@ -12,6 +12,14 @@ export const checkEmpty = function checkEmpty(checkStr) {
   return false;
 };
 
+export const checkArrayEmpty = function checkArrayEmpty(arr) {
+  return arr == null || arr.length === 0;
+};
+
+export const checkArrayNotEmpty = function checkArrayNotEmpty(arr) {
+  return !checkArrayEmpty(arr);
+};
+
 export const checkNotEmpty = function checkNotEmpty(checkStr) {
   return !checkEmpty(checkStr);
 };
