@@ -231,6 +231,10 @@ export const pay = (ProductId, ProductDesc, TransAmount, TransCurrCode) => ajax(
 
 export const QueryPageMessageList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList', params, "POST");
 
+export const AddContactMessage = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddContactMessage', params, "POST");
+export const GetContactMessage = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetContactMessage', params, "POST");
+export const GetContactUserList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetContactUserList', params, "POST");
+
 // 资源列表模块
 export const EditResource = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditResource', params, "POST");
 export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageResourceList', params, "POST");
