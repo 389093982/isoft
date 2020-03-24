@@ -33,7 +33,7 @@
   import {QueryCustomTagCourse, ShowCourseDetail, videoPlayUrl} from "../../../api"
 
   export default {
-    name: "VideoPay",
+    name: "VideoPlay",
     data() {
       return {
         recommendCourses: [],

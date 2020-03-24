@@ -45,8 +45,9 @@
 
     <Row style="background-color: rgb(229, 229, 229)">
       <div style="width: 100%;height: 100px;text-align: center ;">
-        <p style="margin: 40px;" class="hovered hoverLinkColor mr5">Copyright © 2019-2020 LinkKnown 版权所有</p>
-        <div style="margin-top: 30px">
+        <p style="margin: 20px;" class="hovered hoverLinkColor mr5">Copyright © 2019-{{getNowYear()}} LinkKnown 版权所有</p>
+        <div style="margin-top: 20px">
+          <router-link to="/ilearning/domainName" target="_blank" class="hovered hoverLinkColor mr5">域名证书</router-link>&nbsp;
           <a href="http://www.beian.miit.gov.cn/" target="_blank" class="hovered hoverLinkColor mr5">ICP备案号:2020627762077</a>
         </div>
       </div>
@@ -60,7 +61,11 @@
   export default {
     name: "Footer",
     components: {FrindLink},
-    methods: {}
+    methods: {
+      getNowYear:function () {
+        return new Date().getFullYear();
+      }
+    },
   }
 </script>
 
