@@ -40,8 +40,24 @@
         </div>
         <div style="width: 40%;">
           <div style="border: 1px solid #eee;margin: 25px 130px 0 10px;">
-            <div class="isoft_info_tip"><span>自助服务</span>&nbsp;&nbsp;<span>我相关的联系</span></div>
-            <div class="selfAssistent isoft_pd20 clear">
+            <div class="isoft_info_tip isoft_font12">最近联系</div>
+            <div class="selfContact isoft_pd20">
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+              AAAAAAAAAAAA
+            </div>
+
+            <div class="isoft_info_tip isoft_font12">
+              <span class="isoft_point_cursor" :class="showHelpPattern === 1 ? 'isoft_color_red': ''"
+                    @click="showHelpPattern = 1">自助服务</span>&nbsp;|&nbsp;
+              <span class="isoft_point_cursor" :class="showHelpPattern === 2 ? 'isoft_color_red': ''"
+                    @click="showHelpPattern = 2">常见问题</span>
+            </div>
+            <div class="selfAssistent isoft_pd20 clear" v-if="showHelpPattern === 1">
               <a>
                 <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
                 <p>友情链接</p>
@@ -63,9 +79,7 @@
                 <p>商业合作</p>
               </a>
             </div>
-
-            <div class="isoft_info_tip">常见问题</div>
-            <div class="selfAssistent isoft_pd20">
+            <div class="selfAssistent isoft_pd20" v-if="showHelpPattern === 2">
               <p>如何找回链知王账号密码？</p>
               <p>如何找回链知王账号密码？</p>
               <p>如何找回链知王账号密码？</p>
@@ -74,9 +88,6 @@
               <p>如何找回链知王账号密码？</p>
               <p>如何找回链知王账号密码？</p>
               <p>如何找回链知王账号密码？</p>
-            </div>
-            <div class="selfContact">
-
             </div>
           </div>
         </div>
@@ -94,6 +105,7 @@
       return {
         isLoading: false,
         sendMsgText: '',
+        showHelpPattern: 1,  // 1、自助服务 2、常见问题
         asks: [
           '呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃',
           '呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃',
