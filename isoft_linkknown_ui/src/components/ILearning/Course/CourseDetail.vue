@@ -46,7 +46,7 @@
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
                 <span :style="{color:index===clickIndex?'green':''}">
-                  第 {{index + 1}} 集：{{cVideo.video_name}}
+                  第 {{index + 1}} 集:{{cVideo.video_name}}
                 </span>
               </span>
               <router-link style="float: right;" :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
@@ -54,9 +54,28 @@
                 <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
             </div>
+            <div v-if="cVideos.length===0" class="video_item" style="margin-right: 10px;padding: 10px;">
+              作者还未上传视频哦...
+            </div>
             <!--查看更多-->
-            <div v-if="cVideos.length > minLen" style="position: relative;left: -680px;top: -55px">
+            <div v-if="cVideos.length > minLen" style="position: relative;left: -85%;top: -55px">
               <show-more @changeShowMore="changeShowMore" style="position: absolute;top: 60px;right: 45px"></show-more>
+            </div>
+            <div v-else>
+              <!--集数低于5，展示其他课程-->
+              <br>
+              <span style="margin-left: 8px"><i>为您推荐:</i></span>
+              <Row>
+                <Col span="6" v-for="course in recommendCourses">
+                  <div class="courseBorder">
+                    <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
+                      <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
+                      <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                      <p class="isoft_font12 isoft_inline_ellipsis"><span style="color: grey">{{course.course_name}}</span></p>
+                    </router-link>
+                  </div>
+                </Col>
+              </Row>
             </div>
             <Spin fix size="large" v-if="isLoading">
               <div class="isoft_loading"></div>
@@ -88,7 +107,7 @@
 </template>
 
 <script>
-  import {IsFavorite, ShowCourseDetail, ToggleFavorite} from "../../../api"
+  import {IsFavorite, ShowCourseDetail, ToggleFavorite,GetHotCourseRecommend} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import UserAbout from "../../User/UserAbout"
@@ -117,6 +136,8 @@
         course_praise: false,
         clickIndex:0,
         minLen:5,
+        // 推荐课程
+        recommendCourses:[],
       }
     },
     methods: {
@@ -132,6 +153,7 @@
         return getLoginUserName();
       },
       refreshCourseDetail: async function () {
+        this.clickIndex = 0;
         this.isLoading = true;
         try {
           const course_id = this.$route.query.course_id;
@@ -151,9 +173,20 @@
             this.cVideos = result.cVideos;
             this.filter_cVideos = result.cVideos.slice(0,this.minLen);
             this.refreshFavoriteStatus();
+            if (this.filter_cVideos.length<this.minLen){
+              // 如果集数少于5，那么做一个推荐
+              this.refreshHotRecommend()
+            }
           }
         } finally {
           this.isLoading = false;
+        }
+      },
+      refreshHotRecommend: async function () {
+        const result = await GetHotCourseRecommend();
+        if (result.status === "SUCCESS") {
+          // 暂定展示4推荐条视频
+          this.recommendCourses = result.courses.slice(0,4);
         }
       },
       refreshFavoriteStatus: async function () {
@@ -197,6 +230,17 @@
 </script>
 
 <style scoped>
+
+  .courseBorder{
+    width:176px;
+    padding: 10px 0 0 10px;
+  }
+
+  .courseBorder:hover{
+    background-color: rgba(214, 214, 214, 0.5);
+    border: 1px solid #d0cdd2;
+  }
+
   .header a {
     color: red;
   }
