@@ -201,7 +201,7 @@
         // 最小时间=历史最小时间/实际最小时间
         this.minTime = Math.min.apply(Math, newContactMessages.map(m => new Date(m.last_updated_time).getTime()).concat(this.minTime).filter(m => m != null));
         // 最大时间=历史最大时间/实际最大时间
-        this.maxTime = Math.max.apply(Math, newContactMessages.map(m => new Date(m.last_updated_time).getTime()).concat(this.maxTime).filter(m => m != null));
+        this.maxTime = Math.max.apply(Math, newContactMessages.map(m => new Date(m.last_updated_time).getTime()).concat(this.maxTime).concat(duration.endTime).filter(m => m != null));
       },
       refreshContactUserList: async function () {
         const result = await GetContactUserList();
