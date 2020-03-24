@@ -21,6 +21,7 @@ const UserDetail = () => import("@/components/User/UserDetail");
 const UserInfo = () => import("@/components/User/UserInfo");
 const UserGuide = () => import("@/components/User/UserGuide");
 const ILearningIndex = () => import("@/components/ILearning/Index");
+const DomainName = () => import("@/components/ILearning/DomainName");
 const JingpinCourse = () => import("@/components/ILearning/JingpinCourse");
 const CourseSpace = () => import("@/components/ILearning/CourseSpace/CourseSpace");
 const EditCourse = () => import("@/components/ILearning/CourseSpace/EditCourse");
@@ -29,7 +30,7 @@ const MyCourseList = () => import("@/components/ILearning/CourseSpace/MyCourseLi
 const CourseDetail = () => import("@/components/ILearning/Course/CourseDetail");
 const Advise = () => import("@/components/ILearning/Advise");
 const About = () => import("@/components/ILearning/About");
-const VideoPay = () => import("@/components/ILearning/Course/VideoPay");
+const VideoPlay = () => import("@/components/ILearning/Course/VideoPlay");
 const CourseSearch = () => import("@/components/ILearning/Course/CourseSearch");
 const AdviseList = () => import("@/components/Background/AdviseList");
 const FoundList = () => import("@/components/IFound/FoundList");
@@ -85,6 +86,7 @@ const ILearningRouter = [{
   path: '/ilearning', component: ILayout,
     children: [
       {path: 'index', component: ILearningIndex,},
+      {path: 'domainName', component: DomainName,},
       {path: 'jingpinCourse', component: JingpinCourse,},
       {path: 'courseSpace', component: CourseSpace,
         redirect: '/ilearning/courseSpace/myCourseList',
@@ -95,7 +97,7 @@ const ILearningRouter = [{
         ]
       },
       {path: 'courseDetail', component: CourseDetail,},
-      {path: 'videoPlay', component: VideoPay,},
+      {path: 'videoPlay', component: VideoPlay,},
       {path: 'advise', component: Advise,},
       {path: 'about', component: About,},
       {path: 'courseSearch', component: CourseSearch,},

@@ -85,7 +85,7 @@
 
         <div class="isoft_bg_white isoft_top5 isoft_pd20" style="min-height: 600px;">
           <p>学者印象：</p>
-          <VoteTags v-if="course.id > 0" referer_type="course_theme_type" :referer_id="course.id"/>
+          <VoteTags ref="VoteTags"/>
           <!-- 评论模块 -->
           <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
         </div>
@@ -177,6 +177,10 @@
               // 如果集数少于5，那么做一个推荐
               this.refreshHotRecommend()
             }
+            //以这种方式刷新VoteTags
+            this.$refs.VoteTags.setRefererType("course_theme_type");
+            this.$refs.VoteTags.setRefererId(this.course.id);
+            this.$refs.VoteTags.refreshVoteTags();
           }
         } finally {
           this.isLoading = false;

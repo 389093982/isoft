@@ -29,6 +29,12 @@
       }
     },
     methods: {
+      setRefererType:function(referer_type){
+        this.referer_type = referer_type;
+      },
+      setRefererId:function(referer_id){
+        this.referer_id = referer_id;
+      },
       mouseover: function (index) {
         this.hoverIndex = index;
       },
