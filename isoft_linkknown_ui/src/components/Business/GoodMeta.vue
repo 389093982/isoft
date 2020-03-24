@@ -44,7 +44,7 @@
             <div>
               卖家联系方式：{{good.seller_contact}}
               <div style="float: right;">
-                <span class="isoft_button_red_small" @click="$router.push({path:'/contact/contactList'})">免费咨询</span>
+                <span class="isoft_button_red_small" @click="freeContact">免费咨询</span>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  import {checkEmpty, checkNotEmpty, strSplit} from "../../tools"
+  import {checkEmpty, CheckHasLoginConfirmDialog, checkNotEmpty, strSplit} from "../../tools"
   import GoodShortcut from "./GoodShortcut"
   import TagRender from "../Common/TagRender";
 
@@ -75,6 +75,9 @@
       }
     },
     methods: {
+      freeContact: function () {
+        CheckHasLoginConfirmDialog(this, {path: '/contact/contactList'});
+      },
       getLabel: function () {
         return "链知网，让赚钱变得更简单一些";
       },
