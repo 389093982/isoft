@@ -5,14 +5,14 @@
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
           <Row style="border:1px solid #eee;margin-bottom: 10px;">
             <div v-for="(book, index) in books">
-            <Col span="6">
+            <Col span="6" style="margin-bottom: 10px">
               <div class="bookImg isoft_hover_top10">
                 <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
                   <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                   <img v-else src="../../assets/default.png" height="160px" width="140px"/>
                   <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <span class="book_label">精品</span>
-                    <span>{{book.book_name | filterLimitFunc(7)}}</span>
+                    <span style="color: grey">{{book.book_name | filterLimitFunc(7)}}</span>
                   </p>
                 </router-link>
               </div>
