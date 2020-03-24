@@ -43,17 +43,20 @@
           <hr style="margin-top: 10px;">
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
+            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
                 <span :style="{color:index===clickIndex?'green':''}">
                   第 {{index + 1}} 集：{{cVideo.video_name}}
                 </span>
               </span>
-              <router-link style="float: right;"
-                           :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
+              <router-link style="float: right;" :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
                 <span class="isoft_font12 isoft_color_grey isoft_mr10" v-if="cVideo.duration > 0">时长&nbsp;{{cVideo.duration}}&nbsp;s</span>
                 <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
+            </div>
+            <!--查看更多-->
+            <div v-if="cVideos.length > minLen" style="position: relative;left: -680px;top: -55px">
+              <show-more @changeShowMore="changeShowMore" style="position: absolute;top: 60px;right: 45px"></show-more>
             </div>
             <Spin fix size="large" v-if="isLoading">
               <div class="isoft_loading"></div>
@@ -94,10 +97,11 @@
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
   import {CheckHasLoginConfirmDialog} from "../../../tools/index"
   import VoteTags from "../../Decorate/VoteTags";
+  import ShowMore from "../../Elementviewers/showMore";
 
   export default {
     name: "CourseDetail",
-    components: {CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
+    components: {ShowMore, CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
     data() {
       return {
         isLoading: true,
@@ -106,11 +110,13 @@
         course: {},
         // 视频清单
         cVideos: [],
+        filter_cVideos: [],
         // 课程收藏
         course_collect: false,
         // 课程点赞
         course_praise: false,
         clickIndex:0,
+        minLen:5,
       }
     },
     methods: {
@@ -143,6 +149,7 @@
           if (result.status === "SUCCESS") {
             this.course = result.course;
             this.cVideos = result.cVideos;
+            this.filter_cVideos = result.cVideos.slice(0,this.minLen);
             this.refreshFavoriteStatus();
           }
         } finally {
@@ -175,6 +182,9 @@
       },
       clickCourse:function (index) {
         this.clickIndex = index;
+      },
+      changeShowMore:function (showMore) {
+        showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
       }
     },
     mounted: function () {
