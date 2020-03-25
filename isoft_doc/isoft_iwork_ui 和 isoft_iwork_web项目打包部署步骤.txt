@@ -1,0 +1,29 @@
+前端 isoft_iwork_ui 与 后端 isoft_iwork_web 部署
+
+1.后端isoft_iwork_web打包
+①修改环境使用的变量名
+	电脑本地环境应该是:
+	runmode = dev
+	iwork.envname.onuse=dev
+
+	测试环境修改为以下：
+	runmode = test
+	iwork.envname.onuse=test
+
+	生产环境修改为以下：
+	runmode = prod
+	iwork.envname.onuse=prod
+
+②终端下执行打包命令：bee pack -be GOOS=linux， 生成：isoft_iwork_web.tar.gz
+
+2.前端isoft_iwork_ui打包
+①终端执行 npm run build
+②将dist下面的所有文件(静态文件)（可以先压缩为zip文件再上传）
+
+3.部署
+①将后端isoft_iwork_web.tar.gz 和 前端zip文件，上传到 /home/linker/isoft_iwork_web目录下，并解压。
+②给isoft_iwork_web 增加可执行权限，使用命令是：chmod +x isoft_iwork_web
+③将前端静态资源static放到当前目录下：/home/linker/isoft_iwork_web (如果已存在static目录，可以整体替换)
+④将前端index.html放入目录：/home/linker/isoft_iwork_web/views/ （如果已存在，则替换）
+⑤执行启动命令：nohup ./isoft_iwork_web &
+
