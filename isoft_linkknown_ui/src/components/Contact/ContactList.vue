@@ -9,7 +9,7 @@
       <div style="display: flex;">
         <div style="width: 60%;">
           <div style="min-height: 500px;margin: 25px 0 0 90px;">
-            <div style="border: 1px solid #eee;height: 420px;overflow-y:scroll;padding: 20px;">
+            <div id="messageDiv" style="border: 1px solid #eee;height: 420px;overflow-y:scroll;padding: 20px;">
               <div style="text-align: center;margin-bottom: 5px;">
                 <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
                 <span class="isoft_tag1">智能小豆为您 <span class="isoft_color_green1">{{loginUserNickName}}</span> 解答</span>
@@ -18,12 +18,9 @@
               <div v-if="isLoginUserName">
                 <div style="text-align: center;"><span class="isoft_tag1">自己和自己聊天是不是有点蠢啊，^_^</span></div>
               </div>
-              <div v-else-if="isLoading">
-                <div style="text-align: center;"><span class="isoft_tag1">小豆正在为您拼命加载中,请耐心等待，^_^</span></div>
-              </div>
               <div v-else>
                 <div style="text-align: center;">
-                  <span class="isoft_tag1 isoft_point_cursor" @click="refreshContactData(-1)">查看更早信息</span>
+                  <span class="isoft_tag1 isoft_point_cursor" @click="refreshOldContactData">查看更早信息</span>
                 </div>
 
                 <div :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'"
@@ -110,6 +107,8 @@
 <script>
   import {
     checkArrayEmpty,
+    checkEmpty,
+    checkFastClick,
     CheckHasLoginConfirmDialog,
     CheckHasLoginConfirmDialog2,
     checkNotEmpty,
@@ -123,7 +122,6 @@
     name: "ContactList",
     data() {
       return {
-        isLoading: false,
         sendMsgText: '',
         showHelpPattern: 1,  // 1、自助服务 2、常见问题
         contactMessages: [],
@@ -133,6 +131,8 @@
         minTime: null,  // 当前消息的最早时间
         maxTime: null,  // 当前消息的最新时间
         isRefreshing: false,
+        isSending: false,
+        
       }
     },
     methods: {
@@ -141,16 +141,24 @@
       },
       sendMsg: function () {
         var _this = this;
-        CheckHasLoginConfirmDialog2(this, async function () {
-          const result = await AddContactMessage({
-            contact_user_name: _this.$route.query.userName,
-            message_type: 'default', message_text: _this.sendMsgText
+        if (checkEmpty(_this.sendMsgText) || _this.isSending) {     // 正在发送中则点击无效
+          return;
+        }
+        try {
+          _this.isSending = true;
+          CheckHasLoginConfirmDialog2(this, async function () {
+            const result = await AddContactMessage({
+              contact_user_name: _this.$route.query.userName,
+              message_type: 'default', message_text: _this.sendMsgText
+            });
+            if (result.status === "SUCCESS") {
+              _this.sendMsgText = '';
+              _this.refreshContactData(1);
+            }
           });
-          if (result.status === "SUCCESS") {
-            _this.sendMsgText = '';
-            _this.refreshContactData(1);
-          }
-        });
+        } finally {
+          _this.isSending = false;
+        }
       },
       getTimestamp: function (newFlag) {
         // 新消息
@@ -168,8 +176,13 @@
           }
         }
       },
+      refreshOldContactData: function () {
+        if (!checkFastClick()) {
+          this.refreshContactData(-1);
+        }
+      },
       refreshContactData: async function (newFlag) {
-        if (this.isRefreshing) {     // 防止并发造成重复数据
+        if (this.isRefreshing && checkFastClick()) {     // 防止并发造成重复数据
           return;
         }
         try {
@@ -195,7 +208,12 @@
           return;
         }
         let newContactMessages = await FillUserNickNameInfoByNames(result.contactMessages, "contact_user_name");
-        this.contactMessages = newFlag > 0 ? this.contactMessages.concat(newContactMessages) : newContactMessages.concat(this.contactMessages);
+        this.contactMessages = newFlag > 0 ? this.contactMessages.concat(newContactMessages.reverse()) : newContactMessages.reverse().concat(this.contactMessages);
+        this.$nextTick(() => {  // 数据渲染后才滚动到底部
+          // 滚动到底部
+          var scrollDom = this.$el.querySelector("#messageDiv");
+          scrollDom.scrollTop = scrollDom.scrollHeight;
+        });
       },
       refreshContactUserList: async function () {
         const result = await GetContactUserList();
@@ -204,12 +222,6 @@
         }
       },
       firstRefreshContactData: function () {
-        // 加载效果 2 s 后消失
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 2000);
-
         // 先立即执行一次,然后再 10 s 后定时执行
         this.refreshContactUserList();
         this.refreshContactData(-1);
