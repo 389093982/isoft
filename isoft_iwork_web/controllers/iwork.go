@@ -292,10 +292,11 @@ func GetRunlogRecordCount(works []models.Work) interface{} {
 var siMutex sync.Mutex
 
 func (this *WorkController) SaveProject() {
-	defer logs.Info("end SaveProject")
-	logs.Info("start SaveProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
+
+	defer logs.Info("end SaveProject")
+	logs.Info("start SaveProject")
 
 	persistentToFile()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
@@ -303,10 +304,12 @@ func (this *WorkController) SaveProject() {
 }
 
 func (this *WorkController) ImportProject() {
-	defer logs.Info("end ImportProject")
-	logs.Info("start ImportProject")
 	siMutex.Lock()
 	defer siMutex.Unlock()
+
+	defer logs.Info("end ImportProject")
+	logs.Info("start ImportProject")
+
 	defer memory.FlushAll()
 	importProject()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

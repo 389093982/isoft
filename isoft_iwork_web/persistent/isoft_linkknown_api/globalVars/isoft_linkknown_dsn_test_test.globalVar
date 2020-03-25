@@ -3,12 +3,12 @@
 	<AppId>5</AppId>
 	<EnvName>test</EnvName>
 	<Name>isoft_linkknown_dsn_test</Name>
-	<Value>linker:Linker2020@tcp(193.112.162.61:3306)/isoft_linkknown_test?allowNativePasswords=true&amp;charset=utf8&amp;loc=Asia%2FShanghai</Value>
+	<Value>linker:Linker2020@tcp(193.112.162.61:3306)/isoft_linkknown_test?allowNativePasswords=true&amp;charset=utf8&amp;loc=Asia%2FShanghai&amp;parseTime=True</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-03-05T20:34:10+08:00</CreatedTime>
+	<CreatedTime>2020-03-25T09:50:40+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-03-05T20:34:10+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-03-25T09:50:40+08:00</LastUpdatedTime>
 </GlobalVar>

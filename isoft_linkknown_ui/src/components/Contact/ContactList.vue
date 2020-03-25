@@ -23,7 +23,7 @@
               </div>
               <div v-else>
                 <div style="text-align: center;">
-                  <span class="isoft_tag1 isoft_point_cursor" @click="this.refreshOldContactData">查看更早信息</span>
+                  <span class="isoft_tag1 isoft_point_cursor" @click="refreshContactData(-1)">查看更早信息</span>
                 </div>
 
                 <div :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'"
@@ -148,39 +148,40 @@
           });
           if (result.status === "SUCCESS") {
             _this.sendMsgText = '';
-            _this.refreshContactData();
+            _this.refreshContactData(1);
           }
         });
       },
-      // 准备加载消息的时间区域
-      prepareTimeArea: function (endTime, intervalTime) {
-        var startTime = endTime - intervalTime * 1000;  //intervalTime s 之前的时间
-        return {startTime, endTime}
+      getTimestamp: function (newFlag) {
+        // 新消息
+        if (newFlag > 0) {
+          if (checkArrayEmpty(this.contactMessages)) {
+            return new Date().getTime() - 3600 * 24 * 30 * 1000;
+          } else {
+            return Math.max.apply(Math, this.contactMessages.map(m => m.last_updated_timestamp));
+          }
+        } else {   // 历史消息
+          if (checkArrayEmpty(this.contactMessages)) {
+            return new Date().getTime();
+          } else {
+            return Math.min.apply(Math, this.contactMessages.map(m => m.last_updated_timestamp));
+          }
+        }
       },
-      // 加载更早时间的消息,即历史最早消息之前 30 天中最近的 100(limit) 条消息
-      refreshOldContactData: function () {
-        this.refreshContactData(this.prepareTimeArea(this.minTime, 3600 * 24 * 30), true);
-      },
-      refreshContactData: async function (duration, oldFlag) {
+      refreshContactData: async function (newFlag) {
         if (this.isRefreshing) {     // 防止并发造成重复数据
           return;
         }
         try {
           this.isRefreshing = true;
-          if (duration == null) {
-            duration = {startTime: this.maxTime, endTime: new Date().getTime()}   // 上一次结束时间到现在
-          }
-          if (oldFlag == null) {
-            oldFlag = false;
-          }
           if (checkNotEmpty(this.$route.query.userName) && checkNotEmpty(this.$route.query.nickName)) {
             const result = await GetContactMessage({
               contact_user_name: this.$route.query.userName,
-              startTime: duration.startTime,
-              endTime: duration.endTime,
+              newFlag: newFlag,
+              timestamp: this.getTimestamp(newFlag),
             });
             if (result.status === "SUCCESS") {
-              this.smartRenderContactMessage(result, duration, oldFlag);
+              this.smartRenderContactMessage(result, newFlag);
             }
           }
         } finally {
@@ -189,33 +190,18 @@
 
       },
       // 智能组装数据
-      smartRenderContactMessage: async function (result, duration, oldFlag) {
+      smartRenderContactMessage: async function (result, newFlag) {
         if (result == null || checkArrayEmpty(result.contactMessages)) {
-          this.minTime = oldFlag ? duration.minTime : this.minTime;
           return;
         }
         let newContactMessages = await FillUserNickNameInfoByNames(result.contactMessages, "contact_user_name");
-        this.contactMessages = oldFlag ? newContactMessages.concat(this.contactMessages) : this.contactMessages.concat(newContactMessages);
-
-        // 重新计算历史最小最大时间
-        // 最小时间=历史最小时间/实际最小时间
-        this.minTime = Math.min.apply(Math, newContactMessages.map(m => new Date(m.last_updated_time).getTime()).concat(this.minTime).filter(m => m != null));
-        // 最大时间=历史最大时间/实际最大时间
-        this.maxTime = Math.max.apply(Math, newContactMessages.map(m => new Date(m.last_updated_time).getTime()).concat(this.maxTime).concat(duration.endTime).filter(m => m != null));
+        this.contactMessages = newFlag > 0 ? this.contactMessages.concat(newContactMessages) : newContactMessages.concat(this.contactMessages);
       },
       refreshContactUserList: async function () {
         const result = await GetContactUserList();
         if (result.status === "SUCCESS") {
           this.contactUsers = await FillUserNickNameInfoByNames(result.contactUsers, "contact_user_name");
         }
-      }
-    },
-    computed: {
-      isLoginUserName: function () {
-        return GetLoginUserName() === this.$route.query.userName;
-      },
-      loginUserNickName: function () {
-        return getNickName();
       },
       firstRefreshContactData: function () {
         // 加载效果 2 s 后消失
@@ -226,12 +212,19 @@
 
         // 先立即执行一次,然后再 10 s 后定时执行
         this.refreshContactUserList();
-        // 首先加载 30 天内的消息最近 100 条
-        this.refreshContactData(this.prepareTimeArea(new Date().getTime(), 3600 * 24 * 30));
+        this.refreshContactData(-1);
 
         this.refreshContactUserTimer = setInterval(this.refreshContactUserList, 10000);
-        this.refreshContactDataTimer = setInterval(this.refreshContactData, 10000);
+        this.refreshContactDataTimer = setInterval(() => this.refreshContactData(1), 10000);
       }
+    },
+    computed: {
+      isLoginUserName: function () {
+        return GetLoginUserName() === this.$route.query.userName;
+      },
+      loginUserNickName: function () {
+        return getNickName();
+      },
     },
     mounted() {
       this.firstRefreshContactData();
