@@ -80,7 +80,7 @@
   import Element from "./ElementList"
   import IFileUpload from "../../Common/file/IFileUpload"
   import {EditElement, FilterElementByPlacement, QueryElementById, QueryPlacementByName} from "../../../api"
-  import {checkEmpty, handleSpecial, oneOf} from "../../../tools"
+  import {checkEmpty, oneOf} from "../../../tools"
 
   export default {
     name: "ElementEdit",
@@ -189,7 +189,7 @@
       },
       uploadComplete: function (result) {
         if (result.status == "SUCCESS") {
-          this.formInline.imgpath = handleSpecial(result.fileServerPath);
+          this.formInline.imgpath = result.fileServerPath;
         }
       },
       refreshElement: async function (id) {
