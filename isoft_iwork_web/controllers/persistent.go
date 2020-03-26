@@ -70,6 +70,7 @@ func persistentAppIdsToFile(appids []models.AppId) {
 	for _, appid := range appids {
 		_persistentDirPath := path.Join(persistentDirPath, appid.AppName)
 		filepath := path.Join(_persistentDirPath, "appid", fmt.Sprintf(`%s.appid`, appid.AppName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(appid))
 	}
 }
@@ -79,6 +80,7 @@ func persistentAuditTasksToFile(appids []models.AppId) {
 	for _, task := range tasks {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, task.AppId))
 		filepath := path.Join(_persistentDirPath, "audits", fmt.Sprintf(`%s.audit`, task.TaskName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(task))
 	}
 }
@@ -88,6 +90,7 @@ func persistentModulesToFile(appids []models.AppId) {
 	for _, module := range modules {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, module.AppId))
 		filepath := path.Join(_persistentDirPath, "modules", fmt.Sprintf(`%s.module`, module.ModuleName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(module))
 	}
 }
@@ -97,6 +100,7 @@ func persistentFiltersToFile(appids []models.AppId) {
 	for _, filter := range filters {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, filter.AppId))
 		filepath := path.Join(_persistentDirPath, "filters", fmt.Sprintf(`%s.filter`, filter.FilterWorkName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(filter))
 	}
 }
@@ -106,6 +110,7 @@ func persistentGlobalVarsToFile(appids []models.AppId) {
 	for _, globalVar := range globalVars {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, globalVar.AppId))
 		filepath := path.Join(_persistentDirPath, "globalVars", fmt.Sprintf(`%s_%s.globalVar`, globalVar.Name, globalVar.EnvName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(globalVar))
 	}
 }
@@ -115,6 +120,7 @@ func persistentQuartzsToFile(appids []models.AppId) {
 	for _, meta := range metas {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, meta.AppId))
 		filepath := path.Join(_persistentDirPath, "quartzs", fmt.Sprintf(`%s.quartz`, meta.TaskName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(meta))
 	}
 }
@@ -124,6 +130,7 @@ func persistentResourcesToFile(appids []models.AppId) {
 	for _, resource := range resources {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, resource.AppId))
 		filepath := path.Join(_persistentDirPath, "resources", fmt.Sprintf(`%s.resource`, resource.ResourceName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(resource))
 	}
 }
@@ -133,6 +140,7 @@ func persistentMigratesToFile(appids []models.AppId) {
 	for _, migrate := range migrates {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, migrate.AppId))
 		filepath := path.Join(_persistentDirPath, "migrates", fmt.Sprintf(`%s`, migrate.MigrateName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(migrate))
 	}
 }
@@ -142,12 +150,14 @@ func persistentWorkCahcesToFile(appids []models.AppId) {
 	for _, workCahce := range workCahces {
 		_persistentDirPath := path.Join(persistentDirPath, getAppName(appids, workCahce.Work.AppId))
 		filepath := path.Join(_persistentDirPath, "works", fmt.Sprintf(`%s.work`, workCahce.Work.WorkName))
+		logs.Info("存储文件 %s 完成!", filepath)
 		fileutil.WriteFileSecurity(filepath, xmlutil.RenderToString(workCahce))
 	}
 }
 
 // 长度过长可能会批量导入失败,需要进一步拆分
 func persistentWorkFilesToDB(dirPath string) {
+	defer logs.Info("导入目录 %s 完成!", dirPath)
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
 	var err error
 	works := make([]models.Work, 0)
@@ -198,7 +208,7 @@ func Append(slice interface{}, value interface{}) interface{} {
 
 // 批量插入 DB
 func persistentMultiToDB(dirPath string, tp reflect.Type) {
-	defer logs.Info("导入目录 %s 成功!", dirPath)
+	defer logs.Info("导入目录 %s 完成!", dirPath)
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
 	if filepaths == nil || len(filepaths) == 0 {
 		return
