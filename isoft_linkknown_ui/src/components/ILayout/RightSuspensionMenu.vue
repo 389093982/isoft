@@ -24,7 +24,7 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea">
+    <div class="itemArea" @click="$router.push({path:'/contact/contactList'})">
       <Icon type="ios-people-outline" :size="28"/>
       <p>社交</p>
     </div>
