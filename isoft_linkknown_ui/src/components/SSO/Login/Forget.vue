@@ -148,6 +148,8 @@
         const result = await ModifyPwd(this.formValidate.username, this.formValidate.passwd, this.formValidate.verifycode);
         if (result.status === "SUCCESS") {
           this.$Message.success("密码修改成功!");
+          localStorage.setItem("__userName", this.formValidate.username);
+          localStorage.setItem("__passwd", this.formValidate.passwd);
           // 注册成功延迟 2s 跳往登录页面
           setTimeout(function () {
             _this.$router.push({path: '/sso/login'});
