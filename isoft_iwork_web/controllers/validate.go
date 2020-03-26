@@ -128,8 +128,10 @@ func checkBeginAndEnd(steps []models.WorkStep, logCh chan *models.ValidatelogDet
 			}
 		}
 	}
-	checkError(&steps[0], "work_start", "work must start with a work_start node!")
-	checkError(&steps[len(steps)-1], "work_end", "work must end with a work_end node!")
+	if len(steps) > 0 {
+		checkError(&steps[0], "work_start", "work must start with a work_start node!")
+		checkError(&steps[len(steps)-1], "work_end", "work must end with a work_end node!")
+	}
 	return
 }
 

@@ -198,6 +198,7 @@ func Append(slice interface{}, value interface{}) interface{} {
 
 // 批量插入 DB
 func persistentMultiToDB(dirPath string, tp reflect.Type) {
+	defer logs.Info("导入目录 %s 成功!", dirPath)
 	filepaths, _, _ := fileutils.GetAllSubFile(dirPath)
 	if filepaths == nil || len(filepaths) == 0 {
 		return
