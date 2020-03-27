@@ -45,8 +45,8 @@
           <Row style="margin: 10px 0;min-height: 200px;">
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
-                <span :style="{color:index===clickIndex?'green':''}">
-                  第 {{index + 1}} 集:{{cVideo.video_name}}
+                <span :style="{color:index===clickIndex?'#00c806':''}">
+                  第{{index + 1}}集: {{cVideo.video_name | filterSuffix}}
                 </span>
               </span>
               <router-link style="float: right;" :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
@@ -229,7 +229,13 @@
     },
     watch: {
       "$route.params": "refreshCourseDetail"      // 如果 $route.params 有变化,会再次执行该方法
-    }
+    },
+    filters: {
+      filterSuffix: function (value) {
+        // 去除视频文件后缀
+        return value.slice(0, value.indexOf("."));
+      }
+    },
   }
 </script>
 
