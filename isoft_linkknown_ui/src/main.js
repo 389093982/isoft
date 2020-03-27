@@ -18,6 +18,10 @@ import 'mavon-editor/dist/css/index.css'
 import animated from 'animate.css'
 // 使用全局的 hover.css
 import hovered from 'hover.css'
+//使用vuescroll滚动条
+import vuescroll from "vuescroll";
+//引入vuescroll样式
+import "vuescroll/dist/vuescroll.css";
 //------------------------------------------------------------------
 // 注册自定义公共组件
 import IBeautifulLink from "./components/Common/link/IBeautifulLink"
@@ -33,6 +37,8 @@ Vue.use(animated)
 Vue.use(hovered)
 
 Vue.component('IBeautifulLink', IBeautifulLink);
+
+Vue.use(vuescroll);
 //------------------------------------------------------------------
 
 Vue.config.productionTip = false

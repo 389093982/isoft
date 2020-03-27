@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #232325;height: 700px;width: 99.5%">
+  <div style="background-color: rgba(35,35,37,0.95);height: 700px;width: 99.5%">
     <!--整体一行-->
     <Row>
       <!--左侧视频播放-->
@@ -17,28 +17,31 @@
       </Col>
       <!--右侧分上下-->
       <Col span="6" offset="2">
-        <!--上：本主题视频集数-->
-        <div style="font-size: 20px;margin:35px 0 0 0 ;color: #999">
-          {{course.course_name}}
-        </div>
-        <div style="margin: 5px 0 0 10px ">
-          <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
-            <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+        <div style="background-color: #282828;margin:40px 0 0 0 ; padding: 5px 0 0 5px">
+          <!--上：本主题视频集数-->
+          <div style="font-size: 20px;color: #999">
+            {{course.course_name}}
           </div>
-        </div>
-        <!--下：推荐课程-->
-        <div style="font-size: 20px;margin:20px 0 0 0 ;color: #999">
-          推荐课程
-        </div>
-        <div style="margin: 5px 0 0 10px ;">
-          <div class="course_item" v-for="(course, index) in recommendCourses">
-            <div>{{course.course_name}}</div>
-            <div class="course_small_image" style="width: 155px;">
-              <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-              <img v-else src="../../../assets/default.png" height="100" width="155"/>
-              <div class="ico_play"></div>
+          <vue-scroll :ops="scrollOps" style="width:99%;height:100px;">
+            <div style="margin: 5px 0 0 10px ">
+              <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
+                <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+              </div>
             </div>
-
+          </vue-scroll>
+          <!--下：推荐课程-->
+          <div style="font-size: 20px;margin:20px 0 0 0 ;color: #999">
+            推荐课程
+          </div>
+          <div style="margin: 5px 0 0 10px ;">
+            <div class="course_item" v-for="(course, index) in recommendCourses">
+              <div>{{course.course_name}}</div>
+              <div class="course_small_image" style="width: 155px;">
+                <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
+                <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                <div class="ico_play"></div>
+              </div>
+            </div>
           </div>
         </div>
       </Col>
@@ -58,6 +61,22 @@
         course: '',
         curVideo: '',//当前播放视频
         currentClickIndex:0,
+
+        // 滚动条设置
+        scrollOps: {
+          vuescroll: {},
+          scrollPanel: {},
+          rail: {
+            keepShow: true
+          },
+          bar: {
+            keepShow: true,//是否一直显示
+            hoverStyle: true,
+            onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
+            background: "#333",//滚动条颜色
+            opacity: 1,//滚动条透明度
+          }
+        }
       }
     },
     methods: {

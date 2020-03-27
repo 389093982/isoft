@@ -32,7 +32,8 @@
     "vue": "^2.5.2",
     "vue-qr": "^2.2.1",
     "vue-router": "^3.0.1",
-    "vue-video-player": "^5.0.2"
+    "vue-video-player": "^5.0.2",
+    "vuescroll": "^4.15.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
