@@ -22,6 +22,7 @@
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import MultiClickButton from "../../Common/button/MultiClickButton"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
+  import {checkFastClick} from "../../../tools";
 
 
   export default {
@@ -141,6 +142,10 @@
                       } else if (bindData == 3) {   // 复制模式
                         _this.copyElement(_this.elements[params.index].id);
                       } else {
+                        if (checkFastClick()) {
+                          _this.$Message.error("点击过快！");
+                          return;
+                        }
                         const result = await UpdateElementStatus(_this.elements[params.index].id, bindData);
                         if (result.status == "SUCCESS") {
                           _this.$Message.success("操作成功!");
