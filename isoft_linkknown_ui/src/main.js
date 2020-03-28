@@ -22,26 +22,26 @@ import hovered from 'hover.css'
 import vuescroll from "vuescroll";
 //引入vuescroll样式
 import "vuescroll/dist/vuescroll.css";
-//------------------------------------------------------------------
 // 注册自定义公共组件
 import IBeautifulLink from "./components/Common/link/IBeautifulLink"
 import "./assets/css/isoft_common.css"
+//------------------------------------------------------------------
 
-Vue.prototype.GLOBAL = global_                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
+Vue.prototype.GLOBAL = global_;                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
 Vue.use(iView);
 
-Vue.use(mavonEditor)
+Vue.use(mavonEditor);
 
-Vue.use(animated)
+Vue.use(animated);
 
-Vue.use(hovered)
+Vue.use(hovered);
 
 Vue.component('IBeautifulLink', IBeautifulLink);
 
 Vue.use(vuescroll);
 //------------------------------------------------------------------
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 
 router.beforeEach((to, from, next) => {

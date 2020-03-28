@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: rgba(35,35,37,0.95);height: 700px;width: 99.5%">
+  <div class="bodyColor" style="height: 700px;width: 99.5%" :style="{'position':bodyPosition}">
     <!--整体一行-->
     <Row>
       <!--左侧视频播放-->
@@ -8,7 +8,7 @@
           正在播放: {{course.course_name}} / {{curVideo.video_name | filterSuffix }}
         </div>
         <div>
-          <video ref="video" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
+          <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
             <source type="video/mp4">
             <source type="video/ogg">
             您的浏览器不支持Video标签。
@@ -16,33 +16,37 @@
         </div>
       </Col>
       <!--右侧分上下-->
-      <Col span="6" offset="2">
-        <div style="background-color: #282828;margin:40px 0 0 0 ; padding: 5px 0 0 5px">
-          <!--上：本主题视频集数-->
-          <div style="font-size: 20px;color: #999">
-            {{course.course_name}}
-          </div>
-          <vue-scroll :ops="scrollOps" style="width:99%;height:100px;">
-            <div style="margin: 5px 0 0 10px ">
-              <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
-                <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+      <Col span="5" offset="2">
+        <!--右侧竖块-->
+        <div style="margin:30px 0 0 0 ;">
+          <Tabs size="small">
+            <TabPane :label="course.course_name">
+              <!--本主题视频集数-->
+              <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
+                <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                  <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
+                    <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+                  </div>
+                </vue-scroll>
               </div>
-            </div>
-          </vue-scroll>
-          <!--下：推荐课程-->
-          <div style="font-size: 20px;margin:20px 0 0 0 ;color: #999">
-            推荐课程
-          </div>
-          <div style="margin: 5px 0 0 10px ;">
-            <div class="course_item" v-for="(course, index) in recommendCourses">
-              <div>{{course.course_name}}</div>
-              <div class="course_small_image" style="width: 155px;">
-                <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-                <img v-else src="../../../assets/default.png" height="100" width="155"/>
-                <div class="ico_play"></div>
+            </TabPane>
+            <TabPane label="推荐课程">
+              <!--推荐课程-->
+              <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
+                <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                  <div class="course_item" v-for="(course, index) in recommendCourses">
+                    <div>{{course.course_name}}</div>
+                    <div class="course_small_image" style="width: 155px;">
+                      <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
+                      <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                      <div class="ico_play"></div>
+                    </div>
+                  </div>
+                </vue-scroll>
               </div>
-            </div>
-          </div>
+            </TabPane>
+          </Tabs>
+
         </div>
       </Col>
     </Row>
@@ -54,8 +58,10 @@
 
   export default {
     name: "VideoPlay",
+    components: {},
     data() {
       return {
+        bodyPosition:'',
         recommendCourses: [],
         cVideos: [],
         course: '',
@@ -64,10 +70,18 @@
 
         // 滚动条设置
         scrollOps: {
-          vuescroll: {},
-          scrollPanel: {},
+          vuescroll: {
+            mode: 'native',//native 使用与PC ， slide 使用移动端
+            sizeStrategy: 'percent',//如果父容器不是固定高度，请设置为 number , 否则保持默认的percent即可
+            detectResize: true//是否检测内容尺寸发生变化
+          },
+          scrollPanel: {
+            initialScrollY: false,//只要组件mounted之后自动滚动的距离。 例如 100 or 10%
+            scrollingX: false,//是否启用 x 或者 y 方向上的滚动
+            scrollingY: true,
+          },
           rail: {
-            keepShow: true
+            keepShow: false //是否即使 bar 不存在的情况下也保持显示
           },
           bar: {
             keepShow: true,//是否一直显示
@@ -136,6 +150,7 @@
       this.addPlayNextEventListener();
       // 加载热门推荐课程列表
       this.refreshCustomTagCourse('recommand');
+      this.$ref.scrollLock.maxHeight =100;
     },
     filters: {
       filterSuffix: function (value) {
@@ -152,7 +167,16 @@
 </script>
 
 <style scoped>
-  video {
+
+  .bodyColor{
+    background-color: rgba(35,35,37,0.95)
+  }
+
+  .scrollBgColor{
+    background-color: #282828;
+  }
+
+  .videoClass {
     object-fit:fill;
     width:795px;
     height:450px;
