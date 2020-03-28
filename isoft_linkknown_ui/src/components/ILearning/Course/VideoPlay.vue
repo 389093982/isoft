@@ -1,67 +1,82 @@
 <template>
-  <div class="bodyColor" style="height: 700px;width: 99.5%" :style="{'position':bodyPosition}">
-    <!--整体一行-->
-    <Row>
-      <!--左侧视频播放-->
-      <Col span="15" style="position: relative;left: 80px;">
-        <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #999">
-          正在播放: {{course.course_name}} / {{curVideo.video_name | filterSuffix }}
-        </div>
-        <div>
-          <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
-            <source type="video/mp4">
-            <source type="video/ogg">
-            您的浏览器不支持Video标签。
-          </video>
-        </div>
-      </Col>
-      <!--右侧分上下-->
-      <Col span="5" offset="2">
-        <!--右侧竖块-->
-        <div style="margin:30px 0 0 0 ;">
-          <Tabs size="small">
-            <TabPane :label="course.course_name">
-              <!--本主题视频集数-->
-              <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
-                <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
-                  <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
-                    <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
-                  </div>
-                </vue-scroll>
-              </div>
-            </TabPane>
-            <TabPane label="推荐课程">
-              <!--推荐课程-->
-              <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
-                <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
-                  <div class="course_item" v-for="(course, index) in recommendCourses">
-                    <div>{{course.course_name}}</div>
-                    <div class="course_small_image" style="width: 155px;">
-                      <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-                      <img v-else src="../../../assets/default.png" height="100" width="155"/>
-                      <div class="ico_play"></div>
-                    </div>
-                  </div>
-                </vue-scroll>
-              </div>
-            </TabPane>
-          </Tabs>
+  <div>
 
-        </div>
-      </Col>
-    </Row>
+    <div class="bodyColor" style="height: 620px">
+      <!--整体一行-->
+      <Row>
+        <!--左侧视频播放-->
+        <Col span="15" style="margin-left: 80px">
+          <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #999">
+            正在播放: {{course.course_name}} / 第{{currentClickIndex+1}}集: {{curVideo.video_name | filterSuffix }}
+          </div>
+          <div>
+            <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
+              <source type="video/mp4">
+              <source type="video/ogg">
+              您的浏览器不支持Video标签。
+            </video>
+          </div>
+        </Col>
+        <!--右侧分上下-->
+        <Col span="5" style="margin-left: 30px">
+          <!--右侧竖块-->
+          <div style="margin:30px 0 0 0 ;">
+            <Tabs size="small">
+              <TabPane :label="course.course_name">
+                <!--本主题视频集数-->
+                <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
+                  <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
+                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+                    </div>
+                  </vue-scroll>
+                </div>
+              </TabPane>
+              <TabPane label="推荐课程">
+                <!--推荐课程-->
+                <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
+                  <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                    <div class="course_item" v-for="(course, index) in recommendCourses">
+                      <div>{{course.course_name}}</div>
+                      <div class="course_small_image" style="width: 155px;">
+                        <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
+                        <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                        <div class="ico_play"></div>
+                      </div>
+                    </div>
+                  </vue-scroll>
+                </div>
+              </TabPane>
+            </Tabs>
+
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col style="margin-left: 80px">
+          这一块待定
+        </Col>
+      </Row>
+    </div>
+
+    <div>
+      <div class="isoft_bg_white isoft_pd10">
+        <HotRecommend :show-display-icon="true"></HotRecommend>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
   import {QueryCustomTagCourse, ShowCourseDetail, videoPlayUrl} from "../../../api"
+  import HotRecommend from "./HotRecommend";
 
   export default {
     name: "VideoPlay",
-    components: {},
+    components: {HotRecommend},
     data() {
       return {
-        bodyPosition:'',
         recommendCourses: [],
         cVideos: [],
         course: '',
@@ -106,7 +121,9 @@
         }
       },
       playVideo: function (video_id) {
+        // 右侧选中播放指示
         this.currentClickIndex = this.cVideos.indexOf(this.curVideo);
+        //播放curVideo
         let xhr = new XMLHttpRequest();                                                     //创建XMLHttpRequest对象
         xhr.open('GET', videoPlayUrl + "?video_id=" + video_id, true);                      //配置请求方式、请求地址以及是否同步
         xhr.responseType = 'blob';                                                          //设置结果类型为blob;
@@ -140,6 +157,16 @@
           this.recommendCourses = result.custom_tag_courses;
         }
       },
+      sleep:function (numberMillis) {
+        let now = new Date();
+        let exitTime = now.getTime() + numberMillis;
+        while (true) {
+          now = new Date();
+          if (now.getTime() > exitTime){
+            return;
+          }
+        }
+      }
     },
     mounted: function () {
       // 加载当前课程所有视频资源,为自动播放下一集做准备
