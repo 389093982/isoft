@@ -10,7 +10,7 @@
           <Row v-for="(waitYourAnswer,index) in waitYourAnswerList" :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
             <Row>
               <Col span="20" class="title_hover" style="cursor: pointer">
-                <span>
+                <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
                   {{waitYourAnswer.short_desc | filterLimitFunc(15)}}
                 </span>
               </Col>
