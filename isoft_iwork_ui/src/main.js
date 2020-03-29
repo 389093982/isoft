@@ -12,14 +12,24 @@ import 'iview/dist/styles/iview.css'
 // 使用 vue-markdown
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import {checkEmpty} from "./tools";
 
 router.beforeEach((to, from, next) => {
-  if (to.path.indexOf("/iwork/appidList") >= 0) {
+  // 登录参数拦截
+  var expiredTime = localStorage.getItem("iwork_loginExpiredSecond");
+  if (checkEmpty(localStorage.getItem("iwork_userName")) || checkEmpty(localStorage.getItem("iwork_passwd"))
+    || !(expiredTime != null && new Date().getTime() < expiredTime)) {
+    if (to.path.indexOf("/security/login") === -1) {
+      next("/security/login");
+      return;
+    }
+  }
+  if (to.path.indexOf("/iwork/appidList") >= 0 || to.path.indexOf("/security/login") >= 0) {
     next();
     return;
   }
-  let appId = localStorage.getItem("appId");
-  if (appId == null || appId == undefined) {
+  let appId = localStorage.getItem("iwork_appId");
+  if (appId == null || appId === undefined) {
     alert("请先选择 AppID");
     next("/iwork/appidList");
   } else {

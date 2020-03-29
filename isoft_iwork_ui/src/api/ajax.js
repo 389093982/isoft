@@ -6,10 +6,14 @@ import axios from 'axios'
 import Qs from 'qs'
 
 function wrapAppId(data) {
-  let appId = localStorage.getItem("appId");
-  if (appId != null && appId != undefined) {
+  let appId = localStorage.getItem("iwork_appId");
+  let tokenString = localStorage.getItem("iwork_tokenString");
+  if (appId != null && appId !== undefined) {
     let _appId = JSON.parse(appId);
     data.app_id = _appId.id;
+  }
+  if (tokenString != null && tokenString !== undefined) {
+    data.tokenString = tokenString;
   }
   return data;
 }

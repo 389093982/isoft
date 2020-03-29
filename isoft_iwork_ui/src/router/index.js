@@ -9,6 +9,7 @@ const WorkStepList = () => import("@/components/IWork/IWorkStep/WorkStepList");
 const RunLogList = () => import("@/components/IWork/IRunLog/RunLogList");
 const RunlogDetail = () => import("@/components/IWork/IRunLog/RunlogDetail");
 const IWorkLayout = () => import("@/components/ILayout/IWorkLayout");
+const ILayout = () => import("@/components/ILayout/ILayout");
 const QuartzList = () => import("@/components/IWork/IQuartz/QuartzList");
 const AppidList = () => import("@/components/IWork/Appid/AppidList");
 const ResourceList = () => import("@/components/IWork/IResource/ResourceList");
@@ -20,6 +21,7 @@ const GlobalVarList = () => import("@/components/IWork/IGlobalVar/GlobalVarList"
 const DashBoard = () => import("@/components/IWork/IDashBoard/DashBoard");
 const IModuleList = () => import("@/components/IWork/IModule/IModuleList");
 const IFilterList = () => import("@/components/IWork/IFilter/IFilterList");
+const Login = () => import("@/components/IWork/Security/Login");
 
 Vue.use(Router);
 
@@ -49,6 +51,13 @@ const IWorkRouter = [
       {path: 'dashboard',component: DashBoard},
       {path: 'audit',component: AuditTaskList},
       {path: 'audit_detail',component: AuditDetail},
+    ]
+  },
+  {
+    path: '/security',
+    component: ILayout,
+    children: [
+      {path: 'login', component: Login},
     ]
   }
 ];
