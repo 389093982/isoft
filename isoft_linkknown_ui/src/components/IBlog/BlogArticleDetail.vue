@@ -105,7 +105,7 @@
     components: {VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
     data() {
       return {
-        blog: null,
+        blog: '',
         userInfos: [],
         // 博客点赞
         blog_praise: false,

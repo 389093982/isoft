@@ -171,13 +171,10 @@
     mounted: function () {
       // 加载当前课程所有视频资源,为自动播放下一集做准备
       this.refreshCorsedetail();
-      // 播放当前视频
-      this.playVideo(this.$route.query.video_id);
       // 注册播放下一集事件
       this.addPlayNextEventListener();
       // 加载热门推荐课程列表
       this.refreshCustomTagCourse('recommand');
-      this.$ref.scrollLock.maxHeight =100;
     },
     filters: {
       filterSuffix: function (value) {

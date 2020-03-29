@@ -22,7 +22,7 @@
           </div>
 
           <p>用户印象：</p>
-          <VoteTags v-if="ask_expert.id>0" referer_type="answerExpert" :referer_id="ask_expert.id"/>
+          <VoteTags ref="VoteTags"/>
 
           <div class="isoft_bg_white isoft_top10 isoft_pd10">
             <ul>
@@ -75,7 +75,7 @@
 
 <script>
   import {EditAnswerExpert, ModifyGoodNumber, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
-  import {checkEmpty} from "../../tools"
+  import {checkEmpty,CheckHasLoginConfirmDialog2} from "../../tools"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import ExpertWall from "./ExpertWall";
   import VoteTags from "../Decorate/VoteTags";
@@ -119,21 +119,29 @@
           localStorage.setItem(this.GLOBAL.currentSite + "anser_expert" + answerId, true);
         }
       },
-      refreshQuestionDetail: async function (id) {
+      refreshQuestionDetail: async function () {
+        let id = this.$route.query.id;
         const result = await ShowAskExpertDetail({id: id});
         if (result.status === "SUCCESS") {
           this.ask_expert = result.ask_expert;
         }
+        //以这种方式刷新VoteTags
+        this.$refs.VoteTags.setRefererType("answerExpert");
+        this.$refs.VoteTags.setRefererId(this.ask_expert.id);
+        this.$refs.VoteTags.refreshVoteTags();
       },
       EditAnswerExpert: async function () {
-        if (!checkEmpty(this.answer)) {
-          const result = await EditAnswerExpert({question_id: this.ask_expert.id, answer: this.answer});
-          if (result.status === "SUCCESS") {
-            this.$Message.success("提交成功");
-            this.answer = '';
-            this.refreshAskanswerList();
+        var _this = this;
+        CheckHasLoginConfirmDialog2(this, async function () {
+          if (!checkEmpty(_this.answer)) {
+            const result = await EditAnswerExpert({question_id: _this.ask_expert.id, answer: _this.answer});
+            if (result.status === "SUCCESS") {
+              _this.$Message.success("提交成功");
+              _this.answer = '';
+              _this.refreshAskanswerList();
+            }
           }
-        }
+        });
       },
       refreshAskanswerList: async function () {
         const result = await QueryPageAnswerExpertList({
@@ -150,9 +158,15 @@
     mounted() {
       if (this.$route.query.id > 0) {
         this.refreshAskanswerList();
-        this.refreshQuestionDetail(this.$route.query.id);
+        this.refreshQuestionDetail();
       }
-    }
+    },
+    watch:{
+      "$route.params": function () {  // 如果 $route.params 有变化,会再次执行该方法
+        this.refreshAskanswerList();
+        this.refreshQuestionDetail();
+      }
+    },
   }
 </script>
 

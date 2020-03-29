@@ -73,7 +73,7 @@
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
 
           <p>读者印象：</p>
-          <VoteTags v-if="bookInfo.id > 0" referer_type="book_theme_type" :referer_id="bookInfo.id"/>
+          <VoteTags ref="VoteTags"/>
 
           <!-- 评论模块 -->
           <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
@@ -139,6 +139,11 @@
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
           this.isFavorite(this.bookInfo.id,"book_collect");
+
+          //以这种方式刷新VoteTags
+          this.$refs.VoteTags.setRefererType("book_theme_type");
+          this.$refs.VoteTags.setRefererId(this.bookInfo.id);
+          this.$refs.VoteTags.refreshVoteTags();
         }
       },
       renderNickName: function (user_name) {

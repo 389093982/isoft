@@ -3,21 +3,45 @@
 
     <div class="isoft_bg_white isoft_pd10">
       <IBeautifulCard title="等你来答">
+        <div slot="header_right">
+          <span style="font-size: 13px;margin-right: 30px;color: forestgreen;cursor: pointer" @click="otherRefresh()"><Icon type="md-refresh" />&nbsp;换一批</span>
+        </div>
         <div slot="content" style="padding: 10px;">
-          <Row v-for="(waitYourAnswer,index) in waitYourAnswerList" :gutter="10">
+          <Row v-for="(waitYourAnswer,index) in waitYourAnswerList" :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
             <Row>
-              <Col span="14">{{waitYourAnswer.question}}</Col>
-              <Col span="10"><Icon type="md-add-circle" @click="IWantAskAlso()"/>我也想问</Col>
+              <Col span="20" class="title_hover" style="cursor: pointer">
+                <span>
+                  {{waitYourAnswer.short_desc | filterLimitFunc(15)}}
+                </span>
+              </Col>
+              <Col span="4"><Icon type="ios-images-outline" :size="16" style="color:darkgrey;"/></Col>
             </Row>
-            <Row>
-              <Col span="3">
-                <!--随机头像-->
+            <Row style="font-size: 13px">
+              <Col span="4">
+                <span>
+                   <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index)">
+                </span>
+                <span style="position: relative;left: -10px;">
+                   <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index+1)">
+                </span>
               </Col>
-              <Col span="11" style="position: relative;left: -5px">
-                等1991人想问
+              <Col span="6" class="isoft_color_grey2" style="position: relative;left: -5px">
+                等{{waitYourAnswer.also_want_ask_number}}人想问
               </Col>
-              <Col span="10">
-                <Icon type="ios-create-outline" :size="20" style="color: rgba(136,255,72,0.81)"/>我来答
+              <Col span="6">
+                <span>
+                  <span v-if="whetherAsked(waitYourAnswer.id)" style="color: #ff9e3c;cursor: pointer">
+                    我也问过^_^
+                  </span>
+                  <span v-else @click="IWantAskAlso(waitYourAnswer.id)" style="color: #34B458;cursor: pointer">
+                    <Icon type="md-add" :size="15"/>我也想问
+                  </span>
+                </span>
+              </Col>
+              <Col span="7" offset="1" style="color: #34B458;cursor: pointer">
+                <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
+                  <Icon type="ios-create-outline" :size="20"/>我来回答
+                </span>
               </Col>
             </Row>
           </Row>
@@ -30,8 +54,10 @@
 
 <script>
   import IBeautifulCard from "../Common/card/IBeautifulCard"
-  import {QueryWaitYourAnswerList} from "../../api"
+  import {QueryWaitYourAnswerList,IWantAskAlso} from "../../api"
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import {getLoginUserName} from "../../tools/sso"
+  import {CheckHasLogin,CheckHasLoginConfirmDialog2} from "../../tools/index"
 
   export default {
     name: "WaitYourAnswer",
@@ -39,28 +65,87 @@
     data() {
       return {
         waitYourAnswerList: [],       // 等你来答
+        alsoAskedIdList:[],
+        start:0,                       //从0开始查
+        offset:5,                     //往后查5条
       }
     },
     methods: {
       refreshWaitYourAnswerList: async function () {
-        const result = await QueryWaitYourAnswerList({});
+        let params = {
+          start:this.start,
+          offset:this.offset,
+          user_name:getLoginUserName()
+        };
+        const result = await QueryWaitYourAnswerList(params);
         if (result.status === "SUCCESS") {
           this.waitYourAnswerList = result.waitYourAnswerList;
+          this.alsoAskedIdList = result.alsoAskedIdList;
         }
       },
-      IWantAskAlso:async function () {
-        const result = await IWantAskAlso();
-        if (rsult.status === "SUCCESS") {
-          this.$Message.success("提问成功！")
+      otherRefresh:function(start,offset){
+        if (this.start === 0) { //换一批：前0-5条与6-10条，来回切换，就这么干了。
+          this.start = 5;
+        }else{
+          this.start = 0;
         }
+        this.refreshWaitYourAnswerList();
+      },
+      IWantAskAlso:async function (id) {
+        let _this = this;
+        CheckHasLoginConfirmDialog2(this, async function () {
+          let params = {
+            id:id,
+            favorite_type:'ask_expert',
+            user_name:getLoginUserName()
+          };
+          const result = await IWantAskAlso(params);
+          if (result.status === "SUCCESS") {
+            _this.$Message.success("+ 1 成功！");
+            _this.refreshWaitYourAnswerList();
+          }
+        });
+      },
+      whetherAsked:function (id) {
+        return this.alsoAskedIdList.filter(ask => ask.id === id).length > 0;
+      },
+      getImgPath:function (id) {
+        let num = Math.floor(Math.random() * 15) + 1; //1-15 之间的随机数， 因为静态文件准备了20张小图片
+        return "../../../static/images/waitYourAnswer/default_"+(id + num)+".jpg";
       }
     },
     mounted() {
       this.refreshWaitYourAnswerList();
-    }
+    },
+    filters: {
+      // 内容超长则显示部分
+      filterLimitFunc:function (value,limitLenth) {
+        if (value.length > limitLenth) {
+          return value.slice(0,limitLenth) + ' · · ·'
+        }else {
+          return value
+        }
+      }
+    },
   }
 </script>
 
 <style scoped>
+  .title_hover {
+    font-size: 15px;
+    color: #555;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  .title_hover:hover {
+    font-size: 15px;
+    color: red;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
 
+  .hover_color_green{
+    color: #575757;
+  }
+  .hover_color_green:hover{
+    color: #34B458;
+  }
 </style>
