@@ -6,7 +6,8 @@
       </FormItem>
       <FormItem label="我的问题" prop="question">
         <mavon-editor ref="md" v-model="formValidate.question" @imgAdd="$imgAdd"
-                      :toolbars="toolbars" :ishljs="true" style="z-index: 1;"/>
+                      :toolbars="toolbars" :ishljs="true"
+                      :subfield="false" @fullScreen="handleFullScreen" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
@@ -23,6 +24,7 @@
     name: "EditQuestion",
     data() {
       return {
+        fullScreen: false,     // 默认没有全屏
         toolbars: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -91,7 +93,10 @@
         if (result.status == "SUCCESS") {
           this.formValidate = result.ask_expert;
         }
-      }
+      },
+      handleFullScreen: function () {
+        this.fullScreen = !this.fullScreen;
+      },
     },
     mounted() {
       if (this.$route.query.id > 0) {

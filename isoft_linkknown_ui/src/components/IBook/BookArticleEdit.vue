@@ -8,7 +8,9 @@
         <FormItem prop="content">
           <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
                         :editable="formValidate.book_catalog_id > 0"
-                        :toolbars="toolbars" :ishljs="true" style="z-index: 1;min-height: 500px;"/>
+                        :toolbars="toolbars" :ishljs="true" style="min-height: 500px;"
+                        :subfield="false" @fullScreen="handleFullScreen"
+                        :style="{'z-index' : fullScreen ? '9999': '1'}"/>
         </FormItem>
         <FormItem>
           <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
@@ -35,6 +37,7 @@
       return {
         isLoading: false,
         bookArticle: null,
+        fullScreen: false,     // 默认没有全屏
         toolbars: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -125,7 +128,10 @@
           }
         })
       },
-    }
+      handleFullScreen: function () {
+        this.fullScreen = !this.fullScreen;
+      },
+    },
   }
 </script>
 

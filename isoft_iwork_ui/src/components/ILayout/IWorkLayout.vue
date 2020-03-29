@@ -146,7 +146,7 @@
       }
     },
     mounted() {
-      let appId = localStorage.getItem("appId");
+      let appId = localStorage.getItem("iwork_appId");
       if (this.appId == null && appId != null && appId != undefined) {
         this.appId = JSON.parse(appId);
         this.$Message.success("已选择 AppID " + this.appId.app_name);

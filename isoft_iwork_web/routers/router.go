@@ -108,6 +108,8 @@ func loadloadIWorkerRouterDetail() {
 
 	registRouter("/api/iwork/getDBMonitorMeta", wc, wc.GetDBMonitorMeta, "get,post:GetDBMonitorMeta")
 	registRouter("/api/iwork/loadDBMonitorData", wc, wc.LoadDBMonitorData, "get,post:LoadDBMonitorData")
+
+	registRouter("/api/iwork/login", wc, wc.Login, "get,post:Login")
 }
 
 func registRouter(rootpath string, c beego.ControllerInterface, callFunc func(), mappingMethods ...string) *beego.App {

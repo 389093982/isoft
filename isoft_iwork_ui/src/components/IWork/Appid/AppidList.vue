@@ -131,7 +131,7 @@
         }
       },
       chooseAppid: function (appId) {
-        localStorage.setItem("appId", JSON.stringify(appId));
+        localStorage.setItem("iwork_appId", JSON.stringify(appId));
         this.$router.go(0);     // 强制刷新页面
       }
     },

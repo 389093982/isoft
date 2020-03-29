@@ -59,26 +59,29 @@
     </ISimpleLeftRightRow>
 
     所有类型：
-    <Tag :color="search_work_type == 'all' ? 'success' : 'default'">
+    <Tag :color="search_work_type === 'all' ? 'success' : 'default'">
       <span @click="filterWorkTypes('all')">all</span>
     </Tag>
-    <Tag :color="search_work_type == 'work' ? 'success' : 'default'">
+    <Tag :color="search_work_type === 'work' ? 'success' : 'default'">
       <span @click="filterWorkTypes('work')">work</span>
     </Tag>
-    <Tag :color="search_work_type == 'filter' ? 'success' : 'default'">
+    <Tag :color="search_work_type === 'filter' ? 'success' : 'default'">
       <span @click="filterWorkTypes('filter')">filter</span>
     </Tag>
     <br/>
-    所有模块：
-    <Tag :color="search_module == 'all' ? 'success' : 'default'">
-      <span @click="filterModuleWork('all')">all</span>
-    </Tag>
-    <span v-for="module in modules">
-      <Tag :color="search_module == module.module_name ? 'success' : 'default'">
-        <span @click="filterModuleWork(module.module_name)">{{module.module_name}}</span>
-      </Tag>
-    </span>
-
+    <div style="display: flex;">
+      <div style="width: 77px;">所有模块：</div>
+      <div>
+        <Tag :color="search_module === 'all' ? 'success' : 'default'">
+          <span @click="filterModuleWork('all')">all</span>
+        </Tag>
+        <span v-for="module in modules">
+        <Tag :color="search_module === module.module_name ? 'success' : 'default'">
+          <span @click="filterModuleWork(module.module_name)">{{module.module_name}}</span>
+        </Tag>
+      </span>
+      </div>
+    </div>
     <Table border :columns="columns1" :data="works" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
@@ -182,7 +185,7 @@
                       this.$refs.workEditForm.initFormData(this.works[params.index].id, this.works[params.index].work_name, this.works[params.index].work_desc, this.works[params.index].cache_result);
                       this.current_work_type = this.works[params.index].work_type;
                       this.current_module_name = this.works[params.index].module_name;
-                      this.current_cache_result = this.works[params.index].cache_result == true ? "true" : "false";
+                      this.current_cache_result = this.works[params.index].cache_result === true ? "true" : "false";
                     }
                   }
                 }, '编辑'),
@@ -306,7 +309,7 @@
       },
       refreshWorkList:async function () {
         const result = await FilterPageWorks(this.offset,this.current_page,this.search,this.search_work_type,this.search_module);
-        if(result.status=="SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.works = result.works;
           this.total = result.paginator.totalcount;
           this.runLogRecordCount = result.runLogRecordCount;
@@ -331,7 +334,7 @@
       },
       deleteOrCopyWorkById:async function(operate, id){
         const result = await DeleteOrCopyWorkById(operate, id);
-        if(result.status=="SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.refreshWorkList();
         }
       },
@@ -344,7 +347,7 @@
           return;
         }
         const result = await EditWork(work_id, work_name, work_desc, this.current_work_type, this.current_module_name, this.current_cache_result);
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.$refs.workEditModal.hideModal();
           this.$refs.workEditForm.handleSubmitSuccess("提交成功!");
           this.refreshWorkList();
@@ -354,7 +357,7 @@
       },
       runWork:async function (work_id) {
         const result = await RunWork(work_id);
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.$Message.success("运行任务已触发!");
         }
       },
@@ -372,19 +375,19 @@
       },
       getErrorOrTotalCount:function (workId, flag) {
         var key = Object.keys(this.runLogRecordCount).filter(function (key) {
-          return key == workId;
+          return key === workId;
         })[0];
-        return flag == "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
+        return flag === "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
       },
       refreshAllModules:async function(){
         const result = await GetAllModules();
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.modules = result.moudles;
         }
       },
       refreshNodeMetas:async function () {
         const result = await GetMetaInfo("nodeMetas");
-        if(result.status == "SUCCESS"){
+        if (result.status === "SUCCESS") {
           this.nodeMetas = result.nodeMetas;
         }
       }

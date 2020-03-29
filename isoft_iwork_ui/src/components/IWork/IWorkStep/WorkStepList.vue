@@ -509,7 +509,7 @@
         var key = Object.keys(this.runLogRecordCount).filter(function (key) {
           return key === workId;
         })[0];
-        if(key){
+        if (key && this.runLogRecordCount[key]) {
           return flag === "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
         }
       }

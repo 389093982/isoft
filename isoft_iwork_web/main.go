@@ -21,7 +21,7 @@ func main() {
 	beego.ErrorController(&controllers.ErrorController{})
 
 	beego.InsertFilter("/api/iwork/httpservice/*", beego.BeforeExec, filter.FilterFunc)
-	beego.InsertFilter("/*", beego.BeforeExec, filter.IPFilterFunc)
+	beego.InsertFilter("/*", beego.BeforeExec, filter.SecurityFilterFunc)
 
 	iworkpool.LoadAndCachePool()
 	regist.RegistNodes()

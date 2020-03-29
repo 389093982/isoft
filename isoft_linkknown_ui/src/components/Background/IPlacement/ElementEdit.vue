@@ -61,7 +61,9 @@
       </Row>
       <Row>
         <FormItem prop="md_content" v-show="checkShow('md_content')" label="markdown内容">
-          <mavon-editor v-model="formInline.md_content" :toolbars="toolbars" :ishljs="true" style="z-index: 1;"/>
+          <mavon-editor v-model="formInline.md_content" :toolbars="toolbars" :ishljs="true"
+                        :subfield="false" @fullScreen="handleFullScreen"
+                        :style="{'z-index' : fullScreen ? '9999': '1'}"/>
         </FormItem>
       </Row>
       <Row>
@@ -107,6 +109,7 @@
         showPlacementTypeDesc: false,
         showRemark: true,
         placement: null,
+        fullScreen: false,     // 默认没有全屏
         toolbars: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -210,7 +213,10 @@
         if (result.status == "SUCCESS") {
           this.placement = result.placement;
         }
-      }
+      },
+      handleFullScreen: function () {
+        this.fullScreen = !this.fullScreen;
+      },
     },
     mounted() {
       this.formInline.placement = this.$route.query.placement_name;
