@@ -49,8 +49,8 @@
             </Col>
           </Row>
           <FormItem label="文章内容" prop="content">
-            <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
-                          :toolbars="toolbars" :ishljs="true" style="z-index: 1;"/>
+            <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" @fullScreen="handleFullScreen"
+                          :toolbars="toolbars" :ishljs="true" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
           </FormItem>
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
@@ -115,6 +115,7 @@
         }
       };
       return {
+        fullScreen: false,     // 默认没有全屏
         toolbars: {
           bold: true, // 粗体
           italic: true, // 斜体
@@ -244,6 +245,9 @@
       isAdmin: function () {
         return CheckAdminLogin();
       },
+      handleFullScreen: function () {
+        this.fullScreen = !this.fullScreen;
+      },
     },
     mounted: async function () {
       // 加载热门分类
@@ -261,4 +265,5 @@
 </script>
 
 <style scoped>
+
 </style>
