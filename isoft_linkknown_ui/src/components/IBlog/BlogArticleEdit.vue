@@ -49,8 +49,9 @@
             </Col>
           </Row>
           <FormItem label="文章内容" prop="content">
-            <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" @fullScreen="handleFullScreen"
-                          :toolbars="toolbars" :ishljs="true" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
+            <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" :toolbars="toolbars" :ishljs="true"
+                          :subfield="false" @fullScreen="handleFullScreen"
+                          :style="{'z-index' : fullScreen ? '9999': '1'}"/>
           </FormItem>
           <FormItem>
             <Button type="success" @click="handleSubmit('formValidate')">提交</Button>

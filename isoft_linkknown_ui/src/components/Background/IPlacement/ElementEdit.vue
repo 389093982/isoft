@@ -62,7 +62,8 @@
       <Row>
         <FormItem prop="md_content" v-show="checkShow('md_content')" label="markdown内容">
           <mavon-editor v-model="formInline.md_content" :toolbars="toolbars" :ishljs="true"
-                        @fullScreen="handleFullScreen" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
+                        :subfield="false" @fullScreen="handleFullScreen"
+                        :style="{'z-index' : fullScreen ? '9999': '1'}"/>
         </FormItem>
       </Row>
       <Row>

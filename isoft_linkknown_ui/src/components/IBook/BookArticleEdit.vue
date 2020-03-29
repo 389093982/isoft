@@ -6,9 +6,10 @@
       </Spin>
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
         <FormItem prop="content">
-          <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" @fullScreen="handleFullScreen"
+          <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd"
                         :editable="formValidate.book_catalog_id > 0"
                         :toolbars="toolbars" :ishljs="true" style="min-height: 500px;"
+                        :subfield="false" @fullScreen="handleFullScreen"
                         :style="{'z-index' : fullScreen ? '9999': '1'}"/>
         </FormItem>
         <FormItem>

@@ -6,8 +6,8 @@
       </FormItem>
       <FormItem label="我的问题" prop="question">
         <mavon-editor ref="md" v-model="formValidate.question" @imgAdd="$imgAdd"
-                      :toolbars="toolbars" :ishljs="true" @fullScreen="handleFullScreen"
-                      :style="{'z-index' : fullScreen ? '9999': '1'}"/>
+                      :toolbars="toolbars" :ishljs="true"
+                      :subfield="false" @fullScreen="handleFullScreen" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
