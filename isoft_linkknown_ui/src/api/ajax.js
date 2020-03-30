@@ -4,7 +4,8 @@ ajax请求函数模块
  */
 import axios from 'axios'
 import Qs from 'qs'
-import {CheckNotLogin} from "../tools"
+import {checkNotEmpty, CheckNotLogin, setCookie} from "../tools"
+import {RefreshToken} from "./index";
 
 // 允许带认证信息的配置
 axios.defaults.withCredentials = true;
@@ -18,8 +19,23 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          if (!CheckNotLogin()) {
-            window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
+          if (checkNotEmpty(localStorage.getItem("tokenString"))) {
+            RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
+              if (result.status === "SUCCESS") {
+                localStorage.setItem("tokenString", result.tokenString);
+                let expiredTime = new Date().getTime() + result.expireSecond * 1000;     // 毫秒数
+                localStorage.setItem("expiredTime", expiredTime);
+                setCookie("tokenString", result.tokenString, 365, localStorage.getItem("domain"));
+              } else {
+                if (!CheckNotLogin()) {
+                  window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
+                }
+              }
+            });
+          } else {
+            if (!CheckNotLogin()) {
+              window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
+            }
           }
       }
     }

@@ -35,21 +35,21 @@ func reverseJWT(secretKey, tokenString string) (t *jwt.Token, errType string, er
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
 				// That's not even a token
-				return nil, "errInputData", err
+				return token, "errInputData", err
 			} else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
 				// Token is either expired or not active yet
-				return nil, "errExpired", err
+				return token, "errExpired", err
 			} else {
 				// Couldn't handle this token
-				return nil, "errInputData", err
+				return token, "errInputData", err
 			}
 		} else {
 			// Couldn't handle this token
-			return nil, "errInputData", err
+			return token, "errInputData", err
 		}
 	}
 	if !token.Valid {
-		return nil, "errInputData", err
+		return token, "errInputData", err
 	}
 	return token, "", err
 }
@@ -68,10 +68,10 @@ func ParseJWT(secretKey, tokenString string) (map[string]interface{}, error) {
 // 第二个参数是是否过期
 func ParseJWT2(secretKey, tokenString string) (map[string]interface{}, bool, error) {
 	token, errType, err := reverseJWT(secretKey, tokenString)
-	if err == nil {
+	if token != nil {
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if ok {
-			return claims, errType == "errExpired", nil
+			return claims, errType == "errExpired", err
 		}
 	}
 	return nil, errType == "errExpired", err

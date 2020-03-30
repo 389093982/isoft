@@ -3,12 +3,12 @@
 	<AppId>5</AppId>
 	<EnvName>dev</EnvName>
 	<Name>loginExpiredSecond</Name>
-	<Value>3600</Value>
+	<Value>10</Value>
 	<EncryptFalg>false</EncryptFalg>
 	<Type>1</Type>
 	<Desc></Desc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-02-24T11:38:34+08:00</CreatedTime>
+	<CreatedTime>2020-03-30T12:57:02+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-02-24T11:38:34+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-03-30T12:57:02+08:00</LastUpdatedTime>
 </GlobalVar>

@@ -75,6 +75,7 @@ const _setLoginInfo = function (loginResult, username) {
   localStorage.setItem("roleName", loginResult.roleName);
   let expiredTime = new Date().getTime() + loginResult.expireSecond * 1000;     // 毫秒数
   localStorage.setItem("expiredTime", expiredTime);
+  localStorage.setItem("domain", loginResult.domain);
   setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 

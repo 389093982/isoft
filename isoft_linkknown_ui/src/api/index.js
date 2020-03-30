@@ -153,6 +153,7 @@ export const Login = (username, passwd, redirectUrl) => ajax(BASE_URL + "/iwork/
 
 // 注册接口
 export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist2", params, 'POST');
+export const RefreshToken = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/RefreshToken", params, 'POST');
 
 export const CreateVerifyCode = (username) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/createVerifyCode", {username}, 'POST');
 
