@@ -33,6 +33,12 @@ type BaseNode struct {
 	ParamSchemaCacheParser interfaces.IParamSchemaCacheParser
 }
 
+type ParamInputSchemaItemDefinition struct {
+	ParamName    string
+	ParamDesc    string
+	ParamChoices []string
+}
+
 func (this *BaseNode) FilterParamInputSchemaItem(pis *iworkmodels.ParamInputSchema, paramName string) *iworkmodels.ParamInputSchemaItem {
 	for index, item := range pis.ParamInputSchemaItems {
 		if item.ParamName == paramName {
@@ -155,6 +161,23 @@ func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *models.Wo
 // 根据传入的 paramMap 构建 ParamInputSchema 对象
 func (this *BaseNode) BPIS1(paramMap map[int][]string, choicesMap ...map[string][]string) *iworkmodels.ParamInputSchema {
 	return this.buildParamInputSchemaWithDefaultMap(paramMap, choicesMap...) // 主要作用是简写方法名称
+}
+
+// 根据传入的 paramMap 构建 ParamInputSchema 对象
+func (this *BaseNode) BPIS2(paramMap map[int]*ParamInputSchemaItemDefinition) *iworkmodels.ParamInputSchema {
+	keys := datatypeutil.GetMapKeySlice(paramMap, []int{}).([]int)
+	sort.Ints(keys)
+	items := make([]*iworkmodels.ParamInputSchemaItem, 0)
+	for _, key := range keys {
+		pisiDefinition := paramMap[key]
+		item := &iworkmodels.ParamInputSchemaItem{
+			ParamName:    pisiDefinition.ParamName,
+			ParamDesc:    pisiDefinition.ParamDesc,
+			ParamChoices: pisiDefinition.ParamChoices,
+		}
+		items = append(items, item)
+	}
+	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
 func (this *BaseNode) buildParamInputSchemaWithDefaultMap(paramMap map[int][]string, choicesMap ...map[string][]string) *iworkmodels.ParamInputSchema {

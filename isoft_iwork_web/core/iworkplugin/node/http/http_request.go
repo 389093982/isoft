@@ -50,6 +50,19 @@ func (this *HttpRequestParserNode) GetDefaultParamOutputSchema() *iworkmodels.Pa
 }
 
 func (this *HttpRequestParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	var parseToItems = func(paramStr, paramPrefix string) []iworkmodels.ParamOutputSchemaItem {
+		items := make([]iworkmodels.ParamOutputSchemaItem, 0)
+		if paramStr != "" {
+			paramSlice := strings.Split(paramStr, ",")
+			for _, param := range paramSlice {
+				items = append(items, iworkmodels.ParamOutputSchemaItem{
+					ParamName: paramPrefix + param,
+				})
+			}
+		}
+		return items
+	}
+
 	pos := &iworkmodels.ParamOutputSchema{}
 	headers := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"headers?", this.WorkStep).(string)
 	cookies := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"cookies?", this.WorkStep).(string)
@@ -58,15 +71,66 @@ func (this *HttpRequestParserNode) GetRuntimeParamOutputSchema() *iworkmodels.Pa
 	return pos
 }
 
-func parseToItems(paramStr, paramPrefix string) []iworkmodels.ParamOutputSchemaItem {
-	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
-	if paramStr != "" {
-		paramSlice := strings.Split(paramStr, ",")
+type HttpWirterNode struct {
+	node.BaseNode
+	WorkStep *models.WorkStep
+}
+
+func (this *HttpWirterNode) Execute(trackingId string) {
+	request := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_OBJECT].(*http.Request)
+	response := this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_OBJECT].(*http.Response)
+	request_header := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"request_header?", this.WorkStep).(string)
+	response_header := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"response_header?", this.WorkStep).(string)
+	if request_header != "" {
+		paramSlice := strings.Split(request_header, ",")
 		for _, param := range paramSlice {
-			items = append(items, iworkmodels.ParamOutputSchemaItem{
-				ParamName: paramPrefix + param,
-			})
+			request.Header.Add(strings.TrimPrefix(param, "request_"), this.Dispatcher.TmpDataMap[param].(string))
 		}
 	}
-	return items
+	if response_header != "" {
+		paramSlice := strings.Split(response_header, ",")
+		for _, param := range paramSlice {
+			response.Header.Add(strings.TrimPrefix(param, "request_"), this.Dispatcher.TmpDataMap[param].(string))
+		}
+	}
+}
+
+func (this *HttpWirterNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	paramMap := map[int]*node.ParamInputSchemaItemDefinition{
+		1: {
+			ParamName: iworkconst.STRING_PREFIX + "request_header?",
+			ParamDesc: "设置 http 请求头,多个参数使用逗号分割",
+		},
+		2: {
+			ParamName: iworkconst.STRING_PREFIX + "response_header?",
+			ParamDesc: "设置 http 响应头,多个参数使用逗号分割",
+		},
+	}
+	return this.BPIS2(paramMap)
+}
+
+func (this *HttpWirterNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	var parseToItems = func(paramStr, paramPrefix string) []*iworkmodels.ParamInputSchemaItem {
+		items := make([]*iworkmodels.ParamInputSchemaItem, 0)
+		if paramStr != "" {
+			paramSlice := strings.Split(paramStr, ",")
+			for _, param := range paramSlice {
+				items = append(items, &iworkmodels.ParamInputSchemaItem{
+					ParamName: paramPrefix + param,
+				})
+			}
+		}
+		return items
+	}
+
+	pis := &iworkmodels.ParamInputSchema{}
+	request_header := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"request_header?", this.WorkStep).(string)
+	response_header := param.GetStaticParamValueWithStep(this.AppId, iworkconst.STRING_PREFIX+"response_header?", this.WorkStep).(string)
+	if request_header != "" {
+		pis.ParamInputSchemaItems = append(pis.ParamInputSchemaItems, parseToItems(request_header, "request_")...)
+	}
+	if response_header != "" {
+		pis.ParamInputSchemaItems = append(pis.ParamInputSchemaItems, parseToItems(response_header, "response_")...)
+	}
+	return pis
 }

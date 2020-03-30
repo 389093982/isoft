@@ -66,20 +66,44 @@ type ParseJWTNode struct {
 func (this *ParseJWTNode) Execute(trackingId string) {
 	tokenString := this.TmpDataMap[iworkconst.STRING_PREFIX+"tokenString"].(string)
 	secretKey := this.TmpDataMap[iworkconst.STRING_PREFIX+"secretKey"].(string)
-	claimsMap, err := chiperutil.ParseJWT(secretKey, tokenString)
-	if err != nil {
+	handleExpiredError := this.TmpDataMap[iworkconst.BOOL_PREFIX+"handleExpiredError?"].(string)
+	claimsMap, isExpired, err := chiperutil.ParseJWT2(secretKey, tokenString)
+	if handleExpiredError == "`true`" || handleExpiredError == "true" {
+		claimsMap[iworkconst.BOOL_PREFIX+"Expired"] = isExpired
+	} else if err != nil {
 		panic(err)
 	}
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, claimsMap)
 }
 
 func (this *ParseJWTNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "tokenString", "密文"},
-		2: {iworkconst.STRING_PREFIX + "secretKey", "密钥"},
-		3: {iworkconst.STRING_PREFIX + "claimsMap", "解密参数,多个参数逗号分隔"},
+	//paramMap := map[int][]string{
+	//	1: {iworkconst.STRING_PREFIX + "tokenString", "密文"},
+	//	2: {iworkconst.STRING_PREFIX + "secretKey", "密钥"},
+	//	3: {iworkconst.STRING_PREFIX + "claimsMap", "解密参数,多个参数逗号分隔"},
+	//}
+	//return this.BPIS1(paramMap)
+
+	paramMap := map[int]*node.ParamInputSchemaItemDefinition{
+		1: {
+			ParamName: iworkconst.STRING_PREFIX + "tokenString",
+			ParamDesc: "密文",
+		},
+		2: {
+			ParamName: iworkconst.STRING_PREFIX + "secretKey",
+			ParamDesc: "密钥",
+		},
+		3: {
+			ParamName: iworkconst.STRING_PREFIX + "claimsMap",
+			ParamDesc: "解密参数,多个参数逗号分隔",
+		},
+		4: {
+			ParamName:    iworkconst.BOOL_PREFIX + "handleExpiredError?",
+			ParamDesc:    "处理 jwt 数据过期错误,true 返回过期标识,false 则抛出异常,默认 false",
+			ParamChoices: []string{"`true`", "`false`"},
+		},
 	}
-	return this.BPIS1(paramMap)
+	return this.BPIS2(paramMap)
 }
 
 func (this *ParseJWTNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
@@ -92,6 +116,12 @@ func (this *ParseJWTNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutput
 			ParamName: strings.TrimSpace(claim),
 		})
 	}
-	pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, items...)
+	handleExpiredError := param.GetStaticParamValueWithStep(this.AppId, iworkconst.BOOL_PREFIX+"handleExpiredError?", this.WorkStep).(string)
+	if handleExpiredError == "`true`" || handleExpiredError == "true" {
+		items = append(items, iworkmodels.ParamOutputSchemaItem{
+			ParamName: iworkconst.BOOL_PREFIX + "Expired",
+		})
+	}
+	pos.ParamOutputSchemaItems = items
 	return pos
 }

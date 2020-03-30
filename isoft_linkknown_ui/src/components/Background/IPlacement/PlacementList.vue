@@ -13,7 +13,7 @@
     </ISimpleLeftRightRow>
 
     <Table border :columns="columns1" :data="placements" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer
+    <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="[20,30,50]"
           :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
@@ -43,7 +43,7 @@
         // 总数
         total: 0,
         // 每页记录数
-        offset: 10,
+        offset: 20,
         // 搜索条件
         search: "",
         placements: [],

@@ -64,3 +64,15 @@ func ParseJWT(secretKey, tokenString string) (map[string]interface{}, error) {
 	}
 	return nil, err
 }
+
+// 第二个参数是是否过期
+func ParseJWT2(secretKey, tokenString string) (map[string]interface{}, bool, error) {
+	token, errType, err := reverseJWT(secretKey, tokenString)
+	if err == nil {
+		claims, ok := token.Claims.(jwt.MapClaims)
+		if ok {
+			return claims, errType == "errExpired", nil
+		}
+	}
+	return nil, errType == "errExpired", err
+}
