@@ -20,6 +20,7 @@
 
 <script>
   import {CheckHasLogin} from "../../../tools";
+  import {checkCanRefresh, refreshToken} from "../../../tools/sso";
 
   export default {
     name: "CheckHasLoginConfirmDialog",
@@ -39,7 +40,7 @@
       toRegist:function () {
         this.showNotLogin = false;
         this.$router.push({path:'/sso/regist',query:{pattern:1}})
-      }
+      },
     },
     computed: {
       loginCallback() {
@@ -52,7 +53,13 @@
           this.showNotLogin = false;
           newCallBack();
         } else {
-          this.showNotLogin = true;
+          if (checkCanRefresh()) {
+            refreshToken(this.$store, function () {
+              this.showNotLogin = true;
+            });
+          } else {
+            this.showNotLogin = true;
+          }
         }
       },
     },

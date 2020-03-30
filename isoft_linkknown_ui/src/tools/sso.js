@@ -1,4 +1,5 @@
-import {checkContainsInString, checkEmpty, setCookie} from "./index"
+import {checkContainsInString, checkEmpty, checkNotEmpty, setCookie} from "./index"
+import {RefreshToken} from "../api";
 
 const _checkAdminLogin = function () {
   let roleName = localStorage.getItem("roleName");
@@ -79,6 +80,34 @@ const _setLoginInfo = function (loginResult, username) {
   setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 
+const _refreshToken = function (store, failCallback) {
+  // 此处需要加个 isRefreshToken 变量进行去重防止并发
+  RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
+    if (result.status === "SUCCESS") {
+      // 尝试自动连接
+      store.dispatch('autoLogin', {autoLogin: true});
+      // 重新存储用户信息
+      localStorage.setItem("tokenString", result.tokenString);
+      let expiredTime = new Date().getTime() + result.expireSecond * 1000;     // 毫秒数
+      localStorage.setItem("expiredTime", expiredTime);
+      setCookie("tokenString", result.tokenString, 365, localStorage.getItem("domain"));
+    } else {
+      failCallback();
+    }
+  });
+}
+
+// 判断过期时间是否是最近 3 小时之内
+const checkRecently = function () {
+  // return new Date().getTime() - localStorage.getItem("expiredTime") < 3 * 3600 * 1000;
+  return new Date().getTime() - localStorage.getItem("expiredTime") < 10 * 1000;
+}
+
+
+const _checkCanRefresh = function () {
+  return checkNotEmpty(localStorage.getItem("tokenString")) && checkRecently();
+};
+
 export const checkSSOLogin = (to, from, next) => _checkSSOLogin(to, from, next);
 export const checkNotLogin = () => _checkNotLogin();
 export const checkHasLogin = () => _checkHasLogin();
@@ -87,3 +116,5 @@ export const getLoginUserName = () => _getLoginUserName();
 export const deleteLoginInfo = () => _deleteLoginInfo();
 export const getNickName = () => _getNickName();
 export const setLoginInfo = (loginResult, username) => _setLoginInfo(loginResult, username);
+export const refreshToken = (store, failCallback) => _refreshToken(store, failCallback);
+export const checkCanRefresh = () => _checkCanRefresh();

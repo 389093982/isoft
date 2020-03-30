@@ -2,5 +2,8 @@
 export default {
   ShowCheckHasLoginConfirmDialog: function ({commit}, {callback}) {
     commit('ShowCheckHasLoginConfirmDialog', {callback});
+  },
+  autoLogin: function ({commit}, {autoLogin}) {
+    commit('autoLogin', {autoLogin});
   }
 }

@@ -4,5 +4,8 @@
 export default {
   ShowCheckHasLoginConfirmDialog: function (state, {callback}) {
     state.CheckHasLoginConfirmDialogCallBack = callback;
+  },
+  autoLogin: function (state, {autoLogin}) {
+    state.autoLogin = autoLogin;
   }
 }

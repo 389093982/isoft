@@ -3,9 +3,10 @@ ajax请求函数模块
 返回值: promise对象(异步返回的数据是: response.data)
  */
 import axios from 'axios'
+import store from '@/store'
 import Qs from 'qs'
-import {checkNotEmpty, CheckNotLogin, setCookie} from "../tools"
-import {RefreshToken} from "./index";
+import {CheckNotLogin} from "../tools"
+import {checkCanRefresh, refreshToken} from "../tools/sso";
 
 // 允许带认证信息的配置
 axios.defaults.withCredentials = true;
@@ -19,17 +20,11 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          if (checkNotEmpty(localStorage.getItem("tokenString"))) {
-            RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
-              if (result.status === "SUCCESS") {
-                localStorage.setItem("tokenString", result.tokenString);
-                let expiredTime = new Date().getTime() + result.expireSecond * 1000;     // 毫秒数
-                localStorage.setItem("expiredTime", expiredTime);
-                setCookie("tokenString", result.tokenString, 365, localStorage.getItem("domain"));
-              } else {
-                if (!CheckNotLogin()) {
-                  window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
-                }
+          // 此处注意 tokenString 过期 3 小时内可以 RefreshToken,超过 3 小时必须自动登录
+          if (checkCanRefresh()) {
+            refreshToken(store, function () {
+              if (!CheckNotLogin()) {
+                window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
               }
             });
           } else {
@@ -86,3 +81,4 @@ export const download = function (url, data = {}, type = 'GET') {
   // 发送get请求
   window.location.href = url;
 }
+
