@@ -80,21 +80,29 @@ const _setLoginInfo = function (loginResult, username) {
   setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 
+var isRefreshingToken = false
+
 const _refreshToken = function (store, failCallback) {
-  // 此处需要加个 isRefreshToken 变量进行去重防止并发
-  RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
-    if (result.status === "SUCCESS") {
-      // 尝试自动连接
-      store.dispatch('autoLogin', {autoLogin: true});
-      // 重新存储用户信息
-      localStorage.setItem("tokenString", result.tokenString);
-      let expiredTime = new Date().getTime() + result.expireSecond * 1000;     // 毫秒数
-      localStorage.setItem("expiredTime", expiredTime);
-      setCookie("tokenString", result.tokenString, 365, localStorage.getItem("domain"));
-    } else {
-      failCallback();
+  try {
+    if (!isRefreshingToken) { // 此处需要加个 isRefreshingToken 变量进行去重防止并发
+      isRefreshingToken = true;
+      RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
+        if (result.status === "SUCCESS") {
+          // 尝试自动连接
+          store.dispatch('autoLogin', {autoLogin: true});
+          // 重新存储用户信息
+          localStorage.setItem("tokenString", result.tokenString);
+          let expiredTime = new Date().getTime() + result.expireSecond * 1000;     // 毫秒数
+          localStorage.setItem("expiredTime", expiredTime);
+          setCookie("tokenString", result.tokenString, 365, localStorage.getItem("domain"));
+        } else {
+          failCallback();
+        }
+      });
     }
-  });
+  } finally {
+    isRefreshingToken = false;
+  }
 }
 
 // 判断过期时间是否是最近 3 小时之内
