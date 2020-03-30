@@ -145,7 +145,7 @@
 		<WorkStepDesc></WorkStepDesc>
 		<WorkStepType>parse_jwt</WorkStepType>
 		<WorkStepIndent>1</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_tokenString&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;密文&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;getNotEmpty($http_request_parser_params.header_tokenString,$http_request_parser_params.cookie_tokenString);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_secretKey&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;密钥&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.secretKey;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_claimsMap&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;解密参数,多个参数逗号分隔&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_tokenString&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;密文&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;getNotEmpty($http_request_parser_params.header_tokenString,$http_request_parser_params.cookie_tokenString);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_secretKey&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;密钥&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.secretKey;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_claimsMap&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;解密参数,多个参数逗号分隔&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_handleExpiredError?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;处理 jwt 数据过期错误,true 返回过期标识,false 则抛出异常,默认 false&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: [&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`true`&#34;,&#xA;&#x9;&#x9;&#x9;&#x9;&#34;`false`&#34;&#xA;&#x9;&#x9;&#x9;],&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`false`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>str_tokenString</paramName>
@@ -172,6 +172,17 @@
 		<foreachRefer></foreachRefer>
 		<pureText>true</pureText>
 		<paramValue>username</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>bool_handleExpiredError?</paramName>
+		<paramDesc>处理 jwt 数据过期错误,true 返回过期标识,false 则抛出异常,默认 false</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<paramChoices>`true`</paramChoices>
+		<paramChoices>`false`</paramChoices>
+		<pureText>false</pureText>
+		<paramValue>`false`</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
