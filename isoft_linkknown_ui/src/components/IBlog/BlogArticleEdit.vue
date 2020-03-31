@@ -6,6 +6,7 @@
       </div>
       <div class="isoft_bg_white isoft_pd10 isoft_top10">
         <RandomAdmt/>
+        <RandomAdmt/>
       </div>
     </Col>
     <Col span="18">
@@ -23,12 +24,10 @@
                 <Select v-model="formValidate.catalog_name" filterable @on-open-change="refreshMyCatalogs()">
                   <!-- 热门分类 -->
                   <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
-                          :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}
-                  </Option>
+                          :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}</Option>
                   <!-- 我的分类 -->
                   <Option v-for="(mycatalog, index) in mycatalogs" :value="mycatalog.catalog_name"
-                          :key="'__mine__' + index">我的分类：{{ mycatalog.catalog_name }}
-                  </Option>
+                          :key="'__mine__' + index">我的分类：{{ mycatalog.catalog_name }}</Option>
                 </Select>
               </FormItem>
             </Col>
