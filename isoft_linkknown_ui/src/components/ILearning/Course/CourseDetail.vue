@@ -40,7 +40,9 @@
               </p>
             </Col>
           </Row>
-          <hr style="margin-top: 10px;">
+
+          <SepLine/>
+
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
@@ -118,10 +120,11 @@
   import {CheckHasLoginConfirmDialog} from "../../../tools/index"
   import VoteTags from "../../Decorate/VoteTags";
   import ShowMore from "../../Elementviewers/showMore";
+  import SepLine from "../../Common/SepLine";
 
   export default {
     name: "CourseDetail",
-    components: {ShowMore, CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
+    components: {SepLine, ShowMore, CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
     data() {
       return {
         isLoading: true,
