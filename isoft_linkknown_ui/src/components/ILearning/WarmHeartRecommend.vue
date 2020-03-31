@@ -20,9 +20,10 @@
              :style="{color: checked_tag == 'high_comment' ? 'red' : ''}">高评</a>
         </div>
         <div style="column-count:3;height: 350px">
-          <HoverBigImg v-for="(course, index) in display_courses"
-                       class="hoverBorderShadow" width="100%" height="98px"
-                       :src-img="course.small_image" style="float: left;margin: 0 10px 10px 0;"
+          <HoverBigImg v-for="(course, index) in display_courses" :key="index"
+                       width="100%" height="98px"
+                       :src-img="course.small_image"
+                       :label-text="course.course_name"
                        @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
         </div>
       </Col>
