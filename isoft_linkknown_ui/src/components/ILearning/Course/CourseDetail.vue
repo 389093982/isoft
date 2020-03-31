@@ -60,7 +60,7 @@
               作者还未上传视频哦...
             </div>
             <!--查看更多-->
-            <div v-if="cVideos.length > minLen" style="position: relative;left: -85%;top: -55px">
+            <div v-if="cVideos.length > minLen" style="position: relative;left: -45%;top: -60px">
               <show-more @changeShowMore="changeShowMore" style="position: absolute;top: 60px;right: 45px"></show-more>
             </div>
             <div v-else>

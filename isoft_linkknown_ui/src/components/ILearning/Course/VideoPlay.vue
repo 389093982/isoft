@@ -20,12 +20,12 @@
         <!--右侧分上下-->
         <Col span="5" style="margin-left: 30px">
           <!--右侧竖块-->
-          <div style="margin:30px 0 0 0 ;">
+          <div style="margin:10px 0 0 0 ;">
             <Tabs size="small">
               <TabPane :label="course.course_name">
                 <!--本主题视频集数-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
-                  <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                  <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
                     <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
                       <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
                     </div>
@@ -35,7 +35,7 @@
               <TabPane label="推荐课程">
                 <!--推荐课程-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
-                  <vue-scroll :ops="scrollOps" style="width:99%;height:405px;">
+                  <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
                     <div class="course_item" v-for="(course, index) in recommendCourses">
                       <div>{{course.course_name}}</div>
                       <div class="course_small_image" style="width: 155px;">

@@ -66,15 +66,15 @@
       return {
         waitYourAnswerList: [],       // 等你来答
         alsoAskedIdList:[],
-        start:0,                       //从0开始查
-        offset:5,                     //往后查5条
+        pageNumber:1,
+        pageSize:5,
       }
     },
     methods: {
       refreshWaitYourAnswerList: async function () {
         let params = {
-          start:this.start,
-          offset:this.offset,
+          pageNumber:this.pageNumber,
+          pageSize:this.pageSize,
           user_name:getLoginUserName()
         };
         const result = await QueryWaitYourAnswerList(params);
@@ -83,12 +83,8 @@
           this.alsoAskedIdList = result.alsoAskedIdList;
         }
       },
-      otherRefresh:function(start,offset){
-        if (this.start === 0) { //换一批：前0-5条与6-10条，来回切换，就这么干了。
-          this.start = 5;
-        }else{
-          this.start = 0;
-        }
+      otherRefresh:function(pageNumber,pageSize){
+        this.pageNumber = this.pageNumber===1?2:1;
         this.refreshWaitYourAnswerList();
       },
       IWantAskAlso:async function (id) {
