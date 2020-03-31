@@ -71,7 +71,8 @@
                     <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
                       <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
                       <img v-else src="../../../assets/default.png" height="100" width="155"/>
-                      <p class="isoft_font12 isoft_inline_ellipsis"><span style="color: grey">{{course.course_name}}</span></p>
+                      <div class="isoft_font12 isoft_inline_ellipsis" style="text-align: center;"><span
+                        style="color: grey">{{course.course_name}}</span></div>
                     </router-link>
                   </div>
                 </Col>
@@ -107,7 +108,7 @@
 </template>
 
 <script>
-  import {IsFavorite, ShowCourseDetail, ToggleFavorite,GetHotCourseRecommend} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, ToggleFavorite} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import UserAbout from "../../User/UserAbout"
@@ -244,6 +245,7 @@
   .courseBorder{
     width:176px;
     padding: 10px 0 0 10px;
+    border: 1px solid #FFFFFF;
   }
 
   .courseBorder:hover{
