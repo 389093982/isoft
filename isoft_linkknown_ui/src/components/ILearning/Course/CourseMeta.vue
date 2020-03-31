@@ -16,16 +16,12 @@
       </span>
     </p>
     <p>
-      <span style="color: #777">作者 : </span>
+      <span style="color: #777">作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者 : </span>
       <span class="courseDes" v-if="user && renderNickName(course.course_author)">{{renderNickName(course.course_author)}}</span>
     </p>
     <p>
       <span style="color: #777">课程类型 : </span>
-      <span class="courseDes">{{course.course_type}}</span>
-    </p>
-    <p>
-      <span style="color: #777">课程子类型 : </span>
-      <span class="courseDes">{{course.course_sub_type}}</span>
+      <span class="courseDes">{{course.course_type}} / {{course.course_sub_type}}</span>
     </p>
     <p>
       <span style="color: #777">课程简介 :  </span>
