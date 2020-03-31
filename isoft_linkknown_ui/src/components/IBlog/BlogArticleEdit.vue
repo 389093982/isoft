@@ -191,7 +191,11 @@
               if (this.successEmit) {
                 this.$emit("successEmitFunc");
               } else {
-                this.$router.push({path: '/iblog/blogList'});
+                if (_this.formValidate.article_id > 0){
+                  this.$router.push({path: '/iblog/blogArticleDetail', query:{blog_id:_this.formValidate.article_id}});
+                } else {
+                  this.$router.push({path: '/iblog/blogList'});
+                }
               }
             } else {
               _this.$Message.error('提交失败!');

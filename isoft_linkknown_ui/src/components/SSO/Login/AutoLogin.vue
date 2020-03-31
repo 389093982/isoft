@@ -2,7 +2,7 @@
   <div class="autoLogin" v-if="showAutoLogin">
     <div class="isoft_color_grey isoft_font16" style="text-align: center;margin: 50px 0 20px 0;">
       <span v-if="!animationend">自动登录中<span v-for="(item, index) in showDotNumber">.</span></span>
-      <span v-else>登录成功！</span>
+      <span v-else>自动登录成功！</span>
     </div>
     <div style="margin-top: 20px;">
       <div style="text-align: center;position: relative;">
