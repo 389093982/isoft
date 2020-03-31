@@ -34,7 +34,7 @@
         </div>
 
         <p>博友印象：</p>
-        <VoteTags v-if="blog.id > 0" referer_type="blog_theme_type" :referer_id="blog.id"/>
+        <VoteTags v-if="blog.id > 0" referer_type="vote_blog" :referer_id="blog.id"/>
 
         <!-- 评论模块 -->
         <IEasyComment :theme_pk="blog.id" theme_type="blog_theme_type" style="margin-top: 50px;"/>

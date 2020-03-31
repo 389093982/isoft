@@ -36,7 +36,6 @@
       <span class="courseDes">{{course.course_number}}</span>
     </p>
     <p v-if="course.course_label">
-      <span style="color: #777">标签语 :    </span>
       <TagRender :tags="clabels"/>
     </p>
 
