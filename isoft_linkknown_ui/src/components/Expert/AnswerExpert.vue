@@ -22,7 +22,7 @@
           </div>
 
           <p>用户印象：</p>
-          <VoteTags ref="VoteTags"/>
+          <VoteTags ref="VoteTags" referer_type="vote_expert" :referer_id="ask_expert.id"/>
 
           <div class="isoft_bg_white isoft_top10 isoft_pd10">
             <ul>

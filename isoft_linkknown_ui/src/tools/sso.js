@@ -107,8 +107,8 @@ const _refreshToken = function (store, failCallback) {
 
 // 判断过期时间是否是最近 3 小时之内
 const checkRecently = function () {
-  // return new Date().getTime() - localStorage.getItem("expiredTime") < 3 * 3600 * 1000;
-  return new Date().getTime() - localStorage.getItem("expiredTime") < 60 * 1000;
+  return new Date().getTime() - localStorage.getItem("expiredTime") < 3 * 3600 * 1000;
+  // return new Date().getTime() - localStorage.getItem("expiredTime") < 60 * 1000;
 }
 
 

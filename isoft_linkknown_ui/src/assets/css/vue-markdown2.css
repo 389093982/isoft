@@ -31,13 +31,13 @@
 }
 
 .markdown >>> h1 {
-  font-size: 48px;
-  line-height: 54px;
+  font-size: 30px;
+  line-height: 36px;
 }
 
 .markdown >>> h2 {
-  font-size: 36px;
-  line-height: 42px;
+  font-size: 27px;
+  line-height: 33px;
 }
 
 .markdown >>> h1, .markdown >>> h2 {

@@ -30,6 +30,7 @@
 
 <script>
   import {BookArticleEdit, fileUploadUrl, ShowBookArticleDetail} from "../../api"
+  import axios from 'axios'
 
   export default {
     name: "BookArticleEdit",
