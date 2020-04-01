@@ -72,6 +72,7 @@
   import CatalogList from "./CatalogList";
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckAdminLogin} from "../../tools/index"
+  import {markdownAdapter} from "../../tools";
 
   export default {
     name: "BlogArticleEdit",
@@ -185,6 +186,7 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
+            _this.formValidate.content = markdownAdapter(_this.formValidate.content);
             const result = await BlogArticleEdit(_this.formValidate);
             if (result.status === "SUCCESS") {
               _this.$Message.success('提交成功!');

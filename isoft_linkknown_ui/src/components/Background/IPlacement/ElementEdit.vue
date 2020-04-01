@@ -82,7 +82,7 @@
   import Element from "./ElementList"
   import IFileUpload from "../../Common/file/IFileUpload"
   import {EditElement, FilterElementByPlacement, QueryElementById, QueryPlacementByName} from "../../../api"
-  import {checkEmpty, oneOf} from "../../../tools"
+  import {checkEmpty, markdownAdapter, oneOf} from "../../../tools"
 
   export default {
     name: "ElementEdit",
@@ -163,6 +163,7 @@
           if (valid) {
             let id = this.$route.query.id == undefined ? 0 : this.$route.query.id;
             this.formInline.id = id;
+            this.formInline.content = markdownAdapter(this.formInline.content);
             const result = await EditElement(this.formInline);
             if (result.status == "SUCCESS") {
               this.$Message.success('提交成功!');

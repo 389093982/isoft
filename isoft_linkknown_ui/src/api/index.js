@@ -37,11 +37,7 @@ export const BookArticleList = (book_id) => ajax(BASE_URL + '/iwork/httpservice/
 export const BookCatalogEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookCatalogEdit', params, 'POST');
 export const BookCatalogList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookCatalogList', params, 'POST');
 export const ShowBookArticleDetail = (book_catalog_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBookArticleDetail', {book_catalog_id}, 'POST');
-export const BookArticleEdit = (id, book_catalog_id, content) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookArticleEdit', {
-  id,
-  book_catalog_id,
-  content
-}, 'POST');
+export const BookArticleEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookArticleEdit', params, 'POST');
 export const ShowBookCatalogDetail = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBookCatalogDetail', {id}, 'POST');
 export const DeleteBookCatalog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeleteBookCatalog', params, 'POST');
 export const ChangeCatalogOrder = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ChangeCatalogOrder', params, 'POST');

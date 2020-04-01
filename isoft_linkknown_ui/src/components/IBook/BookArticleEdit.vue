@@ -31,6 +31,7 @@
 <script>
   import {BookArticleEdit, fileUploadUrl, ShowBookArticleDetail} from "../../api"
   import axios from 'axios'
+  import {checkNotEmpty, markdownAdapter} from "../../tools";
 
   export default {
     name: "BookArticleEdit",
@@ -115,8 +116,13 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await BookArticleEdit(_this.formValidate.id, _this.formValidate.book_catalog_id, _this.formValidate.content);
-            if (result.status == "SUCCESS") {
+            // 内容优化
+            const result = await BookArticleEdit({
+              id:_this.formValidate.id,
+              book_catalog_id:_this.formValidate.book_catalog_id,
+              content:markdownAdapter(_this.formValidate.content),
+            });
+            if (result.status === "SUCCESS") {
               _this.$Message.success('提交成功!');
               if (this.successEmit) {
                 this.$emit("successEmitFunc");

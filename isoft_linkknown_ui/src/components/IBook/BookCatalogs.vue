@@ -73,7 +73,7 @@
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
 
           <p>读者印象：</p>
-          <VoteTags ref="VoteTags" referer_type="vote_book" :referer_id="bookInfo.id"/>
+          <VoteTags ref="VoteTags" v-if="bookInfo" referer_type="vote_book" :referer_id="bookInfo.id"/>
 
           <!-- 评论模块 -->
           <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>

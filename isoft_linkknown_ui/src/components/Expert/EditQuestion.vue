@@ -19,6 +19,7 @@
 <script>
   import {EditQuestion, fileUploadUrl, ShowAskExpertDetail} from "../../api"
   import axios from 'axios'
+  import {markdownAdapter} from "../../tools";
 
   export default {
     name: "EditQuestion",
@@ -81,6 +82,7 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
+            this.formValidate.question = markdownAdapter(this.formValidate.question);
             const result = await EditQuestion(this.formValidate);
             if (result.status === "SUCCESS") {
               this.$router.push({path: '/expert/askExpert'});

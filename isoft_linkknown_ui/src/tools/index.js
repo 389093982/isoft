@@ -24,6 +24,14 @@ export const checkNotEmpty = function checkNotEmpty(checkStr) {
   return !checkEmpty(checkStr);
 };
 
+// 将不满足 markdown 语法规则的写法优化成标准的 markdown 写法
+export const markdownAdapter = function markdownAdapter (str) {
+  if (checkNotEmpty(str)) {
+    str = str.replace(/\s?\n/g,'  \n');         // 优化换行体验
+  }
+  return str;
+};
+
 // 判断值 value 是否是列表 validList 中
 export function oneOf(value, validList) {
   for (let i = 0; i < validList.length; i++) {
