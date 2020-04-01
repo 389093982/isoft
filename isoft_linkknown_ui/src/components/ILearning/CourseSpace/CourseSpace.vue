@@ -1,7 +1,7 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;">
     <Row style="background: #FFFFFF;">
-      <Col span="6" style="padding: 2px;background: #f8f8f9;">
+      <Col span="6" style="padding: 5px 0 0 10px ;background: #f8f8f9;">
         <IBeautifulCard title="我的课程空间">
           <div slot="content">
             <p style="padding: 5px 5px 5px 20px;">

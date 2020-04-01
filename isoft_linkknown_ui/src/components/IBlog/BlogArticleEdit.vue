@@ -1,5 +1,5 @@
 <template>
-  <Row :gutter="10">
+  <Row>
     <Col span="6">
       <div class="isoft_bg_white isoft_pd10" style="min-height: 200px;">
         <CatalogList/>
@@ -9,53 +9,55 @@
         <RandomAdmt/>
       </div>
     </Col>
-    <Col span="18">
-      <div class="isoft_bg_white isoft_pd10">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-          <Row>
-            <Col span="12">
-              <FormItem label="文章标题" prop="blog_title">
-                <Input v-if="this.$route.query.id != null" readonly v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
-                <Input v-else v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
-              </FormItem>
-            </Col>
-            <Col span="12">
-              <FormItem label="文章分类" prop="catalog_name">
-                <Select v-model="formValidate.catalog_name" filterable @on-open-change="refreshMyCatalogs()">
-                  <!-- 热门分类 -->
-                  <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
-                          :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}</Option>
-                  <!-- 我的分类 -->
-                  <Option v-for="(mycatalog, index) in mycatalogs" :value="mycatalog.catalog_name"
-                          :key="'__mine__' + index">我的分类：{{ mycatalog.catalog_name }}</Option>
-                </Select>
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span="12">
-              <FormItem label="检索词条" prop="key_words">
-                <Input v-model="formValidate.key_words" :maxlength="200" show-word-limit
-                       placeholder="多个检索词条用 / 分割,方便检索"></Input>
-              </FormItem>
-            </Col>
-            <Col span="12">
-              <FormItem label="分享链接" prop="link_href">
-                <Input v-model="formValidate.link_href" :maxlength="200" show-word-limit
-                       placeholder="请输入您要推广的链接"></Input>
-              </FormItem>
-            </Col>
-          </Row>
-          <FormItem label="文章内容" prop="content">
-            <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" :toolbars="toolbars" :ishljs="true"
-                          :subfield="false" @fullScreen="handleFullScreen"
-                          :style="{'z-index' : fullScreen ? '9999': '1'}"/>
-          </FormItem>
-          <FormItem>
-            <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-          </FormItem>
-        </Form>
-      </div>
+    <Col span="18" style="background-color: white">
+      <Row style="width: 95%;">
+        <div class="isoft_bg_white isoft_pd10">
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+            <Row>
+              <Col span="12">
+                <FormItem label="文章标题" prop="blog_title">
+                  <Input v-if="this.$route.query.id != null" readonly v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
+                  <Input v-else v-model="formValidate.blog_title" :maxlength="200" show-word-limit placeholder="请输入文章标题"/>
+                </FormItem>
+              </Col>
+              <Col span="12">
+                <FormItem label="文章分类" prop="catalog_name">
+                  <Select v-model="formValidate.catalog_name" filterable @on-open-change="refreshMyCatalogs()">
+                    <!-- 热门分类 -->
+                    <Option v-for="(hotCatalogItem,index) in hotCatalogItems" :value="hotCatalogItem.element_label"
+                            :key="'__hot__' + index">热门分类： {{ hotCatalogItem.element_label }}</Option>
+                    <!-- 我的分类 -->
+                    <Option v-for="(mycatalog, index) in mycatalogs" :value="mycatalog.catalog_name"
+                            :key="'__mine__' + index">我的分类：{{ mycatalog.catalog_name }}</Option>
+                  </Select>
+                </FormItem>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="12">
+                <FormItem label="检索词条" prop="key_words">
+                  <Input v-model="formValidate.key_words" :maxlength="200" show-word-limit
+                         placeholder="多个检索词条用 / 分割,方便检索"></Input>
+                </FormItem>
+              </Col>
+              <Col span="12">
+                <FormItem label="分享链接" prop="link_href">
+                  <Input v-model="formValidate.link_href" :maxlength="200" show-word-limit
+                         placeholder="请输入您要推广的链接"></Input>
+                </FormItem>
+              </Col>
+            </Row>
+            <FormItem label="文章内容" prop="content">
+              <mavon-editor ref="md" v-model="formValidate.content" @imgAdd="$imgAdd" :toolbars="toolbars" :ishljs="true"
+                            :subfield="false" @fullScreen="handleFullScreen"
+                            :style="{'z-index' : fullScreen ? '9999': '1'}"/>
+            </FormItem>
+            <FormItem>
+              <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+            </FormItem>
+          </Form>
+        </div>
+      </Row>
     </Col>
   </Row>
 </template>

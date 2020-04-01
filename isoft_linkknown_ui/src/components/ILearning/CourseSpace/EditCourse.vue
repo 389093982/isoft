@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div style="width: 95%;position: relative;top: -10px">
 
-    <div
-      style="line-height: 30px;height: 30px;background-color: #eee;text-align: center;margin: 10px 0;cursor: pointer;"
-      @click="$router.push({path:'/user/guide'})">
+    <div style="line-height: 30px;height: 30px;background-color: #eee;text-align: center;margin: 10px 0;cursor: pointer;"
+      @click="$router.push({path:'/user/userGuide'})">
       <Icon type="logo-buffer" style="color: red;" :size="18"/>
       查看课程发布说明
     </div>
@@ -24,8 +23,23 @@
         <Input v-model.trim="formValidate.course_sub_type" placeholder="请输入课程子类型"></Input>
       </FormItem>
       <FormItem label="课程描述" prop="course_short_desc">
-        <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="6"
-               placeholder="请输入课程描述"></Input>
+        <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="2" placeholder="请输入课程描述"></Input>
+      </FormItem>
+      <FormItem label="收费情况" prop="course_label">
+        <RadioGroup v-model="phone">
+          <Radio label="free">
+            <span>免费</span>
+          </Radio>
+          <Radio label="charge">
+            <span>收费</span>
+          </Radio>
+        </RadioGroup>
+      </FormItem>
+      <FormItem label="前几集免费" prop="course_label">
+        <InputNumber :max="100" :min="0" v-model="value1"></InputNumber>
+      </FormItem>
+      <FormItem label="价格" prop="course_label">
+        <InputNumber :max="100" :min="0" v-model="value1"></InputNumber>
       </FormItem>
       <FormItem label="自定义标签语" prop="course_label">
         <Input v-model.trim="formValidate.course_label" placeholder="多个标签语用 / 分割"></Input>
@@ -78,8 +92,8 @@
       const checkCourseShortDesc = (rule,value,callback) => {
         if (value === '') {
           callback(new Error('课程描述不能为空！'));
-        }else if(value.length>200){
-          callback(new Error('课程描述不能超过200个字符!'));
+        }else if(value.length>100){
+          callback(new Error('课程描述不能超过100个字符!'));
         }else {
           callback();
         }
@@ -95,16 +109,16 @@
         },
         ruleValidate: {
           course_name: [
-            {required: true,validator: checkCourseName,  trigger: 'blur'}
+            {required: true,validator: checkCourseName,  trigger: 'change'}
           ],
           course_type: [
-            {required: true,validator:checkCourseType, trigger: 'blur'}
+            {required: true,validator:checkCourseType, trigger: 'change'}
           ],
           course_sub_type: [
-            {required: true,validator:checkCourseSubType, trigger: 'blur'}
+            {required: true,validator:checkCourseSubType, trigger: 'change'}
           ],
           course_short_desc: [
-            {required: true, validator:checkCourseShortDesc, trigger: 'blur'}
+            {required: true, validator:checkCourseShortDesc, trigger: 'change'}
           ],
         },
       }

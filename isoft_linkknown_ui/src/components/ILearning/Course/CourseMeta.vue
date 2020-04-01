@@ -25,7 +25,7 @@
     </p>
     <p>
       <span style="color: #777">课程简介 :  </span>
-      <span class="courseDes">{{course.course_short_desc}}</span>
+      <span class="courseDes" style="font-size: 12px">{{course.course_short_desc}}</span>
     </p>
     <p>
       <span style="color: #777">课程集数 : </span>

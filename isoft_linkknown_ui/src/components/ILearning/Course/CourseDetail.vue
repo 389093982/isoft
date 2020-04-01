@@ -48,7 +48,7 @@
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
                 <span :style="{color:index===clickIndex?'#00c806':''}">
-                  第{{index + 1}}集: {{cVideo.video_name | filterSuffix}}
+                  第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}
                 </span>
               </span>
               <router-link style="float: right;" :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
@@ -234,6 +234,9 @@
       filterSuffix: function (value) {
         // 去除视频文件后缀
         return value.slice(0, value.indexOf("."));
+      },
+      modification:function (value) {
+        return value < 10 ? '0'+value : value
       }
     },
   }

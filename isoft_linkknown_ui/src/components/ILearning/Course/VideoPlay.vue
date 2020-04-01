@@ -7,7 +7,7 @@
         <!--左侧视频播放-->
         <Col span="15" style="margin-left: 80px">
           <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #999">
-            正在播放: {{course.course_name}} / 第{{currentClickIndex+1}}集: {{curVideo.video_name | filterSuffix }}
+            正在播放: {{course.course_name}} / 第{{currentClickIndex+1 | modification}}集: {{curVideo.video_name | filterSuffix }}
           </div>
           <div>
             <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
@@ -27,7 +27,7 @@
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
                     <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
-                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
+                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix}}</div>
                     </div>
                   </vue-scroll>
                 </div>
@@ -180,6 +180,9 @@
       filterSuffix: function (value) {
         // 去除视频文件后缀
         return value.slice(0, value.indexOf("."));
+      },
+      modification:function (value) {
+        return value < 10 ? '0'+value : value
       }
     },
     watch: {

@@ -12,7 +12,7 @@
             <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
           </p>
         </Col>
-        <Col span="16">
+        <Col span="14">
           <CourseMeta :course="myCourse" :show-course-space="false"/>
           <p>
             <router-link :to="{path:'/ilearning/courseSpace/editCourse',query:{course_id:myCourse.id}}"

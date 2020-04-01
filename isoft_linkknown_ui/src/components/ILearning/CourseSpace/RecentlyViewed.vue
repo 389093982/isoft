@@ -1,6 +1,6 @@
 <template>
-  <Row :gutter="20" style="padding-top: 20px;">
-    <Col span="12" v-for="history in historys">
+  <Row :gutter="20" style="padding-top: 10px;width: 90%">
+    <Col span="22" v-for="history in historys">
       <IBeautifulLink @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:history.history_link}})">
         {{history.history_desc}}
       </IBeautifulLink>
