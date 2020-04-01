@@ -181,10 +181,6 @@
               // 如果集数少于5，那么做一个推荐
               this.refreshHotRecommend()
             }
-            //以这种方式刷新VoteTags
-            this.$refs.VoteTags.setRefererType("course_theme_type");
-            this.$refs.VoteTags.setRefererId(this.course.id);
-            this.$refs.VoteTags.refreshVoteTags();
           }
         } finally {
           this.isLoading = false;

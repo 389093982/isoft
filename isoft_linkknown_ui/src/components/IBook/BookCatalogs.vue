@@ -59,7 +59,7 @@
             </div>
             <div style="padding: 10px 0;">
               <h3 style="margin:10px 0;">文章列表</h3>
-              <p v-for="(bookCatalog, index) in bookCatalogs" style="color: #333333;font-size: 15px;">
+              <p class="bookCatalog isoft_point_cursor" v-for="(bookCatalog, index) in bookCatalogs" style="color: #333333;font-size: 15px;">
                 <span style="color: rgba(0,128,0,0.4);">{{index+1}}</span>&nbsp;&nbsp;{{bookCatalog.catalog_name}}
               </p>
             </div>
@@ -73,7 +73,7 @@
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
 
           <p>读者印象：</p>
-          <VoteTags ref="VoteTags" v-if="bookInfo" referer_type="vote_book" :referer_id="bookInfo.id"/>
+          <VoteTags v-if="bookInfo" referer_type="vote_book" :referer_id="bookInfo.id"/>
 
           <!-- 评论模块 -->
           <IEasyComment v-if="bookInfo" :theme_pk="bookInfo.id" theme_type="bookInfo_theme_type" style="margin-top: 50px;"/>
@@ -139,11 +139,6 @@
           this.bookInfo = result.bookInfo;
           this.bookCatalogs = result.bookCatalogs;
           this.isFavorite(this.bookInfo.id,"book_collect");
-
-          //以这种方式刷新VoteTags
-          this.$refs.VoteTags.setRefererType("book_theme_type");
-          this.$refs.VoteTags.setRefererId(this.bookInfo.id);
-          this.$refs.VoteTags.refreshVoteTags();
         }
       },
       renderNickName: function (user_name) {
@@ -163,5 +158,9 @@
     cursor: pointer;
     color: #474747;
     font-size: 17px;
+  }
+
+  .bookCatalog:hover {
+    border-bottom: 1px solid #797776;
   }
 </style>
