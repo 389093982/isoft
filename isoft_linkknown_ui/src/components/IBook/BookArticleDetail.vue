@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="showTip" style="text-align: center;background-color: #eee;padding: 5px 10px;">
+    <div v-if="showTip" style="text-align: center;padding: 5px 10px;" class="isoft_font12 isoft_color_grey">
       温馨提示：点击键盘左右箭头可切换上一篇和下一篇文章
       <Icon type="md-close" style="float: right;margin: 5px;cursor: pointer;" @click="showTip = false"/>
     </div>
@@ -8,7 +8,9 @@
     <Row style="min-height: 500px;background-color: white">
       <Col span="5" style="padding-right: 5px;">
         <div style="background-color: #fff;padding: 20px;">
-          <Button @click="$router.push({path:'/ibook/bookList'})">全部书单</Button>
+          <div style="text-align: right;">
+            <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({path:'/ibook/bookList'})">全部书单</span>
+          </div>
           <div>
             <dl>
               <dd>
@@ -30,7 +32,7 @@
             <span v-if="renderNickName(created_by)">{{renderNickName(created_by)}}</span>
             <span v-else>{{created_by}}</span>
           </a>
-          <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于: {{last_updated_time}}</span>
+          <span class="isoft_mr10" style="color: #8a8a8a;">最后发布于: <Time v-if="last_updated_time" :time="last_updated_time" :interval="1"/></span>
           <span class="isoft_mr10" style="color: #8a8a8a;">累计阅读次数: {{views}}</span>
         </div>
 
