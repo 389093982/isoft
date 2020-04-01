@@ -159,8 +159,4 @@
     color: #474747;
     font-size: 17px;
   }
-
-  .bookCatalog:hover {
-    border-bottom: 1px solid #797776;
-  }
 </style>

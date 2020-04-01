@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="markdown isoft_word_break" v-html="compiledMarkdown"></div>
+    <!-- isoft_markdown 样式主要用于调整 iview 框架导致的缩进问题 -->
+    <div class="markdown isoft_markdown isoft_word_break" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
@@ -84,4 +85,8 @@
 
 <style scoped>
   @import "../../../assets/css/vue-markdown2.css";
+
+  .isoft_markdown>>>li {
+    margin-left: 24px;
+  }
 </style>
