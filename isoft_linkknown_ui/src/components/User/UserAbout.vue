@@ -34,8 +34,8 @@
               <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({path:'/iblog/blogArticleDetail',
                 query:{blog_id:blog.id}})">{{blog.catalog_name}}</span>
             </Col>
-            <Col span="6" class="isoft_inline_ellipsis">
-              <Time :time="blog.last_updated_time" :interval="1" style="color:red;"/>
+            <Col span="6" class="isoft_inline_ellipsis isoft_color_grey isoft_font12">
+              <Time :time="blog.last_updated_time" type="date"/>
             </Col>
           </Row>
         </TabPane>
@@ -71,8 +71,8 @@
                   {{book.book_name}}
                 </IBeautifulLink>
               </Col>
-              <Col span="8">
-                <Time :time="book.last_updated_time" :interval="1" style="color:red;"/>
+              <Col span="8" class="isoft_color_grey isoft_font12">
+                <Time :time="book.last_updated_time" type="date"/>
               </Col>
             </Row>
           </Row>
@@ -140,6 +140,7 @@
         return GetLoginUserName();
       },
       refreshUserDetail: async function () {
+        // TODO 改成从全局的 store 中读取,一次只查一下
         const result = await GetUserDetail(this.getUserName());
         if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
