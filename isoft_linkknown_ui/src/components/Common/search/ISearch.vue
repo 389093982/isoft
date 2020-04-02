@@ -70,6 +70,14 @@
 </script>
 
 <style scoped>
+  /* 设置 input 或 textarea 的 placeholder 样式 */
+  input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 12px;
+  }
+
   .search_input {
     padding-left: 16px;
     float: left;

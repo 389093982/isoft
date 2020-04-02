@@ -31,9 +31,8 @@
               </IBeautifulLink>
             </Col>
             <Col span="6" class="isoft_inline_ellipsis">
-              <IBeautifulLink @onclick="$router.push({path:'/iblog/blogArticleDetail',query:{blog_id:blog.id}})">
-                {{blog.catalog_name}}
-              </IBeautifulLink>
+              <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({path:'/iblog/blogArticleDetail',
+                query:{blog_id:blog.id}})">{{blog.catalog_name}}</span>
             </Col>
             <Col span="6" class="isoft_inline_ellipsis">
               <Time :time="blog.last_updated_time" :interval="1" style="color:red;"/>
@@ -43,8 +42,7 @@
         <TabPane icon="ios-videocam-outline" :label="userName===loginUserName()?'我的课程':'作者课程'">
           <Row>
             <Col span="8">课程名称</Col>
-            <Col span="8">课程类型</Col>
-            <Col span="8">课程子类型</Col>
+            <Col span="16">课程类型</Col>
           </Row>
           <Row v-for="course in courses" :gutter="10" style="line-height: 28px;height: 28px;">
             <Col span="8" class="isoft_inline_ellipsis">
@@ -52,34 +50,27 @@
                 {{course.course_name}}
               </IBeautifulLink>
             </Col>
-            <Col span="8" class="isoft_inline_ellipsis">
-              <IBeautifulLink
-                @onclick="$router.push({ path:'/ilearning/courseSearch', query: { search: course.course_type }})">
-                {{course.course_type}}
-              </IBeautifulLink>
-            </Col>
-            <Col span="8" class="isoft_inline_ellipsis">
-              <IBeautifulLink
-                @onclick="$router.push({ path: '/ilearning/courseSearch', query: { search: course.course_sub_type }})">
-                {{course.course_sub_type}}
-              </IBeautifulLink>
+            <Col span="16" class="isoft_inline_ellipsis">
+              <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({ path:'/ilearning/courseSearch',
+              query: { search: course.course_type }})">{{course.course_type}}</span>
+              /
+              <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({ path: '/ilearning/courseSearch',
+              query: { search: course.course_sub_type }})">{{course.course_sub_type}}</span>
             </Col>
           </Row>
         </TabPane>
         <TabPane icon="ios-book-outline" :label="userName===loginUserName()?'我的书单':'作者书单'">
           <Row>
-            <Col span="8">图书名称</Col>
-            <Col span="8">图书描述</Col>
+            <Col span="16">图书名称</Col>
             <Col span="8">时间</Col>
           </Row>
           <Row v-for="(book,index) in books">
             <Row style="line-height: 28px;height: 28px;">
-              <Col span="8" class="isoft_inline_ellipsis">
+              <Col span="16" class="isoft_inline_ellipsis">
                 <IBeautifulLink @onclick="$router.push({path:'/ibook/bookArticleDetail',query:{book_id:book.id}})">
                   {{book.book_name}}
                 </IBeautifulLink>
               </Col>
-              <Col span="8" class="isoft_inline_ellipsis">{{book.book_desc}}</Col>
               <Col span="8">
                 <Time :time="book.last_updated_time" :interval="1" style="color:red;"/>
               </Col>
