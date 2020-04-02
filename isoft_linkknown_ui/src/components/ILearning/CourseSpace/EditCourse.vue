@@ -25,22 +25,20 @@
       <FormItem label="课程描述" prop="course_short_desc">
         <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="2" placeholder="请输入课程描述"></Input>
       </FormItem>
-      <FormItem label="收费情况" prop="course_label">
-        <RadioGroup v-model="phone">
-          <Radio label="free">
-            <span>免费</span>
-          </Radio>
-          <Radio label="charge">
-            <span>收费</span>
-          </Radio>
+      <FormItem label="收费情况" prop="isCharge">
+        <RadioGroup v-model="formValidate.isCharge">
+          <Radio label='free'>免费</Radio>
+          <Radio label='charge'>收费</Radio>
         </RadioGroup>
       </FormItem>
-      <FormItem label="前几集免费" prop="course_label">
-        <InputNumber :max="100" :min="0" v-model="value1"></InputNumber>
-      </FormItem>
-      <FormItem label="价格" prop="course_label">
-        <InputNumber :max="100" :min="0" v-model="value1"></InputNumber>
-      </FormItem>
+      <div v-if="formValidate.isCharge==='charge'">
+        <FormItem label="前" prop="preListFree">
+          <Input v-model="formValidate.preListFree" clearable style="width: 50px" />集免费
+        </FormItem>
+        <FormItem label="价格" prop="price">
+          <Input v-model="formValidate.price" placeholder="000.00" clearable style="width: 100px" />￥
+        </FormItem>
+      </div>
       <FormItem label="自定义标签语" prop="course_label">
         <Input v-model.trim="formValidate.course_label" placeholder="多个标签语用 / 分割"></Input>
       </FormItem>
@@ -56,7 +54,7 @@
   import {EditCourse, ShowCourseDetail} from "../../../api"
   import ChooseHotCourseType from "../CourseType/ChooseHotCourseType"
   import IBeautifulCard from "../../Common/card/IBeautifulCard"
-  import {checkEmpty} from "../../../tools";
+  import {checkEmpty,validatePatternForString} from "../../../tools";
 
   export default {
     name: "EditCourse",
@@ -98,6 +96,24 @@
           callback();
         }
       };
+      const checkPreListFree = (rule,value,callback) => {
+        let patrn = /^([0-9]{1,3})$/;
+        if(!validatePatternForString(patrn,value)){
+          callback(new Error('集数必须是0-3位数字!'));
+        }else {
+          callback();
+        }
+      };
+      const checkPrice = (rule,value,callback) => {
+        let patrn = /^[0-9]{1,7}(.[0-9]{1,2})?$/;
+        if (value === '') {
+          callback(new Error('收费金额不能为空！'));
+        }else if(!validatePatternForString(patrn,value)){
+          callback(new Error('收费金额格式不正确!'));
+        }else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           id: -1,
@@ -106,6 +122,9 @@
           course_sub_type: "",
           course_label: "",
           course_short_desc: "",
+          isCharge:'free',
+          preListFree:'4',
+          price:'',
         },
         ruleValidate: {
           course_name: [
@@ -119,6 +138,15 @@
           ],
           course_short_desc: [
             {required: true, validator:checkCourseShortDesc, trigger: 'change'}
+          ],
+          isCharge: [
+            {required: true, message:"请选择是否收费", trigger: 'change'}
+          ],
+          preListFree: [
+            {required: true, validator:checkPreListFree, trigger: 'change'}
+          ],
+          price: [
+            {required: true,validator:checkPrice, trigger: 'change'}
           ],
         },
       }

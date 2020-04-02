@@ -59,7 +59,7 @@
         if (value === '') {
           callback(new Error('密码不能为空!'));
         }else if(!validatePatternForString(patrn,value)){
-          callback(new Error('密码必须由字母或数字组合，长度 6-20'));
+          callback(new Error('密码必须由字母或数字或!@#$%^&*组合，长度 6-20'));
         }else {
           callback();
         }
