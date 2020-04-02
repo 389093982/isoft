@@ -52,6 +52,22 @@
     <div class="isoft_tag3">tag 标签样式3</div>
     <div class="isoft_tag4">tag 标签样式4</div>
     <div class="isoft_tag5">tag 标签样式5</div>
+    <br/><br/>
+
+    <!-- 三角形,实现参考 http://www.divcss5.com/rumen/r50847.shtml -->
+    <div class="sjx1" style="display: inline-block;"></div> &nbsp;
+    <div class="sjx2" style="display: inline-block;"></div> &nbsp;
+    <div class="sjx3" style="display: inline-block;"></div> &nbsp;
+    <div class="sjx4" style="display: inline-block;"></div> &nbsp;
+    <div class="sjx5" style="display: inline-block;"></div> &nbsp;
+    <div class="sjx6" style="display: inline-block;"></div> <br/>
+    <div class="jt0" style="display: inline-block;"></div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <div class="jt1" style="display: inline-block;"></div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <div class="jt2" style="display: inline-block;"></div> &nbsp;
+
+    <br/><br/><br/><br/>
+
+
   </div>
 </template>
 
@@ -62,5 +78,124 @@
 </script>
 
 <style scoped>
-
+  .sjx1 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:#FFCCCC #0099CC #996699 #339933;
+  }
+  .sjx2 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:#FFCCCC transparent transparent transparent;   /* transparent 属性用来指定全透明色彩 */
+  }
+  .sjx3 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:transparent #0099CC transparent transparent;
+  }
+  .sjx4 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:transparent transparent #996699 transparent;
+  }
+  .sjx5 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:transparent transparent transparent #339933;
+  }
+  .sjx5 {
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color:transparent transparent transparent #339933;
+    transform: rotate(45deg); /*顺时针旋转*/
+  }
+  .sjx6 {
+    width: 100px;
+    height: 40px;
+    background-color: yellow;
+    position: absolute;
+  }
+  .sjx6:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-color:transparent transparent transparent yellow;
+    position: absolute;
+    right: -20px;
+    top: 10px;
+  }
+  .jt0{
+    position: absolute;
+  }
+  .jt0:before,.jt0:after{
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px transparent dashed;
+    border-left: 10px transparent dashed;
+    border-bottom: 10px transparent dashed;
+    border-right: 10px #fff solid;      /* 上左下透明,右边白色 */
+  }
+  .jt0:before{
+    border-right: 10px #0099CC solid;   /* before 前右边颜色,覆盖之前的白色 */
+  }
+  .jt0:after{
+    left: 5px;                          /* 覆盖并错开 5 px */
+    border-right: 10px #fff solid;      /* after 后右边颜色,覆盖之前的白色,但还是白色 */
+  }
+  .jt1{
+    position: absolute;
+  }
+  .jt1:before,.jt1:after{
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px transparent dashed;
+    border-left: 10px transparent dashed;
+    border-bottom: 10px transparent dashed;
+    border-right: 10px #fff solid;      /* 上左下透明,右边白色 */
+  }
+  .jt1:before{
+    border-right: 10px #0099CC solid;   /* before 前右边颜色,覆盖之前的白色 */
+  }
+  .jt1:after{
+    left: 1px;                          /* 覆盖并错开1px */
+    border-right: 10px #fff solid;      /* after 后右边颜色,覆盖之前的白色,但还是白色 */
+  }
+  .jt2{
+    position: absolute;
+  }
+  .jt2:before,.jt2:after{
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px transparent dashed;
+    border-left: 10px transparent dashed;
+    border-right: 10px transparent dashed;
+    border-bottom: 10px #fff solid;
+  }
+  .jt2:before{
+    border-bottom: 10px #0099CC solid;
+  }
+  .jt2:after{
+    top: 1px; /*覆盖并错开1px*/
+    border-bottom: 10px #fff solid;
+  }
 </style>
