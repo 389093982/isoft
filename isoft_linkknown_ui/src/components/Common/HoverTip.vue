@@ -31,5 +31,10 @@
     cursor: pointer;
     z-index: 100;
     zoom: .8;
+    left: -158px;
+    transition: left 1s ease;
+  }
+  .box:hover {
+    left: 0;
   }
 </style>
