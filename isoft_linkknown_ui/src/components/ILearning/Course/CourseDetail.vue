@@ -45,9 +45,10 @@
 
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;" :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
+            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;"
+                 :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
-                <span :style="{color:index===clickIndex?'#00c806':''}">
+                <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
                   第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}
                 </span>
               </span>
@@ -60,8 +61,8 @@
               作者还未上传视频哦...
             </div>
             <!--查看更多-->
-            <div v-if="cVideos.length > minLen" style="position: relative;left: -45%;top: -60px">
-              <show-more @changeShowMore="changeShowMore" style="position: absolute;top: 60px;right: 45px"></show-more>
+            <div style="text-align: center;" v-if="cVideos.length > minLen">
+              <span class="isoft_tag1"><show-more @changeShowMore="changeShowMore"></show-more></span>
             </div>
             <div v-else>
               <!--集数低于5，展示其他课程-->
