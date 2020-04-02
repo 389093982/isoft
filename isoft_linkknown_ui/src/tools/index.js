@@ -308,3 +308,8 @@ export function setCookie(c_name, value, expiredays, domain) {
     document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) + ";path=/";
   }
 }
+
+export function GenerateRandom(arr) {
+  var index = Math.floor((Math.random()*arr.length));
+  return arr[index];
+}
