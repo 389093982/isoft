@@ -2,6 +2,7 @@
   <div id="app">
     <router-view/>
 
+    <HoverTip/>
     <AutoLogin/>
     <CheckHasLoginConfirmDialog/>
   </div>
@@ -10,10 +11,11 @@
 <script>
   import CheckHasLoginConfirmDialog from "./components/SSO/Login/CheckHasLoginConfirmDialog";
   import AutoLogin from "./components/SSO/Login/AutoLogin";
+  import HoverTip from "./components/Common/HoverTip";
 
   export default {
     name: 'App',
-    components: {CheckHasLoginConfirmDialog, AutoLogin},
+    components: {HoverTip, CheckHasLoginConfirmDialog, AutoLogin},
   }
 </script>
 
