@@ -36,7 +36,7 @@
     </p>
 
     <div style="width: 50%;float: right;margin-top: -30px;">
-        <span v-if="showCourseSpace" class="isoft_button_blue"
+        <span v-if="showCourseSpace" class="isoft_button_blue isoft_border_radius5 isoft_glint"
               @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</span>
     </div>
   </span>
@@ -98,4 +98,22 @@
     cursor: pointer;
   }
 
+  .isoft_glint:hover:before {
+    background: rgba(255,255,255,.5);
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 100%;
+    content: '';
+    left: 0;
+    top: 0;
+    transform: translateX(-50px) skewX(-15deg);
+    filter: blur(20px);         /* CSS: filter: blur(); 实现高斯模糊效果,不可不知的细节优化 */
+    opacity: .6;
+    animation: glint 1.2s infinite;
+  }
+  @keyframes glint{
+    0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
+    100%{transform:translateX(600px) skewX(-15deg);opacity:1}
+  }
 </style>
