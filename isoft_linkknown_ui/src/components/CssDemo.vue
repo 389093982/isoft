@@ -203,8 +203,6 @@
     top: 1px; /*覆盖并错开1px*/
     border-bottom: 10px #fff solid;
   }
-
-
   .introduce-box {
     position: relative;
     padding: 10px;

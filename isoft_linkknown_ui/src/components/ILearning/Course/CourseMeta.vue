@@ -36,8 +36,10 @@
     </p>
 
     <div style="width: 50%;float: right;margin-top: -30px;">
-        <span v-if="showCourseSpace" class="isoft_button_blue isoft_border_radius5 isoft_glint"
-              @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</span>
+      <div style="position: relative;">
+        <div v-if="showCourseSpace" class="isoft_button_blue isoft_glint"
+             @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</div>
+      </div>
     </div>
   </span>
 </template>
