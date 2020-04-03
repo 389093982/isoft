@@ -57,7 +57,7 @@
         deafult: true,
       },
       extraData: {
-        type: Object,
+        type: [Object,Number],
         default: function () {
           return {}
         },

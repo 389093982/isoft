@@ -15,6 +15,12 @@
                 </div>
                 <div class="ico_play"></div>
               </div>
+              <div style="margin: 5px 0 0 50px">
+                <span v-if="course.isCharge==='charge'" style="color: #ff6900">
+                  <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
+                </span>
+                <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
+              </div>
             </Col>
             <Col span="16">
               <!--课程详情介绍-->
@@ -45,7 +51,7 @@
 
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;"
+            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin:0 10px 0 10px ;padding: 5px;"
                  :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
                 <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
@@ -57,8 +63,8 @@
                 <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
               </router-link>
             </div>
-            <div v-if="cVideos.length===0" class="video_item" style="margin-right: 10px;padding: 10px;">
-              作者还未上传视频哦...
+            <div v-if="cVideos.length===0" class="video_item" style="margin-right: 10px;padding: 10px;color: #00c806">
+              ^_^ 作者还未上传视频哦...
             </div>
             <!--查看更多-->
             <div style="text-align: center;" v-if="cVideos.length > minLen">

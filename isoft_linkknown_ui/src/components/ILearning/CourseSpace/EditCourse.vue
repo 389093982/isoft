@@ -36,7 +36,7 @@
           <Input v-model="formValidate.preListFree" clearable style="width: 50px" />集免费
         </FormItem>
         <FormItem label="价格" prop="price">
-          <Input v-model="formValidate.price" placeholder="000.00" clearable style="width: 100px" />￥
+          <Icon type="logo-yen" /><Input v-model="formValidate.price" placeholder="000.00" clearable style="width: 100px" />
         </FormItem>
       </div>
       <FormItem label="自定义标签语" prop="course_label">
@@ -62,27 +62,27 @@
     data() {
       const checkCourseName = (rule,value,callback) => {
         if (value === '') {
-          callback(new Error('课程名称不能为空！'));
+          callback(new Error('课程名称不能为空'));
         }else if(value.length>20){
-          callback(new Error('课程名称不能超过20个字符!'));
+          callback(new Error('课程名称不能超过20个字符'));
         }else {
           callback();
         }
       };
       const checkCourseType = (rule,value,callback) => {
         if (value === '') {
-          callback(new Error('课程类型不能为空！'));
+          callback(new Error('课程类型不能为空'));
         }else if(value.length>20){
-          callback(new Error('课程类型不能超过20个字符!'));
+          callback(new Error('课程类型不能超过20个字符'));
         }else {
           callback();
         }
       };
       const checkCourseSubType = (rule,value,callback) => {
         if (value === '') {
-          callback(new Error('课程子类型不能为空！'));
+          callback(new Error('课程子类型不能为空'));
         }else if(value.length>20){
-          callback(new Error('课程子类型不能超过20个字符!'));
+          callback(new Error('课程子类型不能超过20个字符'));
         }else {
           callback();
         }
@@ -91,7 +91,7 @@
         if (value === '') {
           callback(new Error('课程描述不能为空！'));
         }else if(value.length>100){
-          callback(new Error('课程描述不能超过100个字符!'));
+          callback(new Error('课程描述不能超过100个字符'));
         }else {
           callback();
         }
@@ -99,7 +99,7 @@
       const checkPreListFree = (rule,value,callback) => {
         let patrn = /^([0-9]{1,3})$/;
         if(!validatePatternForString(patrn,value)){
-          callback(new Error('集数必须是0-3位数字!'));
+          callback(new Error('集数必须是0-3位正整数'));
         }else {
           callback();
         }
@@ -107,9 +107,11 @@
       const checkPrice = (rule,value,callback) => {
         let patrn = /^[0-9]{1,7}(.[0-9]{1,2})?$/;
         if (value === '') {
-          callback(new Error('金额不能为空！'));
+          callback(new Error('金额不能为空'));
         }else if(!validatePatternForString(patrn,value)){
-          callback(new Error('金额格式不正确!'));
+          callback(new Error('金额格式不正确'));
+        }else if(value<=0){
+          callback(new Error('金额必须大于0'));
         }else {
           callback();
         }
@@ -123,7 +125,7 @@
           course_label: "",
           course_short_desc: "",
           isCharge:'free',
-          preListFree:'4',
+          preListFree:'',
           price:'',
         },
         ruleValidate: {

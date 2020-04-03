@@ -30,6 +30,7 @@
     <p>
       <span style="color: #777">课程集数 : </span>
       <span class="courseDes">{{course.course_number}}</span>
+      <span v-if="course.isCharge==='charge'&&course.preListFree>0" class="courseDes">(前{{course.preListFree}}集免费)</span>
     </p>
     <p v-if="course.course_label">
       <TagRender :tags="clabels"/>

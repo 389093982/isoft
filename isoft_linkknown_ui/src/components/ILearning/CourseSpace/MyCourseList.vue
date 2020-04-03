@@ -9,7 +9,18 @@
             <img v-else src="../../../assets/default.png" height="120" width="180"/>
           </p>
           <p>
-            <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
+            <span>
+              <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="更换封面"/>
+            </span>
+            <span style="margin-left: 10px">
+              <span v-if="myCourse.isCharge==='charge'" style="color: #ff6900">
+                <Icon type="logo-yen" />
+                <span style="font-size: 20px">
+                  {{myCourse.price}}
+                </span>
+              </span>
+              <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
+            </span>
           </p>
         </Col>
         <Col span="14">
@@ -57,7 +68,7 @@
         fileUploadUrl: fileUploadUrl + "?table_name=course&table_field=small_icon",
         isLoading: true,
         // 我的课程
-        myCourses: null,
+        myCourses: '',
         totalCount:0,
         current_page:1,
         offset:10,
