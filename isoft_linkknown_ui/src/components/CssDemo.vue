@@ -67,6 +67,11 @@
 
     <br/><br/><br/><br/>
 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="introduce-box">
+      <div class="introduce-btn">发布招标需求</div>
+    </div>
+
 
   </div>
 </template>
@@ -197,5 +202,34 @@
   .jt2:after{
     top: 1px; /*覆盖并错开1px*/
     border-bottom: 10px #fff solid;
+  }
+  .introduce-box {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #f6f6f6;
+    background: #ff6900;
+    color: white;
+    display: inline-block;
+  }
+  .introduce-box:hover {
+    background: #f6290e;
+  }
+  .introduce-btn:hover:before {
+    background: rgba(255,255,255,.5);
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 100%;
+    content: '';
+    left: 0;
+    top: 0;
+    transform: translateX(-50px) skewX(-15deg);
+    filter: blur(20px);         /* CSS: filter: blur(); 实现高斯模糊效果,不可不知的细节优化 */
+    opacity: .6;
+    animation: glint 1.2s infinite;
+  }
+  @keyframes glint{
+    0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
+    100%{transform:translateX(300px) skewX(-15deg);opacity:1}
   }
 </style>
