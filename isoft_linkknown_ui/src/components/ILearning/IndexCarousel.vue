@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;height: 400px">
       <!--首页轮播图 图片尺寸尽量长宽2:1，长800，宽400比较合适-->
-      <Carousel :autoplay="true" :autoplaySpeed="2000" dots="outside" trigger="hover" loop>
+      <Carousel :autoplay="true" :autoplaySpeed="2000" trigger="hover" loop>
         <CarouselItem>
           <div style="cursor: pointer" @click="$router.push({path:'/ilearning/about'})"><img src="../../../static/images/indexCarousel/index.jpg" height="400" width="100%"/></div>
         </CarouselItem>

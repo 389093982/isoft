@@ -45,7 +45,7 @@
       </Col>
       <Col span="6">
         <div class="hoverBorderShadow" style="height: 100px;padding: 20px;cursor: pointer;"
-             @click="$router.push({path:'/site/index'})">
+             @click="$router.push({path:'/site/siteIndex'})">
           <Row>
             <Col span="8">
               <img src="../../../static/images/more.jpg" style="width: 52px;height: 52px;"/>

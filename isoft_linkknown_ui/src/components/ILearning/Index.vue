@@ -15,7 +15,7 @@
     </div>
 
     <!--为您精选、热门、特色、高评-->
-    <div style="margin: 40px 0 0 0;">
+    <div style="margin: 2px 0 0 0;">
       <WarmHeartRecommend/>
     </div>
 

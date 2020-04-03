@@ -1,7 +1,7 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <IBeautifulCard :title="placement_label"  :minHeight="600">
-      <div slot="content">
+    <IBeautifulCard :title="placement_label" :minHeight="253">
+      <div slot="content" style="padding: 10px;">
         <ul v-if="elements.length > 0">
           <li v-for="element in elements" class="li">
             <a :href="element.linked_refer" target="_blank">
