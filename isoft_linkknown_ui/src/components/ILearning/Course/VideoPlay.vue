@@ -26,7 +26,7 @@
                 <!--本主题视频集数-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer" @click="clickCourse(index)">
+                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer;padding: 1px" @click="clickCourse(index)">
                       <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}</div>
                     </div>
                   </vue-scroll>
