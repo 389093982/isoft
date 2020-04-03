@@ -38,6 +38,20 @@
     <div style="clear: both"></div>
 
     <!--下三，33:34:33-->
+    <div style="display: flex;">
+      <!--热门书单-->
+      <div style="width: 33%;">
+        <BookRank class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 34%;padding: 0 5px;">
+        <BookRank class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 33%;">
+        <BookRank class="isoft_bg_white isoft_pd10"/>
+      </div>
+    </div>
+
+    <!--下三，33:34:33-->
     <div style="float: left;width: 33%;">
       <!--热门书单-->
       <div style="margin: 5px 4px 0 0">
