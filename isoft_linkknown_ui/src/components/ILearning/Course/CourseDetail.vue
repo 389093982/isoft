@@ -15,6 +15,12 @@
                 </div>
                 <div class="ico_play"></div>
               </div>
+              <div style="margin: 5px 0 0 50px">
+                <span v-if="course.isCharge==='charge'" style="color: #ff6900">
+                  <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
+                </span>
+                <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
+              </div>
             </Col>
             <Col span="16">
               <!--课程详情介绍-->
