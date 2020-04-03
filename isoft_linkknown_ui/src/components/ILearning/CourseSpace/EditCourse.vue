@@ -107,9 +107,9 @@
       const checkPrice = (rule,value,callback) => {
         let patrn = /^[0-9]{1,7}(.[0-9]{1,2})?$/;
         if (value === '') {
-          callback(new Error('收费金额不能为空！'));
+          callback(new Error('金额不能为空！'));
         }else if(!validatePatternForString(patrn,value)){
-          callback(new Error('收费金额格式不正确!'));
+          callback(new Error('金额格式不正确!'));
         }else {
           callback();
         }
