@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="books.length>0">
     <div class="isoft_pd10">
       <div class="isoft_title">{{userName===loginUserName()?'我收藏的图书':'作者收藏的图书'}}</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
