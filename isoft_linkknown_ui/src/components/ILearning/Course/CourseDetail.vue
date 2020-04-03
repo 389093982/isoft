@@ -51,7 +51,7 @@
 
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
-            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 10px;"
+            <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin-right: 10px;padding: 5px;"
                  :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
               <span style="color: #9b9896">
                 <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
