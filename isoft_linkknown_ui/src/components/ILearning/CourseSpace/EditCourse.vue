@@ -123,7 +123,7 @@
           course_label: "",
           course_short_desc: "",
           isCharge:'free',
-          preListFree:'4',
+          preListFree:'',
           price:'',
         },
         ruleValidate: {
