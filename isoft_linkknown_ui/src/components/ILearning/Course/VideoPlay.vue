@@ -26,8 +26,11 @@
                 <!--本主题视频集数-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer;padding: 1px" @click="clickCourse(index)">
-                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}</div>
+                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer;padding: 1px" @click="clickVideoName(index)">
+                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">
+                        第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
+                        <sup v-if="index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                      </div>
                     </div>
                   </vue-scroll>
                 </div>
@@ -121,6 +124,10 @@
         }
       },
       playVideo: function (video_id) {
+        //收费判断
+        if (this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
+          return;
+        }
         // 右侧选中播放指示
         this.currentClickIndex = this.cVideos.indexOf(this.curVideo);
         //播放curVideo
@@ -147,8 +154,12 @@
           }
         });
       },
-      clickCourse:function (index) {
-        this.currentClickIndex = index;
+      clickVideoName:function (index) {
+        //收费判断
+        if (index + 1 > this.course.preListFree) {
+          this.$Message.warning("付费视频！");
+          return;
+        }
         this.curVideo = this.cVideos[index];
       },
       refreshCustomTagCourse: async function (custom_tag) {

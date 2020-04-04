@@ -52,16 +52,16 @@
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin:0 10px 0 10px ;padding: 5px;"
-                 :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickCourse(index)">
+                 :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickVideoName(index)">
               <span style="color: #9b9896">
                 <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
-                  第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}
+                  第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}<sup v-if="index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
                 </span>
               </span>
-              <router-link style="float: right;" :to="{path:'/ilearning/videoPlay',query:{course_id:course.id,video_id:cVideo.id}}">
+              <span style="float: right;">
                 <span class="isoft_font12 isoft_color_grey isoft_mr10" v-if="cVideo.duration > 0">时长&nbsp;{{cVideo.duration}}&nbsp;s</span>
-                <Button size="small" type="success" class="hovered hvr-grow">立即播放</Button>
-              </router-link>
+                <Button size="small" type="success" class="hovered hvr-grow" @click="playSelectedVideo(course.id,cVideo.id,index,course.preListFree)">立即播放</Button>
+              </span>
             </div>
             <div v-if="cVideos.length===0" class="video_item" style="margin-right: 10px;padding: 10px;color: #00c806">
               ^_^ 作者还未上传视频哦...
@@ -224,8 +224,15 @@
           CheckHasLoginConfirmDialog(this, {path: "/ilearning/courseDetail?course_id="+this.$route.query.course_id});
         }
       },
-      clickCourse:function (index) {
+      clickVideoName:function (index) {
         this.clickIndex = index;
+      },
+      playSelectedVideo:function(course_id,video_id,index,preListFree){
+        if (index + 1 > preListFree) {
+          this.$Message.warning("付费视频！");
+          return;
+        }
+        this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
       },
       changeShowMore:function (showMore) {
         showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
