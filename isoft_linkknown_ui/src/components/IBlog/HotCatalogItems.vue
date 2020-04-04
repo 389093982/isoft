@@ -1,10 +1,7 @@
 <template>
-  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" style="margin-left: 240px;margin-right: 60px;">
+  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" style="margin-left: 60px;margin-right: 60px;">
     <Row>
-      <Col span="2" style="text-align: center;padding-top: 15px;">
-        <a href="javascript:;" @click="previous" v-show="showPrevious"><img src="/static/images/arrow_left.png"/></a>
-      </Col>
-      <Col span="4" v-for="element in getCurrentPage">
+      <Col span="4" v-for="element in elements">
         <a href="javascript:;" style="color: #999;" @click="chooseItem(element.linked_refer)">
           <div class="item" style="padding:10px; height: 80px;">
             <Row :gutter="10">
@@ -18,9 +15,6 @@
             </Row>
           </div>
         </a>
-      </Col>
-      <Col span="2" style="text-align: center;padding-top: 15px;">
-        <a href="javascript:;" @click="next" v-show="showNext"><img src="/static/images/arrow_right.png"/></a>
       </Col>
     </Row>
   </ElementsLoader>
@@ -38,21 +32,7 @@
         // 热门分享类型
         elements: [],
         // 当前页
-        currentPageNo: 1,
         defaultImg: require('../../assets/default.png'),
-      }
-    },
-    computed: {
-      getCurrentPage: function () {
-        return this.pagination(this.currentPageNo, 4, this.elements);
-      },
-      showPrevious: function () {
-        const total_page = Math.ceil(this.elements.length / 4);
-        return this.currentPageNo > 1;
-      },
-      showNext: function () {
-        const total_page = Math.ceil(this.elements.length / 4);
-        return this.currentPageNo < total_page;
       }
     },
     methods: {
@@ -60,24 +40,6 @@
         let img = event.srcElement;
         img.src = this.defaultImg;
         img.onerror = null; //防止闪图
-      },
-      // 获取前一页
-      previous: function () {
-        if (this.currentPageNo > 1) {
-          this.currentPageNo = this.currentPageNo - 1;
-        }
-      },
-      // 获取后一页
-      next: function () {
-        const total_page = Math.ceil(this.elements.length / 4);
-        if (this.currentPageNo < total_page) {
-          this.currentPageNo = this.currentPageNo + 1;
-        }
-      },
-      // 对数组进行也分
-      pagination: function (pageNo, pageSize, array) {
-        let offset = (pageNo - 1) * pageSize;
-        return (offset + pageSize >= array.length) ? array.slice(offset, array.length) : array.slice(offset, offset + pageSize);
       },
       chooseItem: function (share_name) {
         this.$emit('chooseItem', share_name);
