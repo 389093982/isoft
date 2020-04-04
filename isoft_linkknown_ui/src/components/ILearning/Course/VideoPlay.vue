@@ -18,9 +18,9 @@
           </div>
         </Col>
         <!--右侧分上下-->
-        <Col span="5" style="margin-left: 30px">
+        <Col span="6" style="margin-left: 30px;">
           <!--右侧竖块-->
-          <div style="margin:10px 0 0 0 ;">
+          <div style="margin:10px 0 0 0 ;width: 95%">
             <Tabs size="small">
               <TabPane :label="course.course_name">
                 <!--本主题视频集数-->
@@ -29,7 +29,9 @@
                     <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer;padding: 1px" @click="clickVideoName(index)">
                       <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">
                         第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
-                        <sup v-if="index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                        <sup v-if="course.isCharge==='free'" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                        <sup v-else-if="course.isCharge==='charge' && index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                        <sup v-else>&nbsp;</sup>
                       </div>
                     </div>
                   </vue-scroll>
@@ -126,7 +128,7 @@
       },
       playVideo: function (video_id) {
         //收费判断
-        if (this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
+        if (this.course.isCharge==='charge' && this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
           return;
         }
         // 右侧选中播放指示
@@ -161,7 +163,7 @@
           return;
         }
         //收费判断
-        if (index + 1 > this.course.preListFree) {
+        if (this.course.isCharge==='charge' && index + 1 > this.course.preListFree) {
           this.$Message.warning("付费视频！");
           return;
         }

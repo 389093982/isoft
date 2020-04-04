@@ -55,7 +55,10 @@
                  :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickVideoName(index)">
               <span style="color: #9b9896">
                 <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
-                  第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}<sup v-if="index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                  第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}
+                  <sup v-if="course.isCharge==='free'" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                  <sup v-else-if="course.isCharge==='charge' && index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
+                  <sup v-else>&nbsp;</sup>
                 </span>
               </span>
               <span style="float: right;">
@@ -228,7 +231,7 @@
         this.clickIndex = index;
       },
       playSelectedVideo:function(course_id,video_id,index,preListFree){
-        if (index + 1 > preListFree) {
+        if (this.course.isCharge === 'charge' && index + 1 > preListFree) {
           this.$Message.warning("付费视频！");
           return;
         }
