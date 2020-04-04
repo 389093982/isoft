@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="section01_bg">
-      <LinkKnownAbout/>
+      <LinkKnownQuickSearch/>
     </div>
 
     <!--高度这里就设置400px-->
@@ -88,7 +88,7 @@
 <script>
 
   // 最顶部的使用同步加载组件
-  import LinkKnownAbout from "./LinkKnownAbout"
+  import LinkKnownQuickSearch from "./LinkKnownQuickSearch"
   // 其它部位使用异步加载组件
   const ToolBox = () => import("@/components/Background/CMS/ToolBox");
   const IBeautifulTabLink = () => import("@/components/Common/link/IBeautifulTabLink");
@@ -114,7 +114,7 @@
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
-      LinkKnownAbout,
+      LinkKnownQuickSearch,
     },
   }
 </script>

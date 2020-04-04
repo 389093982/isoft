@@ -129,6 +129,7 @@
       playVideo: function (video_id) {
         //收费判断
         if (this.course.isCharge==='charge' && this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
+          //弹框显示购买信息
           return;
         }
         // 右侧选中播放指示
