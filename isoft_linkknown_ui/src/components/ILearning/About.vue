@@ -1,9 +1,7 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;">
-    <HeavyRecommend/>
-
     <div class="section01_bg">
-      <LinkKnownAbout style="margin-left: 350px;"/>
+      <LinkKnownAbout/>
     </div>
 
     <Row :gutter="10">
@@ -18,14 +16,14 @@
 </template>
 
 <script>
-  import HeavyRecommend from "./HeavyRecommend";
+
   import LinkKnownAbout from "./LinkKnownAbout";
   import ShowUserExperience from "./ShowUserExperience";
   import BlogRank2 from "./BlogRank2";
 
   export default {
     name: "About",
-    components: {HeavyRecommend, LinkKnownAbout, ShowUserExperience, BlogRank2},
+    components: {LinkKnownAbout, ShowUserExperience, BlogRank2},
   }
 </script>
 
@@ -34,7 +32,7 @@
 
   .section01_bg {
     height: 450px;
-    background: url(../../assets/1.jpg) no-repeat;
+    background: url(../../assets/bg.jpg) no-repeat;
     background-size: 100% 100%;
   }
 </style>

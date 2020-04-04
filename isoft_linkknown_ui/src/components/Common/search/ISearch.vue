@@ -2,8 +2,9 @@
   <div style="height: 45px;">
     <div style="position: relative;float: right;">
       <div>
-        <input class="search_input" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" @keyup.enter="submitFunc"
-          @focus="handleFocus" @blur="showRecently = false">
+        <input class="search_input" :class="searchInputClass"
+               title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" @keyup.enter="submitFunc"
+               @focus="handleFocus" @blur="showRecently = false">
         <input class="submit" type="submit" title="提交" @click="submitFunc">
 
         <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">
@@ -32,6 +33,12 @@
 
   export default {
     name: "Search",
+    props:{
+      longer: {
+        type: Boolean,
+        default: false,
+      }
+    },
     data() {
       return {
         search_data: "",
@@ -64,6 +71,9 @@
           style.background = GenerateRandom(arr);
           return style;
         }
+      },
+      searchInputClass: function () {
+        return [this.longer ? 'search_input_len_longer' : 'search_input_len_default'];
       }
     },
   }
@@ -95,8 +105,19 @@
   }
 
   .search_input:focus {
-    width: 450px;
     box-shadow: 0 0 3px rgba(142, 142, 142, 0.22);
+  }
+
+  .search_input_len_default {
+    width: 350px;
+  }
+
+  .search_input_len_default:focus {
+    width: 450px;
+  }
+
+  .search_input_len_longer {
+    width: 500px;
   }
 
   .submit {
