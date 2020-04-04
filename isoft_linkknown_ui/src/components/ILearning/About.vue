@@ -31,7 +31,7 @@
   /* 引入公共样式库 */
 
   .section01_bg {
-    height: 450px;
+    height: 400px;
     background: url(../../assets/bg.jpg) no-repeat;
     background-size: 100% 100%;
   }
