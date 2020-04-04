@@ -4,7 +4,7 @@
       <Col span="4" v-for="element in elements">
         <a href="javascript:;" style="color: #999;" @click="chooseItem(element.linked_refer)">
           <div class="item" style="padding:10px; height: 80px;">
-            <Row :gutter="10">
+            <Row>
               <Col span="6">
                 <img :src="element.img_path" :alt="element.element_label" width="40px" height="40px" @error="defImg()"/>
               </Col>

@@ -4,17 +4,18 @@
       <span v-if="hasLogin">
         <BlogCatalogEdit v-if="showBlogCatalogEdit" @handleSuccess="handleSuccess"/>
         <Row>
-          <Col span="18">我的博客分类
-            <span style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit">
+          <Col span="17">
+            我的博客分类
+            <span v-if="showAddBoder" style="cursor: pointer;color: red;" @click="showBlogCatalogEdit = !showBlogCatalogEdit">
               <span v-if="!showBlogCatalogEdit"><Icon type="md-add"/>添加分类</span>
               <span v-else><Icon type="ios-remove" />收起添加</span>
             </span>
           </Col>
-          <Col span="6">创建时间</Col>
+          <Col span="7">创建时间</Col>
         </Row>
         <Row v-for="(catalog,index) in catalogs" style="line-height: 28px;height: 28px;">
-          <Col span="18" class="isoft_inline_ellipsis">{{ catalog.catalog_name | filterLimitFunc(10)}}</Col>
-          <Col span="6" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
+          <Col span="17" class="isoft_inline_ellipsis">{{ catalog.catalog_name | filterLimitFunc(10)}}</Col>
+          <Col span="7" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
         </Row>
       </span>
       <span v-else>
@@ -32,6 +33,12 @@
   import ForwardLogin from "../SSO/ForwardLogin"
 
   export default {
+    props:{
+      showAddBoder:{
+        type:Boolean,
+        default:true,
+      }
+    },
     name: "CatalogList",
     components: {ForwardLogin, IBeautifulCard, BlogCatalogEdit},
     data() {
