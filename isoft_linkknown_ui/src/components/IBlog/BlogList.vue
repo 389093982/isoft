@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="section02_bg" style="color: white;font-size: 30px;height: 100px;line-height: 100px;padding: 0 30px;">
+      精选文章推荐，热门项目参考 github
+    </div>
+
     <div class="isoft_bg_white" style="padding: 5px 0;box-shadow: 0px 1px 2px 0px rgba(0,87,255,0.24);border-radius: 4px;">
       <!-- 热门分类 -->
       <HotCatalogItems @chooseItem="chooseItem"/>
@@ -43,11 +47,13 @@
 
         <!--下面是三列-->
         <Row style="padding: 12px;">
-          <Col span="2">
+          <Col span="4">
             <!--博客左侧预留空间-->
             &nbsp;
           </Col>
-          <Col span="16">
+          <Col span="14">
+            <img style="width: 600px;height: 400px;margin-left: 70px;" src="../../assets/xuexi.jpg"/>
+            
             <!--下面展示一篇博客具体格式，按照三列，中间一列分两行-->
             <ul>
               <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
@@ -269,7 +275,11 @@
 </script>
 
 <style scoped>
-
+  .section02_bg {
+    height: 140px;
+    background: url(../../assets/bg2.jpg) no-repeat;
+    background-size: 100%;
+  }
   .type_hover{
     font-size: 15px;color: #777;
   }
