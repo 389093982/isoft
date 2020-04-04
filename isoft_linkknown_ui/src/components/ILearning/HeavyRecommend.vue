@@ -1,7 +1,8 @@
 <template>
   <div style="width: 265px;height: 400px;">
-    <a class="section01" v-for="(sectionData, index) in sectionDatas">
-      <p class="title">{{sectionData.title}}</p>
+    <a class="section01" :class="{hoverIndexSectionClass: hoverIndex === index, hoverIndexBorderClass: hoverIndex === index}"
+       v-for="(sectionData, index) in sectionDatas" @mouseenter="handleMouseEnter(index)" @mouseleave="handleMouseLeave(index)">
+      <p class="title" :class="hoverIndex === index ? 'hoverIndexTitleClass' : ''">{{sectionData.title}}</p>
       <p class="content">{{sectionData.content}}</p>
     </a>
   </div>
@@ -12,7 +13,9 @@
     name: "HeavyRecommend",
     data (){
       return {
-        hoverIndex: 1,
+        hoverIndex: 0,
+        timer: null,
+        timerValid: true,
         sectionDatas: [
           {title: '编程语言', content: '汇集各种流行编程语言精华'},
           {title: '流行框架', content: '深度剖析多种流行框架源码'},
@@ -20,6 +23,28 @@
           {title: '技术交流', content: '全网用户互动交流的集结地'},
           {title: '能力计划', content: '各领域多种多样的途径提升推广自己'},
         ]
+      }
+    },
+    methods:{
+      handleMouseEnter: function (index){
+        this.hoverIndex = index;
+        this.timerValid = false;
+      },
+      handleMouseLeave: function (index) {
+        this.timerValid = true;
+      },
+    },
+    mounted(){
+      var _this = this;
+      this.timer = setInterval(function () {
+        if (_this.timerValid){
+          _this.hoverIndex = _this.hoverIndex < 4 ? _this.hoverIndex + 1 : 0;
+        }
+      }, 2000);
+    },
+    beforeDestroy() {
+      if (this.timer != null) {
+        clearInterval(this.timer);
       }
     },
   }
@@ -43,11 +68,11 @@
     font-size: 14px;
   }
 
-  .section01:hover {
+  .hoverIndexSectionClass {
     background-color: rgba(0, 0, 0, 0.6);
   }
 
-  .section01:hover .title {
+  .hoverIndexTitleClass {
     color: yellow;
     font-weight: bold;
   }
@@ -58,12 +83,21 @@
     margin-left: -20px;
     margin-top: 10%;
     border-left: 3px solid yellow;
-    transition: all 300ms ease-in-out;
     height: 0;
   }
-
-  .section01:hover::before {
-    margin-top: -20px;
-    height: 20%;
+  .hoverIndexBorderClass::before {
+    animation: hoverIndexBorderAnimation 0.5s infinite;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  @keyframes hoverIndexBorderAnimation {
+    0%   {
+      margin-top: 10%;
+      height: 0;
+    }
+    100% {
+      margin-top: -20px;
+      height: 20%;
+    }
   }
 </style>

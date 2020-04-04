@@ -1,8 +1,11 @@
 <template>
   <div>
+    <div class="section01_bg">
+      <LinkKnownAbout/>
+    </div>
 
     <!--高度这里就设置400px-->
-    <div>
+    <div style="margin-top: 5px;">
       <div style="float: left;width: 70%;">
         <!--首页轮播图-->
         <IndexCarousel></IndexCarousel>
@@ -84,6 +87,9 @@
 
 <script>
 
+  // 最顶部的使用同步加载组件
+  import LinkKnownAbout from "./LinkKnownAbout"
+  // 其它部位使用异步加载组件
   const ToolBox = () => import("@/components/Background/CMS/ToolBox");
   const IBeautifulTabLink = () => import("@/components/Common/link/IBeautifulTabLink");
   const HorizontalLinks = () => import("@/components/Elementviewers/HorizontalLinks");
@@ -108,10 +114,15 @@
       NewsNotice,
       ToolBox,
       IBeautifulTabLink,
+      LinkKnownAbout,
     },
   }
 </script>
 
 <style scoped>
-
+  .section01_bg {
+    height: 400px;
+    background: url(../../assets/bg.jpg) no-repeat;
+    background-size: 100% 100%;
+  }
 </style>
