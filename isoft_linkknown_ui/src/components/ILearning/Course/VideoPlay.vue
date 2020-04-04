@@ -74,6 +74,7 @@
 <script>
   import {QueryCustomTagCourse, ShowCourseDetail, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
+  import {checkFastClick} from "../../../tools/index"
 
   export default {
     name: "VideoPlay",
@@ -155,11 +156,17 @@
         });
       },
       clickVideoName:function (index) {
+        if (checkFastClick()){
+          this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
         //收费判断
         if (index + 1 > this.course.preListFree) {
           this.$Message.warning("付费视频！");
           return;
         }
+        //赋值两次是为了可以再次点击，让cVideo存在变化。
+        this.curVideo = '';
         this.curVideo = this.cVideos[index];
       },
       refreshCustomTagCourse: async function (custom_tag) {
@@ -206,7 +213,9 @@
     },
     watch: {
       curVideo: function () {
-        this.playVideo(this.curVideo.id);
+        if (this.curVideo!==null && this.curVideo!==''){
+          this.playVideo(this.curVideo.id);
+        }
       }
     }
   }
