@@ -5,7 +5,7 @@
       <div style="text-align: center;" class="isoft_color_grey2 isoft_font12 tipClass">奉献自己的力量，让自己榜上有名吧~ </div>
     </div>
     <div style="position: relative;">
-      <div class="userClass" v-for="(user,index) in users" style="display: flex;">
+      <div v-for="(user,index) in users" style="display: flex;">
         <div style="width: 12%;">
         <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})" >
           <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30"
@@ -13,8 +13,9 @@
         </span>
         </div>
         <div style="width: 55%;margin: 4px 0 0 0;color: #009a61;" class="isoft_inline_ellipsis">
-        <span class="isoft_point_cursor isoft_hover_red">
+        <span style="position: relative;" class="isoft_point_cursor isoft_hover_red nickName">
           {{user.nick_name}}
+          <span class="nickNameTip" @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">无力吐槽</span>
         </span>
         </div>
         <div style="width: 33%;" class="isoft_font12">
@@ -24,6 +25,10 @@
     </div>
   </div>
 </template>
+
+
+
+
 
 <script>
   import {GetHotUsers} from "../../api"
@@ -88,13 +93,20 @@
     }
   }
 
-  .userClass {
-    animation: userAnimation 2s infinite;
+  .nickNameTip {
+    position: relative;
+    left: 2px;
+    top: -6px;
+    width: 65px;
+    height: 18px;
+    background: url(../../assets/tip.svg) no-repeat;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+    display: none;
   }
-  @keyframes userAnimation {
-    0%   {
-    }
-    100% {
-    }
+  .nickName:hover > .nickNameTip {
+    display: inline-block;
   }
 </style>
