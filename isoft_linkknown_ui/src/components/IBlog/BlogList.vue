@@ -58,7 +58,7 @@
             <!--遍历博客-->
             <ul>
               <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
-                <Row style="height: 80px; " :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
+                <Row class="blogHangHover" style="height: 80px; " @click.native="clickThisBlock(index)" :style="{'margin-top': index===0 ? 5+'px':20+'px', backgroundColor:index===currentClickIndex?'rgba(128, 128, 128, 0.16)':''}">
                   <!--第一列 ：博客中第一张图片-->
                   <Col span="6">
                     <!--博主头像-->
@@ -66,7 +66,7 @@
                       <!--<HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>-->
                     <!--</router-link>-->
                     <div style="padding: 0 5px 0 0">
-                      <img style="width: 100%;height: 72px;" src="../../assets/xuexi.jpg"/>
+                      <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
                     </div>
                   </Col>
                   <!--第二列 ：分两行-->
@@ -193,6 +193,7 @@
         userInfos: [],
         pattern: 1,           // 按钮选中的模式
         search_data:'',
+        currentClickIndex:'',
       }
     },
     methods: {
@@ -282,6 +283,10 @@
       renderHatInUse: function (user_name) {
         return RenderHatInUse(this.userInfos, user_name);
       },
+      //点击博客，变灰色背景
+      clickThisBlock:function(index){
+        this.currentClickIndex = index;
+      },
       // 判断博客是不是今年发布、更新的
       isThisYear:function (value) {
         let thisYear = new Date().getFullYear();
@@ -343,4 +348,9 @@
   ._search a:hover {
     color: #6cb0ca;
   }
+
+  .blogHangHover:hover{
+    background-color: rgba(128, 128, 128, 0.16);
+  }
+
 </style>
