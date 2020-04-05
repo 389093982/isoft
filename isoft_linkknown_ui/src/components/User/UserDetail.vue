@@ -85,36 +85,29 @@
       </div>
     </div>
 
-    <div class="isoft_top5" style="min-height: 450px;">
-      <Row>
-        <Col span="16">
-          <div>
-            <div v-if="user">
-              <div style="background-color: #ffffff;">
-                <!--用户相关的博文、课程、书本-->
-                <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
-              </div>
-              <div class="isoft_top5" style="background-color: #ffffff;">
-                <!--他/她收藏的图书-->
-                <UserFavorite :user-name="_userName"/>
-              </div>
-            </div>
-            <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
-              <Spin fix size="large" v-if="isLoading">
-                <div class="isoft_loading"></div>
-              </Spin>
-              <ForwardLogin v-else></ForwardLogin>
-            </div>
-
+    <div class="isoft_top5" style="min-height: 450px;display: flex;justify-content:space-between;">
+      <div style="width: 66%;background-color: white;">
+        <div v-if="user">
+          <div style="background-color: #ffffff;">
+            <!--用户相关的博文、课程、书本-->
+            <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
           </div>
-        </Col>
-        <Col span="8">
-          <div>
-            <!--用户排行榜-->
-            <HotUser/>
+          <div class="isoft_top5" style="background-color: #ffffff;">
+            <!--他/她收藏的图书-->
+            <UserFavorite :user-name="_userName"/>
           </div>
-        </Col>
-      </Row>
+        </div>
+        <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
+          <Spin fix size="large" v-if="isLoading">
+            <div class="isoft_loading"></div>
+          </Spin>
+          <ForwardLogin v-else></ForwardLogin>
+        </div>
+      </div>
+      <div style="width: 33%;">
+        <!--用户排行榜-->
+        <HotUser/>
+      </div>
     </div>
   </div>
 </template>
