@@ -116,13 +116,35 @@
                     <div style="position: absolute">
                       <!--博主头像-->
                       <Row>
-                        <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;margin: 5px 0 0 5px ">
-                          <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="30" :hat_width="26" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-48" ></HatAndFacePicture>
-                        </router-link>
+                        <Col span="6" offset="1">
+                          <Row style="position: absolute;top: 5px;left: 5px;">
+                            <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}">
+                              <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="30" :hat_width="26" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-48" ></HatAndFacePicture>
+                            </router-link>
+                          </Row>
+                        </Col>
+                        <Col span="17" style="font-size: 10px;">
+                          <Row style="position: absolute;left: 38px;">
+                            <div style="width: 110px;height: 15px;">
+                              {{renderNickName(searchblog.author) | filterLimitFunc(5)}}
+                            </div>
+                          </Row>
+                          <Row style="position: absolute;left: 38px;top: 18px;">
+                            <div style="width: 100px;height: 15px;">
+                              <span v-if="renderGender(searchblog.author)==='male'">
+                                <Icon type="md-male" />
+                              </span>
+                              <span v-else-if="renderGender(searchblog.author)==='female'">
+                                <Icon type="md-female" />
+                              </span>
+                              <span v-else>&nbsp;</span>
+                            </div>
+                          </Row>
+                        </Col>
                       </Row>
                       <!--博主签名-->
-                      <Row>
-                        <div style="font-size: 10px;color: grey;margin-left: 5px">
+                      <Row style="position: absolute;left: 5px;top: 50px;">
+                        <div style="width: 150px;height: 20px;font-size: 10px;color: grey;">
                           {{renderSignature(searchblog.author) | filterLimitFunc(13)}}
                         </div>
                       </Row>
@@ -180,7 +202,8 @@
     RenderVipLevel,
     RenderHatInUse,
     RenderUserInfoByNames,
-    RenderSignature
+    RenderSignature,
+    RenderGender
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
@@ -299,6 +322,9 @@
       },
       renderSignature:function(user_name){
         return RenderSignature(this.userInfos,user_name);
+      },
+      renderGender:function(user_name){
+        return RenderGender(this.userInfos,user_name);
       },
       //点击博客，变灰色背景
       clickThisBlock:function(index){
