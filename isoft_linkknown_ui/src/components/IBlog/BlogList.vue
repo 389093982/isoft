@@ -65,7 +65,7 @@
                       <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
                     </div>
                   </Col>
-                  <!--第二列 ：分两行-->
+                  <!--第二列 ：分三行-->
                   <Col span="18">
                     <Row>
                       <!--第一行：博客标题-->
@@ -161,9 +161,36 @@
           </div>
         </Col>
 
-        <!--右侧推荐-->
+        <!--右侧推荐文章-->
         <Col span="8">
-          <div style="padding: 5px 50px 0 10px">
+          <div style="padding: 5px 50px 0 10px;">
+            <div style="width: 98%">
+              <!--遍历推荐文章-->
+              <ul>
+                <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
+                  <Row style="height: 80px; "  :style="{'margin-top': index===0 ? 0+'px':20+'px'}">
+                    <!--第一列 ：博客中第一张图片-->
+                    <Col span="9">
+                      <div style="padding: 0 5px 0 0">
+                        <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
+                      </div>
+                    </Col>
+                    <!--第二列 ：分三行-->
+                    <Col span="15">
+                      <Row>
+                        <!--第一行：博客标题-->
+                        <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
+                          <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
+                        </router-link>
+                      </Row>
+                      <Row>
+                        <span style="color: #0099ff">精选文章·学习笔记</span>
+                      </Row>
+                    </Col>
+                  </Row>
+                </li>
+              </ul>
+            </div>
             <HotUser></HotUser>
           </div>
         </Col>
