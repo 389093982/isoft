@@ -61,10 +61,6 @@
                 <Row class="blogHangHover" style="height: 80px; " @click.native="clickThisBlock(index)" :style="{'margin-top': index===0 ? 5+'px':20+'px', backgroundColor:index===currentClickIndex?'rgba(128, 128, 128, 0.16)':''}">
                   <!--第一列 ：博客中第一张图片-->
                   <Col span="6">
-                    <!--博主头像-->
-                    <!--<router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;">-->
-                      <!--<HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>-->
-                    <!--</router-link>-->
                     <div style="padding: 0 5px 0 0">
                       <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
                     </div>
@@ -115,6 +111,24 @@
                       </span>
                     </Row>
                   </Col>
+                  <!--博客完整信息提示卡，hover后可见-->
+                  <div class="hoverSeeDetail">
+                    <div style="position: absolute">
+                      <!--博主头像-->
+                      <Row>
+                        <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;margin: 5px 0 0 5px ">
+                          <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="30" :hat_width="26" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-48" ></HatAndFacePicture>
+                        </router-link>
+                      </Row>
+                      <!--博主签名-->
+                      <Row>
+                        <div style="font-size: 10px;color: grey;margin-left: 5px">
+                          {{renderSignature(searchblog.author) | filterLimitFunc(13)}}
+                        </div>
+                      </Row>
+                    </div>
+                  </div>
+
                 </Row>
               </li>
             </ul>
@@ -165,10 +179,10 @@
     RenderUserIcon,
     RenderVipLevel,
     RenderHatInUse,
-    RenderUserInfoByNames
+    RenderUserInfoByNames,
+    RenderSignature
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
-  import ISimpleSearch from "../../../../isoft_iwork_ui/src/components/Common/search/ISimpleSearch";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
@@ -283,6 +297,9 @@
       renderHatInUse: function (user_name) {
         return RenderHatInUse(this.userInfos, user_name);
       },
+      renderSignature:function(user_name){
+        return RenderSignature(this.userInfos,user_name);
+      },
       //点击博客，变灰色背景
       clickThisBlock:function(index){
         this.currentClickIndex = index;
@@ -351,6 +368,26 @@
 
   .blogHangHover:hover{
     background-color: rgba(128, 128, 128, 0.16);
+  }
+
+  .hoverSeeDetail {
+    width: 170px;
+    height: 80px;
+    border-radius: 10px;
+    background-color: rgba(58, 103, 29, 0.19);
+    position: relative;
+    left:-170px;
+    top: 0px;
+    display: none;
+    animation: moveToRight 0.2s infinite;
+    animation-iteration-count: 1;
+  }
+  .blogHangHover:hover > .hoverSeeDetail {
+    display: block;
+  }
+  @keyframes moveToRight {
+    0%   { left: -200px;}
+    100% { left: -170px;}
   }
 
 </style>

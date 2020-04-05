@@ -194,6 +194,16 @@ export const RenderVipLevel = function (userInfos, user_name) {
   return user_name;
 };
 
+export const RenderSignature = function (userInfos, user_name) {
+  if (userInfos != null) {
+    let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);
+    if (user_names != null && user_names.length > 0) {
+      return user_names[0].user_signature;
+    }
+  }
+  return user_name;
+};
+
 export const RenderHatInUse = function (userInfos, user_name) {
   if (userInfos != null) {
     let user_names = userInfos.filter(userinfo => userinfo.user_name === user_name);

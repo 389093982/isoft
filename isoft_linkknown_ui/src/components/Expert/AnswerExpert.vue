@@ -11,9 +11,9 @@
             <div style="text-align: left;">
               <a @click="$router.push({path:'/expert/askExpert'})">返回问题列表</a>&nbsp;&nbsp;
               <span class="showTousu">
-            <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
-            <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
-          </span>
+                <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
+                <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
+              </span>
             </div>
             <div v-if="showEditanswer" style="width: 80%">
               <Input type="textarea" :rows="5" v-model.trim="answer"/>
