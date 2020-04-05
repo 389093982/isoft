@@ -1,24 +1,27 @@
 <template>
-  <div>
-    <IBeautifulCard title="用户排行榜">
-      <div slot="content" style="padding: 10px;">
-        <Row v-for="(user,index) in users" :gutter="10">
-          <Col span="3">
-            <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})" >
-              <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
-            </span>
-          </Col>
-          <Col span="13" class="isoft_inline_ellipsis" style="font-size: 12px;margin: 4px 0 0 0 ">
-            <IBeautifulLink @onclick="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">
-              {{user.nick_name}}
-            </IBeautifulLink>
-          </Col>
-          <Col span="8" class="small_font_size">
-            积分：{{user.user_points}}
-          </Col>
-        </Row>
+  <div class="isoft_bg_white isoft_pd5">
+    <h2 class="user_rank" style="border-bottom: 2px solid #eee;">用户排行榜</h2>
+    <div style="position: relative;">
+      <div style="text-align: center;" class="isoft_color_grey2 isoft_font12 tipClass">奉献自己的力量，让自己榜上有名吧~ </div>
+    </div>
+    <div style="position: relative;">
+      <div class="userClass" v-for="(user,index) in users" style="display: flex;">
+        <div style="width: 12%;">
+        <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})" >
+          <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30"
+                             :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
+        </span>
+        </div>
+        <div style="width: 55%;margin: 4px 0 0 0;color: #009a61;" class="isoft_inline_ellipsis">
+        <span class="isoft_point_cursor isoft_hover_red">
+          {{user.nick_name}}
+        </span>
+        </div>
+        <div style="width: 33%;" class="isoft_font12">
+          积分：{{user.user_points}}
+        </div>
       </div>
-    </IBeautifulCard>
+    </div>
   </div>
 </template>
 
@@ -57,9 +60,41 @@
 </script>
 
 <style scoped>
+  .user_rank {
+    margin: 0 10px 10px 10px;
+    position: relative;
+    height: 40px;
+    color: #111;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 40px;
+    white-space: nowrap;
+  }
 
+  .tipClass {
+    position: relative;
+    animation: tipAnimation 5s infinite;
+    /*animation-iteration-count: 1;*/
+  }
+  @keyframes tipAnimation {
+    0%   {
+      opacity: 0;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 
-  .small_font_size {
-    font-size: 12px;
+  .userClass {
+    animation: userAnimation 2s infinite;
+  }
+  @keyframes userAnimation {
+    0%   {
+    }
+    100% {
+    }
   }
 </style>
