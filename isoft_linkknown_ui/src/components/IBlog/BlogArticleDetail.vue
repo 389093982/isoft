@@ -1,34 +1,56 @@
 <template>
   <div>
 
+    <!--左侧博客内容-->
     <div v-if="blog" style="float: left;width: 72%;margin-left: 40px">
       <div style="margin: 10px;padding: 20px;width:100%;min-height: 800px;background: #ffffff;">
-        <span style="margin-left: 8px;font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
-        <span style="font-size: 16px;margin-left: 30px"><b>{{blog.blog_title}}</b></span>
-        <div style="border-bottom: 1px solid #eee;margin-top:20px;margin-bottom: 20px;">
-          <Row style="margin: 10px;">
-            <Col span="24">
-              <!--作者:-->
-              <span v-if="renderNickName(blog.author)" style="color: #797776;">{{renderNickName(blog.author)}}</span>
-              <span v-else style="color: #797776;">{{blog.author}}</span>
-              <span style="color: #adaaa8"> • 发布于:<Time :time="blog.created_time"/></span>
-              <span style="color: #9b9896">, 更新于:<Time :time="blog.last_updated_time"/></span>
-              <span style="margin-left: 200px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
+
+        <Row>
+          <!--第一列：博主头像-->
+          <Col span="2" style="position: relative;left: 20px;">
+            <router-link :to="{path:'/user/userDetail',query:{username:blog.author}}" style="float: left;">
+              <HatAndFacePicture :src="renderUserIcon(blog.author)" :vip_level="renderVipLevel(blog.author)" :hat_in_use="renderHatInUse(blog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
+            </router-link>
+          </Col>
+          <!--第二列：博客信息-->
+          <Col span="22">
+            <!--第一行-->
+            <Row>
+              <span style="font-size: 15px;color: #777;">{{blog.catalog_name }}</span>
+              <span style="font-size: 16px;margin-left: 10px"><b>{{blog.blog_title}}</b></span>
+            </Row>
+            <!--第二行-->
+            <Row>
+              <Col span="24">
+                <!--作者:-->
+                <span v-if="renderNickName(blog.author)" style="color: #797776;">{{renderNickName(blog.author)}}</span>
+                <span v-else style="color: #797776;">{{blog.author}}</span>
+                <span style="color: #adaaa8"> • 发布于:<Time :time="blog.created_time"/></span>
+                <span style="color: #9b9896">, 更新于:<Time :time="blog.last_updated_time"/></span>
+              </Col>
+            </Row>
+            <!--第三行-->
+            <Row>
+              <span style="margin-left: 500px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
               <span style="margin-left: 20px"><span style="color: rgba(255,0,0,0.65)">{{blog.edits}}</span> 次编辑</span>
               <span>
-                <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blogArticleEdit', query: { id: blog.id }})">继续编辑</Button>
-              </span>
+                  <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blogArticleEdit', query: { id: blog.id }})">继续编辑</Button>
+                </span>
               <span>
-                <Button type="error" size="small" v-if="editable" @click="showDeleteModal">删除博客</Button>
-              </span>
-            </Col>
-          </Row>
-        </div>
+                  <Button type="error" size="small" v-if="editable" @click="showDeleteModal">删除博客</Button>
+                </span>
+            </Row>
+          </Col>
+        </Row>
+
+        <!--灰色分割线-->
+        <div style="border-bottom: 1px solid #eee;margin-bottom: 10px;"></div>
 
         <!--是否确认删除博客-->
         <IsComfirmDelete ref="comfirmDelete" @confirmDelete="deleteBlog" content="博客一经删除，无法复原，确认删除?"></IsComfirmDelete>
 
-        <div style="border-bottom: 1px solid #eee;min-height: 150px;">
+        <!--博客内容-->
+        <div style="border-bottom: 1px solid #eee;min-height: 150px;margin-left: 10px">
           <IShowMarkdown v-if="blog.content" :content="blog.content"/>
           <span v-if="blog.link_href">分享链接：<a :href="blog.link_href" target="_blank">{{blog.link_href}}</a></span>
         </div>
@@ -95,14 +117,15 @@
   import {ShowBlogArticleDetail,ArticleDelete,IsFavorite,ToggleFavorite,queryFavoriteCount} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin, GetLoginUserName, RenderNickName, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName, RenderNickName,RenderUserIcon,RenderVipLevel,RenderHatInUse, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
   import IsComfirmDelete from "./IsComfirmDelete";
   import VoteTags from "../Decorate/VoteTags";
+  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
 
   export default {
     name: "BlogArticleDetail",
-    components: {VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
+    components: {HatAndFacePicture, VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
     data() {
       return {
         blog: '',
@@ -157,6 +180,15 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
+      },
+      renderUserIcon: function (user_name) {
+        return RenderUserIcon(this.userInfos, user_name);
+      },
+      renderVipLevel: function (user_name) {
+        return RenderVipLevel(this.userInfos, user_name);
+      },
+      renderHatInUse: function (user_name) {
+        return RenderHatInUse(this.userInfos, user_name);
       },
       showDeleteModal:function(){
         this.$refs.comfirmDelete.showModal();

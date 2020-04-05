@@ -1,27 +1,30 @@
 <template>
   <div>
 
-    <div class="section02_bg" style="color: white;font-size: 28px;height: 100px;line-height: 100px;padding: 0 30px;">
-      <span style="margin-left: 128px">精选文章推荐，热门项目参考 github</span>
+    <div class="section02_bg" style="font-size: 28px;height: 80px;line-height: 80px;padding: 0 30px;">
+      <a target="_blank" href="https://github.com/search?q=&type=" style="margin-left: 128px;cursor: pointer">
+        <span style="color: white;">精选文章推荐，热门项目参考 github</span>
+      </a>
     </div>
 
-    <div class="isoft_bg_white" style="padding: 5px 0;box-shadow: 0px 1px 2px 0px rgba(0,87,255,0.24);border-radius: 4px;">
+    <div class="isoft_bg_white" style="padding: 5px 0;box-shadow: 0 1px 2px 0 rgba(0,87,255,0.24);border-radius: 4px;">
       <Row>
         <Col span="22" offset="1">
           <!-- 6大热门分类 -->
           <HotCatalogItems @chooseItem="chooseItem"/>
         </Col>
+        <!--搜索框-->
         <Col span="1">
-          <Affix :offset-top="131">
-            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top:-73px;left: -170px;"></ISearch>
+          <Affix :offset-top="125">
+            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top:-65px;left: -170px;"></ISearch>
           </Affix>
         </Col>
       </Row>
     </div>
 
     <!--移动的小球-->
-    <div style="width: 60%;height:1px;border-bottom: 1px solid #e6e6e6;">
-      <MoveLine style="position: relative;top: -105px;"/>
+    <div style="width: 60%;height:0;">
+      <MoveLine style="position: relative;top: -170px;"/>
     </div>
 
     <!--三列：左、中、右-->
@@ -29,77 +32,104 @@
       <Row>
         <!--左侧分类-->
         <Col span="5">
-          <div class="_search" style="margin-left: 20px;height: 50px;">
-            <div style="text-align: center;">
-              <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></div>
-            <div style="text-align: center;">
-              <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></div>
-            <div style="text-align: center;">
-              <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></div>
-            <div style="text-align: center;">
-              <a @click="blogEdit"><Icon type="ios-brush" />我也要发布</a>
+          <div style="padding: 5px 10px 0 30px">
+            <div class="_search">
+              <div style="text-align: center;">
+                <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></div>
+              <div style="text-align: center;">
+                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></div>
+              <div style="text-align: center;">
+                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></div>
+              <div style="text-align: center;">
+                <a @click="blogEdit"><Icon type="ios-brush" />我也要发布</a>
+              </div>
             </div>
-            <CatalogList :showAddBoder="false"></CatalogList>
+            <div>
+              <CatalogList :showAddBoder="false"></CatalogList>
+            </div>
           </div>
         </Col>
 
         <!--中部博客-->
-        <Col span="12">
-          <img style="width: 500px;height: 200px;margin-left: 70px;" src="../../assets/xuexi.jpg"/>
-          <!--下面展示一篇博客具体格式，按照三列，中间一列分两行-->
-          <ul>
-            <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
-              <Row style="margin-top: 10px">
-                <Col span="2" offset="1">
-                  <!--第一列 ：头像-->
-                  <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;">
-                    <HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
-                  </router-link>
-                </Col>
-                <Col span="16" style="position: relative;top: -3px;left: -18px">
+        <Col span="11">
+          <div style="padding: 5px 10px 0 10px;">
+            <!--中间大图-->
+            <img style="width: 100%;height: 220px;" src="../../assets/xuexi.jpg"/>
+            <!--遍历博客-->
+            <ul>
+              <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
+                <Row style="height: 80px; " :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
+                  <!--第一列 ：博客中第一张图片-->
+                  <Col span="6">
+                    <!--博主头像-->
+                    <!--<router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}" style="float: left;">-->
+                      <!--<HatAndFacePicture :src="renderUserIcon(searchblog.author)" :vip_level="renderVipLevel(searchblog.author)" :hat_in_use="renderHatInUse(searchblog.author)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>-->
+                    <!--</router-link>-->
+                    <div style="padding: 0 5px 0 0">
+                      <img style="width: 100%;height: 72px;" src="../../assets/xuexi.jpg"/>
+                    </div>
+                  </Col>
                   <!--第二列 ：分两行-->
-                  <Row>
-                    <!--第一行：所属分类 + 博客标题-->
-                    <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name}}</a>
-                    <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
-                    <span>&nbsp;</span>
-                    <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
-                      <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(27)}}</span>
-                    </router-link>
-                    <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
-                  </Row>
-                  <Row>
-                    <!--第二行：作者 + 发布 + 更新时间 -->
-                    <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}">
-                      <span style="color: #797776;border-bottom: 1px solid #797776;">
-                        <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author)}}</span>
-                        <span v-else>{{searchblog.author}}</span>
+                  <Col span="18">
+                    <Row>
+                      <!--第一行：博客标题-->
+                      <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
+                      <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
+                        <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
+                      </router-link>
+                      <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
+                    </Row>
+                    <Row>
+                      <!--第二行：博客分类 + 作者 + 发布 + 更新时间 -->
+                      <a class="type_hover" @click="chooseItem(searchblog.catalog_name)">{{searchblog.catalog_name | filterLimitFunc(5)}}</a>
+                      <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}">
+                        <span style="color: #797776;border-bottom: 1px solid #797776;font-size: 12px">
+                          <span v-if="renderNickName(searchblog.author)">{{renderNickName(searchblog.author) | filterLimitFunc(5)}}</span>
+                          <span v-else>{{searchblog.author}}</span>
+                        </span>
+                      </router-link>
+
+                      <!--如果是往年发布、更新的，只显示日期即可-->
+                      <span v-if="isThisYear(searchblog.created_time)">
+                        <span style="color: #adaaa8;font-size: 12px"> • 发布于:<Time :time="searchblog.created_time" :interval="1"/></span>
                       </span>
-                    </router-link>
-                    <span style="color: #adaaa8"> • 发布于:<Time :time="searchblog.created_time" :interval="1"/></span>
-                    <span style="color: #9b9896">, 更新于:<Time :time="searchblog.last_updated_time" :interval="1"/></span>
-                  </Row>
-                </Col>
-                <Col span="5">
-                  <!--第三列：-->
-                  <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
-                    <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 20px">{{searchblog.views}}</span> 次阅读</span>
-                  </router-link>
-                  <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
-                    <span class="isoft_font12"><span style="color: rgba(255,0,0,0.65);margin-left: 10px">{{searchblog.comments}}</span> 条评论</span>
-                  </router-link>
-                </Col>
-              </Row>
-            </li>
-          </ul>
-          <!--分页-->
-          <div style="padding-bottom: 10px">
-            <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts" :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+                      <span v-else>
+                        <span style="color: #adaaa8;font-size: 12px"> • 发布于:<Time :time="searchblog.created_time" type="date" :interval="1"/></span>
+                      </span>
+                      <span v-if="isThisYear(searchblog.last_updated_time)">
+                        <span style="color: #9b9896;font-size: 12px">, 更新于:<Time :time="searchblog.last_updated_time" :interval="1"/></span>
+                      </span>
+                      <span v-else>
+                        <span style="color: #9b9896;font-size: 12px">, 更新于:<Time :time="searchblog.last_updated_time" type="date" :interval="1"/></span>
+                      </span>
+                    </Row>
+                    <!--第三行:阅读次数、评论次数-->
+                    <Row>
+                      <span style="font-size: 12px">
+                        <span style="color: #adaaa8;">{{searchblog.views}}</span>
+                        <span style="color: #adaaa8">次阅读</span>
+                      </span>
+                      <span style="font-size: 12px">
+                        <span style="color: #adaaa8;margin-left: 10px;">{{searchblog.comments}}</span>
+                        <span style="color: #adaaa8">条评论</span>
+                      </span>
+                    </Row>
+                  </Col>
+                </Row>
+              </li>
+            </ul>
+            <!--分页-->
+            <div style="padding-bottom: 10px">
+              <Page :total="total" :page-size="offset" show-total show-sizer :page-size-opts="pageSizeOpts" :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+            </div>
           </div>
         </Col>
+
         <!--右侧推荐-->
-        <Col span="7">
-          <HotUser></HotUser>
+        <Col span="8">
+          <div style="padding: 5px 50px 0 10px">
+            <HotUser></HotUser>
+          </div>
         </Col>
       </Row>
 
@@ -252,6 +282,11 @@
       renderHatInUse: function (user_name) {
         return RenderHatInUse(this.userInfos, user_name);
       },
+      // 判断博客是不是今年发布、更新的
+      isThisYear:function (value) {
+        let thisYear = new Date().getFullYear();
+        return parseInt(value.substring(0,4)) === parseInt(thisYear);
+      }
     },
     mounted: function () {
       this.refreshBlogList();
@@ -276,10 +311,10 @@
     background-size: 100%;
   }
   .type_hover{
-    font-size: 15px;color: #777;
+    font-size: 12px;color: #777;
   }
   .type_hover:hover{
-    font-size: 15px;color: rgba(119, 119, 119, 0.62);
+    font-size: 12px;color: rgba(119, 119, 119, 0.62);
   }
 
   .title_hover {
