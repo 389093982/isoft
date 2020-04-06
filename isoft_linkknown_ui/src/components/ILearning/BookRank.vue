@@ -1,6 +1,6 @@
 <template>
   <div style="padding-top: 10px; min-height: 400px" >
-    <h2 class="good_rank">热门书单</h2>
+    <h2 class="isoft_font_header">热门书单</h2>
     <div class="bookItem" v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>
@@ -46,16 +46,6 @@
 </script>
 
 <style scoped>
-  .good_rank {
-    margin: 0 10px 10px 10px;
-    height: 40px;
-    color: #111;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 40px;
-    white-space: nowrap;
-  }
-
   .bookItem {
     margin: 0 20px;
     padding: 10px 10px 5px 10px;

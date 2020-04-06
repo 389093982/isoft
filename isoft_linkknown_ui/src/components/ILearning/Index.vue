@@ -19,13 +19,20 @@
     </div>
     <!--热门应用-->
     <div v-else-if="tabIndex === 3" style="display: flex;justify-content: center;">
-      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
-      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
-      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      <div style="width: 33%;">
+        <ToolBox class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      </div>
+      <div style="width: 34%;padding: 0 5px;">
+        <ToolBox class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      </div>
+      <div style="width: 33%;">
+        <ToolBox class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      </div>
     </div>
     <!--热门产品-->
-    <IBeautifulTabLink v-else-if="tabIndex === 4"/>
-    <IHotRecommand v-else-if="tabIndex === 5" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
+    <IBeautifulTabLink v-else-if="tabIndex === 4" class="isoft_bg_white isoft_pd10"/>
+
+    <IHotRecommand v-else-if="tabIndex === 5" class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
 
     <!--发现-->
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;position: relative;left: -15px">

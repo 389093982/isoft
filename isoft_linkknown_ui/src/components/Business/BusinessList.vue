@@ -36,7 +36,7 @@
       </div>
       <div class="isoft_bg_white" style="width: 25%;padding: 0 10px;">
         <div style="margin-top: 10px;" class="isoft_info_tip">
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">上链知网，总有心发现</span>
+          <span class="hovered hvr-grow isoft_hover_red2 isoft_point_cursor">上链知网，总有心发现</span>
         </div>
 
         <div style="margin-top: 10px;padding: 25px 5px;" class="isoft_info_tip2">

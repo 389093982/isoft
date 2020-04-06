@@ -24,10 +24,10 @@
                     <p>广告状态:
                       <span v-if="advertisement.is_valid === 1">
                       <span v-if="checkDateDiff(advertisement.created_time)"
-                            class="hovered hvr-grow hoverLinkColor">已过期</span>
-                      <span v-else class="hovered hvr-grow hoverLinkColor">已生效</span>
+                            class="hovered hvr-grow isoft_hover_red2">已过期</span>
+                      <span v-else class="hovered hvr-grow isoft_hover_red2">已生效</span>
                     </span>
-                      <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
+                      <span v-else class="hovered hvr-grow isoft_hover_red2">等待审核</span>
                     </p>
                     <p style="text-align: right;">
                       <IBeautifulLink class="mr5" @onclick="editAdvertisement(advertisement.id)">编辑</IBeautifulLink>

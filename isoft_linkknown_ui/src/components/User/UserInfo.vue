@@ -4,7 +4,7 @@
     <!--帽子抽屉-->
     <Drawer title="我的帽子" placement="left" v-model="hatDrawer" width="14">
       <div style="text-align: center">
-        <div class="hovered hvr-grow hoverLinkColor" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
+        <div class="hovered hvr-grow isoft_hover_red2" style="width: 100%;height: 35px;font-size: 20px;text-align: center;cursor: pointer;">
           <span @click="removeHat()">摘下帽子</span>
         </div><hr><br><br>
         <Tooltip max-width="200" content="我要再提醒你一次，金箍戴上之后你再也不是个凡人，人世间的情欲不能再沾半点。如果动心这个金箍就会在你头上越收越紧，苦不堪言！只有好好学习，来链知网多蹭热量才是王道哦^_^">
