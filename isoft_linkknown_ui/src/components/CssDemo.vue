@@ -1,7 +1,6 @@
 <template>
   <div style="font-size: 14px;">
     <!-- 文字样式 -->
-    <span class="isoft_font_header">文字样式</span>
     <span class="isoft_font12">文字 font12</span>
     <span class="isoft_hover_bottom">hover 显示红色下边框</span>
     <span class="isoft_hover_red">hover 字体变成红色</span>
@@ -22,7 +21,8 @@
     <div class="fadeToBottom">淡入淡出</div>
     <br/>
 
-    <!-- 边框样式 -->
+    <!-- title 样式 -->
+    <span class="isoft_font_header">文字样式</span>
     <div class="isoft_title">友情链接</div>
     <br/>
 
