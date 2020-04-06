@@ -29,15 +29,15 @@
     </div>
 
     <div style="position:absolute;left:0;right:0;bottom:10px;text-align: center;">
-      <span class="isoft_font12 tagColor">热门推荐</span>
-      <span class="isoft_font12 tagColor">新闻公告</span>
-      <span class="isoft_font12 tagColor">热门应用</span>
-      <span class="isoft_font12 tagColor">热门产品</span>
-      <span class="isoft_font12 tagColor">热门项目</span>
-      <span class="isoft_font12 tagColor">素材资源</span>
-      <span class="isoft_font12 tagColor">素材资源</span>
-      <span class="isoft_font12 tagColor">素材资源</span>
-      <span class="isoft_font12 tagColor">素材资源</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(1)">热门推荐</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(2)">新闻公告</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(3)">热门应用</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(4)">热门产品</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(5)">热门项目</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(6)">素材资源</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(7)">素材资源</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(8)">素材资源</span>
+      <span class="isoft_font12 tagColor" @click="handleShow(9)">素材资源</span>
       <span class="isoft_font12 tagColor" @click="showRecommend = !showRecommend">更多素材</span>
     </div>
   </div>
@@ -53,6 +53,11 @@
     data (){
       return {
         showRecommend: false,
+      }
+    },
+    methods:{
+      handleShow: function (index) {
+        this.$emit('handleShow', index);
       }
     }
   }
