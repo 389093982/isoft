@@ -6,7 +6,7 @@
     </div>
 
     <!--下三，33:34:33-->
-    <div style="display: flex;">
+    <div style="display: flex;" class="isoft_top5">
       <!--热门书单-->
       <div style="width: 33%;">
         <BookRank class="isoft_bg_white isoft_pd10"/>
@@ -20,8 +20,16 @@
     </div>
 
     <!--热门博客-->
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;margin-right: 4px">
-      <BlogRank/>
+    <div style="display:flex;" class="isoft_top5">
+      <div style="width: 33%;">
+        <BlogRank class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 34%;padding: 0 5px;">
+        <BlogRank class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 33%;">
+        <BlogRank class="isoft_bg_white isoft_pd10"/>
+      </div>
     </div>
 
   </div>
@@ -34,7 +42,11 @@
 
   export default {
     name: "SearchRecommend",
-    components:{WarmHeartRecommend,BookRank,BlogRank}
+    components:{WarmHeartRecommend,BookRank,BlogRank},
+    data (){
+      return {
+      }
+    },
   }
 </script>
 

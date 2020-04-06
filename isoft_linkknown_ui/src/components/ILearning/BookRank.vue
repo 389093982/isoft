@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 10px; min-height: 628px" >
+  <div style="padding-top: 10px; min-height: 400px" >
     <h2 class="good_rank">热门书单</h2>
     <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
@@ -22,13 +22,20 @@
     data() {
       return {
         books: [],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 8,
       }
     },
     methods: {
       refreshCustomTagBook: async function () {
-        const result = await QueryCustomTagBook({custom_tag: 'hot'});
-        if (result.status == "SUCCESS") {
+        const result = await QueryCustomTagBook({custom_tag: 'hot', offset: this.offset, current_page: this.current_page});
+        if (result.status === "SUCCESS") {
           this.books = result.books;
+          this.total = result.paginator.totalcount;
         }
       },
     },

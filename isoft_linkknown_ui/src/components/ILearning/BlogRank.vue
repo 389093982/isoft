@@ -1,12 +1,11 @@
 <template>
-  <IBeautifulCard title="热门博客"  :minHeight="600">
-    <ul slot="content">
-      <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
-        <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
-        <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
-      </li>
-    </ul>
-  </IBeautifulCard>
+  <div style="padding-top: 10px; min-height: 400px" >
+    <h2 class="blog_rank">热门博客</h2>
+    <div v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
+      <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
+      <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,6 +45,17 @@
 </script>
 
 <style scoped>
+  .blog_rank {
+    margin: 0 10px 10px 10px;
+    position: relative;
+    height: 40px;
+    color: #111;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 40px;
+    white-space: nowrap;
+  }
+
   a {
     color: black;
   }
