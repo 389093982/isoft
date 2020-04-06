@@ -6,9 +6,17 @@
 
     <SearchRecommend v-if="tabIndex === 1"/>
     <!--新闻公告-->
-    <NewsNotice v-else-if="tabIndex === 2" :placement_name="GLOBAL.placement_Index_news_list"/>
+    <div v-else-if="tabIndex === 2" style="display: flex;justify-content: center;">
+      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
+      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
+      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
+    </div>
     <!--热门应用-->
-    <ToolBox v-else-if="tabIndex === 3" :placement_name="GLOBAL.placement_host_app_recommand"/>
+    <div v-else-if="tabIndex === 3" style="display: flex;justify-content: center;">
+      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
+      <ToolBox style="width: 33%;" :placement_name="GLOBAL.placement_host_app_recommand"/>
+    </div>
     <!--热门产品-->
     <IBeautifulTabLink v-else-if="tabIndex === 4"/>
     <IHotRecommand v-else-if="tabIndex === 5" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
