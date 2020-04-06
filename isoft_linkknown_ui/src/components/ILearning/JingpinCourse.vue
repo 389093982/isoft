@@ -29,7 +29,6 @@
   import CourseType from "./CourseType/CourseType"
   import ISearch from "../Common/search/ISearch"
   import HotRecommend from "./Course/HotRecommend"
-  import NewsNotice from "./Course/NewsNotice"
   import ToolBox from "../Background/CMS/ToolBox"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks"
   import IHotRecommand from "../Common/recommend/IHotRecommand"
@@ -51,7 +50,6 @@
       IHotRecommand,
       HorizontalLinks,
       HotRecommend,
-      NewsNotice,
       ToolBox,
       ISearch,
     },

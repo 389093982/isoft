@@ -1,9 +1,9 @@
 <template>
   <div style="padding-top: 10px; min-height: 400px" >
     <h2 class="blog_rank">热门博客</h2>
-    <div v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
+    <div class="blogItem isoft_inline_ellipsis" v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
-      <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
+      <span>{{blog.blog_title}}</span>
     </div>
   </div>
 </template>
@@ -47,13 +47,18 @@
 <style scoped>
   .blog_rank {
     margin: 0 10px 10px 10px;
-    position: relative;
     height: 40px;
     color: #111;
     font-size: 20px;
     font-weight: 400;
     line-height: 40px;
     white-space: nowrap;
+  }
+
+  .blogItem {
+    margin: 0 20px;
+    padding: 10px 10px 5px 10px;
+    border-top: 1px solid #eee;
   }
 
   a {

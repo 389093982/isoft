@@ -6,10 +6,16 @@
 
     <SearchRecommend v-if="tabIndex === 1"/>
     <!--新闻公告-->
-    <div v-else-if="tabIndex === 2" style="display: flex;justify-content: center;">
-      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
-      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
-      <NewsNotice style="width: 33%;" :placement_name="GLOBAL.placement_Index_news_list"/>
+    <div v-else-if="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
+      <div style="width: 33%;">
+        <NewsNotice class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_Index_news_list"/>
+      </div>
+      <div style="width: 34%;padding: 0 5px;">
+        <NewsNotice class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_Index_news_list"/>
+      </div>
+      <div style="width: 33%;">
+        <NewsNotice class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_Index_news_list"/>
+      </div>
     </div>
     <!--热门应用-->
     <div v-else-if="tabIndex === 3" style="display: flex;justify-content: center;">

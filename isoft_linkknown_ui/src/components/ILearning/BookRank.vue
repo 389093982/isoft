@@ -48,7 +48,6 @@
 <style scoped>
   .good_rank {
     margin: 0 10px 10px 10px;
-    position: relative;
     height: 40px;
     color: #111;
     font-size: 20px;
