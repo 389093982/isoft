@@ -2,7 +2,7 @@
   <div style="height: 45px;">
     <div style="position: relative;float: right;">
       <div>
-        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" @keyup.enter="submitFunc" @focus="handleFocus" @blur="showRecently = false">
+        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus" @blur="showRecently = false">
         <input class="submit" type="submit" title="提交" @click="submitFunc">
 
         <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">

@@ -16,7 +16,7 @@
         <span style="margin: 0 5px;" class="isoft_point_cursor">源码分析</span>
         <span style="margin: 0 5px;" class="isoft_point_cursor">专家讲坛</span>
       </div>
-      <div style="width: 500px;margin: 0 auto;"><ISearch :longer="true"></ISearch></div>
+      <div style="width: 500px;margin: 0 auto;"><ISearch :longer="true" @submitFunc="handleSubmitFunc"></ISearch></div>
       <div style="text-align: center;color: white;">热门关键词：
         <span style="margin: 0 5px;" class="isoft_point_cursor">前端教程</span>
         <span style="margin: 0 5px;" class="isoft_point_cursor">java</span>
@@ -58,6 +58,9 @@
     methods:{
       handleShow: function (index) {
         this.$emit('handleShow', index);
+      },
+      handleSubmitFunc: function (search_data) {
+        this.$emit('submitFunc', search_data);
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="section01_bg">
-      <LinkKnownQuickSearch @handleShow="handleShow"/>
+      <LinkKnownQuickSearch @handleShow="handleShow" @submitFunc="handleSubmitFunc"/>
     </div>
 
     <SearchRecommend v-if="tabIndex === 1"/>
@@ -75,6 +75,9 @@
     methods:{
       handleShow: function (index) {
         this.tabIndex = index;
+      },
+      handleSubmitFunc: function (search_data) {
+        this.tabIndex = 1;
       }
     }
   }
