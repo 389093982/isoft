@@ -34,10 +34,6 @@
       <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(3)">热门应用</span>
       <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(4)">热门产品</span>
       <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(5)">热门项目</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(6)">素材资源</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(7)">素材资源</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(8)">素材资源</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(9)">素材资源</span>
       <span class="isoft_font12 tagColor isoft_point_cursor" @click="showRecommend = !showRecommend">更多素材</span>
     </div>
   </div>
@@ -69,7 +65,7 @@
 <style scoped>
   .tagColor {
     margin: 0 10px;
-    padding:8px 15px;
+    padding:8px 25px;
     border-radius:2px;
     background-color: rgb(235,235,235);
   }

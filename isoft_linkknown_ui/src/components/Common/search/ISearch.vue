@@ -2,7 +2,8 @@
   <div style="height: 45px;">
     <div style="position: relative;float: right;">
       <div>
-        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus" @blur="showRecently = false">
+        <!-- lazy 防止输入单个字符就触发 computed 计算 -->
+        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.lazy.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus" @blur="showRecently = false">
         <input class="submit" type="submit" title="提交" @click="submitFunc">
 
         <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">
@@ -13,9 +14,9 @@
               <span @mouseenter="searchPattern = 2">热搜榜</span>
             </div>
             <div>
-              <span class="searchTag isoft_point_cursor" :style="searchTagColor(index)"
-                    v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1" :key="index">{{searchItem}}</span>
-              <span class="searchTag isoft_point_cursor" :style="searchTagColor(index)"
+              <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
+                    v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1()" :key="index">{{searchItem}}</span>
+              <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
                     v-if="searchPattern === 2" v-for="(searchItem, index) in searchItems2" :key="index">{{searchItem}}</span>
             </div>
           </div>
@@ -35,6 +36,10 @@
       longer: {
         type: Boolean,
         default: false,
+      },
+      searchType:{
+        type: String,
+        default:'default',    // 搜索类型,主要用于存储不同模块的搜索关键词
       }
     },
     data() {
@@ -42,11 +47,13 @@
         search_data: "",
         showRecently: false,
         searchPattern: 1,  // 默认 1、最近搜索 2、热搜榜
-        searchItems1:['清明节1','清明节1','清明节1','清明节','清明节','清明节','清明节','清明节'],
         searchItems2:['清明节2','清明节2','清明节2','清明节','清明节','清明节','清明节','清明节'],
       }
     },
     methods: {
+      searchItems1: function (){
+        return JSON.parse(localStorage.getItem(this.searchType)) || [];
+      },
       submitFunc: function () {
         this.$emit("submitFunc", this.search_data);
       },
@@ -58,6 +65,14 @@
     },
     watch:{
       search_data:function () {
+        // 缓存搜索关键词
+        if (!localStorage.getItem(this.searchType)) {
+          localStorage.setItem(this.searchType, JSON.stringify([]));
+        }
+        let cacheArr = Array.from(new Set([this.search_data].concat(JSON.parse(localStorage.getItem(this.searchType)))));
+        localStorage.setItem(this.searchType, JSON.stringify(cacheArr.slice(0, 20)));
+
+        // 通知父组件
         this.$emit("searchDataHasChange", this.search_data);
       }
     },
