@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="blogArticleDetail">
 
     <!--左侧博客内容-->
     <div v-if="blog" style="float: left;width: 72%;margin-left: 40px">
@@ -109,7 +109,8 @@
     </div>
 
     <div style="clear: both"></div>
-
+    <!-- 参考 https://github.com/ZYSzys/vue-canvas-nest 蜘蛛网效果 -->
+    <vue-canvas-nest :config="{color:'221,0,25', count: 88, zIndex: 999}" :el="'#blogArticleDetail'"></vue-canvas-nest>
   </div>
 </template>
 
@@ -122,10 +123,11 @@
   import IsComfirmDelete from "./IsComfirmDelete";
   import VoteTags from "../Decorate/VoteTags";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import vueCanvasNest from 'vue-canvas-nest'
 
   export default {
     name: "BlogArticleDetail",
-    components: {HatAndFacePicture, VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment},
+    components: {HatAndFacePicture, VoteTags, IsComfirmDelete, MoveLine, IShowMarkdown, IEasyComment, vueCanvasNest},
     data() {
       return {
         blog: '',
