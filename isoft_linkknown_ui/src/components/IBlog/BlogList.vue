@@ -133,10 +133,10 @@
                           <Row style="position: absolute;left: 38px;top: 18px;">
                             <div style="width: 100px;height: 15px;">
                               <span v-if="renderGender(searchblog.author)==='male'">
-                                <Icon type="md-male" />
+                                <Icon type="md-male" style="color: #0099ff"/>
                               </span>
                               <span v-else-if="renderGender(searchblog.author)==='female'">
-                                <Icon type="md-female" />
+                                <Icon type="md-female" style="color: #ff0000"/>
                               </span>
                               <span v-else>&nbsp;</span>
                             </div>

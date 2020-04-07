@@ -17,22 +17,21 @@
             </video>
           </div>
         </Col>
-        <!--右侧分上下-->
+        <!--右侧竖块-->
         <Col span="6" style="margin-left: 30px;">
-          <!--右侧竖块-->
           <div style="margin:10px 0 0 0 ;width: 95%">
             <Tabs size="small">
               <TabPane :label="course.course_name">
                 <!--本主题视频集数-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div v-for="(video, index) in cVideos" style="color: #999;cursor: pointer;padding: 1px" @click="clickVideoName(index)">
-                      <div class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}">
-                        第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
+                    <div v-for="(video, index) in cVideos" style="color: #999;padding: 1px">
+                        <span class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}" @click="clickVideoName(index)">
+                          第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
+                        </span>
                         <sup v-if="course.isCharge==='free'" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
                         <sup v-else-if="course.isCharge==='charge' && index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
                         <sup v-else>&nbsp;</sup>
-                      </div>
                     </div>
                   </vue-scroll>
                 </div>
@@ -41,8 +40,10 @@
                 <!--推荐课程-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div class="course_item" v-for="(course, index) in recommendCourses">
-                      <div>{{course.course_name}}</div>
+                    <div v-for="(course, index) in recommendCourses">
+                      <span class="course_item">
+                        {{course.course_name}}
+                      </span>
                       <div class="course_small_image" style="width: 155px;">
                         <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
                         <img v-else src="../../../assets/default.png" height="100" width="155"/>
@@ -53,7 +54,6 @@
                 </div>
               </TabPane>
             </Tabs>
-
           </div>
         </Col>
       </Row>
@@ -251,10 +251,10 @@
   }
 
   .course_item:hover {
-    color: white;
+    color: rgba(0, 200, 6, 0.68);
   }
 
-  .course_item:hover .course_small_image{
+  .course_item:hover +.course_small_image{
     display: block;
   }
 
