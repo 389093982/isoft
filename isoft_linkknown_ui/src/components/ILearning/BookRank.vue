@@ -1,6 +1,6 @@
 <template>
   <div style="padding-top: 10px; min-height: 400px" >
-    <h2 class="isoft_font_header">热门书单</h2>
+    <div class="isoft_font_header">热门书单</div>
     <div class="bookItem" v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>

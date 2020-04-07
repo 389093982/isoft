@@ -1,6 +1,6 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
-    <h2 class="isoft_font_header">{{placement_label}}</h2>
+    <div class="isoft_font_header">{{placement_label}}</div>
     <ul v-if="elements.length > 0">
       <li v-for="element in elements" class="li">
         <a :href="element.linked_refer" target="_blank">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="isoft_font_header">{{pData.title}}</h2>
+    <div class="isoft_font_header">{{pData.title}}</div>
     <Tabs :animated="false">
       <TabPane :label="itemData.itemTitle" v-for="(itemData, index) in pData.pItemData">
         <Row :gutter="10">
