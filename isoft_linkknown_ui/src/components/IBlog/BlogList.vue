@@ -62,7 +62,8 @@
                   <!--第一列 ：博客中第一张图片-->
                   <Col span="6">
                     <div style="padding: 0 5px 0 0">
-                      <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
+                      <img v-if="searchblog.first_img" style="width: 100%;height: 80px;" :src="searchblog.first_img"/>
+                      <img v-else style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
                     </div>
                   </Col>
                   <!--第二列 ：分三行-->

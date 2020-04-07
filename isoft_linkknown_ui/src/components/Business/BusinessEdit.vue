@@ -78,20 +78,20 @@
       <div style="width: 30%;">
         <div>
           <span>1</span>
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">发布服务或发布</span>
+          <span class="hovered hvr-grow isoft_hover_red2 isoft_point_cursor">发布服务或发布</span>
         </div>
         <div>
           <span>2</span>
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">装饰店铺</span>
+          <span class="hovered hvr-grow isoft_hover_red2 isoft_point_cursor">装饰店铺</span>
         </div>
         <div>
           <span>3</span>
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">完善认证资格</span>
+          <span class="hovered hvr-grow isoft_hover_red2 isoft_point_cursor">完善认证资格</span>
         </div>
 
         <div>
           <span>4</span>
-          <span class="hovered hvr-grow hoverLinkColor isoft_point_cursor">装饰店铺</span>
+          <span class="hovered hvr-grow isoft_hover_red2 isoft_point_cursor">装饰店铺</span>
         </div>
 
         <div>

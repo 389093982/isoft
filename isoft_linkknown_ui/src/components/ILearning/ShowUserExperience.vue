@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 10px 0 30px 0;">
     <div style="width:690px;text-align: center;background: rgba(220,220,220,0.28);margin: 10px 0 10px 0;padding: 10px;">
-      <p style="font-size: 20px;" class="hovered hvr-grow hoverLinkColor">用户体验</p>
+      <p style="font-size: 20px;" class="hovered hvr-grow isoft_hover_red2">用户体验</p>
     </div>
     <Row>
       <Col span="18">

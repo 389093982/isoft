@@ -1,12 +1,11 @@
 <template>
-  <IBeautifulCard title="热门博客"  :minHeight="600">
-    <ul slot="content">
-      <li v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
-        <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
-        <IBeautifulLink>{{blog.blog_title | filterLimitFunc(22)}}</IBeautifulLink>
-      </li>
-    </ul>
-  </IBeautifulCard>
+  <div style="padding-top: 10px; min-height: 400px" >
+    <h2 class="isoft_font_header">热门博客</h2>
+    <div class="blogItem isoft_inline_ellipsis" v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
+      <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
+      <span class="isoft_hover_red2">{{blog.blog_title}}</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,12 +45,10 @@
 </script>
 
 <style scoped>
-  a {
-    color: black;
-  }
-
-  a:hover {
-    color: red;
+  .blogItem {
+    margin: 0 20px;
+    padding: 10px 10px 5px 10px;
+    border-top: 1px solid #eee;
   }
 
   li {

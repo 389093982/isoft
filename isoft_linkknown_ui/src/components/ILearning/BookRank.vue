@@ -1,7 +1,7 @@
 <template>
-  <div style="padding-top: 10px; min-height: 628px" >
-    <h2 class="good_rank">热门书单</h2>
-    <a v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
+  <div style="padding-top: 10px; min-height: 400px" >
+    <h2 class="isoft_font_header">热门书单</h2>
+    <div class="bookItem" v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>
         <Col span="17">
@@ -10,7 +10,7 @@
         </Col>
         <Col span="5" class="rank_label">{{book.views}} 次阅读</Col>
       </Row>
-    </a>
+    </div>
   </div>
 </template>
 
@@ -22,13 +22,20 @@
     data() {
       return {
         books: [],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 8,
       }
     },
     methods: {
       refreshCustomTagBook: async function () {
-        const result = await QueryCustomTagBook({custom_tag: 'hot'});
-        if (result.status == "SUCCESS") {
+        const result = await QueryCustomTagBook({custom_tag: 'hot', offset: this.offset, current_page: this.current_page});
+        if (result.status === "SUCCESS") {
           this.books = result.books;
+          this.total = result.paginator.totalcount;
         }
       },
     },
@@ -39,18 +46,7 @@
 </script>
 
 <style scoped>
-  .good_rank {
-    margin: 0 10px 10px 10px;
-    position: relative;
-    height: 40px;
-    color: #111;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 40px;
-    white-space: nowrap;
-  }
-
-  a {
+  .bookItem {
     margin: 0 20px;
     padding: 10px 10px 5px 10px;
     border-top: 1px solid #eee;

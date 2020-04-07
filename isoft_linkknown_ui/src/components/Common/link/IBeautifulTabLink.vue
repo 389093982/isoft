@@ -1,26 +1,24 @@
 <template>
-  <IBeautifulCard :title="pData.title" :minHeight="200">
-    <div slot="content" style="padding: 20px;">
-      <Tabs :animated="false">
-        <TabPane :label="itemData.itemTitle" v-for="(itemData, index) in pData.pItemData">
-          <Row :gutter="10">
-            <Col span="6" v-for="item in itemData.items">
-              <IBeautifulHoverBox :item="item"/>
-            </Col>
-          </Row>
-        </TabPane>
-      </Tabs>
-    </div>
-  </IBeautifulCard>
+  <div>
+    <h2 class="isoft_font_header">{{pData.title}}</h2>
+    <Tabs :animated="false">
+      <TabPane :label="itemData.itemTitle" v-for="(itemData, index) in pData.pItemData">
+        <Row :gutter="10">
+          <Col span="6" v-for="item in itemData.items">
+            <IBeautifulHoverBox :item="item"/>
+          </Col>
+        </Row>
+      </TabPane>
+    </Tabs>
+  </div>
 </template>
 
 <script>
   import IBeautifulHoverBox from "./IBeautifulHoverBox"
-  import IBeautifulCard from "../../Common/card/IBeautifulCard"
 
   export default {
     name: "IBeautifulTabLink",
-    components: {IBeautifulHoverBox, IBeautifulCard},
+    components: {IBeautifulHoverBox},
     data() {
       return {
         current_index: 0,

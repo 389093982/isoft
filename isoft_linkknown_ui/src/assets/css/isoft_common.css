@@ -125,11 +125,12 @@
   color: red;
 }
 
-.hoverLinkColor {
+.isoft_hover_red2 {
   color: #000;
 }
 
-.hoverLinkColor:hover {
+.isoft_hover_red2:hover {
+  cursor: pointer;
   color: red;
 }
 

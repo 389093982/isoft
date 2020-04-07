@@ -24,10 +24,10 @@
                     <p>广告状态:
                       <span v-if="advertisement.is_valid === 1">
                       <span v-if="checkDateDiff(advertisement.created_time)"
-                            class="hovered hvr-grow hoverLinkColor">已过期</span>
-                      <span v-else class="hovered hvr-grow hoverLinkColor">已生效</span>
+                            class="hovered hvr-grow isoft_hover_red2">已过期</span>
+                      <span v-else class="hovered hvr-grow isoft_hover_red2">已生效</span>
                     </span>
-                      <span v-else class="hovered hvr-grow hoverLinkColor">等待审核</span>
+                      <span v-else class="hovered hvr-grow isoft_hover_red2">等待审核</span>
                     </p>
                     <p style="text-align: right;">
                       <IBeautifulLink class="mr5" @onclick="editAdvertisement(advertisement.id)">编辑</IBeautifulLink>
@@ -57,7 +57,7 @@
               精准广告或商业合作请邮件联系 <a href="mailto:389093982@qq.com">链知网管理员 389093982@qq.com</a>
             </div>
 
-            <div class="isoft_auto_with title">广告访问记录</div>
+            <div class="isoft_title">广告访问记录</div>
             <div style="padding: 10px;border-top: 2px solid #edeff0;">
               <AccessLog ref="adv_accesslog"/>
             </div>
@@ -130,18 +130,5 @@
 </script>
 
 <style scoped>
-  .title {
-    font-size: 18px;
-    font-weight: normal;
-    height: 35px;
-    line-height: 35px;
-    font-family: "微软雅黑";
-  }
 
-  .title::after {
-    content: "";
-    display: block;
-    height: 3px;
-    border-bottom: 3px solid red;
-  }
 </style>

@@ -74,7 +74,7 @@
   import CatalogList from "./CatalogList";
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckAdminLogin} from "../../tools/index"
-  import {markdownAdapter} from "../../tools";
+  import {checkEmpty, markdownAdapter} from "../../tools";
 
   export default {
     name: "BlogArticleEdit",
@@ -150,6 +150,7 @@
           catalog_name: '',
           content: "",
           link_href: "",
+          first_img: "",
         },
         ruleValidate: {
           blog_title: [
@@ -180,6 +181,9 @@
           data: formdata,
           headers: {'Content-Type': 'multipart/form-data'},
         }).then((result) => {
+          if (checkEmpty(this.formValidate.first_img)) {
+            this.formValidate.first_img = result.data.fileServerPath;
+          }
           // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
           this.$refs.md.$img2Url(pos, result.data.fileServerPath+'?width=500px&height=300px');
         })
@@ -216,12 +220,8 @@
         if (result.status === "SUCCESS") {
           if (result.blog != null) {
             this.blog = result.blog;
+            this.formValidate = result.blog;
             this.formValidate.article_id = result.blog.id;
-            this.formValidate.blog_title = result.blog.blog_title;
-            this.formValidate.key_words = result.blog.key_words;
-            this.formValidate.catalog_name = result.blog.catalog_name;
-            this.formValidate.content = result.blog.content;
-            this.formValidate.link_href = result.blog.link_href;
           }
         }
       },
