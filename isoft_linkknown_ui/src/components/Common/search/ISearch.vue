@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import {GenerateRandom} from "../../../tools";
+  import {checkNotEmpty, GenerateRandom} from "../../../tools";
 
   export default {
     name: "Search",
@@ -47,7 +47,7 @@
         search_data: "",
         showRecently: false,
         searchPattern: 1,  // 默认 1、最近搜索 2、热搜榜
-        searchItems2:['清明节2','清明节2','清明节2','清明节','清明节','清明节','清明节','清明节'],
+        searchItems2:['前端','mysql','java','python','golang','vue'],
       }
     },
     methods: {
@@ -55,7 +55,17 @@
         return JSON.parse(localStorage.getItem(this.searchType)) || [];
       },
       submitFunc: function () {
-        this.$emit("submitFunc", this.search_data);
+        if (checkNotEmpty(this.search_data)) {
+          // 缓存搜索关键词
+          if (!localStorage.getItem(this.searchType)) {
+            localStorage.setItem(this.searchType, JSON.stringify([]));
+          }
+          let cacheArr = Array.from(new Set([this.search_data].concat(JSON.parse(localStorage.getItem(this.searchType)))));
+          localStorage.setItem(this.searchType, JSON.stringify(cacheArr.slice(0, 16)));
+
+          // 通知父组件
+          this.$emit("submitFunc", this.search_data);
+        }
       },
       handleFocus: function () {
         setTimeout(() => {
@@ -65,14 +75,6 @@
     },
     watch:{
       search_data:function () {
-        // 缓存搜索关键词
-        if (!localStorage.getItem(this.searchType)) {
-          localStorage.setItem(this.searchType, JSON.stringify([]));
-        }
-        let cacheArr = Array.from(new Set([this.search_data].concat(JSON.parse(localStorage.getItem(this.searchType)))));
-        localStorage.setItem(this.searchType, JSON.stringify(cacheArr.slice(0, 20)));
-
-        // 通知父组件
         this.$emit("searchDataHasChange", this.search_data);
       }
     },
@@ -170,6 +172,7 @@
     float: left;
     margin-right: 16px;
     margin-top: 12px;
+    padding: 0 5px;
     text-align: center;
     font-size: 12px;
   }

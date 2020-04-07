@@ -1,7 +1,8 @@
 <template>
   <div style="padding-top: 10px; min-height: 400px" >
     <div class="isoft_font_header">热门博客</div>
-    <div class="blogItem isoft_inline_ellipsis" v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
+    <div class="blogItem hoverItemClass isoft_inline_ellipsis"
+         v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <span v-if="index === 0">
         <img :src="blog.first_img" style="width: 90px;height: 60px;"/>&nbsp;
         <strong class="isoft_hover_red2">{{blog.blog_title}}</strong>
@@ -57,6 +58,7 @@
     margin: 0 20px;
     padding: 10px 10px 5px 10px;
     border-top: 1px solid #eee;
+    position: relative;
   }
 
   li {

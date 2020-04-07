@@ -19,6 +19,7 @@
     <div class="fadeToRight">淡入淡出</div>
     <div class="fadeToTop">淡入淡出</div>
     <div class="fadeToBottom">淡入淡出</div>
+    <div class="hoverItemClass">hover 从左移入</div>
     <br/>
 
     <!-- title 样式 -->
