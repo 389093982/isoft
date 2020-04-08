@@ -35,11 +35,19 @@
           <div style="padding: 5px 10px 0 30px">
             <div class="_search">
               <div style="text-align: center;">
-                <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a></div>
+                <span style="border-bottom-style: solid;border-bottom-color: #ff6600;border-bottom-width: 2px;color: #ff6600">
+                  当前类别<Icon type="md-arrow-dropright" /> <b>{{showLabel}}</b>
+                </span>
+              </div>
               <div style="text-align: center;">
-                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a></div>
+                <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a>
+              </div>
               <div style="text-align: center;">
-                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a></div>
+                <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a>
+              </div>
+              <div style="text-align: center;">
+                <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a>
+              </div>
               <div style="text-align: center;">
                 <a @click="blogEdit"><Icon type="ios-brush" />我也要发布</a>
               </div>
@@ -166,33 +174,45 @@
         <Col span="8">
           <div style="padding: 5px 50px 0 10px;">
             <div style="width: 98%">
-              <!--遍历推荐文章-->
-              <ul>
-                <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
-                  <Row style="height: 80px; "  :style="{'margin-top': index===0 ? 0+'px':20+'px'}">
-                    <!--第一列 ：博客中第一张图片-->
-                    <Col span="9">
-                      <div style="padding: 0 5px 0 0">
-                        <img style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
-                      </div>
-                    </Col>
-                    <!--第二列 ：分三行-->
-                    <Col span="15">
-                      <Row>
+              <div style="height: 30px;">
+                <div>
+                  <span style="border-bottom-style: solid; border-bottom-color: #ff6600;border-bottom-width: 2px;color: #ff6600">
+                    今日金榜 • 前五名
+                  </span>
+                </div>
+              </div>
+              <!--前五名展示-->
+              <div style="height: auto">
+                <!--遍历推荐文章-->
+                <ul>
+                  <li v-for="(blogGolden,index) in blogGoldenList" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
+                    <Row style="height: 80px; "  :style="{'margin-top': index===0 ? 0+'px':20+'px'}">
+                      <!--第一列 ：博客中第一张图片-->
+                      <Col span="9">
+                        <div style="padding: 0 5px 0 0">
+                          <img v-if="blogGolden.first_img" style="width: 100%;height: 80px;" :src="blogGolden.first_img" />
+                          <img v-else style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
+                        </div>
+                      </Col>
+                      <!--第二列 ：分三行-->
+                      <Col span="15">
                         <!--第一行：博客标题-->
-                        <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
-                          <span class="title_hover">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
-                        </router-link>
-                      </Row>
-                      <Row>
-                        <span style="color: #0099ff">精选文章·学习笔记</span>
-                      </Row>
-                    </Col>
-                  </Row>
-                </li>
-              </ul>
+                        <Row>
+                          <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:blogGolden.id}}">
+                            <span class="title_hover">{{blogGolden.blog_title | filterLimitFunc(25)}}</span>
+                          </router-link>
+                        </Row>
+                        <!--作者 · 博客类型-->
+                        <Row>
+                          <span style="color: #0099ff">{{renderNickName(blogGolden.author) | filterLimitFunc(5)}}·{{blogGolden.catalog_name | filterLimitFunc(5)}}</span>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <HotUser></HotUser>
+            <HotUser style="margin-top: 40px"></HotUser>
           </div>
         </Col>
       </Row>
@@ -252,6 +272,7 @@
         offset: 20,
         pageSizeOpts:[20, 30, 40, 50],
         searchblogs: [],
+        blogGoldenList:[],
         search_type: '_all',
         showLabel: '全部分类',
         search_user_name: '',
@@ -325,11 +346,13 @@
             search_type: search_type,
             search_user_name: this.search_user_name,
             search_data:this.search_data,
+            today:this.formatDate(new Date()),
           });
           if (result.status === "SUCCESS") {
 
             this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
             this.searchblogs = result.blogs;
+            this.blogGoldenList = result.blogGoldenList;
             this.total = result.paginator.totalcount;
           }
         } finally {
@@ -362,7 +385,20 @@
       isThisYear:function (value) {
         let thisYear = new Date().getFullYear();
         return parseInt(value.substring(0,4)) === parseInt(thisYear);
-      }
+      },
+      //格式化日期：yyyy-MM-dd
+      formatDate:function (date) {
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        if (month < 10) {
+          month = "0" + month;
+        }
+        if (day < 10) {
+          day = "0" + day;
+        }
+        return (year + "-" + month + "-" + day);
+      },
     },
     mounted: function () {
       this.refreshBlogList();
