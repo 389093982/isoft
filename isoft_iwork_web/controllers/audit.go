@@ -68,13 +68,12 @@ func (this *WorkController) GetAuditHandleData() {
 	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
 
 	// 智能审核系统第三步获取审核数据,根据不同场景查询不同数据,默认查询全部数据
-	filterSql := taskDetail.QuerySql
-	for _, updateCase := range taskDetail.UpdateCases {
-		if updateCase.CaseName == case_name && strings.TrimSpace(updateCase.QuerySql) != "" {
-			filterSql = updateCase.QuerySql
+	filterSql := taskDetail.QueryCases[0].QuerySql
+	for _, queryCase := range taskDetail.QueryCases {
+		if queryCase.CaseName == case_name && strings.TrimSpace(queryCase.QuerySql) != "" {
+			filterSql = queryCase.QuerySql
 		}
 	}
-
 	_, rowDatas0, err1 := sqlutil.QuerySql(strings.Replace(filterSql, "*", "count(*) as totalcount", -1),
 		[]interface{}{}, resource.ResourceDsn)
 	_, rowDatas, err2 := sqlutil.QuerySql(fmt.Sprintf(`%s limit ?,?`, filterSql), []interface{}{(current_page - 1) * offset, offset}, resource.ResourceDsn)
@@ -113,15 +112,17 @@ func (this *WorkController) EditAuditTaskSource() {
 	app_id, _ := this.GetInt64("app_id", -1)
 	taskName := this.GetString("task_name")
 	resourceName := this.GetString("resource_name")
-	querySql := this.GetString("query_sql")
+	query_cases := this.GetString("query_cases")
+	var queryCases []models.QueryCase
+	json.Unmarshal([]byte(query_cases), &queryCases)
 	resource, _ := models.QueryResourceByName(app_id, resourceName)
 	resource.ResourceDsn = this.GlobalVarParserWarpper(app_id, resource.ResourceDsn)
-	colNames := sqlutil.GetMetaDatas(querySql, resource.ResourceDsn)
+	colNames := sqlutil.GetMetaDatas(queryCases[0].QuerySql, resource.ResourceDsn)
 	task, _ := models.QueryAuditTaskByTaskName(taskName, orm.NewOrm())
 	var taskDetail models.TaskDetail
 	xml.Unmarshal([]byte(task.TaskDetail), &taskDetail)
+	taskDetail.QueryCases = queryCases
 	taskDetail.ResourceName = resourceName
-	taskDetail.QuerySql = querySql
 	taskDetail.ColNames = jsonutil.RenderToJson(colNames)
 	task.TaskDetail = xmlutil.RenderToString(taskDetail)
 	// 配置入库

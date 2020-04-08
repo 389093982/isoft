@@ -1,10 +1,9 @@
 <template>
   <div>
     <div>
-      <Tag><span @click="filterAuditData('')" :style="{color: case_name === '' ? 'red' : ''}">全部</span></Tag>
-      <Tag v-for="(update_case, index) in update_cases">
-        <span @click="filterAuditData(update_case.case_name)"
-              :style="{color: case_name === update_case.case_name ? 'red' : ''}">{{update_case.case_name}}</span>
+      <Tag v-for="(query_case, index) in query_cases">
+        <span @click="filterAuditData(query_case.case_name)"
+              :style="{color: case_name === query_case.case_name ? 'red' : ''}">{{query_case.case_name}}</span>
       </Tag>
     </div>
 
@@ -19,7 +18,7 @@
         </Scroll>
         <div>
           <span v-if="update_cases" v-for="update_case in update_cases">
-            <span v-if="update_case.case_name" class="operate" :style="{'color': update_case.case_color}"
+            <span v-if="update_case.case_name" class="operate"
                   @click="handleOperate(update_case, rowData)">{{update_case.case_name}}</span>
           </span>
         </div>
@@ -48,6 +47,7 @@
         // 每页记录数
         offset:10,
         search:"",
+        query_cases:[],
         update_cases:[],
         case_name: '',
       }
@@ -83,6 +83,7 @@
       refreshAuditDetail:async function () {
         const result = await QueryTaskDetail(this.$route.query.task_name);
         if(result.status == "SUCCESS"){
+          this.query_cases = result.taskDetail.query_cases;
           this.update_cases = result.taskDetail.update_cases;
         }
       },
