@@ -26,7 +26,7 @@
 
 <script>
   import HoverBigImg from "../Common/img/HoverBigImg"
-  import {QueryCustomTagCourse} from "../../api"
+  import {QueryCustomTagCourse, SearchCourseList} from "../../api"
 
   export default {
     name: "RankCourse",
@@ -41,14 +41,23 @@
       refreshCustomTagCourse: async function (custom_tag) {
         this.checked_tag = custom_tag;
         const result = await QueryCustomTagCourse({custom_tag: custom_tag});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           // 九宫格
           this.display_courses = result.custom_tag_courses.slice(0, 9);
         }
+      },
+      search: async function (search_data) {
+        const result = await SearchCourseList({search: search_data});
+        if (result.status === "SUCCESS") {
+          this.display_courses = result.courses;
+        }
+      },
+      refreshCourseList: function () {
+        this.refreshCustomTagCourse('hot');
       }
     },
     mounted() {
-      this.refreshCustomTagCourse('hot');
+      this.refreshCourseList();
     }
   }
 </script>

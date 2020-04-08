@@ -53,7 +53,7 @@
     },
     methods: {
       refreshCourseSearch: async function (search) {
-        const result = await SearchCourseList(search);
+        const result = await SearchCourseList({search});
         if (result.status == "SUCCESS") {
           this.courses = result.courses;
         }

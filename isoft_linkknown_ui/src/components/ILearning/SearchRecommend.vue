@@ -1,8 +1,16 @@
 <template>
   <div>
     <!--为您精选、热门、特色、高评-->
-    <div style="margin: 2px 0 0 0;">
-      <RankCourse/>
+    <div style="display: flex;" class="isoft_top5">
+      <div style="width: 33%;">
+        <RankCourse ref="rankCourse1" class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 34%;padding: 0 5px;">
+        <RankCourse class="isoft_bg_white isoft_pd10"/>
+      </div>
+      <div style="width: 33%;">
+        <RankCourse class="isoft_bg_white isoft_pd10"/>
+      </div>
     </div>
 
     <div style="display: flex;" class="isoft_top5">
@@ -49,6 +57,7 @@
     },
     methods:{
       search: function (search_data) {
+        this.$refs.rankCourse1.search(search_data);
         this.$refs.rankBook1.search(search_data);
         this.$refs.rankBlog1.search(search_data);
       }
