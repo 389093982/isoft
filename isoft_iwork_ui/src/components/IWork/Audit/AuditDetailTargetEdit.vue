@@ -10,6 +10,7 @@
 
         场景名称: <span style="color: #00ce00;">参考案例：生效、失效、审核通过、内容不合法等中文或英文</span>
         <Button type="error" size="small" @click="handleRemove(index)">删除</Button>
+        <Icon type="md-arrow-back" size="20" @click="moveLocation(index, -1)"/> <Icon type="md-arrow-forward" size="20" @click="moveLocation(index, 1)"/>
 
         <Input type="text" v-model="item.case_name" placeholder="请输入场景名称" style="margin: 5px 0;"></Input>
 
@@ -30,6 +31,7 @@
 
 <script>
   import {EditAuditTaskTarget, QueryTaskDetail} from "../../../api"
+  import {swapArray} from "../../../tools";
 
   export default {
     name: "AuditDetailTargetEdit",
@@ -45,6 +47,9 @@
       }
     },
     methods:{
+      moveLocation: function (index, step){
+        swapArray(this.update_cases, index, index + step);
+      },
       handleSubmit:async function () {
         const result = await EditAuditTaskTarget(this.$route.query.task_name, JSON.stringify(this.update_cases));
         if (result.status === "SUCCESS") {
