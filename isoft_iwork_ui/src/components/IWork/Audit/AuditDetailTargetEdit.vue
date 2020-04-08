@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div style="position: relative;">
+    <div style="position: absolute;top:0px;right: 10px;">
+      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 10px;">保存场景</Button>
+      <Button type="success" size="small" @click="handleAdd">新增场景</Button>
+    </div>
+
     <Tabs :animated="false" name="tab_level_2" style="width: 80%;">
       <TabPane v-for="(item, index) in update_cases" :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
 
@@ -23,7 +28,7 @@
       </TabPane>
     </Tabs>
     <div>
-      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 50px;">保存场景</Button>
+      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 10px;">保存场景</Button>
       <Button type="success" size="small" @click="handleAdd">新增场景</Button>
     </div>
   </div>

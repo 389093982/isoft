@@ -1,6 +1,7 @@
 <template>
   <div style="padding-top: 10px; min-height: 480px" >
-    <div class="isoft_font_header">热门博客</div>
+    <div class="isoft_font_header" v-if="isSearchFlag">博客搜索结果</div>
+    <div class="isoft_font_header" v-else>热门博客</div>
     <div class="blogItem hoverItemClass isoft_inline_ellipsis"
          v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <span v-if="index === 0">
@@ -33,6 +34,7 @@
         total: 0,
         // 每页记录数
         offset: 8,
+        isSearchFlag: false,    // 是否是搜索模式
       }
     },
     methods: {
@@ -43,17 +45,19 @@
         }
       },
       search: async function (search_data) {
+        this.isSearchFlag = true;
         const result = await queryPageBlog({
           search_data: search_data,
           offset: 20,
           current_page: 1,
         });
         if (result.status === "SUCCESS") {
-          this.blogs = result.custom_tag_blogs;
+          this.blogs = result.blogGoldenList;
           this.total = result.paginator.totalcount;
         }
       },
       refreshBlogList: function () {
+        this.isSearchFlag = false;
         this.refreshCustomTagBlog();
       }
     },

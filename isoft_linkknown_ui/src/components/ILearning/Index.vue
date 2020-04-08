@@ -4,9 +4,9 @@
       <LinkKnownQuickSearch @handleShow="handleShow" @submitFunc="handleSubmitFunc"/>
     </div>
 
-    <SearchRecommend ref="searchRecommend" v-if="tabIndex === 1"/>
+    <SearchRecommend ref="searchRecommend" v-show="tabIndex === 1"/>
     <!--新闻公告-->
-    <div v-else-if="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
+    <div v-show="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
       <div style="width: 33%;">
         <NewsNotice class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_Index_news_list"/>
       </div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <!--热门应用-->
-    <div v-else-if="tabIndex === 3" style="display: flex;justify-content: center;">
+    <div v-show="tabIndex === 3" style="display: flex;justify-content: center;">
       <div style="width: 33%;">
         <ToolBox class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_host_app_recommand"/>
       </div>
@@ -30,9 +30,9 @@
       </div>
     </div>
     <!--热门产品-->
-    <IBeautifulTabLink v-else-if="tabIndex === 4" class="isoft_bg_white isoft_pd10"/>
+    <IBeautifulTabLink v-show="tabIndex === 4" class="isoft_bg_white isoft_pd10"/>
 
-    <IHotRecommand v-else-if="tabIndex === 5" class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
+    <IHotRecommand v-show="tabIndex === 5" class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
 
     <!--发现-->
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;position: relative;left: -15px">
