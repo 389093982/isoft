@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 10px; min-height: 400px" >
+  <div style="padding-top: 10px; min-height: 480px" >
     <div class="isoft_font_header">热门博客</div>
     <div class="blogItem hoverItemClass isoft_inline_ellipsis"
          v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">

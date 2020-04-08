@@ -1,40 +1,40 @@
 <template>
   <div>
     <!--为您精选、热门、特色、高评-->
-    <div style="display: flex;" class="isoft_top5">
-      <div style="width: 33%;">
+    <div style="display: flex;justify-content: center;" class="isoft_top5">
+      <div style="width: 31%;">
         <RankCourse ref="rankCourse1" class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 34%;padding: 0 5px;">
+      <div style="width: 31%;margin: 0 5px;">
         <RankCourse class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 33%;">
+      <div style="width: 31%;">
         <RankCourse class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
 
-    <div style="display: flex;" class="isoft_top5">
+    <div style="display: flex;justify-content: center;" class="isoft_top5">
       <!--热门书单-->
-      <div style="width: 33%;">
+      <div style="width: 31%;">
         <RankBook ref="rankBook1" class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 34%;padding: 0 5px;">
+      <div style="width: 31%;margin: 0 5px;">
         <RankBook class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 33%;">
+      <div style="width: 31%;">
         <RankBook class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
 
     <!--热门博客-->
-    <div style="display:flex;" class="isoft_top5">
-      <div style="width: 33%;">
+    <div style="display:flex;justify-content: center;" class="isoft_top5">
+      <div style="width: 31%;">
         <RankBlog ref="rankBlog1" class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 34%;padding: 0 5px;">
+      <div style="width: 31%;margin: 0 5px;">
         <RankBlog class="isoft_bg_white isoft_pd10"/>
       </div>
-      <div style="width: 33%;">
+      <div style="width: 31%;">
         <RankBlog class="isoft_bg_white isoft_pd10"/>
       </div>
     </div>
