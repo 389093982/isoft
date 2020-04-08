@@ -40,17 +40,17 @@
           {
             title: 'resource_name',
             key: 'resource_name',
-            width: 130,
+            width: 150,
           },
           {
             title: 'resource_type',
             key: 'resource_type',
-            width: 130,
+            width: 120,
           },
           {
             title: 'resource_url',
             key: 'resource_url',
-            width: 120,
+            width: 150,
           },
           {
             title: 'resource_dsn',
