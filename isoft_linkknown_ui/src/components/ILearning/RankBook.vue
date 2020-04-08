@@ -19,7 +19,7 @@
   import {QueryCustomTagBook, QueryPageBookList} from "../../api"
 
   export default {
-    name: "BookRank",
+    name: "RankBook",
     data() {
       return {
         books: [],

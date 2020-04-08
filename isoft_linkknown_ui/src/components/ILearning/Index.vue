@@ -51,7 +51,6 @@
   const IBeautifulTabLink = () => import("@/components/Common/link/IBeautifulTabLink");
   const HorizontalLinks = () => import("@/components/Elementviewers/HorizontalLinks");
   const IHotRecommand = () => import("@/components/Common/recommend/IHotRecommand");
-  const BookRank = () => import("@/components/ILearning/BookRank");
 
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
 
@@ -59,7 +58,6 @@
     name: "Index",
     components: {
       SearchRecommend,
-      BookRank,
       IHotRecommand,
       HorizontalLinks,
       NewsNotice,

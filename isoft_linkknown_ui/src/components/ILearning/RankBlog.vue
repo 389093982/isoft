@@ -22,7 +22,7 @@
   import {checkNotEmpty} from "../../tools";
 
   export default {
-    name: "BlogRank",
+    name: "RankBlog",
     components: {IBeautifulCard},
     data() {
       return {
