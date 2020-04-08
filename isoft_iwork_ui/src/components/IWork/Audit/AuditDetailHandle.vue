@@ -118,6 +118,7 @@
     font-size: 14px;
     cursor: pointer;
     margin: 2px 10px;
+    color: green;
   }
   .operate:hover{
     border-bottom: 1px solid red;
