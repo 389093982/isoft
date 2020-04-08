@@ -138,7 +138,7 @@ export const GetHotCourseRecommend = () => ajax(BASE_URL + "/iwork/httpservice/i
 export const GetAllCourseSubType = (course_type) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAllCourseSubType2', {course_type}, 'GET');
 
 // 课程搜索
-export const SearchCourseList = (search) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList2', {search}, 'GET');
+export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList2', params, 'GET');
 
 // 登录接口
 export const Login = (username, passwd, redirectUrl) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin2", {

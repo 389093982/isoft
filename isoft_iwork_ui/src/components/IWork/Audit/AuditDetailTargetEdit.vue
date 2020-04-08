@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div style="position: relative;">
+    <div style="position: absolute;top:0px;right: 10px;">
+      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 10px;">保存场景</Button>
+      <Button type="success" size="small" @click="handleAdd">新增场景</Button>
+    </div>
+
     <Tabs :animated="false" name="tab_level_2" style="width: 80%;">
       <TabPane v-for="(item, index) in update_cases" :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
 
         场景名称: <span style="color: #00ce00;">参考案例：生效、失效、审核通过、内容不合法等中文或英文</span>
-        <span style="margin-left: 100px;">按钮颜色设置：<ColorPicker v-model="item.case_color" size="small" alpha
-                                                              recommend/></span>
         <Button type="error" size="small" @click="handleRemove(index)">删除</Button>
+        <Icon type="md-arrow-back" size="20" @click="moveLocation(index, -1)"/> <Icon type="md-arrow-forward" size="20" @click="moveLocation(index, 1)"/>
 
         <Input type="text" v-model="item.case_name" placeholder="请输入场景名称" style="margin: 5px 0;"></Input>
-
-        场景查询sql: <span style="color: #00ce00;">参考案例：select * from blog where status = 1</span>
-        <Input type="textarea" :rows="6" v-model="item.query_sql" placeholder="请输入 query_sql"
-               style="margin: 5px 0;"></Input>
 
         场景更新sql: <span style="color: #00ce00;">参考案例：update blog set status = 1 where id = :id</span>
         <Input type="textarea" :rows="6" v-model="item.update_sql" placeholder="请输入 update_sql" style="margin: 5px 0;"></Input>
@@ -23,7 +23,7 @@
       </TabPane>
     </Tabs>
     <div>
-      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 50px;">保存场景</Button>
+      <Button type="info" size="small" @click="handleSubmit" style="margin-right: 10px;">保存场景</Button>
       <Button type="success" size="small" @click="handleAdd">新增场景</Button>
     </div>
   </div>
@@ -31,6 +31,7 @@
 
 <script>
   import {EditAuditTaskTarget, QueryTaskDetail} from "../../../api"
+  import {swapArray} from "../../../tools";
 
   export default {
     name: "AuditDetailTargetEdit",
@@ -39,15 +40,16 @@
         update_cases: [
           {
             case_name:'',
-            query_sql: '',
             update_sql:'',
             update_desc:'',
-            case_color:'',
           }
         ]
       }
     },
     methods:{
+      moveLocation: function (index, step){
+        swapArray(this.update_cases, index, index + step);
+      },
       handleSubmit:async function () {
         const result = await EditAuditTaskTarget(this.$route.query.task_name, JSON.stringify(this.update_cases));
         if (result.status === "SUCCESS") {
@@ -60,10 +62,8 @@
       handleAdd () {
         this.update_cases.push({
           case_name:'',
-          query_sql: '',
-            update_sql: '',
-            update_desc: '',
-          case_color: '#19be6b',
+          update_sql: '',
+          update_desc: '',
         });
       },
       handleRemove (index) {

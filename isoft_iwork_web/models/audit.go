@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// 审核任务表
 type AuditTask struct {
 	Id              int64     `json:"id"`
 	AppId           int64     `json:"app_id"`
@@ -19,15 +20,19 @@ type AuditTask struct {
 
 type TaskDetail struct {
 	ResourceName string       `json:"resource_name"`
-	QuerySql     string       `json:"query_sql"`
+	QueryCases   []QueryCase  `json:"query_cases"`
 	ColNames     string       `json:"col_names"`
 	UpdateCases  []UpdateCase `json:"update_cases"`
 }
 
+type QueryCase struct {
+	CaseName  string `json:"case_name"`
+	QuerySql  string `json:"query_sql"`
+	QueryDesc string `json:"query_desc"`
+}
+
 type UpdateCase struct {
 	CaseName   string `json:"case_name"`
-	CaseColor  string `json:"case_color"`
-	QuerySql   string `json:"query_sql"`
 	UpdateSql  string `json:"update_sql"`
 	UpdateDesc string `json:"update_desc"`
 }

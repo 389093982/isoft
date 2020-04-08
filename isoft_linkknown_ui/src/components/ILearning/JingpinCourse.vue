@@ -33,9 +33,6 @@
   import HorizontalLinks from "../Elementviewers/HorizontalLinks"
   import IHotRecommand from "../Common/recommend/IHotRecommand"
   import IndexCarousel from "./IndexCarousel";
-  import BookRank from "./BookRank";
-  import WarmHeartRecommend from "./WarmHeartRecommend";
-  import BlogRank from "./BlogRank";
   import ShowModulars from "./ShowModulars";
 
   export default {
@@ -43,9 +40,6 @@
     components: {
       CourseType,
       ShowModulars,
-      BlogRank,
-      WarmHeartRecommend,
-      BookRank,
       IndexCarousel,
       IHotRecommand,
       HorizontalLinks,

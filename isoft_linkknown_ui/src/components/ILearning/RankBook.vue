@@ -1,6 +1,7 @@
 <template>
-  <div style="padding-top: 10px; min-height: 400px" >
-    <div class="isoft_font_header">热门书单</div>
+  <div style="padding-top: 10px; min-height: 550px" >
+    <div class="isoft_font_header" v-if="isSearchFlag">图书搜索结果</div>
+    <div class="isoft_font_header" v-else>热门图书</div>
     <div class="bookItem hoverItemClass"
          v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
@@ -16,10 +17,10 @@
 </template>
 
 <script>
-  import {QueryCustomTagBook} from "../../api"
+  import {QueryCustomTagBook, QueryPageBookList} from "../../api"
 
   export default {
-    name: "BookRank",
+    name: "RankBook",
     data() {
       return {
         books: [],
@@ -29,6 +30,7 @@
         total: 0,
         // 每页记录数
         offset: 8,
+        isSearchFlag: false,    // 是否是搜索模式
       }
     },
     methods: {
@@ -39,9 +41,25 @@
           this.total = result.paginator.totalcount;
         }
       },
+      search: async function (search_data) {
+        this.isSearchFlag = true;
+        const result = await QueryPageBookList({
+          search_text: search_data,
+          offset: this.offset,
+          current_page: this.current_page,
+        });
+        if (result.status === "SUCCESS") {
+          this.books = result.books;
+          this.total = result.paginator.totalcount;
+        }
+      },
+      refreshBookList: function () {
+        this.isSearchFlag = false;
+        this.refreshCustomTagBook();
+      }
     },
     mounted() {
-      this.refreshCustomTagBook();
+      this.refreshBookList();
     }
   }
 </script>
