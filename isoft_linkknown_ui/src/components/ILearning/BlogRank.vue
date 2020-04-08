@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {QueryCustomTagBlog} from "../../api"
+  import {QueryCustomTagBlog, queryPageBlog} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
   import {checkNotEmpty} from "../../tools";
 
@@ -27,6 +27,12 @@
     data() {
       return {
         blogs: [],
+        // 当前页
+        current_page: 1,
+        // 总数
+        total: 0,
+        // 每页记录数
+        offset: 8,
       }
     },
     methods: {
@@ -35,10 +41,24 @@
         if (result.status === "SUCCESS") {
           this.blogs = result.custom_tag_blogs;
         }
+      },
+      search: async function (search_data) {
+        const result = await queryPageBlog({
+          search_data: search_data,
+          offset: 20,
+          current_page: 1,
+        });
+        if (result.status === "SUCCESS") {
+          this.blogs = result.custom_tag_blogs;
+          this.total = result.paginator.totalcount;
+        }
+      },
+      refreshBlogList: function () {
+        this.refreshCustomTagBlog();
       }
     },
     mounted() {
-      this.refreshCustomTagBlog();
+      this.refreshBlogList();
     },
     filters: {
       // 内容超长则显示部分

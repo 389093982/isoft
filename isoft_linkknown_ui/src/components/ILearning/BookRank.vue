@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import {QueryCustomTagBook} from "../../api"
+  import {QueryCustomTagBook, QueryPageBookList} from "../../api"
 
   export default {
     name: "BookRank",
@@ -39,9 +39,23 @@
           this.total = result.paginator.totalcount;
         }
       },
+      search: async function (search_data) {
+        const result = await QueryPageBookList({
+          search_text: search_data,
+          offset: this.offset,
+          current_page: this.current_page,
+        });
+        if (result.status === "SUCCESS") {
+          this.books = result.books;
+          this.total = result.paginator.totalcount;
+        }
+      },
+      refreshBookList: function () {
+        this.refreshCustomTagBook();
+      }
     },
     mounted() {
-      this.refreshCustomTagBook();
+      this.refreshBookList();
     }
   }
 </script>

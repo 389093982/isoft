@@ -4,7 +4,7 @@
       <LinkKnownQuickSearch @handleShow="handleShow" @submitFunc="handleSubmitFunc"/>
     </div>
 
-    <SearchRecommend v-if="tabIndex === 1"/>
+    <SearchRecommend ref="searchRecommend" v-if="tabIndex === 1"/>
     <!--新闻公告-->
     <div v-else-if="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
       <div style="width: 33%;">
@@ -78,6 +78,7 @@
       },
       handleSubmitFunc: function (search_data) {
         this.tabIndex = 1;
+        this.$refs.searchRecommend.search(search_data);
       }
     }
   }

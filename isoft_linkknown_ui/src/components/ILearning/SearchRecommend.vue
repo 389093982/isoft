@@ -8,7 +8,7 @@
     <div style="display: flex;" class="isoft_top5">
       <!--热门书单-->
       <div style="width: 33%;">
-        <BookRank class="isoft_bg_white isoft_pd10"/>
+        <BookRank ref="bookRank1" class="isoft_bg_white isoft_pd10"/>
       </div>
       <div style="width: 34%;padding: 0 5px;">
         <BookRank class="isoft_bg_white isoft_pd10"/>
@@ -21,7 +21,7 @@
     <!--热门博客-->
     <div style="display:flex;" class="isoft_top5">
       <div style="width: 33%;">
-        <BlogRank class="isoft_bg_white isoft_pd10"/>
+        <BlogRank ref="blogRank1" class="isoft_bg_white isoft_pd10"/>
       </div>
       <div style="width: 34%;padding: 0 5px;">
         <BlogRank class="isoft_bg_white isoft_pd10"/>
@@ -44,8 +44,15 @@
     components:{WarmHeartRecommend,BookRank,BlogRank},
     data (){
       return {
+
       }
     },
+    methods:{
+      search: function (search_data) {
+        this.$refs.bookRank1.search(search_data);
+        this.$refs.blogRank1.search(search_data);
+      }
+    }
   }
 </script>
 
