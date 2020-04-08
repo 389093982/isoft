@@ -24,7 +24,7 @@
     components: {ElementsLoader},
     data() {
       return {
-        currentClickIndex:0,
+        currentClickIndex:'',
         placement_name: this.GLOBAL.placement_host_recommend_blog_tpyes,
         // 热门分享类型
         elements: [],

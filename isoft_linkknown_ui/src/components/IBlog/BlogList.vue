@@ -49,7 +49,7 @@
                 <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a>
               </div>
               <div style="text-align: center;">
-                <a @click="blogEdit"><Icon type="ios-brush" />我也要发布</a>
+                <a @click="blogEdit"><Icon type="ios-create-outline" size="16" />我也要发布</a>
               </div>
             </div>
             <div>
