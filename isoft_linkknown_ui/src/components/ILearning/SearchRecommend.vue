@@ -16,13 +16,13 @@
     <!--热门博客-->
     <div style="display:flex;justify-content: center;" class="isoft_top5">
       <div style="width: 31%;">
-        <RankBlog ref="rankBlog1" class="isoft_bg_white isoft_pd10"/>
+        <RankBlog ref="rankBlog1" class="isoft_bg_white isoft_pd10" custom_tag="views" custom_label="焦点博客" @research="handleReSearch"/>
       </div>
       <div style="width: 31%;margin: 0 5px;">
-        <RankBlog class="isoft_bg_white isoft_pd10"/>
+        <RankBlog class="isoft_bg_white isoft_pd10" custom_tag="recommend" custom_label="推荐博客"/>
       </div>
       <div style="width: 31%;">
-        <RankBlog class="isoft_bg_white isoft_pd10"/>
+        <RankBlog class="isoft_bg_white isoft_pd10" custom_tag="hot" custom_label="热门博客"/>
       </div>
     </div>
 

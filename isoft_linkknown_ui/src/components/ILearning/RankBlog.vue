@@ -1,7 +1,7 @@
 <template>
   <div style="padding-top: 10px; min-height: 510px" >
     <div class="isoft_font_header" v-if="isSearchFlag">博客搜索结果</div>
-    <div class="isoft_font_header" v-else>热门博客</div>
+    <div class="isoft_font_header" v-else>{{custom_label}}</div>
     <div class="blogItem hoverItemClass isoft_inline_ellipsis"
          v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <span v-if="index === 0">
@@ -12,7 +12,12 @@
         <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
         <span class="isoft_hover_red2">{{blog.blog_title}}</span>
       </span>
+    </div>
 
+    <div v-if="isSearchFlag && !(blogs && blogs.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
+      <p>未搜索到匹配的图书</p>
+      <p class="isoft_hover_red2" @click="refreshBlogList">给我推荐一些</p>
+      <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
     </div>
   </div>
 </template>
@@ -24,6 +29,16 @@
   export default {
     name: "RankBlog",
     components: {IBeautifulCard},
+    props:{
+      custom_tag: {
+        type: String,
+        default: 'hot',
+      },
+      custom_label: {
+        type: String,
+        default: '热门博客',
+      }
+    },
     data() {
       return {
         blogs: [],
@@ -37,9 +52,12 @@
       }
     },
     methods: {
+      handleReSearch: function (){
+        this.$emit("research");
+      },
       refreshCustomTagBlog: async function () {
         const result = await QueryCustomTagBlog({
-          custom_tag: 'hot',
+          custom_tag: this.custom_tag,
           offset: 10,
           current_page: 1,
         });
