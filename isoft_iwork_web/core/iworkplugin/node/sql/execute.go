@@ -24,6 +24,7 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatch(this.TmpDataMap, sql)
+	sql = sqlutil.ParseSpecialCharsetAnd(sql)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(this.TmpDataMap, namings)
 

@@ -73,6 +73,7 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcType": "default", "funcDemo": "batchSqlBinding($varOrSlice1,$varOrSlice2,$varOrSlice3)", "funcDesc": "批量插入参数准备"},
 
 		{"funcType": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
+		{"funcType": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
 	}
 }
 

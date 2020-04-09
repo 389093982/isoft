@@ -28,6 +28,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	// 三种 sql
 	sql, namings := parseNamingSql(this.TmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string))
+	sql = sqlutil.ParseSpecialCharsetAnd(sql)
 	total_sql := fmt.Sprintf(`select count(*) as count from (%s) ttt`, sql)
 	limit_sql := fmt.Sprintf(`%s limit ?,?`, sql)
 	// 数据源

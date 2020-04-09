@@ -16,3 +16,16 @@ func GetString(v interface{}, def string, trim ...bool) string {
 	}
 	return def
 }
+
+// 根据分隔符进行分割得到数组,同时保留分隔符 sep
+func SplitWithSepRetain(s, sep string) []string {
+	parts := strings.Split(s, sep)
+	arr := make([]string, 0)
+	for index, part := range parts {
+		arr = append(arr, part)
+		if index < len(parts)-1 {
+			arr = append(arr, sep)
+		}
+	}
+	return arr
+}
