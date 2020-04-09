@@ -1,10 +1,16 @@
 <template>
   <div>
 
-    <div class="section02_bg" style="font-size: 28px;height: 80px;line-height: 80px;padding: 0 30px;">
-      <a target="_blank" href="https://github.com/search?q=&type=" style="margin-left: 128px;cursor: pointer">
-        <span style="color: white;">精选文章推荐，热门项目参考 github</span>
-      </a>
+    <div class="section02_bg" style=";height: 80px;padding: 0 30px;display: flex">
+      <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
+        <span style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
+      </span>
+      <!--搜索框-->
+      <span style="width: 50%;position: relative;">
+        <Affix :offset-top="38">
+          <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: absolute;top: 20px;right: 140px"></ISearch>
+        </Affix>
+      </span>
     </div>
 
     <div class="isoft_bg_white" style="padding: 5px 0;box-shadow: 0 1px 2px 0 rgba(0,87,255,0.24);border-radius: 4px;">
@@ -12,12 +18,6 @@
         <Col span="22" offset="1">
           <!-- 6大热门分类 -->
           <HotCatalogItems @chooseItem="chooseItem"/>
-        </Col>
-        <!--搜索框-->
-        <Col span="1">
-          <Affix :offset-top="125">
-            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;top:-65px;left: -170px;"></ISearch>
-          </Affix>
         </Col>
       </Row>
     </div>
@@ -251,7 +251,8 @@
     RenderHatInUse,
     RenderUserInfoByNames,
     RenderSignature,
-    RenderGender
+    RenderGender,
+    goToTargetLink
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
@@ -283,6 +284,9 @@
       }
     },
     methods: {
+      toGitHub:function(url){
+        goToTargetLink(url);
+      },
       blogEdit: function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, function () {
