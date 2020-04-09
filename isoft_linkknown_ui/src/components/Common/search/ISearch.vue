@@ -165,7 +165,7 @@
     padding: 12px;
     background: #FFFFFF;
     border-radius: 4px;
-    z-index: 10;
+    z-index: 2;
   }
 
   .searchTag {

@@ -39,7 +39,11 @@
     },
     methods: {
       refreshCustomTagBlog: async function () {
-        const result = await QueryCustomTagBlog({custom_tag: 'hot'});
+        const result = await QueryCustomTagBlog({
+          custom_tag: 'hot',
+          offset: 10,
+          current_page: 1,
+        });
         if (result.status === "SUCCESS") {
           this.blogs = result.custom_tag_blogs;
         }
@@ -48,7 +52,7 @@
         this.isSearchFlag = true;
         const result = await queryPageBlog({
           search_data: search_data,
-          offset: 20,
+          offset: 10,
           current_page: 1,
         });
         if (result.status === "SUCCESS") {
