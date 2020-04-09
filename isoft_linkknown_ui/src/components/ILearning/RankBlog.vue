@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 10px; min-height: 480px" >
+  <div style="padding-top: 10px; min-height: 510px" >
     <div class="isoft_font_header" v-if="isSearchFlag">博客搜索结果</div>
     <div class="isoft_font_header" v-else>热门博客</div>
     <div class="blogItem hoverItemClass isoft_inline_ellipsis"
@@ -20,7 +20,6 @@
 <script>
   import {QueryCustomTagBlog, queryPageBlog} from "../../api"
   import IBeautifulCard from "../Common/card/IBeautifulCard"
-  import {checkNotEmpty} from "../../tools";
 
   export default {
     name: "RankBlog",
@@ -56,7 +55,7 @@
           current_page: 1,
         });
         if (result.status === "SUCCESS") {
-          this.blogs = result.blogGoldenList;
+          this.blogs = result.blogs;
           this.total = result.paginator.totalcount;
         }
       },
