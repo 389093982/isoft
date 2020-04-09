@@ -1,7 +1,7 @@
 <template>
   <div style="padding-top: 10px; min-height: 550px" >
     <div class="isoft_font_header" v-if="isSearchFlag">图书搜索结果</div>
-    <div class="isoft_font_header" v-else>热门图书</div>
+    <div class="isoft_font_header" v-else>{{custom_label}}</div>
     <div class="bookItem hoverItemClass"
          v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
@@ -13,6 +13,13 @@
         <Col span="5" class="rank_label">{{book.views}} 次阅读</Col>
       </Row>
     </div>
+
+
+    <div v-if="isSearchFlag && !(books && books.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
+      <p>未搜索到匹配的图书</p>
+      <p class="isoft_hover_red2" @click="refreshBookList">给我推荐一些</p>
+      <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+    </div>
   </div>
 </template>
 
@@ -21,6 +28,16 @@
 
   export default {
     name: "RankBook",
+    props:{
+      custom_tag: {
+        type: String,
+        default: 'hot',
+      },
+      custom_label: {
+        type: String,
+        default: '热门图书',
+      }
+    },
     data() {
       return {
         books: [],
@@ -34,8 +51,11 @@
       }
     },
     methods: {
+      handleReSearch: function (){
+        this.$emit("research");
+      },
       refreshCustomTagBook: async function () {
-        const result = await QueryCustomTagBook({custom_tag: 'hot', offset: this.offset, current_page: this.current_page});
+        const result = await QueryCustomTagBook({custom_tag: this.custom_tag, offset: this.offset, current_page: this.current_page});
         if (result.status === "SUCCESS") {
           this.books = result.books;
           this.total = result.paginator.totalcount;

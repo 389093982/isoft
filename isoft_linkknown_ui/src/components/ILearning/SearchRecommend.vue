@@ -29,13 +29,13 @@
     <!--热门书单-->
     <div style="display: flex;justify-content: center;" class="isoft_top5">
       <div style="width: 31%;">
-        <RankBook ref="rankBook1" class="isoft_bg_white isoft_pd10"/>
+        <RankBook ref="rankBook1" class="isoft_bg_white isoft_pd10" custom_tag="views" custom_label="经典图书" @research="handleReSearch"/>
       </div>
       <div style="width: 31%;margin: 0 5px;">
-        <RankBook class="isoft_bg_white isoft_pd10"/>
+        <RankBook class="isoft_bg_white isoft_pd10" custom_tag="recommend" custom_label="推荐图书"/>
       </div>
       <div style="width: 31%;">
-        <RankBook class="isoft_bg_white isoft_pd10"/>
+        <RankBook class="isoft_bg_white isoft_pd10" custom_tag="hot" custom_label="热门图书"/>
       </div>
     </div>
   </div>
@@ -55,6 +55,9 @@
       }
     },
     methods:{
+      handleReSearch: function (){
+        this.$emit("research");
+      },
       search: function (search_data) {
         // 滚动到指定位置
         document.querySelector("#rankCourse").scrollIntoView({block: 'end', behavior: 'smooth'});
