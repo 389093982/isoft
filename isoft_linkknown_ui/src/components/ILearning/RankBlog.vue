@@ -15,7 +15,7 @@
     </div>
 
     <div v-if="isSearchFlag && !(blogs && blogs.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
-      <p>未搜索到匹配的图书</p>
+      <p>未搜索到匹配的博客</p>
       <p class="isoft_hover_red2" @click="refreshBlogList">给我推荐一些</p>
       <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
     </div>
