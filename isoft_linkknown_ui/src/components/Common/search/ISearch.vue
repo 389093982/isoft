@@ -65,6 +65,11 @@
 
           // 通知父组件
           this.$emit("submitFunc", this.search_data);
+
+          // 300 ms 后隐藏推荐
+          setTimeout(() => {
+            this.showRecently = false;
+          }, 300);
         }
       },
       handleFocus: function () {

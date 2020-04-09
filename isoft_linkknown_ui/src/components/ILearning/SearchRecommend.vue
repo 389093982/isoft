@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--为您精选、热门、特色、高评-->
-    <div style="display: flex;justify-content: center;" class="isoft_top5">
+    <div id="rankCourse" style="display: flex;justify-content: center;" class="isoft_top5">
       <div style="width: 31%;">
         <RankCourse ref="rankCourse1" class="isoft_bg_white isoft_pd10"/>
       </div>
@@ -57,6 +57,9 @@
     },
     methods:{
       search: function (search_data) {
+        // 滚动到指定位置
+        document.querySelector("#rankCourse").scrollIntoView({block: 'end', behavior: 'smooth'});
+
         this.$refs.rankCourse1.search(search_data);
         this.$refs.rankBook1.search(search_data);
         this.$refs.rankBlog1.search(search_data);
