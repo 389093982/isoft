@@ -68,7 +68,7 @@
 	</paramOutputSchemaItem>
 </paramOutputSchema>]]></work_step_output_xml>
 		<IsDefer>false</IsDefer>
-		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;custom_tag&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;current_page&#34;},{&#34;paramMappingName&#34;:&#34;offset&#34;}]</WorkStepParamMapping>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;custom_tag&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;current_page&#34;,&#34;paramMappingDefault&#34;:&#34;1&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;offset&#34;,&#34;paramMappingDefault&#34;:&#34;10&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
 		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
 	<ParamMappingName></ParamMappingName>
 	<ParamMappingDefault></ParamMappingDefault>
