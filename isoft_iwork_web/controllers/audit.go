@@ -21,16 +21,22 @@ func (this *WorkController) EditAuditTask() {
 	id, _ := this.GetInt64("id", 0)
 	taskName := this.GetString("task_name")
 	taskDesc := this.GetString("task_desc")
-	task := &models.AuditTask{
-		Id:              id,
-		AppId:           app_id,
-		TaskName:        taskName,
-		TaskDesc:        taskDesc,
-		CreatedBy:       "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedBy:   "SYSTEM",
-		LastUpdatedTime: time.Now(),
+	var task *models.AuditTask
+	if id > 0 {
+		if task0, err := models.QueryAuditTaskId(id, orm.NewOrm()); err == nil {
+			task = &task0
+		}
 	}
+	if task == nil {
+		task = new(models.AuditTask)
+		task.AppId = app_id
+		task.CreatedBy = "SYSTEM"
+		task.CreatedTime = time.Now()
+	}
+	task.TaskName = taskName
+	task.TaskDesc = taskDesc
+	task.LastUpdatedBy = "SYSTEM"
+	task.LastUpdatedTime = time.Now()
 	_, err := models.InsertOrUpdateAuditTask(task, orm.NewOrm())
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

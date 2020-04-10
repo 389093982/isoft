@@ -46,6 +46,11 @@ func InsertOrUpdateAuditTask(task *AuditTask, o orm.Ormer) (id int64, err error)
 	return
 }
 
+func QueryAuditTaskId(id int64, o orm.Ormer) (task AuditTask, err error) {
+	err = o.QueryTable("audit_task").Filter("id", id).One(&task)
+	return
+}
+
 func QueryAuditTaskByTaskName(task_name string, o orm.Ormer) (task AuditTask, err error) {
 	err = o.QueryTable("audit_task").Filter("task_name", task_name).One(&task)
 	return
