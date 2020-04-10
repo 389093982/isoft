@@ -17,9 +17,10 @@
         </span>
       </div>
 
-      <Tabs :animated="false" name="tab_level_2" style="width: 80%;">
+      <Tabs :animated="false" name="tab_level_2" style="width: 80%;" :value="tabValue">
         <span v-if="taskDetail.query_cases && taskDetail.query_cases.length > 0">
-          <TabPane v-for="(item, index) in taskDetail.query_cases" :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
+          <TabPane v-for="(item, index) in taskDetail.query_cases" :name="'tabValue_' + index"
+                   :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
             场景名称: <span style="color: #00ce00;">参考案例：生效、失效、审核通过、内容不合法等中文或英文</span>
                    <Button type="error" size="small" @click="handleRemove(index)">删除</Button>
                    <Icon type="md-arrow-back" size="20" @click="moveLocation(index, -1)"/> <Icon type="md-arrow-forward" size="20" @click="moveLocation(index, 1)"/>
@@ -57,6 +58,7 @@
     components:{},
     data(){
       return {
+        tabValue: "tabValue_0",            // 当前激活 tab 面板的 name
         resources:[],
         taskDetail:{
           resource_name:'',
@@ -74,6 +76,11 @@
     methods:{
       moveLocation: function (index, step){
           swapArray(this.taskDetail.query_cases, index, index + step);
+          if (step > 0) {
+            this.tabValue = "tabValue_" + (index < this.taskDetail.query_cases.length - 1 ? index + 1 : index);
+          } else if (step < 0) {
+            this.tabValue = "tabValue_" + (index > 0 ? index - 1 : index);
+          }
       },
       handleRemove (index) {
         // 删除一个数组元素

@@ -5,8 +5,9 @@
       <Button type="success" size="small" @click="handleAdd">新增场景</Button>
     </div>
 
-    <Tabs :animated="false" name="tab_level_2" style="width: 80%;">
-      <TabPane v-for="(item, index) in update_cases" :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
+    <Tabs :animated="false" name="tab_level_2" style="width: 80%;" :value="tabValue">
+      <TabPane v-for="(item, index) in update_cases" :name="'tabValue_' + index"
+               :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
 
         场景名称: <span style="color: #00ce00;">参考案例：生效、失效、审核通过、内容不合法等中文或英文</span>
         <Button type="error" size="small" @click="handleRemove(index)">删除</Button>
@@ -37,6 +38,7 @@
     name: "AuditDetailTargetEdit",
     data(){
       return {
+        tabValue: "tabValue_0",            // 当前激活 tab 面板的 name
         update_cases: [
           {
             case_name:'',
@@ -49,6 +51,11 @@
     methods:{
       moveLocation: function (index, step){
         swapArray(this.update_cases, index, index + step);
+        if (step > 0) {
+          this.tabValue = "tabValue_" + (index < this.update_cases.length - 1 ? index + 1 : index);
+        } else if (step < 0) {
+          this.tabValue = "tabValue_" + (index > 0 ? index - 1 : index);
+        }
       },
       handleSubmit:async function () {
         const result = await EditAuditTaskTarget(this.$route.query.task_name, JSON.stringify(this.update_cases));

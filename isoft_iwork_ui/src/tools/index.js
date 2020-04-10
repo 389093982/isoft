@@ -126,6 +126,16 @@ export function getRepeatStr(str, n){
  * index1和index2分别是两个数组的索引值，即是两个要交换元素位置的索引值，如1，5就是数组中下标为1和5的两个元素交换位置
  */
 export function swapArray(arr, index1, index2) {
+  // 去除非法参数
+  if (arr === null || arr.length === 0){
+    return arr;
+  }
+  if (index1 < 0 || index1 > arr.length - 1) {
+    return arr;
+  }
+  if (index2 < 0 || index2 > arr.length - 1) {
+    return arr;
+  }
   arr[index1] = arr.splice(index2, 1, arr[index1])[0];
   return arr;
 }
