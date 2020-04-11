@@ -64,6 +64,13 @@
       </Row>
     </div>
 
+    <!--购买提示-->
+    <ISimpleConfirmModal ref="comfirmModal" modal-title="温馨提示:" :modal-width="300" @handleSubmit="toPay()">
+      <div style="text-align: center;color: #ff6900;font-size: 15px">
+        <span>{{comfirmTips}}</span>
+      </div>
+    </ISimpleConfirmModal>
+
     <div>
       <div class="isoft_bg_white isoft_pd10">
         <HotRecommend :show-display-icon="true"></HotRecommend>
@@ -77,10 +84,11 @@
   import {QueryCustomTagCourse, ShowCourseDetail, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
   import {checkFastClick} from "../../../tools/index"
+  import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal";
 
   export default {
     name: "VideoPlay",
-    components: {HotRecommend},
+    components: {ISimpleConfirmModal, HotRecommend},
     data() {
       return {
         recommendCourses: [],
@@ -111,7 +119,10 @@
             background: "#333",//滚动条颜色
             opacity: 1,//滚动条透明度
           }
-        }
+        },
+
+        //付款弹框提示
+        comfirmTips:'',
       }
     },
     methods: {
@@ -130,6 +141,8 @@
         //收费判断
         if (this.course.isCharge==='charge' && this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
           //弹框显示购买信息
+          this.comfirmTips = "下一集为付费视频，前去购买?";
+          this.$refs.comfirmModal.showModal();
           return;
         }
         // 右侧选中播放指示
@@ -165,7 +178,9 @@
         }
         //收费判断
         if (this.course.isCharge==='charge' && index + 1 > this.course.preListFree) {
-          this.$Message.warning("付费视频！");
+          //弹框显示购买信息
+          this.comfirmTips = "付费视频，前去购买?";
+          this.$refs.comfirmModal.showModal();
           return;
         }
         //赋值两次是为了可以再次点击，让cVideo存在变化。
@@ -187,6 +202,10 @@
             return;
           }
         }
+      },
+      toPay:function () {
+        this.$refs.comfirmModal.hideModal();
+        this.$router.push({path:'/payment/pay',query:{type:'course',id:this.course.id}});
       }
     },
     mounted: function () {
