@@ -8,9 +8,6 @@ import (
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft_unifiedpay/models"
 	"time"
-	"strconv"
-	"github.com/astaxie/beego/httplib"
-	"crypto/tls"
 	"strings"
 	"github.com/gorilla/websocket"
 	"net/http"
@@ -45,7 +42,7 @@ var upgrader = websocket.Upgrader{
 
 //websocket 下单请求
 func (this *MainController) Order() {
-	//orderChan := make(chan interface{})
+	orderChan := make(chan interface{})
 	//获取请求连接
 	conn, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
 	if err != nil {
@@ -67,11 +64,11 @@ func (this *MainController) Order() {
 		userMap.Store("messageType",messageType)
 		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
-		//this.Pay(orderParams, orderChan)
+		this.Pay(orderParams, orderChan)
 		//返回信息
 		var orderResult OrderResult
 		orderResult.UserName = orderParams.UserName
-		orderResult.CodeUrl = "test url";
+		orderResult.CodeUrl = fmt.Sprintf("%s",<- orderChan);
 		resultMessageContent, _ := json.Marshal(orderResult)
 		err = conn.WriteMessage(messageType, resultMessageContent)
 		if err != nil {
@@ -140,82 +137,88 @@ func (this *MainController) Pay(orderParams OrderParams, orderChan chan interfac
 	e := order.Pay(o, order)
 	if e != nil {
 		logs.Error(e)
-	} else {
-		logs.Info(fmt.Sprintf("订单%v入库成功!", order.OrderId))
-		//发送微信下单请求
-		logs.Info("发送微信下单请求...")
-		req := httplib.Post(beego.AppConfig.String("WeChatPay_ReqUrl"))
-		req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-		req.SetTimeout(60*time.Second, 60*time.Second)
-
-		//组织xml报文
-		reqXml := NativeRequestXml{}
-		reqXml.Appid = beego.AppConfig.String("WeChatPay_Appid")
-		reqXml.Mch_id = order.MerchantNo
-		reqXml.Out_trade_no = order.OrderId
-		reqXml.Trade_type = beego.AppConfig.String("WeChatPay_TradeType")
-		reqXml.Fee_type = order.TransCurrCode
-		reqXml.Total_fee = strconv.Itoa(int(order.TransAmount))
-		reqXml.Body = order.ProductDesc
-		reqXml.Spbill_create_ip = beego.AppConfig.String("WeChatPay_SpbillCreateIp")
-		reqXml.Notify_url = beego.AppConfig.String("WeChatPay_NotifyUrl")
-		reqXml.Nonce_str = "1add1a30ac87aa2db72f57a2375d8fec"
-		reqXml.Sign = "0CB01533B8C1EF103065174F50BCA001"
-
-		//设置xml报文体
-		reqXmlStr, e := xml.Marshal(reqXml)
-		logs.Info("设置xml报文体:%v", string(reqXmlStr))
-		req.XMLBody(string(reqXmlStr))
-
-		//获取返回消息、转为结构体
-		logs.Info("接收返回报文...")
-		resXmlStr, e := req.String()
-		logs.Info(fmt.Sprintf("收到报文:%v", resXmlStr))
-		resXml := NativeResponseXml{}
-		e = xml.Unmarshal([]byte(resXmlStr), &resXml)
-		if e != nil {
-			logs.Info(fmt.Sprintf("转换返回报文为结构体失败,失败原因:%v", e.Error()))
-		} else {
-			logs.Info("转换返回报文为结构体成功")
-			//开始解析结构体
-			logs.Info("开始解析结构体...")
-			if resXml.Return_code == "SUCCESS" {
-				//通信成功，则不管用户后面是否支付成功，数据都入库
-				if resXml.Result_code == "SUCCESS" {
-					//下单成功
-					logs.Info("下单成功")
-					orderSuccess := models.Order{}
-					orderSuccess.OrderId = order.OrderId
-					o.Read(&orderSuccess, "OrderId")
-					orderSuccess.OrderResultCode = resXml.Result_code
-					orderSuccess.OrderResultDesc = "下单成功"
-					orderSuccess.CodeUrl = resXml.Code_url
-					o.Update(&orderSuccess)
-					//这里设置真正的支付二维码
-					code_url = resXml.Code_url
-				} else {
-					//下单失败
-					logs.Info("下单失败")
-					orderFail := models.Order{}
-					orderFail.OrderId = order.OrderId
-					o.Read(&orderFail, "OrderId")
-					orderFail.OrderResultCode = resXml.Result_code
-					orderFail.OrderResultDesc = "下单失败"
-					orderFail.OrderErrCode = resXml.Err_code
-					orderFail.OrderErrCodeDes = resXml.Err_code_des
-					o.Update(&orderFail)
-					logs.Info(fmt.Sprintf("下单失败,失败原因:%v", resXml.Err_code_des))
-				}
-			} else {
-				logs.Info(fmt.Sprintf("通信标识:FAIL,失败原因:%v", resXml.Return_msg))
-			}
-		}
 	}
+	orderChan <- code_url;
 
-	orderResultMap := make(map[string]interface{})
-	orderResultMap["code_url"] = code_url
-	this.Data["json"] = orderResultMap
-	this.ServeJSON()
+	//e := order.Pay(o, order)
+	//if e != nil {
+	//	logs.Error(e)
+	//} else {
+	//	logs.Info(fmt.Sprintf("订单%v入库成功!", order.OrderId))
+	//	//发送微信下单请求
+	//	logs.Info("发送微信下单请求...")
+	//	req := httplib.Post(beego.AppConfig.String("WeChatPay_ReqUrl"))
+	//	req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	//	req.SetTimeout(60*time.Second, 60*time.Second)
+	//
+	//	//组织xml报文
+	//	reqXml := NativeRequestXml{}
+	//	reqXml.Appid = beego.AppConfig.String("WeChatPay_Appid")
+	//	reqXml.Mch_id = order.MerchantNo
+	//	reqXml.Out_trade_no = order.OrderId
+	//	reqXml.Trade_type = beego.AppConfig.String("WeChatPay_TradeType")
+	//	reqXml.Fee_type = order.TransCurrCode
+	//	reqXml.Total_fee = strconv.Itoa(int(order.TransAmount))
+	//	reqXml.Body = order.ProductDesc
+	//	reqXml.Spbill_create_ip = beego.AppConfig.String("WeChatPay_SpbillCreateIp")
+	//	reqXml.Notify_url = beego.AppConfig.String("WeChatPay_NotifyUrl")
+	//	reqXml.Nonce_str = "1add1a30ac87aa2db72f57a2375d8fec"
+	//	reqXml.Sign = "0CB01533B8C1EF103065174F50BCA001"
+	//
+	//	//设置xml报文体
+	//	reqXmlStr, e := xml.Marshal(reqXml)
+	//	logs.Info("设置xml报文体:%v", string(reqXmlStr))
+	//	req.XMLBody(string(reqXmlStr))
+	//
+	//	//获取返回消息、转为结构体
+	//	logs.Info("接收返回报文...")
+	//	resXmlStr, e := req.String()
+	//	logs.Info(fmt.Sprintf("收到报文:%v", resXmlStr))
+	//	resXml := NativeResponseXml{}
+	//	e = xml.Unmarshal([]byte(resXmlStr), &resXml)
+	//	if e != nil {
+	//		logs.Info(fmt.Sprintf("转换返回报文为结构体失败,失败原因:%v", e.Error()))
+	//	} else {
+	//		logs.Info("转换返回报文为结构体成功")
+	//		//开始解析结构体
+	//		logs.Info("开始解析结构体...")
+	//		if resXml.Return_code == "SUCCESS" {
+	//			//通信成功，则不管用户后面是否支付成功，数据都入库
+	//			if resXml.Result_code == "SUCCESS" {
+	//				//下单成功
+	//				logs.Info("下单成功")
+	//				orderSuccess := models.Order{}
+	//				orderSuccess.OrderId = order.OrderId
+	//				o.Read(&orderSuccess, "OrderId")
+	//				orderSuccess.OrderResultCode = resXml.Result_code
+	//				orderSuccess.OrderResultDesc = "下单成功"
+	//				orderSuccess.CodeUrl = resXml.Code_url
+	//				o.Update(&orderSuccess)
+	//				//这里设置真正的支付二维码
+	//				code_url = resXml.Code_url
+	//			} else {
+	//				//下单失败
+	//				logs.Info("下单失败")
+	//				orderFail := models.Order{}
+	//				orderFail.OrderId = order.OrderId
+	//				o.Read(&orderFail, "OrderId")
+	//				orderFail.OrderResultCode = resXml.Result_code
+	//				orderFail.OrderResultDesc = "下单失败"
+	//				orderFail.OrderErrCode = resXml.Err_code
+	//				orderFail.OrderErrCodeDes = resXml.Err_code_des
+	//				o.Update(&orderFail)
+	//				logs.Info(fmt.Sprintf("下单失败,失败原因:%v", resXml.Err_code_des))
+	//			}
+	//		} else {
+	//			logs.Info(fmt.Sprintf("通信标识:FAIL,失败原因:%v", resXml.Return_msg))
+	//		}
+	//	}
+	//}
+	//
+	//orderResultMap := make(map[string]interface{})
+	//orderResultMap["code_url"] = code_url
+	//this.Data["json"] = orderResultMap
+	//this.ServeJSON()
 }
 
 

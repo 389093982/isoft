@@ -117,7 +117,7 @@
     },
     methods: {
       refreshCourseDetail: async function () {
-        const course_id = this.goods_id;
+        let course_id = this.goods_id;
         let user_name;
         if (this.checkHasLogin) {
           user_name = getLoginUserName();
@@ -157,7 +157,7 @@
           _this.payResultDesc = '';
           _this.percent = 0;
           //准备参数
-          let ProductId = _this.goods_id;
+          let ProductId = _this.goods_id.toString();
           let ProductDesc = _this.goods_desc;
           let TransAmount = _this.goods_price * 100;
           let TransCurrCode = 'CNY';
