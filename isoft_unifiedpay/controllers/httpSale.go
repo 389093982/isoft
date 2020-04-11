@@ -42,7 +42,7 @@ var upgrader = websocket.Upgrader{
 
 //websocket 下单请求
 func (this *MainController) Order() {
-	orderChan := make(chan interface{})
+	orderChan := make(chan interface{},1)
 	//获取请求连接
 	conn, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
 	if err != nil {
@@ -65,17 +65,25 @@ func (this *MainController) Order() {
 		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
 		this.Pay(orderParams, orderChan)
-		//返回信息
-		var orderResult OrderResult
-		orderResult.UserName = orderParams.UserName
-		orderResult.CodeUrl = fmt.Sprintf("%s",<- orderChan);
-		resultMessageContent, _ := json.Marshal(orderResult)
-		err = conn.WriteMessage(messageType, resultMessageContent)
-		if err != nil {
-			logs.Info("write error:", err)
+		for {
+			code_url ,ok := <- orderChan
+			if !ok {
+				logs.Info("read chan error")
+				break
+			}
+			//返回信息
+			var orderResult OrderResult
+			orderResult.UserName = orderParams.UserName
+			orderResult.CodeUrl = fmt.Sprintf("%s",code_url);
+			resultMessageContent, _ := json.Marshal(orderResult)
+			err = conn.WriteMessage(messageType, resultMessageContent)
+			if err != nil {
+				logs.Info("write error:", err)
+				break
+			}
+			logs.Info("返回websocket信息: %s", resultMessageContent)
 			break
 		}
-		logs.Info("返回websocket信息: %s", resultMessageContent)
 	}
 }
 
