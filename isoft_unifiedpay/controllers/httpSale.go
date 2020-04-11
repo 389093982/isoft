@@ -113,7 +113,7 @@ func (this *MainController)TestNotify()  {
 
 //支付下单-具体处理方法
 func (this *MainController) Pay(orderParams OrderParams, orderChan chan interface{}) {
-	code_url := "下单失败" //支付二维码，默认显示‘下单失败’
+	code_url := "Order Fail" //支付二维码，默认显示‘下单失败’
 	o := orm.NewOrm()
 	//界面接收的参数
 	productId := orderParams.ProductId
