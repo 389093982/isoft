@@ -13,6 +13,8 @@ github.com/astaxie/beego/session
 github.com/astaxie/beego/toolbox
 github.com/astaxie/beego/utils
 github.com/astaxie/beego/utils/pagination
+# github.com/deckarep/golang-set v1.7.1
+github.com/deckarep/golang-set
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
 # github.com/go-sql-driver/mysql v1.4.1
@@ -39,8 +41,6 @@ github.com/pkg/errors
 github.com/pkg/sftp
 # github.com/rifflock/lfshook v0.0.0-20180313183424-62f5e0662816
 github.com/rifflock/lfshook
-# github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967
-github.com/robfig/cron
 # github.com/satori/go.uuid v1.2.0
 github.com/satori/go.uuid
 # github.com/sirupsen/logrus v1.4.1

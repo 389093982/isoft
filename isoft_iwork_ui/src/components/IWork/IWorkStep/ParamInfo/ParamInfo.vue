@@ -27,7 +27,7 @@
             <Col span="18">
               <Tabs type="card" name="tab_paramInfo" :animated="false" value="edit">
                 <TabPane label="ParamMapping" name="ParamMapping" v-if="showParamMapping" tab="tab_paramInfo" :index="1">
-                  <ParamMapping :paramMappings="paramMappings" :work-step-type="workStepParamInfo.work_step_type"/>
+                  <ParamMapping :paramMappings="paramMappings" :work-step-type="workStepParamInfo.work_step_type" :work-id="workStepParamInfo.work_id"/>
                 </TabPane>
                 <TabPane label="edit" name="edit" v-if="showEdit" tab="tab_paramInfo" :index="2">
                   <ParamInputEdit ref="paramInputEdit" :work-id="workStepParamInfo.work_id" :work-step-id="workStepParamInfo.work_step_id"
@@ -68,7 +68,7 @@
     components:{ParamInputEdit,PreParamOutputTree,ParamMapping,ISimpleConfirmModal},
     props: {
       workId: {
-        type: Number,
+        type: [Number, String],
         default: -1
       },
       worksteps: {

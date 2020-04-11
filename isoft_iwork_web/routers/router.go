@@ -109,6 +109,8 @@ func loadloadIWorkerRouterDetail() {
 	registRouter("/api/iwork/getDBMonitorMeta", wc, wc.GetDBMonitorMeta, "get,post:GetDBMonitorMeta")
 	registRouter("/api/iwork/loadDBMonitorData", wc, wc.LoadDBMonitorData, "get,post:LoadDBMonitorData")
 
+	registRouter("/api/iwork/loadRecordParamData", wc, wc.LoadRecordParamData, "get,post:LoadRecordParamData")
+
 	registRouter("/api/iwork/login", wc, wc.Login, "get,post:Login")
 }
 

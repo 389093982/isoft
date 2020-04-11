@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego/context"
+	setutil "github.com/deckarep/golang-set"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkdata/entry"
@@ -15,6 +16,7 @@ import (
 	"isoft/isoft_utils/common/stringutil"
 	"net/http"
 	"path"
+	"sync"
 	"time"
 )
 
@@ -54,7 +56,7 @@ func (this *WorkController) PublishSerivce() {
 // 运行 work 或者从缓存中获取 receiver
 func (this *WorkController) getReceiverFromRunOrMemory(workCache *iworkcache.WorkCache) (receiver *entry.Receiver, trackingId string) {
 	// 获取请求参数
-	mapData := ParseParam(this.Ctx, workCache.Steps[0])
+	mapData := ParseParam(workCache, this.Ctx, workCache.Steps[0])
 	// 传递 request 对象
 	mapData[iworkconst.HTTP_REQUEST_OBJECT] = this.Ctx.Request
 	// 传递文件上传对象
@@ -96,7 +98,29 @@ func checkError(err error) {
 	}
 }
 
-func ParseParam(ctx *context.Context, step models.WorkStep) map[string]interface{} {
+func (this *WorkController) LoadRecordParamData() {
+	work_id, _ := this.GetInt64("work_id", -1)
+	if recordParams, ok := RecordParamMap.Load(work_id); ok {
+		recordParamArr := recordParams.([]interface{})
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "record_param_fields": recordParamArr}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "no recordParams was found!"}
+	}
+	this.ServeJSON()
+}
+
+var RecordParamMap sync.Map
+
+func ParseParam(workCache *iworkcache.WorkCache, ctx *context.Context, step models.WorkStep) map[string]interface{} {
+	// 识别并记录获取到的请求参数
+	recordParams, _ := RecordParamMap.LoadOrStore(workCache.WorkId, []interface{}{})
+	recordParamArr := recordParams.([]interface{})
+	ctx.Request.ParseForm()
+	for k, _ := range ctx.Request.Form {
+		recordParamArr = append(recordParamArr, k)
+	}
+	RecordParamMap.Store(workCache.WorkId, setutil.NewSet(recordParamArr...).ToSlice())
+
 	mapData := make(map[string]interface{}, 0)
 	if step.WorkStepType == iworkconst.NODE_TYPE_WORK_START {
 		inputSchema := node.GetCacheParamInputSchema(&step)

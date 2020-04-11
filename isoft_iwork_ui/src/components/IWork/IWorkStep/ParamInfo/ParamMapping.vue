@@ -1,14 +1,14 @@
 <template>
   <span>
     <Row>
-      <ParamMappingAdd @handleSubmit="paramMappingAdd" v-show="paramMappings.length == 0"/>
+      <ParamMappingAdd @handleSubmit="paramMappingAdd" v-show="paramMappings.length === 0"/>
       <div v-for="(paramMapping, index) in paramMappings">
         <table>
           <tr>
             <td>
               变量名：<Input style="width: 150px;" size="small" type="text" v-model="paramMapping.paramMappingName"/>
             </td>
-            <td v-if="workStepType == 'work_start'">
+            <td v-if="workStepType === 'work_start'">
               默认值：<Input style="width: 150px;" size="small" type="text" v-model="paramMapping.paramMappingDefault"/>
             </td>
             <td>
@@ -16,11 +16,11 @@
               <Icon :size="15" type="md-arrow-round-down" @click="toggleLocation(index, 1)"/>
               <Icon :size="15" type="ios-settings-outline" @click="toggleShowMoreInfo(index)"/>
               <Button type="error" size="small" @click="handleDelete(paramMapping.paramMappingName)" style="margin-left: 6px">删除</Button>
-              <ParamMappingAdd @handleSubmit="paramMappingAdd"/>
+              <ParamMappingAdd @handleSubmit="paramMappingAdd" :work-id="workId"/>
             </td>
           </tr>
           <tr>
-            <td colspan="3" v-if="workStepType == 'work_start' && showMoreInfoIndex == index" style="padding: 2px 0 8px 0;">
+            <td colspan="3" v-if="workStepType === 'work_start' && showMoreInfoIndex === index" style="padding: 2px 0 8px 0;">
                <Checkbox v-model="paramMapping.paramMappingCleanXss">CleanXss</Checkbox>
                <Checkbox v-model="paramMapping.paramMappingSafePageNo">SafePageNo</Checkbox>
                <Checkbox v-model="paramMapping.paramMappingSafePageSize">SafePageSize</Checkbox>
@@ -39,6 +39,10 @@
     name: "ParamMapping",
     components:{ParamMappingAdd},
     props:{
+      workId: {
+        type: [Number, String],
+        default: -1,
+      },
       workStepType:{
         type:String,
         default: '',

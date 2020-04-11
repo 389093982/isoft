@@ -167,4 +167,6 @@ export const GetAuditHandleData = (params) => ajax(BASE_URL + "/iwork/getAuditHa
 export const GetDBMonitorMeta = (params) => ajax(BASE_URL + '/iwork/getDBMonitorMeta', params, 'POST');
 export const LoadDBMonitorData = (params) => ajax(BASE_URL + '/iwork/loadDBMonitorData', params, 'POST');
 
+export const LoadRecordParamData = (params) => ajax(BASE_URL + '/iwork/loadRecordParamData', params, 'POST');
+
 export const Login = (params) => ajax(BASE_URL + '/iwork/login', params, 'POST');

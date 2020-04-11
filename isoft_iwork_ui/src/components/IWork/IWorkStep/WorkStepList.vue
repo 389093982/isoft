@@ -27,8 +27,8 @@
       </ISimpleConfirmModal>
     </Row>
     <BaseInfo ref="workStepBaseInfo" @reloadWorkStepBaseInfo="showWorkStepBaseInfo" @handleSuccess="refreshWorkStepList" :worksteps="worksteps"/>
-    <ParamInfo ref="workStepParamInfo" @reloadWorkStepParamInfo="showWorkStepParamInfo" @handleSuccess="refreshWorkStepList" :worksteps="worksteps"/>
-
+    <ParamInfo ref="workStepParamInfo" @reloadWorkStepParamInfo="showWorkStepParamInfo"
+               @handleSuccess="refreshWorkStepList" :worksteps="worksteps" :work-id="$route.query.work_id"/>
     <Row style="margin-bottom: 5px;">
       <Col span="24">
         <span @click="showRunLogDrawer = true">

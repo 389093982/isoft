@@ -2,6 +2,7 @@ module isoft
 
 require (
 	github.com/astaxie/beego v1.11.1
+	github.com/deckarep/golang-set v1.7.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
@@ -20,7 +21,7 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/pkg/sftp v1.8.2
 	github.com/rifflock/lfshook v0.0.0-20180313183424-62f5e0662816
-	github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967
+	github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.4.1
 	github.com/smartystreets/assertions v0.0.0-20180820201707-7c9eb446e3cf // indirect
