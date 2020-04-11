@@ -105,8 +105,8 @@
         }else{
           this.$Message.success("查询成功！");
           for (let i = 0; i < ordersObj.length; i++) {
-            ordersObj[i].TransAmount = ordersObj[i].TransAmount/100;  //金额从分转为元
-            ordersObj[i].RefundedAmount = ordersObj[i].RefundedAmount/100  //金额从分转为元
+            ordersObj[i].TransAmount = this.formatAmount(ordersObj[i].TransAmount);  //金额从分转为元
+            ordersObj[i].RefundedAmount = this.formatAmount(ordersObj[i].RefundedAmount);  //金额从分转为元
           }
           this.orders = ordersObj;
         }
@@ -119,7 +119,13 @@
         this.page.pageSize = pageSize;
         this.queryOrder()
       },
-
+      formatAmount:function (amount) {
+        let newAmount = (amount/100).toString();
+        if (newAmount.indexOf('.')<0) {
+          newAmount = newAmount+".00"
+        }
+        return newAmount;
+      }
     }
   }
 </script>
