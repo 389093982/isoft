@@ -15,9 +15,10 @@
                 </div>
                 <div class="ico_play"></div>
               </div>
-              <div style="margin: 5px 0 0 50px">
+              <div style="margin: 5px 0 0 40px">
                 <span v-if="course.isCharge==='charge'" style="color: #ff6900">
                   <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
+                  &nbsp;&nbsp;|&nbsp;&nbsp;<span style="cursor: pointer;" @click="toPay('course',course.id)"><Icon type="md-cart" /><span>购买</span></span>
                 </span>
                 <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
               </div>
@@ -239,6 +240,10 @@
       },
       changeShowMore:function (showMore) {
         showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
+      },
+      //购买此课程
+      toPay:function (type,id) {
+        this.$router.push({path:'/payment/pay',query:{type:type,id:id}});
       }
     },
     mounted: function () {

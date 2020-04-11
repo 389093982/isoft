@@ -22,14 +22,14 @@
           </Row>
           <br>
           <Row>
+            <a style="color: #ff6600">支付金额: <Icon type="logo-yen" /></a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>
+          </Row>
+          <br>
+          <Row>
             <a style="color: #ff6600">支付方式: </a>
             <RadioGroup v-model="payType">
               <Radio label="微信支付" border></Radio>
             </RadioGroup>
-          </Row>
-          <br>
-          <Row>
-            <a style="color: #ff6600">支付金额: <Icon type="logo-yen" /></a><a style="font-size: 20px ;color: #ff6900">{{openingTime.trim().split('¥')[1]}}</a>
           </Row>
           <br>
           <Row>
