@@ -39,6 +39,7 @@ const ActivityList = () => import("@/components/IFound/ActivityList");
 const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const Recharge = () => import("@/components/VipCenter/Recharge");
+const Pay = () => import("@/components/Payment/Pay");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
@@ -239,6 +240,13 @@ const VipCenterReouter = [{
     ]
 }];
 
+const Payment = [{
+  path: '/payment', component: ILayout,
+  children: [
+    {path: 'pay', component: Pay},
+  ]
+}];
+
 function getAllRouters() {
   let allRouters = [];
   allRouters = joinArray(allRouters, IExpert);
@@ -252,6 +260,7 @@ function getAllRouters() {
   allRouters = joinArray(allRouters, ISSOReouter);
   allRouters = joinArray(allRouters, ICMSReouter);
   allRouters = joinArray(allRouters, VipCenterReouter);
+  allRouters = joinArray(allRouters, Payment);
   allRouters = joinArray(allRouters, ResourceRouter);
   allRouters = joinArray(allRouters, MessageRouter);
   allRouters = joinArray(allRouters, BusinessRouter);
