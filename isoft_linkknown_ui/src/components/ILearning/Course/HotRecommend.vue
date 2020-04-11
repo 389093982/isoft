@@ -19,12 +19,13 @@
       <div slot="content" style="min-height:350px;padding: 10px;">
         <ul class="clear">
           <li v-for="course in courses">
-            <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
+            <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}" style="position: relative">
               <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
               <img v-else src="../../../assets/default.png" height="100" width="155"/>
               <!-- 播放图标 -->
               <div v-if="showDisplayIcon" class="ico_play"></div>
               <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
+              <span v-if="course.isCharge==='free'" class="freeTag" style="position: absolute;top: -85px;left: 110px">免费</span>
             </router-link>
           </li>
         </ul>
@@ -108,6 +109,17 @@
     left: 55px;
     width: 60px;
     height: 60px;
+  }
+
+  .freeTag{
+    cursor: pointer;
+    font-size: 12px;
+    background: rgba(128, 128, 128, 0.81);
+    line-height: 16px;
+    border-radius: 15px;
+    color: white;
+    padding: 2px 8px 2px 8px ;
+    display: inline-block;
   }
 
 </style>
