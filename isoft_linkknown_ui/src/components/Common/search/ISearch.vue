@@ -9,15 +9,19 @@
         <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">
           <div class="recentlySearch">
             <div class="isoft_font12" style="border-bottom: 1px solid #ffa2b9;padding-bottom: 5px;">
-              <span @mouseenter="searchPattern = 1">最近搜索</span>
+              <span class="isoft_point_cursor" @click="searchPattern = 1" style="font-weight: bold"
+                    :style="{color: searchPattern === 1 ? 'red' : ''}">最近搜索</span>
               &nbsp;|&nbsp;
-              <span @mouseenter="searchPattern = 2">热搜榜</span>
+              <span class="isoft_point_cursor" @click="searchPattern = 2" style="font-weight: bold"
+                    :style="{color: searchPattern === 2 ? 'red' : ''}">热搜榜</span>
             </div>
             <div>
               <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
-                    v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1()" :key="index">{{searchItem}}</span>
+                    v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1()" :key="index"
+                    @click="handleSearchItem(searchItem)">{{searchItem}}</span>
               <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
-                    v-if="searchPattern === 2" v-for="(searchItem, index) in searchItems2" :key="index">{{searchItem}}</span>
+                    v-if="searchPattern === 2" v-for="(searchItem, index) in searchItems2" :key="index"
+                    @click="handleSearchItem(searchItem)">{{searchItem}}</span>
             </div>
           </div>
         </div>
@@ -56,6 +60,11 @@
       },
       searchItems1: function (){
         return JSON.parse(localStorage.getItem(this.searchType)) || [];
+      },
+      handleSearchItem: function (search_data){
+        this.search_data = search_data;
+        this.showRecently = false;
+        this.submitFunc();
       },
       submitFunc: function () {
         if (checkNotEmpty(this.search_data)) {
