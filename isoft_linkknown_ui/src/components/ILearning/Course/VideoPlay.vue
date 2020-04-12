@@ -141,7 +141,7 @@
         //收费判断
         if (this.course.isCharge==='charge' && this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
           //弹框显示购买信息
-          this.comfirmTips = "下一集为付费视频，前去购买?";
+          this.comfirmTips = "下一集开始为付费视频，前去购买?";
           this.$refs.comfirmModal.showModal();
           return;
         }
