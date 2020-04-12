@@ -25,7 +25,7 @@
         default: "模态框标题"
       },
       modalWidth: {
-        type: Number,
+        type: [Number,String],
         default: 800
       },
       footerHide: {

@@ -50,7 +50,7 @@
   import IFileUpload from "../../Common/file/IFileUpload";
   import {ChangeVideoOrder, DeleteVideo, fileUploadUrl, ShowCourseDetail, UploadVideo} from "../../../api"
   import {CheckAdminLogin, handleSpecial} from "../../../tools";
-  import ISimpleConfirmModal from "../../../../../isoft_iwork_ui/src/components/Common/modal/ISimpleConfirmModal";
+  import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal";
 
   export default {
     name: "UploadVideo",
