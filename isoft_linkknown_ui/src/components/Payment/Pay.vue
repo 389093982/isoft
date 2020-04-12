@@ -36,9 +36,10 @@
                 </Row>
               </Col>
               <Col span="12">
-                <div v-if="goods_img" style="margin-top: 50px">
+                <div style="margin-top: 50px">
                   <div style="width: 180px;height: 120px;cursor: pointer;">
-                    <img :src="goods_img" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
+                    <img v-if="goods_img" :src="goods_img" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
+                    <img v-else src="../../assets/default.png" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
                     <div class="ico_play"></div>
                   </div>
                 </div>

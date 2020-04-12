@@ -23,7 +23,7 @@
               <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
               <img v-else src="../../../assets/default.png" height="100" width="155"/>
               <!-- 播放图标 -->
-              <div v-if="showDisplayIcon" class="ico_play"></div>
+              <div v-if="showDisplayIcon" class="ico_play" style="position: absolute;top: -65px;left: 50px;"></div>
               <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
               <span v-if="course.isCharge==='free'" class="freeTag" style="position: absolute;top: -85px;left: 110px">免费</span>
             </router-link>

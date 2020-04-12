@@ -9,14 +9,14 @@
 
     <div class="itemArea" @click="$router.push({path:'/user/userGuide'})">
       <Icon type="logo-reddit" :size="28"/>
-      <p>帮助中心</p>
+      <p>帮助</p>
       <span class="tipBox"><div class="tipInfo">是否遇到困难无法解决</div></span>
     </div>
     <div class="item-line"></div>
 
     <div class="itemArea" @click="$router.push({path:'/site/siteIndex'})">
       <Icon type="ios-radio-outline" :size="28"/>
-      <p>站点导航</p>
+      <p>导航</p>
       <span class="tipBox"><div class="tipInfo">查看本站更多功能</div></span>
     </div>
     <div class="item-line"></div>
@@ -37,7 +37,7 @@
 
     <div class="itemArea" @click="$router.push({path:'/user/userDetail'})">
       <Icon type="ios-person-add-outline" :size="28"/>
-      <p>个人中心</p>
+      <p>个人</p>
       <span class="tipBox"><div class="tipInfo">快来看看您都有哪些</div></span>
     </div>
   </div>

@@ -11,8 +11,8 @@
           </div>
           <div>
             <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
-              <source type="video/mp4">
-              <source type="video/ogg">
+              <source src="" type="video/mp4">
+              <source src="" type="video/ogg">
               您的浏览器不支持Video标签。
             </video>
           </div>
@@ -156,7 +156,7 @@
             // 获取blob对象
             let blob = this.response;
             // 获取blob对象地址，并把值赋给容器
-          document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
+            document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
           }
         };
         xhr.send();
@@ -169,6 +169,19 @@
           if (nextVideo != null && nextVideo !== undefined && nextVideo.length > 0) {
             _this.curVideo = nextVideo[0];
           }
+        });
+      },
+      catchPlayError: function(){
+        let _this = this;
+        let video = document.getElementById("videoPath");
+        video.addEventListener("error", function () {
+          console.log("如果加载进来之后播放视频报错，那么这里做个处理,0.1秒后执行");
+          setTimeout(function () {
+            console.log("0.1秒到了，开始执行");
+            let tempCurVideo = _this.curVideo;
+            _this.curVideo = '';
+            _this.curVideo = tempCurVideo;
+          }, 100);
         });
       },
       clickVideoName:function (index) {
@@ -215,6 +228,8 @@
       this.addPlayNextEventListener();
       // 加载热门推荐课程列表
       this.refreshCustomTagCourse('recommand');
+      //捕获播放报错，并处理
+      this.catchPlayError();
     },
     filters: {
       filterSuffix: function (value) {
