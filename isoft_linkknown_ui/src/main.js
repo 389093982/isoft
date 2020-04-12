@@ -25,6 +25,9 @@ import "vuescroll/dist/vuescroll.css";
 // 注册自定义公共组件
 import IBeautifulLink from "./components/Common/link/IBeautifulLink"
 import "./assets/css/isoft_common.css"
+
+import * as vClickOutside from 'v-click-outside-x';
+Vue.use(vClickOutside);
 //------------------------------------------------------------------
 
 Vue.prototype.GLOBAL = global_;                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
