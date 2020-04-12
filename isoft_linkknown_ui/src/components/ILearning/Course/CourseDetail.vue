@@ -80,13 +80,14 @@
               <span style="margin-left: 8px"><i>为您推荐:</i></span>
               <Row>
                 <Col span="6" v-for="course in recommendCourses">
-                  <div class="courseBorder">
-                    <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
-                      <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-                      <img v-else src="../../../assets/default.png" height="100" width="155"/>
-                      <div class="isoft_font12 isoft_inline_ellipsis" style="text-align: center;"><span
-                        style="color: grey">{{course.course_name}}</span></div>
-                    </router-link>
+                  <div class="courseBorder" style="position: relative;"
+                       @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
+                    <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
+                    <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                    <div class="isoft_font12 isoft_inline_ellipsis isoft_color_grey" style="text-align: center;">
+                      {{course.course_name}}
+                    </div>
+                    <span class="isoft_free">免费</span>
                   </div>
                 </Col>
               </Row>
