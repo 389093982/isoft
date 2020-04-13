@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="section01_bg isoft_glint">
+    <div>
       <LinkKnownQuickSearch id="quickSearch" @handleShow="handleShow" @submitFunc="handleSubmitFunc"/>
     </div>
 
@@ -87,29 +87,5 @@
 </script>
 
 <style scoped>
-  .section01_bg {
-    height: 400px;
-    background: url(../../assets/bg.jpg) no-repeat;
-    background-size: 100% 100%;
-  }
 
-  .isoft_glint:hover:before {
-    background: rgba(255, 255, 255, 0.05);
-    position: absolute;
-    display: block;
-    width: 60px;
-    height: 100%;
-    content: '';
-    left: 0;
-    top: 0;
-    transform: translateX(-50px) skewX(-15deg);
-    filter: blur(20px);         /* CSS: filter: blur(); 实现高斯模糊效果,不可不知的细节优化 */
-    opacity: .6;
-    animation: glint 1.2s infinite;
-    animation-iteration-count: 1;
-  }
-  @keyframes glint{
-    0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
-    100%{transform:translateX(1100px) skewX(-15deg);opacity:1}
-  }
 </style>

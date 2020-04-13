@@ -118,7 +118,8 @@
   import {ShowBlogArticleDetail,ArticleDelete,IsFavorite,ToggleFavorite,queryFavoriteCount} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
-  import {CheckHasLogin, GetLoginUserName, RenderNickName,RenderUserIcon,RenderVipLevel,RenderHatInUse, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
+  import {CheckHasLogin, GetLoginUserName, RenderNickName,RenderUserIcon,RenderVipLevel,
+    RenderHatInUse, RenderUserInfoByName,CheckHasLoginConfirmDialog} from "../../tools"
   import MoveLine from "../Common/decorate/MoveLine";
   import IsComfirmDelete from "./IsComfirmDelete";
   import VoteTags from "../Decorate/VoteTags";
