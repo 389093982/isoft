@@ -9,10 +9,10 @@
                    :label-text="course.course_name"
                    @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
     </div>
-    <div v-if="isSearchFlag && !(courses && courses.length > 0)" style="text-align: center;padding-top: 10px;">
+    <div class="search_result" v-if="isSearchFlag && !(courses && courses.length > 0)" style="text-align: center;padding-top: 10px;">
       <p>未搜索到和 "{{search_data}}" 相关的课程</p>
-      <p class="isoft_hover_red2" @click="refreshCourseList">给我推荐一些</p>
-      <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+      <p class="tag isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+      <p class="tag hidden isoft_hover_red2" @click="refreshCourseList">给我推荐一些</p>
     </div>
   </div>
 </template>
@@ -80,5 +80,20 @@
     font-weight: 400;
     line-height: 40px;
     white-space: nowrap;
+  }
+
+  .hidden {
+    display: none;
+  }
+  .search_result:hover .hidden {
+    display: block;
+  }
+  .tag {
+    background-color: rgba(80, 73, 255, 0.21);
+    border-radius: 3px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+    padding: 5px 10px;
   }
 </style>
