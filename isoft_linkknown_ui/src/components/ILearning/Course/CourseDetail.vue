@@ -15,12 +15,22 @@
                 </div>
                 <div class="ico_play"></div>
               </div>
-              <div style="margin: 5px 0 0 40px">
-                <span v-if="course.isCharge==='charge'" style="color: #ff6900">
-                  <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
-                  &nbsp;&nbsp;|&nbsp;&nbsp;<span style="cursor: pointer;" @click="toPay('course',course.id)"><Icon type="md-cart" /><span>购买</span></span>
-                </span>
-                <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
+              <div class="showPriceAndBuy" style="margin: 5px 0 0 0">
+                <div v-if="course.isCharge==='charge'" style="color: #ff6900">
+                  <Row>
+                    <Col span="8" offset="2">
+                      <span class="showPrice">
+                        <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
+                      </span>
+                    </Col>
+                    <Col span="6">
+                      <span class="showBuy" @click="toPay('course',course.id)">
+                        <Icon type="md-cart" /><span>购买</span>
+                      </span>
+                    </Col>
+                  </Row>
+                </div>
+                <div v-else style="color: #cc0000;font-size: 15px;margin-left: 50px">免费视频</div>
               </div>
             </Col>
             <Col span="16">
@@ -330,5 +340,20 @@
   @keyframes move {
     0%   {left:130px;}
     100% {left:-130px;}
+  }
+
+  .showPriceAndBuy:hover .showBuy{
+    display: block;
+  }
+
+  .showPrice{
+    cursor: pointer;
+  }
+  /*.showPrice:hover +.showBuy{*/
+    /**/
+  /*}*/
+  .showBuy{
+    cursor: pointer;
+    display:none;
   }
 </style>
