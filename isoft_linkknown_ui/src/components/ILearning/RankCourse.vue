@@ -10,7 +10,7 @@
                    @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
     </div>
     <div v-if="isSearchFlag && !(courses && courses.length > 0)" style="text-align: center;padding-top: 10px;">
-      <p>未搜索到匹配的课程</p>
+      <p>未搜索到和 "{{search_data}}" 相关的课程</p>
       <p class="isoft_hover_red2" @click="refreshCourseList">给我推荐一些</p>
       <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
     </div>
@@ -38,6 +38,7 @@
       return {
         courses: [],
         isSearchFlag: false,    // 是否是搜索模式
+        search_data: '',
       }
     },
     methods: {
@@ -52,6 +53,7 @@
       },
       search: async function (search_data) {
         this.isSearchFlag = true;
+        this.search_data = search_data;
         const result = await SearchCourseList({search: search_data});
         if (result.status === "SUCCESS") {
           this.courses = result.courses;

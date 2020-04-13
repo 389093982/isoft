@@ -15,7 +15,7 @@
     </div>
 
     <div v-if="isSearchFlag && !(blogs && blogs.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
-      <p>未搜索到匹配的博客</p>
+      <p>未搜索到和 "{{search_data}}" 相关的博客</p>
       <p class="isoft_hover_red2" @click="refreshBlogList">给我推荐一些</p>
       <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
     </div>
@@ -49,6 +49,7 @@
         // 每页记录数
         offset: 8,
         isSearchFlag: false,    // 是否是搜索模式
+        search_data: '',
       }
     },
     methods: {
@@ -67,6 +68,7 @@
       },
       search: async function (search_data) {
         this.isSearchFlag = true;
+        this.search_data = search_data;
         const result = await queryPageBlog({
           search_data: search_data,
           offset: 10,

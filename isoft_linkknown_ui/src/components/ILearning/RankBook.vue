@@ -16,7 +16,7 @@
 
 
     <div v-if="isSearchFlag && !(books && books.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
-      <p>未搜索到匹配的图书</p>
+      <p>未搜索到和 "{{search_data}}" 相关的图书</p>
       <p class="isoft_hover_red2" @click="refreshBookList">给我推荐一些</p>
       <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
     </div>
@@ -48,6 +48,7 @@
         // 每页记录数
         offset: 8,
         isSearchFlag: false,    // 是否是搜索模式
+        search_data: '',
       }
     },
     methods: {
@@ -63,6 +64,7 @@
       },
       search: async function (search_data) {
         this.isSearchFlag = true;
+        this.search_data = search_data;
         const result = await QueryPageBookList({
           search_text: search_data,
           offset: this.offset,
