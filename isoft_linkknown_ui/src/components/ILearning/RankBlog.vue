@@ -2,7 +2,7 @@
   <div style="padding-top: 10px; min-height: 510px" >
     <div class="isoft_font_header" v-if="isSearchFlag">博客搜索结果</div>
     <div class="isoft_font_header" v-else>{{custom_label}}</div>
-    <div class="blogItem hoverItemClass isoft_inline_ellipsis"
+    <div class="blogItem hoverItemClass isoft_inline_ellipsis isoft_point_cursor"
          v-for="(blog, index) in blogs" @click="$router.push({path:'/iblog/blogArticleDetail', query:{'blog_id': blog.id}})">
       <span v-if="index === 0">
         <img :src="blog.first_img" style="width: 90px;height: 60px;"/>&nbsp;
