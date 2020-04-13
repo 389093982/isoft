@@ -3,7 +3,7 @@
     <div style="position: relative;float: right;">
       <div v-click-outside="onClickOutside">
         <!-- lazy 防止输入单个字符就触发 computed 计算 -->
-        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" placeholder="请输入搜索内容..." v-model.lazy.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus">
+        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" :placeholder="placeholder" v-model.lazy.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus">
         <input class="submit" type="submit" title="提交" @click="submitFunc">
 
         <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">
@@ -52,6 +52,9 @@
         showRecently: false,
         searchPattern: 1,  // 默认 1、最近搜索 2、热搜榜
         searchItems2:['前端','mysql','java','python','golang','vue'],
+        placeholderArr: ["请输入搜索内容...", "予人玫瑰，手有余香", "书山有路勤为径，学海无涯苦作舟", "如果您有好的素材，也可以分享给我们哈~"],
+        placeholder: "请输入搜索内容...",
+        changePlaceholderTimer: null,
       }
     },
     methods: {
@@ -108,6 +111,17 @@
         return [this.longer ? 'search_input_len_longer' : 'search_input_len_default'];
       }
     },
+    mounted(){
+      var _this = this;
+      _this.changePlaceholderTimer = setInterval(function () {
+        _this.placeholder = GenerateRandom(_this.placeholderArr);
+      }, 3000);
+    },
+    beforeDestroy() {
+      if (this.changePlaceholderTimer != null){
+        clearInterval(this.changePlaceholderTimer);
+      }
+    }
   }
 </script>
 
