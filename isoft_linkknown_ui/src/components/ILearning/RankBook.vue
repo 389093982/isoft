@@ -11,7 +11,7 @@
           <span class="rank_desc">{{book.book_desc}}</span>
         </Col>
         <Col span="5" class="rank_label">
-          <div v-if="book.ishover" style="position: relative;">
+          <div v-if="book.ishover" style="position: relative;" title="如果您有多余的空闲时间，可以写写文章发布发布博客">
             <Icon type="ios-eye-outline" size="20" style="position: relative;top: -2px;"/>
             {{book.views}}
             <Icon v-if="book.ishover" style="color: #6a6a6a;top: 8px;" size="30" type="md-arrow-forward" />
