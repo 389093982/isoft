@@ -35,7 +35,7 @@
     <IHotRecommand v-show="tabIndex === 5" class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
 
     <!--发现-->
-    <div class="isoft_bg_white isoft_pd10" style="margin-top: 5px;position: relative;left: -15px">
+    <div class="isoft_bg_white" style="margin-top: 5px;padding: 10px 20px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
     </div>
   </div>

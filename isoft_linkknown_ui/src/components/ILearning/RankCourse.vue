@@ -1,10 +1,10 @@
 <template>
-  <div class="isoft_bg_white isoft_pd10" style="min-height: 370px">
+  <div class="isoft_bg_white isoft_pd10" style="min-height: 400px">
     <div class="isoft_font_header" v-if="isSearchFlag">课程搜索结果</div>
     <div class="isoft_font_header" v-else>{{custom_label}}</div>
-    <div style="column-count:2;border-top: 1px solid #eee;padding-top: 5px;">
+    <div style="column-count:2;border-top: 1px solid #eee;padding-top: 10px;">
       <HoverBigImg v-for="(course, index) in courses" :key="index"
-                   width="100%" height="98px"
+                   width="100%" height="98px" style="margin-bottom: 10px;"
                    :src-img="course.small_image"
                    :label-text="course.course_name"
                    @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>

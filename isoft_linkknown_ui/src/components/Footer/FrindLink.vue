@@ -1,5 +1,7 @@
 <template>
-  <IHotRecommand :placement_name="GLOBAL.placement_frind_link"/>
+  <div style="padding: 0 20px;">
+    <IHotRecommand :placement_name="GLOBAL.placement_frind_link"/>
+  </div>
 </template>
 
 <script>

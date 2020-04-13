@@ -2,39 +2,39 @@
   <div>
     <!--为您精选、热门、特色、高评-->
     <div id="rankCourse" style="display: flex;justify-content: center;" class="isoft_top5">
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankCourse ref="rankCourse1" class="isoft_bg_white isoft_pd10" custom_tag="views" custom_label="精选课程" @research="handleReSearch"/>
       </div>
-      <div style="width: 31%;margin: 0 5px;">
+      <div style="width: 33%;margin: 0 5px;">
         <RankCourse class="isoft_bg_white isoft_pd10"  custom_tag="recommend" custom_label="推荐课程"/>
       </div>
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankCourse class="isoft_bg_white isoft_pd10" custom_tag="hot" custom_label="热门课程"/>
       </div>
     </div>
 
     <!--热门博客-->
     <div style="display:flex;justify-content: center;" class="isoft_top5">
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankBlog ref="rankBlog1" class="isoft_bg_white isoft_pd10" custom_tag="views" custom_label="精选博客" @research="handleReSearch"/>
       </div>
-      <div style="width: 31%;margin: 0 5px;">
+      <div style="width: 33%;margin: 0 5px;">
         <RankBlog class="isoft_bg_white isoft_pd10" custom_tag="recommend" custom_label="推荐博客"/>
       </div>
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankBlog class="isoft_bg_white isoft_pd10" custom_tag="hot" custom_label="热门博客"/>
       </div>
     </div>
 
     <!--热门书单-->
     <div style="display: flex;justify-content: center;" class="isoft_top5">
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankBook ref="rankBook1" class="isoft_bg_white isoft_pd10" custom_tag="views" custom_label="精选图书" @research="handleReSearch"/>
       </div>
-      <div style="width: 31%;margin: 0 5px;">
+      <div style="width: 33%;margin: 0 5px;">
         <RankBook class="isoft_bg_white isoft_pd10" custom_tag="recommend" custom_label="推荐图书"/>
       </div>
-      <div style="width: 31%;">
+      <div style="width: 33%;">
         <RankBook class="isoft_bg_white isoft_pd10" custom_tag="hot" custom_label="热门图书"/>
       </div>
     </div>
