@@ -14,10 +14,10 @@
       </span>
     </div>
 
-    <div v-if="isSearchFlag && !(blogs && blogs.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
-      <p>未搜索到匹配的博客</p>
-      <p class="isoft_hover_red2" @click="refreshBlogList">给我推荐一些</p>
-      <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+    <div class="search_result" v-if="isSearchFlag && !(blogs && blogs.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
+      <div>未搜索到和 "{{search_data}}" 相关的博客</div>
+      <div class="tag isoft_hover_red2" @click="handleReSearch">重新搜索</div>
+      <div class="tag hidden isoft_hover_red2" @click="refreshBlogList">给我推荐一些</div>
     </div>
   </div>
 </template>
@@ -49,6 +49,7 @@
         // 每页记录数
         offset: 8,
         isSearchFlag: false,    // 是否是搜索模式
+        search_data: '',
       }
     },
     methods: {
@@ -67,6 +68,7 @@
       },
       search: async function (search_data) {
         this.isSearchFlag = true;
+        this.search_data = search_data;
         const result = await queryPageBlog({
           search_data: search_data,
           offset: 10,
@@ -116,5 +118,20 @@
     position: relative;
     top: 2px;
     margin-right: 5px;
+  }
+
+  .hidden {
+    display: none;
+  }
+  .search_result:hover .hidden {
+    display: block;
+  }
+  .tag {
+    background-color: rgba(80, 73, 255, 0.21);
+    border-radius: 3px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+    padding: 5px 10px;
   }
 </style>

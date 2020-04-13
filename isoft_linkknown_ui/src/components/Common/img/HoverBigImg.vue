@@ -1,7 +1,7 @@
 <template>
   <div class="box" @mouseenter="mouseenter" :style="styles" style="position: relative;" @click="onclick">
     <img :src="srcImg" :style="styles" class="hoverScaleImg" @error="defImg()"/>
-    <span v-if="labelText" class="labelText">{{labelText}}</span>
+    <span v-if="labelText" class="labelText isoft_inline_ellipsis">{{labelText}}</span>
   </div>
 </template>
 
@@ -76,5 +76,6 @@
     text-align: center;
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
+    padding: 0 10px;
   }
 </style>

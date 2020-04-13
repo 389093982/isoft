@@ -1,8 +1,8 @@
 <template>
-  <div style="padding-top: 10px; min-height: 550px" >
+  <div style="padding-top: 10px; min-height: 550px">
     <div class="isoft_font_header" v-if="isSearchFlag">图书搜索结果</div>
     <div class="isoft_font_header" v-else>{{custom_label}}</div>
-    <div class="bookItem hoverItemClass"
+    <div class="bookItem hoverItemClass" @mouseenter="handleMouseEvent(index, true)" @mouseleave="handleMouseEvent(index, false)"
          v-for="(book, index) in books" @click="$router.push({path:'/ibook/bookCatalogs', query:{'book_id': book.id}})">
       <Row>
         <Col span="2" :class="index < 3 ? 'rank_red_index' : 'rank_grey_index'">{{index + 1}}</Col>
@@ -10,15 +10,22 @@
           <span class="rank_name">{{book.book_name}}</span>
           <span class="rank_desc">{{book.book_desc}}</span>
         </Col>
-        <Col span="5" class="rank_label">{{book.views}} 次阅读</Col>
+        <Col span="5" class="rank_label">
+          <div v-if="book.ishover" style="position: relative;">
+            <Icon type="ios-eye-outline" size="20" style="position: relative;top: -2px;"/>
+            {{book.views}}
+            <Icon v-if="book.ishover" style="color: #6a6a6a;top: 8px;" size="30" type="md-arrow-forward" />
+          </div>
+          <div v-else>{{book.views}} 次阅读</div>
+        </Col>
       </Row>
     </div>
 
 
-    <div v-if="isSearchFlag && !(books && books.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
-      <p>未搜索到匹配的图书</p>
-      <p class="isoft_hover_red2" @click="refreshBookList">给我推荐一些</p>
-      <p class="isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+    <div class="search_result" v-if="isSearchFlag && !(books && books.length > 0)" style="text-align: center;border-top: 1px solid #eee;padding-top: 10px;">
+      <p>未搜索到和 "{{search_data}}" 相关的图书</p>
+      <p class="tag isoft_hover_red2" @click="handleReSearch">重新搜索</p>
+      <p class="tag hidden isoft_hover_red2" @click="refreshBookList">给我推荐一些</p>
     </div>
   </div>
 </template>
@@ -40,6 +47,7 @@
     },
     data() {
       return {
+        ishover: false,
         books: [],
         // 当前页
         current_page: 1,
@@ -48,9 +56,15 @@
         // 每页记录数
         offset: 8,
         isSearchFlag: false,    // 是否是搜索模式
+        search_data: '',
       }
     },
     methods: {
+      handleMouseEvent: function (index, flag) {
+        let book = this.books[index];
+        book.ishover = flag;
+        this.$set(this.books, index, book);
+      },
       handleReSearch: function (){
         this.$emit("research");
       },
@@ -63,6 +77,7 @@
       },
       search: async function (search_data) {
         this.isSearchFlag = true;
+        this.search_data = search_data;
         const result = await QueryPageBookList({
           search_text: search_data,
           offset: this.offset,
@@ -132,5 +147,20 @@
     color: #999;
     font-size: 13px;
     white-space: nowrap;
+  }
+
+  .hidden {
+    display: none;
+  }
+  .search_result:hover .hidden {
+    display: block;
+  }
+  .tag {
+    background-color: rgba(80, 73, 255, 0.21);
+    border-radius: 3px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+    padding: 5px 10px;
   }
 </style>
