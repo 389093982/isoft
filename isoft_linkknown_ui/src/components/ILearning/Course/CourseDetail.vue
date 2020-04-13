@@ -80,14 +80,14 @@
               <span style="margin-left: 8px"><i>为您推荐:</i></span>
               <Row>
                 <Col span="6" v-for="course in recommendCourses">
-                  <div class="courseBorder" style="position: relative;"
+                  <div class="courseBorder" style="position: relative;cursor: pointer"
                        @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
                     <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
                     <img v-else src="../../../assets/default.png" height="100" width="155"/>
                     <div class="isoft_font12 isoft_inline_ellipsis isoft_color_grey" style="text-align: center;">
                       {{course.course_name}}
                     </div>
-                    <span class="isoft_free">免费</span>
+                    <span v-if="course.isCharge==='free'" class="isoft_free">免费</span>
                   </div>
                 </Col>
               </Row>
