@@ -1,5 +1,5 @@
 <template>
-  <div id="quickSearch" class="section01_bg isoft_glint" style="position: relative;height: 400px;">
+  <div id="quickSearch" class="isoft_glint" style="position: relative;height: 400px;" :style="bgStyles">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
@@ -40,6 +40,7 @@
   import ISearch from "../Common/search/ISearch"
   import HeavyRecommend from "./HeavyRecommend";
   import vueCanvasNest from 'vue-canvas-nest'
+  import {GenerateRandom} from "../../tools";
 
   export default {
     name: "LinkKnownQuickSearch",
@@ -49,6 +50,9 @@
         showRecommend: false,
         recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
+        changeBgTimer: null,
+        bgImgName: 'bg.jpg',
+        bgImgNameArr: ['bg.jpg', 'bg2.jpg', 'bg3.jpg'],
       }
     },
     methods:{
@@ -57,6 +61,26 @@
       },
       handleSubmitFunc: function (search_data) {
         this.$emit('submitFunc', search_data);
+      }
+    },
+    computed:{
+      bgStyles: function () {
+        let style = {};
+        style.background=`url(${require(`../../../static/images/bg/${this.bgImgName}`)}) no-repeat`;  // TODO no-repeat bug
+        style.backgroundSize = '100% 100%';
+        style.height = '400px';
+        return style;
+      }
+    },
+    mounted(){
+      var _this = this;
+      _this.changeBgTimer = setInterval(function () {
+        _this.bgImgName = GenerateRandom(_this.bgImgNameArr);
+      }, 5000);
+    },
+    beforeDestroy (){
+      if (this.changeBgTimer != null){
+        clearInterval(this.changeBgTimer);
       }
     }
   }
@@ -88,12 +112,6 @@
   }
   .isoft_hover_green:hover {
     color: yellow;
-  }
-
-  .section01_bg {
-    height: 400px;
-    background: url(../../assets/bg.jpg) no-repeat;
-    background-size: 100% 100%;
   }
 
   .isoft_glint:hover:before {
