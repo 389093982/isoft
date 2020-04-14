@@ -9,15 +9,19 @@
     <div style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
 
     <div style="margin-top: 60px;">
-      <div style="text-align: center;">
-        <span v-for="(recommend, index) in recommend1" class="isoft_point_cursor isoft_hover_green isoft_mr10"
-              @click="handleSubmitFunc(recommend)">{{recommend}}</span>
+      <div style="text-align: center;margin: 5px 0;">
+        <span style="position: relative;padding: 10px 0;">
+          <div :style="activeBottomStyle"></div>
+          <span style="width: 70px;display: inline-block;" v-for="(recommend, index) in recommend1"
+                class="isoft_point_cursor isoft_hover_yellow"
+                @click="handleSubmitFunc(recommend)" @mouseenter="handleMouseEnter(index)">{{recommend}}</span>
+        </span>
       </div>
       <div style="width: 500px;margin: 0 auto;">
         <ISearch :longer="true" @submitFunc="handleSubmitFunc"></ISearch>
       </div>
       <div style="text-align: center;color: white;">热门关键词：
-        <span v-for="(recommend, index) in recommend2" class="isoft_point_cursor isoft_hover_green isoft_mr10"
+        <span v-for="(recommend, index) in recommend2" class="isoft_point_cursor isoft_hover_yellow isoft_mr10"
               @click="handleSubmitFunc(recommend)">{{recommend}}</span>
       </div>
     </div>
@@ -47,7 +51,9 @@
     data (){
       return {
         showRecommend: false,
-        recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],
+        recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],     // 一级分类
+        activeBottomTranslateX: 0,                                                 // 一级分类 bottom 初始偏移量
+        activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
       }
     },
@@ -60,8 +66,26 @@
       },
       handleChangeBg: function () {
 
+      },
+      handleMouseEnter: function (index) {
+        this.activeBottomTranslateX = this.activeBottomTranslateXArr[index];      // 动态修改偏移量
       }
     },
+    computed:{
+      activeBottomStyle: function () {
+        return {
+          width: '56px',
+          transition: 'transform .3s cubic-bezier(.645,.045,.355,1)',             // 触发过渡效果
+          transform: `translateX(${this.activeBottomTranslateX}px)`,
+          backgroundColor: '#ffd100',
+          position: 'absolute',
+          bottom: '0',
+          left: '0',
+          height: '2px',
+          zIndex: 1,
+        }
+      }
+    }
   }
 </script>
 
@@ -86,10 +110,10 @@
     }
   }
 
-  .isoft_hover_green {
+  .isoft_hover_yellow {
     color: white;
   }
-  .isoft_hover_green:hover {
+  .isoft_hover_yellow:hover {
     color: yellow;
   }
 
