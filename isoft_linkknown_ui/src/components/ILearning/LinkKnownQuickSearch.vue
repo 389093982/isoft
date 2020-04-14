@@ -36,7 +36,7 @@
     </div>
 
     <!-- 参考 https://github.com/ZYSzys/vue-canvas-nest 蜘蛛网效果 -->
-    <vue-canvas-nest :config="{color:'255,0,0', count: 88, zIndex: 999}" :el="'#quickSearch'"></vue-canvas-nest>
+    <vue-canvas-nest :config="{color:'255,0,0', count: 40, zIndex: 999}" :el="'#quickSearch'"></vue-canvas-nest>
   </div>
 </template>
 

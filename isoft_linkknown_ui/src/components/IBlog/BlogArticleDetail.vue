@@ -110,7 +110,7 @@
 
     <div style="clear: both"></div>
     <!-- 参考 https://github.com/ZYSzys/vue-canvas-nest 蜘蛛网效果 -->
-    <vue-canvas-nest :config="{color:'221,0,25', count: 88, zIndex: 999}" :el="'#blogArticleDetail'"></vue-canvas-nest>
+    <vue-canvas-nest :config="{color:'221,0,25', count: 40, zIndex: 999}" :el="'#blogArticleDetail'"></vue-canvas-nest>
   </div>
 </template>
 

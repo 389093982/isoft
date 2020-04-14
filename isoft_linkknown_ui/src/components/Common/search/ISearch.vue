@@ -52,7 +52,7 @@
         showRecently: false,
         searchPattern: 1,  // 默认 1、最近搜索 2、热搜榜
         searchItems2:['前端','mysql','java','python','golang','vue'],
-        placeholderArr: ["请输入搜索内容...", "予人玫瑰，手有余香", "书山有路勤为径，学海无涯苦作舟", "如果您有好的素材，也可以分享给我们哈~"],
+        placeholderArr: ["请输入搜索内容...", "予人玫瑰，手有余香", "书山有路勤为径，学海无涯苦作舟", "如果您有好的素材，也可以分享给我们哦~"],
         placeholder: "请输入搜索内容...",
         changePlaceholderTimer: null,
       }
