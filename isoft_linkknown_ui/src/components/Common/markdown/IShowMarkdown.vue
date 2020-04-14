@@ -9,6 +9,7 @@
   let marked = require('marked');
   let hljs = require('highlight.js');
   import 'highlight.js/styles/default.css';
+  import Clipboard from 'clipboard';    // 引入剪切板
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -20,7 +21,8 @@
     smartLists: true,
     smartypants: false,
     highlight: function (code, lang) {
-      let copyBtnHtml = `<div class="isoft_copy">复制代码块</div>`;
+      // 复制功能主要使用的是 clipboard.js
+      let copyBtnHtml = `<div class="isoft_copy" data-clipboard-text="${code}">复制代码块</div>`;
       var preCode = "";
       if (lang && hljs.getLanguage(lang)) {
         // highlight.js 高亮代码
@@ -37,6 +39,11 @@
     props: {
       content: {
         type: String
+      }
+    },
+    data (){
+      return {
+        clipboard: '',
       }
     },
     methods: {
@@ -84,6 +91,21 @@
         return htmlStr;
       }
     },
+    mounted () {
+      this.$nextTick(() => {
+        this.clipboard = new Clipboard('.isoft_copy');
+        // 复制成功失败的提示
+        this.clipboard.on('success', (e) => {
+          this.$Message.success('复制成功!')
+        })
+        this.clipboard.on('error', (e) => {
+          this.$Message.error('复制失败!')
+        })
+      })
+    },
+    destroyed () {
+    this.clipboard.destroy();
+  }
   }
 </script>
 
