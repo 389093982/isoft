@@ -20,11 +20,15 @@
     smartLists: true,
     smartypants: false,
     highlight: function (code, lang) {
+      let copyBtnHtml = `<div class="isoft_copy">复制代码块</div>`;
+      var preCode = "";
       if (lang && hljs.getLanguage(lang)) {
-        return hljs.highlight(lang, code, true).value;
+        // highlight.js 高亮代码
+        preCode = hljs.highlight(lang, code, true).value;
       } else {
-        return hljs.highlightAuto(code).value;
+        preCode = hljs.highlightAuto(code).value;
       }
+      return `<div style="position: relative;">${copyBtnHtml}${preCode}</div>`;
     }
   });
 
@@ -88,5 +92,19 @@
 
   .isoft_markdown>>>li {
     margin-left: 24px;
+  }
+
+  .isoft_markdown >>> .isoft_copy {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    font-size: 12px;
+    color: #4d4d4d;
+    background-color: white;
+    padding: 2px 8px;
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
   }
 </style>
