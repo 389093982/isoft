@@ -1,9 +1,9 @@
 <template>
-  <div id="quickSearch" class="isoft_glint" style="position: relative;height: 400px;" :style="bgStyles">
+  <div id="quickSearch" class="quickSearchBg isoft_glint" style="position: relative;height: 400px;">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
-      <Icon :size="25" type="ios-shirt-outline"/>
+      <Icon :size="25" type="ios-shirt-outline" @click="handleChangeBg"/>
     </span>
 
     <div style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
@@ -40,7 +40,6 @@
   import ISearch from "../Common/search/ISearch"
   import HeavyRecommend from "./HeavyRecommend";
   import vueCanvasNest from 'vue-canvas-nest'
-  import {GenerateRandom} from "../../tools";
 
   export default {
     name: "LinkKnownQuickSearch",
@@ -50,9 +49,6 @@
         showRecommend: false,
         recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
-        changeBgTimer: null,
-        bgImgName: 'bg.jpg',
-        bgImgNameArr: ['bg.jpg', 'bg2.jpg', 'bg3.jpg'],
       }
     },
     methods:{
@@ -61,28 +57,11 @@
       },
       handleSubmitFunc: function (search_data) {
         this.$emit('submitFunc', search_data);
+      },
+      handleChangeBg: function () {
+
       }
     },
-    computed:{
-      bgStyles: function () {
-        let style = {};
-        style.background=`url(${require(`../../../static/images/bg/${this.bgImgName}`)}) no-repeat`;  // TODO no-repeat bug
-        style.backgroundSize = '100% 100%';
-        style.height = '400px';
-        return style;
-      }
-    },
-    mounted(){
-      var _this = this;
-      _this.changeBgTimer = setInterval(function () {
-        _this.bgImgName = GenerateRandom(_this.bgImgNameArr);
-      }, 5000);
-    },
-    beforeDestroy (){
-      if (this.changeBgTimer != null){
-        clearInterval(this.changeBgTimer);
-      }
-    }
   }
 </script>
 
@@ -132,5 +111,17 @@
   @keyframes glint{
     0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
     100%{transform:translateX(1100px) skewX(-15deg);opacity:1}
+  }
+
+  .quickSearchBg {
+    animation: gradientAnimation 7.5s infinite;
+  }
+  @keyframes gradientAnimation {
+    0% {
+      background-image: linear-gradient(43deg,#4158D0 0%,#C850C0 46%,#FFCC70 100%);
+    }
+    100% {
+      background-image: linear-gradient(43deg, #60afd0 0%, #c83782 46%, #ffe668 100%);
+    }
   }
 </style>
