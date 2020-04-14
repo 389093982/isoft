@@ -40,6 +40,7 @@ const ILayout = () => import("@/components/ILayout/ILayout");
 const VipIntroduction = () => import("@/components/VipCenter/VipIntroduction");
 const Recharge = () => import("@/components/VipCenter/Recharge");
 const Pay = () => import("@/components/Payment/Pay");
+const OrderList = () => import("@/components/Payment/OrderList");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
@@ -244,6 +245,7 @@ const Payment = [{
   path: '/payment', component: ILayout,
   children: [
     {path: 'pay', component: Pay},
+    {path: 'orderList', component: OrderList},
   ]
 }];
 
