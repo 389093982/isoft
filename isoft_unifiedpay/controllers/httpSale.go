@@ -42,6 +42,8 @@ var upgrader = websocket.Upgrader{
 
 //websocket 下单请求
 func (this *MainController) Order() {
+	now := time.Now().Format("20060102150405")
+	orderId := now + QueryUniqueRandom()
 	orderChan := make(chan interface{},1)
 	//获取请求连接
 	conn, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
@@ -62,9 +64,10 @@ func (this *MainController) Order() {
 		var userMap sync.Map
 		userMap.Store("conn",conn)
 		userMap.Store("messageType",messageType)
+		userMap.Store("orderId",orderId)
 		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
-		this.Pay(orderParams, orderChan)
+		this.Pay(now, orderId, orderParams, orderChan)
 		for {
 			code_url ,ok := <- orderChan
 			if !ok {
@@ -91,6 +94,7 @@ func (this *MainController) Order() {
 type PaySuccessNotify struct {
 	UserName string  `json:"user_name"`
 	Status string  `json:"status"`
+	OrderId string  `json:"order_id"`
 }
 
 //微信支付官方通知支付成功 -- 模拟
@@ -100,19 +104,22 @@ func (this *MainController)TestNotify()  {
 		userMap := v.(sync.Map)
 		messageType_value, _ := userMap.Load("messageType")
 		conn_value, _ := userMap.Load("conn")
+		order_id, _ := userMap.Load("orderId")
 		messageType := messageType_value.(int)
 		conn := conn_value.(*websocket.Conn)
+		orderId := order_id.(string)
 		defer conn.Close()
 		var paySuccessNotify PaySuccessNotify
 		paySuccessNotify.UserName = userName
 		paySuccessNotify.Status = "SUCCESS"
+		paySuccessNotify.OrderId = orderId
 		payResult, _ := json.Marshal(paySuccessNotify)
 		conn.WriteMessage(messageType, []byte(payResult))
 	}
 }
 
 //支付下单-具体处理方法
-func (this *MainController) Pay(orderParams OrderParams, orderChan chan interface{}) {
+func (this *MainController) Pay(now string, orderId string, orderParams OrderParams, orderChan chan interface{}) {
 	code_url := "Order Fail" //支付二维码，默认显示‘下单失败’
 	o := orm.NewOrm()
 	//界面接收的参数
@@ -126,11 +133,10 @@ func (this *MainController) Pay(orderParams OrderParams, orderChan chan interfac
 	//transCurrCode := "CNY"
 	logs.Info("微信扫码支付请求上来了...")
 	logs.Info(fmt.Sprintf("请求参数:productId=%v,productDesc=%v,transAmount=%v,transCurrCode=%v", productId, productDesc, transAmount, transCurrCode))
-	now := time.Now().Format("20060102150405")
 
 	//组装订单
 	order := models.Order{}
-	order.OrderId = now + QueryUniqueRandom()
+	order.OrderId = orderId
 	order.PayStyle = "微信支付"
 	order.TransType = "SALE"
 	order.MerchantNo = beego.AppConfig.String("WeChatPay_MerchantNo")
