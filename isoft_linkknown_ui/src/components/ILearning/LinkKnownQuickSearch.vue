@@ -1,23 +1,27 @@
 <template>
-  <div id="quickSearch" class="section01_bg isoft_glint" style="position: relative;height: 400px;">
+  <div id="quickSearch" class="quickSearchBg isoft_glint" style="position: relative;height: 400px;">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
-      <Icon :size="25" type="ios-shirt-outline"/>
+      <Icon :size="25" type="ios-shirt-outline" @click="handleChangeBg"/>
     </span>
 
     <div style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
 
     <div style="margin-top: 60px;">
-      <div style="text-align: center;">
-        <span v-for="(recommend, index) in recommend1" class="isoft_point_cursor isoft_hover_green isoft_mr10"
-              @click="handleSubmitFunc(recommend)">{{recommend}}</span>
+      <div style="text-align: center;margin: 5px 0;">
+        <span style="position: relative;padding: 10px 0;">
+          <div :style="activeBottomStyle"></div>
+          <span style="width: 70px;display: inline-block;" v-for="(recommend, index) in recommend1"
+                class="isoft_point_cursor isoft_hover_yellow"
+                @click="handleSubmitFunc(recommend)" @mouseenter="handleMouseEnter(index)">{{recommend}}</span>
+        </span>
       </div>
       <div style="width: 500px;margin: 0 auto;">
         <ISearch :longer="true" @submitFunc="handleSubmitFunc"></ISearch>
       </div>
       <div style="text-align: center;color: white;">热门关键词：
-        <span v-for="(recommend, index) in recommend2" class="isoft_point_cursor isoft_hover_green isoft_mr10"
+        <span v-for="(recommend, index) in recommend2" class="isoft_point_cursor isoft_hover_yellow isoft_mr10"
               @click="handleSubmitFunc(recommend)">{{recommend}}</span>
       </div>
     </div>
@@ -47,7 +51,9 @@
     data (){
       return {
         showRecommend: false,
-        recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],
+        recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],     // 一级分类
+        activeBottomTranslateX: 0,                                                 // 一级分类 bottom 初始偏移量
+        activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
       }
     },
@@ -57,6 +63,27 @@
       },
       handleSubmitFunc: function (search_data) {
         this.$emit('submitFunc', search_data);
+      },
+      handleChangeBg: function () {
+
+      },
+      handleMouseEnter: function (index) {
+        this.activeBottomTranslateX = this.activeBottomTranslateXArr[index];      // 动态修改偏移量
+      }
+    },
+    computed:{
+      activeBottomStyle: function () {
+        return {
+          width: '56px',
+          transition: 'transform .3s cubic-bezier(.645,.045,.355,1)',             // 触发过渡效果
+          transform: `translateX(${this.activeBottomTranslateX}px)`,
+          backgroundColor: '#ffd100',
+          position: 'absolute',
+          bottom: '0',
+          left: '0',
+          height: '2px',
+          zIndex: 1,
+        }
       }
     }
   }
@@ -83,17 +110,11 @@
     }
   }
 
-  .isoft_hover_green {
+  .isoft_hover_yellow {
     color: white;
   }
-  .isoft_hover_green:hover {
+  .isoft_hover_yellow:hover {
     color: yellow;
-  }
-
-  .section01_bg {
-    height: 400px;
-    background: url(../../assets/bg.jpg) no-repeat;
-    background-size: 100% 100%;
   }
 
   .isoft_glint:hover:before {
@@ -114,5 +135,17 @@
   @keyframes glint{
     0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
     100%{transform:translateX(1100px) skewX(-15deg);opacity:1}
+  }
+
+  .quickSearchBg {
+    animation: gradientAnimation 7.5s infinite;
+  }
+  @keyframes gradientAnimation {
+    0% {
+      background-image: linear-gradient(43deg,#4158D0 0%,#C850C0 46%,#FFCC70 100%);
+    }
+    100% {
+      background-image: linear-gradient(43deg, #60afd0 0%, #c83782 46%, #ffe668 100%);
+    }
   }
 </style>
