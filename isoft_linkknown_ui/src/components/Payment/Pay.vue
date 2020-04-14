@@ -75,14 +75,14 @@
 </template>
 
 <script>
-  import {ShowCourseDetail} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrder,addPayOrder} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
   import {CheckHasLoginConfirmDialog2} from "../../tools/index"
   import vueQr from 'vue-qr'
 
   export default {
     name: "Pay",
-    components: {vueQr},
+    components: { vueQr},
     data() {
       return {
         //是否展示页面
@@ -148,29 +148,39 @@
         }
         //检查该商品是否已经下过单
         if (this.goods_type === 'course') {
-          //TODO
-          //发送请求到订单表做个验证
+          //发送请求到订单表做个查询
+          const result = await queryPayOrder({
+            'user_name':this.loginUserName,
+            'goods_type':'course_theme_type',
+            'goods_id':this.goods_id,
+          });
+          if (result.status === 'SUCCESS') {
+            if (result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
+              this.$Message.warning("该课程您已购买过，无需再次购买^_^");
+            }else {
+              let _this = this;
+              CheckHasLoginConfirmDialog2(this, async function () {
+                //清理上次付款结果
+                _this.showPayResult = false;
+                _this.payResultDesc = '';
+                _this.percent = 0;
+                //准备参数
+                let ProductId = _this.goods_id.toString();
+                let ProductDesc = _this.goods_desc;
+                let TransAmount = _this.goods_price * 100;
+                let TransCurrCode = 'CNY';
+                let OrderParams = {
+                  'user_name':_this.loginUserName,
+                  'product_id': ProductId,
+                  'poduct_desc': ProductDesc,
+                  'trans_amount': TransAmount,
+                  'trans_curr_code': TransCurrCode
+                };
+                _this.initWebSocket(OrderParams);
+              });
+            }
+          }
         }
-        let _this = this;
-        CheckHasLoginConfirmDialog2(this, async function () {
-          //清理上次付款结果
-          _this.showPayResult = false;
-          _this.payResultDesc = '';
-          _this.percent = 0;
-          //准备参数
-          let ProductId = _this.goods_id.toString();
-          let ProductDesc = _this.goods_desc;
-          let TransAmount = _this.goods_price * 100;
-          let TransCurrCode = 'CNY';
-          let OrderParams = {
-            'user_name':_this.loginUserName,
-            'product_id': ProductId,
-            'poduct_desc': ProductDesc,
-            'trans_amount': TransAmount,
-            'trans_curr_code': TransCurrCode
-          };
-          _this.initWebSocket(OrderParams);
-        });
       },
       initWebSocket:function(OrderParams) {
         const wsuri = this.GLOBAL.isoft_unifiedpay_order;
@@ -191,7 +201,7 @@
       websocketonerror:function(e) {
         console.log("WebSocket 连接发生错误");
       },
-      websocketonmessage(e){
+      websocketonmessage:async function(e){
         console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
         let result = JSON.parse(e.data);
         if (result.user_name === this.loginUserName) {
@@ -199,14 +209,29 @@
             this.codeUrl = result.code_url;
             this.lastTimeCodeUrl = result.code_url;
           }
-          if (result.status != null && result.status==="SUCCESS") {
-            this.codeUrl = '';
-            this.showPayResult = true;
-            var handler = setInterval(this.add, 50);
-            //一秒后让handler失效
-            setTimeout(function () {
-              clearInterval(handler);
-            }, 1000);
+          if (result.pay_result != null) {
+            //支付成功，订单入pay_order表
+            const res = await addPayOrder({
+              'order_id':result.order_id,
+              'trans_time':result.trans_time,
+              'user_name':result.user_name,
+              'goods_type':'course_theme_type',
+              'goods_id':result.product_id,
+              'goods_desc':result.product_desc,
+              'goods_price':result.trans_amount,
+              'goods_img':this.goods_img,
+              'pay_result':result.pay_result,
+            });
+            //页面支付成功动态效果
+            if (res.status === 'SUCCESS') {
+              this.codeUrl = '';
+              this.showPayResult = true;
+              var handler = setInterval(this.add, 50);
+              //一秒后让handler失效
+              setTimeout(function () {
+                clearInterval(handler);
+              }, 1000);
+            }
           }
         }
       },

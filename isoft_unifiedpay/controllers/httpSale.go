@@ -65,6 +65,10 @@ func (this *MainController) Order() {
 		userMap.Store("conn",conn)
 		userMap.Store("messageType",messageType)
 		userMap.Store("orderId",orderId)
+		userMap.Store("transTime",now)
+		userMap.Store("productId",orderParams.ProductId)
+		userMap.Store("productDesc",orderParams.PoductDesc)
+		userMap.Store("transAmount",orderParams.TransAmount)
 		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
 		this.Pay(now, orderId, orderParams, orderChan)
@@ -93,8 +97,12 @@ func (this *MainController) Order() {
 //支付成功返回参数
 type PaySuccessNotify struct {
 	UserName string  `json:"user_name"`
-	Status string  `json:"status"`
+	PayResult string  `json:"pay_result"`
 	OrderId string  `json:"order_id"`
+	TransTime string  `json:"trans_time"`
+	ProductId string  `json:"product_id"`
+	ProductDesc string  `json:"product_desc"`
+	TransAmount int64  `json:"trans_amount"`
 }
 
 //微信支付官方通知支付成功 -- 模拟
@@ -105,14 +113,26 @@ func (this *MainController)TestNotify()  {
 		messageType_value, _ := userMap.Load("messageType")
 		conn_value, _ := userMap.Load("conn")
 		order_id, _ := userMap.Load("orderId")
+		trans_time, _ := userMap.Load("transTime")
+		product_id, _ := userMap.Load("productId")
+		product_desc, _ := userMap.Load("productDesc")
+		trans_amount, _ := userMap.Load("transAmount")
 		messageType := messageType_value.(int)
 		conn := conn_value.(*websocket.Conn)
 		orderId := order_id.(string)
+		transTime := trans_time.(string)
+		productId := product_id.(string)
+		productDesc := product_desc.(string)
+		transAmount := trans_amount.(int64)
 		defer conn.Close()
 		var paySuccessNotify PaySuccessNotify
 		paySuccessNotify.UserName = userName
-		paySuccessNotify.Status = "SUCCESS"
+		paySuccessNotify.PayResult = "SUCCESS"
 		paySuccessNotify.OrderId = orderId
+		paySuccessNotify.TransTime = transTime
+		paySuccessNotify.ProductId = productId
+		paySuccessNotify.ProductDesc = productDesc
+		paySuccessNotify.TransAmount = transAmount
 		payResult, _ := json.Marshal(paySuccessNotify)
 		conn.WriteMessage(messageType, []byte(payResult))
 	}

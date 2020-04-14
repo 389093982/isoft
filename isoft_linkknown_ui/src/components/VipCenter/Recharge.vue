@@ -55,6 +55,7 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
+  import {addPayOrder} from "../../api/index"
   import vueQr from 'vue-qr'
 
   export default {
@@ -138,21 +139,36 @@
       websocketonerror:function(e) {
         console.log("WebSocket 连接发生错误");
       },
-      websocketonmessage(e){
+      websocketonmessage:async function(e){
         console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
         let result = JSON.parse(e.data);
         if (result.user_name === this.loginUserName) {
           if (result.code_url != null) {
             this.codeUrl = result.code_url;
           }
-          if (result.status != null && result.status==="SUCCESS") {
-            this.codeUrl = '';
-            this.showPayResult = true;
-            var handler = setInterval(this.add, 50);
-            //一秒后让handler失效
-            setTimeout(function () {
-              clearInterval(handler);
-            }, 1000);
+          if (result.pay_result != null) {
+            //支付成功，订单入pay_order表, 充值vip，会在流程里修改user表会员标识
+            const res = await addPayOrder({
+              'order_id':result.order_id,
+              'trans_time':result.trans_time,
+              'user_name':result.user_name,
+              'goods_type':'vip',
+              'goods_id':result.product_id,
+              'goods_desc':result.product_desc,
+              'goods_price':result.trans_amount,
+              'goods_img':'',
+              'pay_result':result.pay_result,
+            });
+            //页面支付成功动态效果
+            if (res.status === 'SUCCESS') {
+              this.codeUrl = '';
+              this.showPayResult = true;
+              var handler = setInterval(this.add, 50);
+              //一秒后让handler失效
+              setTimeout(function () {
+                clearInterval(handler);
+              }, 1000);
+            }
           }
         }
       },
