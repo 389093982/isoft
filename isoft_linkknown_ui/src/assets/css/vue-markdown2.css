@@ -120,7 +120,7 @@ code {
 .markdown >>> pre {
   line-height: 1.7em;
   overflow: auto;
-  padding: 6px 10px;
+  padding: 6px 10px 6px 40px;   /* 保留 40px 用于显示行号 */
   border-left: 5px solid #6CE26C;
 }
 

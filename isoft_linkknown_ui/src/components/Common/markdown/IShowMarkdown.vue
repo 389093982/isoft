@@ -10,6 +10,7 @@
   let hljs = require('highlight.js');
   import 'highlight.js/styles/default.css';
   import Clipboard from 'clipboard';    // 引入剪切板
+  import $ from "jquery"
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -30,7 +31,7 @@
       } else {
         preCode = hljs.highlightAuto(code).value;
       }
-      return `<div style="position: relative;">${copyBtnHtml}${preCode}</div>`;
+      return `<div style="position: relative;">${copyBtnHtml}<span class="isoft_code">${preCode}</span></div>`;
     }
   });
 
@@ -101,6 +102,20 @@
         this.clipboard.on('error', (e) => {
           this.$Message.error('复制失败!')
         })
+
+        //添加行号
+        $('.isoft_code').each(function (index, item) {
+          var num = item.innerHTML.split('\n').length;//通过统计换行获取总行数
+          var ol = $('<ol></ol>');
+          var n = 1;
+          while (n <= num) {
+            ol.append($('<li></li>').text(n));
+            n++;
+          }
+          $(this).before(ol);
+          // 设置行号宽度
+          $(ol).css({"width": num > 99 ? "36px" : "26px"});
+        })
       })
     },
     destroyed () {
@@ -128,5 +143,25 @@
     border-radius: 4px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .isoft_markdown >>> ol {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    /*width: 36px; 由 js 控制 */
+    padding-right: 6px;
+    padding-top: 6px;
+    margin-left: -40px;
+    text-align: right;
+    background: #e5eaf1;
+    color: #666;
+  }
+
+  .isoft_markdown >>> li {
+    list-style: none;
+    height: 23.33px;
+    margin-left: 0;
+    font: 12px/22px Consolas, Menlo, Monaco, "Courier New", monospace !important;
   }
 </style>
