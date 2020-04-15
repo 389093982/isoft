@@ -52,7 +52,7 @@
       return {
         showRecommend: false,
         recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],     // 一级分类
-        activeBottomTranslateX: 0,                                                 // 一级分类 bottom 初始偏移量
+        activeBottomTranslateX: 7,                                                 // 一级分类 bottom 初始偏移量
         activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
       }

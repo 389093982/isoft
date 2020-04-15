@@ -30,17 +30,23 @@
           </div>
 
           <div style="min-height: 450px;">
-            <Row v-for="book in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
+            <Row v-for="(book, index) in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
               <Col span="4" offset="2">
-                <div class="bookImg isoft_hover_top5">
-                  <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
+                <div class="bookImg isoft_hover_top5" :title="book.book_name"
+                     @mouseenter="handleMouseEvent(book, index, true)" @mouseleave="handleMouseEvent(book, index, false)">
+                  <span @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../assets/default.png" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                       <span class="book_label">精品</span>
-                      <span>{{book.book_name}}</span>
+                      <span v-if="book.isHover">
+                        <Icon type="ios-eye" style="color: #b4b4b4;font-size: 20px;"/> {{book.views}}
+                        <Icon type="ios-chatboxes-outline" style="color: #b4b4b4;font-size: 20px;"/> {{book.comments}}
+                      </span>
+                      <span v-else>{{book.book_name}}</span>
                     </p>
-                  </router-link>
+                  </span>
+
                 </div>
               </Col>
               <Col span="12" offset="1" style="margin-top: 10px">
@@ -146,6 +152,10 @@
       }
     },
     methods: {
+      handleMouseEvent: function (book, index, flag) {
+        book.isHover = flag;
+        this.$set(this.books, index, book);
+      },
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
       },
