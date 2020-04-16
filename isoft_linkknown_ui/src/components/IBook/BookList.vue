@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Row>
       <Col span="18" style="padding: 0 8px 0 0;">
         <div class="isoft_bg_white isoft_pd10">
@@ -32,18 +31,19 @@
           <div style="min-height: 450px;">
             <Row v-for="(book, index) in books" style="border-bottom: 1px solid #d7dde4;padding: 20px;" :gutter="20">
               <Col span="4" offset="2">
-                <div class="bookImg isoft_hover_top5" :title="book.book_name"
-                     @mouseenter="handleMouseEvent(book, index, true)" @mouseleave="handleMouseEvent(book, index, false)">
+                <div class="bookImg isoft_hover_top5" :title="book.book_name">
                   <span @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
                     <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
                     <img v-else src="../../assets/default.png" height="160px" width="140px"/>
                     <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                       <span class="book_label">精品</span>
-                      <span v-if="book.isHover">
-                        <Icon type="ios-eye" style="color: #b4b4b4;font-size: 20px;"/> {{book.views}}
-                        <Icon type="ios-chatboxes-outline" style="color: #b4b4b4;font-size: 20px;"/> {{book.comments}}
+                      <span style="position: relative;">
+                        <span class="book_label1">
+                          <Icon type="ios-eye" style="color: #b4b4b4;font-size: 20px;"/> {{book.views}}
+                          <Icon type="ios-chatboxes-outline" style="color: #b4b4b4;font-size: 20px;"/> {{book.comments}}
+                        </span>
+                        <span class="book_label2">{{book.book_name}}</span>
                       </span>
-                      <span v-else>{{book.book_name}}</span>
                     </p>
                   </span>
 
@@ -95,9 +95,11 @@
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
-      <Col span="6">
-        <div class="isoft_bg_white isoft_pd10">
-          <HotUser/>
+      <Col span="5">
+        <HotUser/>
+
+        <div style="margin: 5px 0;">
+          <LearningDiary/>
         </div>
 
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
@@ -127,10 +129,12 @@
   } from "../../tools";
   import BookInfoEdit from "./BookInfoEdit";
   import IsComfirmDelete from "../IBlog/IsComfirmDelete";
+  import LearningDiary from "../ILearning/LearningDiary";
 
   export default {
     name: "BookList",
     components: {
+      LearningDiary,
       IsComfirmDelete,
       BookInfoEdit,
       RandomAdmt,
@@ -152,10 +156,6 @@
       }
     },
     methods: {
-      handleMouseEvent: function (book, index, flag) {
-        book.isHover = flag;
-        this.$set(this.books, index, book);
-      },
       isLoginUserName: function (user_name) {
         return user_name === GetLoginUserName();
       },
@@ -303,4 +303,18 @@
     cursor: pointer;
   }
 
+  .book_label1 {
+    position: absolute;
+    visibility: hidden;
+  }
+  .bookImg:hover .book_label1 {
+    visibility: visible;
+  }
+  .book_label2 {
+    position: absolute;
+    visibility: visible;
+  }
+  .bookImg:hover .book_label2 {
+    visibility: hidden;
+  }
 </style>
