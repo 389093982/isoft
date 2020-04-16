@@ -19,11 +19,24 @@
       <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
       <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
         <div style="width: 60%;padding: 15px 10px;">
-          BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+          这块来点选择项
+          1、用户水平
+          2、用户擅长
+          3、用户期望的资源
         </div>
         <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
           <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
           <p style="font-size: 18px;">通过链知网获得了兼职收入</p>
+
+          <div v-for="(icon, index) in icons" style="margin: 15px 0;display: flex;">
+            <div>
+              <img :src="'../../../static/images/' + icon.icon_name"/>
+            </div>
+            <div style="margin-left: 25px;">
+              <p style="font-size: 14px;font-weight: 500;color: #555;line-height: 22px;margin-bottom: 10px;">{{icon.icon_label}}</p>
+              <p style="font-size: 12px;font-weight: 400;color: #888;line-height: 14px;">{{icon.icon_label2}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -36,6 +49,12 @@
     data (){
       return {
         showBusiness: false,
+        icons: [
+          {icon_name: 'icon_pin.jpg', icon_label: '测试', icon_label2: '测试1233333'},
+          {icon_name: 'icon_bao.jpg', icon_label: '测试', icon_label2: '测试123333'},
+          {icon_name: 'icon_you.jpg', icon_label: '测试', icon_label2: '测试123333'},
+          {icon_name: 'icon_quan.jpg', icon_label: '测试', icon_label2: '测试1233333'},
+        ]
       }
     }
   }
