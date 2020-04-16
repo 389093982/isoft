@@ -1,19 +1,19 @@
 <template>
-	<div style="width: 100%;background-color: white">
+  <div style="width: 100%;background-color: white">
 
-  <Row>
-    <Col span="22" offset="1">
-      <Table border :columns="columns" :data="orderData">
-        <template slot-scope="{ row }" slot="name">
-          <strong>{{ row.name }}</strong>
-        </template>
-        <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
-          <Button type="error" size="small" @click="remove(index)">Delete</Button>
-        </template>
-      </Table>
-    </Col>
-  </Row>
+    <Row>
+      <Col span="22" offset="1">
+        <Table border :columns="columns" :data="orderData">
+          <template slot-scope="{ row }" slot="name">
+            <strong>{{ row.name }}</strong>
+          </template>
+          <template slot-scope="{ row, index }" slot="action">
+            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
+            <Button type="error" size="small" @click="remove(index)">Delete</Button>
+          </template>
+        </Table>
+      </Col>
+    </Row>
 
   </div>
 </template>
@@ -30,41 +30,41 @@
         columns: [
           {
             title: '订单号',
-            slot: 'order_id'
+            key: 'order_id',
+            width:260
           },
           {
             title: '交易时间',
-            key: 'trans_time'
+            key: 'trans_time',
+            width:150,
+            filterMethod:function (value) {
+              return value.slice(1,2)
+            }
           },
           {
             title: '商品类型',
-            key: 'goods_type'
+            key: 'goods_type',
+            width:150
           },
           {
             title: '商品ID',
-            key: 'goods_id'
+            key: 'goods_id',
+            width:150
           },
           {
             title: '商品描述',
-            key: 'goods_desc'
+            key: 'goods_desc',
+            width:200
           },
           {
             title: '商品价格',
-            key: 'goods_price'
-          },
-          {
-            title: '商品图片',
-            key: 'goods_img'
+            key: 'goods_price',
+            width:120
           },
           {
             title: '支付状态',
-            key: 'pay_result'
-          },
-          {
-            title: '操作',
-            slot: 'action',
-            width: 150,
-            align: 'center'
+            key: 'pay_result',
+            width:120
           }
         ],
         orderData: [],
@@ -92,8 +92,10 @@
           'goods_price':this.goods_price,
           'pay_result':this.pay_result
         };
-        const result = await queryPayOrderList(params)
-
+        const result = await queryPayOrderList(params);
+        if (result.status === 'SUCCESS') {
+          this.orderData = result.orders
+        }
 
       },
       show (index) {
