@@ -1,18 +1,17 @@
 <template>
-  <div class="isoft_bg_white isoft_pd5">
-    <h2 class="user_rank" style="border-bottom: 2px solid #eee;">用户排行榜</h2>
-    <div style="position: relative;">
+  <div class="isoft_bg_white isoft_pd5 hotuser_bg" style="position: relative;">
+<!--    <div style="position: relative;">
       <div style="text-align: center;" class="isoft_color_grey2 isoft_font12 tipClass">奉献自己的力量，让自己榜上有名吧~ </div>
-    </div>
-    <div style="position: relative;">
+    </div>-->
+    <div style="position: absolute;top: 120px;left: 35px;right: 35px;">
       <div v-for="(user,index) in users" style="display: flex;">
-        <div style="width: 12%;">
-        <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})" >
-          <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30"
-                             :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
-        </span>
+        <div style="width: 17%;">
+          <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})" >
+            <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :src_size="30"
+                               :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
+          </span>
         </div>
-        <div style="width: 55%;margin: 4px 0 0 0;color: #009a61;" class="isoft_inline_ellipsis">
+        <div style="width: 50%;margin: 4px 0 0 0;color: #009a61;" class="isoft_inline_ellipsis">
         <span style="position: relative;" class="isoft_point_cursor isoft_hover_red nickName">
           {{user.nick_name}}
           <span class="nickNameTip" @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">无力吐槽</span>
@@ -25,10 +24,6 @@
     </div>
   </div>
 </template>
-
-
-
-
 
 <script>
   import {GetHotUsers} from "../../api"
@@ -65,17 +60,6 @@
 </script>
 
 <style scoped>
-  .user_rank {
-    margin: 0 10px 10px 10px;
-    position: relative;
-    height: 40px;
-    color: #111;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 40px;
-    white-space: nowrap;
-  }
-
   .tipClass {
     position: relative;
     animation: tipAnimation 5s infinite;
@@ -108,5 +92,11 @@
   }
   .nickName:hover > .nickNameTip {
     display: inline-block;
+  }
+
+  .hotuser_bg {
+    height: 650px;
+    background: url('../../../static/images/hotuser.jpg') no-repeat;
+    background-size: 100% 100%;
   }
 </style>

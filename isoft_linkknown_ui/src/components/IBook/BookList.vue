@@ -95,11 +95,11 @@
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
-      <Col span="6">
-        <LearningDiary/>
+      <Col span="5">
+        <HotUser/>
 
-        <div class="isoft_bg_white isoft_pd10">
-          <HotUser/>
+        <div style="margin: 5px 0;">
+          <LearningDiary/>
         </div>
 
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
