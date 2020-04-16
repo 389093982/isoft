@@ -14,9 +14,18 @@
       </div>
     </div>
 
-    <div class="center_box" v-if="showBusiness">
+    <div class="center_box" v-if="showBusiness" style="display: flex;">
       <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
       <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
+      <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
+        <div style="width: 60%;padding: 15px 10px;">
+          BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+        </div>
+        <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
+          <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
+          <p style="font-size: 18px;">通过链知网获得了兼职收入</p>
+        </div>
+      </div>
     </div>
   </span>
 </template>
@@ -51,6 +60,7 @@
     left: 0;
   }
   .center_box {
+    z-index: 10;
     position: fixed;
     top: 80px;
     left: 10%;
