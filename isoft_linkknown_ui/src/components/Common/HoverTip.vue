@@ -16,13 +16,23 @@
 
     <div class="center_box" v-if="showBusiness" style="display: flex;">
       <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
-      <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
+      <div class="to_zixun_box" style="position: relative;">
+        <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
+        <div class="to_zixun">马上咨询管理员</div>
+      </div>
       <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
         <div style="width: 60%;padding: 15px 10px;">
+          <p class="question_tip">创业太难怎么办？</p>
+          <p class="question_tip">创业成本太高怎么办？</p>
+          <p class="question_tip">创业没有途径怎么办？</p>
+          <p class="question_tip">离职没工资怎么办？</p>
+          <p class="answer_tip">在链知网总有&nbsp;“薪”&nbsp;发现</p>
           这块来点选择项
           1、用户水平
           2、用户擅长
           3、用户期望的资源
+
+          <div>了解一下</div>
         </div>
         <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
           <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
@@ -105,5 +115,38 @@
     color: #000000;
     border: 1px solid #000000;
     transform: rotateZ(360deg);
+  }
+
+  .to_zixun {
+    position: absolute;
+    bottom: 40px;
+    background-color: #dfd684;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    left: 10%;
+    right: 10%;
+    cursor: pointer;
+    transition: bottom 0.5s ease-in-out;
+    visibility: hidden;
+  }
+  .to_zixun_box:hover .to_zixun {
+    bottom: 100px;
+    visibility: visible;
+  }
+
+  .question_tip {
+    font-size: 16px;
+    color: green;
+    height: 30px;
+    line-height: 30px;
+  }
+  .answer_tip {
+    font-size: 16px;
+    color: #e80000;
+    height: 30px;
+    line-height: 30px;
   }
 </style>
