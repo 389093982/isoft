@@ -15,8 +15,7 @@
     </div>
 
     <div class="center_box" v-if="showBusiness">
-      <span class="isoft_point_cursor" @click="showBusiness = false"
-            style="position: absolute;right: 10px;top: 10px;"><Icon type="md-close" size="20"/></span>
+      <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
       <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
     </div>
   </span>
@@ -60,5 +59,22 @@
     background: rgba(248, 248, 248, 1);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.16);
     border-radius: 6px;
+  }
+
+  .isoft_close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    padding: 2px;
+    color: #959595;
+    background: rgba(248, 248, 248, 1);
+    border: 1px solid #959595;
+    border-radius: 50%;
+    transition: transform 0.5s ease-in;
+  }
+  .isoft_close:hover {
+    color: #000000;
+    border: 1px solid #000000;
+    transform: rotateZ(360deg);
   }
 </style>
