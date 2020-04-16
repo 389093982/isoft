@@ -75,7 +75,7 @@
 </template>
 
 <script>
-  import {ShowCourseDetail,queryPayOrder,addPayOrder} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrderList,addPayOrder} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
   import {CheckHasLoginConfirmDialog2} from "../../tools/index"
   import vueQr from 'vue-qr'
@@ -149,7 +149,7 @@
         //检查该商品是否已经下过单
         if (this.goods_type === 'course') {
           //发送请求到订单表做个查询
-          const result = await queryPayOrder({
+          const result = await queryPayOrderList({
             'user_name':this.loginUserName,
             'goods_type':'course_theme_type',
             'goods_id':this.goods_id,

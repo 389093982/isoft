@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/stringutil"
 	stringutil2 "isoft/isoft_utils/common/stringutil"
 	"strings"
+	"regexp"
 )
 
 func GetAllTableNames(dataSourceName string) []string {
@@ -43,7 +44,11 @@ func concatableN(part1, part2 string) bool {
 
 func concatable(part string) bool {
 	part = strings.ToLower(strings.TrimSpace(part))
-	if strings.HasSuffix(part, "where") {
+	// .匹配任意一个字符 ，*匹配零个或多个 ，优先匹配更多(贪婪)
+	orderMatch, _ := regexp.MatchString(`^(order)\s+.*`, part)
+	whereMatch, _ := regexp.MatchString(`^(where)\s+.*`, part)
+	whereMatch2, _ := regexp.MatchString(`.*\s+(where)`, part)
+	if orderMatch || whereMatch || whereMatch2{
 		return false
 	}
 	if part == ";" || part == "" {
