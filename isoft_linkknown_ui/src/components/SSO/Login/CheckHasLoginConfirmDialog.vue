@@ -1,6 +1,6 @@
 <template>
   <div v-if="showNotLogin">
-    <div class="shade"></div>
+    <div class="isoft_shade"></div>
 
     <div class="dialog">
       <div class="header">
@@ -75,20 +75,9 @@
     text-decoration: underline;
   }
 
-  .shade {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #d0d0d0;
-    opacity: 0.6;
-    z-index: 9998;
-  }
-
   .dialog {
     position: fixed;
-    top: 100px;
+    top: 180px;
     left: 0;
     right: 0;
     width: 400px;
