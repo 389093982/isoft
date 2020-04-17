@@ -273,10 +273,10 @@ export const QueryElementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isof
 
 //支付订单
 export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addPayOrder", params, 'POST');
-export const queryPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrder", params, 'POST');
+export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
 
-export const fileUploadUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/fileUpload"
-export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay"
+export const fileUploadUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/fileUpload";
+export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay";
 
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
