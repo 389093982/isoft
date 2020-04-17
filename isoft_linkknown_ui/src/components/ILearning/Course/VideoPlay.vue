@@ -81,9 +81,10 @@
 </template>
 
 <script>
-  import {QueryCustomTagCourse, ShowCourseDetail, videoPlayUrl} from "../../../api"
+  import {QueryCustomTagCourse, queryPayOrderList, ShowCourseDetail, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
   import {checkFastClick} from "../../../tools/index"
+  import {getLoginUserName} from "../../../tools/sso"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal";
 
   export default {
@@ -92,10 +93,12 @@
     data() {
       return {
         recommendCourses: [],
-        cVideos: [],
-        course: '',
-        curVideo: '',//当前播放视频
-        currentClickIndex:0,
+        cVideos: [],               //课程的Videos
+        course: '',                //当前课程
+        curVideo: '',              //当前播放视频
+        currentClickIndex:0,      //当前播放video索引
+        comfirmTips:'',           //付款弹框提示
+        hasPaid:false,            //默认为未付款
 
         // 滚动条设置
         scrollOps: {
@@ -120,37 +123,51 @@
             opacity: 1,//滚动条透明度
           }
         },
-
-        //付款弹框提示
-        comfirmTips:'',
       }
     },
     methods: {
+      confirmPaid:async function(){
+        if (this.loginUserName) {
+          console.log("用户已登录");
+          const result = await queryPayOrderList({
+            'user_name':this.loginUserName,
+            'goods_type':'course_theme_type',
+            'goods_id':this.$route.query.course_id
+          });
+          if (result.status === 'SUCCESS' && result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
+            this.hasPaid = true;
+          }
+        }else {
+          console.log("用户未登录")
+        }
+      },
       refreshCorsedetail: async function () {
         const course_id = this.$route.query.course_id;
         const result = await ShowCourseDetail({course_id:course_id});
         if (result.status === "SUCCESS") {
           this.course = result.course;
-          // 根据id来排序的
-          this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);
+          this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);// 根据id来排序的
           this.playVideo(this.cVideos.filter(video => video.id == this.$route.query.video_id)[0]);
         }
       },
+      //播放视频
       playVideo: function (curVideo) {
-        //收费判断
-        if (this.course.isCharge==='charge' && this.cVideos.indexOf(curVideo) + 1 > this.course.preListFree) {
-          //弹框显示购买信息
-          this.comfirmTips = "付费视频，前去购买?";
-          this.$refs.comfirmModal.showModal();
-          return;
+        //1.收费判断
+        if (!this.hasPaid) {
+          if (this.course.isCharge==='charge' && this.cVideos.indexOf(curVideo) + 1 > this.course.preListFree) {
+            this.comfirmTips = "付费视频，前去购买?";
+            this.$refs.comfirmModal.showModal();
+            return;
+          }
         }
-        // 右侧选中播放指示
+        //2.右侧选中播放指示
         this.currentClickIndex = this.cVideos.indexOf(curVideo);
-        //播放curVideo
+        //3.设置当前curVideo
         this.curVideo = curVideo;
-        let xhr = new XMLHttpRequest();                                                     //创建XMLHttpRequest对象
-        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                      //配置请求方式、请求地址以及是否同步
-        xhr.responseType = 'blob';                                                          //设置结果类型为blob;
+        //4.播放curVideo
+        let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
+        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
+        xhr.responseType = 'blob';                                                            //设置结果类型为blob;
         xhr.onload = function (e) {
           if (this.status === 200) {
             // 获取blob对象
@@ -210,15 +227,22 @@
         this.$router.push({path:'/payment/pay',query:{type:'course',id:this.course.id}});
       }
     },
+    computed:{
+      loginUserName: function () {
+        return getLoginUserName();
+      },
+    },
     mounted: function () {
-      // 加载当前课程所有视频资源,为自动播放下一集做准备
+      //已购判断
+      this.confirmPaid();
+      //刷新课程信息
       this.refreshCorsedetail();
       // 注册播放下一集事件
       this.addPlayNextEventListener();
-      // 加载热门推荐课程列表
-      this.refreshCustomTagCourse('recommand');
       //捕获播放报错，并处理
       this.catchPlayError();
+      // 加载热门推荐课程列表
+      this.refreshCustomTagCourse('recommand');
     },
     filters: {
       filterSuffix: function (value) {

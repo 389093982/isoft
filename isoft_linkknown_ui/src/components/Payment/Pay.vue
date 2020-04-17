@@ -143,23 +143,23 @@
         return checkHasLogin();
       },
       getPayUrl: async function () {
-        if (this.lastTimeCodeUrl !== '') {
+        let _this = this;
+        if (_this.lastTimeCodeUrl !== '') {
           return false;
         }
-        //检查该商品是否已经下过单
-        if (this.goods_type === 'course') {
-          //发送请求到订单表做个查询
-          const result = await queryPayOrderList({
-            'user_name':this.loginUserName,
-            'goods_type':'course_theme_type',
-            'goods_id':this.goods_id,
-          });
-          if (result.status === 'SUCCESS') {
-            if (result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
-              this.$Message.warning("该课程您已购买过，无需再次购买^_^");
-            }else {
-              let _this = this;
-              CheckHasLoginConfirmDialog2(this, async function () {
+        CheckHasLoginConfirmDialog2(this, async function () {
+          //检查该商品是否已经下过单
+          if (_this.goods_type === 'course') {
+            //发送请求到订单表做个查询
+            const result = await queryPayOrderList({
+              'user_name':_this.loginUserName,
+              'goods_type':'course_theme_type',
+              'goods_id':_this.goods_id,
+            });
+            if (result.status === 'SUCCESS') {
+              if (result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
+                _this.$Message.warning("该课程您已购买过，无需再次购买^_^");
+              }else {
                 //清理上次付款结果
                 _this.showPayResult = false;
                 _this.payResultDesc = '';
@@ -177,10 +177,10 @@
                   'trans_curr_code': TransCurrCode
                 };
                 _this.initWebSocket(OrderParams);
-              });
+              }
             }
           }
-        }
+        });
       },
       initWebSocket:function(OrderParams) {
         const wsuri = this.GLOBAL.isoft_unifiedpay_order;
