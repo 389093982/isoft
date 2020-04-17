@@ -1,5 +1,5 @@
 <template>
-  <div id="quickSearch" class="quickSearchBg isoft_glint" style="position: relative;height: 400px;">
+  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 400px;">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
@@ -35,8 +35,6 @@
       <span class="isoft_font12 tagColor isoft_point_cursor" @click="showRecommend = !showRecommend">更多素材</span>
     </div>
 
-    <!-- 参考 https://github.com/ZYSzys/vue-canvas-nest 蜘蛛网效果 -->
-    <vue-canvas-nest :config="{color:'255,0,0', count: 40, zIndex: 2}" :el="'#quickSearch'"></vue-canvas-nest>
   </div>
 </template>
 
@@ -44,6 +42,7 @@
   import ISearch from "../Common/search/ISearch"
   import HeavyRecommend from "./HeavyRecommend";
   import vueCanvasNest from 'vue-canvas-nest'
+  import {GenerateRandom} from "../../tools/index"
 
   export default {
     name: "LinkKnownQuickSearch",
@@ -55,6 +54,11 @@
         activeBottomTranslateX: 7,                                                 // 一级分类 bottom 初始偏移量
         activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
+        changeBgTimer: null,
+        bgImgShowArray: ['bgImg1Show', 'bgImg2Show', 'bgImg3Show'],
+        bgImg1Show:true,
+        bgImg2Show:false,
+        bgImg3Show:false,
       }
     },
     methods:{
@@ -69,7 +73,7 @@
       },
       handleMouseEnter: function (index) {
         this.activeBottomTranslateX = this.activeBottomTranslateXArr[index];      // 动态修改偏移量
-      }
+      },
     },
     computed:{
       activeBottomStyle: function () {
@@ -84,12 +88,39 @@
           height: '2px',
           zIndex: 1,
         }
+      },
+    },
+    mounted:function () {
+      let _this = this;
+      if (_this.changeBgTimer != null){
+        clearInterval(_this.changeBgTimer);
       }
+      this.changeBgTimer = setInterval(function () {
+        let imgShow = GenerateRandom(_this.bgImgShowArray)+"";
+        _this.bgImg1Show = imgShow === 'bgImg1Show';
+        _this.bgImg2Show = imgShow === 'bgImg2Show';
+        _this.bgImg3Show = imgShow === 'bgImg3Show';
+      }, 5000);
     }
   }
 </script>
 
 <style scoped>
+  .bgImg1{
+    background-image: url("../../../static/images/bg/bg1.jpg");
+    background-size: 100% 100%;
+    height: 400px;
+  }
+  .bgImg2{
+    background-image: url("../../../static/images/bg/bg2.jpg");
+    background-size: 100% 100%;
+    height: 400px;
+  }
+  .bgImg3{
+    background-image: url("../../../static/images/bg/bg3.jpg");
+    background-size: 100% 100%;
+    height: 400px;
+  }
   .tagColor {
     margin: 0 10px;
     padding:8px 25px;
@@ -137,15 +168,15 @@
     100%{transform:translateX(1100px) skewX(-15deg);opacity:1}
   }
 
-  .quickSearchBg {
-    animation: gradientAnimation 7.5s infinite;
-  }
-  @keyframes gradientAnimation {
-    0% {
-      background-image: linear-gradient(43deg,#4158D0 0%,#C850C0 46%,#FFCC70 100%);
-    }
-    100% {
-      background-image: linear-gradient(43deg, #60afd0 0%, #c83782 46%, #ffe668 100%);
-    }
-  }
+  /*.quickSearchBg {*/
+    /*animation: gradientAnimation 7.5s infinite;*/
+  /*}*/
+  /*@keyframes gradientAnimation {*/
+    /*0% {*/
+      /*background-image: linear-gradient(43deg,#4158D0 0%,#C850C0 46%,#FFCC70 100%);*/
+    /*}*/
+    /*100% {*/
+      /*background-image: linear-gradient(43deg, #60afd0 0%, #c83782 46%, #ffe668 100%);*/
+    /*}*/
+  /*}*/
 </style>
