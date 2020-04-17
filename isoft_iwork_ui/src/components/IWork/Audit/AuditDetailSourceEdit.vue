@@ -9,15 +9,9 @@
 
     <br/>
 
-    <div style="margin-top: 20px;padding:5px;border-top: 2px solid #eee;">
-      <div style="position: relative;">
-        <span style="position: absolute;right: 10px;">
-          <Button type="success" size="small" @click="editAuditTaskSource">保存提交</Button>
-          <Button type="success" size="small" @click="handleAdd">新增场景</Button>
-        </span>
-      </div>
-
-      <Tabs :animated="false" name="tab_level_2" style="width: 80%;" :value="tabValue">
+    <div style="display: flex;margin-top: 20px;padding:5px;border-top: 2px solid #eee;">
+      <div style="width: 80%;">
+        <Tabs type="card" :animated="false" name="tab_level_2" :value="tabValue">
         <span v-if="taskDetail.query_cases && taskDetail.query_cases.length > 0">
           <TabPane v-for="(item, index) in taskDetail.query_cases" :name="'tabValue_' + index"
                    :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
@@ -33,13 +27,16 @@
             <Input type="textarea" :rows="6" v-model="item.query_desc" placeholder="请输入描述" style="margin: 5px 0;"></Input>
           </TabPane>
         </span>
-        <span v-else>暂无场景</span>
-      </Tabs>
-    </div>
+          <span v-else>暂无场景</span>
+        </Tabs>
+      </div>
+      <div style="width: 20%;padding-left: 10px;">
+        <Button type="success" size="small" @click="editAuditTaskSource">保存提交</Button>
+        <Button type="success" size="small" @click="handleAdd">新增场景</Button>
 
-    <div>
-      <Button type="success" size="small" @click="editAuditTaskSource">保存提交</Button>
-      <Button type="success" size="small" @click="handleAdd">新增场景</Button>
+        <br/><br/>
+        <Tag v-for="(item, index) in taskDetail.query_cases"><span @click="tabValue = 'tabValue_' + index">{{item.case_name}}</span></Tag>
+      </div>
     </div>
 
     <h3 style="margin-top: 20px;">字段显示类型：</h3>

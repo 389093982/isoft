@@ -17,10 +17,9 @@
           </Row>
         </Scroll>
         <div>
-          <span v-if="update_cases" v-for="update_case in update_cases">
-            <span v-if="update_case.case_name" class="operate"
-                  @click="handleOperate(update_case, rowData)">{{update_case.case_name}}</span>
-          </span>
+           <Tag v-if="update_cases" v-for="update_case in update_cases">
+             <span v-if="update_case.case_name" @click="handleOperate(update_case, rowData)">{{update_case.case_name}}</span>
+           </Tag>
         </div>
       </Row>
     </div>
@@ -114,13 +113,5 @@
 </script>
 
 <style scoped>
-  .operate{
-    font-size: 14px;
-    cursor: pointer;
-    margin: 2px 10px;
-    color: green;
-  }
-  .operate:hover{
-    border-bottom: 1px solid red;
-  }
+
 </style>
