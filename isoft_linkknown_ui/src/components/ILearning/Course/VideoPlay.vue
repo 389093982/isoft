@@ -133,23 +133,23 @@
           this.course = result.course;
           // 根据id来排序的
           this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);
-          this.curVideo = this.cVideos.filter(video => video.id == this.$route.query.video_id)[0];
-          this.currentClickIndex = this.cVideos.indexOf(this.curVideo);
+          this.playVideo(this.cVideos.filter(video => video.id == this.$route.query.video_id)[0]);
         }
       },
-      playVideo: function (video_id) {
+      playVideo: function (curVideo) {
         //收费判断
-        if (this.course.isCharge==='charge' && this.cVideos.indexOf(this.curVideo) + 1 > this.course.preListFree) {
+        if (this.course.isCharge==='charge' && this.cVideos.indexOf(curVideo) + 1 > this.course.preListFree) {
           //弹框显示购买信息
-          this.comfirmTips = "下一集开始为付费视频，前去购买?";
+          this.comfirmTips = "付费视频，前去购买?";
           this.$refs.comfirmModal.showModal();
           return;
         }
         // 右侧选中播放指示
-        this.currentClickIndex = this.cVideos.indexOf(this.curVideo);
+        this.currentClickIndex = this.cVideos.indexOf(curVideo);
         //播放curVideo
+        this.curVideo = curVideo;
         let xhr = new XMLHttpRequest();                                                     //创建XMLHttpRequest对象
-        xhr.open('GET', videoPlayUrl + "?video_id=" + video_id, true);                      //配置请求方式、请求地址以及是否同步
+        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                      //配置请求方式、请求地址以及是否同步
         xhr.responseType = 'blob';                                                          //设置结果类型为blob;
         xhr.onload = function (e) {
           if (this.status === 200) {
@@ -167,9 +167,16 @@
         video.addEventListener("ended", function () {
           let nextVideo = _this.cVideos.filter(video => video.id > _this.curVideo.id);
           if (nextVideo != null && nextVideo !== undefined && nextVideo.length > 0) {
-            _this.curVideo = nextVideo[0];
+            _this.playVideo(nextVideo[0])
           }
         });
+      },
+      clickVideoName:function (index) {
+        if (checkFastClick()){
+          this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
+        this.playVideo(this.cVideos[index]);
       },
       catchPlayError: function(){
         let _this = this;
@@ -178,27 +185,9 @@
           console.log("如果加载进来之后播放视频报错，那么这里做个处理,0.1秒后执行");
           setTimeout(function () {
             console.log("0.1秒到了，开始执行");
-            let tempCurVideo = _this.curVideo;
-            _this.curVideo = '';
-            _this.curVideo = tempCurVideo;
+            _this.playVideo(_this.curVideo);
           }, 100);
         });
-      },
-      clickVideoName:function (index) {
-        if (checkFastClick()){
-          this.$Message.error("点击过快,请稍后重试!");
-          return;
-        }
-        //收费判断
-        if (this.course.isCharge==='charge' && index + 1 > this.course.preListFree) {
-          //弹框显示购买信息
-          this.comfirmTips = "付费视频，前去购买?";
-          this.$refs.comfirmModal.showModal();
-          return;
-        }
-        //赋值两次是为了可以再次点击，让cVideo存在变化。
-        this.curVideo = '';
-        this.curVideo = this.cVideos[index];
       },
       refreshCustomTagCourse: async function (custom_tag) {
         const result = await QueryCustomTagCourse({custom_tag: custom_tag});
@@ -248,13 +237,6 @@
         }
       }
     },
-    watch: {
-      curVideo: function () {
-        if (this.curVideo!==null && this.curVideo!==''){
-          this.playVideo(this.curVideo.id);
-        }
-      }
-    }
   }
 </script>
 
