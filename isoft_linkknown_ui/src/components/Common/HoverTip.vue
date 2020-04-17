@@ -14,6 +14,8 @@
       </div>
     </div>
 
+    <div v-if="showBusiness" class="isoft_shade"></div>
+
     <div class="center_box" v-if="showBusiness" style="display: flex;">
       <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
       <div class="to_zixun_box" style="position: relative;">
@@ -32,7 +34,7 @@
           2、用户擅长
           3、用户期望的资源
 
-          <div>了解一下</div>
+          <div class="isoft_button_blue" style="width: 60%;margin-left: 10%;margin-top: 20px;">了解一下</div>
         </div>
         <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
           <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
@@ -89,9 +91,9 @@
     left: 0;
   }
   .center_box {
-    z-index: 10;
+    z-index: 1025;
     position: fixed;
-    top: 80px;
+    top: 60px;
     left: 10%;
     right: 10%;
     padding: 18px 20px;
