@@ -3,11 +3,11 @@
     <!-- 列表形式显示 -->
     <div v-if="showMode==='list'">
       <IBeautifulCard title="热门课程推荐">
-        <div slot="content" style="padding: 20px;">
+        <div slot="content" style="padding: 20px 50px 20px 20px;">
           <Row v-for="course in courses">
-            <div class="isoft_inline_ellipsis isoft_hover_red"
-                 @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
-              {{course.course_name}}
+            <div @onclick="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
+              <p class="isoft_hover_red isoft_inline_ellipsis">【热荐课程】&nbsp;{{course.course_name}}</p>
+              <p class="isoft_hover_desc isoft_p3line" style="padding-left: 20px;">{{course.course_short_desc}}</p>
             </div>
           </Row>
         </div>
@@ -110,16 +110,4 @@
     width: 60px;
     height: 60px;
   }
-
-  .freeTag{
-    cursor: pointer;
-    font-size: 12px;
-    background: rgba(128, 128, 128, 0.81);
-    line-height: 16px;
-    border-radius: 15px;
-    color: white;
-    padding: 2px 8px 2px 8px ;
-    display: inline-block;
-  }
-
 </style>

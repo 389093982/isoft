@@ -43,10 +43,8 @@
                 <!--推荐课程-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div v-for="(course, index) in recommendCourses">
-                      <span class="course_item">
-                        {{course.course_name}}
-                      </span>
+                    <div v-for="(course, index) in recommendCourses" class="course_item" :title="course.course_short_desc">
+                      <span>【热荐课程】&nbsp;{{course.course_name}}</span>
                       <div class="course_small_image" style="width: 155px;">
                         <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
                         <img v-else src="../../../assets/default.png" height="100" width="155"/>
@@ -300,7 +298,7 @@
     color: rgba(0, 200, 6, 0.68);
   }
 
-  .course_item:hover +.course_small_image{
+  .course_item:hover > .course_small_image{
     display: block;
   }
 
@@ -317,5 +315,4 @@
     width: 20px;
     height: 20px;
   }
-
 </style>
