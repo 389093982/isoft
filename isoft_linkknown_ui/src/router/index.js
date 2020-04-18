@@ -64,6 +64,7 @@ const BusinessDetail = () => import("@/components/Business/BusinessDetail");
 const PayConfirm = () => import("@/components/Business/PayConfirm");
 const ContactList = () => import("@/components/Contact/ContactList");
 const SiteIndex = () => import("@/components/SiteIndex");
+const NotFound = () => import("@/components/NotFound");
 const CssDemo = () => import("@/components/CssDemo");
 const ElementList = () => import("@/components/Background/IPlacement/ElementList");
 const ElementEdit = () => import("@/components/Background/IPlacement/ElementEdit");
@@ -80,7 +81,9 @@ function getRootRouters() {
       children: [
         {path: 'siteIndex', component: SiteIndex},
       ]
-    }
+    },
+    {path: '/404',name: '404',component: NotFound},
+    {path: '*',redirect: '/404'}
   ]
 }
 
