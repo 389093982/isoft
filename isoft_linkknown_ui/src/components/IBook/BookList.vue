@@ -81,7 +81,7 @@
                   <span class="isoft_hover_desc" style="font-size: 12px">{{book.book_desc}}</span>
                 </div>
                 <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
-                  <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true" :extra-data="book" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
+                  <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true" :extra-data="book" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传图书封面"/>
                   <Button size="small" @click="showDeleteModal(book.id)">删除</Button>
                   <Button size="small" @click="showBookEditModal2(book)">修改信息</Button>
                   <Button size="small" @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">编辑书本</Button>
