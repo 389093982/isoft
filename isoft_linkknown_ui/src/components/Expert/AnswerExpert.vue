@@ -22,7 +22,7 @@
           </div>
 
           <p>用户印象：</p>
-          <VoteTags ref="VoteTags" v-if="ask_expert && ask_expert.id > 0" referer_type="vote_expert" :referer_id="ask_expert.id"/>
+          <VoteTags ref="voteTags" v-if="ask_expert && ask_expert.id > 0" referer_type="vote_expert" :referer_id="ask_expert.id"/>
 
           <div class="isoft_bg_white isoft_top10 isoft_pd10">
             <ul>
@@ -125,6 +125,10 @@
         if (result.status === "SUCCESS") {
           this.ask_expert = result.ask_expert;
         }
+        //更新 voteTags 标签
+        this.$refs.voteTags.setRefererType("vote_expert");
+        this.$refs.voteTags.setRefererId(this.ask_expert.id);
+        this.$refs.voteTags.refreshVoteTags();
       },
       EditAnswerExpert: async function () {
         var _this = this;
