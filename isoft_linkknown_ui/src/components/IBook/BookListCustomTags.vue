@@ -13,28 +13,33 @@
       </div>
     </div>
 
-    <div style="width: 48%;padding: 15px 10px;">
+    <div style="width: 48%;padding: 15px 10px;border-left: 2px dashed #dddddd;border-right: 2px dashed #dddddd;">
       <div style="margin-top: 30px;display: flex;flex-wrap: wrap;justify-content: space-between;">
         <div class="img_box isoft_point_cursor" style="width: 50%;height: 293px;"
+             v-if="top_location2_books && top_location2_books.length > 0"
              @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:top_location2_books[top_location2_bookIndex].id}})">
           <img v-if="top_location2_books[top_location2_bookIndex].book_img"
                :src="top_location2_books[top_location2_bookIndex].book_img" height="100%" width="100%"/>
           <img v-else src="../../assets/default.png" height="100%" width="100%"/>
         </div>
-        <div style="width: 50%;position: relative;">
-          <div style="padding-left: 10px;">
-            <p class="isoft_inline_ellipsis isoft_hover_title">{{top_location2_books[top_location2_bookIndex].book_name}}</p>
 
-            <p style="margin: 3px 0;">
-              <span class="isoft_tag1" :title="famousTexts[0]">博观而约取</span>
-              <span class="isoft_tag1" :title="famousTexts[1]">厚积而薄发</span>
-              <span class="isoft_tag1" :title="famousTexts[2]">纸上得来终觉浅</span>
-              <span class="isoft_tag1" :title="famousTexts[3]">绝知此事要躬行</span>
-            </p>
+        <div style="width: 50%;position: relative;padding-left: 10px;overflow: hidden;">
+          <transition-group name="transition_slide_text">
+            <div v-if="top_location2_bookIndex === index" v-for="(book, index) in top_location2_books" :key="index"
+              style="position: absolute;">
+              <p class="isoft_inline_ellipsis isoft_hover_title"
+                 @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">{{book.book_name}}</p>
+              <p style="margin: 3px 0;">
+                <span class="isoft_tag1" :title="famousTexts[0]">博观而约取</span>
+                <span class="isoft_tag1" :title="famousTexts[1]">厚积而薄发</span>
+                <span class="isoft_tag1" :title="famousTexts[2]">纸上得来终觉浅</span>
+                <span class="isoft_tag1" :title="famousTexts[3]">绝知此事要躬行</span>
+              </p>
+              <p class="isoft_p5line isoft_hover_desc isoft_font12">{{book.book_desc}}</p>
+            </div>
+          </transition-group>
 
-            <p class="isoft_p5line isoft_hover_desc isoft_font12">{{top_location2_books[top_location2_bookIndex].book_desc}}</p>
-          </div>
-          <div style="position: absolute;bottom: 0;display: flex;justify-content: space-between;">
+          <div style="position: absolute;bottom: 2px;right:2px;display: flex;justify-content: space-between;">
             <div v-for="(book, index) in top_location2_books" style="width: 30%;height:88px;margin-left: 5px;"
                  class="img_box isoft_point_cursor" :class="{img_box_current: top_location2_bookIndex === index}"
                  @mouseenter="top_location2_bookIndex = index"
@@ -103,5 +108,23 @@
 <style scoped>
   .img_box:hover,.img_box_current {
     box-shadow: 0 0 2px 2px #00ff33;
+  }
+    /*定义进入前与离开后状态*/
+  .transition_slide_text-enter {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  .transition_slide_text-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  /*定义离开前与进入后状态*/
+  .transition_slide_text-leave, .transition_slide_text-enter-to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  /*定义进出过程*/
+  .transition_slide_text-enter-active, .transition_slide_text-leave-active {
+    transition: all .5s ease-in;
   }
 </style>
