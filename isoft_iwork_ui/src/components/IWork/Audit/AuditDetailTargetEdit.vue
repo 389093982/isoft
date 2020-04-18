@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex;">
-    <div style="width: 80%;">
+    <div style="width: 75%;">
       <Tabs type="card" :animated="false" name="tab_level_2" :value="tabValue">
         <TabPane v-for="(item, index) in update_cases" :name="'tabValue_' + index"
                  :label="item.case_name ? item.case_name : '场景 ' + (index + 1)" tab="tab_level_2">
@@ -20,7 +20,7 @@
         </TabPane>
       </Tabs>
     </div>
-    <div style="width: 20%;padding-left: 10px;">
+    <div style="width: 25%;padding-left: 10px;">
       <Button type="success" size="small" @click="handleSubmit">保存场景</Button>
       <Button type="success" size="small" @click="handleAdd">新增场景</Button>
 

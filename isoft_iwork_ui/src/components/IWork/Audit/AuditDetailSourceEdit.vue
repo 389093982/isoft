@@ -10,7 +10,7 @@
     <br/>
 
     <div style="display: flex;margin-top: 20px;padding:5px;border-top: 2px solid #eee;">
-      <div style="width: 80%;">
+      <div style="width: 75%;">
         <Tabs type="card" :animated="false" name="tab_level_2" :value="tabValue">
         <span v-if="taskDetail.query_cases && taskDetail.query_cases.length > 0">
           <TabPane v-for="(item, index) in taskDetail.query_cases" :name="'tabValue_' + index"
@@ -30,7 +30,7 @@
           <span v-else>暂无场景</span>
         </Tabs>
       </div>
-      <div style="width: 20%;padding-left: 10px;">
+      <div style="width: 25%;padding-left: 10px;">
         <Button type="success" size="small" @click="editAuditTaskSource">保存提交</Button>
         <Button type="success" size="small" @click="handleAdd">新增场景</Button>
 

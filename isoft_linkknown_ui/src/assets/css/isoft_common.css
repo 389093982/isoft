@@ -213,7 +213,7 @@
 }
 
 /* 文字超过三行显示省略号 */
-.p3line {
+.isoft_p3line {
   word-wrap: break-word;
   word-break: break-all;
   overflow: hidden;
@@ -223,7 +223,17 @@
   -webkit-box-orient: vertical;
 }
 
-.p1line {
+.isoft_p5line {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.isoft_p1line {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

@@ -24,6 +24,8 @@
             </Col>
           </Row>
 
+          <BookListCustomTags/>
+
           <div class="isoft_info_tip isoft_font12" style="margin-top: 5px;">
             图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
           </div>
@@ -130,10 +132,12 @@
   import BookInfoEdit from "./BookInfoEdit";
   import IsComfirmDelete from "../IBlog/IsComfirmDelete";
   import LearningDiary from "../ILearning/LearningDiary";
+  import BookListCustomTags from "./BookListCustomTags";
 
   export default {
     name: "BookList",
     components: {
+      BookListCustomTags,
       LearningDiary,
       IsComfirmDelete,
       BookInfoEdit,
@@ -233,7 +237,7 @@
       },
       renderNickName: function (user_name) {
         return RenderNickName(this.userInfos, user_name);
-      }
+      },
     },
     mounted() {
       let search_type = !checkEmpty(this.$route.query.type) ? this.$route.query.type : '_all';
