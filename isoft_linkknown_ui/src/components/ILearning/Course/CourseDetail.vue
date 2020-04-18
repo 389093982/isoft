@@ -132,7 +132,7 @@
 </template>
 
 <script>
-  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, ToggleFavorite} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import UserAbout from "../../User/UserAbout"
@@ -151,19 +151,15 @@
       return {
         isLoading: true,
         defaultImg: require('../../../assets/default.png'),
-        // 当前课程
-        course: {},
-        // 视频清单
-        cVideos: [],
+        course: {},                // 当前课程
+        hasPaid:false,            //默认为未付款
+        cVideos: [],              // 视频清单
         filter_cVideos: [],
-        // 课程收藏
-        course_collect: false,
-        // 课程点赞
-        course_praise: false,
+        course_collect: false,  // 课程收藏
+        course_praise: false,   // 课程点赞
         clickIndex:0,
         minLen:5,
-        // 推荐课程
-        recommendCourses:[],
+        recommendCourses:[],    // 推荐课程
       }
     },
     methods: {
@@ -178,7 +174,27 @@
       getLoginUserName:function(){
         return getLoginUserName();
       },
+      refreshPaidAndCourse:async function(){
+        if (this.getLoginUserName()) {
+          console.log("用户已登录");
+          const result = await queryPayOrderList({
+            'user_name':this.getLoginUserName(),
+            'goods_type':'course_theme_type',
+            'goods_id':this.$route.query.course_id
+          });
+          if (result.status === 'SUCCESS') {
+            if (result.orders.length === 1 && result.orders[0].pay_result === 'SUCCESS') {
+              this.hasPaid = true;
+            }
+            this.refreshCourseDetail();
+          }
+        }else {
+          console.log("用户未登录");
+          this.refreshCourseDetail();
+        }
+      },
       refreshCourseDetail: async function () {
+        //刷新课程
         this.clickIndex = 0;
         this.isLoading = true;
         try {
@@ -203,6 +219,7 @@
               // 如果集数少于5，那么做一个推荐
               this.refreshHotRecommend()
             }
+            //更新 voteTags 标签
             this.$refs.voteTags.setRefererType("vote_course");
             this.$refs.voteTags.setRefererId(this.course.id);
             this.$refs.voteTags.refreshVoteTags();
@@ -246,9 +263,11 @@
         this.clickIndex = index;
       },
       playSelectedVideo:function(course_id,video_id,index,preListFree){
-        if (this.course.isCharge === 'charge' && index + 1 > preListFree) {
-          this.$Message.warning("付费视频！");
-          return;
+        if (!this.hasPaid) {
+          if (this.course.isCharge === 'charge' && index + 1 > preListFree) {
+            this.$Message.warning("付费视频！");
+            return;
+          }
         }
         this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
       },
@@ -261,10 +280,11 @@
       }
     },
     mounted: function () {
-      this.refreshCourseDetail(this.$route.query.course_id);
+      //判断是否已付费 & 刷新课程
+      this.refreshPaidAndCourse();
     },
     watch: {
-      "$route.params": "refreshCourseDetail"      // 如果 $route.params 有变化,会再次执行该方法
+      "$route.params": "refreshPaidAndCourse"      // 如果 $route.params 有变化,会再次执行该方法
     },
     filters: {
       filterSuffix: function (value) {

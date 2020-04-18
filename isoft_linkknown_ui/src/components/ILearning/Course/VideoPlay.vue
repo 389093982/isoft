@@ -126,7 +126,7 @@
       }
     },
     methods: {
-      confirmPaid:async function(){
+      refreshPaidAndCourse:async function(){
         if (this.loginUserName) {
           console.log("用户已登录");
           const result = await queryPayOrderList({
@@ -134,14 +134,19 @@
             'goods_type':'course_theme_type',
             'goods_id':this.$route.query.course_id
           });
-          if (result.status === 'SUCCESS' && result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
-            this.hasPaid = true;
+          if (result.status === 'SUCCESS') {
+            if (result.orders.length === 1 && result.orders[0].pay_result === 'SUCCESS') {
+              this.hasPaid = true;
+            }
+            this.refreshCorsedetail();
           }
         }else {
-          console.log("用户未登录")
+          console.log("用户未登录");
+          this.refreshCorsedetail();
         }
       },
       refreshCorsedetail: async function () {
+        //刷新课程
         const course_id = this.$route.query.course_id;
         const result = await ShowCourseDetail({course_id:course_id});
         if (result.status === "SUCCESS") {
@@ -233,10 +238,8 @@
       },
     },
     mounted: function () {
-      //已购判断
-      this.confirmPaid();
-      //刷新课程信息
-      this.refreshCorsedetail();
+      //判断是否已付费 & 刷新课程
+      this.refreshPaidAndCourse();
       // 注册播放下一集事件
       this.addPlayNextEventListener();
       //捕获播放报错，并处理
