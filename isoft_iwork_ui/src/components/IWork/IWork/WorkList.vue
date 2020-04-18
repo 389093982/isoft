@@ -58,30 +58,32 @@
 
     </ISimpleLeftRightRow>
 
-    所有类型：
-    <Tag :color="search_work_type === 'all' ? 'success' : 'default'">
-      <span @click="filterWorkTypes('all')">all</span>
-    </Tag>
-    <Tag :color="search_work_type === 'work' ? 'success' : 'default'">
-      <span @click="filterWorkTypes('work')">work</span>
-    </Tag>
-    <Tag :color="search_work_type === 'filter' ? 'success' : 'default'">
-      <span @click="filterWorkTypes('filter')">filter</span>
-    </Tag>
-    <br/>
-    <div style="display: flex;">
-      <div style="width: 77px;">所有模块：</div>
-      <div>
+    <Row>
+      所有类型：
+      <Tag :color="search_work_type === 'all' ? 'success' : 'default'">
+        <span @click="filterWorkTypes('all')">all</span>
+      </Tag>
+      <Tag :color="search_work_type === 'work' ? 'success' : 'default'">
+        <span @click="filterWorkTypes('work')">work</span>
+      </Tag>
+      <Tag :color="search_work_type === 'filter' ? 'success' : 'default'">
+        <span @click="filterWorkTypes('filter')">filter</span>
+      </Tag>
+    </Row>
+    <Row>
+      所有模块：
+      <span>
         <Tag :color="search_module === 'all' ? 'success' : 'default'">
           <span @click="filterModuleWork('all')">all</span>
         </Tag>
         <span v-for="module in modules">
-        <Tag :color="search_module === module.module_name ? 'success' : 'default'">
-          <span @click="filterModuleWork(module.module_name)">{{module.module_name}}</span>
-        </Tag>
+          <Tag :color="search_module === module.module_name ? 'success' : 'default'">
+            <span @click="filterModuleWork(module.module_name)">{{module.module_name}}</span>
+          </Tag>
+        </span>
       </span>
-      </div>
-    </div>
+    </Row>
+    <br>
     <Table border :columns="columns1" :data="works" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>

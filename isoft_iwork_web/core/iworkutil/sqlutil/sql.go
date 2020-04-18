@@ -47,7 +47,7 @@ func concatable(part string) bool {
 	// .匹配任意一个字符 ，*匹配零个或多个 ，优先匹配更多(贪婪)
 	orderMatch, _ := regexp.MatchString(`^(order)\s+.*`, part)
 	whereMatch, _ := regexp.MatchString(`^(where)\s+.*`, part)
-	whereMatch2, _ := regexp.MatchString(`.*\s+(where)`, part)
+	whereMatch2, _ := regexp.MatchString(`.*\s+(where)$`, part)
 	if orderMatch || whereMatch || whereMatch2{
 		return false
 	}

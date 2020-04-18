@@ -110,7 +110,7 @@
 
         <div class="isoft_bg_white isoft_top5 isoft_pd20" style="min-height: 600px;">
           <p>学者印象：</p>
-          <VoteTags  v-if="course.id > 0" ref="voteTags"/>
+          <VoteTags  v-if="course.id > 0" ref="voteTags" referer_type="vote_course" :referer_id="course.id"/>
           <!-- 评论模块 -->
           <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
         </div>
