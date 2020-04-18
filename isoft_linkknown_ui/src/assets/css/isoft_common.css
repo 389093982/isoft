@@ -591,3 +591,23 @@
   opacity: 0.7;
   z-index: 1024;
 }
+
+.isoft_hover_title {
+  font-size: 15px;
+  color: #555;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+.isoft_hover_title:hover {
+  font-size: 15px;
+  color: red;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.isoft_hover_desc {
+  color: #9b9896;
+  cursor: pointer;
+}
+.isoft_hover_desc:hover{
+  color: #777;
+}

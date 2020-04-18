@@ -59,26 +59,26 @@
                   <Row>
                     <span style="margin-left: 10px;">
                       <span style="color: #777">作者:</span>
-                      <span class="bookDetail" v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
-                      <span class="bookDetail" v-else>{{book.created_by}}</span>
+                      <span class="isoft_hover_desc" v-if="renderNickName(book.created_by)">{{renderNickName(book.created_by)}}</span>
+                      <span class="isoft_hover_desc" v-else>{{book.created_by}}</span>
                     </span>
                   </Row>
                   <Row>
                     <span style="margin-left: 10px;">
                       <span style="color: #777">创建于:</span>
-                      <span class="bookDetail"><Time :time="book.created_time" type="relative"/></span>
+                      <span class="isoft_hover_desc"><Time :time="book.created_time" type="relative"/></span>
                     </span>
                   </Row>
                   <Row>
                     <span style="margin-left: 10px;">
                       <span style="color: #777">更新于:</span>
-                      <span class="bookDetail"><Time :time="book.last_updated_time" type="relative"/></span>
+                      <span class="isoft_hover_desc"><Time :time="book.last_updated_time" type="relative"/></span>
                     </span>
                   </Row>
                 </div>
                 <div class="isoft_word_break" style="font-size: 14px;color: #7d7d7d;margin-left: 10px;">
                   <span style="color: #777">本书简介:</span>
-                  <span class="bookDetail" style="font-size: 12px">{{book.book_desc}}</span>
+                  <span class="isoft_hover_desc" style="font-size: 12px">{{book.book_desc}}</span>
                 </div>
                 <div v-if="isLoginUserName(book.created_by)" style="margin: 10px;float: right;">
                   <IFileUpload class="isoft_mr10" size="small" :auto-hide-modal="true" :extra-data="book" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="换张图片"/>
@@ -298,11 +298,11 @@
     padding: 1px 4px;
   }
 
-  .bookDetail{
+  .isoft_hover_desc{
     color: #9b9896;
     cursor: pointer;
   }
-  .bookDetail:hover{
+  .isoft_hover_desc:hover{
     color: #777;
     cursor: pointer;
   }
