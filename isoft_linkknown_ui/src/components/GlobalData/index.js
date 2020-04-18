@@ -20,6 +20,9 @@ const goodTypes = ['服务', '商品'];
 const voteTags = ['深受启发', '言简意赅', '值得收藏', '晦涩难懂', '内容不符'];
 const currentSite = "_isoft_linkknown_ui";
 const isoft_unifiedpay_order = "ws://localhost:6002/wechatPayApi/Order";
+const book_list_top_location1 = "book_list_top_location1";
+const book_list_top_location2 = "book_list_top_location2";
+const book_list_top_location3 = "book_list_top_location2";
 
 export default {
   placement_host_recommend_blog_tpyes,
@@ -44,5 +47,9 @@ export default {
   jobTypes,
   currentSite,
   isoft_unifiedpay_order,
+
+  book_list_top_location1,      // 图书列表页顶部位置推荐左侧图书
+  book_list_top_location2,      // 图书列表页顶部位置推荐中间图书
+  book_list_top_location3,      // 图书列表页顶部位置推荐右侧图书
 }
 

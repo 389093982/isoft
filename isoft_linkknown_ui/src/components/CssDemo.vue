@@ -13,6 +13,8 @@
     <span class="isoft_hover_color_green">hover 字体绿色样式</span>
     <span class="isoft_hover_color_blue">hover 字体蓝色样式</span>
     <br/>
+    <span class="isoft_hover_title">这里是标题</span>
+    <span class="isoft_hover_desc">这里是描述</span>
 
     <!-- div 淡入淡出效果-->
     <div class="fadeToLeft">淡入淡出</div>

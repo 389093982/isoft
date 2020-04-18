@@ -213,7 +213,7 @@
 }
 
 /* 文字超过三行显示省略号 */
-.p3line {
+.isoft_p3line {
   word-wrap: break-word;
   word-break: break-all;
   overflow: hidden;
@@ -223,7 +223,17 @@
   -webkit-box-orient: vertical;
 }
 
-.p1line {
+.isoft_p5line {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.isoft_p1line {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -580,4 +590,24 @@
   background-color: rgb(0, 0, 0);
   opacity: 0.7;
   z-index: 1024;
+}
+
+.isoft_hover_title {
+  font-size: 15px;
+  color: #555;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+.isoft_hover_title:hover {
+  font-size: 15px;
+  color: red;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.isoft_hover_desc {
+  color: #9b9896;
+  cursor: pointer;
+}
+.isoft_hover_desc:hover{
+  color: #777;
 }
