@@ -12,10 +12,10 @@
       </div>
     </div>
 
-    <div style="margin: 150px 0 0 110px;">
+<!--    <div style="margin: 150px 0 0 110px;">
       <Button @click="resetImgAnimation()">重置</Button>
       <Button @click="showImgAnimation()">测试效果</Button>
-    </div>
+    </div>-->
   </div>
 </template>
 

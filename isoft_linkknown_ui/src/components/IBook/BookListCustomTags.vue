@@ -1,5 +1,6 @@
 <template>
-  <div style="display: flex;justify-content: space-between;">
+  <div style="display: flex;justify-content: space-between;"
+       v-if="top_location1_books && top_location1_books.length > 0">
     <div style="width: 25%;padding: 5px 10px;">
       <div class="isoft_font_header">官方推荐</div>
       <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
@@ -13,10 +14,10 @@
       </div>
     </div>
 
-    <div style="width: 48%;padding: 15px 10px;border-left: 2px dashed #dddddd;border-right: 2px dashed #dddddd;">
+    <div style="width: 48%;padding: 15px 10px;border-left: 2px dashed #dddddd;border-right: 2px dashed #dddddd;"
+         v-if="top_location2_books && top_location2_books.length > 0">
       <div style="margin-top: 30px;display: flex;flex-wrap: wrap;justify-content: space-between;">
         <div class="img_box isoft_point_cursor" style="width: 50%;height: 293px;"
-             v-if="top_location2_books && top_location2_books.length > 0"
              @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:top_location2_books[top_location2_bookIndex].id}})">
           <img v-if="top_location2_books[top_location2_bookIndex].book_img"
                :src="top_location2_books[top_location2_bookIndex].book_img" height="100%" width="100%"/>
@@ -52,7 +53,8 @@
       </div>
     </div>
 
-    <div style="width: 25%;padding: 5px 10px;">
+    <div style="width: 25%;padding: 5px 10px;"
+      v-if="top_location3_books && top_location3_books.length > 0">
       <div class="isoft_font_header">新番图书</div>
       <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
         <div class="isoft_point_cursor isoft_hover_red" v-for="(book, index) in top_location3_books" style="width: 48%;">

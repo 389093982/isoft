@@ -24,10 +24,9 @@
             </Col>
           </Row>
 
-          <BookListCustomTags v-if="pattern === '_all'"/>
-
-          <div class="isoft_info_tip isoft_font12" style="margin-top: 5px;">
-            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
+          <div v-if="pattern === '_all'">
+            <BookListCustomTags/>
+            <SepLine/>
           </div>
 
           <div style="min-height: 450px;">
@@ -94,6 +93,10 @@
             <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
 
+          <div class="isoft_info_tip isoft_font12 isoft_color_grey isoft_point_cursor" style="margin-top: 20px;" @click="showBookEditModal">
+            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
+          </div>
+
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
@@ -133,6 +136,7 @@
   import IsComfirmDelete from "../IBlog/IsComfirmDelete";
   import LearningDiary from "../ILearning/LearningDiary";
   import BookListCustomTags from "./BookListCustomTags";
+  import SepLine from "../Common/SepLine";
 
   export default {
     name: "BookList",
@@ -142,6 +146,7 @@
       IsComfirmDelete,
       BookInfoEdit,
       RandomAdmt,
+      SepLine,
       IndexCarousel, HotUser, IBeautifulLink, IBeautifulCard, ISimpleConfirmModal, IFileUpload
     },
     data() {
