@@ -1,7 +1,7 @@
 <template>
     <span style="cursor: pointer;font-size: 12px;color: grey" @click="changeShowMore()">
-      <span v-if="showMore"><Icon type="ios-arrow-down" /></span>
-      <span v-else><Icon type="ios-arrow-up" /></span>
+      <span v-if="showMore"><Icon type="ios-arrow-up" /></span>
+      <span v-else><Icon type="ios-arrow-down" /></span>
       {{defaultDesc}}
     </span>
 </template>
