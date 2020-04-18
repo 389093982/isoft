@@ -1,17 +1,16 @@
 <template>
   <div>
 
-    <!--搜索框-->
-    <div style="width: 100%;height: 70px;background-color: white;border:1px solid wheat;border-radius: 50px">
-      <div style="float: left;width: 50%">
-        <div style="font-size: 30px;margin: 25px 0 0 180px;color: rgba(128,128,128,0.58)">Stay hungry，Stay foolish</div>
-      </div>
-      <div style="float: left;width: 50%;padding: 15px 170px 0 0 ">
-        <Affix :offset-top="60">
-          <ISearch @submitFunc="submitFunc"></ISearch>
+    <div class="course_title_bg" style="height: 80px;padding: 0 30px;display: flex">
+      <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
+        <span style="cursor: pointer;position: absolute;top: 27px;">Stay hungry，Stay foolish</span>
+      </span>
+      <!--搜索框-->
+      <span style="width: 50%;position: relative;">
+        <Affix :offset-top="38">
+          <ISearch @submitFunc="submitFunc" style="position: absolute;top: 20px;right: 140px"></ISearch>
         </Affix>
-      </div>
-      <div style="clear: both"></div>
+      </span>
     </div>
 
     <!--课程分类-->
@@ -38,14 +37,7 @@
   export default {
     name: "JingpinCourse",
     components: {
-      CourseType,
-      ShowModulars,
-      IndexCarousel,
-      IHotRecommand,
-      HorizontalLinks,
-      HotRecommend,
-      ToolBox,
-      ISearch,
+      CourseType, ShowModulars, IndexCarousel, IHotRecommand, HorizontalLinks, HotRecommend, ToolBox, ISearch,
     },
     data() {
       return {
@@ -73,13 +65,9 @@
 </script>
 
 <style scoped>
-  #courseSearchId{
-    border-style:solid;border-color:#ff537c;width: 400px;height: 35px;padding: 2px 0 2px 8px;position: absolute;left:400px;top:100px;
-  }
-  #courseSearchButtonId{
-    border-style:solid;border-color:#ff537c;width:60px;height: 35px;background-color: #ff537c;cursor: pointer;position: absolute;left:800px;top:100px;
-  }
-  #courseSearchCodeId{
-    color: white;cursor: pointer;font-size: 15px;
+  .course_title_bg {
+    height: 140px;
+    background: url(../../assets/course/course_title_bg.jpg) no-repeat;
+    background-size: 100%;
   }
 </style>

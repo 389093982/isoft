@@ -107,17 +107,17 @@
 
 <style scoped>
   .bgImg1{
-    background-image: url("../../../static/images/bg/bg1.jpg");
+    background-image: url("../../../static/images/indexBg/bg1.jpg");
     background-size: 100% 100%;
     height: 400px;
   }
   .bgImg2{
-    background-image: url("../../../static/images/bg/bg2.jpg");
+    background-image: url("../../../static/images/indexBg/bg2.jpg");
     background-size: 100% 100%;
     height: 400px;
   }
   .bgImg3{
-    background-image: url("../../../static/images/bg/bg3.jpg");
+    background-image: url("../../../static/images/indexBg/bg3.jpg");
     background-size: 100% 100%;
     height: 400px;
   }

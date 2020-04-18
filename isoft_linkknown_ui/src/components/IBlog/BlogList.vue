@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="section02_bg" style=";height: 80px;padding: 0 30px;display: flex">
+    <div class="blog_title_bg" style="height: 80px;padding: 0 30px;display: flex">
       <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
         <span style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
       </span>
@@ -66,7 +66,7 @@
             <!--遍历博客-->
             <ul>
               <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
-                <Row class="blogHangHover" style="height: 80px; " @click.native="clickThisBlock(index)" :style="{'margin-top': index===0 ? 5+'px':20+'px', backgroundColor:index===currentClickIndex?'rgba(128, 128, 128, 0.16)':''}">
+                <Row class="blogHangHover" style="height: 80px; " @click.native="clickThisBlock(index)" :style="{'margin-top': index===0 ? 5+'px':20+'px', backgroundColor:index===currentClickIndex?'rgba(128, 128, 128, 0.22)':''}">
                   <!--第一列 ：博客中第一张图片-->
                   <Col span="6">
                     <div style="padding: 0 5px 0 0">
@@ -260,8 +260,7 @@
   export default {
     name: "BlogList",
     components: {
-      HatAndFacePicture,
-      MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
+      HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
         isLoading: true,
@@ -421,9 +420,9 @@
 </script>
 
 <style scoped>
-  .section02_bg {
+  .blog_title_bg {
     height: 140px;
-    background: url(../../assets/bg2.jpg) no-repeat;
+    background: url(../../assets/blog/blog_title_bg.jpg) no-repeat;
     background-size: 100%;
   }
   .type_hover{
@@ -450,7 +449,8 @@
   }
 
   .blogHangHover:hover{
-    background-color: rgba(128, 128, 128, 0.16);
+    background-color: rgba(177, 177, 177, 0.13);
+    /*background-color: rgba(128, 128, 128, 0.22);*/
   }
 
   .hoverSeeDetail {
