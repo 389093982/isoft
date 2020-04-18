@@ -58,7 +58,7 @@
             </Col>
           </Row>
 
-          <SepLine/>
+          <SepLine style="margin: 25px 0 30px 0;"/>
 
           <!-- 视频链接 -->
           <Row style="margin: 10px 0;min-height: 200px;">
