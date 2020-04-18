@@ -24,7 +24,7 @@
             </Col>
           </Row>
 
-          <BookListCustomTags/>
+          <BookListCustomTags v-if="pattern === '_all'"/>
 
           <div class="isoft_info_tip isoft_font12" style="margin-top: 5px;">
             图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
