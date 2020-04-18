@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="section02_bg" style=";height: 80px;padding: 0 30px;display: flex">
+    <div class="blog_title_bg" style="height: 80px;padding: 0 30px;display: flex">
       <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
         <span style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
       </span>
@@ -260,8 +260,7 @@
   export default {
     name: "BlogList",
     components: {
-      HatAndFacePicture,
-      MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
+      HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
         isLoading: true,
@@ -421,9 +420,9 @@
 </script>
 
 <style scoped>
-  .section02_bg {
+  .blog_title_bg {
     height: 140px;
-    background: url(../../assets/bg2.jpg) no-repeat;
+    background: url(../../assets/blog/blog_title_bg.jpg) no-repeat;
     background-size: 100%;
   }
   .type_hover{

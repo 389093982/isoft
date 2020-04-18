@@ -9,6 +9,9 @@
           <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #999">
             正在播放: {{course.course_name}} / 第{{currentClickIndex+1 | modification}}集: {{curVideo.video_name | filterSuffix }}
           </div>
+          <div v-else style="height: 30px;margin: 10px 0 0 0 ;color: #999">
+            &nbsp;
+          </div>
           <div>
             <video ref="video" class="videoClass" width="100%" height="100%" controls preload="auto" id="videoPath" autoplay="autoplay" controlslist="nodownload">
               <source src="" type="video/mp4">
