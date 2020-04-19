@@ -86,29 +86,33 @@
       </div>
     </div>
 
-    <div class="isoft_top5" style="min-height: 450px;display: flex;justify-content:space-between;">
-      <div style="width: 66%;background-color: white;">
-        <div v-if="user">
-          <div style="background-color: #ffffff;">
-            <!--用户相关的博文、课程、书本-->
-            <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
+    <div class="isoft_top5" style="min-height: 450px;justify-content:space-between;">
+      <Row>
+        <Col span="16" style="background-color: white;margin-right: 5px">
+          <div v-if="user" style="margin: 0 0 0 20px ">
+            <div style="background-color: #ffffff;">
+              <!--用户相关的博文、课程、书本-->
+              <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
+            </div>
+            <div class="isoft_top5" style="background-color: #ffffff;">
+              <!--他/她收藏的图书-->
+              <UserFavorite :user-name="_userName"/>
+            </div>
           </div>
-          <div class="isoft_top5" style="background-color: #ffffff;">
-            <!--他/她收藏的图书-->
-            <UserFavorite :user-name="_userName"/>
+          <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
+            <Spin fix size="large" v-if="isLoading">
+              <div class="isoft_loading"></div>
+            </Spin>
+            <ForwardLogin v-else></ForwardLogin>
           </div>
-        </div>
-        <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
-          <Spin fix size="large" v-if="isLoading">
-            <div class="isoft_loading"></div>
-          </Spin>
-          <ForwardLogin v-else></ForwardLogin>
-        </div>
-      </div>
-      <div style="width: 33%;">
-        <!--用户排行榜-->
-        <HotUser/>
-      </div>
+        </Col>
+        <Col span="7">
+          <div style="width: 99%">
+            <!--用户排行榜-->
+            <HotUser/>
+          </div>
+        </Col>
+      </Row>
     </div>
   </div>
 </template>

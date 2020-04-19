@@ -72,7 +72,7 @@
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
         </Col>
-        <Col span="8">
+        <Col span="7">
           <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
           <ExpertWall></ExpertWall>
         </Col>

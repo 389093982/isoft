@@ -69,7 +69,7 @@
     </div>
 
     <Row class="isoft_top10">
-      <Col span="18">
+      <Col span="17">
         <div class="isoft_bg_white isoft_pd10" style="margin-right: 5px;">
 
           <p>读者印象：</p>
