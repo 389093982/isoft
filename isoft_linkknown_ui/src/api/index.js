@@ -141,11 +141,7 @@ export const GetAllCourseSubType = (course_type) => ajax(BASE_URL + '/iwork/http
 export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList2', params, 'GET');
 
 // 登录接口
-export const Login = (username, passwd, redirectUrl) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin2", {
-  username,
-  passwd,
-  redirectUrl
-}, 'POST');
+export const Login = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin2", params, 'POST');
 
 // 注册接口
 export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist2", params, 'POST');

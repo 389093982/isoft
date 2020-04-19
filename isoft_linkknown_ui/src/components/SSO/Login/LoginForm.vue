@@ -91,10 +91,15 @@
           return false;
         }
         // 实际登录接口
-        this.postLogin(username, passwd, redirectUrl);
+        this.postLogin(username, passwd, "lk", redirectUrl);
       },
-      postLogin: async function (username, passwd, redirectUrl) {
-        var result = await Login(username, passwd, decodeURIComponent(redirectUrl));
+      postLogin: async function (username, passwd, third_user_type, redirectUrl) {
+        var result = await Login({
+          username,
+          passwd,
+          third_user_type,
+          redirectUrl: decodeURIComponent(redirectUrl),
+        });
         if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
           setLoginInfo(result, username);
           localStorage.setItem("__userName", this.username);
@@ -123,7 +128,7 @@
       if (checkNotEmpty(this.$route.query.code)) {
         await handleGitHubLoginResponse(this.$route.query.code,
           this.getLoginRedirectUrl(),
-          (username, passwd, redirectUrl) => this.postLogin(username, passwd, redirectUrl),
+          (username, passwd, redirectUrl) => this.postLogin(username, passwd, "github", redirectUrl),
           (msg) => this.$Message.error(msg));
       }
     }
