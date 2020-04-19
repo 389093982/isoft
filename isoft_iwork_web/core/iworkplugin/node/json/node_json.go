@@ -43,6 +43,10 @@ type JsonParserNode struct {
 func (this *JsonParserNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	json_str := this.TmpDataMap[iworkconst.STRING_PREFIX+"json_data"].(string)
+	// 直接转成 json 数组
+	if !strings.HasPrefix(json_str, "[") && !strings.HasSuffix(json_str, "]") {
+		json_str = "[" + json_str + "]"
+	}
 	json_objects := make([]map[string]interface{}, 0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)
 	if err == nil {
@@ -51,7 +55,7 @@ func (this *JsonParserNode) Execute(trackingId string) {
 			for paramName, paramValue := range json_object {
 				paramMap[fmt.Sprintf("rows[%d].%s", index, paramName)] = paramValue
 				if index == 0 {
-					paramMap[fmt.Sprintf("rows.%s", paramName)] = paramValue
+					paramMap[fmt.Sprintf("row.%s", paramName)] = paramValue
 				}
 			}
 		}
@@ -69,12 +73,16 @@ func (this *JsonParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
-	if json_fields := param.GetStaticParamValueWithStep(this.WorkCache.Work.AppId, "json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
+	if json_fields := param.GetStaticParamValueWithStep(this.AppId, "json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
 		jsonArr := strings.Split(json_fields, ",")
 		for _, paramName := range jsonArr {
 			if _paramName := strings.TrimSpace(paramName); _paramName != "" {
 				items = append(items, iworkmodels.ParamOutputSchemaItem{
 					ParentPath: "rows",
+					ParamName:  _paramName,
+				})
+				items = append(items, iworkmodels.ParamOutputSchemaItem{
+					ParentPath: "row",
 					ParamName:  _paramName,
 				})
 			}

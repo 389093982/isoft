@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"io/ioutil"
-	"isoft/isoft_utils/common/httputil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/httputil"
 	"net/http"
 	"strings"
 )
@@ -56,8 +56,8 @@ func (this *HttpRequestNode) GetDefaultParamInputSchema() *iworkmodels.ParamInpu
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "request_url", "请求资源的url地址"},
 		2: {iworkconst.STRING_PREFIX + "request_method?", "可选参数,请求方式,默认是GET请求,支持GET、POST"},
-		3: {iworkconst.MULTI_PREFIX + "request_params?", "可选参数,请求参数,格式参考：key=value"},
-		4: {iworkconst.MULTI_PREFIX + "request_headers?", "可选参数,请求头参数,格式参考：key=value"},
+		3: {iworkconst.MULTI_PREFIX + "request_params?", "可选参数,请求参数,格式参考：key=value,多个参数用分隔符 & 拼接"},
+		4: {iworkconst.MULTI_PREFIX + "request_headers?", "可选参数,请求头参数,格式参考：key=value,多个参数用分隔符 & 拼接"},
 	}
 	return this.BPIS1(paramMap)
 }
@@ -73,14 +73,12 @@ func (this *HttpRequestNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOut
 
 func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[string]interface{} {
 	paramMap := make(map[string]interface{})
-	if _paramName, ok := tmpDataMap[paramName].(string); ok {
-		if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != "" {
-			paramMap[strings.TrimSpace(paramName)] = strings.TrimSpace(paramValue)
-		}
-	} else if _paramNames, ok := tmpDataMap[paramName].([]string); ok {
-		for _, _paramName := range _paramNames {
-			if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != "" {
-				paramMap[strings.TrimSpace(paramName)] = strings.TrimSpace(paramValue)
+	if paramValue, ok := tmpDataMap[paramName].(string); ok {
+		// 根据分隔符 & 分割得到多个参数
+		for _, keyValue := range strings.Split(paramValue, "&") {
+			// 再根据分隔符 = 进行分割
+			if key, value := checkParameter(keyValue); strings.TrimSpace(key) != "" {
+				paramMap[strings.TrimSpace(key)] = strings.TrimSpace(value)
 			}
 		}
 	}

@@ -3,7 +3,7 @@ import {checkNotEmpty, parseUrlParamsToObj} from "./index"
 import {Regist} from "../api";
 
 const config = {
-  clientID:'af46aec6d4529d7cd7fd',
+    clientID:'af46aec6d4529d7cd7fd',
   clientSecret:'26ed56923769e65599573e85bfe76d5e6740c838',
 };
 
@@ -33,7 +33,7 @@ const getAccessTokenByCode = async function (code, loginSuccessFunc) {
 };
 
 const getUserInfoByAccessToken = async function(access_token, loginSuccessFunc) {
-/*  axios({
+  axios({
     method: "GET",
     url: "/githubapi/user",
     headers: {
@@ -46,15 +46,15 @@ const getUserInfoByAccessToken = async function(access_token, loginSuccessFunc) 
     if (res && res.data) {
       await loginSuccessFunc(res.data.login);
     }
-  });*/
-  await loginSuccessFunc("389093982");   // 测试使用
+  });
+  // await loginSuccessFunc("389093982");   // 测试使用
 };
 
 export const redirectToGitHubLogin = function () {
   window.location.href = "https://github.com/login/oauth/authorize?client_id=" + config.clientID + "&scope=user,public_repo";
 };
 
-export const handleGitHubLoginResponse = async function (code, redirectUrl, loginSucessFunc, loginFailedFunc) {
+export const handleGitHubLoginResponse = async function (code, redirectUrl, linkknownLoginFunc, loginFailedFunc) {
   if (code === localStorage.getItem("github_login_code")) {
     loginFailedFunc("不能重复提交表单数据，请重新登录！");
     return;
@@ -65,7 +65,7 @@ export const handleGitHubLoginResponse = async function (code, redirectUrl, logi
   await getAccessTokenByCode(code, async (login) => {
     // 登录成功拿到了用户名后执行 linkknown 登录
     await autoRegistFunc(login);                     // 先尝试去自动注册,已注册则不用注册
-    await loginSucessFunc("gh_" + login, "", redirectUrl);      // 去登录，第三方登录不用校验密码
+    await linkknownLoginFunc("gh_" + login, "", redirectUrl);      // 去登录，第三方登录不用校验密码
     loginFlag = true;
   });
 
@@ -79,7 +79,6 @@ const autoRegistFunc = async function (userName) {
   // 第三方自动注册,账号、密码、昵称使用一致,第三方注册不需要验证码
   const result = await Regist({
     third_user_type: 'github',
-    third_user_name: "gh_" + userName,
     username: "gh_" + userName,
     passwd: userName,
     nickname: userName,
