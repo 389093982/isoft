@@ -611,3 +611,8 @@
 .isoft_hover_desc:hover{
   color: #777;
 }
+
+.qun_hover_orange:hover{
+  color: #ff6900;
+  cursor: pointer;
+}
