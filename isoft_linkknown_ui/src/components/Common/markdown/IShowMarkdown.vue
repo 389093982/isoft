@@ -106,10 +106,10 @@
         //添加行号
         $('.isoft_code').each(function (index, item) {
           var num = item.innerHTML.split('\n').length;//通过统计换行获取总行数
-          var ol = $('<ol></ol>');
+          var ol = $('<ol class="lineNumberOl"></ol>');
           var n = 1;
           while (n <= num) {
-            ol.append($('<li></li>').text(n));
+            ol.append($('<li class="lineNumberLi"></li>').text(n));
             n++;
           }
           $(this).before(ol);
@@ -145,7 +145,7 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
   }
 
-  .isoft_markdown >>> ol {
+  .isoft_markdown >>> .lineNumberOl {
     position: absolute;
     top: -6px;
     bottom: -6px;
@@ -158,7 +158,7 @@
     color: #666;
   }
 
-  .isoft_markdown >>> li {
+  .isoft_markdown >>> .lineNumberLi {
     list-style: none;
     height: 23.33px;
     margin-left: 0;
