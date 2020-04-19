@@ -35,7 +35,9 @@
     </div>
 
     <div id="login_footer">
-      <!--<router-link :to="{path:'/sso/user/loginProblem'}" style="float: left;color: #2e82ff;">常见登录问题</router-link>以后做成可以第三方登录-->
+      <span @click="gotoGithubLogin" class="isoft_point_cursor" style="float: left;color: black;">
+        <Icon type="logo-github" size="20" title="使用 github 账号登录"/>
+      </span>
       <router-link :to="{path:'/sso/regist', query: { pattern: 1 }}" style="float: right;color: #2e82ff;"><Icon type="ios-arrow-dropright-circle" />立即注册</router-link>
     </div>
   </div>
@@ -45,6 +47,7 @@
   import {Login} from "../../../api"
   import {checkEmpty, checkNotEmpty, strSplit} from "../../../tools"
   import {setLoginInfo} from "../../../tools/sso"
+  import {redirectToGitHubLogin, handleGitHubLoginResponse} from "../../../tools/gitlogin"
 
   export default {
     name: "LoginForm",
@@ -58,17 +61,25 @@
       }
     },
     methods: {
+      gotoGithubLogin: function (){
+        redirectToGitHubLogin();
+      },
       showInputPasswordType:function(){
         this.inputPasswordType=true;
       },
-      login: async function () {
+      getLoginRedirectUrl: function (){
         let redirectUrl = "";
         var arr = strSplit(window.location.href, "?redirectUrl=");
         if (arr.length === 2) {
           redirectUrl = arr[1];
         }
+        return redirectUrl;
+      },
+      login: async function () {
+        // 准备请求参数
+        let redirectUrl = this.getLoginRedirectUrl();
         var username = this.username;
-        var passwd = this.passwd
+        var passwd = this.passwd;
         if (username.length === 0) {
           this.showError = true;
           this.errorMsg = '请填写账号';
@@ -79,6 +90,10 @@
           this.errorMsg = '请填写密码';
           return false;
         }
+        // 实际登录接口
+        this.postLogin(username, passwd, redirectUrl);
+      },
+      postLogin: async function (username, passwd, redirectUrl) {
         var result = await Login(username, passwd, decodeURIComponent(redirectUrl));
         if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
           setLoginInfo(result, username);
@@ -102,8 +117,15 @@
         }
       }
     },
-    mounted() {
+    async mounted () {
       this.fillMemoryLoginInfo();
+
+      if (checkNotEmpty(this.$route.query.code)) {
+        await handleGitHubLoginResponse(this.$route.query.code,
+          this.getLoginRedirectUrl(),
+          (username, passwd, redirectUrl) => this.postLogin(username, passwd, redirectUrl),
+          (msg) => this.$Message.error(msg));
+      }
     }
   }
 </script>

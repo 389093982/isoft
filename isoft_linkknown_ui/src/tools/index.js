@@ -333,3 +333,15 @@ export function GenerateRandom(arr) {
   var index = Math.floor((Math.random()*arr.length));
   return arr[index];
 }
+
+export function parseUrlParamsToObj(urlStr) {
+  if (urlStr.indexOf("?") !== -1) {
+    urlStr = urlStr.split("?")[1];
+  }
+  var obj = {};
+  let strs = urlStr.split("&");
+  for (var i = 0; i < strs.length; i++) {
+    obj[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+  }
+  return obj;
+}

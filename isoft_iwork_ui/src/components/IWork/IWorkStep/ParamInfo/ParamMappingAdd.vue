@@ -29,6 +29,7 @@
 <script>
   import ISimpleBtnTriggerModal from "../../../Common/modal/ISimpleBtnTriggerModal"
   import {LoadRecordParamData} from "../../../../api"
+  import {checkNotEmpty} from "../../../../../../isoft_linkknown_ui/src/tools";
 
   export default {
     name: "ParamMappingAdd",
@@ -62,6 +63,9 @@
         this.$refs.triggerModal.hideModal();
       },
       loadRecordParamData:async function () {
+        if (this.workId < 0 && checkNotEmpty(this.$route.query.work_id)) {
+          this.workId = parseInt(this.$route.query.work_id);
+        }
         const result = await LoadRecordParamData({work_id: this.workId});
         if (result.status === "SUCCESS") {
           this.record_param_fields = result.record_param_fields;
