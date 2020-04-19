@@ -123,8 +123,8 @@
                   <!--博客完整信息提示卡，hover后可见-->
                   <div class="hoverSeeDetail">
                     <div style="position: absolute">
-                      <!--博主头像-->
                       <Row>
+                        <!--博主头像-->
                         <Col span="6" offset="1">
                           <Row style="position: absolute;top: 5px;left: 5px;">
                             <router-link :to="{path:'/user/userDetail',query:{username:searchblog.author}}">
@@ -132,12 +132,14 @@
                             </router-link>
                           </Row>
                         </Col>
-                        <Col span="17" style="font-size: 10px;">
+                        <Col span="12" style="font-size: 10px;">
+                          <!--博主昵称-->
                           <Row style="position: absolute;left: 38px;">
                             <div style="width: 110px;height: 15px;">
                               {{renderNickName(searchblog.author) | filterLimitFunc(5)}}
                             </div>
                           </Row>
+                          <!--博主性别-->
                           <Row style="position: absolute;left: 38px;top: 18px;">
                             <div style="width: 100px;height: 15px;">
                               <span v-if="renderGender(searchblog.author)==='male'">
@@ -146,6 +148,19 @@
                               <span v-else-if="renderGender(searchblog.author)==='female'">
                                 <Icon type="md-female" style="color: #ff0000"/>
                               </span>
+                              <span v-else>&nbsp;</span>
+                            </div>
+                          </Row>
+                        </Col>
+                        <Col span="5">
+                          <Row style="position: absolute;left: 58px;">
+                            <div style="width: 110px;height: 15px;">
+                              &nbsp;
+                            </div>
+                          </Row>
+                          <Row style="position: absolute;left: 58px;top: 18px;">
+                            <div style="width: 110px;height: 15px;color: orange;">
+                              <span v-if="renderVipLevel(searchblog.author)>=1">vip</span>
                               <span v-else>&nbsp;</span>
                             </div>
                           </Row>
