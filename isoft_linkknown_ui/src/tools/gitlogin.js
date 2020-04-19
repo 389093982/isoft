@@ -33,7 +33,7 @@ const getAccessTokenByCode = async function (code, loginSuccessFunc) {
 };
 
 const getUserInfoByAccessToken = async function(access_token, loginSuccessFunc) {
- /* axios({
+/*  axios({
     method: "GET",
     url: "/githubapi/user",
     headers: {
@@ -47,7 +47,7 @@ const getUserInfoByAccessToken = async function(access_token, loginSuccessFunc) 
       await loginSuccessFunc(res.data.login);
     }
   });*/
-  await loginSuccessFunc("389093982");
+  await loginSuccessFunc("389093982");   // 测试使用
 };
 
 export const redirectToGitHubLogin = function () {
@@ -65,7 +65,7 @@ export const handleGitHubLoginResponse = async function (code, redirectUrl, logi
   await getAccessTokenByCode(code, async (login) => {
     // 登录成功拿到了用户名后执行 linkknown 登录
     await autoRegistFunc(login);                     // 先尝试去自动注册,已注册则不用注册
-    await loginSucessFunc(login, "", redirectUrl);      // 去登录，第三方登录不用校验密码
+    await loginSucessFunc("gh_" + login, "", redirectUrl);      // 去登录，第三方登录不用校验密码
     loginFlag = true;
   });
 
@@ -79,8 +79,8 @@ const autoRegistFunc = async function (userName) {
   // 第三方自动注册,账号、密码、昵称使用一致,第三方注册不需要验证码
   const result = await Regist({
     third_user_type: 'github',
-    third_user_name: userName,
-    username: userName,
+    third_user_name: "gh_" + userName,
+    username: "gh_" + userName,
     passwd: userName,
     nickname: userName,
   });
