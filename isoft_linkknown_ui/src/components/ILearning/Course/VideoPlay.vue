@@ -6,10 +6,10 @@
       <Row>
         <!--左侧视频播放-->
         <Col span="15" style="margin-left: 80px">
-          <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #999">
+          <div v-if="course && curVideo" style="height: 30px;margin: 10px 0 0 0 ;color: #ccc">
             正在播放: {{course.course_name}} / 第{{currentClickIndex+1 | modification}}集: {{curVideo.video_name | filterSuffix }}
           </div>
-          <div v-else style="height: 30px;margin: 10px 0 0 0 ;color: #999">
+          <div v-else style="height: 30px;margin: 10px 0 0 0 ;color: #ccc">
             &nbsp;
           </div>
           <div>
@@ -28,7 +28,7 @@
                 <!--本主题视频集数-->
                 <div class="scrollBgColor" style="padding: 5px 0 0 10px ">
                   <vue-scroll :ops="scrollOps" style="width:99%;height:425px;">
-                    <div v-for="(video, index) in cVideos" style="color: #999;padding: 1px">
+                    <div v-for="(video, index) in cVideos" style="color: #ccc;padding: 1px">
                         <span class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}" @click="clickVideoName(index)">
                           第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
                         </span>
@@ -58,9 +58,13 @@
           </div>
         </Col>
       </Row>
+      <!--播放器下方，课程&和作者基本信息-->
       <Row>
-        <Col style="margin-left: 80px">
-          这一块待定
+        <Col span="15" style="margin-left: 80px;color: #ccc">
+          {{renderNickName(course.course_author)}} • {{course.course_name}} ,
+          <span class="courseDes">共{{course.course_number}}集</span><br>
+          {{course.course_type}} / {{course.course_sub_type}}<br>
+          {{course.course_short_desc}}
         </Col>
       </Row>
     </div>
@@ -82,9 +86,9 @@
 </template>
 
 <script>
-  import {QueryCustomTagCourse, queryPayOrderList, ShowCourseDetail, videoPlayUrl} from "../../../api"
+  import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetail, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
-  import {checkFastClick} from "../../../tools/index"
+  import {checkFastClick,checkEmpty} from "../../../tools/index"
   import {getLoginUserName} from "../../../tools/sso"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal";
 
@@ -93,6 +97,7 @@
     components: {ISimpleConfirmModal, HotRecommend},
     data() {
       return {
+        user:'',                   //作者信息
         recommendCourses: [],
         cVideos: [],               //课程的Videos
         course: '',                //当前课程
@@ -154,6 +159,10 @@
           this.course = result.course;
           this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);// 根据id来排序的
           this.playVideo(this.cVideos.filter(video => video.id == this.$route.query.video_id)[0]);
+          const userInfo = await GetUserDetail(this.course.course_author);
+          if (userInfo.status === "SUCCESS") {
+            this.user = userInfo.user;
+          }
         }
       },
       //播放视频
@@ -217,6 +226,9 @@
         if (result.status === "SUCCESS") {
           this.recommendCourses = result.custom_tag_courses;
         }
+      },
+      renderNickName: function (user_name) {
+        return !checkEmpty(this.user.nick_name) ? this.user.nick_name : user_name;
       },
       sleep:function (numberMillis) {
         let now = new Date();
@@ -285,17 +297,17 @@
   }
 
   .video_item:hover {
-    color: rgba(0, 200, 6, 0.68);
+    color: #00c806;
     cursor: pointer;
   }
 
   .course_item {
-    color: #999;
+    color: #ccc;
     cursor: pointer;
   }
 
   .course_item:hover {
-    color: rgba(0, 200, 6, 0.68);
+    color: #00c806;
   }
 
   .course_item:hover > .course_small_image{

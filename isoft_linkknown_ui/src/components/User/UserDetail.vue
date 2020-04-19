@@ -27,7 +27,7 @@
             </div>
              <div v-if="isLoginUserName(user.user_name)">
                <div @click="$router.push({ path: '/user/userInfo'})" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
-               <div @click="$router.push({ path: '/sso/forget?pattern=2'})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
+               <div @click="$router.push({ path: '/sso/forget',query:{pattern:2}})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
                <br><br>
                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
                <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
