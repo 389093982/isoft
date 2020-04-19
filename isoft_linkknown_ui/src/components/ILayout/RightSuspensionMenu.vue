@@ -37,10 +37,7 @@
         <div class="tipInfo" @click="$router.push({path:'/contact/contactList'})">有空多与人联系联系</div>
         <div class="tipContact isoft_font12 isoft_bg_white isoft_hover_desc">
           <div class="isoft_hover_color_green" style="text-align: center;">--链知官方交流--</div>
-          <div class="isoft_copy" data-clipboard-text="389093982">管理员QQ：389093982</div>
-          <div class="isoft_copy" data-clipboard-text="1875112921">管理员QQ：1875112921</div>
-          <div class="isoft_copy" data-clipboard-text="xxxx">技术交流群：xxxx</div>
-          <div class="isoft_copy" data-clipboard-text="xxxx">商业合作群：xxxx</div>
+          <contact-us></contact-us>
         </div>
       </span>
     </div>
@@ -55,10 +52,12 @@
 </template>
 
 <script>
-  import Clipboard from 'clipboard';    // 引入剪切板
+  import Clipboard from 'clipboard';
+  import ContactUs from "../Common/contactUs/contactUs";    // 引入剪切板
 
   export default {
     name: "RightSuspensionMenu",
+    components: {ContactUs},
     data (){
       return {
         clipboard: '',
@@ -159,6 +158,6 @@
     width: 100%;
     height: 150px;
     top: -150px;
-    box-shadow: 0 0 1px 1px green;
+    box-shadow: 0 0 1px 1px #ff6900;
   }
 </style>
