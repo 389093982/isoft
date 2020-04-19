@@ -1,41 +1,50 @@
 <template>
-  <div class="rightSuspension isoft_bg_white">
-    <div class="itemArea" @click="$router.push({path:'/ilearning/advise'})">
+  <div class="toolbox isoft_bg_white">
+    <div class="toolItemBox" @click="$router.push({path:'/ilearning/advise'})">
       <Icon type="ios-apps-outline" :size="28"/>
       <p>反馈</p>
       <span class="tipBox"><div class="tipInfo">提出您的意见或建议</div></span>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/user/userGuide'})">
+    <div class="toolItemBox" @click="$router.push({path:'/user/userGuide'})">
       <Icon type="logo-reddit" :size="28"/>
       <p>帮助</p>
       <span class="tipBox"><div class="tipInfo">是否遇到困难无法解决</div></span>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/site/siteIndex'})">
+    <div class="toolItemBox" @click="$router.push({path:'/site/siteIndex'})">
       <Icon type="ios-radio-outline" :size="28"/>
       <p>导航</p>
       <span class="tipBox"><div class="tipInfo">查看本站更多功能</div></span>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/advertisement/advApply'})">
+    <div class="toolItemBox" @click="$router.push({path:'/advertisement/advApply'})">
       <Icon type="ios-cog-outline" :size="28"/>
       <p>广告</p>
       <span class="tipBox"><div class="tipInfo">可以推广您的产品奥</div></span>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/contact/contactList'})">
+    <div class="toolItemBox" @click="$router.push({path:'/contact/contactList'})">
       <Icon type="ios-people-outline" :size="28"/>
       <p>社交</p>
-      <span class="tipBox"><div class="tipInfo">有空多与人联系联系</div></span>
+      <span class="tipBox">
+        <div class="tipInfo">有空多与人联系联系</div>
+        <div class="tipContact isoft_font12 isoft_bg_white isoft_hover_desc">
+          <p class="isoft_hover_color_green" style="text-align: center;">--链知官方交流--</p>
+          <p>管理员QQ：389093982</p>
+          <p>管理员QQ：1875112921</p>
+          <p>技术交流群：xxxx</p>
+          <p>商业合作群：xxxx</p>
+        </div>
+      </span>
     </div>
     <div class="item-line"></div>
 
-    <div class="itemArea" @click="$router.push({path:'/user/userDetail'})">
+    <div class="toolItemBox" @click="$router.push({path:'/user/userDetail'})">
       <Icon type="ios-person-add-outline" :size="28"/>
       <p>个人</p>
       <span class="tipBox"><div class="tipInfo">快来看看您都有哪些</div></span>
@@ -44,13 +53,14 @@
 </template>
 
 <script>
-  name: "RightSuspensionMenu"
+
   export default {
+    name: "RightSuspensionMenu",
   }
 </script>
 
 <style scoped>
-  .rightSuspension {
+  .toolbox {
     position: fixed;
     width: 40px;
     min-height: 100px;
@@ -59,14 +69,14 @@
     z-index: 999;
   }
 
-  .itemArea {
+  .toolItemBox {
     text-align: center;
     font-size: 10px;
     padding: 5px 0;
     cursor: pointer;
   }
 
-  .itemArea:hover {
+  .toolItemBox:hover {
     background-color: black;
     color: white;
   }
@@ -79,13 +89,14 @@
 
   .tipBox {
     position: relative;
+    width: 150px;
     right: 150px;
     top: -48px;
     display: none;
     animation: moveToRight 0.2s infinite;
     animation-iteration-count: 1;
   }
-  .itemArea:hover > .tipBox {
+  .toolItemBox:hover > .tipBox {
     display: block;
   }
   @keyframes moveToRight {
@@ -93,7 +104,7 @@
     100% { right: 150px;}
   }
   .tipInfo {
-    width: 150px;
+    width: 100%;
     height: 53px;
     line-height: 53px;
     font-size: 14px;
@@ -111,5 +122,15 @@
     position: absolute;
     right: -20px;
     top: 16.5px;
+  }
+
+  .tipContact {
+    position: absolute;
+    padding: 15px 5px;
+    text-align: left;
+    width: 100%;
+    height: 150px;
+    top: -150px;
+    box-shadow: 0 0 1px 1px green;
   }
 </style>
