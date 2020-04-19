@@ -21,8 +21,9 @@ type IWorkFuncProxy struct{}
 
 func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 	return []map[string]string{
-		{"funcType": "default", "funcDemo": "StringsEq($str1,$str2)", "funcDesc": "字符串转大写函数"},
-		{"funcType": "default", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串相等比较"},
+		{"funcType": "default", "funcDemo": "StringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
+		{"funcType": "default", "funcDemo": "StringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},
+		{"funcType": "default", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串转大写函数"},
 		{"funcType": "default", "funcDemo": "stringsToLower($str)", "funcDesc": "字符串转小写函数"},
 		{"funcType": "default", "funcDemo": "stringsJoin($str1,$str2)", "funcDesc": "字符串拼接函数"},
 		{"funcType": "default", "funcDemo": "stringsJoinWithSep($str1,$str2)", "funcDesc": "字符串拼接函数"},
@@ -234,6 +235,10 @@ func (t *IWorkFuncProxy) StringsTrimSuffix(args []interface{}) interface{} {
 
 func (t *IWorkFuncProxy) StringsEq(args []interface{}) interface{} {
 	return args[0].(string) == args[1].(string)
+}
+
+func (t *IWorkFuncProxy) StringsNotEq(args []interface{}) interface{} {
+	return args[0].(string) != args[1].(string)
 }
 
 func (t *IWorkFuncProxy) StringsContains(args []interface{}) interface{} {

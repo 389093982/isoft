@@ -175,6 +175,7 @@
         let _this = this;
         const result = await Regist({
           username: this.formValidate.username,
+          third_user_type: "lk",
           passwd: this.formValidate.passwd,
           nickname: this.formValidate.nickname,
           verifyCode: this.formValidate.verifycode,
