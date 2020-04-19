@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row>
-      <Col span="18" style="padding: 0 8px 0 0;">
+      <Col span="17" style="padding: 0 8px 0 0;">
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
           <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
@@ -100,7 +100,7 @@
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
-      <Col span="5">
+      <Col span="6">
         <HotUser/>
 
         <div style="margin: 5px 0;">

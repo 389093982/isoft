@@ -39,7 +39,7 @@
     </div>
 
     <Row>
-      <Col span="18">
+      <Col span="17">
         <div class="isoft_bg_white isoft_top10 isoft_pd20" style="margin-right: 10px;">
           <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
             <Row style="margin-top: 15px">
