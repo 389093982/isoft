@@ -2,10 +2,8 @@
   <div>
     <div class="isoft_bg_white isoft_pd20">
       <div style="text-align: right;">
-        <span class="isoft_button_theme1"
-              @click="forwardResumeManage">我是应聘者 - 管理我的简历</span>
-        <span class="isoft_button_theme2"
-              @click="toEditCorporateDetail">我是招聘者 - 我来发起招聘</span>
+        <span class="isoft_button_theme1" @click="forwardResumeManage">我是应聘者 - 管理我的简历</span>
+        <span class="isoft_button_theme2" @click="toEditCorporateDetail">我是招聘者 - 我来发起招聘</span>
       </div>
     </div>
 
@@ -39,14 +37,10 @@
       </Row>
 
       <div style="padding: 10px;">
-
         <div v-for="(job,index) in jobs">
-          <JobItem :job-detail="job"/>
+          <JobItem :job-detail="job" :hr-vip-level="renderVipLevel(job.created_by)"/>
         </div>
-
-        <Page :total="total" :page-size="offset" show-total show-sizer
-              :styles="{'text-align': 'center','margin-top': '10px'}"
-              @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+        <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
       </div>
 
     </div>
@@ -55,7 +49,7 @@
 
 <script>
   import {FilterPageJobList} from "../../api"
-  import {checkEmpty, CheckHasLoginConfirmDialog, GetLoginUserName, strSplit} from "../../tools";
+  import {checkEmpty, CheckHasLoginConfirmDialog, GetLoginUserName, strSplit,RenderUserInfoByNames, RenderVipLevel} from "../../tools";
   import IAreaChooser from "../Common/IAreaChooser";
   import JobItem from "./JobItem";
 
@@ -68,13 +62,11 @@
         jobInfoSearch: '',
         jobPlaceSearch: '',
         jobSalaySearch: '',
-        // 当前页
-        current_page: 1,
-        // 总数
-        total: 0,
-        // 每页记录数
-        offset: 20,
+        current_page: 1,        // 当前页
+        total: 0,               // 总数
+        offset: 20,             // 每页记录数
         jobs: [],
+        HRInfos:'',
       }
     },
     methods: {
@@ -113,10 +105,14 @@
           offset: this.offset,
           current_page: this.current_page
         });
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.jobs = result.jobs;
           this.total = result.paginator.totalcount;
+          this.HRInfos = await RenderUserInfoByNames(result.jobs, 'created_by');
         }
+      },
+      renderVipLevel: function (user_name) {
+        return RenderVipLevel(this.HRInfos, user_name);
       },
       clearSearch: function () {
         this.jobInfoSearch = "";
