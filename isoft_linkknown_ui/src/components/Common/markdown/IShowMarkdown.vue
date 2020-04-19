@@ -98,10 +98,10 @@
         // 复制成功失败的提示
         this.clipboard.on('success', (e) => {
           this.$Message.success('复制成功!')
-        })
+        });
         this.clipboard.on('error', (e) => {
           this.$Message.error('复制失败!')
-        })
+        });
 
         //添加行号
         $('.isoft_code').each(function (index, item) {
@@ -119,8 +119,8 @@
       })
     },
     destroyed () {
-    this.clipboard.destroy();
-  }
+      this.clipboard.destroy();
+    }
   }
 </script>
 

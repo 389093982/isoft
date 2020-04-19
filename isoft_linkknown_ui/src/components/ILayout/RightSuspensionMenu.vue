@@ -34,11 +34,11 @@
       <span class="tipBox">
         <div class="tipInfo">有空多与人联系联系</div>
         <div class="tipContact isoft_font12 isoft_bg_white isoft_hover_desc">
-          <p class="isoft_hover_color_green" style="text-align: center;">--链知官方交流--</p>
-          <p>管理员QQ：389093982</p>
-          <p>管理员QQ：1875112921</p>
-          <p>技术交流群：xxxx</p>
-          <p>商业合作群：xxxx</p>
+          <div class="isoft_hover_color_green" style="text-align: center;">--链知官方交流--</div>
+          <div class="isoft_copy" data-clipboard-text="389093982">管理员QQ：389093982</div>
+          <div class="isoft_copy" data-clipboard-text="1875112921">管理员QQ：1875112921</div>
+          <div class="isoft_copy" data-clipboard-text="xxxx">技术交流群：xxxx</div>
+          <div class="isoft_copy" data-clipboard-text="xxxx">商业合作群：xxxx</div>
         </div>
       </span>
     </div>
@@ -53,9 +53,35 @@
 </template>
 
 <script>
+  import Clipboard from 'clipboard';    // 引入剪切板
 
   export default {
     name: "RightSuspensionMenu",
+    data (){
+      return {
+        clipboard: '',
+      }
+    },
+    methods:{
+      handle11: function () {
+
+      }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.clipboard = new Clipboard('.isoft_copy');
+        // 复制成功失败的提示
+        this.clipboard.on('success', (e) => {
+          this.$Message.success('复制成功!')
+        });
+        this.clipboard.on('error', (e) => {
+          this.$Message.error('复制失败!')
+        });
+      });
+    },
+    destroyed () {
+      this.clipboard.destroy();
+    }
   }
 </script>
 
