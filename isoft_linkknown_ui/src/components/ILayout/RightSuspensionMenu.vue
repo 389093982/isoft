@@ -28,11 +28,13 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="toolItemBox" @click="$router.push({path:'/contact/contactList'})">
-      <Icon type="ios-people-outline" :size="28"/>
-      <p>社交</p>
+    <div class="toolItemBox">
+      <span @click="$router.push({path:'/contact/contactList'})">
+        <Icon type="ios-people-outline" :size="28"/>
+        <p>社交</p>
+      </span>
       <span class="tipBox">
-        <div class="tipInfo">有空多与人联系联系</div>
+        <div class="tipInfo" @click="$router.push({path:'/contact/contactList'})">有空多与人联系联系</div>
         <div class="tipContact isoft_font12 isoft_bg_white isoft_hover_desc">
           <div class="isoft_hover_color_green" style="text-align: center;">--链知官方交流--</div>
           <div class="isoft_copy" data-clipboard-text="389093982">管理员QQ：389093982</div>
