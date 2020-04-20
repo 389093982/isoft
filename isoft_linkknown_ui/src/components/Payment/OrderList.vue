@@ -1,19 +1,81 @@
 <template>
-  <div style="width: 100%;background-color: white">
+  <div style="width: 100%;">
 
-    <Row>
-      <Col span="22" offset="1">
-        <Table border :columns="columns" :data="orderData">
-          <template slot-scope="{ row }" slot="name">
-            <strong>{{ row.name }}</strong>
-          </template>
-          <template slot-scope="{ row, index }" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
-            <Button type="error" size="small" @click="remove(index)">Delete</Button>
-          </template>
-        </Table>
-      </Col>
-    </Row>
+  <div style="display: flex">
+    <div style="width: 68%;background-color: white">
+      <Row>
+        <!--左侧空出一点-->
+        <Col span="4">
+          &nbsp;
+        </Col>
+        <!--右侧展示商品-->
+        <Col span="20">
+          <!--一行一个商品-->
+          <Row v-for="(goods, index) in orderData" style="margin-top: 20px">
+            <Row>
+              <!--商品图片-->
+              <Col span="7">
+                <div v-if="goods.goods_type==='course_theme_type'" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods.goods_id}})" style="cursor: pointer">
+                  <img v-if="goods.goods_img" :src="goods.goods_img" width="180" height="120"/>
+                  <img v-else src="../../assets/default.png" width="180" height="120"/>
+                  <div class="ico_play"></div>
+                </div>
+                <div v-if="goods.goods_type==='vip'">
+                  <img src="../../../static/images/vipCenter/vip_card.jpg" width="180" height="120"/>
+                </div>
+              </Col>
+              <!--商品信息-->
+              <Col span="10">
+                <Row style="margin-top: 10px">
+                  <code v-if="goods.goods_type==='course_theme_type'">课程</code>
+                  <code v-else-if="goods.goods_type==='vip'">会员</code>
+                </Row>
+                <Row style="margin-top: 10px">
+                  {{goods.goods_desc}}
+                </Row>
+                <Row style="margin-top: 10px">
+                  <div style="display: flex">
+                    <div class="orderTipService">查看详情</div>
+                    <div class="orderTipService" style="margin-left: 10px">查看发票</div>
+                    <div class="orderTipService" style="margin-left: 10px">平价服务</div>
+                  </div>
+                </Row>
+              </Col>
+              <!--商品价格-->
+              <Col span="5" style="color: #ff6900;">
+                <Row style="margin-top: 10px">&nbsp;</Row>
+                <Row>
+                  <div style="margin-top: 10px">
+                    <Icon type="logo-yen" style="font-size: 12px"/>
+                    <span style="font-size: 20px">{{formatAmount(goods.goods_price)}}</span>
+                  </div>
+                </Row>
+                <Row style="margin-top: 10px">
+                  <code style="color: grey">{{formatTransTime(goods.trans_time)}}</code>
+                </Row>
+              </Col>
+              <!--交易完成认证，圆形印章图片-->
+              <Col span="2">
+                <img v-if="goods.pay_result==='SUCCESS'" style="border-radius:50%;position: relative;top: -20px;left: -50px" width=80 height=80 src="../../../static/images/order/transaction_success.png">
+              </Col>
+            </Row>
+            <!--彩色分底线-->
+            <div style="width: 100%;display: flex;margin-top: 10px">
+              <div style="width: 20%;height: 2px;background-color: rgba(255,105,0,0.42)"></div>
+              <div style="width: 30%;height: 2px;background-color: rgba(216,137,255,0.6)"></div>
+              <div style="width: 40%;height: 2px;background-color: rgba(65,255,57,0.51)"></div>
+              <div style="width: 10%;height: 2px;background-color: rgba(255,162,187,0.55)"></div>
+            </div>
+          </Row>
+        </Col>
+      </Row>
+    </div>
+    <div style="width: 27%;margin-left: 5px;background-color: white">
+      <div>
+        <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
+      </div>
+    </div>
+  </div>
 
   </div>
 </template>
@@ -27,46 +89,6 @@
     components:{GetLoginUserName},
     data () {
       return {
-        columns: [
-          {
-            title: '订单号',
-            key: 'order_id',
-            width:260
-          },
-          {
-            title: '交易时间',
-            key: 'trans_time',
-            width:150,
-            filterMethod:function (value) {
-              return value.slice(1,2)
-            }
-          },
-          {
-            title: '商品类型',
-            key: 'goods_type',
-            width:150
-          },
-          {
-            title: '商品ID',
-            key: 'goods_id',
-            width:150
-          },
-          {
-            title: '商品描述',
-            key: 'goods_desc',
-            width:200
-          },
-          {
-            title: '商品价格',
-            key: 'goods_price',
-            width:120
-          },
-          {
-            title: '支付状态',
-            key: 'pay_result',
-            width:120
-          }
-        ],
         orderData: [],
         //查询条件
         order_id:'',
@@ -98,11 +120,19 @@
         }
 
       },
-      show (index) {
-        this.$Modal.info({
-          title: '订单详情',
-          content: `Name：${this.orderData[index].name}<br>Age：${this.orderData[index].age}<br>Address：${this.orderData[index].address}`
-        })
+      formatAmount:function (amount) {
+        let newAmount = (amount/100).toString();
+        if (newAmount.indexOf('.')<0) {
+          newAmount = newAmount+".00"
+        }
+        return newAmount;
+      },
+      formatTransTime:function (trans_time) {
+        let date = trans_time.slice(0,8);
+        let time = trans_time.slice(8,14);
+        let formatDate = date.slice(0,4)+"-"+date.slice(4,6)+"-"+date.slice(6,8);
+        let formatTime = time.slice(0,2)+":"+time.slice(2,4)+":"+time.slice(4,6);
+        return formatDate + " " +formatTime;
       },
     },
     computed:{
@@ -117,5 +147,25 @@
 </script>
 
 <style scoped>
-
+  .ico_play {
+    background: url(../../assets/ico_play.png) no-repeat;
+    position: absolute;
+    top: 35px;
+    left: 55px;
+    width: 60px;
+    height: 60px;
+  }
+  .orderTipService{
+    cursor: pointer;
+    padding: 2px 0 0 8px ;
+    height: 30px;
+    width: 80px;
+    background-color: rgba(220, 220, 220, 0.39);
+    border-radius: 20px;
+    border: 2px orange solid;
+  }
+  .orderTipService:hover{
+    color: rgba(255, 105, 0, 0.65);
+    background-color: rgba(214, 214, 214, 0.99);
+  }
 </style>

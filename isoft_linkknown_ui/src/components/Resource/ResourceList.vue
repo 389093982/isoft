@@ -1,12 +1,18 @@
 <template>
   <div>
     <div class="isoft_bg_white">
-      <div class="bg01" style="width: 100%;height: 150px;overflow: hidden;padding: 30px;">
-        <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
-        <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
-        <Button type="default" ghost style="cursor:pointer;text-align: center;margin-left: 860px" @click="uploadResource">
-          <Icon type="md-cloud-upload" style="font-size: 20px" />上传资源赚钱
-        </Button>
+      <div class="bg01" style="width: 100%;height: 80px;overflow: hidden;padding: 20px;">
+        <Row>
+          <Col span="16">
+            <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
+            <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
+          </Col>
+          <Col span="8">
+            <Button type="default" ghost style="cursor:pointer;margin-top: 5px" @click="uploadResource">
+              <Icon type="md-cloud-upload" style="font-size: 20px" />上传资源赚钱
+            </Button>
+          </Col>
+        </Row>
       </div>
 
       <div style="padding: 10px 0 10px 30px ">
@@ -38,10 +44,10 @@
 
     </div>
 
-    <Row>
-      <Col span="17">
-        <div class="isoft_bg_white isoft_top10 isoft_pd20" style="margin-right: 10px;">
-          <div v-for="(resource,index) in resources" style="padding: 10px;border-bottom: 1px solid #eee;">
+    <div style="display: flex;">
+      <div style="width: 65%;background-color: white;margin-top: 5px">
+        <div class="isoft_bg_white isoft_pd20">
+          <div v-for="(resource,index) in resources" style="padding: 15px 0 0 20px ;border-bottom: 1px solid #eee;">
             <Row style="margin-top: 15px">
               <Col span="12"><h4>{{resource.resource_name}}</h4></Col>
               <Col span="8" style="font-size: 15px;color: #777;"><span v-if="resource.resource_catalog">分类：{{resource.resource_catalog}}</span></Col>
@@ -74,12 +80,13 @@
 
           <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
         </div>
-      </Col>
-      <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
+      </div>
+      <div style="width: 30%;margin: 5px 0 0 5px ;background-color: white">
+        <WaitYourAnswer></WaitYourAnswer>
         <RandomAdmt/>
         <RandomAdmt/>
-      </Col>
-    </Row>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -89,10 +96,11 @@
   import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import ISearch from "../Common/search/ISearch"
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "ResourceList",
-    components: {RandomAdmt,ISearch},
+    components: {WaitYourAnswer, RandomAdmt,ISearch},
     data() {
       return {
         search: '',
