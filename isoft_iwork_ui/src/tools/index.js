@@ -21,12 +21,20 @@ export const delCookie = function delCookie(name) {
   document.cookie = name+"=;expires="+(new Date(0)).toGMTString();
 };
 
+export const checkNotEmpty = function checkNotEmpty(checkStr){
+  return !checkEmpty(checkStr);
+};
+
 export const checkEmpty = function checkEmpty(checkStr){
   if(checkStr == null || checkStr == undefined || checkStr == ""){
     return true;
   }
   return false;
 };
+
+export const percentNum = function percentNum(num, num2) {
+  return (Math.round(num / num2 * 10000) / 100.00 + "%");  //小数copy点百后两度位百知分比道
+}
 
 // 跨域设置 cookie
 export function setCookie (c_name,value,expiredays,domain){

@@ -7,7 +7,9 @@
       流程名称：{{$route.query.work_name}}
     </h3>
     <p v-if="work" style="text-align: center;background: #fff5dd;padding: 10px;margin: 10px;">
-      所属模块：{{work.module_name}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;流程描述：{{work.work_desc}}</p>
+      所属模块：{{work.module_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+      流程描述：{{work.work_desc}}&nbsp;&nbsp;&nbsp;&nbsp;
+      流程注释比率：<span style="color: green;font-weight: bold;">{{commentRate}}</span></p>
 
     <Button type="success" size="small" @click="$router.push({ path:'/iwork/workList'})">返回列表</Button>
     <Button type="warning" size="small" @click="$router.push({ path:'/iwork/filterList'})">过滤器配置</Button>
@@ -63,7 +65,7 @@
   import ParamInfo from "./ParamInfo/ParamInfo"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import BaseInfo from "./BaseInfo/BaseInfo"
-  import {checkEmpty, checkFastClick, getRepeatStr, oneOf, startsWith} from "../../../tools"
+  import {checkEmpty, checkFastClick, checkNotEmpty, getRepeatStr, oneOf, percentNum, startsWith} from "../../../tools"
   import WorkValidate from "../IValidate/WorkValidate"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import WorkStepEditBtns from "./WorkStepEditBtns"
@@ -83,10 +85,13 @@
         refactor_worksub_name:'',
         nodeMetas: [],
         worksteps: [],
+        // 当前流程注释率
+        commentRate: '',
         loading:false,
         showWorkDashboard:false,
         usedMap: null,
         runLogRecordCount:{},
+        // 显示运行日志的抽屉
         showRunLogDrawer:false,
         work: null,
       }
@@ -384,6 +389,7 @@
         if(result.status=="SUCCESS"){
           this.usedMap = result.usedMap;
           this.worksteps = result.worksteps;
+          this.commentRate = percentNum(this.worksteps.filter(step => checkNotEmpty(step.work_step_desc)).length, this.worksteps.length);
           this.runLogRecordCount = result.runLogRecordCount;
           this.refreshWorkValidateDetail();
         }
