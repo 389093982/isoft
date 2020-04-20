@@ -506,9 +506,8 @@
         }
       },
       getErrorOrTotalCount:function (workId, flag) {
-        var key = Object.keys(this.runLogRecordCount).filter(function (key) {
-          return key === workId;
-        })[0];
+        // 此处统一转换成字符串进行比较, 而不是 int 和 字符串比较
+        var key = Object.keys(this.runLogRecordCount).filter(_key => _key + "" === workId + "")[0];
         if (key && this.runLogRecordCount[key]) {
           return flag === "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
         }
