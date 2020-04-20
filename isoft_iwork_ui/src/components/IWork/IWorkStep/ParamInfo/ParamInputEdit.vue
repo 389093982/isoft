@@ -95,7 +95,7 @@
       refreshParamInputSchemaItems:function (label, text, pureText) {
         for(var i=0; i<this.paramInputSchemaItems.length; i++){
           var paramInputSchemaItem = this.paramInputSchemaItems[i];
-          if(paramInputSchemaItem.ParamName == label){
+          if(paramInputSchemaItem.ParamName === label){
             paramInputSchemaItem.ParamValue = text;
             paramInputSchemaItem.PureText = pureText;
             this.$set(this.paramInputSchemaItems, i, paramInputSchemaItem);
@@ -111,16 +111,16 @@
       },
       refreshWorkValidateDetail: async function(){
         const result = await LoadValidateResult(this.workId);
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           let validateDetails = result.details;
-          this.validateErrors = validateDetails.filter(validateDetail => this.workId == validateDetail.work_id
-            && this.workStepId == validateDetail.work_step_id);
+          this.validateErrors = validateDetails.filter(validateDetail => this.workId === validateDetail.work_id
+            && this.workStepId === validateDetail.work_step_id);
         }else{
           this.$Message.error(result.errorMsg);
         }
       },
       getValidateErrors:function (paramName) {
-        let _validateErrors = this.validateErrors.filter(validateDetail => validateDetail.param_name == paramName)
+        let _validateErrors = this.validateErrors.filter(validateDetail => validateDetail.param_name === paramName)
           .map(validateDetail => validateDetail.detail).join(",");
         return _validateErrors;
       }
@@ -138,12 +138,21 @@
     background-color: #eee;
     border-radius: 5px;
     z-index: 10;
-    transition: right 0.2s ease-in-out;
-    opacity: 0;
+    display: none;
     cursor: pointer;
   }
   .moreToolBox:hover .moreTool {
-    opacity: 1;
-    right: -150px;
+    display: inline-block;
+    animation: moveLeft 0.2s linear infinite;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  @keyframes moveLeft {
+    0% {
+      right: -160px;
+    }
+    100% {
+      right: -150px;
+    }
   }
 </style>
