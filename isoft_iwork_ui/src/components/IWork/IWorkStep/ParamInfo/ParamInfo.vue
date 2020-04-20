@@ -5,7 +5,8 @@
     title="查看/编辑 workstep 参数"
     :footer-hide="true"
     :mask-closable="false"
-    :styles="{top: '20px'}">
+    :styles="{top: '20px'}"
+    :scrollable="true">
     <Row>
       <Col span="6">
         <Scroll height="450">
@@ -25,7 +26,7 @@
           </Row>
           <Row style="margin-right: 5px;margin-left:20px;" :gutter="16">
             <Col span="18">
-              <Tabs type="card" name="tab_paramInfo" :animated="false" value="edit">
+              <Tabs type="card" name="tab_paramInfo" :animated="false" value="edit" style="overflow: visible;">
                 <TabPane label="ParamMapping" name="ParamMapping" v-if="showParamMapping" tab="tab_paramInfo" :index="1">
                   <ParamMapping :paramMappings="paramMappings" :work-step-type="workStepParamInfo.work_step_type" :work-id="workStepParamInfo.work_id"/>
                 </TabPane>
@@ -40,7 +41,7 @@
                 <Button type="info" size="small" @click="closeModal">Close</Button>
                 <span class="moreToolBox" style="margin-left: 50px;">
                   <Icon type="ios-hand-outline" size="20"/>
-                  <span class="moreTool"><Button type="success" size="small" @click="handleCopyAttrs" title="多个属性用,分割">复制所有属性</Button></span>
+                  <span class="moreTool"><Button type="success" size="small" @click="handleCopyAttrs" title="多个属性用,分割">复制所有属性名</Button></span>
                 </span>
               </Row>
             </Col>

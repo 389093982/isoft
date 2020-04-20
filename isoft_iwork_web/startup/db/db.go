@@ -23,9 +23,9 @@ func init() {
 	timezone := beego.AppConfig.String("db.timezone")
 	aesChiperKey := beego.AppConfig.String("isoft.aes.cipher.key")
 	// 对数据库密码进行解密
-	dbport = chiperutil.AesDecryptToStr(dbport, aesChiperKey)
-	dbuser = chiperutil.AesDecryptToStr(dbuser, aesChiperKey)
-	dbpass = chiperutil.AesDecryptToStr(dbpass, aesChiperKey)
+	dbport = chiperutil.AesDecryptToStrQuietly(dbport, aesChiperKey)
+	dbuser = chiperutil.AesDecryptToStrQuietly(dbuser, aesChiperKey)
+	dbpass = chiperutil.AesDecryptToStrQuietly(dbpass, aesChiperKey)
 
 	Dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
 

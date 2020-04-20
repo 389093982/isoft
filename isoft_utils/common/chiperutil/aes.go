@@ -49,6 +49,14 @@ func AesDecryptToStr(encryptStr, key string) string {
 	return ""
 }
 
+// 静默解密,解密失败返回原值
+func AesDecryptToStrQuietly(encryptStr, key string) string {
+	if str := AesDecryptToStr(encryptStr, key); str != "" {
+		return str
+	}
+	return encryptStr
+}
+
 func AesDecrypt(crypted, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {

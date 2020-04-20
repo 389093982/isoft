@@ -6,7 +6,8 @@
     :footer-hide="true"
     :transfer="false"
     :mask-closable="false"
-    :styles="{top: '20px'}">
+    :styles="{top: '20px'}"
+    :scrollable="true">
     <Row>
       <Col span="6">
         <ParamInputEditDataSource ref="paramInputEditDataSource" :pre-pos-tree-node-arr="prePosTreeNodeArr"/>
