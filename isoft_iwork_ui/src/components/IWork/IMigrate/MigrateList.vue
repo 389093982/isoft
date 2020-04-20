@@ -115,7 +115,7 @@
           {
             title: 'migrate_hash',
             key: 'migrate_hash',
-            width: 350,
+            width: 400,
           },
           {
             title: '操作',

@@ -15,11 +15,13 @@
             <Row>
               <!--商品图片-->
               <Col span="7">
+                <!--如果是课程-->
                 <div v-if="goods.goods_type==='course_theme_type'" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods.goods_id}})" style="cursor: pointer">
                   <img v-if="goods.goods_img" :src="goods.goods_img" width="180" height="120"/>
                   <img v-else src="../../assets/default.png" width="180" height="120"/>
                   <div class="ico_play"></div>
                 </div>
+                <!--如果是vip-->
                 <div v-if="goods.goods_type==='vip'">
                   <img src="../../../static/images/vipCenter/vip_card.jpg" width="180" height="120"/>
                 </div>
@@ -35,7 +37,7 @@
                 </Row>
                 <Row style="margin-top: 10px">
                   <div style="display: flex">
-                    <div class="orderTipService">查看详情</div>
+                    <div class="orderTipService" @click="$router.push({path:'/payment/orderDetail',query:{order_id:goods.order_id}})">查看详情</div>
                     <div class="orderTipService" style="margin-left: 10px">查看发票</div>
                     <div class="orderTipService" style="margin-left: 10px">平价服务</div>
                   </div>
