@@ -5,7 +5,8 @@
     title="查看/编辑 workstep"
     :footer-hide="true"
     :mask-closable="false"
-    :styles="{top: '20px'}">
+    :styles="{top: '20px'}"
+    :scrollable="true">
     <div>
       <Row>
         <Col span="8">
