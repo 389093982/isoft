@@ -345,3 +345,17 @@ export function parseUrlParamsToObj(urlStr) {
   }
   return obj;
 }
+
+// 复制方法 text: 要复制的内容， successCallback: 成功回调
+export function copyText (text, successCallback){
+  var tag = document.createElement('input');
+  tag.setAttribute('id', 'cp_linkknown_input');
+  tag.value = text;
+  document.getElementsByTagName('body')[0].appendChild(tag);
+  document.getElementById('cp_linkknown_input').select();
+  document.execCommand('copy');
+  document.getElementById('cp_linkknown_input').remove();
+  if(successCallback) {
+    successCallback(text);
+  }
+}

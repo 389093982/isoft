@@ -65,7 +65,7 @@
   import ISimpleConfirmModal from "../../../Common/modal/ISimpleConfirmModal"
   import ParamMapping from "./ParamMapping"
   import {EditWorkStepParamInfo, LoadWorkStepInfo} from "../../../../api"
-  import {oneOf} from "../../../../tools/index"
+  import {oneOf, copyText} from "../../../../tools/index"
 
   export default {
     name: "ParamInfo",
@@ -108,9 +108,12 @@
       },
       // 复制当前节点的所有属性名,多个属性用逗号分割
       handleCopyAttrs: function () {
+        var _this = this;
         let paramNames = this.paramInputSchema.ParamInputSchemaItems.map(item => item.ParamName);
-        console.log(paramNames.join(","));
-        alert(paramNames.join(","));
+        let copyStr = paramNames.join(",");
+        copyText(copyStr, function (){
+          _this.$Message.success('复制成功');
+        });
       },
       handleSubmit:async function() {
         const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);

@@ -45,6 +45,20 @@ export function setCookie (c_name,value,expiredays,domain){
   }
 }
 
+// 复制方法 text: 要复制的内容， successCallback: 成功回调
+export function copyText (text, successCallback){
+  var tag = document.createElement('input');
+  tag.setAttribute('id', 'cp_linkknown_input');
+  tag.value = text;
+  document.getElementsByTagName('body')[0].appendChild(tag);
+  document.getElementById('cp_linkknown_input').select();
+  document.execCommand('copy');
+  document.getElementById('cp_linkknown_input').remove();
+  if(successCallback) {
+    successCallback(text);
+  }
+}
+
 // 判断值 value 是否是列表 validList 中
 export function oneOf (value, validList) {
   for (let i = 0; i < validList.length; i++) {
