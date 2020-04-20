@@ -22,7 +22,7 @@
                 {{choice}}
               </Option>
             </Select>
-            <Input style="width: 350px;" v-else size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
+            <Input style="width: 350px;" v-else size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="输入内容"/>
           </td>
           <td>
             <Button v-if="!item.ParamChoices" type="success" size="small" @click="handleReload(index, true)">查看/编辑</Button>

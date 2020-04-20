@@ -40,7 +40,7 @@
                 <Button type="info" size="small" @click="closeModal">Close</Button>
                 <span class="moreToolBox" style="margin-left: 50px;">
                   <Icon type="ios-hand-outline" size="20"/>
-                  <span class="moreTool"><Button type="success" size="small" @click="handleCopyAttrs" title="多个属性用,分割">复制所有属性</Button></span>
+                  <span class="moreTool"><Button type="success" size="small" @click="handleCopyAttrs" title="多个属性用,分割">复制所有属性名</Button></span>
                 </span>
               </Row>
             </Col>
