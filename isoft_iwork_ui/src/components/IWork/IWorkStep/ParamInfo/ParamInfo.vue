@@ -26,7 +26,7 @@
           </Row>
           <Row style="margin-right: 5px;margin-left:20px;" :gutter="16">
             <Col span="18">
-              <Tabs type="card" name="tab_paramInfo" :animated="false" value="edit">
+              <Tabs type="card" name="tab_paramInfo" :animated="false" value="edit" style="overflow: visible;">
                 <TabPane label="ParamMapping" name="ParamMapping" v-if="showParamMapping" tab="tab_paramInfo" :index="1">
                   <ParamMapping :paramMappings="paramMappings" :work-step-type="workStepParamInfo.work_step_type" :work-id="workStepParamInfo.work_id"/>
                 </TabPane>

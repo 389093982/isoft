@@ -24,8 +24,14 @@
             </Select>
             <Input style="width: 350px;" v-else size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="输入内容"/>
           </td>
-          <td>
+          <td class="moreToolBox">
             <Button v-if="!item.ParamChoices" type="success" size="small" @click="handleReload(index, true)">查看/编辑</Button>
+            <span style="position: relative;">
+              <span class="moreTool">
+                <Icon type="ios-copy" size="20" title="复制属性名" @click="handleQuickOperation(index, 0)"/>
+                <Icon type="md-copy" size="20" title="复制属性值" @click="handleQuickOperation(index, 1)"/>
+              </span>
+            </span>
           </td>
         </tr>
         <div><span style="color: red;">{{getValidateErrors(item.ParamName)}}</span></div>
@@ -40,6 +46,7 @@
 <script>
   import ParamInputEditDialog from "./ParamInputEditDialog"
   import {LoadValidateResult} from "../../../../api"
+  import {copyText} from "../../../../tools";
 
   export default {
     name: "ParamInputEdit",
@@ -64,6 +71,19 @@
       }
     },
     methods:{
+      // 快捷操作
+      handleQuickOperation: function (index, type) {
+        var _this = this;
+        if (type === 0) {    // 复制属性名
+          copyText(this.paramInputSchemaItems[index].ParamName, function () {
+            _this.$Message.success("复制成功!");
+          });
+        } else if (type === 1){    // 复制属性值
+          copyText(this.paramInputSchemaItems[index].ParamValue, function () {
+            _this.$Message.success("复制成功!");
+          });
+        }
+      },
       // 根据 paramIndex 重新加载
       handleReload: function(paramIndex, refreshOutput){
         if(paramIndex >=0 && paramIndex <= this.paramInputSchemaItems.length -1){
@@ -109,5 +129,21 @@
 </script>
 
 <style scoped>
-
+  .moreTool {
+    position: absolute;
+    top: -5px;
+    right: -160px;
+    width:150px;
+    padding: 3px 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    z-index: 10;
+    transition: right 0.2s ease-in-out;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .moreToolBox:hover .moreTool {
+    opacity: 1;
+    right: -150px;
+  }
 </style>
