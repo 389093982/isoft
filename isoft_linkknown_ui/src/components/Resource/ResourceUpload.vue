@@ -1,46 +1,45 @@
 <template>
-  <Row>
-    <Col span="18">
-      <div class="isoft_bg_white isoft_top10 isoft_pd20 isoft_mr10">
-
-        <div class="isoft_info_tip" style="margin: 5px 0 40px 0;">每个用户每日可上传资料文件三次，请不要频繁的上传呢，^_^，在此感谢您无私的奉献！</div>
-
-        <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
-          <FormItem label="分类名称" prop="resource_catalog">
-            <Input v-model.trim="formInline.resource_catalog" placeholder="请您输入分类名称"></Input>
-          </FormItem>
-          <FormItem label="文件路径" prop="resource_path">
-            <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径" @on-focus="handleFocus"/>
-            <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传"/>
-          </FormItem>
-          <FormItem label="文件名称" prop="resource_name">
-            <Input readonly="readonly" v-model.trim="formInline.resource_name" placeholder="请您选择文件名称"></Input>
-          </FormItem>
-          <FormItem label="描述信息" prop="resource_desc">
-            <Input type="textarea" :rows="3" v-model.trim="formInline.resource_desc" placeholder="请您输入描述信息"></Input>
-          </FormItem>
-          <FormItem>
-            <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
-          </FormItem>
-        </Form>
+  <div style="display: flex">
+      <div style="width: 64%;background-color: white;min-height: 550px">
+        <div class="isoft_bg_white isoft_pd20 isoft_mr10">
+          <div class="isoft_info_tip" style="margin: 5px 0 40px 0;">每个用户每日可上传资料文件三次，请不要频繁的上传呢，^_^，在此感谢您无私的奉献！</div>
+          <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
+            <FormItem label="分类名称" prop="resource_catalog">
+              <Input v-model.trim="formInline.resource_catalog" placeholder="请您输入分类名称"></Input>
+            </FormItem>
+            <FormItem label="文件路径" prop="resource_path">
+              <Input type="text" readonly="readonly" v-model="formInline.resource_path" placeholder="请您选择文件路径" @on-focus="handleFocus"/>
+              <IFileUpload ref="fileUpload" :show-button="false" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传"/>
+            </FormItem>
+            <FormItem label="文件名称" prop="resource_name">
+              <Input readonly="readonly" v-model.trim="formInline.resource_name" placeholder="请您选择文件名称"></Input>
+            </FormItem>
+            <FormItem label="描述信息" prop="resource_desc">
+              <Input type="textarea" :rows="3" v-model.trim="formInline.resource_desc" placeholder="请您输入描述信息"></Input>
+            </FormItem>
+            <FormItem>
+              <Button type="success" @click="handleSubmit('formInline')" style="margin-right: 6px">提交</Button>
+            </FormItem>
+          </Form>
+        </div>
       </div>
-    </Col>
-    <Col span="6" class="isoft_bg_white isoft_top10 isoft_pd10">
-      <RandomAdmt/>
-      <RandomAdmt/>
-    </Col>
-  </Row>
-
+      <div style="width: 31%;margin-left: 5px;background-color: white">
+        <WaitYourAnswer></WaitYourAnswer>
+        <RandomAdmt/>
+        <RandomAdmt/>
+      </div>
+  </div>
 </template>
 
 <script>
   import IFileUpload from "../Common/file/IFileUpload"
   import {EditResource, fileUploadUrl} from "../../api"
   import RandomAdmt from "../Advertisement/RandomAdmt";
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "ResourceUpload",
-    components: {RandomAdmt, IFileUpload},
+    components: {WaitYourAnswer, RandomAdmt, IFileUpload},
     data() {
       const checkResourceCatalog = (rule, value, callback) => {
         if (value === '') {
