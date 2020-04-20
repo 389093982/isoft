@@ -4,7 +4,11 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-iwork">
-            IWork V1.0.0
+            <span style="position: relative;">
+               <img src="../../assets/images/linkknown.jpg" class="linkknownlogo"
+                    title="链知网低代码开发框架，详情请访问 www.linkknown.com 或咨询 QQ 1875112921、389093982"/>
+            </span>
+            <span style="margin-left: 10px;">IWork {{version}}</span>
           </div>
           <div class="layout-nav">
             <MenuItem name="1">
@@ -126,6 +130,7 @@
     data(){
       return {
         appId: null,
+        version: '1.0.1',
       }
     },
     methods:{
@@ -176,5 +181,13 @@
   .layout-nav{
     width: 920px;
     float: right;
+  }
+
+  .linkknownlogo {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: -40px;
+    top: -10px;
   }
 </style>
