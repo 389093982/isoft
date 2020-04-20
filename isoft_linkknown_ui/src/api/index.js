@@ -142,6 +142,7 @@ export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/
 
 // 登录接口
 export const Login = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin2", params, 'POST');
+export const GitHubLogin = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GitHubLogin", params, 'POST');
 
 // 注册接口
 export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist2", params, 'POST');

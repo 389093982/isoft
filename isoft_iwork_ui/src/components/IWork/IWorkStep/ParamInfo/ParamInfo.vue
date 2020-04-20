@@ -38,6 +38,10 @@
               <Row style="padding-left: 130px;margin-top: 20px;">
                 <Button type="success" size="small" @click="handleSubmit">提交</Button>
                 <Button type="info" size="small" @click="closeModal">Close</Button>
+                <span class="moreToolBox" style="margin-left: 50px;">
+                  <Icon type="ios-hand-outline" size="20"/>
+                  <span class="moreTool"><Button type="success" size="small" @click="handleCopyAttrs" title="多个属性用,分割">复制所有属性</Button></span>
+                </span>
               </Row>
             </Col>
             <Col span="6">
@@ -101,6 +105,12 @@
     methods:{
       reloadWorkStepParamInfo:function(work_step_id, work_step_name){
         this.$emit("reloadWorkStepParamInfo", work_step_id);
+      },
+      // 复制当前节点的所有属性名,多个属性用逗号分割
+      handleCopyAttrs: function () {
+        let paramNames = this.paramInputSchema.ParamInputSchemaItems.map(item => item.ParamName);
+        console.log(paramNames.join(","));
+        alert(paramNames.join(","));
       },
       handleSubmit:async function() {
         const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);
@@ -168,5 +178,10 @@
 </script>
 
 <style scoped>
-
+  .moreTool {
+    display: none;
+  }
+  .moreToolBox:hover > .moreTool {
+    display: inline-block;
+  }
 </style>

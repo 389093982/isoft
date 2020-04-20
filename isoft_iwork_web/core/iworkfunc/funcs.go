@@ -39,6 +39,7 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcType": "default", "funcDemo": "int64Gt($int1,$int2)", "funcDesc": "判断数字1是否大于数字2"},
 		{"funcType": "default", "funcDemo": "int64Lt($int1,$int2)", "funcDesc": "判断数字1是否小于数字2"},
 		{"funcType": "default", "funcDemo": "int64Eq($int1,$int2)", "funcDesc": "判断数字1是否等于数字2"},
+		{"funcType": "default", "funcDemo": "int64NotEq($int1,$int2)", "funcDesc": "判断数字1是否不等于数字2"},
 		{"funcType": "default", "funcDemo": "and($bool1,$bool2)", "funcDesc": "判断bool1和bool2同时满足"},
 		{"funcType": "default", "funcDemo": "or($bool,$bool2)", "funcDesc": "判断bool1和bool2只要一个满足即可"},
 		{"funcType": "default", "funcDemo": "not($bool)", "funcDesc": "bool值取反"},
@@ -315,6 +316,10 @@ func (t *IWorkFuncProxy) Int64Eq(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount("Int64Eq", sargs, 2)
 	return sargs[0] == sargs[1]
+}
+
+func (t *IWorkFuncProxy) Int64NotEq(args []interface{}) interface{} {
+	return !(t.Int64Eq(args).(bool))
 }
 
 func (t *IWorkFuncProxy) Int64Multi(args []interface{}) interface{} {

@@ -25,20 +25,6 @@ module.exports = {
           '^/wechatPayApi': '/wechatPayApi'
         }
       },
-      '/githubapi': { // 匹配所有以 '/github'开头的请求路径
-        target: 'https://api.github.com', // 代理目标的基础路径
-        changeOrigin: true, // 支持跨域
-        pathRewrite: {// 路径重写
-          '^/githubapi': '/'
-        }
-      },
-      '/github': { // 匹配所有以 '/github'开头的请求路径
-        target: 'https://github.com', // 代理目标的基础路径
-        changeOrigin: true, // 支持跨域
-        pathRewrite: {// 路径重写
-          '^/github': '/'
-        }
-      },
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

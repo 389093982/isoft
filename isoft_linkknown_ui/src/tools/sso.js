@@ -68,9 +68,9 @@ const _getNickName = function () {
   return _checkHasExpired() ? "" : localStorage.getItem("nickName");
 }
 
-const _setLoginInfo = function (loginResult, username) {
+const _setLoginInfo = function (loginResult) {
   localStorage.setItem("tokenString", loginResult.tokenString);
-  localStorage.setItem("userName", username);
+  localStorage.setItem("userName", loginResult.userName);
   localStorage.setItem("nickName", loginResult.nickName);
   localStorage.setItem("isLogin", "isLogin");
   localStorage.setItem("roleName", loginResult.roleName);
@@ -123,6 +123,6 @@ export const checkAdminLogin = () => _checkAdminLogin();
 export const getLoginUserName = () => _getLoginUserName();
 export const deleteLoginInfo = () => _deleteLoginInfo();
 export const getNickName = () => _getNickName();
-export const setLoginInfo = (loginResult, username) => _setLoginInfo(loginResult, username);
+export const setLoginInfo = (loginResult) => _setLoginInfo(loginResult);
 export const refreshToken = (store, failCallback) => _refreshToken(store, failCallback);
 export const checkCanRefresh = () => _checkCanRefresh();

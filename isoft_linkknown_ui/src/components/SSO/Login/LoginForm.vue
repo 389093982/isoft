@@ -47,7 +47,7 @@
   import {Login} from "../../../api"
   import {checkEmpty, checkNotEmpty, strSplit} from "../../../tools"
   import {setLoginInfo} from "../../../tools/sso"
-  import {redirectToGitHubLogin, handleGitHubLoginResponse} from "../../../tools/gitlogin"
+  import {redirectToGitHubLogin, handleAfterGitHubLogin} from "../../../tools/gitlogin"
 
   export default {
     name: "LoginForm",
@@ -100,7 +100,7 @@
           redirectUrl: decodeURIComponent(redirectUrl),
         });
         if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
-          setLoginInfo(result, username);
+          setLoginInfo(result);
           localStorage.setItem("__userName", this.username);
           localStorage.setItem("__passwd", this.passwd);
           if (!checkEmpty(result.redirectUrl)) {
@@ -125,9 +125,8 @@
       this.fillMemoryLoginInfo();
 
       if (checkNotEmpty(this.$route.query.code)) {
-        await handleGitHubLoginResponse(this.$route.query.code,
+        await handleAfterGitHubLogin(this.$route.query.code,
           this.getLoginRedirectUrl(),
-          (username, passwd, redirectUrl) => this.postLogin(username, passwd, redirectUrl),
           (msg) => this.$Message.error(msg));
       }
     }

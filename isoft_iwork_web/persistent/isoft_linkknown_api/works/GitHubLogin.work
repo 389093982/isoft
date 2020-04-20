@@ -19,15 +19,15 @@
 		<WorkStepDesc>start节点</WorkStepDesc>
 		<WorkStepType>work_start</WorkStepType>
 		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;code&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;a820fc2a57b3935df605&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;af46aec6d4529d7cd7fd&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_secret&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;26ed56923769e65599573e85bfe76d5e6740c838&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;code&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_secret&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;redirectUrl&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>code</paramName>
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
-		<pureText>true</pureText>
-		<paramValue>a820fc2a57b3935df605</paramValue>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -35,8 +35,8 @@
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
-		<pureText>true</pureText>
-		<paramValue>af46aec6d4529d7cd7fd</paramValue>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -44,12 +44,21 @@
 		<paramDesc></paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
-		<pureText>true</pureText>
-		<paramValue>26ed56923769e65599573e85bfe76d5e6740c838</paramValue>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>redirectUrl</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
-		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;code&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_secret&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;code&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;client_secret&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;redirectUrl&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
 		<work_step_output_xml><![CDATA[<paramOutputSchema>
 	<paramOutputSchemaItem>
 		<parentPath></parentPath>
@@ -66,9 +75,14 @@
 		<paramName>client_secret</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>redirectUrl</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
 </paramOutputSchema>]]></work_step_output_xml>
 		<IsDefer>false</IsDefer>
-		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;code&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;client_id&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;client_secret&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;code&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;client_id&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;client_secret&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;redirectUrl&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
 		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
 	<ParamMappingName></ParamMappingName>
 	<ParamMappingDefault></ParamMappingDefault>
@@ -168,9 +182,53 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>2071</Id>
+		<Id>2077</Id>
 		<WorkId>443</WorkId>
 		<WorkStepId>3</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>panic_error_Not200a</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;int64NotEq($http_request_access_token.number_StatusCode,200);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`登录失败，请检查 github 服务是否可以访问！`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>int64NotEq($http_request_access_token.number_StatusCode,200);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>`登录失败，请检查 github 服务是否可以访问！`</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2071</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>4</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>json_parser_access_token</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -223,15 +281,59 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
+		<Id>2078</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>5</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>panic_error_NoAccessToken</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;isempty($json_parser_access_token.row.access_token);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`登录失败，请检查 github 服务是否可以访问！`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>isempty($json_parser_access_token.row.access_token);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>`登录失败，请检查 github 服务是否可以访问！`</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
 		<Id>2073</Id>
 		<WorkId>443</WorkId>
-		<WorkStepId>4</WorkStepId>
+		<WorkStepId>6</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>http_request_userInfo</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
 		<WorkStepType>http_request</WorkStepType>
 		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_request_url&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;请求资源的url地址&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;https://api.github.com/user&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_request_method?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求方式,默认是GET请求,支持GET、POST&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_request_params?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求参数,格式参考：key=value,多个参数用分隔符 \u0026 拼接&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;fmtSprintf(`access_token=%s`,$json_parser_access_token.row.access_token);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_request_headers?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求头参数,格式参考：key=value,多个参数用分隔符 \u0026 拼接&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_request_url&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;请求资源的url地址&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;https://api.github.com/user&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_request_method?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求方式,默认是GET请求,支持GET、POST&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_request_params?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求参数,格式参考：key=value,多个参数用分隔符 \u0026 拼接&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_request_headers?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;可选参数,请求头参数,格式参考：key=value,多个参数用分隔符 \u0026 拼接&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;fmtSprintf(`Content-Type=application/x-www-form-urlencoded\u0026accept=application/json\u0026Authorization=token %s`,$json_parser_access_token.row.access_token);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
 		<paramName>str_request_url</paramName>
@@ -257,7 +359,7 @@
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
-		<paramValue>fmtSprintf(`access_token=%s`,$json_parser_access_token.row.access_token);&#xA;</paramValue>
+		<paramValue></paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 	<paramInputSchemaItem>
@@ -266,7 +368,7 @@
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
-		<paramValue></paramValue>
+		<paramValue>fmtSprintf(`Content-Type=application/x-www-form-urlencoded&amp;accept=application/json&amp;Authorization=token %s`,$json_parser_access_token.row.access_token);&#xA;</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
@@ -311,36 +413,603 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>2074</Id>
+		<Id>2079</Id>
 		<WorkId>443</WorkId>
-		<WorkStepId>5</WorkStepId>
+		<WorkStepId>7</WorkStepId>
 		<WorkSubId>0</WorkSubId>
-		<WorkStepName>mapper_1587297607</WorkStepName>
+		<WorkStepName>panic_error_Not200b</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
-		<WorkStepType>mapper</WorkStepType>
-		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;s&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$http_request_userInfo.str_response_data;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;int64NotEq($http_request_userInfo.number_StatusCode,200);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`登录失败，请检查 github 服务是否可以访问！`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
 		<work_step_input_xml><![CDATA[<paramInputSchema>
 	<paramInputSchemaItem>
-		<paramName>s</paramName>
-		<paramDesc></paramDesc>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>int64NotEq($http_request_userInfo.number_StatusCode,200);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>`登录失败，请检查 github 服务是否可以访问！`</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2075</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>8</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>json_parser_userName</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>json_parser</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_json_data&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;需要转换成json对象的字符串&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$http_request_userInfo.str_response_data;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;json_fields&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;json对象的字段列表&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;login&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_json_data</paramName>
+		<paramDesc>需要转换成json对象的字符串</paramDesc>
 		<repeatable>false</repeatable>
 		<foreachRefer></foreachRefer>
 		<pureText>false</pureText>
 		<paramValue>$http_request_userInfo.str_response_data;&#xA;</paramValue>
 		<paramNamings></paramNamings>
 	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>json_fields</paramName>
+		<paramDesc>json对象的字段列表</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>login</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
 </paramInputSchema>]]></work_step_input_xml>
-		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;s&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;login&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;login&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
 		<work_step_output_xml><![CDATA[<paramOutputSchema>
 	<paramOutputSchemaItem>
-		<parentPath></parentPath>
-		<paramName>s</paramName>
+		<parentPath>rows</parentPath>
+		<paramName>login</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>login</paramName>
 		<paramValue></paramValue>
 	</paramOutputSchemaItem>
 </paramOutputSchema>]]></work_step_output_xml>
 		<IsDefer>false</IsDefer>
-		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;s&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2080</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>9</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>panic_error_userName</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;isempty($json_parser_userName.row.login);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`登录失败，请检查 github 服务是否可以访问！`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>isempty($json_parser_userName.row.login);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>`登录失败，请检查 github 服务是否可以访问！`</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2076</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>10</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>mapper_userName</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>mapper</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;userName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$json_parser_userName.row.login;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>userName</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$json_parser_userName.row.login;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;userName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>userName</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;userName&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2081</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>11</WorkStepId>
+		<WorkSubId>301</WorkSubId>
+		<WorkStepName>work_sub_GetUserDetail_checkRegist</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>work_sub</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_work_sub&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;子流程信息&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$WORK.GetUserDetail;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;userName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_work_sub</paramName>
+		<paramDesc>子流程信息</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$WORK.GetUserDetail;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>userName</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>errorMsg</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>status</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>user</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2082</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>12</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>if_Not</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>if</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;if条件表达式,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;isempty($work_sub_GetUserDetail_checkRegist.user);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_expression</paramName>
+		<paramDesc>if条件表达式,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>isempty($work_sub_GetUserDetail_checkRegist.user);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>bool_expression</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2083</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>13</WorkStepId>
+		<WorkSubId>230</WorkSubId>
+		<WorkStepName>work_sub_Regist2_registUser</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>work_sub</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_work_sub&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;子流程信息&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$WORK.Regist2;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;passwd&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;nickname&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;verifyCode&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;000000&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;third_user_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;`github`&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_work_sub</paramName>
+		<paramDesc>子流程信息</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$WORK.Regist2;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>username</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>passwd</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>nickname</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>verifyCode</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>000000</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>third_user_type</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>`github`</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>status</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>errorMsg</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2085</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>14</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>sql_query_checkUserExist</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>sql_query</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询sql语句,带分页条件的sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;select user_name,third_user_type,nick_name,pass_wd,role_name from user where user_name = ?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_columnNames?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询结果集列名列表,以逗号分隔,动态sql需要提供&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_metadata_sql?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询 metadata 所需 sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数和sql中的?数量相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_current_page?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;当前页数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_page_size?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;每页数据量&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_datacounts?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;用户不存在！&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_sql</paramName>
+		<paramDesc>查询sql语句,带分页条件的sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>select user_name,third_user_type,nick_name,pass_wd,role_name from user where user_name = ?</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_columnNames?</paramName>
+		<paramDesc>查询结果集列名列表,以逗号分隔,动态sql需要提供</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_metadata_sql?</paramName>
+		<paramDesc>查询 metadata 所需 sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>multi_sql_binding?</paramName>
+		<paramDesc>sql绑定数据,个数和sql中的?数量相同</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_current_page?</paramName>
+		<paramDesc>当前页数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_page_size?</paramName>
+		<paramDesc>每页数据量</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_no_datacounts?</paramName>
+		<paramDesc>查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>用户不存在！</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_db_conn</paramName>
+		<paramDesc>数据库连接信息,需要使用 $RESOURCE 全局参数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$RESOURCE.isoft_linkknown;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;third_user_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;third_user_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;nick_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;nick_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;pass_wd&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;pass_wd&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;role_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;row&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;role_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>number_datacounts</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>rows</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>row</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>third_user_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>third_user_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>nick_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>nick_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>pass_wd</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>pass_wd</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>role_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>row</parentPath>
+		<paramName>role_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2084</Id>
+		<WorkId>443</WorkId>
+		<WorkStepId>15</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>create_jwt_tokenString</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>create_jwt</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_secretKey&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;密钥&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.secretKey;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_claimsMap&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;加密参数,多个参数逗号分隔&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_expireSecond&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;过期秒数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.loginExpiredSecond;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_username&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$mapper_userName.userName;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_secretKey</paramName>
+		<paramDesc>密钥</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$Global.secretKey;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_claimsMap</paramName>
+		<paramDesc>加密参数,多个参数逗号分隔</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>username</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_expireSecond</paramName>
+		<paramDesc>过期秒数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$Global.loginExpiredSecond;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_username</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$mapper_userName.userName;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_tokenString&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>str_tokenString</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
 		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
 	<ParamMappingName></ParamMappingName>
 	<ParamMappingDefault></ParamMappingDefault>
@@ -354,18 +1023,174 @@
 	<steps>
 		<Id>2067</Id>
 		<WorkId>443</WorkId>
-		<WorkStepId>6</WorkStepId>
+		<WorkStepId>16</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>end</WorkStepName>
 		<WorkStepDesc>end节点</WorkStepDesc>
 		<WorkStepType>work_end</WorkStepType>
 		<WorkStepIndent>0</WorkStepIndent>
-		<WorkStepInput></WorkStepInput>
-		<work_step_input_xml><![CDATA[<paramInputSchema></paramInputSchema>]]></work_step_input_xml>
-		<WorkStepOutput></WorkStepOutput>
-		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;ifThenElse($Error.isNoError,$Global.SUCCESS,$Global.ERROR);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Error.insensitiveErrorMsg;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;loginSuccess&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;ifThenElse($Error.isNoError,`SUCCESS`,`FAILED`);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;loginStatus&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;ifThenElse($Error.isNoError,`SUCCESS`,`FAILED`);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;nickName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$sql_query_checkUserExist.row.nick_name;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;tokenString&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$create_jwt_tokenString.str_tokenString;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;domain&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;getDomain($start.redirectUrl);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;roleName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$sql_query_checkUserExist.row.role_name;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;redirectUrl&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$start.redirectUrl;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;expireSecond&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$Global.loginExpiredSecond;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;userName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$sql_query_checkUserExist.row.user_name;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>status</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>ifThenElse($Error.isNoError,$Global.SUCCESS,$Global.ERROR);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>errorMsg</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$Error.insensitiveErrorMsg;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>loginSuccess</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>ifThenElse($Error.isNoError,`SUCCESS`,`FAILED`);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>loginStatus</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>ifThenElse($Error.isNoError,`SUCCESS`,`FAILED`);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>nickName</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$sql_query_checkUserExist.row.nick_name;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>tokenString</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$create_jwt_tokenString.str_tokenString;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>domain</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>getDomain($start.redirectUrl);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>roleName</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$sql_query_checkUserExist.row.role_name;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>redirectUrl</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$start.redirectUrl;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>expireSecond</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$Global.loginExpiredSecond;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>userName</paramName>
+		<paramDesc></paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$sql_query_checkUserExist.row.user_name;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;status&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;errorMsg&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;loginSuccess&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;loginStatus&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;nickName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;tokenString&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;domain&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;roleName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;redirectUrl&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;expireSecond&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;userName&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>status</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>errorMsg</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>loginSuccess</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>loginStatus</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>nickName</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>tokenString</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>domain</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>roleName</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>redirectUrl</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>expireSecond</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>userName</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
 		<IsDefer>false</IsDefer>
-		<WorkStepParamMapping></WorkStepParamMapping>
+		<WorkStepParamMapping>[{&#34;paramMappingName&#34;:&#34;status&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;errorMsg&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;loginSuccess&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;loginStatus&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;nickName&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;tokenString&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;domain&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;roleName&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;redirectUrl&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;expireSecond&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false},{&#34;paramMappingName&#34;:&#34;userName&#34;,&#34;paramMappingDefault&#34;:&#34;&#34;,&#34;paramMappingCleanXss&#34;:false,&#34;paramMappingSafePageNo&#34;:false,&#34;paramMappingSafePageSize&#34;:false}]</WorkStepParamMapping>
 		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
 	<ParamMappingName></ParamMappingName>
 	<ParamMappingDefault></ParamMappingDefault>
