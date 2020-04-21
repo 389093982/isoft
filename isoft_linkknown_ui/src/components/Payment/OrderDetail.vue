@@ -89,8 +89,8 @@
 		  refreshOrder:async function () {
 		    let params = {
 		      'order_id':this.$route.query.order_id,
-          'currentPage':this.page.currentPage,
-          'offset':this.page.offset,
+          'currentPage':1,
+          'offset':10,
         };
         const result = await queryPayOrderList(params);
         if (result.status === 'SUCCESS' && result.orders.length===1) {

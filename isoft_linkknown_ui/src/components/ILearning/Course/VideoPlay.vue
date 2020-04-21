@@ -138,7 +138,9 @@
           const result = await queryPayOrderList({
             'user_name':this.loginUserName,
             'goods_type':'course_theme_type',
-            'goods_id':this.$route.query.course_id
+            'goods_id':this.$route.query.course_id,
+            'currentPage':1,
+            'offset':10,
           });
           if (result.status === 'SUCCESS') {
             if (result.orders.length === 1 && result.orders[0].pay_result === 'SUCCESS') {
