@@ -46,7 +46,7 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 		}
 	})
 	if err != nil {
-		panic(err)
+		panic(errors.Wrapf(err, "[HttpRequestNode-%s]", request_url))
 	}
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, dataMap,
 		iworkconst.STRING_PREFIX+"response_data", iworkconst.BYTE_ARRAY_PREFIX+"response_data", iworkconst.BASE64STRING_PREFIX+"response_data")
