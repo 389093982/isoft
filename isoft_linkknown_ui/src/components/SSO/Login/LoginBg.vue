@@ -19,7 +19,7 @@
   .login_bg {
     height: 450px;
     width: 100%;
-    background: url(../../../assets/sso/login_bg03.jpg) 0px 0px no-repeat;
+    background: url(../../../../static/images/sso/login_bg03.jpg) 0px 0px no-repeat;
     background-size: 100%;
   }
 </style>

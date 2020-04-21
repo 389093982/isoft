@@ -32,7 +32,7 @@
     width: 18px;
     height: 14px;
     margin: 0 5px;
-    background: url('../../../assets/sso/question_icon.png') no-repeat;
+    background: url('../../../../static/images/sso/question_icon.png') no-repeat;
     overflow: hidden;
     vertical-align: middle;
   }
