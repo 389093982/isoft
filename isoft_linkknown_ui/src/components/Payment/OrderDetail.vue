@@ -126,6 +126,8 @@
         const result = await GetUserDetail(this.loginUserName());
         if (result.status === 'SUCCESS') {
           this.user = result.user;
+          //格式化会员过期时间
+          this.user.vip_expired_time = this.formatVipExpiredTime('YYYY-mm-dd HH:MM:SS',this.user.vip_expired_time);
         }
       },
       formatAmount:function (amount) {
@@ -141,6 +143,29 @@
         let formatDate = date.slice(0,4)+"-"+date.slice(4,6)+"-"+date.slice(6,8);
         let formatTime = time.slice(0,2)+":"+time.slice(2,4)+":"+time.slice(4,6);
         return formatDate + " " +formatTime;
+      },
+      formatVipExpiredTime:function(fmt, date) {
+        let ret="";
+        date=new Date(date);
+        const opt = {
+          'Y+': date.getFullYear().toString(), // 年
+          'm+': (date.getMonth() + 1).toString(), // 月
+          'd+': date.getDate().toString(), // 日
+          'H+': date.getHours().toString(), // 时
+          'M+': date.getMinutes().toString(), // 分
+          'S+': date.getSeconds().toString() // 秒
+          // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+          ret = new RegExp('(' + k + ')').exec(fmt)
+          if (ret) {
+            fmt = fmt.replace(
+              ret[1],
+              ret[1].length == 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+            )
+          }
+        }
+        return fmt
       },
     },
     computed:{
