@@ -4,7 +4,7 @@
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <div>
           <MenuItem name="0">
-              <img width="80" height="35" src="../../../static/images/linkknown_logo02.png" @error="defImg()"
+              <img width="80" height="35" src="../../../static/images/common_img/linkknown_logo02.png" @error="defImg()"
                    style="cursor: pointer;position: relative;top: 14px;left: 14px">
           </MenuItem>
           <MenuItem name="1">
@@ -94,7 +94,7 @@
         theme1: 'light',
         loginUserNickName: '',
         small_icon:'',
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
       }
     },
     methods: {

@@ -7,7 +7,7 @@
         <div class="isoft_point_cursor isoft_hover_red" v-for="(book, index) in top_location1_books" style="width: 48%;">
           <div class="img_box" style="height: 120px;" @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
             <img v-if="book.book_img" :src="book.book_img" height="100%" width="100%"/>
-            <img v-else src="../../assets/default.png" height="100%" width="100%"/>
+            <img v-else src="../../../static/images/common_img/default.png" height="100%" width="100%"/>
           </div>
           <div class="isoft_inline_ellipsis isoft_font12" style="margin: 2px 0 5px 0;">{{book.book_name}}</div>
         </div>
@@ -21,7 +21,7 @@
              @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:top_location2_books[top_location2_bookIndex].id}})">
           <img v-if="top_location2_books[top_location2_bookIndex].book_img"
                :src="top_location2_books[top_location2_bookIndex].book_img" height="100%" width="100%"/>
-          <img v-else src="../../assets/default.png" height="100%" width="100%"/>
+          <img v-else src="../../../static/images/common_img/default.png" height="100%" width="100%"/>
         </div>
 
         <div style="width: 50%;position: relative;padding-left: 10px;overflow: hidden;">
@@ -46,7 +46,7 @@
                  @mouseenter="top_location2_bookIndex = index"
                  @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
               <img v-if="book.book_img" :src="book.book_img" height="100%" width="100%"/>
-              <img v-else src="../../assets/default.png" height="100%" width="100%"/>
+              <img v-else src="../../../static/images/common_img/default.png" height="100%" width="100%"/>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
           <div class="img_box" style="height: 120px;"
                @click="$router.push({path:'/ibook/bookCatalogs',query:{book_id:book.id}})">
             <img v-if="book.book_img" :src="book.book_img" height="100%" width="100%"/>
-            <img v-else src="../../assets/default.png" height="100%" width="100%"/>
+            <img v-else src="../../../static/images/common_img/default.png" height="100%" width="100%"/>
           </div>
           <div class="isoft_inline_ellipsis isoft_font12" style="margin: 2px 0 5px 0;">{{book.book_name}}</div>
         </div>

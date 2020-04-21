@@ -29,7 +29,7 @@
         // 热门分享类型
         elements: [],
         // 当前页
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
       }
     },
     methods: {

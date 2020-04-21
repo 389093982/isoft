@@ -9,7 +9,7 @@
         <strong class="isoft_hover_red2">{{blog.blog_title}}</strong>
       </span>
       <span v-else>
-        <img class="imgIcon" src="../../assets/icon_b.png"/>&nbsp;
+        <img class="imgIcon" src="../../../static/images/common_img/icon_b.png"/>&nbsp;
         <span class="isoft_hover_red2">{{blog.blog_title}}</span>
       </span>
     </div>

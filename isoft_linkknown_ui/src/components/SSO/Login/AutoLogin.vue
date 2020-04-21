@@ -25,7 +25,7 @@
     data() {
       return {
         showAutoLogin: false,
-        defaultImg: require('../../../assets/default.png'),
+        defaultImg: require('../../../../static/images/common_img/default.png'),
         showImgAnimationFlag: false,
         animationend: false,
         showDotTimer: null,   // 修改点数量的动画

@@ -17,7 +17,7 @@
         <ul>
           <li v-for="(userex,index) in userexs" style="list-style: none;display: block;margin-top: 5px;">
             <span style="width: 13px;height: 17px;float: left;position: relative;left: -3px;top: 35px;">
-              <img v-show="userex.choosed" src="../../assets/arrow_l.jpg"/>
+              <img v-show="userex.choosed" src="../../../static/images/common_img/arrow_l.jpg"/>
             </span>
             <HoverBigImg @mouseenter="overShow(index)" :srcImg="userex.img" width="144px"/>
           </li>
@@ -38,25 +38,25 @@
         currentIndex: 0,
         userexs: [
           {
-            img: require("../../assets/1.jpg"),
+            img: require("../../../static/images/common_img/link_connect.jpg"),
             link: "http://www.baidu.com",
             label: "eeeeeee11111111111111111111",
             choosed: true,
           },
           {
-            img: require("../../assets/default.png"),
+            img: require("../../../static/images/common_img/default.png"),
             link: "http://www.baidu.com",
             label: "eeeeeee22222222222222222",
             choosed: false,
           },
           {
-            img: require("../../assets/1.jpg"),
+            img: require("../../../static/images/common_img/link_connect.jpg"),
             link: "http://www.baidu.com",
             label: "eeeeeee333333333333333333333333",
             choosed: false,
           },
           {
-            img: require("../../assets/default.png"),
+            img: require("../../../static/images/common_img/default.png"),
             link: "http://www.baidu.com",
             label: "eeeeeee44444444444444444444444444444444",
             choosed: false,

@@ -73,7 +73,7 @@
         payType: '微信支付',
         realPay:'',
         codeUrl: '',
-        imageUrl: require("../../../static/images/vip.png"),
+        imageUrl: require("../../../static/images/vipCenter/vip.png"),
         websocket:null,
         percent:0,
         showPayResult:false,

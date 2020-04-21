@@ -47,7 +47,7 @@
                       <span>【热荐课程】&nbsp;{{course.course_name}}</span>
                       <div class="course_small_image" style="width: 155px;">
                         <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-                        <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                        <img v-else src="../../../../static/images/common_img/default.png" height="100" width="155"/>
                         <div class="ico_play"></div>
                       </div>
                     </div>
@@ -321,7 +321,7 @@
   }
 
   .ico_play {
-    background: url(../../../assets/ico_play.png) no-repeat;
+    background: url(../../../../static/images/common_img/ico_play.png) no-repeat;
     background-size: 20px;
     position: relative;
     top: -30px;

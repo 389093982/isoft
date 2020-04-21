@@ -167,7 +167,7 @@
   }
 
   .submit {
-    background: url('../../../assets/search.png') 50% 50% no-repeat;
+    background: url('../../../../static/images/common_img/search.png') 50% 50% no-repeat;
     background-size: 24px;
     position: absolute;
     right: 10px;

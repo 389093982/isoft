@@ -45,7 +45,7 @@
 
       <div class="isoft_bg_white" style="margin: 20px 80px;padding: 25px;min-height: 250px;display: flex;">
         <div style="width: 20%;">
-          <img style="width: 80%;height: 200px;" src="../../assets/default.png"/>
+          <img style="width: 80%;height: 200px;" src="../../../static/images/common_img/default.png"/>
         </div>
         <div style="width: 80%;display: flex;">
           <div style="width: 50%;">
@@ -88,7 +88,7 @@
 
       <div class="isoft_bg_white" style="margin: 20px 80px;padding: 25px;min-height: 250px;display: flex;">
         <div style="width: 20%;">
-          <img style="width: 80%;height: 200px;" src="../../assets/default.png"/>
+          <img style="width: 80%;height: 200px;" src="../../../static/images/common_img/default.png"/>
         </div>
         <div style="width: 80%;display: flex;">
           <div style="width: 50%;">

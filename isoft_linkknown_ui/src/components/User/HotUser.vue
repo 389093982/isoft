@@ -42,7 +42,7 @@
     data() {
       return {
         users: [],
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
       }
     },
     methods: {

@@ -18,7 +18,7 @@
                 <!--如果是课程-->
                 <div v-if="goods.goods_type==='course_theme_type'" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods.goods_id}})" style="cursor: pointer">
                   <img v-if="goods.goods_img" :src="goods.goods_img" width="180" height="120"/>
-                  <img v-else src="../../assets/default.png" width="180" height="120"/>
+                  <img v-else src="../../../static/images/common_img/default.png" width="180" height="120"/>
                   <div class="ico_play"></div>
                 </div>
                 <!--如果是vip-->
@@ -168,7 +168,7 @@
 
 <style scoped>
   .ico_play {
-    background: url(../../assets/ico_play.png) no-repeat;
+    background: url(../../../static/images/common_img/ico_play.png) no-repeat;
     position: absolute;
     top: 35px;
     left: 55px;

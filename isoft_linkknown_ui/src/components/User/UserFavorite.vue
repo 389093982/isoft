@@ -9,7 +9,7 @@
               <div class="bookImg isoft_hover_top10">
                 <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
                   <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
-                  <img v-else src="../../assets/default.png" height="160px" width="140px"/>
+                  <img v-else src="../../../static/images/common_img/default.png" height="160px" width="140px"/>
                   <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                     <span class="book_label">精品</span>
                     <span style="color: grey">{{book.book_name | filterLimitFunc(7)}}</span>
@@ -39,7 +39,7 @@
     },
     data() {
       return {
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
         book_collects: [],
         books: [],
       }

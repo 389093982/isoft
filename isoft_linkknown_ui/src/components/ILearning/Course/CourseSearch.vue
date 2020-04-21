@@ -14,7 +14,7 @@
                 <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}">
                   <h4>课程名称：{{course.course_name}}</h4>
                   <img v-if="course.small_image" :src="course.small_image" height="120" width="180"/>
-                  <img v-else src="../../../assets/default.png" height="120" width="180"/>
+                  <img v-else src="../../../../static/images/common_img/default.png" height="120" width="180"/>
                 </router-link>
               </Col>
               <Col span="16">

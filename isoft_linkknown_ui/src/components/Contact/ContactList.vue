@@ -2,7 +2,7 @@
   <div class="isoft_bg_white">
     <div class="header">
     <span style="color: #999;font-size: 14px;font-weight: bold;float: right;padding-right: 120px;">
-      <img src="../../assets/default.png" style="width: 40px;height: 40px;"/>链知网智能小豆为您服务
+      <img src="../../../static/images/common_img/default.png" style="width: 40px;height: 40px;"/>链知网智能小豆为您服务
     </span>
     </div>
     <div class="content">
@@ -11,7 +11,7 @@
           <div style="min-height: 500px;margin: 25px 0 0 90px;">
             <div id="messageDiv" style="border: 1px solid #eee;height: 420px;overflow-y:scroll;padding: 20px;">
               <div style="text-align: center;margin-bottom: 5px;">
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <span class="isoft_tag1">智能小豆为您 <span class="isoft_color_green1">{{loginUserNickName}}</span> 解答</span>
               </div>
 
@@ -30,7 +30,7 @@
                       <span class="isoft_font12 isoft_color_grey"><Time :time="msg.last_updated_time"
                                                                         :interval="1"/></span>
                     </span>
-                    <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                    <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                     <span v-if="msg.user_name === $route.query.userName">{{msg._nick_name}}
                       <span class="isoft_font12 isoft_color_grey"><Time :time="msg.last_updated_time"
                                                                         :interval="1"/></span>
@@ -67,23 +67,23 @@
             </div>
             <div class="selfAssistent isoft_pd20 clear" v-if="showHelpPattern === 1">
               <a>
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <p>友情链接</p>
               </a>
               <a>
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <p>问题反馈</p>
               </a>
               <a>
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <p>商业合作</p>
               </a>
               <a>
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <p>商业合作</p>
               </a>
               <a>
-                <img src="../../assets/default.png" style="width: 30px;height: 30px;"/>
+                <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/>
                 <p>商业合作</p>
               </a>
             </div>
@@ -132,7 +132,7 @@
         maxTime: null,  // 当前消息的最新时间
         isRefreshing: false,
         isSending: false,
-        
+
       }
     },
     methods: {

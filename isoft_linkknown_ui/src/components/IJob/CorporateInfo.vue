@@ -6,7 +6,7 @@
           <a>
             <img v-if="corporateInfo.corporate_logo" :src="corporateInfo.corporate_logo" height="160px"
                  width="180px"/>
-            <img v-else src="../../assets/default.png" height="160px" width="140px"/>
+            <img v-else src="../../../static/images/common_img/default.png" height="160px" width="140px"/>
           </a>
         </div>
       </Col>

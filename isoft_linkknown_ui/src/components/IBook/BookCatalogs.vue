@@ -102,7 +102,7 @@
       return {
         bookInfo: null,
         bookCatalogs: [],
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
         userInfos: null,
         isCollected: false,  // 是否收藏
       }

@@ -1,7 +1,7 @@
 <template>
   <div style="height: 60px;background-color: white">
     <div style="float: left;width: 20%;">
-      <img src="../../../../static/images/linkknown_logo02.png" style="width: 80px;height: 35px;margin: 13px 0 0 50px"/>
+      <img src="../../../../static/images/common_img/linkknown_logo02.png" style="width: 80px;height: 35px;margin: 13px 0 0 50px"/>
     </div>
     <div style="float: left;width: 60%;padding: 20px 0 0 0;">
       <div style="background-color: #fef2f2;width:80%;height: 25px;text-align: center;border-radius: 10px;border: 1px #ffb4a8 solid">

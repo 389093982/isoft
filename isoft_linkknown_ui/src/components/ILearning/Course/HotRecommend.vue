@@ -21,7 +21,7 @@
           <li v-for="course in courses">
             <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:course.id}}" style="position: relative">
               <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-              <img v-else src="../../../assets/default.png" height="100" width="155"/>
+              <img v-else src="../../../../static/images/common_img/default.png" height="100" width="155"/>
               <!-- 播放图标 -->
               <div v-if="showDisplayIcon" class="ico_play" style="position: absolute;top: -65px;left: 50px;"></div>
               <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
@@ -103,7 +103,7 @@
   }
 
   .ico_play {
-    background: url(../../../assets/ico_play.png) no-repeat;
+    background: url(../../../../static/images/common_img/ico_play.png) no-repeat;
     position: absolute;
     top: 35px;
     left: 55px;

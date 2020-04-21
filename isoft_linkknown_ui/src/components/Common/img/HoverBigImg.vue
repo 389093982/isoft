@@ -11,7 +11,7 @@
     props: {
       srcImg: {
         type: String,
-        default: "../../../assets/2.jpeg",
+        default: "../../../../static/images/common_img/link_AI.jpeg",
       },
       width: {
         type: String,
@@ -28,7 +28,7 @@
     },
     data() {
       return {
-        defaultImg: require('../../../assets/default.png'),
+        defaultImg: require('../../../../static/images/common_img/default.png'),
       }
     },
     methods: {

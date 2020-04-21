@@ -39,7 +39,7 @@
                 <div style="margin-top: 50px">
                   <div style="width: 180px;height: 120px;cursor: pointer;">
                     <img v-if="goods_img" :src="goods_img" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
-                    <img v-else src="../../assets/default.png" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
+                    <img v-else src="../../../static/images/common_img/default.png" width="180" height="120" @error="defImg()" @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:goods_id}})"/>
                     <div class="ico_play"></div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@
         payType: '微信支付',
         lastTimeCodeUrl: '',
         codeUrl: '',
-        imageUrl: require("../../../static/images/vip.png"),
+        imageUrl: require("../../../static/images/vipCenter/vip.png"),
         websocket:null,
         percent:0,
         showPayResult:false,
@@ -270,7 +270,7 @@
     border: 1px solid #dcdee2;
   }
   .ico_play {
-    background: url(../../assets/ico_play.png) no-repeat;
+    background: url(../../../static/images/common_img/ico_play.png) no-repeat;
     background-size: 20px;
     position: absolute;
     top: 145px;

@@ -62,7 +62,7 @@
         <Col span="11">
           <div style="padding: 5px 10px 0 10px;">
             <!--中间大图-->
-            <img style="width: 100%;height: 220px;" src="../../assets/xuexi.jpg"/>
+            <img style="width: 100%;height: 220px;" src="../../../static/images/common_img/xuexi.jpg"/>
             <!--遍历博客-->
             <ul>
               <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
@@ -71,7 +71,7 @@
                   <Col span="6">
                     <div style="padding: 0 5px 0 0">
                       <img v-if="searchblog.first_img" style="width: 100%;height: 80px;" :src="searchblog.first_img"/>
-                      <img v-else style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
+                      <img v-else style="width: 100%;height: 80px;" src="../../../static/images/common_img/xuexi.jpg"/>
                     </div>
                   </Col>
                   <!--第二列 ：分三行-->
@@ -206,7 +206,7 @@
                       <Col span="9">
                         <div style="padding: 0 5px 0 0">
                           <img v-if="blogGolden.first_img" style="width: 100%;height: 80px;" :src="blogGolden.first_img" />
-                          <img v-else style="width: 100%;height: 80px;" src="../../assets/xuexi.jpg"/>
+                          <img v-else style="width: 100%;height: 80px;" src="../../../static/images/common_img/xuexi.jpg"/>
                         </div>
                       </Col>
                       <!--第二列 ：分三行-->
@@ -437,7 +437,7 @@
 <style scoped>
   .blog_title_bg {
     height: 140px;
-    background: url(../../assets/blog/blog_title_bg.jpg) no-repeat;
+    background: url(../../../static/images/common_img/blog_title_bg.jpg) no-repeat;
     background-size: 100%;
   }
   .type_hover{

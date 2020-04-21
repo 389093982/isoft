@@ -6,7 +6,7 @@
              @click="$router.push({path:'/ilearning/jingpinCourse'})">
           <Row>
             <Col span="8">
-              <img src="../../../static/images/course.jpg" style="width: 52px;height: 52px;"/>
+              <img src="../../../static/images/common_img/course.jpg" style="width: 52px;height: 52px;"/>
             </Col>
             <Col span="16">
               <h4>精品课程</h4>
@@ -20,7 +20,7 @@
              @click="$router.push({path:'/iblog/blogList'})">
           <Row>
             <Col span="8">
-              <img src="../../../static/images/blog.jpg" style="width: 52px;height: 52px;"/>
+              <img src="../../../static/images/common_img/blog.jpg" style="width: 52px;height: 52px;"/>
             </Col>
             <Col span="16">
               <h4>话题博客</h4>
@@ -34,7 +34,7 @@
              @click="$router.push({path:'/ibook/bookList'})">
           <Row>
             <Col span="8">
-              <img src="../../../static/images/book.jpg" style="width: 52px;height: 52px;"/>
+              <img src="../../../static/images/common_img/book.jpg" style="width: 52px;height: 52px;"/>
             </Col>
             <Col span="16">
               <h4>热门书单</h4>
@@ -48,7 +48,7 @@
              @click="$router.push({path:'/site/siteIndex'})">
           <Row>
             <Col span="8">
-              <img src="../../../static/images/more.jpg" style="width: 52px;height: 52px;"/>
+              <img src="../../../static/images/common_img/more.jpg" style="width: 52px;height: 52px;"/>
             </Col>
             <Col span="16">
               <h4>更多资源</h4>

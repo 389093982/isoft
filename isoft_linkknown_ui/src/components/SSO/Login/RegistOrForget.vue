@@ -2,7 +2,7 @@
   <div>
 
     <div style="float: left;width: 20%;">
-      <img src="../../../../static/images/linkknown_logo02.png" style="width: 80px;height: 35px;margin: 13px 0 0 50px"/>
+      <img src="../../../../static/images/common_img/linkknown_logo02.png" style="width: 80px;height: 35px;margin: 13px 0 0 50px"/>
     </div>
     <div id="header">
       <div class="login-link" id="login_link" style="position: absolute;top: 20px;right: 120px;">

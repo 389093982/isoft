@@ -2,14 +2,14 @@
   <span>
     <div class="box" style="display: inline-block;" @click="showBusiness = true">
       <span style="position: relative;">
-        <img style="width: 120px;height: 150px;position: absolute;top: -90px;left: -20px;" src="../../../static/images/logo01.gif"/>
+        <img style="width: 120px;height: 150px;position: absolute;top: -90px;left: -20px;" src="../../../static/images/common_img/logo01.gif"/>
         <!--<img style="width: 120px;height: 150px;position: absolute;top: -90px;left: -20px;" src="../../../static/images/logo02.gif"/>-->
       </span>
       <div style="margin: 15px 5px 5px 50px;color: white;text-align: center;" class="isoft_font16">
         <p>创业必备</p>
         <p>点击我了解</p>
         <div style="position: relative;">
-          <img style="position: absolute;right: 10px;top: -33px;width: 10px;height: 17px;" src="../../../static/images/right.png"/>
+          <img style="position: absolute;right: 10px;top: -33px;width: 10px;height: 17px;" src="../../../static/images/common_img/right.png"/>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="center_box" v-if="showBusiness" style="display: flex;">
       <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
       <div class="to_zixun_box" style="position: relative;">
-        <img src="../../../static/images/jianzhi.png" style="width: 280px;height: 450px;"/>
+        <img src="../../../static/images/common_img/jianzhi.png" style="width: 280px;height: 450px;"/>
         <div class="to_zixun">马上咨询管理员</div>
       </div>
       <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
@@ -42,7 +42,7 @@
 
           <div v-for="(icon, index) in icons" style="margin: 15px 0;display: flex;">
             <div>
-              <img :src="'../../../static/images/' + icon.icon_name"/>
+              <img :src="'../../../static/images/common_img/' + icon.icon_name"/>
             </div>
             <div style="margin-left: 25px;">
               <p style="font-size: 14px;font-weight: 500;color: #555;line-height: 22px;margin-bottom: 10px;">{{icon.icon_label}}</p>

@@ -115,7 +115,7 @@
         search_type: '',
         search_user_name: '',
         userInfos: [],
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
       }
     },
     methods: {

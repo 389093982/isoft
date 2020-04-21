@@ -93,7 +93,7 @@
                   <div class="courseBorder" style="position: relative;cursor: pointer"
                        @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:course.id}})">
                     <img v-if="course.small_image" :src="course.small_image" height="100" width="155"/>
-                    <img v-else src="../../../assets/default.png" height="100" width="155"/>
+                    <img v-else src="../../../../static/images/common_img/default.png" height="100" width="155"/>
                     <div class="isoft_font12 isoft_inline_ellipsis isoft_color_grey" style="text-align: center;">
                       {{course.course_name}}
                     </div>
@@ -150,7 +150,7 @@
     data() {
       return {
         isLoading: true,
-        defaultImg: require('../../../assets/default.png'),
+        defaultImg: require('../../../../static/images/common_img/default.png'),
         course: {},                // 当前课程
         hasPaid:false,            //默认为未付款
         cVideos: [],              // 视频清单
@@ -345,7 +345,7 @@
   }
 
    .ico_play {
-     background: url(../../../assets/ico_play.png) no-repeat;
+     background: url(../../../../static/images/common_img/ico_play.png) no-repeat;
      background-size: 20px;
      position: absolute;
      top: 125px;

@@ -64,7 +64,7 @@
       return {
         isLoading: true,
         fileUploadUrl: fileUploadUrl + "?table_name=decorate_item&table_field=media_path",
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
         fileUploadIndex: -1,
         formDynamic: {
           items: [

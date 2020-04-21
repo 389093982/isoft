@@ -67,7 +67,7 @@
 <style scoped>
   .course_title_bg {
     height: 140px;
-    background: url(../../assets/course/course_title_bg.jpg) no-repeat;
+    background: url(../../../static/images/common_img/course_title_bg.jpg) no-repeat;
     background-size: 100%;
   }
 </style>

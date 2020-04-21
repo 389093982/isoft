@@ -7,7 +7,7 @@
             <span class="isoft_hover_top10 isoft_point_cursor">
               <img v-if="resume.head_img" :src="resume.head_img" style="width: 160px;height: 160px;border-radius: 50%;"
                    @error="defImg()"/>
-              <img v-else src="../../assets/default.png" style="width: 160px;height: 160px;border-radius: 50%;"/>
+              <img v-else src="../../../static/images/common_img/default.png" style="width: 160px;height: 160px;border-radius: 50%;"/>
             </span>
           </div>
           <div style="width: 80%;">
@@ -65,7 +65,7 @@
       return {
         isLoading: true,
         resume: null,
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
       }
     },
     methods: {

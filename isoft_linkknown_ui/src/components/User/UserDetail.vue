@@ -135,7 +135,7 @@
       return {
         user: null,
         isLoading: true,
-        defaultImg: require('../../assets/default.png'),
+        defaultImg: require('../../../static/images/common_img/default.png'),
         editSignFlag: false,
         user_signature: '这家伙很懒，什么个性签名都没有留下',
       }

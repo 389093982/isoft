@@ -216,19 +216,19 @@
 
   @keyframes toggle_bg {
     0% {
-      background-image: url("../../../static/images/banner1.jpg");
+      background-image: url("../../../static/images/resourceList/banner1.jpg");
     }
     25% {
-      background-image: url("../../../static/images/banner2.jpg");
+      background-image: url("../../../static/images/resourceList/banner2.jpg");
     }
     50% {
-      background-image: url("../../../static/images/banner3.jpg");
+      background-image: url("../../../static/images/resourceList/banner3.jpg");
     }
     75% {
-      background-image: url("../../../static/images/banner2.jpg");
+      background-image: url("../../../static/images/resourceList/banner2.jpg");
     }
     100% {
-      background-image: url("../../../static/images/banner1.jpg");
+      background-image: url("../../../static/images/resourceList/banner1.jpg");
     }
   }
 </style>
