@@ -69,6 +69,12 @@
               <div style="width: 10%;height: 2px;background-color: rgba(255,162,187,0.55)"></div>
             </div>
           </Row>
+
+          <!--分页-->
+          <div style="text-align: center;margin-top: 10px">
+            <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+          </div>
+
         </Col>
       </Row>
     </div>
@@ -92,6 +98,7 @@
     data () {
       return {
         orderData: [],
+        page:{totalCount:0,currentPage:1,offset:10},
         //查询条件
         order_id:'',
         trans_date_start:'',
@@ -114,11 +121,14 @@
           'goods_id':this.goods_id,
           'goods_desc':this.goods_desc,
           'goods_price':this.goods_price,
-          'pay_result':this.pay_result
+          'pay_result':this.pay_result,
+          'currentPage':this.page.currentPage,
+          'offset':this.page.offset,
         };
         const result = await queryPayOrderList(params);
         if (result.status === 'SUCCESS') {
-          this.orderData = result.orders
+          this.orderData = result.orders;
+          this.page.totalCount = result.paginator.totalcount;
         }
 
       },
@@ -135,6 +145,14 @@
         let formatDate = date.slice(0,4)+"-"+date.slice(4,6)+"-"+date.slice(6,8);
         let formatTime = time.slice(0,2)+":"+time.slice(2,4)+":"+time.slice(4,6);
         return formatDate + " " +formatTime;
+      },
+      pageChange:function (page) {
+        this.page.currentPage = page;
+        this.refreshOrderList()
+      },
+      pageSizeChange:function (pageSize) {
+        this.page.offset = pageSize;
+        this.refreshOrderList()
       },
     },
     computed:{
