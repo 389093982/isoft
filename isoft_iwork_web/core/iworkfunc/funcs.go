@@ -90,7 +90,7 @@ func (t *IWorkFuncProxy) GetFileNameFromUrl(args []interface{}) interface{} {
 	if fileName != "" {
 		return fileName
 	}
-	panic("无效文件名")
+	panic(errors.New(fmt.Sprintf("[url=%s] 未找到有效的文件名", args[0].(string))))
 }
 
 func (t *IWorkFuncProxy) True(args []interface{}) interface{} {

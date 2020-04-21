@@ -3,6 +3,8 @@ package iworkfunc
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
+	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_utils/common/stringutil"
 	"reflect"
 	"strings"
@@ -65,6 +67,7 @@ func CheckHasNearRightBracket(leftBracketIndex int, lexersExpression string) (bo
 func ExecuteFuncCaller(caller *FuncCaller, args []interface{}) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
+			logutil.Error(string(errorutil.PanicTrace(4)))
 			panic(errors.Wrap(err.(error), fmt.Sprintf(`caller.FuncName is %s, caller.FuncArgs %v`, caller.FuncName, caller.FuncArgs)))
 		}
 	}()
