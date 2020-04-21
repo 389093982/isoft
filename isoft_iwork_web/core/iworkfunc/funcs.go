@@ -21,20 +21,24 @@ type IWorkFuncProxy struct{}
 
 func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 	return []map[string]string{
-		{"funcType": "default", "funcDemo": "StringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
-		{"funcType": "default", "funcDemo": "StringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},
-		{"funcType": "default", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串转大写函数"},
-		{"funcType": "default", "funcDemo": "stringsToLower($str)", "funcDesc": "字符串转小写函数"},
-		{"funcType": "default", "funcDemo": "stringsJoin($str1,$str2)", "funcDesc": "字符串拼接函数"},
-		{"funcType": "default", "funcDemo": "stringsJoinWithSep($str1,$str2)", "funcDesc": "字符串拼接函数"},
-		{"funcType": "default", "funcDemo": "int64Add($int1,$int2)", "funcDesc": "数字相加函数"},
-		{"funcType": "default", "funcDemo": "int64Sub($int1,$int2)", "funcDesc": "数字相减函数"},
-		{"funcType": "default", "funcDemo": "int64Multi($int1,$int2)", "funcDesc": "数字相乘函数"},
-		{"funcType": "default", "funcDemo": "stringsContains($str1,$str2)", "funcDesc": "字符串包含函数"},
-		{"funcType": "default", "funcDemo": "stringsHasPrefix($str1,$str2)", "funcDesc": "字符串前缀判断函数"},
-		{"funcType": "default", "funcDemo": "stringsHasSuffix($str1,$str2)", "funcDesc": "字符串后缀判断函数"},
-		{"funcType": "default", "funcDemo": "stringsTrimSuffix($str1,$suffix)", "funcDesc": "字符串去除后缀"},
-		{"funcType": "default", "funcDemo": "stringsTrimPrefix($str1,$prefix)", "funcDesc": "字符串去除前缀"},
+		{"funcType": "string", "funcDemo": "StringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
+		{"funcType": "string", "funcDemo": "StringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},
+		{"funcType": "string", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串转大写函数"},
+		{"funcType": "string", "funcDemo": "stringsToLower($str)", "funcDesc": "字符串转小写函数"},
+		{"funcType": "string", "funcDemo": "stringsJoin($str1,$str2)", "funcDesc": "字符串拼接函数"},
+		{"funcType": "string", "funcDemo": "stringsJoinWithSep($str1,$str2)", "funcDesc": "字符串拼接函数"},
+		{"funcType": "string", "funcDemo": "stringsContains($str1,$str2)", "funcDesc": "字符串包含函数"},
+		{"funcType": "string", "funcDemo": "stringsHasPrefix($str1,$str2)", "funcDesc": "字符串前缀判断函数"},
+		{"funcType": "string", "funcDemo": "stringsHasSuffix($str1,$str2)", "funcDesc": "字符串后缀判断函数"},
+		{"funcType": "string", "funcDemo": "stringsTrimSuffix($str1,$suffix)", "funcDesc": "字符串去除后缀"},
+		{"funcType": "string", "funcDemo": "stringsTrimPrefix($str1,$prefix)", "funcDesc": "字符串去除前缀"},
+
+		{"funcType": "math", "funcDemo": "int64Add($int1,$int2)", "funcDesc": "数字相加函数"},
+		{"funcType": "math", "funcDemo": "int64Sub($int1,$int2)", "funcDesc": "数字相减函数"},
+		{"funcType": "math", "funcDemo": "int64Multi($int1,$int2)", "funcDesc": "数字相乘函数"},
+
+		{"funcType": "url", "funcDemo": "getFileNameFromUrl($url)", "funcDesc": "根据 url 地址获取文件名, egg 格式 http://www.linkknown.com/files/helloworld.jpg"},
+
 		{"funcType": "default", "funcDemo": "stringsOneOf($str1,$str2,$checkStr)", "funcDesc": "判断字符串 checkStr 是否存在于字符数组中"},
 		{"funcType": "default", "funcDemo": "int64Gt($int1,$int2)", "funcDesc": "判断数字1是否大于数字2"},
 		{"funcType": "default", "funcDemo": "int64Lt($int1,$int2)", "funcDesc": "判断数字1是否小于数字2"},
@@ -77,6 +81,15 @@ func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 		{"funcType": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
 		{"funcType": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
 	}
+}
+
+func (t *IWorkFuncProxy) GetFileNameFromUrl(args []interface{}) interface{} {
+	sli := strings.Split(strings.TrimSpace(args[0].(string)), "/")
+	fileName := sli[len(sli)-1]
+	if fileName != "" {
+		return fileName
+	}
+	panic("无效文件名")
 }
 
 func (t *IWorkFuncProxy) True(args []interface{}) interface{} {

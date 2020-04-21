@@ -1,20 +1,20 @@
 package http
 
 import (
-	"isoft/isoft_utils/common/stringutil"
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkutil/htmlutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_utils/common/stringutil"
 )
 
-type HrefParserNode struct {
+type HttpHrefParserNode struct {
 	node.BaseNode
 	WorkStep *models.WorkStep
 }
 
-func (this *HrefParserNode) Execute(trackingId string) {
+func (this *HttpHrefParserNode) Execute(trackingId string) {
 	hrefs := make([]interface{}, 0)
 	if url, ok := this.TmpDataMap[iworkconst.STRING_PREFIX+"url"].(string); ok {
 		if _hrefs := htmlutil.GetAllHref(url); len(_hrefs) > 0 {
@@ -29,13 +29,13 @@ func (this *HrefParserNode) Execute(trackingId string) {
 	})
 }
 
-func (this *HrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+func (this *HttpHrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: []string{iworkconst.STRING_PREFIX + "url", "需要分析资源的url地址"},
 	}
 	return this.BPIS1(paramMap)
 }
 
-func (this *HrefParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+func (this *HttpHrefParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return this.BPOS1([]string{iworkconst.MULTI_PREFIX + "hrefs", iworkconst.NUMBER_PREFIX + "href_amounts"})
 }
