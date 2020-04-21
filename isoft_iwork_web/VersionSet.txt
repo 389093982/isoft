@@ -11,4 +11,9 @@ v1.0.2
 快捷函数支持分组
 快捷函数首字母统一整改成小写开头
 HttpHrefParser 节点优化
+流程运行报错 Error 节点记录日记级别纠正为 ERROR
+
+
+v.2.x.x
 ForeachNode 节点逻辑重构
+对无效函数名进行校验
