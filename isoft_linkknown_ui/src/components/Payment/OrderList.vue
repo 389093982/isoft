@@ -39,7 +39,7 @@
                   <div style="display: flex">
                     <div class="orderTipService" @click="$router.push({path:'/payment/orderDetail',query:{order_id:goods.order_id}})">查看详情</div>
                     <div class="orderTipService" style="margin-left: 10px">查看发票</div>
-                    <div class="orderTipService" style="margin-left: 10px">平价服务</div>
+                    <div class="orderTipService" @click="$router.push({path:'/contact/contactList'})" style="margin-left: 10px">联系客服</div>
                   </div>
                 </Row>
               </Col>
