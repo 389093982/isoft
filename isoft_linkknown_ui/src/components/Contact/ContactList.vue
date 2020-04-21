@@ -21,15 +21,15 @@
 
     <div class="content" style="display: flex;">
       <!--左侧-->
-      <div style="width: 30%">
+      <div style="width: 28%">
         <div style="margin-top: 5px">
           <LearningDiary></LearningDiary>
         </div>
       </div>
       <!--中间聊天区域-->
-      <div style="width: 35%;min-height: 500px;margin: 5px 0 0 5px;">
+      <div style="width: 39%;min-height: 500px;margin: 5px 0 0 5px;">
         <!--上边聊天记录, 模仿微信聊天背景样式来-->
-        <div id="messageDiv" style="border: 1px solid #d2d2d2;height: 360px;overflow-y:scroll;padding: 20px;background-color: rgba(160,160,160,0.18)">
+        <div id="messageDiv" style="border: 1px solid #d2d2d2;height: 350px;overflow-y:scroll;padding: 20px 5px 40px 5px ;background-color: rgba(160,160,160,0.18)">
           <div style="text-align: center;margin-bottom: 5px;">
             <span class="isoft_tag1">^_^智能小豆为您 <span class="isoft_color_green1">{{loginUserNickName}}</span> 解答</span>
           </div>
@@ -43,28 +43,30 @@
             </div>
             <div v-for="(msg, index) in contactMessages">
               <!--提问者-->
-              <div v-if="msg.user_name === $route.query.userName" :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'" style="margin-top: 40px;position: relative">
+              <div v-if="msg.user_name === $route.query.userName" :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'" style="width: 85%;float: left;margin-top: 40px;position: relative;margin-bottom: 20px">
                 <img src="../../../static/images/common_img/default.png" style="width: 35px;height: 35px;"/>
                 <span class="requestTime">{{loginUserNickName}} • <Time :time="msg.last_updated_time" :interval="1"/></span>
-                <span class="contact requestContent">{{msg.message_text}}</span>
+                <div class="contact requestContent">{{msg.message_text}}</div>
               </div>
               <!--回答者-->
-              <div v-else-if="msg.user_name !== $route.query.userName" :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'" style="margin-top: 40px;position: relative">
-                <span class="contact answerContent">{{msg.message_text}}</span>
+              <div v-else-if="msg.user_name !== $route.query.userName" :class="msg.user_name === $route.query.userName ? 'answer' : 'ask'" style="width: 85%;float: right;margin-top: 40px;position: relative;margin-bottom: 20px">
+                <div class="contact answerContent">{{msg.message_text}}</div>
                 <span class="answerTime"><Time :time="msg.last_updated_time" :interval="1"/></span>
-                <img src="../../../static/images/common_img/default.png" style="width: 35px;height: 35px;"/>
+                <div style="text-align: right">
+                  <img src="../../../static/images/common_img/default.png" style="width: 35px;height: 35px;"/>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <!--下边发送内容编辑框-->
         <div style="margin-top:5px;position: relative;">
-          <textarea rows="3" placeholder="按 Enter 键发送" style="background-color: #ffffff;border-color: #eee;height: 70px;width: 100%;padding: 0 10px;" v-model.trim="sendMsgText"></textarea>
-          <span class="isoft_tag1 isoft_point_cursor hover_green" style="position: absolute;bottom: 15px;right: 20px;" @click="sendMsg">&nbsp;&nbsp;立刻发送&nbsp;&nbsp;</span>
+          <textarea rows="3" placeholder="按 Enter 键发送" style="background-color: #ffffff;border-color: #eee;height: 80px;width: 100%;padding: 0 10px;" maxlength="70" v-model.trim="sendMsgText" @keyup.enter="sendMsg"></textarea>
+          <span class="isoft_tag1 isoft_point_cursor hover_green" style="position: absolute;bottom: 8px;right: 20px;" @click="sendMsg">&nbsp;&nbsp;立刻发送&nbsp;&nbsp;</span>
         </div>
       </div>
       <!--右侧最近联系+常见问题-->
-      <div style="width: 35%;">
+      <div style="width: 33%;">
         <div style="border: 1px solid #eee;margin: 5px 60px 0 10px;">
           <!--最近联系-->
           <div class="isoft_info_tip isoft_font12">最近联系</div>
@@ -283,32 +285,6 @@
     color: grey;
   }
 
-  .ask {
-    text-align: right;
-    margin-bottom: 15px;
-  }
-
-  .answer {
-    text-align: left;
-    margin-bottom: 15px;
-  }
-
-  .ask > .contact {
-    font-size: 12px;
-    background: rgba(64, 248, 55, 0.56);
-    color: #525252;
-    padding: 2px 4px 2px 4px ;
-    border-radius: 5px;
-  }
-
-  .answer > .contact {
-    font-size: 12px;
-    background: white;
-    color: #525252;
-    padding: 2px 4px 2px 4px ;
-    border-radius: 5px;
-  }
-
   textarea::-webkit-input-placeholder {
     /* placeholder颜色  */
     color: #aab2bd;
@@ -331,6 +307,22 @@
     text-align: center;
     padding: 0 5px;
     font-weight: 100;
+  }
+
+  .ask > .contact {
+    font-size: 12px;
+    background: rgba(64, 248, 55, 0.56);
+    color: #525252;
+    padding: 2px 4px 2px 4px ;
+    border-radius: 5px;
+  }
+
+  .answer > .contact {
+    font-size: 12px;
+    background: white;
+    color: #525252;
+    padding: 2px 4px 2px 4px ;
+    border-radius: 5px;
   }
 
   .requestTime{
