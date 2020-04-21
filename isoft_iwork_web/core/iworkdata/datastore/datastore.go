@@ -40,7 +40,11 @@ func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface
 			logs = append(logs, log)
 		}
 	}
-	this.logwriter.Write(this.TrackingId, nodeName, iworkconst.LOG_LEVEL_SUCCESS, strings.Join(logs, "<br/>"))
+	logLevel := iworkconst.LOG_LEVEL_SUCCESS
+	if nodeName == "Error" && paramMap["isError"].(bool) {
+		logLevel = iworkconst.LOG_LEVEL_ERROR
+	}
+	this.logwriter.Write(this.TrackingId, nodeName, logLevel, strings.Join(logs, "<br/>"))
 }
 
 //func (this *DataStore) isReferUsage(nodeName, paramName string) bool {

@@ -31,7 +31,7 @@ func (this *HttpHrefParserNode) Execute(trackingId string) {
 
 func (this *HttpHrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "url", "需要分析资源的url地址"},
+		1: []string{iworkconst.STRING_PREFIX + "url", "待进行分析资源的url地址"},
 	}
 	return this.BPIS1(paramMap)
 }
