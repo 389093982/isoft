@@ -8,6 +8,8 @@ import (
 	"isoft/isoft_iwork_web/core/iworkconst"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkrun"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
+	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_iwork_web/models"
 	"isoft/isoft_utils/common/pageutil"
 	"strings"
@@ -44,7 +46,15 @@ func GetRelativeWorkService(serviceArgs map[string]interface{}) (result map[stri
 
 func RunWork(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
-	go iworkrun.RunOneWork(work_id, nil)
+	go func() {
+		// 防止携程 panic 导致程序崩溃
+		defer func() {
+			if err := recover(); err != nil {
+				logutil.Error(errorutil.ToError(err))
+			}
+		}()
+		iworkrun.RunOneWork(work_id, nil)
+	}()
 	return nil
 }
 
