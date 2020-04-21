@@ -464,7 +464,7 @@
   }
 
   .blogHangHover:hover{
-    background-color: rgba(177, 177, 177, 0.13);
+    background-color: rgba(187, 187, 187, 0.2);
     /*background-color: rgba(128, 128, 128, 0.22);*/
   }
 

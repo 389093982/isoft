@@ -60,7 +60,7 @@
           {
             title: '交易时间',
             key: 'trans_time',
-            width:145
+            width:160
           },
           {
             title: '描述',
@@ -70,7 +70,7 @@
           {
             title: '价格',
             key: 'goods_price',
-            width:150
+            width:130
           },
           {
             title: '支付状态',
@@ -99,6 +99,8 @@
           }
           //格式化金额
           this.orders[0].goods_price = this.formatAmount(this.orders[0].goods_price);
+          // 格式化交易时间
+          this.orders[0].trans_time = this.formatTransTime(this.orders[0].trans_time);
 
           //如果是课程，则刷新课程信息
           if (this.orders[0].goods_type === 'course_theme_type') {
@@ -128,6 +130,13 @@
           newAmount = newAmount+".00"
         }
         return newAmount;
+      },
+      formatTransTime:function (trans_time) {
+        let date = trans_time.slice(0,8);
+        let time = trans_time.slice(8,14);
+        let formatDate = date.slice(0,4)+"-"+date.slice(4,6)+"-"+date.slice(6,8);
+        let formatTime = time.slice(0,2)+":"+time.slice(2,4)+":"+time.slice(4,6);
+        return formatDate + " " +formatTime;
       },
     },
     computed:{
