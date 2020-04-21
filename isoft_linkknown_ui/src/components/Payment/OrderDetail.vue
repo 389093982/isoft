@@ -81,12 +81,16 @@
         orders:[],
         course:'',
         user:'',
+        //本页面最多只会查到一条数据，订单详情信息
+        page:{totalCount:0,currentPage:1,offset:10},
       }
     },
     methods:{
 		  refreshOrder:async function () {
 		    let params = {
 		      'order_id':this.$route.query.order_id,
+          'currentPage':this.page.currentPage,
+          'offset':this.page.offset,
         };
         const result = await queryPayOrderList(params);
         if (result.status === 'SUCCESS' && result.orders.length===1) {
