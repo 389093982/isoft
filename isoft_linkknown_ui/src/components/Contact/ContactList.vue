@@ -2,7 +2,7 @@
   <div class="isoft_bg_white">
     <Row>
       <Col span="1" offset="10">
-        <img src="../../../static/images/common_img/xiaodou.png" style="width: 40px;height: 50px;margin-top: 5px"/>
+        <img src="../../../static/images/common_img/xiaodou.png" style="width: 35px;height: 40px;margin-top: 5px"/>
       </Col>
       <Col span="6">
         <div style="color: #999;font-size: 14px;font-weight: bold;margin-top: 20px">
@@ -29,7 +29,7 @@
       <!--中间聊天区域-->
       <div style="width: 39%;min-height: 500px;margin: 5px 0 0 5px;">
         <!--上边聊天记录, 模仿微信聊天背景样式来-->
-        <div id="messageDiv" style="border: 1px solid #d2d2d2;height: 350px;overflow-y:scroll;padding: 20px 5px 40px 5px ;background-color: rgba(160,160,160,0.18)">
+        <div id="messageDiv" style="border: 1px solid #d2d2d2;height: 370px;overflow-y:scroll;padding: 20px 5px 40px 5px ;background-color: rgba(160,160,160,0.18)">
           <div style="text-align: center;margin-bottom: 5px;">
             <span class="isoft_tag1">^_^智能小豆为您 <span class="isoft_color_green1">{{loginUserNickName}}</span> 解答</span>
           </div>
