@@ -21,66 +21,66 @@ type IWorkFuncProxy struct{}
 
 func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
 	return []map[string]string{
-		{"funcType": "string", "funcDemo": "stringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
-		{"funcType": "string", "funcDemo": "stringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},
-		{"funcType": "string", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串转大写函数"},
-		{"funcType": "string", "funcDemo": "stringsToLower($str)", "funcDesc": "字符串转小写函数"},
-		{"funcType": "string", "funcDemo": "stringsJoin($str1,$str2)", "funcDesc": "字符串拼接函数"},
-		{"funcType": "string", "funcDemo": "stringsJoinWithSep($str1,$str2)", "funcDesc": "字符串拼接函数"},
-		{"funcType": "string", "funcDemo": "stringsContains($str1,$str2)", "funcDesc": "字符串包含函数"},
-		{"funcType": "string", "funcDemo": "stringsHasPrefix($str1,$str2)", "funcDesc": "字符串前缀判断函数"},
-		{"funcType": "string", "funcDemo": "stringsHasSuffix($str1,$str2)", "funcDesc": "字符串后缀判断函数"},
-		{"funcType": "string", "funcDemo": "stringsTrimSuffix($str1,$suffix)", "funcDesc": "字符串去除后缀"},
-		{"funcType": "string", "funcDemo": "stringsTrimPrefix($str1,$prefix)", "funcDesc": "字符串去除前缀"},
-		{"funcType": "string", "funcDemo": "stringsSplit($str1, $sep)", "funcDesc": "根据分隔符分割字符串"},
-		{"funcType": "string", "funcDemo": "stringsRepeatQuestion($count)", "funcDesc": "'?,'重复 count 次,最后一次不带,"},
-		{"funcType": "string", "funcDemo": "stringsRepeat($str,$count)", "funcDesc": "字符串 str 重复 count 次"},
-		{"funcType": "string", "funcDemo": "stringsRepeatWithSep($str,$sep,$count)", "funcDesc": "字符串 str 重复 count 次，用 sep 进行分割"},
+		{"group": "string", "funcDemo": "stringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
+		{"group": "string", "funcDemo": "stringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},
+		{"group": "string", "funcDemo": "stringsToUpper($str)", "funcDesc": "字符串转大写函数"},
+		{"group": "string", "funcDemo": "stringsToLower($str)", "funcDesc": "字符串转小写函数"},
+		{"group": "string", "funcDemo": "stringsJoin($str1,$str2)", "funcDesc": "字符串拼接函数"},
+		{"group": "string", "funcDemo": "stringsJoinWithSep($str1,$str2)", "funcDesc": "字符串拼接函数"},
+		{"group": "string", "funcDemo": "stringsContains($str1,$str2)", "funcDesc": "字符串包含函数"},
+		{"group": "string", "funcDemo": "stringsHasPrefix($str1,$str2)", "funcDesc": "字符串前缀判断函数"},
+		{"group": "string", "funcDemo": "stringsHasSuffix($str1,$str2)", "funcDesc": "字符串后缀判断函数"},
+		{"group": "string", "funcDemo": "stringsTrimSuffix($str1,$suffix)", "funcDesc": "字符串去除后缀"},
+		{"group": "string", "funcDemo": "stringsTrimPrefix($str1,$prefix)", "funcDesc": "字符串去除前缀"},
+		{"group": "string", "funcDemo": "stringsSplit($str1, $sep)", "funcDesc": "根据分隔符分割字符串"},
+		{"group": "string", "funcDemo": "stringsRepeatQuestion($count)", "funcDesc": "'?,'重复 count 次,最后一次不带,"},
+		{"group": "string", "funcDemo": "stringsRepeat($str,$count)", "funcDesc": "字符串 str 重复 count 次"},
+		{"group": "string", "funcDemo": "stringsRepeatWithSep($str,$sep,$count)", "funcDesc": "字符串 str 重复 count 次，用 sep 进行分割"},
 
-		{"funcType": "math", "funcDemo": "int64Gt($int1,$int2)", "funcDesc": "判断数字1是否大于数字2"},
-		{"funcType": "math", "funcDemo": "int64Lt($int1,$int2)", "funcDesc": "判断数字1是否小于数字2"},
-		{"funcType": "math", "funcDemo": "int64Eq($int1,$int2)", "funcDesc": "判断数字1是否等于数字2"},
-		{"funcType": "math", "funcDemo": "int64NotEq($int1,$int2)", "funcDesc": "判断数字1是否不等于数字2"},
-		{"funcType": "math", "funcDemo": "int64Add($int1,$int2)", "funcDesc": "数字相加函数"},
-		{"funcType": "math", "funcDemo": "int64Sub($int1,$int2)", "funcDesc": "数字相减函数"},
-		{"funcType": "math", "funcDemo": "int64Multi($int1,$int2)", "funcDesc": "数字相乘函数"},
+		{"group": "math", "funcDemo": "int64Gt($int1,$int2)", "funcDesc": "判断数字1是否大于数字2"},
+		{"group": "math", "funcDemo": "int64Lt($int1,$int2)", "funcDesc": "判断数字1是否小于数字2"},
+		{"group": "math", "funcDemo": "int64Eq($int1,$int2)", "funcDesc": "判断数字1是否等于数字2"},
+		{"group": "math", "funcDemo": "int64NotEq($int1,$int2)", "funcDesc": "判断数字1是否不等于数字2"},
+		{"group": "math", "funcDemo": "int64Add($int1,$int2)", "funcDesc": "数字相加函数"},
+		{"group": "math", "funcDemo": "int64Sub($int1,$int2)", "funcDesc": "数字相减函数"},
+		{"group": "math", "funcDemo": "int64Multi($int1,$int2)", "funcDesc": "数字相乘函数"},
 
-		{"funcType": "url", "funcDemo": "getFileNameFromUrl($url)", "funcDesc": "根据 url 地址获取文件名, egg 格式 http://www.linkknown.com/files/helloworld.jpg"},
+		{"group": "url", "funcDemo": "getFileNameFromUrl($url)", "funcDesc": "根据 url 地址获取文件名, egg 格式 http://www.linkknown.com/files/helloworld.jpg"},
 
-		{"funcType": "default", "funcDemo": "stringsOneOf($str1,$str2,$checkStr)", "funcDesc": "判断字符串 checkStr 是否存在于字符数组中"},
+		{"group": "default", "funcDemo": "stringsOneOf($str1,$str2,$checkStr)", "funcDesc": "判断字符串 checkStr 是否存在于字符数组中"},
 
-		{"funcType": "default", "funcDemo": "and($bool1,$bool2)", "funcDesc": "判断bool1和bool2同时满足"},
-		{"funcType": "default", "funcDemo": "or($bool,$bool2)", "funcDesc": "判断bool1和bool2只要一个满足即可"},
-		{"funcType": "default", "funcDemo": "not($bool)", "funcDesc": "bool值取反"},
-		{"funcType": "default", "funcDemo": "uuid()", "funcDesc": "生成随机UUID信息"},
-		{"funcType": "default", "funcDemo": "isEmpty($var)", "funcDesc": "判断变量或者字符串是否为空"},
-		{"funcType": "default", "funcDemo": "isNotEmpty($var)", "funcDesc": "判断变量或者字符串是否非空"},
-		{"funcType": "default", "funcDemo": "getDirPath($filepath)", "funcDesc": "获取当前文件父级目录的绝对路径"},
-		{"funcType": "default", "funcDemo": "pathJoin($path1,$path2)", "funcDesc": "文件路径拼接"},
-		{"funcType": "default", "funcDemo": "ifThenElse($condition,$var1,$var2)", "funcDesc": "三目运算符,条件满足返回$var1,不满足返回$var2"},
-		{"funcType": "default", "funcDemo": "getRequestParameter($url,$paramName)", "funcDesc": "从url地址中根据参数名获取参数值"},
-		{"funcType": "default", "funcDemo": "getRequestParameters($url,$paramName)", "funcDesc": "从url地址中根据参数名获取参数值,返回的是数组"},
-		{"funcType": "default", "funcDemo": "getDomain($url)", "funcDesc": "从url地址中获取 domain 信息"},
-		{"funcType": "default", "funcDemo": "getNotEmpty($var1,$var2)", "funcDesc": "从参数列表中获取第一个非空值"},
-		{"funcType": "default", "funcDemo": "fmtSprintf($formatStr,$var)", "funcDesc": "字符串格式化操作,如 fmt.Sprintf(`%03d`, a)"},
-		{"funcType": "default", "funcDemo": "formatNowTimeToYYYYMMDD()", "funcDesc": "当前日期格式化成 YYYYMMSS 格式"},
-		{"funcType": "default", "funcDemo": "parseTimestampStrToDate($str)", "funcDesc": "将字符串转行成日期"},
-		{"funcType": "default", "funcDemo": "bcryptGenerateFromPassword($password)", "funcDesc": "对密码进行加密,密码对比时需要使用 bcryptCompareHashAndPassword 进行对比"},
-		{"funcType": "default", "funcDemo": "bcryptCompareHashAndPassword($hashedPassword, $password)", "funcDesc": "密码对比,密文密码($hashedPassword)和明文($password)对比,返回是否相等"},
-		{"funcType": "default", "funcDemo": "generateMap($key1, $value1, $key2, $value2)", "funcDesc": "产生 map 对象"},
-		{"funcType": "default", "funcDemo": "aesEncrypt($origData, $key)", "funcDesc": "aes 加密算法,用于生成密文密码,origData为明文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为密文"},
-		{"funcType": "default", "funcDemo": "aesDecrypt($crypted, $key)", "funcDesc": "aes 解密算法,用于解密密文密码,crypted为密文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为明文"},
-		{"funcType": "default", "funcDemo": "randNumberString($len)", "funcDesc": "生成指定长度的随机数"},
-		{"funcType": "default", "funcDemo": "sliceLen($slices)", "funcDesc": "计算数组长度"},
-		{"funcType": "default", "funcDemo": "switchCase($bool1,$val1,$bool2,$val2,$bool3,$val3)", "funcDesc": "bool 条件满足时返回 val"},
-		{"funcType": "default", "funcDemo": "true()", "funcDesc": "返回布尔 true 值"},
-		{"funcType": "default", "funcDemo": "false()", "funcDesc": "返回布尔 false 值"},
-		{"funcType": "default", "funcDemo": "int64($str)", "funcDesc": "将支持转为 int64"},
-		{"funcType": "default", "funcDemo": "getByteSizeForMB($int64)", "funcDesc": "产生指定大小 MB 的字节数"},
-		{"funcType": "default", "funcDemo": "batchSqlBinding($varOrSlice1,$varOrSlice2,$varOrSlice3)", "funcDesc": "批量插入参数准备"},
+		{"group": "default", "funcDemo": "and($bool1,$bool2)", "funcDesc": "判断bool1和bool2同时满足"},
+		{"group": "default", "funcDemo": "or($bool,$bool2)", "funcDesc": "判断bool1和bool2只要一个满足即可"},
+		{"group": "default", "funcDemo": "not($bool)", "funcDesc": "bool值取反"},
+		{"group": "default", "funcDemo": "uuid()", "funcDesc": "生成随机UUID信息"},
+		{"group": "default", "funcDemo": "isEmpty($var)", "funcDesc": "判断变量或者字符串是否为空"},
+		{"group": "default", "funcDemo": "isNotEmpty($var)", "funcDesc": "判断变量或者字符串是否非空"},
+		{"group": "default", "funcDemo": "getDirPath($filepath)", "funcDesc": "获取当前文件父级目录的绝对路径"},
+		{"group": "default", "funcDemo": "pathJoin($path1,$path2)", "funcDesc": "文件路径拼接"},
+		{"group": "default", "funcDemo": "ifThenElse($condition,$var1,$var2)", "funcDesc": "三目运算符,条件满足返回$var1,不满足返回$var2"},
+		{"group": "default", "funcDemo": "getRequestParameter($url,$paramName)", "funcDesc": "从url地址中根据参数名获取参数值"},
+		{"group": "default", "funcDemo": "getRequestParameters($url,$paramName)", "funcDesc": "从url地址中根据参数名获取参数值,返回的是数组"},
+		{"group": "default", "funcDemo": "getDomain($url)", "funcDesc": "从url地址中获取 domain 信息"},
+		{"group": "default", "funcDemo": "getNotEmpty($var1,$var2)", "funcDesc": "从参数列表中获取第一个非空值"},
+		{"group": "default", "funcDemo": "fmtSprintf($formatStr,$var)", "funcDesc": "字符串格式化操作,如 fmt.Sprintf(`%03d`, a)"},
+		{"group": "default", "funcDemo": "formatNowTimeToYYYYMMDD()", "funcDesc": "当前日期格式化成 YYYYMMSS 格式"},
+		{"group": "default", "funcDemo": "parseTimestampStrToDate($str)", "funcDesc": "将字符串转行成日期"},
+		{"group": "default", "funcDemo": "bcryptGenerateFromPassword($password)", "funcDesc": "对密码进行加密,密码对比时需要使用 bcryptCompareHashAndPassword 进行对比"},
+		{"group": "default", "funcDemo": "bcryptCompareHashAndPassword($hashedPassword, $password)", "funcDesc": "密码对比,密文密码($hashedPassword)和明文($password)对比,返回是否相等"},
+		{"group": "default", "funcDemo": "generateMap($key1, $value1, $key2, $value2)", "funcDesc": "产生 map 对象"},
+		{"group": "default", "funcDemo": "aesEncrypt($origData, $key)", "funcDesc": "aes 加密算法,用于生成密文密码,origData为明文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为密文"},
+		{"group": "default", "funcDemo": "aesDecrypt($crypted, $key)", "funcDesc": "aes 解密算法,用于解密密文密码,crypted为密文,key为密钥(秘钥字符串长度必须是16/24/32),返回值为明文"},
+		{"group": "default", "funcDemo": "randNumberString($len)", "funcDesc": "生成指定长度的随机数"},
+		{"group": "default", "funcDemo": "sliceLen($slices)", "funcDesc": "计算数组长度"},
+		{"group": "default", "funcDemo": "switchCase($bool1,$val1,$bool2,$val2,$bool3,$val3)", "funcDesc": "bool 条件满足时返回 val"},
+		{"group": "default", "funcDemo": "true()", "funcDesc": "返回布尔 true 值"},
+		{"group": "default", "funcDemo": "false()", "funcDesc": "返回布尔 false 值"},
+		{"group": "default", "funcDemo": "int64($str)", "funcDesc": "将支持转为 int64"},
+		{"group": "default", "funcDemo": "getByteSizeForMB($int64)", "funcDesc": "产生指定大小 MB 的字节数"},
+		{"group": "default", "funcDemo": "batchSqlBinding($varOrSlice1,$varOrSlice2,$varOrSlice3)", "funcDesc": "批量插入参数准备"},
 
-		{"funcType": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
-		{"funcType": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
+		{"group": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
+		{"group": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
 	}
 }
 
@@ -390,7 +390,7 @@ func (t *IWorkFuncProxy) Uuid(args []interface{}) interface{} {
 	return stringutil.RandomUUID()
 }
 
-func (t *IWorkFuncProxy) Isempty(args []interface{}) interface{} {
+func (t *IWorkFuncProxy) IsEmpty(args []interface{}) interface{} {
 	if val, ok := args[0].(string); ok {
 		return val == ""
 	}
@@ -398,7 +398,7 @@ func (t *IWorkFuncProxy) Isempty(args []interface{}) interface{} {
 }
 
 func (t *IWorkFuncProxy) IsNotEmpty(args []interface{}) interface{} {
-	return !t.Isempty(args).(bool)
+	return !t.IsEmpty(args).(bool)
 }
 
 func (t *IWorkFuncProxy) PathJoin(args []interface{}) string {
