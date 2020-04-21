@@ -9,7 +9,7 @@
       <Scroll height="400">
         <ul>
           <span v-for="(data, index) in data2">
-            <span style="background-color: #eee;padding: 5px 10px;">{{data.funcType}}</span>
+            <span style="background-color: #eee;padding: 5px 10px;">{{data.group}}</span>
             <Tree v-if="data.treeArr" :data="data.treeArr" show-checkbox ref="tree2" :render="renderContent"></Tree>
           </span>
         </ul>
@@ -176,16 +176,16 @@
         return {treeArr};
       },
       data2:function () {
-        // 不同 funcType 类型的 func 存储为 arr 中的一个对象
+        // 不同 group 类型的 func 存储为 arr 中的一个对象
         let arr = [];
-        // 获取所有的 funcType
-        let funcTypes = Array.from(new Set(this.funcs.map(fc => fc.funcType)));
-        funcTypes.forEach(funcType => {
+        // 获取所有的 group
+        let groups = Array.from(new Set(this.funcs.map(fc => fc.group)));
+        groups.forEach(group => {
           // tree 对应的 arr
-          let treeArr = this.funcs.filter(fc => fc.funcType === funcType).map(fc => {
+          let treeArr = this.funcs.filter(fc => fc.group === group).map(fc => {
             return {title: fc.funcDemo}
           });
-          arr.push({funcType, treeArr});
+          arr.push({group, treeArr});
         });
         return arr;
       },
