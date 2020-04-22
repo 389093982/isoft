@@ -256,6 +256,7 @@ func (this *WorkController) QueryWorkDetail() {
 	this.ServeJSON()
 }
 
+// 获取元数据信息(快捷函数、节点元数据)
 func (this *WorkController) GetMetaInfo() {
 	meta := this.GetString("meta")
 	resultMap := map[string]interface{}{"status": "SUCCESS"}

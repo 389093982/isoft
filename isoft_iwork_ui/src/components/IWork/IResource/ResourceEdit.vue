@@ -1,8 +1,8 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增资源信息" btn-size="small" modal-title="新增/编辑资源信息" modal-top="50px"
-                          :modal-width="800">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增资源信息" btn-size="small"
+      modal-title="新增/编辑资源信息" modal-top="50px" :modal-width="800">
     <Row>
       <Col span="6">
         <Scroll>

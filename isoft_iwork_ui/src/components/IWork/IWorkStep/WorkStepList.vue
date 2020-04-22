@@ -4,7 +4,10 @@
     <WorkDashboard ref="workDashboard" v-show="showWorkDashboard"/>
 
     <h3 v-if="$route.query.work_name" style="text-align:center;">
-      流程名称：{{$route.query.work_name}}
+      <span class="workNameBox">
+        流程名称：{{$route.query.work_name}} &nbsp;&nbsp;
+        <span class="workHttpService" v-if="work" @click="handleCopy(workHttpServiceUri)">{{workHttpServiceUri}}</span>
+      </span>
     </h3>
     <p v-if="work" style="text-align: center;background: #fff5dd;padding: 10px;margin: 10px;">
       所属模块：{{work.module_name}}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,7 +68,16 @@
   import ParamInfo from "./ParamInfo/ParamInfo"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import BaseInfo from "./BaseInfo/BaseInfo"
-  import {checkEmpty, checkFastClick, checkNotEmpty, getRepeatStr, oneOf, percentNum, startsWith} from "../../../tools"
+  import {
+    checkEmpty,
+    checkFastClick,
+    checkNotEmpty,
+    copyText,
+    getRepeatStr,
+    oneOf,
+    percentNum,
+    startsWith
+  } from "../../../tools"
   import WorkValidate from "../IValidate/WorkValidate"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import WorkStepEditBtns from "./WorkStepEditBtns"
@@ -97,6 +109,13 @@
       }
     },
     computed:{
+      workHttpServiceUri:function () {
+        let appId = localStorage.getItem("iwork_appId");
+        if (appId != null && appId !== undefined) {
+          return "/api/iwork/httpservice/" + JSON.parse(appId).app_name + "/" + this.work.work_name;
+        }
+        return "";
+      },
       errorCount:function () {
         return this.getErrorOrTotalCount(this.$route.query.work_id, 'error');
       },
@@ -377,7 +396,7 @@
       },
       refreshWorkValidateDetail: async function(){
         const result = await LoadValidateResult(this.$route.query.work_id);
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.validateDetails = result.details;
         }else{
           this.$Message.error(result.errorMsg);
@@ -386,7 +405,7 @@
       refreshWorkStepList:async function () {
         this.loading = true;
         const result = await WorkStepList(this.$route.query.work_id);
-        if(result.status=="SUCCESS"){
+        if(result.status==="SUCCESS"){
           this.usedMap = result.usedMap;
           this.worksteps = result.worksteps;
           this.commentRate = percentNum(this.worksteps.filter(step => checkNotEmpty(step.work_step_desc)).length, this.worksteps.length);
@@ -397,19 +416,19 @@
       },
       copyWorkStepByWorkStepId: async function(work_id, work_step_id){
         const result = await CopyWorkStepByWorkStepId(work_id, work_step_id);
-        if(result.status=="SUCCESS"){
+        if(result.status==="SUCCESS"){
           this.refreshWorkStepList();
         }
       },
       deleteWorkStepByWorkStepId:async function(work_id, work_step_id){
         const result = await DeleteWorkStepByWorkStepId(work_id, work_step_id);
-        if(result.status=="SUCCESS"){
+        if(result.status==="SUCCESS"){
           this.refreshWorkStepList();
         }
       },
       changeWorkStepOrder:async function(work_step_id, type){
         const result = await ChangeWorkStepOrder(this.$route.query.work_id, work_step_id, type);
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.refreshWorkStepList();
           this.$Message.success('换位成功!');
         }else{
@@ -418,7 +437,7 @@
       },
       addWorkStep:async function (work_step_id, work_step_meta) {
         const result = await AddWorkStep(this.$route.query.work_id, work_step_id, work_step_meta);
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.refreshWorkStepList();
           this.$Message.success('添加成功!');
         }else{
@@ -428,7 +447,7 @@
       renderWorkStepTypeIcon:function (workStepType) {
         for(var i=0; i<this.nodeMetas.length; i++){
           let default_work_step_type = this.nodeMetas[i];
-          if(default_work_step_type.name == workStepType){
+          if(default_work_step_type.name === workStepType){
             return default_work_step_type.icon;
           }
         }
@@ -447,7 +466,7 @@
       refactor: async function () {
         let selections = this.getSelectionArr();
         const result = await RefactorWorkStepInfo(this.$route.query.work_id, this.refactor_worksub_name, JSON.stringify(selections));
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.refreshWorkStepList();
         }else{
           this.$Message.error(result.errorMsg);
@@ -458,7 +477,7 @@
           selections = this.getSelectionArr();
         }
         const result = await BatchChangeIndent(this.$route.query.work_id, mod, JSON.stringify(selections));
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.refreshWorkStepList();
         }else{
           this.$Message.error(result.errorMsg);
@@ -469,7 +488,7 @@
       },
       runWork: async function(){
         const result = await RunWork(this.$route.query.work_id);
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.$Message.success("运行任务已触发!");
         }
       },
@@ -517,6 +536,12 @@
         if (key && this.runLogRecordCount[key]) {
           return flag === "error" ? this.runLogRecordCount[key].errorCount : "/" + this.runLogRecordCount[key].allCount;
         }
+      },
+      handleCopy: function () {
+        var _this = this;
+        copyText(this.workHttpServiceUri, function () {
+          _this.$Message.success("复制成功！");
+        });
       }
     },
     mounted: function () {
@@ -534,5 +559,22 @@
 </script>
 
 <style scoped>
-
+  .workNameBox {
+    position: relative;
+  }
+  .workHttpService {
+    display: none;
+    position: absolute;
+    color: #fff;
+    background-color: rgba(0,0,0,.7);
+    font-size: 12px;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 5px;
+    padding: 0 15px;
+    cursor: pointer;
+  }
+  .workNameBox:hover .workHttpService {
+    display: inline-block;
+  }
 </style>
