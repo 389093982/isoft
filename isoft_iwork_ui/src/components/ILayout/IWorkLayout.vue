@@ -5,7 +5,7 @@
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-iwork">
             <span style="position: relative;">
-               <img src="../../assets/images/linkknown.jpg" class="linkknownlogo"
+               <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown"
                     title="链知网低代码开发框架，详情请访问 www.linkknown.com 或咨询 QQ 1875112921、389093982"/>
             </span>
             <span style="margin-left: 10px;">IWork {{version}}</span>
@@ -55,7 +55,7 @@
                 <Icon type="ios-keypad"></Icon>
                 资源管理
               </template>
-              <MenuItem name="2-1"><router-link to="/iwork/resourceList">资源列表</router-link></MenuItem>
+              <MenuItem name="2-1"><router-link to="/iwork/resourceList">连接资源管理</router-link></MenuItem>
               <MenuItem name="2-2"><router-link to="/iwork/migrateList">数据库迁移管理</router-link></MenuItem>
               <MenuItem name="2-3">
                 <router-link to="/iwork/globalVarList">全局变量管理</router-link>
@@ -130,19 +130,23 @@
     data(){
       return {
         appId: null,
-        version: '1.0.2',
+        version: '1.0.3',
       }
     },
     methods:{
+      tolinkknown: function (){
+        // 打开新窗口跳转
+        window.open("http://www.linkknown.com/resource/resourceList", '_blank');
+      },
       saveProject:async function () {
         const result = await SaveProject();
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.$Message.success("保存成功!");
         }
       },
       importProject:async function () {
         const result = await ImportProject();
-        if(result.status == "SUCCESS"){
+        if(result.status === "SUCCESS"){
           this.$Message.success("导入成功!");
         }
       },
@@ -152,7 +156,7 @@
     },
     mounted() {
       let appId = localStorage.getItem("iwork_appId");
-      if (this.appId == null && appId != null && appId !== undefined) {
+      if (this.appId === null && appId != null && appId !== undefined) {
         this.appId = JSON.parse(appId);
         this.$Message.success("已选择 AppID " + this.appId.app_name);
       }
