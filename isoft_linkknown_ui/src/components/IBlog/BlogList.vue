@@ -22,9 +22,9 @@
       </Row>
     </div>
 
-    <!--移动的小球-->
-    <div style="width: 60%;height:0;">
-      <MoveLine style="position: relative;top: -170px;"/>
+    <!--移动的小球, 改成彩色小球了，暂定就这样-->
+    <div style="width: 23%;height:0;">
+      <MoveLine style="position: relative;top: -10px;z-index:999"/>
     </div>
 
     <!--三列：左、中、右-->
