@@ -31,25 +31,25 @@
     <div class="isoft_bg_white">
       <Row>
         <!--左侧分类-->
-        <Col span="5">
+        <Col span="6">
           <div style="padding: 5px 10px 0 30px">
-            <div class="_search">
-              <div style="text-align: center;">
+            <div class="_search blog_menu_bg">
+              <div style="margin: 0 0 0 120px ">
                 <span style="border-bottom-style: solid;border-bottom-color: #ff6600;border-bottom-width: 2px;color: #ff6600">
-                  当前类别<Icon type="md-arrow-dropright" /> <b>{{showLabel}}</b>
+                  当前<Icon type="md-arrow-dropright" /> <b>{{showLabel}}</b>
                 </span>
               </div>
-              <div style="text-align: center;">
+              <div style="margin: 3px 0 0 130px ">
                 <a @click="chooseItem(1)" :style="{color: pattern === 1 ? 'red':''}">全部分类</a>
               </div>
-              <div style="text-align: center;">
+              <div style="margin: 3px 0 0 145px ">
                 <a @click="chooseItem(2)" :style="{color: pattern === 2 ? 'red':''}"><Icon type="md-flame" />热门博客</a>
               </div>
-              <div style="text-align: center;">
+              <div style="margin: 3px 0 0 160px ">
                 <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a>
               </div>
-              <div style="text-align: center;">
-                <a @click="blogEdit"><Icon type="ios-create-outline" size="16" />我也要发布</a>
+              <div style="margin: 3px 0 0 175px ">
+                <a @click="blogEdit"><Icon type="ios-create-outline" size="16" />发布博客</a>
               </div>
             </div>
             <div>
@@ -186,7 +186,7 @@
         </Col>
 
         <!--右侧推荐文章-->
-        <Col span="8">
+        <Col span="7">
           <div style="padding: 5px 50px 0 10px;">
             <div style="width: 98%">
               <div style="height: 30px;">
@@ -214,7 +214,7 @@
                         <!--第一行：博客标题-->
                         <Row>
                           <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:blogGolden.id}}">
-                            <span class="isoft_hover_title">{{blogGolden.blog_title | filterLimitFunc(25)}}</span>
+                            <span class="isoft_hover_title">{{blogGolden.blog_title | filterLimitFunc(22)}}</span>
                           </router-link>
                         </Row>
                         <!--作者 · 博客类型-->
@@ -438,6 +438,11 @@
   .blog_title_bg {
     height: 140px;
     background: url(../../../static/images/common_img/blog_title_bg.jpg) no-repeat;
+    background-size: 100%;
+  }
+  .blog_menu_bg {
+    height: 140px;
+    background: url(../../../static/images/common_img/blog_menu_bg.png) no-repeat;
     background-size: 100%;
   }
   .type_hover{
