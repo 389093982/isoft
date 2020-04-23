@@ -17,6 +17,22 @@ import (
 	"time"
 )
 
+var callers []map[string]string
+
+func init() {
+	fproxy := &IWorkFuncProxy{}
+	callers = fproxy.GetFuncCallers()
+}
+
+func CheckFuncNameValid(funcName string) bool {
+	for _, caller := range callers {
+		if funcDemo := caller["funcDemo"]; strings.HasPrefix(funcDemo, funcName+"(") {
+			return true
+		}
+	}
+	return false
+}
+
 type IWorkFuncProxy struct{}
 
 func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
