@@ -102,8 +102,9 @@ func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models
 	defer workWg.Done()
 	defer func(start time.Time) {
 		logCh <- &models.ValidatelogDetail{
-			WorkId: work.Id,
-			Detail: fmt.Sprintf(`validate %s work cost %d ms!`, work.WorkName, time.Now().Sub(start).Nanoseconds()/1e6),
+			WorkId:      work.Id,
+			Detail:      fmt.Sprintf(`validate %s work cost %d ms!`, work.WorkName, time.Now().Sub(start).Nanoseconds()/1e6),
+			SuccessFlag: true,
 		}
 	}(time.Now())
 
@@ -449,6 +450,7 @@ func recordCostTimeLog(trackingId string, start time.Time) {
 func newValidatelogDetail(trackingId, detail string) *models.ValidatelogDetail {
 	return &models.ValidatelogDetail{
 		TrackingId:      trackingId,
+		SuccessFlag:     true,
 		Detail:          detail,
 		CreatedBy:       "SYSTEM",
 		LastUpdatedBy:   "SYSTEM",

@@ -55,7 +55,7 @@ func (this *JsonParserNode) Execute(trackingId string) {
 			for paramName, paramValue := range json_object {
 				paramMap[fmt.Sprintf("rows[%d].%s", index, paramName)] = paramValue
 				if index == 0 {
-					paramMap[fmt.Sprintf("row.%s", paramName)] = paramValue
+					paramMap[fmt.Sprintf("firstrow.%s", paramName)] = paramValue
 				}
 			}
 		}
@@ -82,7 +82,7 @@ func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutp
 					ParamName:  _paramName,
 				})
 				items = append(items, iworkmodels.ParamOutputSchemaItem{
-					ParentPath: "row",
+					ParentPath: "firstrow",
 					ParamName:  _paramName,
 				})
 			}

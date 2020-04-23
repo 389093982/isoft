@@ -74,7 +74,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	// 数组对象整体存储在 rows 里面
 	paramMap["rows"] = rowDatas
 	if len(rowDatas) > 0 {
-		paramMap["row"] = rowDatas[0]
+		paramMap["firstrow"] = rowDatas[0]
 	}
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 	this.checkPanicNoDataCount(datacounts)
@@ -109,7 +109,7 @@ func (this *SQLQueryNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSc
 }
 
 func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{iworkconst.NUMBER_PREFIX + "datacounts", "rows", "row"})
+	return this.BPOS1([]string{iworkconst.NUMBER_PREFIX + "datacounts", "rows", "firstrow"})
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
@@ -175,7 +175,7 @@ func renderMetaData(columnNames []string) *iworkmodels.ParamOutputSchema {
 			ParamName:  columnName,
 		})
 		items = append(items, iworkmodels.ParamOutputSchemaItem{
-			ParentPath: "row",
+			ParentPath: "firstrow",
 			ParamName:  columnName,
 		})
 	}

@@ -21,6 +21,8 @@ httpservice 地址可复制
 
 v1.0.4
 流程使用的函数名校验
+row 字段改为 firstrow
+校验结果异常优先显示
 
 v.2.x.x
 ForeachNode 节点逻辑重构

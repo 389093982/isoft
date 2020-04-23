@@ -116,6 +116,7 @@ type ValidatelogDetail struct {
 	WorkName        string    `json:"work_name"`
 	WorkStepName    string    `json:"work_step_name"`
 	ParamName       string    `json:"param_name"`
+	SuccessFlag     bool      `json:"success_flag"` // 默认就是 false
 	Detail          string    `json:"detail" orm:"type(text)"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
@@ -149,7 +150,7 @@ func QueryLastValidatelogDetail(work_id int64) (details []ValidatelogDetail, err
 	if record, err := QueryLastValidatelogRecord(work_id); err == nil {
 		o := orm.NewOrm()
 		_, err = o.QueryTable("validatelog_detail").
-			Filter("tracking_id", record.TrackingId).OrderBy("-work_id", "work_step_id").All(&details)
+			Filter("tracking_id", record.TrackingId).OrderBy("success_flag", "-work_id", "work_step_id").All(&details)
 	}
 	return
 }
