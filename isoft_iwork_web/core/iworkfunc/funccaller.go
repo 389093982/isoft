@@ -6,7 +6,6 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/logutil"
 	"isoft/isoft_utils/common/stringutil"
-	"reflect"
 	"strings"
 )
 
@@ -71,17 +70,10 @@ func ExecuteFuncCaller(caller *FuncCaller, args []interface{}) interface{} {
 			panic(errors.Wrap(err.(error), fmt.Sprintf(`caller.FuncName is %s, caller.FuncArgs %v`, caller.FuncName, caller.FuncArgs)))
 		}
 	}()
-	proxy := &IWorkFuncProxy{}
 	// 将 funcName 首字母变成大写
-	funcName := strings.Join([]string{
-		strings.ToUpper(string([]rune(caller.FuncName)[0])), string([]rune(caller.FuncName)[1:]),
-	}, "")
-	if _, ok := reflect.ValueOf(proxy).Type().MethodByName(funcName); !ok {
-		panic(errors.New(fmt.Sprintf(`invalid func name for %s`, funcName)))
-	}
-	m := reflect.ValueOf(proxy).MethodByName(funcName)
-	rtn := m.Call([]reflect.Value{reflect.ValueOf(args)})
-	return rtn[0].Interface()
+	funcName := stringutil.ToUpperCaseFirstOne(caller.FuncName)
+	// 执行函数
+	return Invoke(funcName, args)
 }
 
 // 编码特殊字符, // 对转义字符 \, \; \( \) 等进行编码

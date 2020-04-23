@@ -17,15 +17,16 @@ import (
 	"time"
 )
 
-var callers []map[string]string
+var FuncCallers []map[string]string
 
 func init() {
 	fproxy := &IWorkFuncProxy{}
-	callers = fproxy.GetFuncCallers()
+	FuncCallers = fproxy.getFuncCallers()
 }
 
+// 校验函数名是否合法
 func CheckFuncNameValid(funcName string) bool {
-	for _, caller := range callers {
+	for _, caller := range FuncCallers {
 		if funcDemo := caller["funcDemo"]; strings.HasPrefix(funcDemo, funcName+"(") {
 			return true
 		}
@@ -33,9 +34,20 @@ func CheckFuncNameValid(funcName string) bool {
 	return false
 }
 
+// 执行函数
+func Invoke(funcName string, args []interface{}) interface{} {
+	proxy := &IWorkFuncProxy{}
+	if _, ok := reflect.ValueOf(proxy).Type().MethodByName(funcName); !ok {
+		panic(errors.New(fmt.Sprintf(`invalid func name for %s`, funcName)))
+	}
+	m := reflect.ValueOf(proxy).MethodByName(funcName)
+	rtn := m.Call([]reflect.Value{reflect.ValueOf(args)})
+	return rtn[0].Interface()
+}
+
 type IWorkFuncProxy struct{}
 
-func (t *IWorkFuncProxy) GetFuncCallers() []map[string]string {
+func (t *IWorkFuncProxy) getFuncCallers() []map[string]string {
 	return []map[string]string{
 		{"group": "string", "funcDemo": "stringsEq($str1,$str2)", "funcDesc": "字符串相等比较"},
 		{"group": "string", "funcDemo": "stringsNotEq($str1,$str2)", "funcDesc": "字符串不相等比较"},

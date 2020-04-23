@@ -130,7 +130,7 @@
     data(){
       return {
         appId: null,
-        version: '1.0.3',
+        version: '1.0.4',
       }
     },
     methods:{
