@@ -63,11 +63,15 @@
             title: 'resource_url',
             key: 'resource_url',
             width: 150,
+            ellipsis: true,
+            tooltip: true,
           },
           {
             title: 'resource_dsn',
             key: 'resource_dsn',
             width: 320,
+            ellipsis: true,
+            tooltip: true,
           },
           {
             title: 'resource_username',
