@@ -5,7 +5,13 @@
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="任务名称" prop="task_name">
-        <Input v-model.trim="formValidate.task_name" placeholder="任务名称目前版本需要和流程名称保持一致"></Input>
+        <Input v-model.trim="formValidate.task_name" placeholder="任务名称目前版本需要和流程名称保持一致" @on-focus="showWorkSearch = true"></Input>
+        <div class="workSearch" v-show="showWorkSearch">
+          <Icon type="md-close" style="float: right;cursor: pointer;" @click="showWorkSearch = false"/>
+          <Scroll :height="300" style="margin-top: 20px;">
+            <WorkSearch @handleClick="handleClick"/>
+          </Scroll>
+        </div>
       </FormItem>
       <FormItem label="任务类型" prop="task_type">
         <Select v-model="formValidate.task_type">
@@ -27,10 +33,11 @@
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
   import {EditQuartz} from "../../../api/index"
   import {validateCron} from "../../../tools/index"
+  import WorkSearch from "../IWork/WorkSearch";
 
   export default {
     name: "QuartzEdit",
-    components:{ISimpleBtnTriggerModal},
+    components:{WorkSearch, ISimpleBtnTriggerModal},
     data(){
       const _validateCron = (rule, value, callback) => {
         if (value === '') {
@@ -42,6 +49,7 @@
         }
       };
       return {
+        showWorkSearch: false,
         formValidate: {
           id: 0,
           task_name: '',
@@ -62,6 +70,10 @@
       }
     },
     methods:{
+      handleClick: function (work_name){
+        this.formValidate.task_name = work_name;
+        this.showWorkSearch = false;
+      },
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
@@ -86,10 +98,18 @@
         this.formValidate = formdata;
         this.$refs.triggerModal.triggerClick();
       }
-    }
+    },
   }
 </script>
 
 <style scoped>
-
+  .workSearch {
+    position: absolute;
+    margin-top: 2px;
+    z-index: 10;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: white;
+  }
 </style>
