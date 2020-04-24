@@ -2,7 +2,7 @@
   <div class="isoft_bg_white isoft_pd5">
     <h2 class="user_rank" style="border-bottom: 2px solid #eee;">用户排行榜</h2>
     <div style="position: relative;">
-      <div style="text-align: center;" class="isoft_color_grey2 isoft_font12 tipClass">奉献自己的力量，让自己榜上有名吧~ </div>
+      <div style="text-align: center;" class="animated bounce infinite isoft_color_grey2 isoft_font12">奉献自己的力量，让自己榜上有名吧~ </div>
     </div>
     <div style="position: relative;">
       <div v-for="(user,index) in users" style="display: flex;">
@@ -18,8 +18,8 @@
           <span class="nickNameTip" @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">无力吐槽</span>
         </span>
         </div>
-        <div style="width: 33%;" class="isoft_font12">
-          积分：{{user.user_points}}
+        <div style="width: 33%;" class="isoft_hover_desc isoft_font12">
+          积分:{{user.user_points}}
         </div>
       </div>
     </div>
@@ -74,23 +74,6 @@
     font-weight: 400;
     line-height: 40px;
     white-space: nowrap;
-  }
-
-  .tipClass {
-    position: relative;
-    animation: tipAnimation 5s infinite;
-    /*animation-iteration-count: 1;*/
-  }
-  @keyframes tipAnimation {
-    0%   {
-      opacity: 0;
-    }
-    80% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
   }
 
   .nickNameTip {
