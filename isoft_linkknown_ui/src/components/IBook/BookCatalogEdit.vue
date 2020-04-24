@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-x: hidden;">
     <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
     </Alert>
     <Row :gutter="10" style="min-height: 500px;background-color: white">
@@ -41,7 +41,7 @@
                 </dd>
               </dl>
             </div>
-            <div v-else>
+            <div v-else class="isoft_hover_desc">
               暂未创建文章,点击上面按钮创建
             </div>
           </div>

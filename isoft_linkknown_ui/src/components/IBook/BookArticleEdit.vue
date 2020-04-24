@@ -18,7 +18,7 @@
       </Form>
     </div>
 
-    <div v-else class="isoft_bg_white" style="min-height: 500px;text-align: center;padding: 50px 0;cursor: pointer;">
+    <div v-else class="isoft_bg_white isoft_hover_desc" style="min-height: 500px;text-align: center;padding: 50px 0;cursor: pointer;">
       <span class="book_icon">
         <img src="../../../static/images/book/book.gif" width="150px" height="150px"/>
         <p class="book_icon_text1">多读书使人聪明</p>

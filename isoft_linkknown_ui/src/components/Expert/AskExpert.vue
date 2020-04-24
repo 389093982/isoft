@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-x: hidden;">
     <div>
       <Row>
         <Col span="16" style="padding-right: 5px;">
@@ -25,47 +25,49 @@
               </Col>
             </Row>
 
-            <ul>
-              <li class="isoft_hover_parent" v-for="(as, index) in asks" style="list-style:none;height: 82px;padding: 10px 30px;
-                background: #fff;border-bottom: 1px solid #f4f4f4;">
-                <Row>
-                  <Col span="6" style="display: flex;vertical-align: middle;">
-                    <div class="isoft_hover_color_green" style="text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
-                      <p>{{as.answer_number}}</p>
-                      <p>回答</p>
-                    </div>
+            <div v-for="(as, index) in asks" class="isoft_border_bottom" @mouseenter="hoverIndex = index"
+                 :class="{'animated faster bounceInLeft': index === hoverIndex}" style="height: 82px;padding: 10px 30px;">
+              <div style="display: flex;">
+                <div style="width: 25%;display: flex;text-align: center;">
+                  <div class="isoft_hover_color_green isoft_point_cursor mr5">
+                    <p>{{as.answer_number}}</p>
+                    <p>回答</p>
+                  </div>
 
-                    <div style="color: #696969;text-align: center;line-height: 16px;margin: 10px 10px 0 0;">
-                      <p>{{as.view_number}}</p>
-                      <p>浏览</p>
-                    </div>
+                  <div class="isoft_hover_desc">
+                    <p>{{as.view_number}}</p>
+                    <p>浏览</p>
+                  </div>
 
-                    <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">
-                      <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
-                    </div>
-                  </Col>
-                  <Col span="18" style="line-height: 30px;">
-
-                    <div class="title_hover" style="font-size: 16px;cursor: pointer;" @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
-                    <div class="isoft_font12">
-                      <span style="cursor: pointer" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
-                      <span><Time :time="as.last_updated_time" :interval="1"/></span>
-                      <span class="isoft_hover_item_show" style="float: right;">
+                  <div style="margin: 10px 0 0 60px;" @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">
+                    <HatAndFacePicture :src="renderUserIcon(as.user_name)" :vip_level="renderVipLevel(as.user_name)" :hat_in_use="renderHatInUse(as.user_name)" :src_size="40" :hat_width="36" :hat_height="10" :hat_relative_left="2" :hat_relative_top="-56" ></HatAndFacePicture>
+                  </div>
+                </div>
+                <div style="width: 75%;line-height: 30px;">
+                  <div class="title_hover isoft_font16 isoft_point_cursor"
+                       @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
+                  <div class="isoft_font12">
+                    <div style="display: flex;">
+                      <div class="isoft_point_cursor isoft_hover_desc" style="width: 50%;">
+                        <span @click="$router.push({path:'/user/userDetail',query:{username:as.user_name}})">{{renderNickName(as.user_name)}} · </span>
+                        <span><Time :time="as.last_updated_time" :interval="1"/></span>
+                      </div>
+                      <div style="width: 50%;">
                         <span class="isoft_mr10">
                           <a v-if="showEdit(as.user_name)" @click="$router.push({path:'/expert/editQuestion', query: {id : as.id}})">编辑</a>
                         </span>
-                        <span>
+                          <span>
                           <a @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">
-                            <span class="isoft_hover_color_green" style="margin-right: 5px;">我来回答</span>
+                            <span class="isoft_hover_color_green mr5">我来回答</span>
                             <span class="isoft_color_grey">回答问题可获得 2 积分</span>
                           </a>
                         </span>
-                      </span>
+                      </div>
                     </div>
-                  </Col>
-                </Row>
-              </li>
-            </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <Page :total="total" :page-size="offset" show-total show-sizer
                   :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -73,8 +75,8 @@
           </div>
         </Col>
         <Col span="7">
-          <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
-          <ExpertWall></ExpertWall>
+          <WaitYourAnswer></WaitYourAnswer>
+          <ExpertWall class="isoft_top5"></ExpertWall>
         </Col>
       </Row>
     </div>
@@ -104,6 +106,7 @@
     components: {WaitYourAnswer, HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
+        hoverIndex: 0,
         // 当前页
         current_page: 1,
         // 总数

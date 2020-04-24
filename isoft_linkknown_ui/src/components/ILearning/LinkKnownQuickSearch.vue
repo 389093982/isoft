@@ -1,38 +1,38 @@
 <template>
-  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 400px;">
+  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 400px;overflow-x: hidden;">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
       <Icon :size="25" type="ios-shirt-outline" @click="handleChangeBg"/>
     </span>
 
-    <div style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
+    <div class="animated faster bounceInRight" style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
 
     <div style="margin-top: 60px;">
       <div style="text-align: center;margin: 5px 0;">
         <span style="position: relative;padding: 10px 0;">
           <div :style="activeBottomStyle"></div>
           <span style="width: 70px;display: inline-block;" v-for="(recommend, index) in recommend1"
-                class="isoft_point_cursor isoft_hover_yellow"
+                class="animated faster bounceInRight isoft_point_cursor isoft_hover_yellow"
                 @click="handleSubmitFunc(recommend)" @mouseenter="handleMouseEnter(index)">{{recommend}}</span>
         </span>
       </div>
       <div style="width: 500px;margin: 0 auto;">
         <ISearch :longer="true" @submitFunc="handleSubmitFunc"></ISearch>
       </div>
-      <div style="text-align: center;color: white;">热门关键词：
+      <div class="animated faster bounceInRight" style="text-align: center;color: white;">热门关键词：
         <span v-for="(recommend, index) in recommend2" class="isoft_point_cursor isoft_hover_yellow isoft_mr10"
               @click="handleSubmitFunc(recommend)">{{recommend}}</span>
       </div>
     </div>
 
     <div style="position:absolute;left:0;right:0;bottom:10px;text-align: center;">
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(1)">热门推荐</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(2)">新闻公告</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(3)">热门应用</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(4)">热门产品</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="handleShow(5)">热门项目</span>
-      <span class="isoft_font12 tagColor isoft_point_cursor" @click="showRecommend = !showRecommend">更多素材</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(1)">热门推荐</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(2)">新闻公告</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(3)">热门应用</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(4)">热门产品</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(5)">热门项目</span>
+      <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="showRecommend = !showRecommend">更多素材</span>
     </div>
 
   </div>

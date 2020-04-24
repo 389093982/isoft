@@ -21,9 +21,14 @@ func (this *ParamValueFormatChecker) Check() (bool, error) {
 		return false, err
 	}
 	for _, expression := range multiExpression {
-		_, err := iworkfunc.ParseToFuncCallers(expression)
+		callers, err := iworkfunc.ParseToFuncCallers(expression)
 		if err != nil {
 			return false, err
+		}
+		for _, caller := range callers {
+			if !iworkfunc.CheckFuncNameValid(caller.FuncName) {
+				return false, err
+			}
 		}
 	}
 	return true, nil

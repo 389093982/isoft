@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"isoft/isoft_iwork_web/core/iworkcache"
 	"isoft/isoft_iwork_web/core/iworkdata/block"
+	"isoft/isoft_iwork_web/core/iworkfunc"
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkutil"
@@ -101,8 +102,9 @@ func validateWork(work *models.Work, steps []models.WorkStep, logCh chan *models
 	defer workWg.Done()
 	defer func(start time.Time) {
 		logCh <- &models.ValidatelogDetail{
-			WorkId: work.Id,
-			Detail: fmt.Sprintf(`validate %s work cost %d ms!`, work.WorkName, time.Now().Sub(start).Nanoseconds()/1e6),
+			WorkId:      work.Id,
+			Detail:      fmt.Sprintf(`validate %s work cost %d ms!`, work.WorkName, time.Now().Sub(start).Nanoseconds()/1e6),
+			SuccessFlag: true,
 		}
 	}(time.Now())
 
@@ -184,7 +186,7 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 	checkResult = make([]string, 0)
 	checkResultCh := make(chan string, 10)
 	wg := new(sync.WaitGroup)
-	wg.Add(3)
+	wg.Add(4)
 	go func() {
 		defer wg.Done()
 		// 校验 step 中的参数是否为空
@@ -195,6 +197,11 @@ func getCheckResultsForStep(work *models.Work, step *models.WorkStep) (checkResu
 	go func() {
 		defer wg.Done()
 		checkVariableRelationShip(work, step, checkResultCh)
+	}()
+	go func() {
+		defer wg.Done()
+		// 校验使用的函数名是否有效
+		checkFuncNameInvalid(work, step, checkResultCh)
 	}()
 	go func() {
 		defer wg.Done()
@@ -232,6 +239,32 @@ func checkVariableRelationShip(work *models.Work, step *models.WorkStep, checkRe
 	inputSchema := node.GetCacheParamInputSchema(step)
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		checkVariableRelationShipDetail(work.AppId, item, step.WorkId, step.WorkStepId, checkResultCh)
+	}
+	return
+}
+
+func checkFuncNameInvalid(work *models.Work, step *models.WorkStep, checkResultCh chan string) {
+	defer func() {
+		if err := recover(); err != nil {
+			checkResultCh <- errorutil.ToError(err).Error()
+		}
+	}()
+	inputSchema := node.GetCacheParamInputSchema(step)
+	for _, item := range inputSchema.ParamInputSchemaItems {
+		if !item.PureText && strings.TrimSpace(item.ParamValue) != "" {
+			multiExpression, err := iworkfunc.SplitWithLexerAnalysis(item.ParamValue)
+			if err != nil {
+				checkResultCh <- fmt.Sprintf(`%s 格式有误！`, item.ParamName)
+			}
+			for _, expression := range multiExpression {
+				callers, _ := iworkfunc.ParseToFuncCallers(expression)
+				for _, caller := range callers {
+					if !iworkfunc.CheckFuncNameValid(caller.FuncName) {
+						checkResultCh <- fmt.Sprintf(`%s 无效的函数名！`, caller.FuncName)
+					}
+				}
+			}
+		}
 	}
 	return
 }
@@ -417,6 +450,7 @@ func recordCostTimeLog(trackingId string, start time.Time) {
 func newValidatelogDetail(trackingId, detail string) *models.ValidatelogDetail {
 	return &models.ValidatelogDetail{
 		TrackingId:      trackingId,
+		SuccessFlag:     true,
 		Detail:          detail,
 		CreatedBy:       "SYSTEM",
 		LastUpdatedBy:   "SYSTEM",

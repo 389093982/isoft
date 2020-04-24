@@ -47,7 +47,9 @@
           {
             title: '任务名称',
             key: 'task_name',
-            width: 200,
+            width: 250,
+            ellipsis: true,
+            tooltip: true,
           },
           {
             title: '任务类型',

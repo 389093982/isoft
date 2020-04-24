@@ -2,7 +2,7 @@
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增资源信息" btn-size="small"
-      modal-title="新增/编辑资源信息" modal-top="50px" :modal-width="800">
+      modal-title="新增/编辑资源信息" modal-top="50px" :modal-width="1000">
     <Row>
       <Col span="6">
         <Scroll>
@@ -27,7 +27,7 @@
             <Input v-model.trim="formValidate.resource_url" placeholder="请输入 resource_url"></Input>
           </FormItem>
           <FormItem label="resource_dsn" prop="resource_dsn">
-            <Input v-model.trim="formValidate.resource_dsn" placeholder="请输入 resource_dsn"
+            <Input type="textarea" :rows="3" v-model.trim="formValidate.resource_dsn" placeholder="请输入 resource_dsn"
                    @drop="drop($event, 'resource_dsn')" @dragover="allowDrop($event)"></Input>
           </FormItem>
           <FormItem label="resource_username" prop="resource_username">

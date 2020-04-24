@@ -261,7 +261,7 @@ func (this *WorkController) GetMetaInfo() {
 	meta := this.GetString("meta")
 	resultMap := map[string]interface{}{"status": "SUCCESS"}
 	if meta == "funcCallers" {
-		resultMap["funcCallers"] = (&iworkfunc.IWorkFuncProxy{}).GetFuncCallers()
+		resultMap["funcCallers"] = iworkfunc.FuncCallers
 	} else if meta == "nodeMetas" {
 		resultMap["nodeMetas"] = regist.GetNodeMeta()
 	}

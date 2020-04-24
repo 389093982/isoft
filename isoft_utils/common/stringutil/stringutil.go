@@ -159,3 +159,8 @@ func Join(strs ...string) string {
 	}
 	return buffer.String()
 }
+
+// 首字母变成大写
+func ToUpperCaseFirstOne(s string) string {
+	return strings.ToUpper(string([]rune(s)[0])) + string([]rune(s)[1:])
+}

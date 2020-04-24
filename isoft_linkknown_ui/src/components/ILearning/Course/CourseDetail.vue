@@ -73,7 +73,7 @@
                 </span>
               </span>
               <span style="float: right;">
-                <span class="isoft_font12 isoft_color_grey isoft_mr10" v-if="cVideo.duration > 0">时长&nbsp;{{cVideo.duration}}&nbsp;s</span>
+                <span class="isoft_font12 isoft_hover_desc isoft_mr10" v-if="cVideo.duration > 0">时长&nbsp;{{cVideo.duration}}&nbsp;s</span>
                 <Button size="small" type="success" class="hovered hvr-grow" @click="playSelectedVideo(course.id,cVideo.id,index,course.preListFree)">立即播放</Button>
               </span>
             </div>

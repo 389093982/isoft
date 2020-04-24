@@ -16,6 +16,15 @@ HttpHrefParser 节点优化
 v1.0.3
 流程支持分组显示
 httpservice 地址可复制
+支持数据库 dsn 示例复制
+点击版本 logo 可以调往链知网页面进行下载
+
+v1.0.4
+流程使用的函数名校验
+row 字段改为 firstrow
+校验结果异常优先显示
+数字支持负数识别
+定时任务名称支持流程搜索
 
 v.2.x.x
 ForeachNode 节点逻辑重构

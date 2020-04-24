@@ -2,12 +2,10 @@
   <div>
     <Form ref="formInline" :model="formInline" :rules="ruleInline" :label-width="100">
       <FormItem prop="task_name" label="任务名称">
-        <Input type="text" v-model.trim="formInline.task_name" placeholder="task_name">
-        </Input>
+        <Input type="text" v-model.trim="formInline.task_name" placeholder="task_name"></Input>
       </FormItem>
       <FormItem prop="task_desc" label="任务描述">
-        <Input type="textarea" :rows="5" v-model.trim="formInline.task_desc" placeholder="task_desc">
-        </Input>
+        <Input type="textarea" :rows="5" v-model.trim="formInline.task_desc" placeholder="task_desc"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formInline')" :style="{'float':'right'}">确认</Button>

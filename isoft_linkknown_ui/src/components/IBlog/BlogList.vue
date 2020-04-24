@@ -1,9 +1,8 @@
 <template>
-  <div>
-
+  <div style="overflow-x: hidden;">
     <div class="blog_title_bg" style="height: 80px;padding: 0 30px;display: flex">
       <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
-        <span style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
+        <span class="animated faster bounceInRight" style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
       </span>
       <!--搜索框-->
       <span style="width: 50%;position: relative;">
@@ -246,7 +245,6 @@
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 8px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
     </div>
-
   </div>
 </template>
 

@@ -5,7 +5,7 @@
         <a href="javascript:;" style="color: #999;" @click="chooseItem(index,element.linked_refer)">
           <div class="item" style="height: 145px;text-align: center;padding: 8px 8px 0 8px " :style="{backgroundColor:index===currentClickIndex?'rgba(172,168,167,0.2)':''}">
             <img :src="element.img_path" :alt="element.element_label" width="100%" height="80px" @error="defImg()"/>
-            <div class="share_catalog_name" style="text-align: left;margin: 0 0 0 0px" :style="{color:index===currentClickIndex?'red':''}">
+            <div class="share_catalog_name" style="text-align: center;" :style="{color:index===currentClickIndex?'red':''}">
               <p>{{element.element_label}}</p>
               <p style="font-size: 12px;">{{element.content}}</p>
             </div>
