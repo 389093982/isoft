@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div style="overflow-x: hidden;">
     <div class="isoft_bg_white">
       <div class="bg01" style="width: 100%;height: 80px;overflow: hidden;padding: 20px;">
         <Row>
-          <Col span="16">
+          <Col span="16" class="animated faster bounceInRight">
             <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
             <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
           </Col>

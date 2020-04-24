@@ -1,9 +1,8 @@
 <template>
-  <div>
-
+  <div style="overflow-x: hidden;">
     <div class="course_title_bg" style="height: 80px;padding: 0 30px;display: flex">
       <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
-        <span style="cursor: pointer;position: absolute;top: 27px;">Stay hungry，Stay foolish</span>
+        <span class="animated faster bounceInRight" style="cursor: pointer;position: absolute;top: 27px;">Stay hungry，Stay foolish</span>
       </span>
       <!--搜索框-->
       <span style="width: 50%;position: relative;">
@@ -14,13 +13,12 @@
     </div>
 
     <!--课程分类-->
-    <CourseType ></CourseType>
+    <CourseType></CourseType>
 
     <!--热门课程推荐-->
     <div class="isoft_bg_white isoft_pd10">
       <HotRecommend :show-display-icon="true"></HotRecommend>
     </div>
-
   </div>
 </template>
 
