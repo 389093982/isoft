@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-x: hidden;">
     <div>
       <Row>
         <Col span="16" style="padding-right: 5px;">
@@ -25,7 +25,8 @@
               </Col>
             </Row>
 
-            <div v-for="(as, index) in asks" class="isoft_border_bottom" style="height: 82px;padding: 10px 30px;">
+            <div v-for="(as, index) in asks" class="isoft_border_bottom" @mouseenter="hoverIndex = index"
+                 :class="{'animated faster bounceInLeft': index === hoverIndex}" style="height: 82px;padding: 10px 30px;">
               <div style="display: flex;">
                 <div style="width: 25%;display: flex;text-align: center;">
                   <div class="isoft_hover_color_green isoft_point_cursor mr5">
@@ -105,6 +106,7 @@
     components: {WaitYourAnswer, HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
+        hoverIndex: 0,
         // 当前页
         current_page: 1,
         // 总数
