@@ -1,54 +1,48 @@
 <template>
-  <div>
+  <div class="isoft_bg_white isoft_pd10">
 
-    <div class="isoft_bg_white isoft_pd10">
-      <IBeautifulCard title="等你来答">
-        <div slot="header_right">
-          <span style="font-size: 13px;margin-right: 30px;color: forestgreen;cursor: pointer" @click="otherRefresh()"><Icon type="md-refresh" />&nbsp;换一批</span>
-        </div>
-        <div slot="content" style="padding: 10px;">
-          <Row v-for="(waitYourAnswer,index) in waitYourAnswerList" :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
-            <Row>
-              <Col span="20" class="title_hover" style="cursor: pointer">
-                <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
-                  {{waitYourAnswer.short_desc | filterLimitFunc(15)}}
-                </span>
-              </Col>
-              <Col span="4"><Icon type="ios-images-outline" :size="16" style="color:darkgrey;"/></Col>
-            </Row>
-            <Row style="font-size: 13px">
-              <Col span="4">
-                <span>
-                   <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index)">
-                </span>
-                <span style="position: relative;left: -10px;">
-                   <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index+1)">
-                </span>
-              </Col>
-              <Col span="6" class="isoft_color_grey2" style="position: relative;left: -5px">
-                等{{waitYourAnswer.also_want_ask_number}}人想问
-              </Col>
-              <Col span="6">
-                <span>
-                  <span v-if="whetherAsked(waitYourAnswer.id)" style="color: #ff9e3c;cursor: pointer">
-                    我也问过^_^
-                  </span>
-                  <span v-else @click="IWantAskAlso(waitYourAnswer.id)" style="color: #34B458;cursor: pointer">
-                    <Icon type="md-add" :size="15"/>我也想问
-                  </span>
-                </span>
-              </Col>
-              <Col span="7" offset="1" style="color: #34B458;cursor: pointer">
-                <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
-                  <Icon type="ios-create-outline" :size="20"/>我来回答
-                </span>
-              </Col>
-            </Row>
-          </Row>
-        </div>
-      </IBeautifulCard>
+    <div class="isoft_font_header isoft_border_bottom">
+      等你来答
+      <span class="isoft_font12 isoft_point_cursor" style="float:right;margin-right: 30px;color: forestgreen;" @click="otherRefresh()"><Icon type="md-refresh" />&nbsp;换一批</span>
     </div>
-
+    <Row v-for="(waitYourAnswer,index) in waitYourAnswerList" :style="{'margin-top': index===0 ? 5+'px':20+'px'}">
+        <Row>
+          <Col span="20" class="title_hover" style="cursor: pointer">
+            <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
+              {{waitYourAnswer.short_desc | filterLimitFunc(15)}}
+            </span>
+          </Col>
+          <Col span="4"><Icon type="ios-images-outline" :size="16" style="color:darkgrey;"/></Col>
+        </Row>
+        <Row style="font-size: 13px">
+          <Col span="4">
+            <span>
+               <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index)">
+            </span>
+            <span style="position: relative;left: -10px;">
+               <img style="border: 1px solid grey;border-radius:50%;" width="18" height="18" :src="getImgPath(index+1)">
+            </span>
+          </Col>
+          <Col span="6" class="isoft_hover_desc isoft_font12" style="position: relative;left: -5px">
+            等{{waitYourAnswer.also_want_ask_number}}人想问
+          </Col>
+          <Col span="6">
+            <span>
+              <span v-if="whetherAsked(waitYourAnswer.id)" style="color: #ff9e3c;cursor: pointer">
+                我也问过^_^
+              </span>
+              <span v-else @click="IWantAskAlso(waitYourAnswer.id)" style="color: #34B458;cursor: pointer">
+                <Icon type="md-add" :size="15"/>我也想问
+              </span>
+            </span>
+          </Col>
+          <Col span="7" offset="1" style="color: #34B458;cursor: pointer">
+            <span @click="$router.push({path:'/expert/answerExpert', query:{id : waitYourAnswer.id}})">
+              <Icon type="ios-create-outline" :size="20"/>我来回答
+            </span>
+          </Col>
+        </Row>
+      </Row>
   </div>
 </template>
 

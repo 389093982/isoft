@@ -25,7 +25,7 @@
               </Col>
             </Row>
 
-            <div v-for="(as, index) in asks" style="height: 82px;padding: 10px 30px;border-bottom: 1px solid #f4f4f4;">
+            <div v-for="(as, index) in asks" class="isoft_border_bottom" style="height: 82px;padding: 10px 30px;">
               <div style="display: flex;">
                 <div style="width: 25%;display: flex;text-align: center;">
                   <div class="isoft_hover_color_green isoft_point_cursor mr5">
@@ -74,8 +74,8 @@
           </div>
         </Col>
         <Col span="7">
-          <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
-          <ExpertWall></ExpertWall>
+          <WaitYourAnswer></WaitYourAnswer>
+          <ExpertWall class="isoft_top5"></ExpertWall>
         </Col>
       </Row>
     </div>

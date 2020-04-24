@@ -1,8 +1,7 @@
 <template>
   <div>
-
     <div class="isoft_bg_white isoft_pd10">
-      <div class="isoft_font_header">专家墙</div>
+      <div class="isoft_font_header isoft_border_bottom">专家墙</div>
       <Row v-for="(user,index) in users2" :gutter="10">
         <Col span="3">
           <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">
@@ -15,14 +14,14 @@
             <span v-else>{{user.user_name}}</span>
           </span>
         </Col>
-        <Col span="10" class="isoft_hover_desc">
+        <Col span="10" class="isoft_hover_desc isoft_font12">
           累计好评次数：{{user.good_numbers}}
         </Col>
       </Row>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top5">
-      <div class="isoft_font_header">答疑勤兵</div>
+      <div class="isoft_font_header isoft_border_bottom">答疑勤兵</div>
       <Row v-for="(user,index) in users" :gutter="10">
         <Col span="3">
           <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">
@@ -35,14 +34,14 @@
             <span v-else>{{user.user_name}}</span>
           </span>
         </Col>
-        <Col span="10" class="isoft_hover_desc">
+        <Col span="10" class="isoft_hover_desc isoft_font12">
           累计解答次数：{{user.count}}
         </Col>
       </Row>
     </div>
 
     <div class="isoft_bg_white isoft_pd10 isoft_top5">
-      <div class="isoft_font_header">提问达人</div>
+      <div class="isoft_font_header isoft_border_bottom">提问达人</div>
       <Row v-for="(user,index) in users3" :gutter="10">
         <Col span="3">
           <span @click="$router.push({path:'/user/userDetail',query:{username:user.user_name}})">
@@ -55,7 +54,7 @@
             <span v-else>{{user.user_name}}</span>
           </span>
         </Col>
-        <Col span="10" class="isoft_hover_desc">
+        <Col span="10" class="isoft_hover_desc isoft_font12">
           累计提问次数：{{user.question_numbers}}
         </Col>
       </Row>
