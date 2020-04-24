@@ -1,7 +1,7 @@
 <template>
-  <IBeautifulCard title="我的博客分类">
-    <div slot="content" style="padding: 10px;">
-      <span v-if="hasLogin">
+  <div>
+    <div class="isoft_font_header isoft_border_bottom">我的博客分类</div>
+    <span v-if="hasLogin">
         <BlogCatalogEdit v-if="showBlogCatalogEdit" @handleSuccess="handleSuccess"/>
         <Row>
           <Col span="17">
@@ -18,11 +18,10 @@
           <Col span="7" style="font-size: 12px;"><Time :time="catalog.created_time" type="date"/></Col>
         </Row>
       </span>
-      <span v-else>
-        <ForwardLogin/>
-      </span>
-    </div>
-  </IBeautifulCard>
+    <span v-else>
+      <ForwardLogin/>
+    </span>
+  </div>
 </template>
 
 <script>

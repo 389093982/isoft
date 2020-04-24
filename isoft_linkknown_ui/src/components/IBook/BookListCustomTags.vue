@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;justify-content: space-between;"
+  <div class="animated rollIn faster" style="display: flex;justify-content: space-between;"
        v-if="top_location1_books && top_location1_books.length > 0">
     <div style="width: 25%;padding: 5px 10px;">
       <div class="isoft_font_header">官方推荐</div>

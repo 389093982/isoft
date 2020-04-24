@@ -1,6 +1,5 @@
 <template>
   <div class="isoft_bg_white isoft_pd10">
-
     <div class="isoft_font_header isoft_border_bottom">
       等你来答
       <span class="isoft_font12 isoft_point_cursor" style="float:right;margin-right: 30px;color: forestgreen;" @click="otherRefresh()"><Icon type="md-refresh" />&nbsp;换一批</span>
