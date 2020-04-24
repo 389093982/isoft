@@ -1,25 +1,28 @@
 <template>
-  <div v-if="books.length>0">
-    <div class="isoft_pd10">
+  <div class="isoft_pd10 isoft_top5 isoft_bg_white">
+    <div v-if="books && books.length > 0">
       <div class="isoft_title">{{userName===loginUserName()?'我收藏的图书':'作者收藏的图书'}}</div>
       <div style="padding: 10px;border-top: 2px solid #edeff0;">
           <Row style="border:1px solid #eee;margin-bottom: 10px;">
             <div v-for="(book, index) in books">
-            <Col span="6" style="margin-bottom: 10px">
-              <div class="bookImg isoft_hover_top10">
-                <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
-                  <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
-                  <img v-else src="../../../static/images/common_img/default.png" height="160px" width="140px"/>
-                  <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                    <span class="book_label">精品</span>
-                    <span style="color: grey">{{book.book_name | filterLimitFunc(7)}}</span>
-                  </p>
-                </router-link>
-              </div>
-            </Col>
+              <Col span="6" style="margin-bottom: 10px">
+                <div class="bookImg isoft_hover_top10">
+                  <router-link :to="{path:'/ibook/bookCatalogs',query:{book_id:book.id}}">
+                    <img v-if="book.book_img" :src="book.book_img" height="160px" width="140px"/>
+                    <img v-else src="../../../static/images/common_img/default.png" height="160px" width="140px"/>
+                    <p style="font-size: 12px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                      <span class="book_label">精品</span>
+                      <span style="color: grey">{{book.book_name | filterLimitFunc(7)}}</span>
+                    </p>
+                  </router-link>
+                </div>
+              </Col>
             </div>
           </Row>
       </div>
+    </div>
+    <div v-else>
+      <BookListCustomTags/>
     </div>
   </div>
 </template>
@@ -28,9 +31,11 @@
   import {GetUserFavoriteList, QueryBookListByIds} from "../../api"
   import {checkEmpty} from "../../tools"
   import {GetLoginUserName} from "../../tools";
+  import BookListCustomTags from "../IBook/BookListCustomTags";
 
   export default {
     name: "UserFavorite",
+    components: {BookListCustomTags},
     props: {
       userName: {
         type: String,

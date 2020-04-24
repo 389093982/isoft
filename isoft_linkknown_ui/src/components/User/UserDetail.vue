@@ -88,13 +88,13 @@
 
     <div class="isoft_top5" style="min-height: 450px;justify-content:space-between;">
       <Row>
-        <Col span="16" style="background-color: white;margin-right: 5px">
+        <Col span="16" style="margin-right: 5px">
           <div v-if="user" style="margin: 0 0 0 20px ">
             <div style="background-color: #ffffff;">
               <!--用户相关的博文、课程、书本-->
               <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
             </div>
-            <div class="isoft_top5" style="background-color: #ffffff;">
+            <div class="isoft_top5">
               <!--他/她收藏的图书-->
               <UserFavorite :user-name="_userName"/>
             </div>

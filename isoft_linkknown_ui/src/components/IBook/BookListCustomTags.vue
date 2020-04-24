@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div style="width: 48%;padding: 15px 10px;border-left: 2px dashed #dddddd;border-right: 2px dashed #dddddd;"
+    <div style="width: 49%;padding: 15px 10px;border-left: 2px dashed #dddddd;border-right: 2px dashed #dddddd;"
          v-if="top_location2_books && top_location2_books.length > 0">
       <div style="margin-top: 30px;display: flex;flex-wrap: wrap;justify-content: space-between;">
         <div class="img_box isoft_point_cursor" style="width: 50%;height: 293px;"
