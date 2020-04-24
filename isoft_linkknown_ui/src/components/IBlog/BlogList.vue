@@ -49,7 +49,9 @@
                 <a @click="chooseItem(3)" :style="{color: pattern === 3 ? 'red':''}"><Icon type="ios-list-box-outline" />我的博客</a>
               </div>
               <div style="margin: 3px 0 0 175px ">
-                <a @click="blogEdit"><Icon type="ios-create-outline" size="16" />发布博客</a>
+                <a @click="blogEdit"><Icon type="ios-create-outline" size="16" />
+                  <span style="border-bottom-style: solid;border-bottom-color: #2940ff;border-bottom-width: 2px;">发布博客</span>
+                </a>
               </div>
             </div>
             <div>
