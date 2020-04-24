@@ -26,10 +26,6 @@
   </div>
 </template>
 
-
-
-
-
 <script>
   import {GetHotUsers} from "../../api"
   import IBeautifulCard from "../../components/Common/card/IBeautifulCard";

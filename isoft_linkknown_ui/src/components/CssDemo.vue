@@ -75,7 +75,8 @@
       <div class="introduce-btn">发布招标需求</div>
     </div>
 
-
+    <!-- 图标 -->
+    <div class="isoft_add"></div>
   </div>
 </template>
 
@@ -234,5 +235,37 @@
   @keyframes glint{
     0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
     100%{transform:translateX(300px) skewX(-15deg);opacity:1}
+  }
+
+  .isoft_add {
+    width: 100px;
+    height: 100px;
+    color: #ccc;
+    position: relative;
+  }
+  .isoft_add::before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80px;
+    margin-left: -40px;
+    margin-top: -5px;
+    /*利用伪类before和其 border-top 来设置一个“横”：*/
+    border-top: 10px solid;
+  }
+  .isoft_add::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 80px;
+    margin-left: -5px;
+    margin-top: -40px;
+    /*使用after伪类和 border-left 设置一个“竖”：*/
+    border-left: 10px solid;
+  }
+  .isoft_add:hover {
+    color: #a5a5a5;
   }
 </style>
