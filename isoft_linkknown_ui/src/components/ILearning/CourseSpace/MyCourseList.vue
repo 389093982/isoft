@@ -9,10 +9,7 @@
             <img v-else src="../../../../static/images/common_img/default.png" height="120" width="180"/>
           </p>
           <p>
-            <span>
-              <IFileUpload ref="fileUpload" :extra-data="myCourse.id" btn-size="small" :auto-hide-modal="true" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="更换封面"/>
-            </span>
-            <span style="margin-left: 10px">
+            <span style="margin-left: 60px">
               <span v-if="myCourse.isCharge==='charge'" style="color: #ff6900">
                 <Icon type="logo-yen" />
                 <span style="font-size: 20px">
@@ -54,7 +51,7 @@
 </template>
 
 <script>
-  import {EndUpdate, fileUploadUrl, GetCourseListByUserName, UpdateCourseIcon} from "../../../api"
+  import {EndUpdate, GetCourseListByUserName, UpdateCourseIcon} from "../../../api"
   import UploadVideo from "../Course/UploadVideo"
   import {GetLoginUserName, handleSpecial} from "../../../tools"
   import CourseMeta from "../Course/CourseMeta";
@@ -65,7 +62,6 @@
     components: {IFileUpload, CourseMeta, UploadVideo},
     data() {
       return {
-        fileUploadUrl: fileUploadUrl + "?table_name=course&table_field=small_icon",
         isLoading: true,
         // 我的课程
         myCourses: '',
