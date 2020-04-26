@@ -66,6 +66,11 @@
             <Carousel autoplay  loop>
               <CarouselItem>
                 <div class="demo-carousel">
+                  <img src="../../../static/images/blog/girl.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div class="demo-carousel">
                   <img src="../../../static/images/blog/wuzhen.png" height="220" width="100%"/>
                 </div>
               </CarouselItem>
@@ -76,7 +81,17 @@
               </CarouselItem>
               <CarouselItem>
                 <div class="demo-carousel">
+                  <img src="../../../static/images/blog/tianyuan.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div class="demo-carousel">
                   <img src="../../../static/images/blog/horse.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div class="demo-carousel">
+                  <img src="../../../static/images/blog/huanghelou.png" height="220" width="100%"/>
                 </div>
               </CarouselItem>
             </Carousel>
