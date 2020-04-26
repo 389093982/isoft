@@ -3,11 +3,7 @@
     <div class="isoft_font_header" v-if="isSearchFlag">课程搜索结果</div>
     <div class="isoft_font_header" v-else>{{custom_label}}</div>
     <div style="column-count:2;border-top: 1px solid #eee;padding-top: 10px;">
-      <HoverBigImg v-for="(course, index) in courses" :key="index"
-                   width="100%" height="98px" style="margin-bottom: 10px;"
-                   :src-img="course.small_image"
-                   :label-text="course.course_name"
-                   @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
+      <HoverBigImg v-for="(course, index) in courses" :key="index" width="100%" height="98px" style="margin-bottom: 10px;" :src-img="course.small_image" :label-text="course.course_name" @onclick="$router.push({path:'/ilearning/courseDetail', query:{course_id: course.id}})"/>
     </div>
     <div class="search_result" v-if="isSearchFlag && !(courses && courses.length > 0)" style="text-align: center;padding-top: 10px;">
       <p>未搜索到和 "{{search_data}}" 相关的课程</p>
@@ -39,6 +35,7 @@
         courses: [],
         isSearchFlag: false,    // 是否是搜索模式
         search_data: '',
+        videos:[],
       }
     },
     methods: {
@@ -57,6 +54,7 @@
         const result = await SearchCourseList({search: search_data});
         if (result.status === "SUCCESS") {
           this.courses = result.courses;
+          this.videos = result.videos;
         }
       },
       refreshCourseList: function () {
