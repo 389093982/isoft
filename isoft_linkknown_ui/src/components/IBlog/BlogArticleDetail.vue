@@ -92,8 +92,8 @@
           </div>
           <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">
             <div style="margin-bottom: 5px">
-             <img src="../../../static/images/blogShare/sina.png" height="18" width="18" style="cursor: pointer"/>
-             <img src="../../../static/images/blogShare/wechat.png" height="18" width="18" style="cursor: pointer"/>
+             <img src="../../../static/images/blog/sina.png" height="18" width="18" style="cursor: pointer"/>
+             <img src="../../../static/images/blog/wechat.png" height="18" width="18" style="cursor: pointer"/>
             </div>
           </div>
           <div style="margin: 10px 0 0 0 ;border-bottom: 1px solid gainsboro;">

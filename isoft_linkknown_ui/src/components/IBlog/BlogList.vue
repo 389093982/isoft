@@ -63,7 +63,24 @@
         <Col span="11">
           <div style="padding: 5px 10px 0 10px;">
             <!--中间大图-->
-            <img style="width: 100%;height: 220px;" src="../../../static/images/common_img/xuexi.jpg"/>
+            <Carousel autoplay  loop>
+              <CarouselItem>
+                <div class="demo-carousel">
+                  <img src="../../../static/images/blog/wuzhen.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div class="demo-carousel">
+                  <img src="../../../static/images/blog/sunshine.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div class="demo-carousel">
+                  <img src="../../../static/images/blog/horse.png" height="220" width="100%"/>
+                </div>
+              </CarouselItem>
+            </Carousel>
+
             <!--遍历博客-->
             <ul>
               <li v-for="(searchblog,index) in searchblogs" style="list-style:none;background: #fff;border-bottom: 1px solid rgba(223,223,223,0.42);">
@@ -72,7 +89,7 @@
                   <Col span="6">
                     <div style="padding: 0 5px 0 0">
                       <img v-if="searchblog.first_img" style="width: 100%;height: 80px;" :src="searchblog.first_img"/>
-                      <img v-else style="width: 100%;height: 80px;" src="../../../static/images/common_img/xuexi.jpg"/>
+                      <img v-else style="width: 100%;height: 80px;" src="../../../static/images/blog/all.jpg"/>
                     </div>
                   </Col>
                   <!--第二列 ：分三行-->
