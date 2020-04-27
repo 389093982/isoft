@@ -162,16 +162,16 @@
         },
         ruleValidate: {
           blog_title: [
-            {required: true,validator: checkBlogTitle, trigger: 'blur'}
+            {required: true,validator: checkBlogTitle, trigger: 'change'}
           ],
           key_words: [
-            { required: false, validator: checkKeyWords, trigger: 'blur' }
+            { required: false, validator: checkKeyWords, trigger: 'change' }
           ],
           catalog_name: [
-            { required: true, message: '文章分类不能为空', trigger: 'blur' }
+            { required: true, message: '文章分类不能为空', trigger: 'change' }
           ],
           content: [
-            {required: true, validator:checkContent, trigger: 'blur'}
+            {required: true, validator:checkContent, trigger: 'change'}
           ],
         },
       }

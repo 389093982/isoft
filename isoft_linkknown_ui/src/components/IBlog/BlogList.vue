@@ -221,6 +221,7 @@
         <!--右侧推荐文章-->
         <Col span="7">
           <div style="padding: 5px 50px 0 10px;">
+            <!--今日金榜 • 前五名-->
             <div style="width: 98%">
               <div style="height: 30px;">
                 <div>
@@ -239,7 +240,7 @@
                       <Col span="9">
                         <div style="padding: 0 5px 0 0">
                           <img v-if="blogGolden.first_img" style="width: 100%;height: 80px;" :src="blogGolden.first_img" />
-                          <img v-else style="width: 100%;height: 80px;" src="../../../static/images/common_img/xuexi.jpg"/>
+                          <img v-else style="width: 100%;height: 80px;" src="../../../static/images/blog/all.jpg"/>
                         </div>
                       </Col>
                       <!--第二列 ：分三行-->
@@ -260,7 +261,10 @@
                 </ul>
               </div>
             </div>
+            <!--热门用户-->
             <HotUser style="margin-top: 40px"></HotUser>
+            <!--等你来答-->
+            <WaitYourAnswer style="margin-top: 40px"></WaitYourAnswer>
           </div>
         </Col>
       </Row>
@@ -303,10 +307,12 @@
   } from "../../tools";
   import MoveLine from "../../components/Common/decorate/MoveLine";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "BlogList",
     components: {
+      WaitYourAnswer,
       HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
