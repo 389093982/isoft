@@ -113,7 +113,7 @@
                       <!--第一行：博客标题-->
                       <span v-if="searchblog.blog_status === -1" style="float: right;color: red;">审核不通过！</span>
                       <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:searchblog.id}}">
-                        <span class="isoft_hover_title">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
+                        <span class="isoft_hover_title" :title="searchblog.blog_title.length>25 ? searchblog.blog_title:''">{{searchblog.blog_title | filterLimitFunc(25)}}</span>
                       </router-link>
                       <Tag v-if="searchblog.to_top > 0" color="rgba(254,211,145,0.59)" style="width: 40px;height: 20px;"><span style="font-size: 11px;color: grey">置顶</span></Tag>
                     </Row>
@@ -248,7 +248,7 @@
                         <!--第一行：博客标题-->
                         <Row>
                           <router-link :to="{path:'/iblog/blogArticleDetail',query:{blog_id:blogGolden.id}}">
-                            <span class="isoft_hover_title">{{blogGolden.blog_title | filterLimitFunc(22)}}</span>
+                            <span class="isoft_hover_title" :title="blogGolden.blog_title.length>22 ? blogGolden.blog_title:''">{{blogGolden.blog_title | filterLimitFunc(22)}}</span>
                           </router-link>
                         </Row>
                         <!--作者 · 博客类型-->
