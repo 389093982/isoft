@@ -36,6 +36,8 @@ public class CourseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        CourseMeta courseMeta = mData.get(position);
+
         // LayoutInflater 布局服务
         // LayoutInflater.from 获取布局服务实例
         // inflate 加载布局的方法
@@ -44,10 +46,8 @@ public class CourseAdapter extends BaseAdapter {
 //        TextView txt_aName = (TextView) convertView.findViewById(R.id.txt_aName);
 //        TextView txt_aSpeak = (TextView) convertView.findViewById(R.id.txt_aSpeak);
 
-        String url = "https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg";
-
         Glide.with(mContext)
-                .load(url)
+                .load(courseMeta.getSmall_image())
                 // placeholder 图片加载出来前,显示的图片
                 // error 图片加载失败后,显示的图片
                 .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))

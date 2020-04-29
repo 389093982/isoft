@@ -11,7 +11,6 @@ import com.linkknown.ilearning.adapter.CourseAdapter;
 import com.linkknown.ilearning.model.CourseMeta;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class CourseListActivity extends AppCompatActivity {
 
@@ -27,13 +26,87 @@ public class CourseListActivity extends AppCompatActivity {
 
         mContext = this;
 
-        mData = new LinkedList<CourseMeta>();
-        mData.add(new CourseMeta("测试1"));
-        mData.add(new CourseMeta("测试2"));
-        mData.add(new CourseMeta("测试3"));
-        mData.add(new CourseMeta("测试4"));
+        getData();
+
         courseListView = findViewById(R.id.courseList);
         mAdapter = new CourseAdapter(mData, mContext);
         courseListView.setAdapter(mAdapter);
+    }
+
+    private void getData(){
+        this.mData = new LinkedList<>();
+        CourseMeta meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
     }
 }
