@@ -35,7 +35,6 @@
         courses: [],
         isSearchFlag: false,    // 是否是搜索模式
         search_data: '',
-        videos:[],
       }
     },
     methods: {
@@ -54,7 +53,6 @@
         const result = await SearchCourseList({search: search_data});
         if (result.status === "SUCCESS") {
           this.courses = result.courses;
-          this.videos = result.videos;
         }
       },
       refreshCourseList: function () {
