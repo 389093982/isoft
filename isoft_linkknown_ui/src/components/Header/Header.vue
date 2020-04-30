@@ -25,7 +25,7 @@
           <MenuItem name="6">
             <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
           </MenuItem>
-          <MenuItem name="7">
+          <MenuItem name="7" v-if="showJobFlag">
             <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
           </MenuItem>
           <Submenu name="8">
