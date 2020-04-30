@@ -11,12 +11,11 @@ import android.widget.ListView;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CourseAdapter;
 import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.service.LinkKnownApiFactory;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.util.HandlerUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -67,16 +66,16 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
 
                     @Override
                     public void onNext(CourseMetaResponse courseMetaResponse) {
-                        if (courseMetaResponse.isSuccess() && courseMetaResponse.getCourseMetas() != null) {
-                            mData.addAll(courseMetaResponse.getCourseMetas());
+                        if (courseMetaResponse.isSuccess() && courseMetaResponse.getCourses() != null) {
+                            mData.addAll(courseMetaResponse.getCourses());
                         } else {
-                            ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                            Log.e("onNext =>", "系统异常,请联系管理员~");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("onError =>", e.getMessage());
                     }
 
                     @Override

@@ -13,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class CourseAdapter extends BaseAdapter {
@@ -54,16 +53,16 @@ public class CourseAdapter extends BaseAdapter {
 
         // 异步加载图片,使用 Glide 第三方库
         Glide.with(mContext)
-                .load(courseMeta.getSmallImage())
+                .load(courseMeta.getSmall_image())
                 // placeholder 图片加载出来前,显示的图片
                 // error 图片加载失败后,显示的图片
                 .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                 .into(imageView);
 
-        courseNameView.setText(courseMeta.getCourseName());
-        courseShortDescView.setText(courseMeta.getCourseShortDesc());
-        courseTypeView.setText(courseMeta.getCourseType() + "/" + courseMeta.getCourseSubType());
-        courseLabelView.setText(courseMeta.getCourseLabel());
+        courseNameView.setText(courseMeta.getCourse_name());
+        courseShortDescView.setText(courseMeta.getCourse_short_desc());
+        courseTypeView.setText(courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
+        courseLabelView.setText(courseMeta.getCourse_label());
         return convertView;
     }
 
