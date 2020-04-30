@@ -1,14 +1,13 @@
 package com.linkknown.ilearning.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class CourseMetaResponse extends BaseResponse {
 
 
