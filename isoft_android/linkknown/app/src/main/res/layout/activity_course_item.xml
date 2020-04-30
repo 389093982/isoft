@@ -44,8 +44,9 @@
             <ImageView
                 android:id="@+id/courseImageView"
                 android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:src="@drawable/linkknown"/>
+                android:layout_height="90dp"
+                android:src="@drawable/linkknown"
+                android:scaleType="fitXY"/> <!-- fitXY 完全填充 -->
         </LinearLayout>
 
         <!-- 右侧详情 -->
