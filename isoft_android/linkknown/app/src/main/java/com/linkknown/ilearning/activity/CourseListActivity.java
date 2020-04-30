@@ -102,7 +102,7 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseAuthor("你好哇");
         meta.setCourseLabel("helloworld");
         meta.setCourseNumber(10);
-        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看呃呃呃，世界那么大，我想去看看");
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
