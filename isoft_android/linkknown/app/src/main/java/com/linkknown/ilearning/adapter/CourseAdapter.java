@@ -11,13 +11,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.model.CourseMeta;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class CourseAdapter extends BaseAdapter {
 
-    private LinkedList<CourseMeta> mData;
+    private List<CourseMetaResponse.CourseMeta> mData;
     private Context mContext;
 
     @Override
@@ -38,7 +39,7 @@ public class CourseAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 获取第 position 个模型对象
-        CourseMeta courseMeta = mData.get(position);
+        CourseMetaResponse.CourseMeta courseMeta = mData.get(position);
 
         // LayoutInflater 布局服务
         // LayoutInflater.from 获取布局服务实例
@@ -68,7 +69,7 @@ public class CourseAdapter extends BaseAdapter {
 
     public CourseAdapter() {}
 
-    public CourseAdapter(LinkedList<CourseMeta> mData, Context mContext) {
+    public CourseAdapter(List<CourseMetaResponse.CourseMeta> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }
