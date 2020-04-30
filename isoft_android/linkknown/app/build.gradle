@@ -11,12 +11,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // lombok 需要配置这些
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
-        }
+        //显示声明注解处理器
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
     buildTypes {
         release {
             minifyEnabled false
