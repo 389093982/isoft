@@ -23,6 +23,7 @@ const isoft_unifiedpay_order = "ws://localhost:6002/wechatPayApi/Order";
 const book_list_top_location1 = "book_list_top_location1";
 const book_list_top_location2 = "book_list_top_location2";
 const book_list_top_location3 = "book_list_top_location2";
+const showJobFlag = false;
 
 export default {
   placement_host_recommend_blog_tpyes,
@@ -51,5 +52,6 @@ export default {
   book_list_top_location1,      // 图书列表页顶部位置推荐左侧图书
   book_list_top_location2,      // 图书列表页顶部位置推荐中间图书
   book_list_top_location3,      // 图书列表页顶部位置推荐右侧图书
+  showJobFlag
 }
 
