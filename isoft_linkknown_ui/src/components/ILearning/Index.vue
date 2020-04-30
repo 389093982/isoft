@@ -4,6 +4,7 @@
       <LinkKnownQuickSearch id="quickSearch" @handleShow="handleShow" @submitFunc="handleSubmitFunc"/>
     </div>
 
+    <!--课程、博客、书单-->
     <SearchRecommend ref="searchRecommend" v-show="tabIndex === 1" @research="handleReSearch"/>
     <!--新闻公告-->
     <div v-show="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
