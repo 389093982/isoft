@@ -46,6 +46,7 @@
                 android:layout_width="150dp"
                 android:layout_height="90dp"
                 android:src="@drawable/linkknown"
+                android:layout_marginTop="5dp"
                 android:scaleType="fitXY"/> <!-- fitXY 完全填充 -->
         </LinearLayout>
 
@@ -85,7 +86,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp">
 
                 <TextView
                     android:id="@+id/courseTypeLabel"
@@ -110,7 +112,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp">
 
                 <TextView
                     android:id="@+id/courseLabelLabel"
@@ -135,7 +138,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp">
 
                 <TextView
                     android:id="@+id/courseNumberAndWatchNumberLabel"
@@ -156,11 +160,28 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="购买" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+                <!--
+                    通过以下设置来消除默认的内边距
+                    android:padding="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                -->
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:background="@drawable/button_drawable"
+                    android:text="立即购买" />
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

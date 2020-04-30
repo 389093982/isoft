@@ -6,4 +6,5 @@
 
     <color name="colorGrey">#657180</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="theme_red">#FF0000</color>
 </resources>
