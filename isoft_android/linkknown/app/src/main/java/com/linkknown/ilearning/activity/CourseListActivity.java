@@ -44,7 +44,7 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
         this.mData.add(meta);
 
         meta = new CourseMeta();
@@ -56,20 +56,7 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
-        this.mData.add(meta);
-
-
-        meta = new CourseMeta();
-        meta.setCourseName("测试123");
-        meta.setCourseAuthor("你好哇");
-        meta.setCourseLabel("helloworld");
-        meta.setCourseNumber(10);
-        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
-        meta.setCourseSubType("不想编程了");
-        meta.setCourseType("真是够无聊");
-        meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
         this.mData.add(meta);
 
 
@@ -82,7 +69,20 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        this.mData.add(meta);
+
+
+        meta = new CourseMeta();
+        meta.setCourseName("测试123");
+        meta.setCourseAuthor("你好哇");
+        meta.setCourseLabel("helloworld");
+        meta.setCourseNumber(10);
+        meta.setCourseShortDesc("呃呃呃，世界那么大，我想去看看");
+        meta.setCourseSubType("不想编程了");
+        meta.setCourseType("真是够无聊");
+        meta.setWatchNumber(9999);
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
         this.mData.add(meta);
 
         meta = new CourseMeta();
@@ -94,7 +94,7 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
         this.mData.add(meta);
 
         meta = new CourseMeta();
@@ -106,7 +106,7 @@ public class CourseListActivity extends AppCompatActivity {
         meta.setCourseSubType("不想编程了");
         meta.setCourseType("真是够无聊");
         meta.setWatchNumber(9999);
-        meta.setSmall_image("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
+        meta.setSmallImage("https://w.wallhaven.cc/full/6k/wallhaven-6k3oox.jpg");
         this.mData.add(meta);
     }
 }

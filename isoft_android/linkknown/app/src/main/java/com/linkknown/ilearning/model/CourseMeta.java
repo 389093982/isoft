@@ -8,7 +8,7 @@ public class CourseMeta {
     private String courseName;
     private String courseAuthor;
     private String courseType;
-    private String small_image;
+    private String smallImage;
     private String courseSubType;
     private String courseShortDesc;
     private int courseNumber;

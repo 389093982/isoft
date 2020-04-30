@@ -1,17 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/courseImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/linkknown"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="16dp">
+        <!-- 左侧图片 -->
+        <ImageView
+            android:id="@+id/courseImageView"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:src="@drawable/linkknown" />
+
+        <!-- 右侧详情 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <!-- 课程名称 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+                <TextView
+                    android:id="@+id/courseNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseNameText"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/courseNameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseNameTextDemo"
+                    android:textColor="#222222"
+                    android:textSize="12sp"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <!-- 课程描述 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+                <TextView
+                    android:id="@+id/courseShortDescLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseShortDescText"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/courseShortDescView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseShortDescTextDemo"
+                    android:textColor="#222222"
+                    android:textSize="12sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <!-- 课程类型 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/courseTypeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseTypeText"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/courseTypeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseTypeTextDemo"
+                    android:textColor="#222222"
+                    android:textSize="12sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <!-- 课程标签语 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/courseLabelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseLabelText"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/courseLabelView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseLabelTextDemo"
+                    android:textColor="#222222"
+                    android:textSize="12sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <!-- 课程集数和课程浏览量 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/courseNumberAndWatchNumberLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseNumberAndWatchNumberText"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/courseNumberAndWatchNumberView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/courseNumberAndWatchNumberTextDemo"
+                    android:textColor="#222222"
+                    android:textSize="12sp"
+                    android:maxLines="3"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
