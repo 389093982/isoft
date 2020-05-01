@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.imageButton2)
     public RadioButton rb_mine;
 
-    private Button btnToLogin;
-    private Button btnToCourseList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,24 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         this.initFragment();
-
-        btnToLogin = findViewById(R.id.btnToLogin);
-        btnToCourseList = findViewById(R.id.btnToCourseList);
-
-        btnToLogin.setOnClickListener(this);
-        btnToCourseList.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnToLogin:
-                UIUtils.gotoActivity(this, LoginActivity.class);
-                break;
-            case R.id.btnToCourseList:
-                UIUtils.gotoActivity(this, CourseListActivity.class);
-                break;
-
             case R.id.imageButton0:
                 mViewPage.setCurrentItem(0);
                 break;
