@@ -185,20 +185,26 @@
       },
       showChooseElement: async function () {
         if (!checkEmpty(this.formInline.placement)) {
-          const result = await FilterElementByPlacement(this.formInline.placement);
-          if (result.status == "SUCCESS") {
+          let params = {
+            'placement':this.formInline.placement
+          };
+          const result = await FilterElementByPlacement(params);
+          if (result.status === "SUCCESS") {
             this.elements = result.elements;
           }
         }
       },
       uploadComplete: function (result) {
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formInline.imgpath = result.fileServerPath;
         }
       },
       refreshElement: async function (id) {
-        const result = await QueryElementById(id);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'id':id
+        };
+        const result = await QueryElementById(params);
+        if (result.status === "SUCCESS") {
           let element = result.element;
           this.formInline.placement = element.placement;
           this.formInline.element_name = element.element_name;
@@ -210,8 +216,11 @@
         }
       },
       refreshPlacement: async function (placement_name) {
-        const result = await QueryPlacementByName(placement_name);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'placement_name':placement_name
+        };
+        const result = await QueryPlacementByName(params);
+        if (result.status === "SUCCESS") {
           this.placement = result.placement;
         }
       },

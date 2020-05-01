@@ -116,7 +116,10 @@
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       },
       querySamllIcon: async function () {
-        const result = await GetUserDetail(GetLoginUserName());
+        let params = {
+          'userName':GetLoginUserName()
+        };
+        const result = await GetUserDetail(params);
         if (result.status === "SUCCESS") {
           this.small_icon = result.user.small_icon;
         }

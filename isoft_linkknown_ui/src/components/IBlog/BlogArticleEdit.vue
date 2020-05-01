@@ -71,13 +71,7 @@
 </template>
 
 <script>
-  import {
-    BlogArticleEdit,
-    fileUploadUrl,
-    FilterElementByPlacement,
-    GetMyCatalogs,
-    ShowBlogArticleDetail
-  } from "../../api"
+  import {BlogArticleEdit, fileUploadUrl, FilterElementByPlacement, GetMyCatalogs, ShowBlogArticleDetail} from "../../api"
   import axios from 'axios'
   import CatalogList from "./CatalogList";
   import RandomAdmt from "../Advertisement/RandomAdmt";
@@ -224,7 +218,10 @@
       refreshArticleDetail: async function (article_id) {
         var articleId = article_id > 0 ? article_id : this.$route.query.id;
         this.formValidate.article_id = articleId;
-        const result = await ShowBlogArticleDetail(articleId);
+        let params = {
+          'id':articleId
+        };
+        const result = await ShowBlogArticleDetail(params);
         if (result.status === "SUCCESS") {
           if (result.blog != null) {
             this.blog = result.blog;
@@ -234,7 +231,10 @@
         }
       },
       refreshHotCatalogItems: async function () {
-        const result = await FilterElementByPlacement(this.GLOBAL.placement_host_recommend_blog_tpyes);
+        let params = {
+          'placement':this.GLOBAL.placement_host_recommend_blog_tpyes
+        };
+        const result = await FilterElementByPlacement(params);
         if (result.status === "SUCCESS") {
           //判断是否有admin权限，如果没有那么剔除“官方博客”这一类别
           if (this.isAdmin()) {

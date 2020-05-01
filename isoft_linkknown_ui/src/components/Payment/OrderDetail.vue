@@ -123,7 +123,10 @@
         }
       },
       getUserDetail:async function () {
-        const result = await GetUserDetail(this.loginUserName());
+		    let params = {
+		      'userName':this.loginUserName()
+        };
+        const result = await GetUserDetail(params);
         if (result.status === 'SUCCESS') {
           this.user = result.user;
           //格式化会员过期时间

@@ -161,7 +161,10 @@
           this.course = result.course;
           this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);// 根据id来排序的
           this.playVideo(this.cVideos.filter(video => video.id == this.$route.query.video_id)[0]);
-          const userInfo = await GetUserDetail(this.course.course_author);
+          let params = {
+            'userName':this.course.course_author
+          };
+          const userInfo = await GetUserDetail(params);
           if (userInfo.status === "SUCCESS") {
             this.user = userInfo.user;
           }

@@ -23,7 +23,10 @@
           result = JSON.parse(_store.getItem(this.placement_name));
         } else {
           if (!checkEmpty(this.placement_name)) {
-            result = await FilterElementByPlacement(this.placement_name);
+            let params = {
+              'placement':this.placement_name
+            };
+            result = await FilterElementByPlacement(params);
             if (result.status === "SUCCESS") {
               _store.setItem({
                 name: this.placement_name,

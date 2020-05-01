@@ -51,8 +51,17 @@
           }  else {
             // 修改换行符，等取出来的时候，用v-html展示
             _this.content=  _this.content.replace(/\r|\n|\r\n/g,"<br/>");
-            const result = await AddComment(_this.org_parent_id,_this.parent_id, _this.content, _this.theme_pk,_this.theme_type, comment_type, _this.refer_user_name);
-            if (result.status == "SUCCESS") {
+            let params = {
+              'org_parent_id':_this.org_parent_id,
+              'parent_id':_this.parent_id,
+              'content':_this.content,
+              'theme_pk':_this.theme_pk,
+              'theme_type':_this.theme_type,
+              'comment_type':comment_type,
+              'refer_user_name':_this.refer_user_name
+            };
+            const result = await AddComment(params);
+            if (result.status === "SUCCESS") {
               _this.$Message.success("发表成功!");
               _this.content = '';
               // 调用父组件的 refreshComment 方法

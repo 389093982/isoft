@@ -94,8 +94,11 @@
         this.isLoading = true;
         try {
           this.formValidate.book_catalog_id = book_catalog_id;
-          const result = await ShowBookArticleDetail(book_catalog_id);
-          if (result.status == "SUCCESS") {
+          let params = {
+            'book_catalog_id':book_catalog_id,
+          };
+          const result = await ShowBookArticleDetail(params);
+          if (result.status === "SUCCESS") {
             if (result.bookArticle != null) {
               this.bookArticle = result.bookArticle;
               this.formValidate.id = result.bookArticle.id;

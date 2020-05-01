@@ -100,8 +100,11 @@
         this.$router.push({path: '/background/placementList'});
       },
       refreshPlacement: async function (id) {
-        const result = await QueryPlacementById(id);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'id':id
+        };
+        const result = await QueryPlacementById(params);
+        if (result.status === "SUCCESS") {
           let placement = result.placement;
           this.formInline.placement_name = placement.placement_name;
           this.formInline.placement_desc = placement.placement_desc;

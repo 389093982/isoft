@@ -56,7 +56,10 @@
       },
       refreshRandomAdvertisement: async function () {
         var _this = this;
-        const result = await GetRandomAdvertisement(this.advertisementAmount);
+        let params = {
+          'limit':this.advertisementAmount
+        };
+        const result = await GetRandomAdvertisement(params);
         if (result.status === "SUCCESS") {
           this.advertisements = result.advertisements;
           this.advertisements_kt = result.advertisements.filter(adv => adv.size_type === 1);

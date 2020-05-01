@@ -42,14 +42,17 @@
     methods: {
       refreshCourseType: async function () {
         const result = await GetAllCourseType();
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.course_types = result.course_types;
           this.loadSubCourseType(result.course_types[0]);
         }
       },
       loadSubCourseType: async function (course_type) {
-        const result = await GetAllCourseSubType(course_type.course_type);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'course_type':course_type.course_type
+        };
+        const result = await GetAllCourseSubType(params);
+        if (result.status === "SUCCESS") {
           this.current_course_type = course_type;
           this.sub_course_types = result.sub_course_types;
         }

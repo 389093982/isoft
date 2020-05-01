@@ -75,7 +75,11 @@
         if (data.status === "SUCCESS") {
           let uploadFilePath = data.fileServerPath;
           let courseId = data.extraData;
-          const result = await UpdateCourseIcon(courseId, handleSpecial(uploadFilePath));
+          let params = {
+            'course_id':courseId,
+            'small_image':handleSpecial(uploadFilePath),
+          };
+          const result = await UpdateCourseIcon(params);
           if (result.status === "SUCCESS") {
             this.refreshMyCourseList();
           }

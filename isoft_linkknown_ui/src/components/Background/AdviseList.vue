@@ -55,7 +55,11 @@
         this.refreshAdviseList();
       },
       refreshAdviseList: async function () {
-        const result = await queryPageAdvise(this.offset, this.current_page);
+        let params = {
+          'offset':this.offset,
+          'current_page':this.current_page
+        };
+        const result = await queryPageAdvise(params);
         if (result.status === "SUCCESS") {
           this.advises = result.advises;
           for (let i = 0; i < this.advises.length; i++) {

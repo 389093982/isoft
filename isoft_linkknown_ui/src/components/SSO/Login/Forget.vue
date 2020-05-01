@@ -115,7 +115,10 @@
         });
       },
       createVerifyCode: async function (username) {
-        const result = await CreateVerifyCode(username);
+        let params = {
+          'username':username,
+        };
+        const result = await CreateVerifyCode(params);
         if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
           //这里进行30秒的置灰设置
@@ -145,7 +148,12 @@
       },
       modifyPwd: async function () {
         let _this = this;
-        const result = await ModifyPwd(this.formValidate.username, this.formValidate.passwd, this.formValidate.verifycode);
+        let params = {
+          'username':this.formValidate.username,
+          'passwd':this.formValidate.passwd,
+          'verifyCode':this.formValidate.verifycode
+        };
+        const result = await ModifyPwd(params);
         if (result.status === "SUCCESS") {
           this.$Message.success("密码修改成功!");
           localStorage.setItem("__userName", this.formValidate.username);

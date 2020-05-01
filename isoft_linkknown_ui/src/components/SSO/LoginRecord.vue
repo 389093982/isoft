@@ -76,8 +76,13 @@
     },
     methods: {
       refreshLoginRecordList: async function () {
-        const result = await LoginRecordList(this.offset, this.current_page, this.search);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'offset':this.offset,
+          'current_page':this.current_page,
+          'search':this.search,
+        };
+        const result = await LoginRecordList(params);
+        if (result.status === "SUCCESS") {
           this.loginRecords = result.loginRecords;
           this.total = result.paginator.totalcount;
         }

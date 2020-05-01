@@ -198,7 +198,10 @@
         })
       },
       refreshGoodDetail: async function (good_id) {
-        const result = await GetGoodDetail(good_id);
+        let params = {
+          'id':good_id
+        };
+        const result = await GetGoodDetail(params);
         if (result.status === "SUCCESS") {
           this.formValidate = result.good;
           this.formValidate.good_images = checkNotEmpty(result.good.good_images) ? JSON.parse(result.good.good_images) : [];

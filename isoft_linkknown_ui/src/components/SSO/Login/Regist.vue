@@ -143,7 +143,10 @@
         });
       },
       createVerifyCode: async function (username) {
-        const result = await CreateVerifyCode(username);
+        let params = {
+          'username':username
+        };
+        const result = await CreateVerifyCode(params);
         if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
           //这里进行30秒的置灰设置

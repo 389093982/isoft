@@ -141,7 +141,10 @@
       },
       refreshUserDetail: async function () {
         // TODO 改成从全局的 store 中读取,一次只查一下
-        const result = await GetUserDetail(this.getUserName());
+        let params = {
+          'userName':this.getUserName()
+        };
+        const result = await GetUserDetail(params);
         if (result.status === "SUCCESS") {
           this.user_small_icon = result.user.small_icon;
           this.nick_name = result.user.nick_name;

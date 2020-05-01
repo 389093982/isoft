@@ -69,8 +69,14 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditAdvertisement(_this.formValidate.id, _this.formValidate.advertisement_label,
-              _this.formValidate.linked_type, _this.formValidate.linked_refer, handleSpecial(_this.formValidate.linked_img));
+            let params = {
+              'id':_this.formValidate.id,
+              'advertisement_label':_this.formValidate.advertisement_label,
+              'linked_type':_this.formValidate.linked_type,
+              'linked_refer':_this.formValidate.linked_refer,
+              'linked_img':handleSpecial(_this.formValidate.linked_img)
+            };
+            const result = await EditAdvertisement(params);
             if (result.status === "SUCCESS") {
               _this.$Message.success('提交成功!');
               _this.handleReset("formValidate");
@@ -87,7 +93,10 @@
         this.$refs[name].resetFields();
       },
       initData: async function (id) {
-        const result = await QueryAdvertisementById(id);
+        let params = {
+          'id':id
+        };
+        const result = await QueryAdvertisementById(params);
         if (result.status === "SUCCESS") {
           this.formValidate.id = result.advertisement.id;
           this.formValidate.advertisement_label = result.advertisement.advertisement_label;

@@ -71,7 +71,10 @@
     },
     methods: {
       RenderUserInfoByName: async function () {
-        const result = await GetUserDetail(this.course.course_author);
+        let params = {
+          'userName':this.course.course_author
+        };
+        const result = await GetUserDetail(params);
         if (result.status === "SUCCESS") {
           this.user = result.user;
         }
