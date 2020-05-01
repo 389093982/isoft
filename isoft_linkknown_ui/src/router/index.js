@@ -71,6 +71,7 @@ const ElementList = () => import("@/components/Background/IPlacement/ElementList
 const ElementEdit = () => import("@/components/Background/IPlacement/ElementEdit");
 const PlacementList = () => import("@/components/Background/IPlacement/PlacementList");
 const PlacementEdit = () => import("@/components/Background/IPlacement/PlacementEdit");
+const UserSearch = () => import("@/components/Background/UserSearch");
 
 Vue.use(Router);
 
@@ -149,6 +150,7 @@ const ICMSReouter = [{
       {path: 'elementList', component: ElementList},
       {path: 'placementList', component: PlacementList},
       {path: 'placementEdit', component: PlacementEdit},
+      {path: 'userSearch', component: UserSearch},
     ]
 }];
 
