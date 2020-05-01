@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.initFragment();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         btnToLogin = findViewById(R.id.btnToLogin);
         btnToCourseList = findViewById(R.id.btnToCourseList);
 
