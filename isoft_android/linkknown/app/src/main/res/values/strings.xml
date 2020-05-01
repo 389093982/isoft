@@ -14,11 +14,11 @@
     <string name="courseNameText">课程名称：</string>
     <string name="courseNameTextDemo">这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称</string>
     <string name="courseShortDescText">课程描述：</string>
-    <string name="courseShortDescTextDemo">你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗这里是课程描述,你知道吗</string>
+    <string name="courseShortDescTextDemo">你知道吗这里</string>
     <string name="courseTypeText">课程类型：</string>
     <string name="courseTypeTextDemo">你好哇哇哇哇，想哭</string>
     <string name="courseLabelText">课程特点：</string>
     <string name="courseLabelTextDemo">倒霉倒霉123</string>
-    <string name="courseNumberAndWatchNumberText">关联数量：</string>
-    <string name="courseNumberAndWatchNumberTextDemo">99 集, 1000 次播放</string>
+    <string name="courseNumberTextDemo">%1d 集</string>
+    <string name="watchNumberTextDemo">%1d 次播放</string>
 </resources>
