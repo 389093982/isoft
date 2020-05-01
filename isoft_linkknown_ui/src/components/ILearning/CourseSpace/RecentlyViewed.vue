@@ -30,8 +30,12 @@
         this.$router.push({path: '/ilearning/courseSearch', query: {search: data}});
       },
       async refreshRecentlyViewed() {
-        const data = await ShowCourseHistory(this.offset, this.current_page);
-        if (data.status == "SUCCESS") {
+        let params = {
+          'offset':this.offset,
+          'current_page':this.current_page
+        };
+        const data = await ShowCourseHistory(params);
+        if (data.status === "SUCCESS") {
           this.historys = data.historys;
           this.total = data.paginator.totalcount;
         }

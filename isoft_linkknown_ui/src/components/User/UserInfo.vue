@@ -139,8 +139,11 @@
       uploadComplete: async function (data) {
         if (data.status === "SUCCESS") {
           this.$refs.fileUpload.hideModal();
-          let uploadFilePath = data.fileServerPath;
-          const result = await UpdateUserIcon(GetLoginUserName(), uploadFilePath);
+          let params = {
+            'userName':GetLoginUserName(),
+            'small_icon':data.fileServerPath,
+          };
+          const result = await UpdateUserIcon(params);
           if (result.status === "SUCCESS") {
             this.GetUserDetail();
           }
@@ -171,7 +174,10 @@
         this.$refs.hometownAreaChooser.showModal();
       },
       GetUserDetail:async function () {
-        const result = await GetUserDetail(GetLoginUserName());
+        let params = {
+          'userName':GetLoginUserName()
+        };
+        const result = await GetUserDetail(params);
         if (result.status === "SUCCESS") {
           this.formValidate = result.user;
           this.formValidate.birthday = result.user.birthday==='0000-00-00'?'':result.user.birthday;

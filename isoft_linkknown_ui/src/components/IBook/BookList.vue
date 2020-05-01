@@ -188,7 +188,10 @@
           this.$Message.error("点击过快,请稍后重试!");
           return;
         }
-        const result = await DeleteBookById(book_id);
+        let params = {
+          'id':book_id,
+        };
+        const result = await DeleteBookById(params);
         if (result.status === "SUCCESS") {
           this.refreshBookList();
         }
@@ -196,9 +199,11 @@
       uploadComplete: async function (data) {
         if (data.status === "SUCCESS") {
           if (data.status === "SUCCESS") {
-            let uploadFilePath = data.fileServerPath;
-            let bookId = data.extraData.id;
-            const result = await UpdateBookIcon(bookId, uploadFilePath);
+            let params = {
+              'book_id':data.extraData.id,
+              'book_img':data.fileServerPath,
+            };
+            const result = await UpdateBookIcon(params);
             if (result.status === "SUCCESS") {
               this.refreshBookList();
             }

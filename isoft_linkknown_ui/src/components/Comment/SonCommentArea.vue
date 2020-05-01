@@ -123,7 +123,12 @@
         this.refreshComment();
       },
       refreshComment: async function (comment_type) {
-        const result = await FilterCommentSecondLevel(this.theme_pk, this.theme_type,this.org_parent_id);
+        let params = {
+          'theme_pk':this.theme_pk,
+          'theme_type':this.theme_type,
+          'org_parent_id':this.org_parent_id,
+        };
+        const result = await FilterCommentSecondLevel(params);
         if (result.status === "SUCCESS") {
           this.showCommentForm = false;
           this.comments = result.comments;

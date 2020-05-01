@@ -93,7 +93,10 @@
         });
       },
       payConfirm: async function (good) {
-        const result = await NewOrder(good.id);
+        let params = {
+          'good_id':good.id,
+        };
+        const result = await NewOrder(params);
         if (result.status === "SUCCESS") {
           this.$router.push({
             path: '/business/payConfirm',

@@ -167,8 +167,11 @@
         this.modalTarget = 'edit';
         this.formValidate.catalogOrder = bookCatalog.catalog_order;
         this.tempOrgCatalogOrder = bookCatalog.catalog_order;
-        const result = await ShowBookCatalogDetail(bookCatalog.id);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'id':bookCatalog.id
+        };
+        const result = await ShowBookCatalogDetail(params);
+        if (result.status === "SUCCESS") {
           this.formValidate.id = result.bookCatalog.id;
           this.formValidate.catalogName = result.bookCatalog.catalog_name;
           this.$refs.bookCatalogEditModal.showModal();

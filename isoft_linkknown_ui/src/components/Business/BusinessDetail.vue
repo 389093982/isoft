@@ -30,7 +30,10 @@
     },
     methods: {
       refreshGoodDetail: async function (good_id) {
-        const result = await GetGoodDetail(good_id);
+        let params = {
+          'id':good_id
+        };
+        const result = await GetGoodDetail(params);
         if (result.status === "SUCCESS") {
           this.good = result.good;
         }

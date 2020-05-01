@@ -164,8 +164,11 @@
     },
     methods: {
       copyPlacement: async function (id) {
-        const result = await CopyPlacement(id);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'id':id
+        };
+        const result = await CopyPlacement(params);
+        if (result.status === "SUCCESS") {
           this.$Message.success("复制成功！");
           this.refreshPlacementList();
         } else {
@@ -203,8 +206,11 @@
           title: '删除',
           content: '确认删除该条数据吗？请谨慎操作！',
           onOk: async () => {
-            const result = await DeletePlacementById(id);
-            if (result.status == "SUCCESS") {
+            let params = {
+              'id':id
+            };
+            const result = await DeletePlacementById(params);
+            if (result.status === "SUCCESS") {
               _this.$Message.success("删除成功！");
               _this.refreshPlacementList();
             } else {

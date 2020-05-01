@@ -148,7 +148,7 @@
           }
           if (result.pay_result != null) {
             //支付成功，订单入pay_order表, 充值vip，会在流程里修改user表会员标识
-            const res = await addPayOrder({
+            let params = {
               'order_id':result.order_id,
               'trans_time':result.trans_time,
               'user_name':result.user_name,
@@ -158,7 +158,8 @@
               'goods_price':result.trans_amount,
               'goods_img':'',
               'pay_result':result.pay_result,
-            });
+            };
+            const res = await addPayOrder(params);
             //页面支付成功动态效果
             if (res.status === 'SUCCESS') {
               this.codeUrl = '';

@@ -100,8 +100,13 @@
     },
     methods: {
       refreshAppRegistList: async function () {
-        const result = await AppRegisterList(this.offset, this.current_page, this.search);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'offset':this.offset,
+          'current_page':this.current_page,
+          'search':this.search
+        };
+        const result = await AppRegisterList(params);
+        if (result.status === "SUCCESS") {
           this.appRegisters = result.appRegisters;
           this.total = result.paginator.totalcount;
         }
@@ -117,8 +122,11 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddAppRegister(this.formValidate.app_address);
-            if (result.status == "SUCCESS") {
+            let params = {
+              'app_address':this.formValidate.app_address
+            };
+            const result = await AddAppRegister(params);
+            if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
               this.$refs.triggerModal.hideModal();

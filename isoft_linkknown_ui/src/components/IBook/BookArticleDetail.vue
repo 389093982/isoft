@@ -113,7 +113,10 @@
         this.viewCatalogName = this.bookCatalogs[index].catalog_name;
         this.prevCatalogName = index > 0 ? this.bookCatalogs[index - 1].catalog_name : '';
         this.nextCatalogName = index < this.bookCatalogs.length - 1 ? this.bookCatalogs[index + 1].catalog_name : '';
-        const result = await ShowBookArticleDetail(book_catalog_id);
+        let params = {
+          'book_catalog_id':book_catalog_id
+        };
+        const result = await ShowBookArticleDetail(params);
         if (result.status === "SUCCESS") {
           if (result.bookArticle != null) {
             this.bookArticle = result.bookArticle;
@@ -128,7 +131,10 @@
         }
       },
       refreshBookInfo: async function (book_id) {
-        const result = await BookArticleList(book_id);
+        let params = {
+          'book_id':book_id
+        };
+        const result = await BookArticleList(params);
         if (result.status === "SUCCESS") {
           this.bookArticles = result.books;
           if (this.bookArticles.length > 0) {

@@ -146,8 +146,12 @@
                           _this.$Message.error("点击过快！");
                           return;
                         }
-                        const result = await UpdateElementStatus(_this.elements[params.index].id, bindData);
-                        if (result.status == "SUCCESS") {
+                        let params = {
+                          'id':_this.elements[params.index].id,
+                          'status':bindData,
+                        };
+                        const result = await UpdateElementStatus(params);
+                        if (result.status === "SUCCESS") {
                           _this.$Message.success("操作成功!");
                           _this.refreshElementList();
                         } else {
@@ -165,8 +169,11 @@
     },
     methods: {
       copyElement: async function (id) {
-        const result = await CopyElement(id);
-        if (result.status == "SUCCESS") {
+        let params = {
+          'id':id
+        };
+        const result = await CopyElement(params);
+        if (result.status === "SUCCESS") {
           this.$Message.success("复制成功！");
           this.refreshElementList();
         } else {

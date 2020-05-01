@@ -122,7 +122,14 @@
       },
       // 刷新当前父级评论对应的评论列表
       refreshComment: async function (comment_type) {
-        const result = await FilterCommentFirstLevel(this.theme_pk, this.theme_type, comment_type, this.offset, this.current_page);
+        let params = {
+          'theme_pk':this.theme_pk,
+          'theme_type':this.theme_type,
+          'comment_type':comment_type,
+          'offset':this.offset,
+          'current_page':this.current_page
+        };
+        const result = await FilterCommentFirstLevel(params);
         if (result.status === "SUCCESS") {
           this.showCommentForm = false;
           this.comments = result.comments;

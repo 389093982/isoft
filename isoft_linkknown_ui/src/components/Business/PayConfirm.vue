@@ -23,13 +23,19 @@
     },
     methods: {
       refreshGoodDetail: async function () {
-        const result = await GetGoodDetail(this.$route.query.good_id);
+        let params = {
+          'id':this.$route.query.good_id
+        };
+        const result = await GetGoodDetail(params);
         if (result.status === "SUCCESS") {
           this.good = result.good;
         }
       },
       refreshOrderInfo: async function () {
-        const result = await GetOrderDetail(this.$route.query.orderCode);
+        let params = {
+          'orderCode':this.$route.query.orderCode
+        };
+        const result = await GetOrderDetail(params);
         if (result.status === "SUCCESS") {
           this.orderInfo = result.orderInfo;
         }

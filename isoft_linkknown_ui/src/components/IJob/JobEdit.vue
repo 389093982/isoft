@@ -130,7 +130,10 @@
         })
       },
       refreshJobDetail: async function (id) {
-        const result = await QueryJobById(id);
+        let params = {
+          'id':id
+        };
+        const result = await QueryJobById(params);
         if (result.status === "SUCCESS") {
           this.formInline = result.jobDetail;
         }

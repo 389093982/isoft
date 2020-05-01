@@ -145,7 +145,10 @@
     },
     methods: {
       refreshArticleDetail: async function () {
-        const result = await ShowBlogArticleDetail(this.$route.query.blog_id);
+        let params = {
+          'id':this.$route.query.blog_id
+        };
+        const result = await ShowBlogArticleDetail(params);
         if (result.status === "SUCCESS") {
           this.userInfos = await RenderUserInfoByName(result.blog.author);
           this.blog = result.blog;
@@ -197,7 +200,10 @@
         this.$refs.comfirmDelete.showModal();
       },
       deleteBlog: async function () {
-        const result = await ArticleDelete(this.$route.query.blog_id);
+        let params = {
+          'blog_id':this.$route.query.blog_id
+        };
+        const result = await ArticleDelete(params);
         if (result.status === "SUCCESS") {
           this.$router.push({path:'/iblog/blogList'});
           this.$Message.info("删除成功！");

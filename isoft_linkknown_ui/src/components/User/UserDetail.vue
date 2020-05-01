@@ -118,7 +118,7 @@
 </template>
 
 <script>
-  import {EditUserSignature, GetUserDetail, UpdateUserIcon} from "../../api"
+  import {EditUserSignature, GetUserDetail} from "../../api"
   import HotUser from "./HotUser"
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -170,7 +170,10 @@
       refreshUserDetail: async function () {
         this.isLoading = true;
         try {
-          const result = await GetUserDetail(this.getUserName());
+          let params = {
+            'userName':this.getUserName()
+          };
+          const result = await GetUserDetail(params);
           if (result.status === "SUCCESS") {
             this.user = result.user;
             if (!checkEmpty(this.user.user_signature)) {
