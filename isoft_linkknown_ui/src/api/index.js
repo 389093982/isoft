@@ -26,10 +26,7 @@ export const QueryCustomTagBlog = (params) => ajax(BASE_URL + '/iwork/httpservic
 
 export const QueryBookListByIds = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryBookListByIds', params, 'POST');
 export const BookEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BookEdit', params, 'POST');
-export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateBookIcon', {
-  book_id,
-  book_img
-}, 'POST');
+export const UpdateBookIcon = (book_id, book_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateBookIcon', {book_id, book_img}, 'POST');
 export const DeleteBookById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeleteBookById', {id}, 'POST');
 export const QueryCustomTagBook = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCustomTagBook', params, 'POST');
 export const QueryPageBookList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageBookList', params, 'POST');
@@ -57,10 +54,7 @@ export const GetOrderDetail = (orderCode) => ajax(BASE_URL + '/iwork/httpservice
 export const EditUserSignature = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditUserSignature', params, 'POST');
 export const GetUserDetail = (userName) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetUserDetail', {userName}, 'POST');
 export const UpdateUserDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserDetail', params, 'POST');
-export const UpdateUserIcon = (userName, small_icon) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon', {
-  userName,
-  small_icon
-}, 'POST');
+export const UpdateUserIcon = (userName, small_icon) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon', {userName, small_icon}, 'POST');
 
 // 根据 blog_id 查询 blog 详细信息
 export const ShowBlogArticleDetail = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail', {id}, 'GET');
@@ -72,10 +66,7 @@ export const EditCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_
 export const GetCourseListByUserName = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", params, 'GET');
 
 // 完结视频更新
-export const UpdateCourseIcon = (course_id, small_image) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", {
-  course_id,
-  small_image
-}, 'GET');
+export const UpdateCourseIcon = (course_id, small_image) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", {course_id, small_image}, 'GET');
 export const UploadVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UploadVideo", params, 'GET');
 export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/DeleteVideo", params, 'GET');
 export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ChangeVideoOrder", params, 'GET');
@@ -91,34 +82,13 @@ export const queryFavoriteCount = (params) => ajax(BASE_URL + "/iwork/httpservic
 export const GetUserFavoriteList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList", params, 'GET');
 
 // 添加评论
-export const AddComment = (org_parent_id,parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment', {
-    org_parent_id,
-    parent_id,
-    content,
-    theme_pk,
-    theme_type,
-    comment_type,
-    refer_user_name
-  }, 'GET');
+export const AddComment = (org_parent_id,parent_id, content, theme_pk, theme_type, comment_type, refer_user_name) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment', {org_parent_id, parent_id, content, theme_pk, theme_type, comment_type, refer_user_name}, 'GET');
 
 // 获取一级评论列表
-export const FilterCommentFirstLevel = (theme_pk, theme_type, comment_type, offset, current_page) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', {
-    theme_pk,
-    theme_type,
-    comment_type,
-    offset,
-    current_page
-  }, 'GET');
+export const FilterCommentFirstLevel = (theme_pk, theme_type, comment_type, offset, current_page) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', {theme_pk, theme_type, comment_type, offset, current_page}, 'GET');
 
 // 获取二级子评论列表
-export const FilterCommentSecondLevel = (theme_pk, theme_type,org_parent_id) =>
-  ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel', {
-    theme_pk,
-    theme_type,
-    org_parent_id,
-  }, 'GET');
+export const FilterCommentSecondLevel = (theme_pk, theme_type,org_parent_id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel', {theme_pk, theme_type, org_parent_id,}, 'GET');
 
 //删除评论
 export const deleteComment = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/deleteComment", params, 'POST');
@@ -126,10 +96,7 @@ export const deleteComment = (params) => ajax(BASE_URL + "/iwork/httpservice/iso
 // 获取所有课程类型
 export const GetAllCourseType = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetAllCourseType2", {}, 'GET');
 
-export const ShowCourseHistory = (offset, current_page) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory2", {
-  offset,
-  current_page
-}, 'GET');
+export const ShowCourseHistory = (offset, current_page) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory2", {offset, current_page}, 'GET');
 
 // 获取热门推荐的课程
 export const GetHotCourseRecommend = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend2", {}, 'GET');
@@ -150,40 +117,26 @@ export const RefreshToken = (params) => ajax(BASE_URL + "/iwork/httpservice/isof
 
 export const CreateVerifyCode = (username) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/createVerifyCode", {username}, 'POST');
 
-export const ModifyPwd = (username, passwd, verifyCode) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/modifyPwd", {
-  username,
-  passwd,
-  verifyCode
-}, 'POST');
+export const ModifyPwd = (username, passwd, verifyCode) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/modifyPwd", {username, passwd, verifyCode}, 'POST');
 
 export const GetHotUsers = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotUsers", {}, 'POST');
 export const GetUserInfoByNames = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetUserInfoByNames", params, 'POST');
 
 // 系统注册分页查询
-export const AppRegisterList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList2", {
-  offset,
-  current_page,
-  search
-}, 'POST');
+export const AppRegisterList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList2", {offset, current_page, search}, 'POST');
 
 // 添加系统注册
 export const AddAppRegister = (app_address) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddAppRegister2", {app_address}, 'POST');
 
 // 登录记录分页查询
-export const LoginRecordList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/LoginRecordList2", {
-  offset,
-  current_page,
-  search
-}, 'POST');
+export const LoginRecordList = (offset, current_page, search) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/LoginRecordList2", {offset, current_page, search}, 'POST');
 
-// 意见或建议
+// 插入意见或吐槽
 export const InsertAdvise = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/InsertAdvise", params, 'POST');
-
-export const queryPageAdvise = (offset, current_page) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageAdvise', {
-  offset,
-  current_page
-}, 'GET');
-
+//查询意见或吐槽
+export const queryPageAdvise = (offset, current_page) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageAdvise', {offset, current_page}, 'GET');
+// 查询所有用户
+export const QueryAllUsers = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryAllUsers", params, 'POST');
 // 广告模块
 export const GetPersonalAdvertisement = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetPersonalAdvertisement', {}, 'GET');
 export const QueryAdvertisementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryAdvertisementById', {id}, 'GET');
@@ -191,13 +144,7 @@ export const GetRandomAdvertisement = (limit) => ajax(BASE_URL + '/iwork/httpser
 export const RecordAdvstAccessLog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/RecordAdvstAccessLog', params, 'GET');
 export const GetAdvstAccessLog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAdvstAccessLog', params, 'GET');
 
-export const EditAdvertisement = (id, advertisement_label, linked_type, linked_refer, linked_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditAdvertisement', {
-  id,
-  advertisement_label,
-  linked_type,
-  linked_refer,
-  linked_img
-}, 'GET');
+export const EditAdvertisement = (id, advertisement_label, linked_type, linked_refer, linked_img) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditAdvertisement', {id, advertisement_label, linked_type, linked_refer, linked_img}, 'GET');
 
 export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditCorporateDetail', params, 'POST');
 
@@ -216,12 +163,7 @@ export const FilterPageJobList = (params) => ajax(BASE_URL + '/iwork/httpservice
 export const GetJobApplyList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetJobApplyList', params, "POST");
 
 //会员中心-初始下单
-export const pay = (ProductId, ProductDesc, TransAmount, TransCurrCode) => ajax(WECHAT_PAY + '/Pay', {
-  ProductId,
-  ProductDesc,
-  TransAmount,
-  TransCurrCode
-}, 'POST');
+export const pay = (ProductId, ProductDesc, TransAmount, TransCurrCode) => ajax(WECHAT_PAY + '/Pay', {ProductId, ProductDesc, TransAmount, TransCurrCode}, 'POST');
 
 export const QueryPageMessageList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList', params, "POST");
 
@@ -253,10 +195,7 @@ export const QueryRechargeRight = (params) => ajax(BASE_URL + '/iwork/httpservic
 export const FilterElements = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageElement', params, 'POST');
 export const EditElement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditElement', params, 'POST');
 
-export const UpdateElementStatus = (id, status) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateElementStatus', {
-  id,
-  status
-}, 'POST');
+export const UpdateElementStatus = (id, status) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateElementStatus', {id, status}, 'POST');
 export const EditPlacement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditPlacement', params, 'POST');
 
 export const QueryPlacementById = (id) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPlacementByIdOrName', {id}, 'POST');
