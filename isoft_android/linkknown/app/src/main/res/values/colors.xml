@@ -7,4 +7,8 @@
     <color name="colorGrey">#657180</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="theme_red">#FF0000</color>
+
+    <!-- 按钮样式 -->
+    <color name="button_normal">#858585</color>
+    <color name="button_press">#387ef5</color>
 </resources>
