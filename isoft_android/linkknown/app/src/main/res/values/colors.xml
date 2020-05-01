@@ -7,4 +7,20 @@
     <color name="colorGrey">#657180</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="theme_red">#FF0000</color>
+
+    <!-- 按钮样式 -->
+    <color name="button_normal">#858585</color>
+    <color name="button_press">#387ef5</color>
+
+    <!--基础颜色表-->
+    <color name="light_blue">#03a9f4</color>
+    <color name="base">#AAAAAA</color>
+    <color name="iron">#CCCCCC</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="blue">#419DE4</color>
+    <color name="red">#ff0000</color>
+    <color name="amber">#ffc107</color>
+    <color name="gray">#808080</color>
+    <color name="light_gray">#E0E0E0</color>
 </resources>
