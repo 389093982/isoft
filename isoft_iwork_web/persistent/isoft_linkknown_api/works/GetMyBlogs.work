@@ -2,8 +2,8 @@
 	<work>
 		<Id>252</Id>
 		<AppId>5</AppId>
-		<WorkName>GetMyBlogs2</WorkName>
-		<WorkDesc>GetMyBlogs2</WorkDesc>
+		<WorkName>GetMyBlogs</WorkName>
+		<WorkDesc>GetMyBlogs</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Blog</ModuleName>
 		<CacheResult>false</CacheResult>

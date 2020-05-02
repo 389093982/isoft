@@ -2,8 +2,8 @@
 	<work>
 		<Id>230</Id>
 		<AppId>5</AppId>
-		<WorkName>Regist2</WorkName>
-		<WorkDesc>Regist2</WorkDesc>
+		<WorkName>Regist</WorkName>
+		<WorkDesc>Regist</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>User</ModuleName>
 		<CacheResult>false</CacheResult>

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="display: flex">
 
-    <div style="float: left;width: 70%">
+    <div style="width: 65%;background-color: white">
       <div style="width: 90%;margin:0 0 0 30px;background-color: white ">
         <div style="margin: 0 0 0 50px ">
           <div class="isoft_bg_white isoft_pd20 clear" v-if="ask_expert">
@@ -61,15 +61,12 @@
       </div>
     </div>
 
-    <div style="float: left;width: 30%">
-      <div style="position: relative;left: -50px;">
-        <WaitYourAnswer style="padding-bottom: 5px"></WaitYourAnswer>
+    <div style="width: 30.5%;margin: 0 0 0 5px ;">
+      <div>
+        <WaitYourAnswer style="margin-bottom: 5px"></WaitYourAnswer>
         <ExpertWall></ExpertWall>
       </div>
     </div>
-
-    <div style="clear: both"></div>
-
   </div>
 </template>
 

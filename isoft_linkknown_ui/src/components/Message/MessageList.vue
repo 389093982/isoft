@@ -2,32 +2,28 @@
   <div>
     <div v-if="hasLogin">
       <!-- 显示详细消息 -->
-      <div v-if="showDetail" class="isoft_bg_white isoft_pd20" style="min-height: 300px;">
-        <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
-
-        <div v-for="(message, index) in messages" style="margin: 5px 0;">
-          <span class="isoft_color_green1">【系统消息】</span>
-          <Time class="isoft_color_grey3" :time="message.last_updated_time" :interval="1"/> &nbsp;
-          {{message.message_text}}
+      <div v-if="showDetail" class="isoft_bg_white isoft_pd20;" style="min-height: 550px">
+        <div style="padding: 20px 0 0 0 ;text-align: center">
+          <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
         </div>
-
-        <Page :total="total" :page-size="offset" show-total show-sizer
-              :styles="{'text-align': 'center','margin-top': '10px'}"
-              @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+        <!--遍历消息-->
+        <div style="min-height: 420px;padding: 20px 0 0 100px">
+          <div v-for="(message, index) in messages" style="padding: 13px 0 0 0 ;">
+            <span class="isoft_color_green1">【系统消息】</span>
+            <Time class="isoft_color_grey3" :time="message.last_updated_time" :interval="1"/> &nbsp;{{message.message_text}}
+          </div>
+        </div>
+        <!--分页-->
+        <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
       </div>
-
       <!-- 显示简略消息 -->
       <div v-else style="font-size: 14px;line-height: 16px;color: black;padding: 0 10px 15px 10px;">
-        <div v-if="isVip" style="height: 50px;line-height: 50px;border-bottom: 1px solid #D3D6D9;">
-          <h2 style="font-weight: bold;font-size: 14px;color: #1C1F21;">
-            尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a>
-          </h2>
+        <div style="padding: 20px 0 0 0 ;text-align: center">
+          <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
         </div>
-
         <div class="isoft_font12" style="margin: 10px 0;">
           <p v-for="(message, index) in messages" style="margin: 8px 0px;">{{message.message_text}}</p>
         </div>
-
         <div style="text-align: right;" @click="$router.push({path: '/message/messageList'});">
           <Button size="small" type="success">查看更多</Button>
         </div>
@@ -72,7 +68,7 @@
     },
     methods: {
       refreshMessageList: async function () {
-        let offset = this.showDetail ? this.offset : 5;
+        let offset = this.showDetail ? this.offset : 4;
         const result = await QueryPageMessageList({current_page: this.current_page, offset: offset});
         if (result.status === "SUCCESS") {
           this.messages = result.messages;

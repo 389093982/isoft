@@ -2,8 +2,8 @@
 	<work>
 		<Id>323</Id>
 		<AppId>5</AppId>
-		<WorkName>PostLogin2</WorkName>
-		<WorkDesc>PostLogin2</WorkDesc>
+		<WorkName>PostLogin</WorkName>
+		<WorkDesc>PostLogin</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>SSO</ModuleName>
 		<CacheResult>false</CacheResult>
