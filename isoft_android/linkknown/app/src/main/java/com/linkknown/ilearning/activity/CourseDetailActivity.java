@@ -9,10 +9,11 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CVedioAdapter;
+import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,10 +28,11 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private Context mContext;
     private Intent intent;
-    private CVedioAdapter cVedioAdapter;
-    private List<CourseDetailResponse.CVideos> cVideos  = new LinkedList<>();;
+    private List<CourseDetailResponse.CVideos> cVideos = new ArrayList<>();
+
     @BindView(R.id.cVideoListView)
     public ListView cVideoListView;
+    private CommonAdapter<CourseDetailResponse.CVideos> cVideosCommonAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +43,19 @@ public class CourseDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mContext = this;
+
         intent = getIntent();
 
         // 发送异步请求获取数据
         initData();
 
-        cVedioAdapter = new CVedioAdapter(cVideos, mContext);
-        cVideoListView.setAdapter(cVedioAdapter);
+        cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideos>((ArrayList<CourseDetailResponse.CVideos>)cVideos,R.layout.item_cvideo) {
+            @Override
+            public void bindView(ViewHolder holder, CourseDetailResponse.CVideos cVideo) {
+                holder.setText(R.id.cVideoName, cVideo.getVideo_name());
+            }
+        };
+        cVideoListView.setAdapter(cVideosCommonAdapter);
     }
 
     private void initData () {
@@ -77,7 +85,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        cVedioAdapter.notifyDataSetChanged();
+                        cVideosCommonAdapter.notifyDataSetChanged();
                     }
                 });
     }
