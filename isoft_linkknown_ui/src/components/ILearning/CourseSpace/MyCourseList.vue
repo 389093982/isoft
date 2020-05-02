@@ -32,6 +32,8 @@
             <UploadVideo :course="myCourse" @uploadComplete="uploadVideoComplete"/>
           </p>
         </Col>
+        <!--彩色分底线-->
+        <SepLine></SepLine>
       </Row>
       <div style="text-align: center;margin-top: 10px">
         <Page :total="totalCount" :page-size="offset" :current="current_page" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
@@ -56,10 +58,11 @@
   import {GetLoginUserName, handleSpecial} from "../../../tools"
   import CourseMeta from "../Course/CourseMeta";
   import IFileUpload from "../../Common/file/IFileUpload";
+  import SepLine from "../../Common/SepLine";
 
   export default {
     name: "MyCourseList",
-    components: {IFileUpload, CourseMeta, UploadVideo},
+    components: {SepLine, IFileUpload, CourseMeta, UploadVideo},
     data() {
       return {
         isLoading: true,

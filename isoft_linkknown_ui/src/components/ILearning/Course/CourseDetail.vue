@@ -61,7 +61,7 @@
           <SepLine style="margin: 25px 0 30px 0;"/>
 
           <!-- 视频链接 -->
-          <Row style="margin: 10px 0;min-height: 200px;">
+          <Row style="min-height: 200px;">
             <div v-for="(cVideo, index) in filter_cVideos" class="video_item" style="margin:0 10px 0 10px ;padding: 5px;"
                  :style="{backgroundColor:index===clickIndex?'rgba(172,168,167,0.2)':''}" @click="clickVideoName(index)">
               <span style="color: #9b9896">

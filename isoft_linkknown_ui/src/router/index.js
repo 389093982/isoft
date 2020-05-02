@@ -18,7 +18,8 @@ const BookList = () => import("@/components/IBook/BookList");
 const BookCatalogs = () => import("@/components/IBook/BookCatalogs");
 const BookArticleDetail = () => import("@/components/IBook/BookArticleDetail");
 const UserDetail = () => import("@/components/User/UserDetail");
-const UserInfo = () => import("@/components/User/UserInfo");
+const UserInfoSet = () => import("@/components/User/Set/UserInfoSet");
+const UserInfo = () => import("@/components/User/Set/UserInfo");
 const UserGuide = () => import("@/components/User/UserGuide");
 const ILearningIndex = () => import("@/components/ILearning/Index");
 const DomainName = () => import("@/components/ILearning/DomainName");
@@ -158,9 +159,13 @@ const IUserReouter = [{
   path: '/user', component: ILayout,
     children: [
       {path: 'userDetail', component: UserDetail},
-      {path: 'userInfo', component: UserInfo},
       {path: 'userGuide', component: UserGuide},
       {path: 'mine/userDetail', component: UserDetail},
+      {path: 'set', component: UserInfoSet,
+        redirect: '/user/set/userInfo',
+        children: [
+          {path: 'userInfo', component: UserInfo,},
+        ]}
     ]
 }];
 
