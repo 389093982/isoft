@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.mViewPage)
     public MainActivityViewPager mViewPage;
+    // 底部按钮组
     @BindView(R.id.radioGroup)
     public RadioGroup radioGroup;
     @BindView(R.id.imageButton0)
@@ -103,16 +104,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //禁用滑动
         mViewPage.setOnTouchListener((v, event) -> true);
 
-        this.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+        radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray2));
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.imageButton0:
+                    // 获取颜色使用 ContextCompat.getColor 方法
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray2));
                     mViewPage.setCurrentItem(0);
-                    //底部ImageView点击之后变色
                     break;
                 case R.id.imageButton1:
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                     mViewPage.setCurrentItem(1);
                     break;
                 case R.id.imageButton2:
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                     mViewPage.setCurrentItem(2);
                     break;
                 default:
