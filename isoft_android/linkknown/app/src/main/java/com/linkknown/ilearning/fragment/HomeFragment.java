@@ -73,7 +73,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ToastUtil.showText(mContext, "点击了按钮~");
         switch (v.getId()) {
             case R.id.btnToLogin:
                 UIUtils.gotoActivity(mContext, LoginActivity.class);

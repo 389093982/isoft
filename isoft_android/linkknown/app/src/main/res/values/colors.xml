@@ -26,8 +26,8 @@
     <color name="light_gray2">#34E0E0E0</color>
 
     <!-- "我的" 界面描边颜色 -->
-    <color name="border_clo">#ccc</color>
-    <color name="text_clo">#333</color>
+    <color name="border_color">#ccc</color>
+    <color name="text_color">#333</color>
     <!--关于我的界面-->
     <color name="background_dark">#ECECEC</color>
 </resources>

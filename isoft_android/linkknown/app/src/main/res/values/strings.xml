@@ -24,6 +24,7 @@
 
     <string name="home_search">搜索....</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">关于</string>
+    <string name="currentVersion">当前版本：v1.0.0</string>
+    <string name="copyright">Copyright © 链知科技网络</string>
 </resources>
