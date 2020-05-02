@@ -237,13 +237,13 @@
 
     position:relative;
     animation-name:messageTip;
-    animation-duration:1.5s;
+    animation-duration:1s;
     animation-iteration-count:infinite;
     animation-direction:alternate;
     animation-play-state:running;
     /* Safari and Chrome: */
     -webkit-animation-name:messageTip;
-    -webkit-animation-duration:1.5s;
+    -webkit-animation-duration:1s;
     -webkit-animation-iteration-count:infinite;
     -webkit-animation-direction:alternate;
     -webkit-animation-play-state:running;
