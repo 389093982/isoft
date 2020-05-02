@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CourseDetailAdapter extends BaseAdapter {
+public class CVedioAdapter extends BaseAdapter {
 
     private List<CourseDetailResponse.CVideos> cVideos;
     private Context mContext;
@@ -41,19 +41,33 @@ public class CourseDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // 使用 ViewHolder 来解决每次 onMeasure 导致的多次 getView 调用,发生重用
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            // inflate 加载布局的方法
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_cvideo,parent,false);
+            // 重新 bind
+            ButterKnife.bind(this,convertView);
+
+            viewHolder = new ViewHolder();
+            viewHolder.cVideoName = cVideoName;
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
         // 获取第 position 个模型对象
         CourseDetailResponse.CVideos cVideo = this.cVideos.get(position);
-        // inflate 加载布局的方法
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.item_cvideo,parent,false);
-        // 重新 bind
-        ButterKnife.bind(this,convertView);
-
-        cVideoName.setText(cVideo.getVideo_name());
+        viewHolder.cVideoName.setText(cVideo.getVideo_name());
         return convertView;
     }
 
-    public CourseDetailAdapter(List<CourseDetailResponse.CVideos> cVideos, Context mContext) {
+    public CVedioAdapter(List<CourseDetailResponse.CVideos> cVideos, Context mContext) {
         this.cVideos = cVideos;
         this.mContext = mContext;
+    }
+
+    private class ViewHolder {
+        public TextView cVideoName;
     }
 }

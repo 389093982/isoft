@@ -9,12 +9,9 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CourseAdapter;
-import com.linkknown.ilearning.adapter.CourseDetailAdapter;
+import com.linkknown.ilearning.adapter.CVedioAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
-import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +27,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private Context mContext;
     private Intent intent;
-    private CourseDetailAdapter courseDetailAdapter;
+    private CVedioAdapter cVedioAdapter;
     private List<CourseDetailResponse.CVideos> cVideos  = new LinkedList<>();;
     @BindView(R.id.cVideoListView)
     public ListView cVideoListView;
@@ -49,8 +46,8 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 发送异步请求获取数据
         initData();
 
-        courseDetailAdapter = new CourseDetailAdapter(cVideos, mContext);
-        cVideoListView.setAdapter(courseDetailAdapter);
+        cVedioAdapter = new CVedioAdapter(cVideos, mContext);
+        cVideoListView.setAdapter(cVedioAdapter);
     }
 
     private void initData () {
@@ -80,7 +77,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        courseDetailAdapter.notifyDataSetChanged();
+                        cVedioAdapter.notifyDataSetChanged();
                     }
                 });
     }
