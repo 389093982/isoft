@@ -16,7 +16,7 @@
           <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
         </div>
         <div>
-          加入时间：<Time :time="user.created_time" :interval="1"/>
+          入驻时间：<Time :time="user.created_time" :interval="1"/>
         </div>
         <div>
           <i>个性签名:
@@ -26,11 +26,14 @@
           </i>
          </div>
       </div>
-      <!--设置-->
-      <div v-if="isLoginUserName(user.user_name)" style="position: absolute;top: 25px;left: 600px;color: white">
-        <div @click="$router.push({ path: '/user/userInfo'})" style="padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add-outline" style="font-size: 18px"/>个人信息</div>
-        <div @click="$router.push({ path: '/sso/forget',query:{pattern:2}})" style="padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog-outline" style="font-size: 18px"/>修改密码</div>
-        <div @click="$router.push({ path: '/message/messageList'})" style="padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-chatbubbles-outline" style="font-size: 18px"/>消息</div>
+      <!--设置、消息-->
+      <div v-if="isLoginUserName(user.user_name)" style="position: absolute;top: 20px;left: 600px;color: white;display: flex">
+        <div @click="$router.push({ path: '/user/set'})" style="padding-left: 15px;cursor: pointer" class="hvr-grow">
+          <Icon type="ios-cog-outline" style="font-size: 25px"/>
+        </div>
+        <div @click="$router.push({ path: '/message/messageList'})" style="padding-left: 15px;cursor: pointer">
+          <Icon class="messageTipClass" type="ios-chatbubbles-outline"/>
+        </div>
       </div>
     </div>
 
@@ -41,25 +44,25 @@
           <div v-if="isLoginUserName(user.user_name)" style="background-color: white;height: 80px">
             <Row>
               <Col span="4" offset="4">
-                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-create-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">发布博客</div>
                 </div>
               </Col>
               <Col span="4">
-                <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-videocam-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的课程</div>
                 </div>
               </Col>
               <Col span="4">
-                <div @click="$router.push({path:'/ibook/bookList'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                <div @click="$router.push({path:'/ibook/bookList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-book-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">书单列表</div>
                 </div>
               </Col>
               <Col span="4">
-                <div @click="$router.push({ path: '/payment/orderList'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                <div @click="$router.push({ path: '/payment/orderList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-list-box-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的订单</div>
                 </div>
@@ -136,7 +139,7 @@
     methods: {
       toUserInfo:function(user_name){
         if (this.isLoginUserName(user_name)) {
-          this.$router.push({ path: '/user/userInfo'})
+          this.$router.push({ path: '/user/set/userInfo'})
         }
       },
       handleEditSignFlag: async function () {
@@ -227,39 +230,35 @@
     color: #8a0000;
   }
 
-  .user_icon .user_icon_upload {
-    display: none;
-  }
-
-  .user_icon:hover .user_icon_upload {
-    display: block;
-  }
-
-  .user_icon_tip {
-    animation: user_icon_tip_move 5s infinite;
-  }
-
   li {list-style-type:none;}
 
-  @keyframes user_icon_tip_move {
-    0% {
-      position: absolute;
-      top: 2px;
-      right: -135px;
-      opacity: 0;
-    }
-    50% {
-      position: absolute;
-      top: 2px;
-      right: -175px;
-      color: #c50000;
-      opacity: 1;
-    }
-    100% {
-      position: absolute;
-      top: 2px;
-      right: -135px;
-      opacity: 0;
-    }
+  .messageTipClass{
+    font-size: 22px;
+
+    position:relative;
+    animation-name:messageTip;
+    animation-duration:1.5s;
+    animation-iteration-count:infinite;
+    animation-direction:alternate;
+    animation-play-state:running;
+    /* Safari and Chrome: */
+    -webkit-animation-name:messageTip;
+    -webkit-animation-duration:1.5s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-direction:alternate;
+    -webkit-animation-play-state:running;
   }
+
+  @keyframes messageTip {
+    0%   {font-size: 22px;}
+    50%  {font-size: 28px;}
+    100% {font-size: 22px;}
+  }
+
+  @-webkit-keyframes messageTip /* Safari and Chrome */{
+    0%   {font-size: 22px;}
+    50%  {font-size: 28px;}
+    100% {font-size: 22px;}
+  }
+
 </style>

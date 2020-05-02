@@ -8,19 +8,19 @@
           <span @click="removeHat()">摘下帽子</span>
         </div><hr><br><br>
         <Tooltip max-width="200" content="我要再提醒你一次，金箍戴上之后你再也不是个凡人，人世间的情欲不能再沾半点。如果动心这个金箍就会在你头上越收越紧，苦不堪言！只有好好学习，来链知网多蹭热量才是王道哦^_^">
-          <img @click="chooseHat('hat01')" class="hvr-grow" style="cursor: pointer" src="../../../static/images/vipHat/hat01.png" width="80" height="20" @error="defImg()"/>
+          <img @click="chooseHat('hat01')" class="hvr-grow" style="cursor: pointer" src="../../../../static/images/vipHat/hat01.png" width="80" height="20" @error="defImg()"/>
         </Tooltip>
       </div>
      </Drawer>
 
     <!--帽子&头像-->
-    <div style="float:left;width: 33%;">
-      <div style="margin: 150px 0 0 248px ">
+    <div style="float:left;width: 25%;">
+      <div style="margin: 150px 0 0 50px ">
         <!--更换帽子-->
-        <div v-if="formValidate.vip_level>0" style="position: relative;top: -50px;">
+        <div v-if="formValidate.vip_level>0" style="position: relative;top: -20px;">
           <Button @click="hatDrawer=true"><i style="color: #E8B66E">vip</i> · 更换帽子</Button>
         </div>
-        <div v-else style="position: relative;top: -50px;visibility:hidden">
+        <div v-else style="position: relative;top: -20px;visibility:hidden">
           <Button>隐藏按钮</Button>
         </div>
         <!--帽子和头像-->
@@ -28,14 +28,14 @@
           <HatAndFacePicture :src="formValidate.small_icon" :vip_level="formValidate.vip_level" :hat_in_use="formValidate.hat_in_use"></HatAndFacePicture>
         </div>
         <!--修改头像-->
-        <div style="position: absolute;top: 380px;">
+        <div style="position: absolute;top: 300px;">
           <UploadHeadSculpture ref="fileUpload" @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="修改头像"/>
         </div>
       </div>
     </div>
 
     <!--用户详细信息-->
-    <div style="float:left;width: 40%;height: auto;margin-top: 20px;">
+    <div style="float:left;width: 40%;height: auto;">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="昵称" prop="nick_name">
           <Input v-model="formValidate.nick_name" placeholder="请输入您的昵称"></Input>
@@ -82,11 +82,11 @@
   </div>
 </template>
 <script>
-  import IAreaChooser from "../Common/IAreaChooser";
-  import {checkEmpty, copyObj, GetLoginUserName} from "../../tools"
-  import {GetUserDetail, UpdateUserDetail,UpdateUserIcon,fileUploadUrl} from "../../api"
-  import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
-  import UploadHeadSculpture from "../Common/file/UploadHeadSculpture";
+  import IAreaChooser from "../../Common/IAreaChooser";
+  import {checkEmpty, copyObj, GetLoginUserName} from "../../../tools/index"
+  import {GetUserDetail, UpdateUserDetail,UpdateUserIcon,fileUploadUrl} from "../../../api/index"
+  import HatAndFacePicture from "../../Common/HatAndFacePicture/HatAndFacePicture";
+  import UploadHeadSculpture from "../../Common/file/UploadHeadSculpture";
 
   export default {
     name: "UserInfo",
@@ -181,7 +181,31 @@
         if (result.status === "SUCCESS") {
           this.formValidate = result.user;
           this.formValidate.birthday = result.user.birthday==='0000-00-00'?'':result.user.birthday;
+          this.formValidate.vip_expired_time = this.formatVipExpiredTime('YYYY-mm-dd HH:MM:SS',this.formValidate.vip_expired_time);
         }
+      },
+      formatVipExpiredTime:function(fmt, date) {
+        let ret="";
+        date=new Date(date);
+        const opt = {
+          'Y+': date.getFullYear().toString(), // 年
+          'm+': (date.getMonth() + 1).toString(), // 月
+          'd+': date.getDate().toString(), // 日
+          'H+': date.getHours().toString(), // 时
+          'M+': date.getMinutes().toString(), // 分
+          'S+': date.getSeconds().toString() // 秒
+          // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+          ret = new RegExp('(' + k + ')').exec(fmt);
+          if (ret) {
+            fmt = fmt.replace(
+              ret[1],
+              ret[1].length === 1 ? opt[k] : opt[k].padStart(ret[1].length, '0')
+            )
+          }
+        }
+        return fmt
       },
       handleSubmit: function(name){
         this.$refs[name].validate(async (valid) => {
