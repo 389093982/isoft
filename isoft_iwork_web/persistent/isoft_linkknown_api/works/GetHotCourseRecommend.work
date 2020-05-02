@@ -2,8 +2,8 @@
 	<work>
 		<Id>232</Id>
 		<AppId>5</AppId>
-		<WorkName>GetHotCourseRecommend2</WorkName>
-		<WorkDesc>GetHotCourseRecommend2</WorkDesc>
+		<WorkName>GetHotCourseRecommend</WorkName>
+		<WorkDesc>GetHotCourseRecommend</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Course</ModuleName>
 		<CacheResult>false</CacheResult>

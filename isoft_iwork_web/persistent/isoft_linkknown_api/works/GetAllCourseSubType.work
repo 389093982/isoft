@@ -2,8 +2,8 @@
 	<work>
 		<Id>233</Id>
 		<AppId>5</AppId>
-		<WorkName>GetAllCourseSubType2</WorkName>
-		<WorkDesc>GetAllCourseSubType2</WorkDesc>
+		<WorkName>GetAllCourseSubType</WorkName>
+		<WorkDesc>GetAllCourseSubType</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Course</ModuleName>
 		<CacheResult>false</CacheResult>
