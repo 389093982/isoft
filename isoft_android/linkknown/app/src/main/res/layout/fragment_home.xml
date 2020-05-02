@@ -93,36 +93,152 @@
                         android:background="@color/TableLinecolor"></View>
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:id="@+id/hotlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/banner_layout"
+                    android:layout_alignParentStart="true">
+
+                    <ImageView
+                        android:layout_width="50px"
+                        android:layout_height="50px"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/hot_title"
+                        android:src="@drawable/home53" />
+
+                    <TextView
+                        android:id="@+id/hot_title"
+                        android:layout_width="200px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:paddingLeft="5dp"
+                        android:text="热销产品"
+                        android:textColor="#FF4040"
+                        android:textSize="45px" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/hotproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hotlayout"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/TableLinecolor"></View>
+
+                    <GridView
+                        android:id="@+id/hot_gridview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/TableLinecolor"
+                        android:horizontalSpacing="0.5dp"
+                        android:numColumns="2"
+                        android:verticalSpacing="0.5dp"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/hot_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/TableLinecolor"></View>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/recommendlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/hotproduct"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50px"
+                        android:layout_height="50px"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/recommend_title"
+                        android:src="@drawable/recommend" />
+
+                    <TextView
+                        android:id="@+id/recommend_title"
+                        android:layout_width="200px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:paddingLeft="5dp"
+                        android:text="热门推荐"
+                        android:textColor="#FFC125"
+                        android:textSize="45px" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/recommendproduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recommendlayout"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/TableLinecolor"></View>
+
+                    <GridView
+                        android:id="@+id/recommend_gridview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/TableLinecolor"
+                        android:horizontalSpacing="1dp"
+                        android:numColumns="2"
+                        android:verticalSpacing="15dp"
+                        android:visibility="gone" />
+
+                    <ProgressBar
+                        android:id="@+id/recommend_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/TableLinecolor"></View>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/recommendproduct"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btnToLogin"
+                        android:layout_width="100dp"
+                        android:layout_height="64dp"
+                        android:layout_centerInParent="true"
+                        android:text="前去登录"/>
+
+                    <Button
+                        android:id="@+id/btnToCourseList"
+                        android:layout_width="100dp"
+                        android:layout_height="64dp"
+                        android:layout_toLeftOf="@id/btnToLogin"
+                        android:layout_centerVertical="true"
+                        android:text="查看课程"/>
+                </RelativeLayout>
+
             </RelativeLayout>
 
         </ScrollView>
-
-        <RelativeLayout
-            android:id="@+id/RelativeLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <Button
-                android:id="@+id/btnToLogin"
-                android:layout_width="100dp"
-                android:layout_height="64dp"
-                android:layout_centerInParent="true"
-                android:text="前去登录"/>
-
-            <Button
-                android:id="@+id/btnToCourseList"
-                android:layout_width="100dp"
-                android:layout_height="64dp"
-                android:layout_toLeftOf="@id/btnToLogin"
-                android:layout_centerVertical="true"
-                android:text="查看课程"/>
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>
