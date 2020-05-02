@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -94,7 +93,7 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/hotlayout"
+                    android:id="@+id/hotCourseLayout"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@+id/banner_layout"
@@ -113,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:paddingLeft="5dp"
-                        android:text="热销产品"
+                        android:text="@string/hotCourse"
                         android:textColor="#FF4040"
                         android:textSize="45px" />
                 </RelativeLayout>
@@ -122,13 +121,11 @@
                     android:id="@+id/hotproduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/hotlayout"
+                    android:layout_below="@id/hotCourseLayout"
                     android:orientation="vertical">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"
-                        android:background="@color/TableLinecolor"></View>
+                    <!-- 分割线 -->
+                    <include layout="@layout/item_line"/>
 
                     <GridView
                         android:id="@+id/hot_gridview"
@@ -146,14 +143,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"
-                        android:background="@color/TableLinecolor"></View>
+                    <!-- 分割线 -->
+                    <include layout="@layout/item_line"/>
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/recommendlayout"
+                    android:id="@+id/recommendLayout"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@+id/hotproduct"
@@ -174,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:paddingLeft="5dp"
-                        android:text="热门推荐"
+                        android:text="@string/recommendCourse"
                         android:textColor="#FFC125"
                         android:textSize="45px" />
                 </RelativeLayout>
@@ -183,13 +178,11 @@
                     android:id="@+id/recommendproduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recommendlayout"
+                    android:layout_below="@+id/recommendLayout"
                     android:orientation="vertical">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/TableLinecolor"></View>
+                    <!-- 分割线 -->
+                    <include layout="@layout/item_line"/>
 
                     <GridView
                         android:id="@+id/recommend_gridview"
@@ -207,10 +200,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/TableLinecolor"></View>
+                    <!-- 分割线 -->
+                    <include layout="@layout/item_line"/>
                 </LinearLayout>
 
                 <RelativeLayout

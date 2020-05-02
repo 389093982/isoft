@@ -28,6 +28,9 @@
     <string name="currentVersion">当前版本：v1.0.0</string>
     <string name="copyright">Copyright © 链知科技网络</string>
 
+    <string name="hotCourse">热门课程</string>
+    <string name="recommendCourse">推荐课程</string>
+
     <!-- 登录相关 -->
     <string name="need_login">未登录，请先登录！</string>
 </resources>
