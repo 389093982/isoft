@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".activity.CourseListActivity">
 
+    <!--
+        android:divider="#00000000"
+        android:dividerHeight="10dp"
+        分隔线透明，高度为 10dp
+    -->
     <ListView
         android:id="@+id/courseListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="#00000000"
+        android:dividerHeight="10dp"
+        android:padding="@dimen/default_padding"
+        android:background="@color/light_gray2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
