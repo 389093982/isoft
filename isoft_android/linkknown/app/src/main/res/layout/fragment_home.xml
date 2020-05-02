@@ -78,18 +78,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/product"
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="15dp"
                     android:orientation="vertical">
 
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp" />
+                        android:layout_height="150dp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/TableLinecolor"></View>
+                    <!-- 分割线 -->
+                    <include layout="@layout/item_line"/>
                 </LinearLayout>
 
                 <RelativeLayout

@@ -21,6 +21,7 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.adapter.HomePageGridViewAdapter;
 import com.linkknown.ilearning.adapter.HomePageViewPagerAdapter;
 import com.linkknown.ilearning.model.Catalog;
@@ -48,9 +49,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
 
+    // 轮播图部分
     @BindView(R.id.banner)
     public Banner banner;
-    private ArrayList<String> imageList = new ArrayList<>();
+    // 存放轮播图所有图片
+    private ArrayList<String> bannerImageList = new ArrayList<>();
 
     // GridView 作为一个 View 对象添加到 ViewPager 集合中
     private List<View> viewPagerList;
@@ -96,6 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         // 初始化热门课程分类
         initHotCategorys();
+
         //加载轮播图
         initBanner();
 
@@ -107,23 +111,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      * 初始化广告页
      */
     private void initBanner() {
-        //设置banner样式
+        //设置 banner 样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
-        banner.setImageLoader(new ImageLoader (){
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                Glide.with(context).load(path).into(imageView);
-            }
-        });
+        banner.setImageLoader(new GlideImageLoader());
 
         //清空旧数据
-        imageList.clear();
-        imageList.add("https://img-blog.csdn.net/20180420104431654");
-        imageList.add("https://img-blog.csdn.net/20180420104431654");
-        imageList.add("https://img-blog.csdn.net/20180420104431654");
-        imageList.add("https://img-blog.csdn.net/20180420104431654");
-        banner.setImages(imageList);
+        bannerImageList.clear();
+        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
+        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
+        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
+        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
+        banner.setImages(bannerImageList);
         banner.start();
     }
 
