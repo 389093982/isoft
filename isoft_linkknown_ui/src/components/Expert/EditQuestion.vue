@@ -1,18 +1,23 @@
 <template>
-  <div class="isoft_bg_white isoft_pd10">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-      <FormItem label="问题简述" prop="short_desc">
-        <Input v-model.trim="formValidate.short_desc" placeholder="Enter short_desc..."></Input>
-      </FormItem>
-      <FormItem label="我的问题" prop="question">
-        <mavon-editor ref="md" v-model="formValidate.question" @imgAdd="$imgAdd"
-                      :toolbars="toolbars" :ishljs="true"
-                      :subfield="false" @fullScreen="handleFullScreen" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
-      </FormItem>
-      <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-      </FormItem>
-    </Form>
+  <div style="display: flex;min-height: 550px">
+    <div style="width: 65%" class="isoft_bg_white isoft_pd10">
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+        <FormItem label="问题简述" prop="short_desc">
+          <Input v-model.trim="formValidate.short_desc" placeholder="Enter short_desc..."></Input>
+        </FormItem>
+        <FormItem label="我的问题" prop="question">
+          <mavon-editor ref="md" v-model="formValidate.question" @imgAdd="$imgAdd"
+                        :toolbars="toolbars" :ishljs="true"
+                        :subfield="false" @fullScreen="handleFullScreen" :style="{'z-index' : fullScreen ? '9999': '1'}"/>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+        </FormItem>
+      </Form>
+    </div>
+    <div style="width: 30.5%;margin-left: 5px;background-color: white">
+      <WaitYourAnswer></WaitYourAnswer>
+    </div>
   </div>
 </template>
 
@@ -20,9 +25,13 @@
   import {EditQuestion, fileUploadUrl, ShowAskExpertDetail} from "../../api"
   import axios from 'axios'
   import {markdownAdapter} from "../../tools";
+  import HotUser from "../User/HotUser";
+  import WaitYourAnswer from "./WaitYourAnswer";
+  import ExpertWall from "./ExpertWall";
 
   export default {
     name: "EditQuestion",
+    components: {ExpertWall, WaitYourAnswer, HotUser},
     data() {
       return {
         fullScreen: false,     // 默认没有全屏
@@ -54,10 +63,10 @@
         },
         ruleValidate: {
           short_desc: [
-            {required: true, message: 'short_desc 不能为空!', trigger: 'blur'}
+            {required: true, message: '问题简述 不能为空!', trigger: 'blur'}
           ],
           question: [
-            {required: true, message: 'question 不能为空!', trigger: 'blur'}
+            {required: true, message: '我的问题 不能为空!', trigger: 'blur'}
           ],
         },
       }
