@@ -47,13 +47,13 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
 
         mContext = this;
         // 发送异步请求获取数据
-        loadData();
+        initData();
 
         mAdapter = new CourseAdapter(mData, mContext);
         courseListView.setAdapter(mAdapter);
     }
 
-    private void loadData() {
+    private void initData() {
         LinkKnownApiFactory.getLinkKnownService().getHotCourseRecommend()
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行

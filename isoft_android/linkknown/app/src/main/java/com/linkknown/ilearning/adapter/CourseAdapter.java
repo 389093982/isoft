@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,7 +79,10 @@ public class CourseAdapter extends BaseAdapter {
                 .into(courseImageView);
 
         courseImageView.setOnClickListener(v -> {
-            UIUtils.gotoActivity(mContext, CourseDetailActivity.class);
+            UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                intent.putExtra("course_id", courseMeta.getId());
+                return intent;
+            });
         });
 
         courseNameView.setText(courseMeta.getCourse_name());

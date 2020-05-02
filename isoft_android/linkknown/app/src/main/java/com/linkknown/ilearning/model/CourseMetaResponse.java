@@ -17,6 +17,7 @@ public class CourseMetaResponse extends BaseResponse {
     @ToString
     public static class CourseMeta {
 
+        private int id;
         private String course_name;
         private String course_author;
         private String course_type;
