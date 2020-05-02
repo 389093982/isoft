@@ -81,8 +81,12 @@
           <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
         </div>
       </div>
-      <div style="width: 30%;margin: 5px 0 0 5px ;background-color: white">
+      <div style="width: 30.5%;margin: 5px 0 0 5px ;background-color: white">
         <WaitYourAnswer></WaitYourAnswer>
+        <div style="margin-top: 5px">
+          <img src="../../../static/images/common_img/linkknown_tip_share.jpg" height="480" width=100%/>
+        </div>
+        <ExpertWall style="margin-top: 5px"></ExpertWall>
         <RandomAdmt/>
         <RandomAdmt/>
       </div>
@@ -97,10 +101,11 @@
   import RandomAdmt from "../Advertisement/RandomAdmt";
   import ISearch from "../Common/search/ISearch"
   import WaitYourAnswer from "../Expert/WaitYourAnswer";
+  import ExpertWall from "../Expert/ExpertWall";
 
   export default {
     name: "ResourceList",
-    components: {WaitYourAnswer, RandomAdmt,ISearch},
+    components: {ExpertWall, WaitYourAnswer, RandomAdmt,ISearch},
     data() {
       return {
         search: '',

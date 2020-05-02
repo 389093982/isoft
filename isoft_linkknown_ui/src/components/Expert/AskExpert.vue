@@ -1,8 +1,8 @@
 <template>
   <div style="overflow-x: hidden;">
     <div>
-      <Row>
-        <Col span="16" style="padding-right: 5px;">
+      <div style="display: flex">
+        <div style="width: 65%;background-color: white;min-height: 1000px">
           <div class="isoft_bg_white isoft_pd10">
             <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="3" offset="3" style="text-align: center;">
@@ -18,7 +18,7 @@
                 <a class="isoft_hover_color_blue" @click="searchQuestion(4)" :style="{color: pattern === 4 ? 'red':''}">热门问题</a>
               </Col>
               <Col span="3" style="text-align: center;">
-                <a class="isoft_hover_color_blue" @click="$router.push({path:'/expert/editQuestion'})">我要提问</a>
+                <a class="isoft_hover_color_blue" @click="iWillAsk">我要提问</a>
               </Col>
               <Col span="3" style="text-align: center;">
                 <a class="isoft_hover_color_blue" @click="searchQuestion(5)" :style="{color: pattern === 5 ? 'red':''}">我的问题</a>
@@ -73,12 +73,12 @@
                   :styles="{'text-align': 'center','margin-top': '10px'}"
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
-        </Col>
-        <Col span="7">
+        </div>
+        <div style="width: 30.5%;margin-left: 5px">
           <WaitYourAnswer></WaitYourAnswer>
           <ExpertWall class="isoft_top5"></ExpertWall>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -87,6 +87,7 @@
 <script>
   import {QueryPageAskExpert} from "../../api"
   import ExpertWall from "./ExpertWall";
+  import {checkHasLogin} from "../../tools/sso"
   import {
     CheckHasLoginConfirmDialog2,
     GetLoginUserName,
@@ -190,6 +191,16 @@
       },
       renderHatInUse: function (user_name) {
         return RenderHatInUse(this.userInfos, user_name);
+      },
+      iWillAsk:function () {
+        let _this = this;
+        if (checkHasLogin()) {
+          _this.$router.push({path:'/expert/editQuestion'})
+        }else {
+          CheckHasLoginConfirmDialog2(this, function () {
+            _this.$router.push({path:'/expert/askExpert'})
+          });
+        }
       }
     },
     mounted() {

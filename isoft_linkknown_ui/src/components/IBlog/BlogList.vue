@@ -265,6 +265,12 @@
             <HotUser style="margin-top: 40px"></HotUser>
             <!--等你来答-->
             <WaitYourAnswer style="margin-top: 40px"></WaitYourAnswer>
+            <div style="margin-top: 5px">
+              <LearningDiary></LearningDiary>
+            </div>
+            <div style="margin-top: 5px">
+              <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
+            </div>
           </div>
         </Col>
       </Row>
@@ -308,10 +314,13 @@
   import MoveLine from "../../components/Common/decorate/MoveLine";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
   import WaitYourAnswer from "../Expert/WaitYourAnswer";
+  import LearningDiary from "../ILearning/LearningDiary";
+  import ExpertWall from "../Expert/ExpertWall";
 
   export default {
     name: "BlogList",
     components: {
+      LearningDiary,
       WaitYourAnswer,
       HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
