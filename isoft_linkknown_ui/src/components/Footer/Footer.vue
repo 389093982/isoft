@@ -35,7 +35,8 @@
       <Col span="4">
         <div>
           <div><b style="font-size: 16px">客服中心</b></div>
-          <span class="tipHoverOrange" @click="$router.push({path:'/ilearning/advise'})" style="cursor: pointer;font-size: 14px">提出意见</span>
+          <span class="tipHoverOrange" @click="$router.push({path:'/ilearning/advise'})" style="cursor: pointer;font-size: 14px">提出意见</span><br>
+          <span class="tipHoverOrange" @click="$router.push({path:'/contact/contactList'})" style="cursor: pointer;font-size: 14px">联系客服</span>
         </div>
       </Col>
       <Col span="4">
