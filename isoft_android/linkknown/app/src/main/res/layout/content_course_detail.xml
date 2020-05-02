@@ -7,11 +7,10 @@
     tools:context=".activity.CourseDetailActivity"
     tools:showIn="@layout/activity_course_detail">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
@@ -19,6 +18,11 @@
             android:layout_width="200dp"
             android:layout_height="120dp"
             android:src="@drawable/linkknown"/>
+
+        <ListView
+            android:id="@+id/cVideoListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
