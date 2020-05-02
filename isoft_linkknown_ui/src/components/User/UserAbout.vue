@@ -213,13 +213,11 @@
     animation-name:myfirst;
     animation-duration:6s;
     animation-iteration-count:infinite;
-    animation-direction:alternate;
     animation-play-state:running;
     /* Safari and Chrome: */
     -webkit-animation-name:myfirst;
     -webkit-animation-duration:6s;
     -webkit-animation-iteration-count:infinite;
-    -webkit-animation-direction:alternate;
     -webkit-animation-play-state:running;
   }
 

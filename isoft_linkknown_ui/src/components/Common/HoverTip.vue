@@ -20,7 +20,7 @@
       <span class="isoft_point_cursor isoft_close" @click="showBusiness = false"><Icon type="md-close" size="20"/></span>
       <div class="to_zixun_box" style="position: relative;">
         <img src="../../../static/images/common_img/jianzhi.png" style="width: 280px;height: 450px;"/>
-        <div class="to_zixun">马上咨询管理员</div>
+        <div class="to_zixun" @click="contactAdmin">马上咨询管理员</div>
       </div>
       <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
         <div style="width: 60%;padding: 15px 10px;">
@@ -33,8 +33,7 @@
           1、用户水平
           2、用户擅长
           3、用户期望的资源
-
-          <div class="isoft_button_blue" style="width: 60%;margin-left: 10%;margin-top: 20px;">了解一下</div>
+          <div class="isoft_button_blue" style="width: 60%;margin-left: 10%;margin-top: 20px;" @click="toSeeIt">了解一下</div>
         </div>
         <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
           <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
@@ -66,7 +65,17 @@
           {icon_name: 'icon_bao.jpg', icon_label: '测试', icon_label2: '测试123333'},
           {icon_name: 'icon_you.jpg', icon_label: '测试', icon_label2: '测试123333'},
           {icon_name: 'icon_quan.jpg', icon_label: '测试', icon_label2: '测试1233333'},
-        ]
+        ],
+      }
+    },
+    methods:{
+      contactAdmin:function () {
+        this.showBusiness = false;
+        this.$router.push({path:'/contact/contactList'})
+      },
+      toSeeIt:function () {
+        this.showBusiness = false;
+        this.$router.push({path:'/ilearning/about'})
       }
     }
   }

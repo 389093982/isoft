@@ -15,8 +15,8 @@
         </FormItem>
       </Form>
     </div>
-    <div style="width: 30.5%;margin-left: 5px;background-color: white">
-      <WaitYourAnswer></WaitYourAnswer>
+    <div style="width: 30.5%;margin-left: 5px;">
+      <ExpertWall></ExpertWall>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@
 
   export default {
     name: "EditQuestion",
-    components: {ExpertWall, WaitYourAnswer, HotUser},
+    components: {ExpertWall, HotUser},
     data() {
       return {
         fullScreen: false,     // 默认没有全屏
