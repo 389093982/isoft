@@ -4,7 +4,7 @@
       <Col span="17" style="padding: 0 8px 0 0;">
         <div class="isoft_bg_white isoft_pd10">
           <!-- 内外边距：上右下左 -->
-          <Row style="padding: 15px 10px 10px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
+          <Row style="padding: 20px 8px 8px 25px;border-bottom: 1px solid #e6e6e6;height: 62px;">
             <Col span="3" offset="6">
               <IBeautifulLink @onclick="refreshBookList('_all', '')" :style="{color: pattern === '_all' ? 'red': ''}">
                 全部书单
@@ -23,6 +23,10 @@
               <IBeautifulLink @onclick="showBookEditModal">新增书单</IBeautifulLink>
             </Col>
           </Row>
+
+          <div class="isoft_info_tip isoft_font12 isoft_color_grey isoft_point_cursor" @click="showBookEditModal">
+            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
+          </div>
 
           <div v-if="pattern === '_all'">
             <BookListCustomTags/>
@@ -93,20 +97,19 @@
             <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
 
-          <div class="isoft_info_tip isoft_font12 isoft_color_grey isoft_point_cursor" style="margin-top: 20px;" @click="showBookEditModal">
-            图书万千，一书难得，你有知识，我有平台。赶快发布书籍尝尝鲜吧，^_^
-          </div>
-
           <BookInfoEdit ref="bookEditModal" @handleSubmit="refreshMyBookList"></BookInfoEdit>
         </div>
       </Col>
       <Col span="6">
         <HotUser/>
-
-        <div style="margin: 5px 0;">
+        <div style="margin-top: 5px">
           <LearningDiary/>
         </div>
-
+        <WaitYourAnswer></WaitYourAnswer>
+        <ExpertWall style="margin-top: 5px"></ExpertWall>
+        <div style="margin-top: 5px">
+          <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
+        </div>
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
           <RandomAdmt/>
         </div>
@@ -137,10 +140,14 @@
   import LearningDiary from "../ILearning/LearningDiary";
   import BookListCustomTags from "./BookListCustomTags";
   import SepLine from "../Common/SepLine";
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
+  import ExpertWall from "../Expert/ExpertWall";
 
   export default {
     name: "BookList",
     components: {
+      ExpertWall,
+      WaitYourAnswer,
       BookListCustomTags,
       LearningDiary,
       IsComfirmDelete,

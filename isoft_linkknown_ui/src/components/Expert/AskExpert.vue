@@ -2,7 +2,7 @@
   <div style="overflow-x: hidden;">
     <div>
       <div style="display: flex">
-        <div style="width: 65%;">
+        <div style="width: 65%;background-color: white;min-height: 1000px">
           <div class="isoft_bg_white isoft_pd10">
             <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
               <Col span="3" offset="3" style="text-align: center;">
