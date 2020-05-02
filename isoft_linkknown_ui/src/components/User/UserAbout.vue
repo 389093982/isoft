@@ -1,6 +1,6 @@
 <template>
   <div v-if="getUserName()" style="margin:2px 0 5px 5px;padding: 15px;min-height: 350px;">
-    <Row>
+    <Row v-if="!isLoginUserName(getUserName())">
         <span @click="$router.push({path:'/user/userDetail',query:{username:getUserName()}})">
           <HatAndFacePicture :src="user_small_icon" :vip_level="vip_level" :hat_in_use="hat_in_use" :src_size="30" :hat_width="30" :hat_height="10" :hat_relative_left="0" :hat_relative_top="-46" ></HatAndFacePicture>
         </span>
@@ -9,7 +9,7 @@
             <span v-if="nick_name">{{nick_name}}</span>
             <span v-else>{{getUserName()}}</span>
           </span>
-          <span style="margin-left: 200px">
+          <span style="margin-left: 100px">
             <span v-if="userName===loginUserName()"></span>
             <span v-else class="ToMyCenter" @click="$router.push({path:'/user/userDetail'})"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></span>
           </span>
@@ -123,6 +123,9 @@
         let img = event.srcElement;
         img.src = this.defaultImg;
         img.onerror = null; //防止闪图
+      },
+      isLoginUserName: function (user_name) {
+        return user_name === GetLoginUserName();
       },
       refreshUserInfo: function () {
         if (checkEmpty(this.userName) && checkEmpty(GetLoginUserName())) {

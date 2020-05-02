@@ -1,118 +1,108 @@
 <template>
-  <div>
-    <div v-if="user">
-      <div style="min-height: 140px;background: linear-gradient(to right, rgb(176, 108, 239), rgba(176,108,239,0.13));
-          background-size: cover;background-position: 50%;background-repeat: no-repeat;">
+  <div v-if="user">
+    <div class="myCenter_title_bg" style="position:relative;height:150px;padding: 0 30px;display: flex;">
+      <!--头像-->
+      <div style="position: relative;left: 170px; color: white;font-size: 28px;">
+        <div style="cursor: pointer;position: absolute;top: 32px;">
+          <div @click="toUserInfo(user.user_name)">
+            <!--帽子 & 头像-->
+            <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use" :hat_relative_top="-98"></HatAndFacePicture>
+          </div>
+        </div>
       </div>
-      <div style="margin: 0 5px 0 5px ">
-        <Row :gutter="10" style="min-height: 150px;background-color: #ffffff;padding: 20px 0 0 0 ;">
-          <Col span="3" offset="1" style="top:-70px;">
-            <div @click="toUserInfo(user.user_name)">
-              <!--帽子 & 头像-->
-              <HatAndFacePicture :src="user.small_icon" :vip_level="user.vip_level" :hat_in_use="user.hat_in_use"></HatAndFacePicture>
-            </div>
-          </Col>
-          <Col span="12" style="padding: 10px 0 0 3px;">
-            <div>
-              <b style="font-size: 18px">{{user.nick_name}}</b> / <code style="color: grey">{{user.user_name}}</code>
-            </div>
-            <div>
-              个性签名:
-              <textarea rows="3" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="220" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
-              <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
-              <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign" style="color: #ff6900"/>
-            </div>
-            <div>
-              加入时间：<Time :time="user.created_time" :interval="1"/>
-            </div>
-             <div v-if="isLoginUserName(user.user_name)">
-               <div @click="$router.push({ path: '/user/userInfo'})" style="color: grey;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add" style="font-size: 18px"/>个人信息</div>
-               <div @click="$router.push({ path: '/sso/forget',query:{pattern:2}})" style="color: grey;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog" style="font-size: 18px"/>修改密码</div>
-               <br><br>
-               <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="color: #ff6900;padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />发布博客</div>
-               <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-videocam-outline" style="font-size: 16px" />我的课程</div>
-               <div @click="$router.push({path:'/ibook/bookList'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-book-outline" style="font-size: 15px" />书单列表</div>
-               <div @click="$router.push({ path: '/payment/orderList'})" style="color: #ff6900;padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-list-box-outline" style="font-size: 15px" />订单列表</div>
-             </div>
-
-          </Col>
-          <Col span="8" style="padding: 0 0 0 3px">
-            <Card style="width:350px;background:linear-gradient(90deg,#ebd2ae,#e8b66e);">
-              <p slot="title" style="height: 25px">
-                <Icon class="VIPicon" @click="$router.push({path:'/vipcenter/vipIntroduction'})" type="md-ribbon"/>
-                会员权益
-              </p>
-              <a href="#" slot="extra" @click.prevent="changeLimit">
-                <Icon type="ios-loop-strong"></Icon>
-                <span style="color: red;font-size: 15px" class="hvr-grow" @click="$router.push({path:'/vipcenter/vipIntroduction'})">
-                <Icon type="md-arrow-round-forward" />开通会员
-              </span>
-              </a>
-              <Carousel autoplay arrow="never" dots="outside" trigger="hover" radius-dot :autoplay-speed="4000">
-                <CarouselItem>
-                  <div class="demo-carousel">
-                    <ul style="padding-left: 10px">
-                      <li>
-                        <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
-                        </div>
-                      </li>
-                      <li>
-                        <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
-                        </div>
-                      </li>
-                      <li>
-                        <div class="hvr-grow" style="cursor: pointer;color: blue"
-                             @click="$router.push({path:'/resource/resourceList'})">订阅本站优秀热门资源
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div class="demo-carousel">
-                    <ul style="padding-left: 10px">
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
-                      <li><div class="hvr-grow" style="cursor: pointer;color: blue" @click="$router.push({path:'/advertisement/advApply'})">本站广告推广</div></li>
-                    </ul>
-                  </div>
-                </CarouselItem>
-              </Carousel>
-            </Card>
-          </Col>
-        </Row>
+      <!--基本信息-->
+      <div style="position: absolute;top: 40px;left: 300px;color: white">
+        <div>
+          <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
+        </div>
+        <div>
+          加入时间：<Time :time="user.created_time" :interval="1"/>
+        </div>
+        <div>
+          <i>个性签名:
+            <textarea rows="1" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="30" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
+            <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
+            <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign"/>
+          </i>
+         </div>
+      </div>
+      <!--设置-->
+      <div v-if="isLoginUserName(user.user_name)" style="position: absolute;top: 25px;left: 600px;color: white">
+        <div @click="$router.push({ path: '/user/userInfo'})" style="padding-left: 0;cursor: pointer" class="hvr-grow"><Icon type="ios-person-add-outline" style="font-size: 18px"/>个人信息</div>
+        <div @click="$router.push({ path: '/sso/forget',query:{pattern:2}})" style="padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-cog-outline" style="font-size: 18px"/>修改密码</div>
+        <div @click="$router.push({ path: '/message/messageList'})" style="padding-left: 15px;cursor: pointer" class="hvr-grow"><Icon type="ios-chatbubbles-outline" style="font-size: 18px"/>消息</div>
       </div>
     </div>
 
     <div class="isoft_top5" style="min-height: 450px;justify-content:space-between;">
-      <Row>
-        <Col span="16" style="margin-right: 5px">
-          <div v-if="user" style="margin: 0 0 0 20px ">
-            <div style="background-color: #ffffff;">
-              <!--用户相关的博文、课程、书本-->
-              <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
-            </div>
-            <div class="isoft_top5">
-              <!--他/她收藏的图书-->
-              <UserFavorite :user-name="_userName"/>
-            </div>
+      <div style="display: flex;">
+        <div v-if="user" style="width: 65%;padding: 0 0 0 20px ;background-color: white">
+          <!--第一行是主菜单: 发布博客、 我的课程、 书单列表、 我的订单 -->
+          <div v-if="isLoginUserName(user.user_name)" style="background-color: white;height: 80px">
+            <Row>
+              <Col span="4" offset="4">
+                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-create-outline" style="font-size: 40px" />
+                  <div style="font-size: 12px;">发布博客</div>
+                </div>
+              </Col>
+              <Col span="4">
+                <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-videocam-outline" style="font-size: 40px" />
+                  <div style="font-size: 12px;">我的课程</div>
+                </div>
+              </Col>
+              <Col span="4">
+                <div @click="$router.push({path:'/ibook/bookList'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-book-outline" style="font-size: 40px" />
+                  <div style="font-size: 12px;">书单列表</div>
+                </div>
+              </Col>
+              <Col span="4">
+                <div @click="$router.push({ path: '/payment/orderList'})" style="margin: 10px 0 0 0 ;cursor: pointer" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-list-box-outline" style="font-size: 40px" />
+                  <div style="font-size: 12px;">我的订单</div>
+                </div>
+              </Col>
+            </Row>
           </div>
-          <div v-else style="font-size: 20px;text-align: center;margin-top: 50px;padding: 50px;">
-            <Spin fix size="large" v-if="isLoading">
-              <div class="isoft_loading"></div>
-            </Spin>
-            <ForwardLogin v-else></ForwardLogin>
+
+          <!--用户相关的博文、课程、书本-->
+          <div style="background-color: #ffffff;">
+            <UserAbout :user-name="_userName" :titleLimitLenth="20"/>
           </div>
-        </Col>
-        <Col span="7">
-          <div style="width: 99%">
-            <!--用户排行榜-->
-            <HotUser/>
+
+          <!--他/她收藏的图书-->
+          <div class="isoft_top5">
+            <UserFavorite :user-name="_userName"/>
           </div>
-        </Col>
-      </Row>
+        </div>
+        <div style="width: 30.5%;margin: 0 0 0 5px;background-color: white ">
+          <!--会员卡片-->
+          <OpenVipCard v-if="isLoginUserName(user.user_name)" style="margin-bottom: 5px;"></OpenVipCard>
+          <!--用户排行榜-->
+          <HotUser style="margin-top: 20px"/>
+          <!--等你来答-->
+          <WaitYourAnswer style="margin-top: 40px"></WaitYourAnswer>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--未登录显示-->
+  <div v-else style="background-color: antiquewhite">
+    <div style="display: flex;">
+      <div style="width: 65%;font-size: 20px;text-align: center;margin-top: 120px;padding: 50px;">
+        <Spin fix size="large" v-if="isLoading">
+          <div class="isoft_loading"></div>
+        </Spin>
+        <ForwardLogin v-else></ForwardLogin>
+      </div>
+      <div style="width: 31%;">
+        <!--用户排行榜-->
+        <HotUser style="margin-top: 5px"/>
+        <!--等你来答-->
+        <WaitYourAnswer style="margin-top: 5px"></WaitYourAnswer>
+      </div>
     </div>
   </div>
 </template>
@@ -127,10 +117,13 @@
   import UserFavorite from "./UserFavorite";
   import UploadHeadSculpture from "../Common/file/UploadHeadSculpture";
   import HatAndFacePicture from "../Common/HatAndFacePicture/HatAndFacePicture";
+  import OpenVipCard from "../VipCenter/OpenVipCard";
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "UserDetail",
-    components: {HatAndFacePicture, UploadHeadSculpture, UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
+    components: {WaitYourAnswer, OpenVipCard, HatAndFacePicture, UploadHeadSculpture,
+      UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
         user: null,
@@ -213,41 +206,11 @@
 </script>
 
 <style scoped>
-  .VIPicon{
-    color: #ff6900;
-    font-size: 20px;
-    cursor: pointer;
 
-    position:relative;
-    animation-name:myfirst;
-    animation-duration:8s;
-    animation-iteration-count:infinite;
-    animation-direction:alternate;
-    animation-play-state:running;
-    /* Safari and Chrome: */
-    -webkit-animation-name:myfirst;
-    -webkit-animation-duration:8s;
-    -webkit-animation-iteration-count:infinite;
-    -webkit-animation-direction:alternate;
-    -webkit-animation-play-state:running;
-  }
-
-  @keyframes myfirst
-  {
-    0%   {color:red; left:0px; top:0px;}
-    25%  {color:yellow; left:230px; top:0px;}
-    50%  {color:blue; left:230px; top:10px;}
-    75%  {color:green; left:0px; top:10px;}
-    100% {color:red; left:0px; top:0px;}
-  }
-
-  @-webkit-keyframes myfirst /* Safari and Chrome */
-  {
-    0%   {color:red; left:0px; top:0px;}
-    25%  {color:yellow; left:230px; top:0px;}
-    50%  {color:blue; left:230px; top:10px;}
-    75%  {color:green; left:0px; top:10px;}
-    100% {color:red; left:0px; top:0px;}
+  .myCenter_title_bg {
+    background: url(../../../static/images/common_img/my_center.jpg) no-repeat;
+    height: 150px;
+    background-size: 100% 100%;
   }
 
   .focus:focus {
