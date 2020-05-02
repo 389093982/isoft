@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/courseNameText"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/courseShortDescText"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/courseTypeText"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/courseLabelText"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorGray"
                     android:textSize="12sp" />
 
                 <TextView

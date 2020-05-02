@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button
+                android:id="@+id/btnToLogin"
+                android:layout_width="100dp"
+                android:layout_height="64dp"
+                android:layout_centerInParent="true"
+                android:text="前去登录"/>
+
+            <Button
+                android:id="@+id/btnToCourseList"
+                android:layout_width="100dp"
+                android:layout_height="64dp"
+                android:layout_toLeftOf="@id/btnToLogin"
+                android:layout_centerVertical="true"
+                android:text="查看课程"/>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</FrameLayout>
