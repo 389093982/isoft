@@ -63,6 +63,9 @@ dependencies {
     // 配合Rxjava2 使用
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.2.0"
 
+    // 安卓图片轮播
+    implementation 'com.youth.banner:banner:1.4.10'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

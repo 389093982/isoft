@@ -30,4 +30,5 @@
     <color name="text_color">#333</color>
     <!--关于我的界面-->
     <color name="background_dark">#ECECEC</color>
+    <color name="TableLinecolor">#fff5f5f5</color>
 </resources>

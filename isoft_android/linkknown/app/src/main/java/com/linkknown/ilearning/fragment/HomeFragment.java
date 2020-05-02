@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseListActivity;
@@ -26,6 +27,9 @@ import com.linkknown.ilearning.model.Catalog;
 import com.linkknown.ilearning.util.NetUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public Button btnToCourseList;
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
+
+    @BindView(R.id.banner)
+    public Banner banner;
+    private ArrayList<String> imageList = new ArrayList<>();
 
     // GridView 作为一个 View 对象添加到 ViewPager 集合中
     private List<View> viewPagerList;
@@ -88,11 +96,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         // 初始化热门课程分类
         initHotCategorys();
+        //加载轮播图
+        initBanner();
 
-//            //加载轮播图
-//            initBanner();
 //            //获取热评商品
 //            initCommodityList(Constants.HOME_PAGE_LIMIT, 0, true);
+    }
+
+    /**
+     * 初始化广告页
+     */
+    private void initBanner() {
+        //设置banner样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        //设置图片加载器
+        banner.setImageLoader(new ImageLoader (){
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                Glide.with(context).load(path).into(imageView);
+            }
+        });
+
+        //清空旧数据
+        imageList.clear();
+        imageList.add("https://img-blog.csdn.net/20180420104431654");
+        imageList.add("https://img-blog.csdn.net/20180420104431654");
+        imageList.add("https://img-blog.csdn.net/20180420104431654");
+        imageList.add("https://img-blog.csdn.net/20180420104431654");
+        banner.setImages(imageList);
+        banner.start();
     }
 
     private void initHotCategorys () {

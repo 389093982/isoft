@@ -74,6 +74,25 @@
                         android:orientation="horizontal" />
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/banner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/product"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/TableLinecolor"></View>
+                </LinearLayout>
+
             </RelativeLayout>
 
         </ScrollView>
