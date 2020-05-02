@@ -1,26 +1,24 @@
 package com.linkknown.ilearning;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.linkknown.ilearning.activity.CourseListActivity;
-import com.linkknown.ilearning.activity.LoginActivity;
+import com.google.android.material.navigation.NavigationView;
 import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
-import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.viewpage.MainActivityViewPager;
 
 import java.util.ArrayList;
@@ -29,7 +27,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    @BindView(R.id.navigationView)
+    public NavigationView navigationView;
+
+    // 用户登录之后显示用户头像及昵称
+    private LinearLayout userHeaderInfoLayout;
+
+    // 未登录时显示提示信息
+    private RelativeLayout unLoginLayout;
+
+    // 登陆后在头像下方显示的用户名
+    private TextView mHeaderUserNameText;
 
     // 存储首页对应的三个片段
     private List<Fragment> mFragments;
@@ -53,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ButterKnife.bind(this);
 
-        this.initFragment();
+        // 绑定控件
+        this.init();
     }
 
     @Override
@@ -88,6 +99,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             rb.setTextColor(ContextCompat.getColor(this, R.color.button_normal));
         }
+    }
+
+    private void init () {
+        initFragment();
+        initNavigation();
+    }
+
+    private void initNavigation () {
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        userHeaderInfoLayout = headerView.findViewById(R.id.user_header_info);
+        unLoginLayout = headerView.findViewById(R.id.un_login_dead);
+        mHeaderUserNameText = headerView.findViewById(R.id.user_name_header);
     }
 
     private void initFragment () {
@@ -125,5 +149,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
