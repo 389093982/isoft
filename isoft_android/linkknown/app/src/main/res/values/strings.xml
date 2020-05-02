@@ -33,4 +33,5 @@
 
     <!-- 登录相关 -->
     <string name="need_login">未登录，请先登录！</string>
+    <string name="title_activity_course_detail">CourseDetailActivity</string>
 </resources>

@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.List;
 
@@ -74,6 +76,10 @@ public class CourseAdapter extends BaseAdapter {
                 .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                 .into(courseImageView);
 
+        courseImageView.setOnClickListener(v -> {
+            UIUtils.gotoActivity(mContext, CourseDetailActivity.class);
+        });
+
         courseNameView.setText(courseMeta.getCourse_name());
         courseShortDescView.setText(courseMeta.getCourse_short_desc());
         courseTypeView.setText(courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
@@ -93,4 +99,5 @@ public class CourseAdapter extends BaseAdapter {
         this.mData = mData;
         this.mContext = mContext;
     }
+
 }
