@@ -36,5 +36,6 @@
 3.启动
 ①启动tomcat: 在apache-tomcat-8.5.51_8002/bin目录下执行启动命令：nohup ./startup.sh &
 ②启动nginx: cd /etc/nginx, 执行nginx -s reload
-注：启动nginx命令还有：service nginx start
-	关闭nginx命令有：nginx -s stop ,或者 ps -ef|grep nginx 然后kill -9 端口号（这种方式比较彻底）
+注：查看nginx状态:service nginx status
+	启动nginx命令还有:service nginx start
+	关闭nginx命令有:nginx -s stop ,或者 ps -ef|grep nginx 然后kill -9 端口号（这种方式比较彻底）
