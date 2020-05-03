@@ -36,14 +36,9 @@
   export default {
     name: "UserFavorite",
     components: {BookListCustomTags},
-    props: {
-      userName: {
-        type: String,
-        default: ''
-      },
-    },
     data() {
       return {
+        userName:'',
         defaultImg: require('../../../static/images/common_img/default.png'),
         book_collects: [],
         books: [],
@@ -64,22 +59,20 @@
         }
       },
       // 获取用户收藏列表
-      refreshUserFavoriteList: async function () {
-        // 获取图书收藏列表
-        const result = await GetUserFavoriteList({favorite_type: 'book_collect', user_name: this.userName});
-        if (result.status === "SUCCESS") {
-          this.book_collects = result.favorites;
-          this.refreshBookList();
+      refreshUserFavoriteList: async function (userName) {
+        if (userName) {
+          this.userName = userName;
+          // 获取图书收藏列表
+          const result = await GetUserFavoriteList({favorite_type: 'book_collect', user_name: userName});
+          if (result.status === "SUCCESS") {
+            this.book_collects = result.favorites;
+            this.refreshBookList();
+          }
         }
       },
       loginUserName:function(){
         return GetLoginUserName()
       },
-    },
-    mounted() {
-      if (checkEmpty(this.user_name)) {
-        this.refreshUserFavoriteList();
-      }
     },
     filters: {
       // 内容超长则显示部分

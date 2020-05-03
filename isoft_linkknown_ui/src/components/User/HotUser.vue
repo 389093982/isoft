@@ -1,6 +1,11 @@
 <template>
   <div class="isoft_bg_white isoft_pd5">
-    <h2 class="user_rank" style="border-bottom: 2px solid #eee;">用户排行榜</h2>
+    <h2 class="user_rank" style="border-bottom: 2px solid #eee;">
+      用户排行榜
+      <span class="hvr-grow isoft_hover_red" style="font-size: 12px; margin-left: 100px; cursor: pointer" @click="$router.push({path:'/user/userDetail'})">
+        我的个人中心
+      </span>
+    </h2>
     <div style="position: relative;">
       <div style="text-align: center;" class="animated bounce infinite isoft_color_grey2 isoft_font12">奉献自己的力量，让自己榜上有名吧~ </div>
     </div>

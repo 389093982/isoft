@@ -1,6 +1,6 @@
 <template>
   <div v-if="user">
-    <div class="myCenter_title_bg" style="position:relative;height:150px;padding: 0 30px;display: flex;">
+    <div :class="{my_center: myCenterBgShow,other_center: otherCenterBgShow }" style="position:relative;height:150px;padding: 0 30px;display: flex;">
       <!--头像-->
       <div style="position: relative;left: 170px; color: white;font-size: 28px;">
         <div style="cursor: pointer;position: absolute;top: 32px;">
@@ -77,7 +77,7 @@
 
           <!--他/她收藏的图书-->
           <div class="isoft_top5">
-            <UserFavorite :user-name="_userName"/>
+            <UserFavorite ref="userFavorite"/>
           </div>
         </div>
         <div style="width: 30.5%;margin: 0 0 0 5px;background-color: white ">
@@ -129,6 +129,8 @@
       UserFavorite, ForwardLogin, UserAbout, HotUser, IFileUpload},
     data() {
       return {
+        myCenterBgShow:false,
+        otherCenterBgShow:false,
         user: null,
         isLoading: true,
         defaultImg: require('../../../static/images/common_img/default.png'),
@@ -164,6 +166,8 @@
         return !checkEmpty(this.$route.query.username) ? this.$route.query.username : GetLoginUserName();
       },
       refreshUserDetail: async function () {
+        this.refreshBg();
+        //加载用户信息
         this.isLoading = true;
         try {
           let params = {
@@ -178,6 +182,33 @@
           }
         } finally {
           this.isLoading = false;
+          //刷新用户信息后，刷新一下图书
+          this.$nextTick(() => {
+            this.refreshUserFavorite()
+          });
+        }
+      },
+      //修改主题背景颜色图片
+      refreshBg:function () {
+        if (this.$route.query.username) {
+          if (this.isLoginUserName(this.$route.query.username)) {
+            this.myCenterBgShow = true;
+            this.otherCenterBgShow = false;
+          }else {
+            this.myCenterBgShow = false;
+            this.otherCenterBgShow = true;
+          }
+        }else {
+          this.myCenterBgShow = true;
+          this.otherCenterBgShow = false;
+        }
+      },
+      //更新收藏图书//强制刷新
+      refreshUserFavorite:function () {
+        if (this.$route.query.username) {
+          this.$refs.userFavorite.refreshUserFavoriteList(this.$route.query.username);
+        }else {
+          this.$refs.userFavorite.refreshUserFavoriteList(GetLoginUserName());
         }
       }
     },
@@ -210,8 +241,14 @@
 
 <style scoped>
 
-  .myCenter_title_bg {
+  .my_center {
     background: url(../../../static/images/common_img/my_center.jpg) no-repeat;
+    height: 150px;
+    background-size: 100% 100%;
+  }
+
+  .other_center {
+    background: url(../../../static/images/common_img/other_center.jpg) no-repeat;
     height: 150px;
     background-size: 100% 100%;
   }
