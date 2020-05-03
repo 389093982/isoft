@@ -9,11 +9,11 @@ import retrofit2.http.Query;
 
 public interface LinkKnownService {
 
-    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend2" )
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend" )
     Observable<CourseMetaResponse> getHotCourseRecommend();
 
 
-    @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail2" )
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail" )
     Observable<CourseDetailResponse> showCourseDetail(
             @Query("course_id") int course_id
     );
