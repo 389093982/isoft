@@ -7,13 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -33,10 +37,26 @@ public class CourseDetailActivity extends AppCompatActivity {
     private List<CourseDetailResponse.CVideos> cVideos = new ArrayList<>();
     private CommonAdapter<CourseDetailResponse.CVideos> cVideosCommonAdapter;
 
-    @BindView(R.id.cVideoListView)
-    public ListView cVideoListView;
     @BindView(R.id.detail_goback)
     public ImageView gobackView;
+
+    @BindView(R.id.cVideoListView)
+    public ListView cVideoListView;
+
+    @BindView(R.id.courseImageView)
+    public ImageView courseImageView;
+    @BindView(R.id.courseNameView)
+    public TextView courseNameView;
+    @BindView(R.id.courseShortDescView)
+    public TextView courseShortDescView;
+    @BindView(R.id.courseTypeView)
+    public TextView courseTypeView;
+    @BindView(R.id.courseLabelView)
+    public TextView courseLabelView;
+    @BindView(R.id.courseNumberView)
+    public TextView courseNumberView;
+    @BindView(R.id.watchNumberView)
+    public TextView watchNumberView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +98,27 @@ public class CourseDetailActivity extends AppCompatActivity {
                     @Override
                     public void onNext(CourseDetailResponse courseDetailResponse) {
                         if (courseDetailResponse.isSuccess()) {
+                            CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+
+                            // 异步加载图片,使用 Glide 第三方库
+                            Glide.with(mContext)
+                                    .load(course.getSmall_image().replace("localhost", "192.168.1.2"))
+                                    // placeholder 图片加载出来前,显示的图片
+                                    // error 图片加载失败后,显示的图片
+                                    .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                                    .into(courseImageView);
+
+                            courseNameView.setText(course.getCourse_name());
+                            courseShortDescView.setText(course.getCourse_short_desc());
+                            courseTypeView.setText(course.getCourse_type() + "/" + course.getCourse_sub_type());
+                            courseLabelView.setText(course.getCourse_label());
+
+                            String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
+                            courseNumberView.setText(String.format(courseNumberTextDemo, course.getCourse_number()));
+
+                            String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
+                            watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
+
                             cVideos.addAll(courseDetailResponse.getCVideos());
                         } else {
                             Log.e("onNext =>", "系统异常,请联系管理员~");

@@ -48,12 +48,12 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
         // 发送异步请求获取数据
         initData();
 
-        courseCommonAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>(mData, R.layout.activity_course_item) {
+        courseCommonAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>(mData, R.layout.item_course) {
 
             @Override
             public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
 
-                holder.setImage(R.id.courseImageView, courseMeta.getSmall_image());
+                holder.setImage(R.id.courseImageView, courseMeta.getSmall_image().replace("localhost", "192.168.1.2"));
 
                 holder.setOnClickListener(R.id.courseImageView, v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
                     intent.putExtra("course_id", courseMeta.getId());
