@@ -11,7 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LinkKnownApiFactory {
 
     private static LinkKnownService linkKnownService;
-    private static String BASE_URL = "http://www.linkknown.com";
+    private static String BASE_URL = "http://192.168.1.2:6001";
+//    private static String BASE_URL = "http://www.linkknown.com";
 
     public static void init (){
         // okhttp设置部分,此处还可再设置网络参数

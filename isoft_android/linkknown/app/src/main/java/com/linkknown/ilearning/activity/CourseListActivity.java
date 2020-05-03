@@ -1,23 +1,22 @@
 package com.linkknown.ilearning.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CourseAdapter;
-import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.HandlerUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
-
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,10 +31,10 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
     // butterknife 使用注册取代 findViewById
     @BindView(R.id.courseListView)
     public ListView courseListView;
+    private ArrayList<CourseMetaResponse.CourseMeta> mData = new ArrayList<>();
 
-    private List<CourseMetaResponse.CourseMeta> mData = new LinkedList<>();
     private Context mContext;
-    private CourseAdapter mAdapter;
+    private CommonAdapter<CourseMetaResponse.CourseMeta> courseCommonAdapter;
 
 
     @Override
@@ -49,8 +48,31 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
         // 发送异步请求获取数据
         initData();
 
-        mAdapter = new CourseAdapter(mData, mContext);
-        courseListView.setAdapter(mAdapter);
+        courseCommonAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>(mData, R.layout.activity_course_item) {
+
+            @Override
+            public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
+
+                holder.setImage(R.id.courseImageView, courseMeta.getSmall_image());
+
+                holder.setOnClickListener(R.id.courseImageView, v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMeta.getId());
+                    return intent;
+                }));
+
+                holder.setText(R.id.courseNameView, courseMeta.getCourse_name());
+                holder.setText(R.id.courseShortDescView, courseMeta.getCourse_short_desc());
+                holder.setText(R.id.courseTypeView, courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
+                holder.setText(R.id.courseLabelView, courseMeta.getCourse_label());
+
+                String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
+                holder.setText(R.id.courseNumberView, String.format(courseNumberTextDemo, courseMeta.getCourse_number()));
+
+                String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
+                holder.setText(R.id.watchNumberView, String.format(watchNumberTextDemo, courseMeta.getWatch_number()));
+            }
+        };
+        courseListView.setAdapter(courseCommonAdapter);
     }
 
     private void initData() {
@@ -80,7 +102,7 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
 
                     @Override
                     public void onComplete() {
-                        mAdapter.notifyDataSetChanged();
+                        courseCommonAdapter.notifyDataSetChanged();
                     }
                 });
 //        this.mData = new LinkedList<>();
