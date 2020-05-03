@@ -1,5 +1,7 @@
 package com.linkknown.ilearning;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,17 +10,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.viewpage.MainActivityViewPager;
 
 import java.util.ArrayList;
@@ -31,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @BindView(R.id.navigationView)
     public NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout drawer;
 
     // 用户登录之后显示用户头像及昵称
     private LinearLayout userHeaderInfoLayout;
@@ -151,8 +160,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    // navigation view 点击事件
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if (id == R.id.shouye) {
+            // Handle the camera action
+            mViewPage.setCurrentItem(0);
+            //底部ImageView点击之后变色
+            rb_home.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.fenlei) {
+            mViewPage.setCurrentItem(1);
+            //底部ImageView点击之后变色
+            rb_category.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.wode) {
+            mViewPage.setCurrentItem(2);
+            //底部ImageView点击之后变色
+            rb_mine.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.denglu) {
+//            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
+//            } else {
+//                UIUtils.gotoActivity(this, LoginActivity.class);
+//            }
+            UIUtils.gotoActivity(this, LoginActivity.class);
+        } else if (id == R.id.zhuce) {
+            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+//                startActivity(intent);
+//            }
+
+        } else if (id == R.id.zhuxiao) {
+            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                SharedPreferences.Editor editor = getSharedPreferences("userInfo", 0).edit();
+//                editor.clear();
+//                editor.commit();
+//                Toast.makeText(this, "您已注销", Toast.LENGTH_SHORT).show();
+//
+//                //刷新UI显示
+//                refreshUI(LoginCheckUtil.isLogin(this));
+//            } else {
+//                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
+//            }
+
+        }
+
+        // 抽屉关闭
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

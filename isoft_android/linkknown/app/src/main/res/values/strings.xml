@@ -9,7 +9,7 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">登录失败！</string>
 
     <string name="courseNameText">课程名称：</string>
     <string name="courseNameTextDemo">这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称</string>
