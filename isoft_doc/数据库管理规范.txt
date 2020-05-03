@@ -13,3 +13,11 @@
     5.7 及 5.7 以上版本：
         update user set authentication_string=password('Linker2020') where user='linker' and host='%';
         flush privileges;
+
+5.mysql设置数据库不区分大小写(root用户操作):
+	vi /etc/my.cnf
+	在最后一行添加:lower_case_table_names = 1
+	(说明 0：区分大小写，1：不区分大小写)
+	 注意:lower_case_table_names =1 的配置需要添加在my.cnf 文件的mysqld 配置节中
+
+	 重启:service mysql restart, 查看状态:service mysql status
