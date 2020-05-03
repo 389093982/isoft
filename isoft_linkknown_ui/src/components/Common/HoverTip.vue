@@ -31,21 +31,21 @@
           <p class="answer_tip">在链知网总有&nbsp;“薪”&nbsp;发现</p>
 
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-            <FormItem label="1.您的技术整体水平" prop="userLevel">
+            <FormItem label="1.您的技术整体水平:" prop="userLevel">
                 <RadioGroup v-model="formValidate.userLevel">
                     <Radio label="primary">初级</Radio>
                     <Radio label="intermediate">中级</Radio>
                     <Radio label="senior">高级</Radio>
                 </RadioGroup>
             </FormItem>
-            <FormItem label="2.您所擅长的方向" prop="userGoodAt">
+            <FormItem label="2.您所擅长的方向:" prop="userGoodAt">
                 <RadioGroup v-model="formValidate.userGoodAt">
                     <Radio label="frontUI">前端UI</Radio>
                     <Radio label="backDesigner">后端设计</Radio>
                     <Radio label="requirementAnalysis">需求分析</Radio>
                 </RadioGroup>
             </FormItem>
-            <FormItem label="3.您期望的资源" prop="userExpect">
+            <FormItem label="3.您期望的资源:" prop="userExpect">
                 <RadioGroup v-model="formValidate.userExpect">
                     <Radio label="videoTutorial">视频教程</Radio>
                     <Radio label="cooperationWithLinkknown">与链知网合作</Radio>
@@ -82,10 +82,10 @@
       return {
         showBusiness: false,
         icons: [
-          {icon_name: 'icon_pin.jpg', icon_label: '测试', icon_label2: '测试1233333'},
-          {icon_name: 'icon_bao.jpg', icon_label: '测试', icon_label2: '测试123333'},
-          {icon_name: 'icon_you.jpg', icon_label: '测试', icon_label2: '测试123333'},
-          {icon_name: 'icon_quan.jpg', icon_label: '测试', icon_label2: '测试1233333'},
+          {icon_name: 'icon_pin.jpg', icon_label: '品质', icon_label2: '原生态视频教程'},
+          {icon_name: 'icon_bao.jpg', icon_label: '保证', icon_label2: '保证资源的质量'},
+          {icon_name: 'icon_you.jpg', icon_label: '优秀', icon_label2: '优秀的学习资源'},
+          {icon_name: 'icon_quan.jpg', icon_label: '全新', icon_label2: '全新的技术方案'},
         ],
         formValidate: {
           userLevel: '',

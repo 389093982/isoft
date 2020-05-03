@@ -44,8 +44,8 @@
     <div class="item-line"></div>
 
     <div class="toolItemBox" @click="$router.push({path:'/user/userDetail'})">
-      <Icon type="ios-person-add-outline" :size="28"/>
-      <p>个人</p>
+      <Icon type="ios-contact-outline" :size="28"/>
+      <p>我的</p>
       <span class="tipBox"><div class="tipInfo">快来看看您都有哪些</div></span>
     </div>
   </div>
