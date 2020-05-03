@@ -9,10 +9,6 @@
             <span v-if="nick_name">{{nick_name}}</span>
             <span v-else>{{getUserName()}}</span>
           </span>
-          <span style="margin-left: 100px">
-            <span v-if="userName===loginUserName()"></span>
-            <span v-else class="ToMyCenter" @click="$router.push({path:'/user/userDetail'})"><Icon type="ios-arrow-forward" /><i>我的个人中心</i></span>
-          </span>
         </div>
     </Row>
 
@@ -204,38 +200,5 @@
 </script>
 
 <style scoped>
-  .ToMyCenter{
-    color: #ff6900;
-    font-size: 12px;
-    cursor: pointer;
 
-    position:relative;
-    animation-name:myfirst;
-    animation-duration:6s;
-    animation-iteration-count:infinite;
-    animation-play-state:running;
-    /* Safari and Chrome: */
-    -webkit-animation-name:myfirst;
-    -webkit-animation-duration:6s;
-    -webkit-animation-iteration-count:infinite;
-    -webkit-animation-play-state:running;
-  }
-
-  @keyframes myfirst
-  {
-    0%   {color:red; left:0px; top:0px;}
-    25%  {color:yellow; left:0px; top:0px;}
-    50%  {color:blue; left:0px; top:0px;}
-    75%  {color:green; left:0px; top:0px;}
-    100% {color:red; left:0px; top:0px;}
-  }
-
-  @-webkit-keyframes myfirst /* Safari and Chrome */
-  {
-    0%   {color:red; left:0px; top:0px;}
-    25%  {color:yellow; left:0px; top:0px;}
-    50%  {color:blue; left:0px; top:0px;}
-    75%  {color:green; left:0px; top:0px;}
-    100% {color:red; left:0px; top:0px;}
-  }
 </style>
