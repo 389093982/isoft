@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,10 +31,12 @@ public class CourseDetailActivity extends AppCompatActivity {
     private Context mContext;
     private Intent intent;
     private List<CourseDetailResponse.CVideos> cVideos = new ArrayList<>();
+    private CommonAdapter<CourseDetailResponse.CVideos> cVideosCommonAdapter;
 
     @BindView(R.id.cVideoListView)
     public ListView cVideoListView;
-    private CommonAdapter<CourseDetailResponse.CVideos> cVideosCommonAdapter;
+    @BindView(R.id.detail_goback)
+    public ImageView gobackView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             }
         };
         cVideoListView.setAdapter(cVideosCommonAdapter);
+        // 返回箭头点击事件
+        gobackView.setOnClickListener(v -> finish());
     }
 
     private void initData () {
