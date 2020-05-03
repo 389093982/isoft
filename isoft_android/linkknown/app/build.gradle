@@ -66,6 +66,9 @@ dependencies {
     // 安卓图片轮播
     implementation 'com.youth.banner:banner:1.4.10'
 
+    // 节操播放器
+    implementation 'fm.jiecao:jiecaovideoplayer:4.8.3'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

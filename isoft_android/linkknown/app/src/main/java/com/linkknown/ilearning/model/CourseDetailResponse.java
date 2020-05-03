@@ -10,7 +10,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper=true)
 public class CourseDetailResponse extends BaseResponse {
 
-    private List<CVideos> cVideos ;
+    private List<CVideo> cVideos ;
     private Course course;
 
     @Data
@@ -42,10 +42,12 @@ public class CourseDetailResponse extends BaseResponse {
 
     @Data
     @ToString
-    public class CVideos {
+    public class CVideo {
         private int course_id;
         private int duration;
         private int id;
         private String video_name;
+        private String first_play;
+        private String second_play;
     }
 }

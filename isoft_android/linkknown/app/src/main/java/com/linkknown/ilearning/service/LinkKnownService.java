@@ -13,8 +13,8 @@ public interface LinkKnownService {
     Observable<CourseMetaResponse> getHotCourseRecommend();
 
 
-    @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail" )
-    Observable<CourseDetailResponse> showCourseDetail(
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp" )
+    Observable<CourseDetailResponse> showCourseDetailForApp(
             @Query("course_id") int course_id
     );
 }
