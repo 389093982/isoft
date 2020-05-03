@@ -135,7 +135,7 @@
         isLoading: true,
         defaultImg: require('../../../static/images/common_img/default.png'),
         editSignFlag: false,
-        user_signature: '这家伙很懒，什么个性签名都没有留下',
+        user_signature: '',
       }
     },
     methods: {
@@ -178,6 +178,8 @@
             this.user = result.user;
             if (!checkEmpty(this.user.user_signature)) {
               this.user_signature = this.user.user_signature;
+            }else {
+              this.user_signature = '这家伙很懒，什么个性签名都没有留下';
             }
           }
         } finally {
