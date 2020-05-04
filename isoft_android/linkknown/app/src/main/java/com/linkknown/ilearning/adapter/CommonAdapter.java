@@ -5,8 +5,10 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -14,11 +16,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.linkknown.ilearning.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public abstract class CommonAdapter<T> extends BaseAdapter {
 
     private ArrayList<T> mData;
     private int mLayoutRes;           //布局 id
+    private Map<Integer, ViewHolder> holderMap = new HashMap<>();
 
     public CommonAdapter() {
     }
@@ -26,6 +33,18 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     public CommonAdapter(ArrayList<T> mData, int mLayoutRes) {
         this.mData = mData;
         this.mLayoutRes = mLayoutRes;
+    }
+
+    public interface ViewHolderIterator {
+        void iterator(int position, ViewHolder viewHolder);
+    }
+
+    public void forEachHolder (ViewHolderIterator viewHolderIterator) {
+        Iterator<Map.Entry<Integer, ViewHolder>> iterator = holderMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, ViewHolder> entry = iterator.next();
+            viewHolderIterator.iterator(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
@@ -47,6 +66,8 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = ViewHolder.bind(parent.getContext(), convertView, parent, mLayoutRes, position);
         bindView(holder, getItem(position));
+
+        holderMap.put(position, holder);
         return holder.getItemView();
     }
 
@@ -182,6 +203,14 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
                 ((ImageView) view).setImageResource(drawableRes);
             } else {
                 view.setBackgroundResource(drawableRes);
+            }
+            return this;
+        }
+
+        public ViewHolder setChecked(int id, boolean checked) {
+            View view = getView(id);
+            if (view instanceof RadioButton) {
+                ((RadioButton) view).setChecked(checked);
             }
             return this;
         }

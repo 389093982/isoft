@@ -26,8 +26,9 @@ import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.linkknown.ilearning.viewmodel.LoginViewModel;
 import com.linkknown.ilearning.viewpage.MainActivityViewPager;
 
 import org.apache.commons.lang3.StringUtils;
@@ -129,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         unLoginLayout = headerView.findViewById(R.id.un_login_dead);
 
-        LiveEventBus.get("loginResult", LoginViewModel.LoginResult.class).observe(this, loginResult -> {
-            if (loginResult != null){
-                if (StringUtils.isEmpty(loginResult.getErrorMsg()) && loginResult.getLoggedInUser() != null) {
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
+            if (loginUserResponse != null){
+                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功，显示登录布局
                     userHeaderInfoLayout.setVisibility(View.VISIBLE);
 
@@ -140,10 +141,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // 设置登录信息
                     // 异步加载图片,使用 Glide 第三方库
                     Glide.with(this)
-                            .load(UIUtils.replaceMediaUrl(loginResult.getLoggedInUser().getHeaderIcon()))
+                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
                             .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                             .into(headerIconView);
-                    mHeaderUserNameText.setText(loginResult.getLoggedInUser().getUserName());
+                    mHeaderUserNameText.setText(loginUserResponse.getUserName());
                 } else {
                     // 登录失败
                     unLoginLayout.setVisibility(View.VISIBLE);
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            } else {
 //                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
 //            }
-
+            UserService.logout(this);
         }
 
         // 抽屉关闭

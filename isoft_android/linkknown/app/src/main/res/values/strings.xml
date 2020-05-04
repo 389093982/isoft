@@ -32,6 +32,7 @@
     <string name="recommendCourse">推荐课程</string>
 
     <string name="courseDetail">课程详情</string>
+    <string name="cVideoIndex">第%1d集</string>
 
     <!-- 登录相关 -->
     <string name="need_login">未登录，请先登录！</string>

@@ -14,25 +14,21 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
-import com.linkknown.ilearning.viewmodel.LoginViewModel;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // 获取 viewModel
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -41,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         fillAccountFromMemory(usernameEditText, passwordEditText, loginButton);
 
-        LiveEventBus.get("loginFormState", LoginViewModel.LoginFormState.class).observe(this, loginFormState -> {
+        LiveEventBus.get("loginFormState", UserService.LoginFormState.class).observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
             }
@@ -54,17 +50,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        LiveEventBus.get("loginResult", LoginViewModel.LoginResult.class).observe(this, loginResult -> {
-            if (loginResult != null) {
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
+            if (loginUserResponse != null) {
                 loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getErrorMsg() != null) {
-                    ToastUtil.showText(this, loginResult.getErrorMsg());
+                if (loginUserResponse.getErrorMsg() != null) {
+                    ToastUtil.showText(this, loginUserResponse.getErrorMsg());
                 }
-                if (loginResult.getLoggedInUser() != null) {
+                if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
                     memoryAccount(usernameEditText, passwordEditText);
 
-                    updateUiWithUser(loginResult.getLoggedInUser());
+                    updateUiWithUser(loginUserResponse);
 
                     setResult(Activity.RESULT_OK);
                     finish();
@@ -84,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // 校验输入框
-                loginViewModel.validateLoginDataChanged(usernameEditText.getText().toString(),
+                UserService.validateLoginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
@@ -94,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         // setOnEditorActionListener 编辑完之后点击软键盘上的各种键才会触发
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(this, usernameEditText.getText().toString(),
+                UserService.login(this, usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
             return false;
@@ -104,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             // 显示登录进度 loading
             loadingProgressBar.setVisibility(View.VISIBLE);
             // 调用登录接口
-            loginViewModel.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            UserService.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
         });
     }
 
@@ -129,8 +125,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUiWithUser(LoginViewModel.LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getUserName();
+    private void updateUiWithUser(LoginUserResponse loginUserResponse) {
+        String welcome = getString(R.string.welcome) + loginUserResponse.getUserName();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
