@@ -19,8 +19,9 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,16 +77,24 @@ public class CourseDetailActivity extends AppCompatActivity {
         cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideo>((ArrayList<CourseDetailResponse.CVideo>)cVideos,R.layout.item_cvideo) {
             @Override
             public void bindView(ViewHolder holder, CourseDetailResponse.CVideo cVideo) {
-                holder.setText(R.id.cVideoName, cVideo.getVideo_name());
+                // 视频索引
+                String cVideoIndex = mContext.getResources().getString(R.string.cVideoIndex);
+                holder.setText(R.id.cVideoIndex, String.format(cVideoIndex, cVideos.indexOf(cVideo) + 1));
+                // 视频名称,去除后缀名后
+                holder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
+                // 视频时长
+                if (cVideo.getDuration() > 0) {
+                    holder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
+                } else {
+                    holder.setVisibility(R.id.cVideoDuration, View.INVISIBLE);
+                }
+
                 holder.setOnClickListener(R.id.cVideoName, v -> {
-                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
-                        @Override
-                        public Intent wrapper(Intent intent) {
-                            intent.putExtra("course_id", cVideo.getCourse_id());
-                            intent.putExtra("video_id", cVideo.getId());
-                            intent.putExtra("first_play", cVideo.getFirst_play());
-                            return intent;
-                        }
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                        intent.putExtra("course_id", cVideo.getCourse_id());
+                        intent.putExtra("video_id", cVideo.getId());
+                        intent.putExtra("first_play", cVideo.getFirst_play());
+                        return intent;
                     });
                 });
             }
