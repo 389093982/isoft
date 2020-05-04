@@ -1,6 +1,8 @@
 package com.linkknown.ilearning.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,15 +13,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.ui.login.LoginViewModel;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.viewmodel.LoginViewModel;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        fillAccountFromMemory(usernameEditText, passwordEditText, loginButton);
 
         LiveEventBus.get("loginFormState", LoginViewModel.LoginFormState.class).observe(this, loginFormState -> {
             if (loginFormState == null) {
@@ -57,6 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                     ToastUtil.showText(this, loginResult.getErrorMsg());
                 }
                 if (loginResult.getLoggedInUser() != null) {
+                    // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
+                    memoryAccount(usernameEditText, passwordEditText);
+
                     updateUiWithUser(loginResult.getLoggedInUser());
 
                     setResult(Activity.RESULT_OK);
@@ -99,6 +106,27 @@ public class LoginActivity extends AppCompatActivity {
             // 调用登录接口
             loginViewModel.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
         });
+    }
+
+    // 记录上次登录参数
+    private void memoryAccount(EditText usernameEditText, EditText passwordEditText) {
+        SharedPreferences preferences = this.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username", usernameEditText.getText().toString());
+        editor.putString("passwd", passwordEditText.getText().toString());
+        editor.apply();
+    }
+
+    // 自动填充登录表单
+    private void fillAccountFromMemory(EditText usernameEditText, EditText passwordEditText, Button loginButton) {
+        SharedPreferences preferences = this.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        String passwd = preferences.getString("passwd", "");
+        if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(passwd)) {
+            usernameEditText.setText(username);
+            passwordEditText.setText(passwd);
+            loginButton.setEnabled(true);
+        }
     }
 
     private void updateUiWithUser(LoginViewModel.LoggedInUserView model) {

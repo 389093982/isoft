@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.factory;
 
 import com.linkknown.ilearning.interceptor.HttpLogInterceptor;
+import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.service.LinkKnownService;
 
 import okhttp3.OkHttpClient;
@@ -17,6 +18,7 @@ public class LinkKnownApiFactory {
     public static void init (){
         // okhttp设置部分,此处还可再设置网络参数
         OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new TokenHeaderInterceptor())
                 .addInterceptor(new HttpLogInterceptor())
                 .build();
 

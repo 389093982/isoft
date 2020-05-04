@@ -1,6 +1,7 @@
-package com.linkknown.ilearning.activity.ui.login;
+package com.linkknown.ilearning.viewmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,6 +57,10 @@ public class LoginViewModel extends ViewModel {
                             loggedInUser.setRoleName(loginResponse.getRoleName());
                             loggedInUser.setTokenString(loginResponse.getTokenString());
                             loggedInUser.setUserName(loginResponse.getUserName());
+                            loggedInUser.setHeaderIcon(loginResponse.getHeaderIcon());
+
+                            // 存储登录后的 tokenString
+                            TokenHeaderInterceptor.TOKEN_STRING.set(loginResponse.getTokenString());
 
                             LoginResult lrt = new LoginResult();
                             lrt.setLoggedInUser(loggedInUser);
@@ -150,5 +156,6 @@ public class LoginViewModel extends ViewModel {
         private String roleName;
         private String tokenString;
         private String userName;
+        private String headerIcon;
     }
 }
