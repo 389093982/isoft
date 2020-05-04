@@ -9,8 +9,6 @@ public class LoginResponse extends BaseResponse {
 
     private String domain;
 
-    private String errorMsg;
-
     private String expireSecond;
 
     private String loginStatus;

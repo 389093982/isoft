@@ -1,12 +1,12 @@
 package com.linkknown.ilearning.activity.ui.login;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.LoginResponse;
@@ -19,27 +19,17 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+// LiveData 在实体类里可以通知指定某个字段的数据更新
+// MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class LoginViewModel extends ViewModel {
 
-    // LiveData 在实体类里可以通知指定某个字段的数据更新
-    // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-
-    public LiveData<LoginFormState> getLoginFormState() {
-        return loginFormState;
-    }
-
-    public LiveData<LoginResult> getLoginResult() {
-        return loginResult;
-    }
-
-    public void login(String username, String passwd) {
+    public void login(Context mContext, String username, String passwd) {
         LinkKnownApiFactory.getLinkKnownService().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -68,12 +58,13 @@ public class LoginViewModel extends ViewModel {
 
                             LoginResult lrt = new LoginResult();
                             lrt.setLoggedInUser(loggedInUser);
-                            loginResult.setValue(lrt);
+
+                            LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
                         } else {
-                            Log.e("onNext =>", "登录失败！");
+                            Log.e("onNext =>", "login failed！" + loginResponse.getErrorMsg());
                             LoginResult lrt = new LoginResult();
-                            lrt.setErrorMsg(R.string.login_failed);
-                            loginResult.setValue(lrt);
+                            lrt.setErrorMsg(loginResponse.getErrorMsg());
+                            LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
                         }
                     }
 
@@ -81,8 +72,8 @@ public class LoginViewModel extends ViewModel {
                     public void onError(Throwable e) {
                         Log.e("onError =>", e.getMessage());
                         LoginResult lrt = new LoginResult();
-                        lrt.setErrorMsg(R.string.login_failed);
-                        loginResult.setValue(lrt);
+                        lrt.setErrorMsg(mContext.getResources().getString(R.string.login_failed));
+                        LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
                     }
 
                     @Override
@@ -100,7 +91,7 @@ public class LoginViewModel extends ViewModel {
             state.setPasswordError(R.string.invalid_password);
         } else {
             state.setDataValid(true);
-            loginFormState.setValue(state);
+            LiveEventBus.get("loginFormState", LoginFormState.class).post(state);
         }
     }
 
@@ -122,8 +113,6 @@ public class LoginViewModel extends ViewModel {
     }
 
 
-
-
     // LiveData 管理的模型对象,用于双向绑定
     @Data
     @NoArgsConstructor
@@ -132,7 +121,7 @@ public class LoginViewModel extends ViewModel {
         @Nullable
         private LoggedInUserView loggedInUser;
         @Nullable
-        private Integer errorMsg;           // 登录失败的错误提示,使用 R.string.xxx int 类型参数
+        private String errorMsg;           // 登录失败的错误提示
     }
 
     @Data

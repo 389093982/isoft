@@ -13,10 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.ui.login.LoginViewModel;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+        LiveEventBus.get("loginFormState", LoginViewModel.LoginFormState.class).observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
             }
@@ -47,20 +50,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, loginResult -> {
-            if (loginResult == null) {
-                return;
-            }
-            loadingProgressBar.setVisibility(View.GONE);
-            if (loginResult.getErrorMsg() != null) {
-                showLoginFailed(loginResult.getErrorMsg());
-            }
-            if (loginResult.getLoggedInUser() != null) {
-                updateUiWithUser(loginResult.getLoggedInUser());
-            }
-            setResult(Activity.RESULT_OK);
+        LiveEventBus.get("loginResult", LoginViewModel.LoginResult.class).observe(this, loginResult -> {
+            if (loginResult != null) {
+                loadingProgressBar.setVisibility(View.GONE);
+                if (loginResult.getErrorMsg() != null) {
+                    ToastUtil.showText(this, loginResult.getErrorMsg());
+                }
+                if (loginResult.getLoggedInUser() != null) {
+                    updateUiWithUser(loginResult.getLoggedInUser());
 
-            finish();
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+            }
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -82,9 +84,10 @@ public class LoginActivity extends AppCompatActivity {
         // 文本框设置 listener
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
+        // setOnEditorActionListener 编辑完之后点击软键盘上的各种键才会触发
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(usernameEditText.getText().toString(),
+                loginViewModel.login(this, usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
             return false;
@@ -94,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             // 显示登录进度 loading
             loadingProgressBar.setVisibility(View.VISIBLE);
             // 调用登录接口
-            loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            loginViewModel.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
         });
     }
 
@@ -104,7 +107,4 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-    }
 }
