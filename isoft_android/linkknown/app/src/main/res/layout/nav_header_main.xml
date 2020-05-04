@@ -16,7 +16,7 @@
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/person_head"
+            android:id="@+id/headerIconView"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"

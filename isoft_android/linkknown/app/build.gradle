@@ -66,6 +66,14 @@ dependencies {
     // 安卓图片轮播
     implementation 'com.youth.banner:banner:1.4.10'
 
+    // 节操播放器
+    implementation 'fm.jiecao:jiecaovideoplayer:4.8.3'
+
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+
+    // LiveEventBus是一款Android消息总线,基于LiveData,具有生命周期感知能力,支持Sticky,支持AndroidX,支持跨进程,支持跨APP
+    implementation 'com.jeremyliao:live-event-bus-x:1.6.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

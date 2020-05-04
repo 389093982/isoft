@@ -34,8 +34,8 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private Context mContext;
     private Intent intent;
-    private List<CourseDetailResponse.CVideos> cVideos = new ArrayList<>();
-    private CommonAdapter<CourseDetailResponse.CVideos> cVideosCommonAdapter;
+    private List<CourseDetailResponse.CVideo> cVideos = new ArrayList<>();
+    private CommonAdapter<CourseDetailResponse.CVideo> cVideosCommonAdapter;
 
     @BindView(R.id.detail_goback)
     public ImageView gobackView;
@@ -73,10 +73,21 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 发送异步请求获取数据
         initData();
 
-        cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideos>((ArrayList<CourseDetailResponse.CVideos>)cVideos,R.layout.item_cvideo) {
+        cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideo>((ArrayList<CourseDetailResponse.CVideo>)cVideos,R.layout.item_cvideo) {
             @Override
-            public void bindView(ViewHolder holder, CourseDetailResponse.CVideos cVideo) {
+            public void bindView(ViewHolder holder, CourseDetailResponse.CVideo cVideo) {
                 holder.setText(R.id.cVideoName, cVideo.getVideo_name());
+                holder.setOnClickListener(R.id.cVideoName, v -> {
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
+                        @Override
+                        public Intent wrapper(Intent intent) {
+                            intent.putExtra("course_id", cVideo.getCourse_id());
+                            intent.putExtra("video_id", cVideo.getId());
+                            intent.putExtra("first_play", cVideo.getFirst_play());
+                            return intent;
+                        }
+                    });
+                });
             }
         };
         cVideoListView.setAdapter(cVideosCommonAdapter);
@@ -85,7 +96,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     private void initData () {
-        LinkKnownApiFactory.getLinkKnownService().showCourseDetail(intent.getIntExtra("course_id", -1))
+        LinkKnownApiFactory.getLinkKnownService().showCourseDetailForApp(intent.getIntExtra("course_id", -1))
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<CourseDetailResponse>() {
@@ -102,7 +113,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
                             // 异步加载图片,使用 Glide 第三方库
                             Glide.with(mContext)
-                                    .load(course.getSmall_image().replace("localhost", "192.168.1.2"))
+                                    .load(UIUtils.replaceMediaUrl(course.getSmall_image()))
                                     // placeholder 图片加载出来前,显示的图片
                                     // error 图片加载失败后,显示的图片
                                     .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))

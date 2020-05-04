@@ -3,6 +3,7 @@ package com.linkknown.ilearning;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -12,14 +13,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.util.ui.UIUtils;
+import com.linkknown.ilearning.viewmodel.LoginViewModel;
 import com.linkknown.ilearning.viewpage.MainActivityViewPager;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +42,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @BindView(R.id.navigationView)
     public NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout drawer;
 
     // 用户登录之后显示用户头像及昵称
     private LinearLayout userHeaderInfoLayout;
 
-    // 未登录时显示提示信息
-    private RelativeLayout unLoginLayout;
-
     // 登陆后在头像下方显示的用户名
     private TextView mHeaderUserNameText;
+
+    // 未登录时显示提示信息的布局
+    private RelativeLayout unLoginLayout;
 
     // 存储首页对应的三个片段
     private List<Fragment> mFragments;
@@ -109,9 +122,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initNavigation () {
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
+
         userHeaderInfoLayout = headerView.findViewById(R.id.user_header_info);
-        unLoginLayout = headerView.findViewById(R.id.un_login_dead);
         mHeaderUserNameText = headerView.findViewById(R.id.user_name_header);
+        ImageView headerIconView = headerView.findViewById(R.id.headerIconView);
+
+        unLoginLayout = headerView.findViewById(R.id.un_login_dead);
+
+        LiveEventBus.get("loginResult", LoginViewModel.LoginResult.class).observe(this, loginResult -> {
+            if (loginResult != null){
+                if (StringUtils.isEmpty(loginResult.getErrorMsg()) && loginResult.getLoggedInUser() != null) {
+                    // 登录成功，显示登录布局
+                    userHeaderInfoLayout.setVisibility(View.VISIBLE);
+
+                    unLoginLayout.setVisibility(View.GONE);
+
+                    // 设置登录信息
+                    // 异步加载图片,使用 Glide 第三方库
+                    Glide.with(this)
+                            .load(UIUtils.replaceMediaUrl(loginResult.getLoggedInUser().getHeaderIcon()))
+                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                            .into(headerIconView);
+                    mHeaderUserNameText.setText(loginResult.getLoggedInUser().getUserName());
+                } else {
+                    // 登录失败
+                    unLoginLayout.setVisibility(View.VISIBLE);
+                    userHeaderInfoLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void initFragment () {
@@ -151,8 +190,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    // navigation view 点击事件
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if (id == R.id.shouye) {
+            // Handle the camera action
+            mViewPage.setCurrentItem(0);
+            //底部ImageView点击之后变色
+            rb_home.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.fenlei) {
+            mViewPage.setCurrentItem(1);
+            //底部ImageView点击之后变色
+            rb_category.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.wode) {
+            mViewPage.setCurrentItem(2);
+            //底部ImageView点击之后变色
+            rb_mine.setChecked(true);
+            setRadioGroupStatus();
+        } else if (id == R.id.denglu) {
+//            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
+//            } else {
+//                UIUtils.gotoActivity(this, LoginActivity.class);
+//            }
+            UIUtils.gotoActivity(this, LoginActivity.class);
+        } else if (id == R.id.zhuce) {
+            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+//                startActivity(intent);
+//            }
+
+        } else if (id == R.id.zhuxiao) {
+            //intent跳转
+//            if (LoginCheckUtil.isLogin(this)) {
+//                SharedPreferences.Editor editor = getSharedPreferences("userInfo", 0).edit();
+//                editor.clear();
+//                editor.commit();
+//                Toast.makeText(this, "您已注销", Toast.LENGTH_SHORT).show();
+//
+//                //刷新UI显示
+//                refreshUI(LoginCheckUtil.isLogin(this));
+//            } else {
+//                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
+//            }
+
+        }
+
+        // 抽屉关闭
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
