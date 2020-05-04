@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            } else {
 //                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
 //            }
-
+            LoginViewModel.logout(this);
         }
 
         // 抽屉关闭

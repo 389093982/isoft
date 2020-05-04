@@ -1,7 +1,6 @@
 package com.linkknown.ilearning.viewmodel;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -9,9 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginResponse;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,17 +22,21 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class LoginViewModel extends ViewModel {
 
-    public void login(Context mContext, String username, String passwd) {
+    public static void logout (Context mContext) {
+        TokenHeaderInterceptor.TOKEN_STRING.set("");
+        LoginResult lrt = new LoginResult();
+        lrt.setErrorMsg("用户未登录！");
+        LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
+        UIUtils.gotoActivity(mContext, LoginActivity.class);
+    }
+
+    public static void login(Context mContext, String username, String passwd) {
         LinkKnownApiFactory.getLinkKnownService().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -89,7 +94,7 @@ public class LoginViewModel extends ViewModel {
                 });
     }
 
-    public void validateLoginDataChanged(String username, String password) {
+    public static void validateLoginDataChanged(String username, String password) {
         LoginFormState state = new LoginFormState();
         if (!isUserNameValid(username)) {
             state.setUsernameError(R.string.invalid_username);
@@ -101,7 +106,7 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    private boolean isUserNameValid(String username) {
+    private static boolean isUserNameValid(String username) {
 //        if (username == null) {
 //            return false;
 //        }
@@ -113,7 +118,7 @@ public class LoginViewModel extends ViewModel {
         return StringUtils.isNotBlank(username);
     }
 
-    private boolean isPasswordValid(String password) {
+    private static boolean isPasswordValid(String password) {
 //        return password != null && password.trim().length() > 5;
         return StringUtils.isNotBlank(password);
     }
@@ -123,7 +128,7 @@ public class LoginViewModel extends ViewModel {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class LoginResult {
+    public static class LoginResult {
         @Nullable
         private LoggedInUserView loggedInUser;
         @Nullable
@@ -133,7 +138,7 @@ public class LoginViewModel extends ViewModel {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class LoginFormState {
+    public static class LoginFormState {
         @Nullable
         private Integer usernameError;
         @Nullable
@@ -145,7 +150,7 @@ public class LoginViewModel extends ViewModel {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class LoggedInUserView {
+    public static class LoggedInUserView {
         private String domain;
         private String errorMsg;
         private String expireSecond;

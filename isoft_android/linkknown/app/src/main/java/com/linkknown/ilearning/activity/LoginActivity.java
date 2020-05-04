@@ -25,14 +25,10 @@ import org.apache.commons.lang3.StringUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // 获取 viewModel
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -84,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // 校验输入框
-                loginViewModel.validateLoginDataChanged(usernameEditText.getText().toString(),
+                LoginViewModel.validateLoginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
@@ -94,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         // setOnEditorActionListener 编辑完之后点击软键盘上的各种键才会触发
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(this, usernameEditText.getText().toString(),
+                LoginViewModel.login(this, usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
             return false;
@@ -104,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             // 显示登录进度 loading
             loadingProgressBar.setVisibility(View.VISIBLE);
             // 调用登录接口
-            loginViewModel.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+            LoginViewModel.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
         });
     }
 

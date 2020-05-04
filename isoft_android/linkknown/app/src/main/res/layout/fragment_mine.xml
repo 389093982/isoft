@@ -43,15 +43,11 @@
                 android:src="@drawable/img01">
             </ImageView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/big_headerIcon"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/cutecat"/>
-            </View>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/big_headerIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/cutecat"/>
 
             <!-- 自定义 toolbar,本质也是继承于toolbar -->
             <androidx.appcompat.widget.Toolbar
