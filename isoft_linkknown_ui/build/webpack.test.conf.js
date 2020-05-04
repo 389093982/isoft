@@ -28,7 +28,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': require('../config/prod.env')
+      'process.env': require('../config/test.env')
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
@@ -59,7 +59,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.build.index,
+      filename: 'index.html',
       template: 'index.html',
       inject: true,
       minify: {

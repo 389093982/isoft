@@ -2,10 +2,23 @@ import {checkEmpty} from "./index"
 import {GitHubLogin} from "../api";
 import {setLoginInfo} from "./sso";
 
-const config = {
+let config;
+if(process.env.NODE_ENV==='development'){
+  config = {
     clientID:'af46aec6d4529d7cd7fd',
-  clientSecret:'26ed56923769e65599573e85bfe76d5e6740c838',
-};
+    clientSecret:'26ed56923769e65599573e85bfe76d5e6740c838',
+  }
+}else if (process.env.NODE_ENV === 'testing') {
+  config = {
+    clientID:'de425b2326ee1fa24b68',
+    clientSecret:'0fd3686f1e12e59314046a2c144047a63930282c',
+  }
+}else if (process.env.NODE_ENV === 'production') {
+  config = {
+    clientID:'7168f3568d2c6d3f6403',
+    clientSecret:'85e9c5226b5beddc5469298225acc79101975032',
+  }
+}
 
 export const redirectToGitHubLogin = function () {
   window.location.href = "https://github.com/login/oauth/authorize?client_id=" + config.clientID + "&scope=user,public_repo";
