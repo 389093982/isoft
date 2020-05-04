@@ -76,7 +76,7 @@ public class CourseListActivity extends AppCompatActivity implements HandlerUtil
     }
 
     private void initData() {
-        LinkKnownApiFactory.getLinkKnownService().getHotCourseRecommend()
+        LinkKnownApiFactory.getLinkKnownApi().getHotCourseRecommend()
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<CourseMetaResponse>() {

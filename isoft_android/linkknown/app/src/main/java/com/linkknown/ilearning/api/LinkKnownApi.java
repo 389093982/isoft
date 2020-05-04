@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.service;
+package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface LinkKnownService {
+public interface LinkKnownApi {
 
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend")
     Observable<CourseMetaResponse> getHotCourseRecommend();

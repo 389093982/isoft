@@ -105,7 +105,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     private void initData () {
-        LinkKnownApiFactory.getLinkKnownService().showCourseDetailForApp(intent.getIntExtra("course_id", -1))
+        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(intent.getIntExtra("course_id", -1))
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<CourseDetailResponse>() {

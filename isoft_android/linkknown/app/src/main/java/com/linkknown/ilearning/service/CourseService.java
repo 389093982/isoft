@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.manager;
+package com.linkknown.ilearning.service;
 
 import android.util.Log;
 
@@ -13,10 +13,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseServiceManager {
+public class CourseService {
 
     public static void search(String search) {
-        LinkKnownApiFactory.getLinkKnownService().searchCourseList(search)
+        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<CourseSearchResponse>() {

@@ -2,7 +2,7 @@ package com.linkknown.ilearning.factory;
 
 import com.linkknown.ilearning.interceptor.HttpLogInterceptor;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
-import com.linkknown.ilearning.service.LinkKnownService;
+import com.linkknown.ilearning.api.LinkKnownApi;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LinkKnownApiFactory {
 
-    private static LinkKnownService linkKnownService;
+    private static LinkKnownApi linkKnownApi;
     private static String BASE_URL = "http://192.168.1.2:6001";
 //    private static String BASE_URL = "http://www.linkknown.com";
 
@@ -29,13 +29,13 @@ public class LinkKnownApiFactory {
                 .client(client) //此 client 是为了打印信息
                 .build();
 
-        linkKnownService = retrofit.create(LinkKnownService.class);
+        linkKnownApi = retrofit.create(LinkKnownApi.class);
     }
 
-    public static synchronized LinkKnownService getLinkKnownService () {
-        if (linkKnownService == null) {
+    public static synchronized LinkKnownApi getLinkKnownApi () {
+        if (linkKnownApi == null) {
             init();
         }
-        return linkKnownService;
+        return linkKnownApi;
     }
 }

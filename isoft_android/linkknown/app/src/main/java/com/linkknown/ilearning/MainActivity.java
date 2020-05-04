@@ -26,7 +26,7 @@ import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
-import com.linkknown.ilearning.manager.UserServiceManager;
+import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.viewpage.MainActivityViewPager;
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            } else {
 //                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
 //            }
-            UserServiceManager.logout(this);
+            UserService.logout(this);
         }
 
         // 抽屉关闭

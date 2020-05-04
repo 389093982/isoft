@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.manager;
+package com.linkknown.ilearning.service;
 
 import android.content.Context;
 import android.util.Log;
@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
-public class UserServiceManager extends ViewModel {
+public class UserService extends ViewModel {
 
     public static void logout (Context mContext) {
         TokenHeaderInterceptor.TOKEN_STRING.set("");
@@ -37,7 +37,7 @@ public class UserServiceManager extends ViewModel {
     }
 
     public static void login(Context mContext, String username, String passwd) {
-        LinkKnownApiFactory.getLinkKnownService().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
+        LinkKnownApiFactory.getLinkKnownApi().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<LoginUserResponse>() {

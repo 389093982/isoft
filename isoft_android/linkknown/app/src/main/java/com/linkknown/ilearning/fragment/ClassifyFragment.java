@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
-import com.linkknown.ilearning.manager.CourseServiceManager;
+import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.model.CourseSearchResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
@@ -152,6 +152,6 @@ public class ClassifyFragment extends Fragment {
     }
 
     private void loadCourseList (String search) {
-        CourseServiceManager.search(search);
+        CourseService.search(search);
     }
 }
