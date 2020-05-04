@@ -14,11 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,9 +32,9 @@ public class ClassifyFragment extends Fragment {
 
     //一级菜单，两个ListView控件
     @BindView(R.id.left)
-    public ListView mCommodityTypeListView;
+    public ListView leftClassifyListView;
     @BindView(R.id.right)
-    public ListView mCommodityListView;
+    public ListView rightCourseListView;
     @BindView(R.id.progress)
     public RelativeLayout mProgressBar;
     @BindView(R.id.home_serachview)
@@ -60,26 +63,47 @@ public class ClassifyFragment extends Fragment {
 
     private void init() {
         ArrayList<String> mData = new ArrayList<>();
-        mData.add("hello");
-        mData.add("hello");
-        mData.add("hello");
-        mData.add("hello");
+        mData.add("前端");
+        mData.add("后台");
+        mData.add("数据库");
+        mData.add("docker");
+        mData.add("自动化测试");
+        mData.add("其它");
+        mData.add("全部");
 
-        CommonAdapter mCommodityTypeListAdapter = new CommonAdapter<String>(mData, R.layout.classify_left_item) {
+        CommonAdapter leftClassifyListAdapter = new CommonAdapter<String>(mData, R.layout.classify_left_item) {
             @Override
             public void bindView(ViewHolder holder, String str) {
                 holder.setText(R.id.classifyName, str);
             }
         };
-        mCommodityTypeListView.setAdapter(mCommodityTypeListAdapter);
-        mCommodityTypeListView.setOnItemClickListener((parent, view, position, id) -> {
-            mCommodityTypeListAdapter.forEachHolder((position1, viewHolder) -> {
+        leftClassifyListView.setAdapter(leftClassifyListAdapter);
+        leftClassifyListView.setOnItemClickListener((parent, view, position, id) -> {
+            leftClassifyListAdapter.forEachHolder((position1, viewHolder) -> {
                 if (position == position1){
                     viewHolder.setChecked(R.id.radioButton, true);
                 } else {
                     viewHolder.setChecked(R.id.radioButton, false);
                 }
             });
+            //加载中动效
+            showLoading(true);
+
+            // 加载右侧视频数据
+            loadCourseList(mData.get(position));
+        });
+
+        LiveEventBus.get("loadCourseList", List.class).observe(this, list -> {
+            CommonAdapter rightCourseListAdapter = new CommonAdapter<String>((ArrayList<String>) list, R.layout.classify_right_item) {
+
+                @Override
+                public void bindView(ViewHolder holder, String str) {
+                    holder.setText(R.id.courseName, str);
+                }
+            };
+            rightCourseListView.setAdapter(rightCourseListAdapter);
+            // 去掉加载效果
+            showLoading(false);
         });
 
 //        //商品类别菜单点击事件
@@ -110,5 +134,27 @@ public class ClassifyFragment extends Fragment {
 //                startActivity(intent);
 //            }
 //        });
+    }
+
+    /**
+     * 当进行网络请求时，播放进度条动画
+     *
+     * @param isLoading 是否正在网络请求
+     */
+    private void showLoading(boolean isLoading) {
+        mProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        rightCourseListView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+    }
+
+    private void loadCourseList (String search) {
+        ArrayList<String> mData = new ArrayList<>();
+        mData.add("111" + search);
+        mData.add("222" + search);
+        mData.add("333" + search);
+        mData.add("111" + search);
+        mData.add("111" + search);
+        mData.add("111" + search);
+
+        LiveEventBus.get("loadCourseList", List.class).post(mData);
     }
 }
