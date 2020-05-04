@@ -5,23 +5,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
+import com.linkknown.ilearning.manager.CourseServiceManager;
+import com.linkknown.ilearning.model.CourseSearchResponse;
+import com.linkknown.ilearning.util.ui.ToastUtil;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,15 +94,19 @@ public class ClassifyFragment extends Fragment {
             loadCourseList(mData.get(position));
         });
 
-        LiveEventBus.get("loadCourseList", List.class).observe(this, list -> {
-            CommonAdapter rightCourseListAdapter = new CommonAdapter<String>((ArrayList<String>) list, R.layout.classify_right_item) {
+        LiveEventBus.get("courseSearchResponse", CourseSearchResponse.class).observe(this, courseSearchResponse -> {
+            if (StringUtils.isEmpty(courseSearchResponse.getErrorMsg())) {
+                CommonAdapter rightCourseListAdapter = new CommonAdapter<CourseSearchResponse.Course>((ArrayList<CourseSearchResponse.Course>) courseSearchResponse.getCourses(), R.layout.classify_right_item) {
 
-                @Override
-                public void bindView(ViewHolder holder, String str) {
-                    holder.setText(R.id.courseName, str);
-                }
-            };
-            rightCourseListView.setAdapter(rightCourseListAdapter);
+                    @Override
+                    public void bindView(ViewHolder holder, CourseSearchResponse.Course course) {
+                        holder.setText(R.id.courseName, course.getCourse_name());
+                    }
+                };
+                rightCourseListView.setAdapter(rightCourseListAdapter);
+            } else {
+                ToastUtil.showText(getContext(),"数据加载异常");
+            }
             // 去掉加载效果
             showLoading(false);
         });
@@ -147,14 +152,6 @@ public class ClassifyFragment extends Fragment {
     }
 
     private void loadCourseList (String search) {
-        ArrayList<String> mData = new ArrayList<>();
-        mData.add("111" + search);
-        mData.add("222" + search);
-        mData.add("333" + search);
-        mData.add("111" + search);
-        mData.add("111" + search);
-        mData.add("111" + search);
-
-        LiveEventBus.get("loadCourseList", List.class).post(mData);
+        CourseServiceManager.search(search);
     }
 }

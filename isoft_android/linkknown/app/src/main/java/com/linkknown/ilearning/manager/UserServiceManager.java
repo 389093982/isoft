@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.viewmodel;
+package com.linkknown.ilearning.manager;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
-import com.linkknown.ilearning.model.LoginResponse;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,13 +26,13 @@ import lombok.NoArgsConstructor;
 
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
-public class LoginViewModel extends ViewModel {
+public class UserServiceManager extends ViewModel {
 
     public static void logout (Context mContext) {
         TokenHeaderInterceptor.TOKEN_STRING.set("");
-        LoginResult lrt = new LoginResult();
-        lrt.setErrorMsg("用户未登录！");
-        LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
+        LoginUserResponse result = new LoginUserResponse();
+        result.setErrorMsg("用户未登录！");
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
         UIUtils.gotoActivity(mContext, LoginActivity.class);
     }
 
@@ -40,7 +40,7 @@ public class LoginViewModel extends ViewModel {
         LinkKnownApiFactory.getLinkKnownService().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new Observer<LoginResponse>() {
+                .subscribe(new Observer<LoginUserResponse>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -48,43 +48,26 @@ public class LoginViewModel extends ViewModel {
                     }
 
                     @Override
-                    public void onNext(LoginResponse loginResponse) {
-                        if (loginResponse.isSuccess()) {
-                            LoggedInUserView loggedInUser = new LoggedInUserView();
-                            // 对象转换
-                            loggedInUser.setDomain(loginResponse.getDomain());
-                            loggedInUser.setErrorMsg(loginResponse.getErrorMsg());
-                            loggedInUser.setExpireSecond(loginResponse.getExpireSecond());
-                            loggedInUser.setLoginStatus(loginResponse.getStatus());
-                            loggedInUser.setNickName(loginResponse.getNickName());
-                            loggedInUser.setLoginSuccess(loginResponse.getLoginSuccess());
-                            loggedInUser.setRedirectUrl(loginResponse.getRedirectUrl());
-                            loggedInUser.setRoleName(loginResponse.getRoleName());
-                            loggedInUser.setTokenString(loginResponse.getTokenString());
-                            loggedInUser.setUserName(loginResponse.getUserName());
-                            loggedInUser.setHeaderIcon(loginResponse.getHeaderIcon());
-
+                    public void onNext(LoginUserResponse loginUserResponse) {
+                        if (loginUserResponse.isSuccess()) {
                             // 存储登录后的 tokenString
-                            TokenHeaderInterceptor.TOKEN_STRING.set(loginResponse.getTokenString());
+                            TokenHeaderInterceptor.TOKEN_STRING.set(loginUserResponse.getTokenString());
 
-                            LoginResult lrt = new LoginResult();
-                            lrt.setLoggedInUser(loggedInUser);
-
-                            LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
+                            LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(loginUserResponse);
                         } else {
-                            Log.e("onNext =>", "login failed！" + loginResponse.getErrorMsg());
-                            LoginResult lrt = new LoginResult();
-                            lrt.setErrorMsg(loginResponse.getErrorMsg());
-                            LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
+                            Log.e("onNext =>", "login failed！" + loginUserResponse.getErrorMsg());
+                            LoginUserResponse result = new LoginUserResponse();
+                            result.setErrorMsg(loginUserResponse.getErrorMsg());
+                            LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("onError =>", e.getMessage());
-                        LoginResult lrt = new LoginResult();
-                        lrt.setErrorMsg(mContext.getResources().getString(R.string.login_failed));
-                        LiveEventBus.get("loginResult", LoginResult.class).post(lrt);
+                        LoginUserResponse result = new LoginUserResponse();
+                        result.setErrorMsg(mContext.getResources().getString(R.string.login_failed));
+                        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
                     }
 
                     @Override
@@ -123,18 +106,6 @@ public class LoginViewModel extends ViewModel {
         return StringUtils.isNotBlank(password);
     }
 
-
-    // LiveData 管理的模型对象,用于双向绑定
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class LoginResult {
-        @Nullable
-        private LoggedInUserView loggedInUser;
-        @Nullable
-        private String errorMsg;           // 登录失败的错误提示
-    }
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -146,21 +117,5 @@ public class LoginViewModel extends ViewModel {
         private boolean isDataValid;
     }
 
-    // 登录成功后的存储的用户信息
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class LoggedInUserView {
-        private String domain;
-        private String errorMsg;
-        private String expireSecond;
-        private String loginStatus;
-        private String loginSuccess;
-        private String nickName;
-        private String redirectUrl;
-        private String roleName;
-        private String tokenString;
-        private String userName;
-        private String headerIcon;
-    }
+
 }

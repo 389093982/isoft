@@ -20,8 +20,9 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
+import com.linkknown.ilearning.manager.UserServiceManager;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.linkknown.ilearning.viewmodel.LoginViewModel;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -71,16 +72,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private void initLoginInfo () {
 
 
-        LiveEventBus.get("loginResult", LoginViewModel.LoginResult.class).observe(this, loginResult -> {
-            if (StringUtils.isEmpty(loginResult.getErrorMsg()) && loginResult.getLoggedInUser() != null) {
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
+            if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                 small_headerIcon.setVisibility(View.VISIBLE);
                 // 登录成功
                 Glide.with(getContext())
-                        .load(UIUtils.replaceMediaUrl(loginResult.getLoggedInUser().getHeaderIcon()))
+                        .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
                         .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                         .into(small_headerIcon);
                 Glide.with(getContext())
-                        .load(UIUtils.replaceMediaUrl(loginResult.getLoggedInUser().getHeaderIcon()))
+                        .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
                         .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                         .into(big_headerIcon);
             } else {

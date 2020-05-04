@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class LoginResponse extends BaseResponse {
+public class LoginUserResponse extends BaseResponse {
 
     private String domain;
     private String expireSecond;
