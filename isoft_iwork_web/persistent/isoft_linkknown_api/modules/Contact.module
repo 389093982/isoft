@@ -1,0 +1,10 @@
+<Module>
+	<Id>27</Id>
+	<AppId>5</AppId>
+	<ModuleName>Contact</ModuleName>
+	<ModuleDesc>联系模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-05-05T16:00:29+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-05-05T16:00:29+08:00</LastUpdatedTime>
+</Module>

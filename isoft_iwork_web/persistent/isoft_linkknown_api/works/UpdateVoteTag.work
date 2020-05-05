@@ -5,7 +5,7 @@
 		<WorkName>UpdateVoteTag</WorkName>
 		<WorkDesc>UpdateVoteTag</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName>Decorate</ModuleName>
+		<ModuleName>Common</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>

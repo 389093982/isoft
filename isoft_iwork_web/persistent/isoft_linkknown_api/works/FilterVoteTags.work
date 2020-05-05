@@ -5,7 +5,7 @@
 		<WorkName>FilterVoteTags</WorkName>
 		<WorkDesc>FilterVoteTags</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName>Decorate</ModuleName>
+		<ModuleName>Common</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>

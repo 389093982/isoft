@@ -1,10 +1,10 @@
 <Module>
 	<Id>26</Id>
 	<AppId>5</AppId>
-	<ModuleName>Payment</ModuleName>
+	<ModuleName>Pay</ModuleName>
 	<ModuleDesc>支付模块</ModuleDesc>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-04-16T21:27:52+08:00</CreatedTime>
+	<CreatedTime>2020-05-05T16:09:22+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-04-16T21:27:52+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-05-05T16:09:22+08:00</LastUpdatedTime>
 </Module>

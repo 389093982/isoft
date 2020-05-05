@@ -1,0 +1,10 @@
+<Module>
+	<Id>12</Id>
+	<AppId>5</AppId>
+	<ModuleName>Goods</ModuleName>
+	<ModuleDesc>商品模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-05-05T16:09:11+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-05-05T16:09:11+08:00</LastUpdatedTime>
+</Module>

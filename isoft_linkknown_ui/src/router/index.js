@@ -5,7 +5,6 @@ import {joinArray} from "../tools"
 // es6 import 异步语法,使用异步组件加载机制减少耗时操作
 const Login = () => import("@/components/SSO/Login/Login");
 const RegistOrForget = () => import("@/components/SSO/Login/RegistOrForget");
-const AppRegist = () => import("@/components/SSO/AppRegist");
 const LoginRecord = () => import("@/components/SSO/LoginRecord");
 const IEmptyLayout = () => import("@/components/ILayout/IEmptyLayout");
 const ICMSLayout = () => import("@/components/ILayout/ICMSLayout");
@@ -148,7 +147,6 @@ const ICMSReouter = [{
   path: '/background', component: ICMSLayout,
     children: [
       {path: 'adviseList', component: AdviseList},
-      {path: 'sso/appRegist', component: AppRegist},
       {path: 'sso/loginRecord', component: LoginRecord},
       {path: 'elementEdit', component: ElementEdit},
       {path: 'elementList', component: ElementList},
