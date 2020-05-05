@@ -5,7 +5,7 @@
 		<WorkName>AddAppRegister</WorkName>
 		<WorkDesc>AddAppRegister</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName>SSO</ModuleName>
+		<ModuleName>User</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
