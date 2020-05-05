@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
 //                startActivity(intent);
 //            }
-
+            UIUtils.gotoActivity(this, RegistActivity.class);
         } else if (id == R.id.zhuxiao) {
             //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {

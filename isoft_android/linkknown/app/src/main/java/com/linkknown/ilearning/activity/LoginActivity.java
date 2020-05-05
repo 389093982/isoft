@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginUserResponse.getErrorMsg() != null) {
                     ToastUtil.showText(this, loginUserResponse.getErrorMsg());
+                    return;
                 }
                 if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入

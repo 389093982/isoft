@@ -10,6 +10,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">登录失败！</string>
+    <string name="regist_failed">注册失败！</string>
 
     <string name="courseNameText">课程名称：</string>
     <string name="courseNameTextDemo">这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称这里是课程超长的课程名称</string>
@@ -37,4 +38,5 @@
     <!-- 登录相关 -->
     <string name="need_login">未登录，请先登录！</string>
     <string name="title_activity_course_detail">CourseDetailActivity</string>
+    <string name="title_activity_regist">Regist</string>
 </resources>
