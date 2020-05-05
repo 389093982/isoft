@@ -5,7 +5,7 @@
 		<WorkName>AddContactMessage</WorkName>
 		<WorkDesc>AddContactMessage</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName>Message</ModuleName>
+		<ModuleName>Contact</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
