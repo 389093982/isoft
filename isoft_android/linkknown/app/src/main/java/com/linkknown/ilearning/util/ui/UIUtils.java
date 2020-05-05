@@ -36,4 +36,5 @@ public class UIUtils {
     public static String replaceMediaUrl (String url) {
         return url.replace("localhost", "192.168.1.2");
     }
+
 }
