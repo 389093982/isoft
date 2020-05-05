@@ -43,9 +43,6 @@
                 <router-link to="/background/userSearch">用户查询</router-link>
               </MenuItem>
               <MenuItem name="5-3">权限管理</MenuItem>
-              <MenuItem name="5-4">
-                <router-link to="/background/sso/appRegist">注册管理</router-link>
-              </MenuItem>
             </Submenu>
             <Submenu name="6">
               <template slot="title">
