@@ -79,7 +79,7 @@
         var formdata = new FormData();
         formdata.append('file', $file);
         axios({
-          url: fileUploadUrl + "?table_name=ask_expert&table_field=question",
+          url: fileUploadUrl + "?table_name=expert_ask&table_field=question",
           method: 'post',
           data: formdata,
           headers: {'Content-Type': 'multipart/form-data'},
@@ -94,14 +94,14 @@
             this.formValidate.question = markdownAdapter(this.formValidate.question);
             const result = await EditQuestion(this.formValidate);
             if (result.status === "SUCCESS") {
-              this.$router.push({path: '/expert/askExpert'});
+              this.$router.push({path: '/expert/expertAsk'});
             }
           }
         })
       },
       refreshQuestionDetail: async function (id) {
         const result = await ShowExpertAskDetail({id: id});
-        if (result.status == "SUCCESS") {
+        if (result.status === "SUCCESS") {
           this.formValidate = result.ask_expert;
         }
       },

@@ -9,7 +9,7 @@
             <code style="margin-left: 30px;color: #adaaa8">[{{ask_expert.answer_number}}次回答,  {{ask_expert.view_number}}次浏览]</code>
             <IShowMarkdown :content="ask_expert.question"/>
             <div style="text-align: left;">
-              <a @click="$router.push({path:'/expert/askExpert'})">返回问题列表</a>&nbsp;&nbsp;
+              <a @click="$router.push({path:'/expert/expertAsk'})">返回问题列表</a>&nbsp;&nbsp;
               <span class="showTousu">
                 <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
                 <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
