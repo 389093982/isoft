@@ -54,8 +54,8 @@ const JobApplyList = () => import("@/components/IJob/JobApplyList");
 const ResourceList = () => import("@/components/Resource/ResourceList");
 const ResourceUpload = () => import("@/components/Resource/ResourceUpload");
 const ResourceDownload = () => import("@/components/Resource/ResourceDownload");
-const AskExpert = () => import("@/components/Expert/AskExpert");
-const AnswerExpert = () => import("@/components/Expert/AnswerExpert");
+const ExpertAsk = () => import("@/components/Expert/ExpertAsk");
+const ExpertAnswer = () => import("@/components/Expert/ExpertAnswer");
 const EditQuestion = () => import("@/components/Expert/EditQuestion");
 const MessageList = () => import("@/components/Message/MessageList");
 const BusinessIntroduce = () => import("@/components/Business/Introduce");
@@ -176,8 +176,8 @@ const IUserReouter = [{
 const IExpert = [{
   path: '/expert', component: ILayout,
     children: [
-      {path: 'askExpert', component: AskExpert},
-      {path: 'answerExpert', component: AnswerExpert},
+      {path: 'expertAsk', component: ExpertAsk},
+      {path: 'expertAnswer', component: ExpertAnswer},
       {path: 'editQuestion', component: EditQuestion},
     ]
 }];

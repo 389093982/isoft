@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import {QueryPageAskExpert} from "../../api"
+  import {QueryPageExpertAsk} from "../../api"
   import ExpertWall from "./ExpertWall";
   import {checkHasLogin} from "../../tools/sso"
   import {
@@ -103,7 +103,7 @@
   import WaitYourAnswer from "./WaitYourAnswer";
 
   export default {
-    name: "AskExpert",
+    name: "ExpertAsk",
     components: {WaitYourAnswer, HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
@@ -168,7 +168,7 @@
         return user_name === GetLoginUserName();
       },
       refreshAskExperts: async function () {
-        const result = await QueryPageAskExpert({
+        const result = await QueryPageExpertAsk({
           offset: this.offset,
           current_page: this.current_page,
           search_type: this.search_type,

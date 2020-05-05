@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {EditQuestion, fileUploadUrl, ShowAskExpertDetail} from "../../api"
+  import {EditQuestion, fileUploadUrl, ShowExpertAskDetail} from "../../api"
   import axios from 'axios'
   import {markdownAdapter} from "../../tools";
   import HotUser from "../User/HotUser";
@@ -100,7 +100,7 @@
         })
       },
       refreshQuestionDetail: async function (id) {
-        const result = await ShowAskExpertDetail({id: id});
+        const result = await ShowExpertAskDetail({id: id});
         if (result.status == "SUCCESS") {
           this.formValidate = result.ask_expert;
         }
