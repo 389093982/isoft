@@ -56,6 +56,21 @@
                 <router-link to="/background/placementList">占位符管理</router-link>
               </MenuItem>
             </Submenu>
+            <Submenu name="7">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                活动与优惠
+              </template>
+              <MenuItem name="7-1">
+                <router-link to="/background/createActivity">举办活动</router-link>
+              </MenuItem>
+              <MenuItem name="7-2">
+                <router-link to="/background/searchActivity">活动查询</router-link>
+              </MenuItem>
+              <MenuItem name="7-3">
+                <router-link to="/background/searchCoupon">优惠券管理</router-link>
+              </MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Content

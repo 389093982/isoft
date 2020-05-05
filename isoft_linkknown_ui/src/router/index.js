@@ -73,6 +73,9 @@ const ElementEdit = () => import("@/components/Background/IPlacement/ElementEdit
 const PlacementList = () => import("@/components/Background/IPlacement/PlacementList");
 const PlacementEdit = () => import("@/components/Background/IPlacement/PlacementEdit");
 const UserSearch = () => import("@/components/Background/UserSearch");
+const CreateActivity = () => import("@/components/Background/Pay/CreateActivity");
+const SearchActivity = () => import("@/components/Background/Pay/SearchActivity");
+const SearchCoupon = () => import("@/components/Background/Pay/SearchCoupon");
 
 Vue.use(Router);
 
@@ -152,6 +155,9 @@ const ICMSReouter = [{
       {path: 'placementList', component: PlacementList},
       {path: 'placementEdit', component: PlacementEdit},
       {path: 'userSearch', component: UserSearch},
+      {path: 'createActivity', component: CreateActivity},
+      {path: 'searchActivity', component: SearchActivity},
+      {path: 'searchCoupon', component: SearchCoupon},
     ]
 }];
 
