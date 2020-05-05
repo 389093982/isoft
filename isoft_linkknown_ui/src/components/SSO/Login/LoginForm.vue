@@ -61,23 +61,32 @@
       }
     },
     methods: {
+      // 登录目前支持邮箱登录和 github 账号登录
+      // 登录前需要存储 RedirectUrl，主要用于后台解析 domain 和登录完成后地址跳转
+      // RedirectUrl 存储在 localStorage 中，github 登录跳转后的地址无法定制参数，所以需要将 RedirectUrl 存储在 localStorage 中，以便后面跳转使用
       gotoGithubLogin: function (){
+        // 登录之前先存储 redirectUrl
+        this.storageRedirectUrl();
+
         redirectToGitHubLogin();
       },
       showInputPasswordType:function(){
         this.inputPasswordType=true;
       },
-      getLoginRedirectUrl: function (){
+      storageRedirectUrl: function (){
         let redirectUrl = "";
         var arr = strSplit(window.location.href, "?redirectUrl=");
         if (arr.length === 2) {
           redirectUrl = arr[1];
         }
-        return redirectUrl;
+        localStorage.setItem("redirectUrl", decodeURIComponent(redirectUrl));
       },
       login: async function () {
+        // 登录之前先存储 redirectUrl
+        this.storageRedirectUrl();
+
         // 准备请求参数
-        let redirectUrl = this.getLoginRedirectUrl();
+        let redirectUrl = localStorage.getItem("redirectUrl");
         var username = this.username;
         var passwd = this.passwd;
         if (username.length === 0) {
@@ -100,7 +109,10 @@
           redirectUrl: decodeURIComponent(redirectUrl),
         });
         if (result.loginSuccess === true || result.loginSuccess === "SUCCESS") {
+          // 登录成功后将登录信息设置到 cookie 中
           setLoginInfo(result);
+
+          // 成功登录后将用户名和密码存储起来，用于后面再次登录自动填充表单
           localStorage.setItem("__userName", this.username);
           localStorage.setItem("__passwd", this.passwd);
           if (!checkEmpty(result.redirectUrl)) {
@@ -114,6 +126,7 @@
           this.errorMsg = result.errorMsg;
         }
       },
+      // 自动填充表单
       fillMemoryLoginInfo: function () {
         if (checkNotEmpty(localStorage.getItem("__userName")) && checkNotEmpty(localStorage.getItem("__passwd"))) {
           this.username = localStorage.getItem("__userName");
@@ -122,11 +135,12 @@
       }
     },
     async mounted () {
+      // 自动填充表单
       this.fillMemoryLoginInfo();
 
       if (checkNotEmpty(this.$route.query.code)) {
         await handleAfterGitHubLogin(this.$route.query.code,
-          this.getLoginRedirectUrl(),
+          localStorage.getItem("redirectUrl"),
           (msg) => this.$Message.error(msg));
       }
     }

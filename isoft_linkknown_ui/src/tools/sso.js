@@ -69,6 +69,7 @@ const _getNickName = function () {
 }
 
 const _setLoginInfo = function (loginResult) {
+  // tokenString 用于登录鉴权
   localStorage.setItem("tokenString", loginResult.tokenString);
   localStorage.setItem("userName", loginResult.userName);
   localStorage.setItem("nickName", loginResult.nickName);
@@ -77,15 +78,19 @@ const _setLoginInfo = function (loginResult) {
   let expiredTime = new Date().getTime() + loginResult.expireSecond * 1000;     // 毫秒数
   localStorage.setItem("expiredTime", expiredTime);
   localStorage.setItem("domain", loginResult.domain);
+  // cookie 在指定的 domain 进行绑定
   setCookie("tokenString", loginResult.tokenString, 365, loginResult.domain);
 }
 
-var isRefreshingToken = false
+// 是否正在刷新 token
+// 自定登录刷新 token：目的主要是为了体验
+// tokenString 有效期设置过长有安全为题，设置太短频繁登录，所以当登录失效是调用改接口可自动登录
+var isRefreshingTokening = false;
 
 const _refreshToken = function (store, failCallback) {
   try {
-    if (!isRefreshingToken) { // 此处需要加个 isRefreshingToken 变量进行去重防止并发
-      isRefreshingToken = true;
+    if (!isRefreshingTokening) { // 此处需要加个 isRefreshingTokening 变量进行去重防止并发
+      isRefreshingTokening = true;
       RefreshToken({tokenString: localStorage.getItem("tokenString")}).then(function (result) {
         if (result.status === "SUCCESS") {
           // 尝试自动连接
@@ -101,18 +106,19 @@ const _refreshToken = function (store, failCallback) {
       });
     }
   } finally {
-    isRefreshingToken = false;
+    isRefreshingTokening = false;
   }
 }
 
 // 判断过期时间是否是最近 3 小时之内
 const checkRecently = function () {
   return new Date().getTime() - localStorage.getItem("expiredTime") < 3 * 3600 * 1000;
-  // return new Date().getTime() - localStorage.getItem("expiredTime") < 60 * 1000;
 }
 
 
 const _checkCanRefresh = function () {
+  // 之前登录过，即有 tokenString
+  // 在最近过期 N 小时内才可以自动登录
   return checkNotEmpty(localStorage.getItem("tokenString")) && checkRecently();
 };
 
