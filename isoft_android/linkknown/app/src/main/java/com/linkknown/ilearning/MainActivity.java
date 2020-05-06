@@ -28,6 +28,7 @@ import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.SpaceFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawer;
+    @BindView(R.id.headerToolBarLayout)
+    public LinearLayout headerToolBarLayout;
 
     // 存储首页对应的三个片段
     private List<Fragment> mFragments = new ArrayList<>();
@@ -71,11 +74,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 绑定控件
         this.init();
+
+        headerToolBarLayout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.headerToolBarLayout:
+                toggleDrawer();
+                break;
+            default:
+                break;
+        }
     }
 
     private void init () {
@@ -228,5 +239,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 抽屉关闭
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * DrawerLayout侧滑菜单开关
+     */
+    public void toggleDrawer() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 }
