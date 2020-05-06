@@ -45,7 +45,7 @@
                 </div>
                 <div style="width: 75%;line-height: 30px;">
                   <div class="title_hover isoft_font16 isoft_point_cursor"
-                       @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
+                       @click="$router.push({path:'/expert/expertAnswer', query:{id : as.id}})">{{as.short_desc | filterLimitFunc(30)}}</div>
                   <div class="isoft_font12">
                     <div style="display: flex;">
                       <div class="isoft_point_cursor isoft_hover_desc" style="width: 50%;">
@@ -57,7 +57,7 @@
                           <a v-if="showEdit(as.user_name)" @click="$router.push({path:'/expert/editQuestion', query: {id : as.id}})">编辑</a>
                         </span>
                           <span>
-                          <a @click="$router.push({path:'/expert/answerExpert', query:{id : as.id}})">
+                          <a @click="$router.push({path:'/expert/expertAnswer', query:{id : as.id}})">
                             <span class="isoft_hover_color_green mr5">我来回答</span>
                             <span class="isoft_color_grey">回答问题可获得 2 积分</span>
                           </a>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import {QueryPageAskExpert} from "../../api"
+  import {QueryPageExpertAsk} from "../../api"
   import ExpertWall from "./ExpertWall";
   import {checkHasLogin} from "../../tools/sso"
   import {
@@ -103,7 +103,7 @@
   import WaitYourAnswer from "./WaitYourAnswer";
 
   export default {
-    name: "AskExpert",
+    name: "ExpertAsk",
     components: {WaitYourAnswer, HatAndFacePicture, MoveLine, ExpertWall, IShowMarkdown},
     data() {
       return {
@@ -168,7 +168,7 @@
         return user_name === GetLoginUserName();
       },
       refreshAskExperts: async function () {
-        const result = await QueryPageAskExpert({
+        const result = await QueryPageExpertAsk({
           offset: this.offset,
           current_page: this.current_page,
           search_type: this.search_type,

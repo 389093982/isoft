@@ -17,7 +17,7 @@
             <IBeautifulLink @onclick="$router.push({path:'/iblog/blogList'})">话题博客</IBeautifulLink>
           </MenuItem>
           <MenuItem name="4">
-            <IBeautifulLink @onclick="$router.push({path:'/expert/askExpert'})">求问专家</IBeautifulLink>
+            <IBeautifulLink @onclick="$router.push({path:'/expert/expertAsk'})">求问专家</IBeautifulLink>
           </MenuItem>
           <MenuItem name="5">
             <IBeautifulLink @onclick="$router.push({path:'/ibook/bookList'})">热门书单</IBeautifulLink>

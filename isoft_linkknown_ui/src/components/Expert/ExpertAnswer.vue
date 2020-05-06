@@ -9,7 +9,7 @@
             <code style="margin-left: 30px;color: #adaaa8">[{{ask_expert.answer_number}}次回答,  {{ask_expert.view_number}}次浏览]</code>
             <IShowMarkdown :content="ask_expert.question"/>
             <div style="text-align: left;">
-              <a @click="$router.push({path:'/expert/askExpert'})">返回问题列表</a>&nbsp;&nbsp;
+              <a @click="$router.push({path:'/expert/expertAsk'})">返回问题列表</a>&nbsp;&nbsp;
               <span class="showTousu">
                 <a @click="showEditanswer = !showEditanswer">我来回答</a>&nbsp;&nbsp;
                 <a @click="$router.push({path:'/ilearning/advise',query:{user_name:ask_expert.user_name,ask_id:ask_expert.id,short_desc:ask_expert.short_desc}})" class="willComplaint">我要投诉</a>
@@ -17,7 +17,7 @@
             </div>
             <div v-if="showEditanswer" style="width: 80%">
               <Input type="textarea" :rows="5" v-model.trim="answer"/>
-              <Button size="small" style="float: right;margin: 10px 0;" type="success" @click="EditAnswerExpert">提交</Button>
+              <Button size="small" style="float: right;margin: 10px 0;" type="success" @click="EditExpertAnswer">提交</Button>
             </div>
           </div>
 
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import {EditAnswerExpert, ModifyGoodNumber, QueryPageAnswerExpertList, ShowAskExpertDetail} from "../../api"
+  import {EditExpertAnswer, ModifyGoodNumber, QueryPageExpertAnswerList, ShowExpertAskDetail} from "../../api"
   import {checkEmpty,CheckHasLoginConfirmDialog2} from "../../tools"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import ExpertWall from "./ExpertWall";
@@ -80,7 +80,7 @@
   import WaitYourAnswer from "./WaitYourAnswer";
 
   export default {
-    name: "AnswerExpert",
+    name: "ExpertAnswer",
     components: {WaitYourAnswer, HatAndFacePicture, VoteTags, ExpertWall, IShowMarkdown},
     data() {
       return {
@@ -118,7 +118,7 @@
       },
       refreshQuestionDetail: async function () {
         let id = this.$route.query.id;
-        const result = await ShowAskExpertDetail({id: id});
+        const result = await ShowExpertAskDetail({id: id});
         if (result.status === "SUCCESS") {
           this.ask_expert = result.ask_expert;
         }
@@ -127,11 +127,11 @@
         this.$refs.voteTags.setRefererId(this.ask_expert.id);
         this.$refs.voteTags.refreshVoteTags();
       },
-      EditAnswerExpert: async function () {
+      EditExpertAnswer: async function () {
         var _this = this;
         CheckHasLoginConfirmDialog2(this, async function () {
           if (!checkEmpty(_this.answer)) {
-            const result = await EditAnswerExpert({question_id: _this.ask_expert.id, answer: _this.answer});
+            const result = await EditExpertAnswer({question_id: _this.ask_expert.id, answer: _this.answer});
             if (result.status === "SUCCESS") {
               _this.$Message.success("提交成功");
               _this.answer = '';
@@ -141,7 +141,7 @@
         });
       },
       refreshAskanswerList: async function () {
-        const result = await QueryPageAnswerExpertList({
+        const result = await QueryPageExpertAnswerList({
           current_page: this.current_page,
           offset: this.offset,
           question_id: this.$route.query.id

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {EditQuestion, fileUploadUrl, ShowAskExpertDetail} from "../../api"
+  import {EditQuestion, fileUploadUrl, ShowExpertAskDetail} from "../../api"
   import axios from 'axios'
   import {markdownAdapter} from "../../tools";
   import HotUser from "../User/HotUser";
@@ -79,7 +79,7 @@
         var formdata = new FormData();
         formdata.append('file', $file);
         axios({
-          url: fileUploadUrl + "?table_name=ask_expert&table_field=question",
+          url: fileUploadUrl + "?table_name=expert_ask&table_field=question",
           method: 'post',
           data: formdata,
           headers: {'Content-Type': 'multipart/form-data'},
@@ -94,14 +94,14 @@
             this.formValidate.question = markdownAdapter(this.formValidate.question);
             const result = await EditQuestion(this.formValidate);
             if (result.status === "SUCCESS") {
-              this.$router.push({path: '/expert/askExpert'});
+              this.$router.push({path: '/expert/expertAsk'});
             }
           }
         })
       },
       refreshQuestionDetail: async function (id) {
-        const result = await ShowAskExpertDetail({id: id});
-        if (result.status == "SUCCESS") {
+        const result = await ShowExpertAskDetail({id: id});
+        if (result.status === "SUCCESS") {
           this.formValidate = result.ask_expert;
         }
       },

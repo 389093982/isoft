@@ -130,11 +130,11 @@ export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpse
 export const RecommendResource = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/RecommendResource', params, "POST");
 export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetResourceInfo', params, "POST");
 export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DownloadResourceFile', params, "GET");
-export const QueryPageAskExpert = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAskExpert', params, "POST");
+export const QueryPageExpertAsk = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageExpertAsk', params, "POST");
 export const EditQuestion = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditQuestion', params, "POST");
-export const ShowAskExpertDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowAskExpertDetail', params, "POST");
-export const EditAnswerExpert = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditAnswerExpert', params, "POST");
-export const QueryPageAnswerExpertList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAnswerExpertList', params, "POST");
+export const ShowExpertAskDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowExpertAskDetail', params, "POST");
+export const EditExpertAnswer = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditExpertAnswer', params, "POST");
+export const QueryPageExpertAnswerList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageExpertAnswerList', params, "POST");
 export const ModifyGoodNumber = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ModifyGoodNumber', params, "POST");
 export const QueryExpertWallList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryExpertWallList', params, "POST");
 export const QueryWaitYourAnswerList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryWaitYourAnswerList', params, "POST");
