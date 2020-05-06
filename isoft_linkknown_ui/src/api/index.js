@@ -214,6 +214,7 @@ export const FilterElementByPlacement = (params) => ajax(BASE_URL + '/iwork/http
 //支付订单
 export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addPayOrder", params, 'POST');
 export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
+export const isoft_unifiedpay_order_api = "ws://localhost:6002/"+WECHAT_PAY+"/Order";
 
 
 //【Contact模块】***************************************************************************************************

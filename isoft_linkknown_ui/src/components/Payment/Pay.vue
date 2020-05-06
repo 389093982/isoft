@@ -75,6 +75,7 @@
 </template>
 
 <script>
+  import {isoft_unifiedpay_order_api} from "../../api/index"
   import {ShowCourseDetail,queryPayOrderList,addPayOrder} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
   import {CheckHasLoginConfirmDialog2} from "../../tools/index"
@@ -185,7 +186,7 @@
         });
       },
       initWebSocket:function(OrderParams) {
-        const wsuri = this.GLOBAL.isoft_unifiedpay_order;
+        const wsuri = isoft_unifiedpay_order_api; //这里就是下单接口
         this.websocket = new WebSocket(wsuri);
         this.websocket.onopen = this.websocketonopen;
         this.websocket.onmessage = this.websocketonmessage;
