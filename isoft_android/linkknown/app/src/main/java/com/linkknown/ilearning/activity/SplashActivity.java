@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.linkknown.ilearning.MainActivity;
@@ -12,6 +13,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 // 动画简介 translate 位置转移动画效果
 //    整型值:
@@ -35,26 +37,20 @@ import butterknife.BindView;
 // 主要用于预加载数据、展示一些广告和动画
 public class SplashActivity extends AppCompatActivity {
 
-    // 入场动画布局
-    @BindView(R.id.firstLayout)
-    public LinearLayout firstLayout;
-    // 最终动画布局
-    @BindView(R.id.lastLayout)
-    public LinearLayout lastLayout;
+    @BindView(R.id.imageView)
+    public ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        firstLayout = findViewById(R.id.firstLayout);       // 要显示的字体
-        lastLayout = findViewById(R.id.lastLayout);
+
+        ButterKnife.bind(this);
 
         //动画1
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.text_splash_position);
-        //动画2
-        final Animation hideLayoutAnimation = AnimationUtils.loadAnimation(this, R.anim.text_canvas);
 
-        firstLayout.startAnimation(animation);
+        imageView.startAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -63,25 +59,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                //第一个动画执行完后执行第二个动画就是那个字体显示那部分
-                lastLayout.startAnimation(hideLayoutAnimation);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        hideLayoutAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                //第二个动画执行完之后跳转到主页
+                // 动画结束后调往主页
                 UIUtils.gotoActivity(getApplicationContext(), MainActivity.class);
                 finish();
             }
