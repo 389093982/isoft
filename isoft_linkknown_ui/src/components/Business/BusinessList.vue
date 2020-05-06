@@ -57,7 +57,7 @@
 
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import {GoodsList, NewOrder} from "../../api"
+  import {GoodsList} from "../../api"
   import {CheckHasLoginConfirmDialog2, FillUserNickNameInfoByNames, GetLoginUserName} from "../../tools"
   import GoodMeta from "./GoodMeta";
   import ShowMore from "../Elementviewers/showMore";
@@ -93,16 +93,12 @@
         });
       },
       payConfirm: async function (good) {
-        let params = {
-          'good_id':good.id,
-        };
-        const result = await NewOrder(params);
-        if (result.status === "SUCCESS") {
+
           this.$router.push({
             path: '/business/payConfirm',
-            query: {"good_id": good.id, "orderCode": result.orderCode}
+            query: {"good_id": good.id, "orderCode": ''}
           });
-        }
+
       },
       refreshGoodsList: async function () {
         const result = await GoodsList({offset: this.offset, current_page: this.current_page});
