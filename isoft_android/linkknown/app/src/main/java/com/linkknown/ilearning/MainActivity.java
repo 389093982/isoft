@@ -28,7 +28,6 @@ import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.SpaceFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -48,6 +47,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.headerToolBarLayout)
     public LinearLayout headerToolBarLayout;
 
+    @BindView(R.id.person_head)
+    public ImageView person_head;
+    @BindView(R.id.userNameText)
+    public TextView userNameText;
+    @BindView(R.id.toolBarLoginLayout)
+    public LinearLayout toolBarLoginLayout;
+    @BindView(R.id.toolBarUnLoginLayout)
+    public LinearLayout toolBarUnLoginLayout;
+
+
     // 存储首页对应的三个片段
     private List<Fragment> mFragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
@@ -57,13 +66,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewPager viewPager;
 
     // 用户登录之后显示用户头像及昵称
-    private LinearLayout userHeaderInfoLayout;
+    private LinearLayout navigationUserHeaderInfoLayout;
 
     // 登陆后在头像下方显示的用户名
-    private TextView mHeaderUserNameText;
+    private TextView navigationUserNameText;
 
     // 未登录时显示提示信息的布局
-    private RelativeLayout unLoginLayout;
+    private RelativeLayout navigationUnLoginLayout;
+
+    ImageView navigationHeaderIconView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +103,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void init () {
         initFragment();
         initNavigation();
+
+        // 订阅登录信息
+        observeLogin();
+    }
+
+    private void observeLogin () {
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
+            if (loginUserResponse != null){
+                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+
+                    // 1、--------- 左侧 navigationView 显示登录信息
+                    // 登录成功，显示登录布局
+                    navigationUserHeaderInfoLayout.setVisibility(View.VISIBLE);
+                    navigationUnLoginLayout.setVisibility(View.GONE);
+
+                    // 设置登录信息
+                    // 异步加载图片,使用 Glide 第三方库
+                    Glide.with(this)
+                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
+                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                            .into(navigationHeaderIconView);
+                    navigationUserNameText.setText(loginUserResponse.getUserName());
+
+                    // 2、--------- 顶部 toolbar 显示登录信息
+                    toolBarLoginLayout.setVisibility(View.VISIBLE);
+                    toolBarUnLoginLayout.setVisibility(View.GONE);
+
+                    userNameText.setText(loginUserResponse.getUserName());
+                    Glide.with(this)
+                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
+                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                            .into(person_head);
+                } else {
+                    // 1、--------- 左侧 navigationView 显示登录信息
+                    // 登录失败
+                    navigationUnLoginLayout.setVisibility(View.VISIBLE);
+                    navigationUserHeaderInfoLayout.setVisibility(View.GONE);
+
+                    // 2、--------- 顶部 toolbar 显示登录信息
+                    toolBarLoginLayout.setVisibility(View.VISIBLE);
+                    toolBarUnLoginLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void initFragment () {
@@ -150,35 +205,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initNavigation () {
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
+        // navigation 未登录布局
+        navigationUnLoginLayout = headerView.findViewById(R.id.navigationUnLoginLayout);
+        // navigation 已登录布局
+        navigationUserHeaderInfoLayout = headerView.findViewById(R.id.navigationUserHeaderInfoLayout);
+        // 用户名和头像
+        navigationUserNameText = headerView.findViewById(R.id.navigationUserNameText);
+        navigationHeaderIconView = headerView.findViewById(R.id.navigationHeaderIconView);
 
-        userHeaderInfoLayout = headerView.findViewById(R.id.user_header_info);
-        mHeaderUserNameText = headerView.findViewById(R.id.user_name_header);
-        ImageView headerIconView = headerView.findViewById(R.id.headerIconView);
 
-        unLoginLayout = headerView.findViewById(R.id.un_login_dead);
-
-        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
-            if (loginUserResponse != null){
-                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                    // 登录成功，显示登录布局
-                    userHeaderInfoLayout.setVisibility(View.VISIBLE);
-
-                    unLoginLayout.setVisibility(View.GONE);
-
-                    // 设置登录信息
-                    // 异步加载图片,使用 Glide 第三方库
-                    Glide.with(this)
-                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                            .into(headerIconView);
-                    mHeaderUserNameText.setText(loginUserResponse.getUserName());
-                } else {
-                    // 登录失败
-                    unLoginLayout.setVisibility(View.VISIBLE);
-                    userHeaderInfoLayout.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     // navigation view 点击事件

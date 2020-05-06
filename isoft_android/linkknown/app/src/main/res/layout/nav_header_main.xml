@@ -4,19 +4,17 @@
               android:layout_height="250dp"
               android:background="@drawable/side_nav_bar"
               android:fitsSystemWindows="true"
-              android:orientation="vertical"
-    >
+              android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/user_header_info"
+        android:id="@+id/navigationUserHeaderInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/headerIconView"
+            android:id="@+id/navigationHeaderIconView"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
@@ -27,7 +25,7 @@
             android:src="@drawable/cutecat"/>
 
         <TextView
-            android:id="@+id/user_name_header"
+            android:id="@+id/navigationUserNameText"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="bottom|center_horizontal"
@@ -37,10 +35,9 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/un_login_dead"
+        android:id="@+id/navigationUnLoginLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
