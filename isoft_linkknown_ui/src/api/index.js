@@ -10,8 +10,7 @@ const WECHAT_PAY = '/wechatPayApi';
 export const GetHotUsers = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotUsers", {}, 'POST');
 export const GetUserDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetUserDetail', params, 'POST');
 export const UpdateUserIcon = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon', params, 'POST');
-// 登录接口
-export const Login = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin", params, 'POST');
+export const Login = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin", params, 'POST');// 登录接口
 export const CreateVerifyCode = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/createVerifyCode", params, 'POST');
 export const ModifyPwd = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/modifyPwd", params, 'POST');
 export const GetUserInfoByNames = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetUserInfoByNames", params, 'POST');
@@ -19,16 +18,11 @@ export const EditUserSignature = (params) => ajax(BASE_URL + '/iwork/httpservice
 export const UpdateUserDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserDetail', params, 'POST');
 export const RefreshToken = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/RefreshToken", params, 'POST');
 export const GitHubLogin = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GitHubLogin", params, 'POST');
-// 查询所有用户
-export const QueryAllUsers = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryAllUsers", params, 'POST');
-// 登录记录分页查询
-export const LoginRecordList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/LoginRecordList", params, 'POST');
-// 系统注册分页查询
-export const AppRegisterList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList", params, 'POST');
-// 添加系统注册
-export const AddAppRegister = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddAppRegister", params, 'POST');
-// 注册接口
-export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist", params, 'POST');
+export const QueryAllUsers = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryAllUsers", params, 'POST');// 查询所有用户
+export const LoginRecordList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/LoginRecordList", params, 'POST');// 登录记录分页查询
+export const AppRegisterList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList", params, 'POST');// 系统注册分页查询
+export const AddAppRegister = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddAppRegister", params, 'POST');// 添加系统注册
+export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist", params, 'POST');// 注册接口
 // UpdateUserPoints 未直接使用，被其他流程调用
 // insert_loginRecord 未直接使用，被其他流程调用
 // SsoFilter 未直接使用，被其他流程调用
@@ -36,59 +30,41 @@ export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_link
 
 
 //【Blog模块】***************************************************************************************************
-// 编辑或者新增博客文章
-export const BlogArticleEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit', params, 'POST');
-// 编辑或者新增博客分类
-export const BlogCatalogEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit', params, 'POST');
+export const BlogArticleEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit', params, 'POST');// 编辑或者新增博客文章
+export const BlogCatalogEdit = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit', params, 'POST');// 编辑或者新增博客分类
 export const ArticleDelete = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ArticleDelete', params, 'POST');
 export const QueryCustomTagBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCustomTagBlog', params, 'GET');
-// 热门博客分页列表
-export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageBlog', params, 'GET');
-// 获取我的所有博客文章
-export const GetMyBlogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyBlogs', {}, 'GET');
-// 根据 blog_id 查询 blog 详细信息
-export const ShowBlogArticleDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail', params, 'GET');
-// 获取我的所有博客分类
-export const GetMyCatalogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs', {}, 'GET');
+export const queryPageBlog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageBlog', params, 'GET');// 热门博客分页列表
+export const GetMyBlogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyBlogs', {}, 'GET');// 获取我的所有博客文章
+export const ShowBlogArticleDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail', params, 'GET');// 根据 blog_id 查询 blog 详细信息
+export const GetMyCatalogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs', {}, 'GET');// 获取我的所有博客分类
 
 
 //【Course模块】***************************************************************************************************
-// 课程搜索
-export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList', params, 'GET');
+export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList', params, 'GET');// 课程搜索
 export const ShowCourseHistory = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory", params, 'GET');
-// 完结视频更新
-export const UpdateCourseIcon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", params, 'GET');
+export const UpdateCourseIcon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", params, 'GET');// 完结视频更新
 export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/DeleteVideo", params, 'GET');
-// updateCourseNum 未直接使用，被其他流程调用
-// ShowCourseDetailForApp 未直接使用，被其他流程调用
-// InsertOrUpdateVedioRecord 未直接使用，被其他流程调用
 export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ChangeVideoOrder", params, 'GET');
 export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay";
-// 获取所有课程类型
-export const GetAllCourseType = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetAllCourseType", {}, 'GET');
-// 获取热门推荐的课程
-export const GetHotCourseRecommend = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend", {}, 'GET');
-// 根据课程名称获取所有子类型名称
-export const GetAllCourseSubType = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAllCourseSubType', params, 'GET');
-// 显示课程详细信息
-export const ShowCourseDetail = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail", params, 'GET');
-// 新建课程
-export const EditCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/EditCourse", params, 'GET');
-// 根据用户名查询用户的课程信息
-export const GetCourseListByUserName = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", params, 'GET');
+export const GetAllCourseType = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetAllCourseType", {}, 'GET');// 获取所有课程类型
+export const GetHotCourseRecommend = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend", {}, 'GET');// 获取热门推荐的课程
+export const GetAllCourseSubType = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAllCourseSubType', params, 'GET');// 根据课程名称获取所有子类型名称
+export const ShowCourseDetail = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail", params, 'GET');// 显示课程详细信息
+export const EditCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/EditCourse", params, 'GET');// 新建课程
+export const GetCourseListByUserName = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName", params, 'GET');// 根据用户名查询用户的课程信息
 export const UploadVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UploadVideo", params, 'GET');
+// updateCourseNum 未直接使用，被其他流程调用
+// ShowCourseDetailForApp 未直接使用，被其他流程调用
+// InsertOrUpdateVedioRecord 未直接使用，被其他流程调用
 
 
 //【Comment模块】***************************************************************************************************
-// 获取一级评论列表
-export const FilterCommentFirstLevel = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', params, 'GET');
-// 获取二级子评论列表
-export const FilterCommentSecondLevel = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel', params, 'GET');
-// 添加评论
-export const AddComment = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment', params, 'GET');
-//删除评论
-export const deleteComment = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/deleteComment", params, 'POST');
+export const FilterCommentFirstLevel = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel', params, 'GET');// 获取一级评论列表
+export const FilterCommentSecondLevel = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel', params, 'GET');// 获取二级子评论列表
+export const AddComment = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddComment', params, 'GET');// 添加评论
+export const deleteComment = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/deleteComment", params, 'POST');//删除评论
 
 
 //【CMS模块】***************************************************************************************************
@@ -125,15 +101,12 @@ export const UpdateVoteTag = (params) => ajax(BASE_URL + '/iwork/httpservice/iso
 export const FilterVoteTags = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterVoteTags', params, 'POST');
 export const queryFavoriteCount = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount", params, 'GET');
 export const IsFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/IsFavorite", params, 'GET');
-// 切换收藏点赞
-export const ToggleFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite", params, 'GET');
+export const ToggleFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite", params, 'GET');// 切换收藏点赞
 
 
 //【Advise模块】***************************************************************************************************
-// 插入意见或吐槽
-export const InsertAdvise = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/InsertAdvise", params, 'POST');
-//查询意见或吐槽
-export const queryPageAdvise = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageAdvise', params, 'GET');
+export const InsertAdvise = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/InsertAdvise", params, 'POST');// 插入意见或吐槽
+export const queryPageAdvise = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/queryPageAdvise', params, 'GET');//查询意见或吐槽
 
 
 //【Advertisement模块】***************************************************************************************************
@@ -189,9 +162,9 @@ export const QueryRechargeRight = (params) => ajax(BASE_URL + '/iwork/httpservic
 
 //【Decorate模块】***************************************************************************************************
 export const EditDecorateItem = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditDecorateItem', params, 'POST');
-// EditDecorate 未使用，后面确认是否可以删除
 export const LoadAllDecorates = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadAllDecorates', params, 'POST');
 export const LoadDecorateItems = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/LoadDecorateItems', params, 'POST');
+// EditDecorate 未使用，后面确认是否可以删除
 
 
 //【Placement模块】***************************************************************************************************
@@ -201,8 +174,7 @@ export const QueryPlacementById = (params) => ajax(BASE_URL + '/iwork/httpservic
 export const QueryPlacementByName = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPlacementByIdOrName', params, 'POST');
 export const CopyPlacement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/CopyPlacement', params, 'POST');
 export const DeletePlacementById = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DeletePlacementById', params, 'POST');
-// 占位符、页面元素模块
-export const FilterElements = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageElement', params, 'POST');
+export const FilterElements = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageElement', params, 'POST');// 占位符、页面元素模块
 export const EditElement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditElement', params, 'POST');
 export const QueryElementById = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryElementById', params, 'POST');
 export const CopyElement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/CopyElement', params, 'POST');
@@ -211,7 +183,6 @@ export const FilterElementByPlacement = (params) => ajax(BASE_URL + '/iwork/http
 
 
 //【Pay模块】***************************************************************************************************
-//支付订单
 export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addPayOrder", params, 'POST');
 export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
 export const isoft_unifiedpay_order_api = "ws://localhost:6002/"+WECHAT_PAY+"/Order";
