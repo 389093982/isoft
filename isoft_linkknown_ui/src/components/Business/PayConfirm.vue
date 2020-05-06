@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {GetGoodDetail, GetOrderDetail} from "../../api"
+  import {GetGoodsDetail, GetOrderDetail} from "../../api"
   import GoodMeta from "./GoodMeta";
 
   export default {
@@ -26,7 +26,7 @@
         let params = {
           'id':this.$route.query.good_id
         };
-        const result = await GetGoodDetail(params);
+        const result = await GetGoodsDetail(params);
         if (result.status === "SUCCESS") {
           this.good = result.good;
         }

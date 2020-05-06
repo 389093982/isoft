@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import {GetGoodDetail} from "../../api"
+  import {GetGoodsDetail} from "../../api"
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import BusinessDecorate from "./BusinessDecorate";
   import GoodMeta from "./GoodMeta";
@@ -33,7 +33,7 @@
         let params = {
           'id':good_id
         };
-        const result = await GetGoodDetail(params);
+        const result = await GetGoodsDetail(params);
         if (result.status === "SUCCESS") {
           this.good = result.good;
         }

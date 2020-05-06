@@ -5,7 +5,7 @@
 		<WorkName>addPayOrder</WorkName>
 		<WorkDesc>addPayOrder</WorkDesc>
 		<WorkType>work</WorkType>
-		<ModuleName>Payment</ModuleName>
+		<ModuleName>Pay</ModuleName>
 		<CacheResult>false</CacheResult>
 		<CreatedBy>SYSTEM</CreatedBy>
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>

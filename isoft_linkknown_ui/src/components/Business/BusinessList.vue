@@ -57,13 +57,13 @@
 
 <script>
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import {GoodList, NewOrder} from "../../api"
+  import {GoodsList, NewOrder} from "../../api"
   import {CheckHasLoginConfirmDialog2, FillUserNickNameInfoByNames, GetLoginUserName} from "../../tools"
   import GoodMeta from "./GoodMeta";
   import ShowMore from "../Elementviewers/showMore";
 
   export default {
-    name: "GoodList",
+    name: "BusinessList",
     components: {ShowMore, GoodMeta, IBeautifulLink},
     data() {
       return {
@@ -104,8 +104,8 @@
           });
         }
       },
-      refreshGoodList: async function () {
-        const result = await GoodList({offset: this.offset, current_page: this.current_page});
+      refreshGoodsList: async function () {
+        const result = await GoodsList({offset: this.offset, current_page: this.current_page});
         if (result.status === "SUCCESS") {
           this.goods = await FillUserNickNameInfoByNames(result.goods, "good_seller");
           this.total = result.paginator.totalcount;
@@ -116,18 +116,18 @@
       },
       handleChange(page) {
         this.current_page = page;
-        this.refreshGoodList();
+        this.refreshGoodsList();
       },
       handlePageSizeChange(pageSize) {
         this.offset = pageSize;
-        this.refreshGoodList();
+        this.refreshGoodsList();
       },
     },
     mounted() {
-      this.refreshGoodList();
+      this.refreshGoodsList();
     },
     watch: {
-      '$route': 'refreshGoodList',
+      '$route': 'refreshGoodsList',
     },
   }
 </script>
