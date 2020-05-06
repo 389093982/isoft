@@ -12,6 +12,23 @@ export const checkEmpty = function checkEmpty(checkStr) {
   return false;
 };
 
+/**
+ * @return {string}
+ */
+export function GetToday_yyyyMMdd(){
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth()+1;
+  if (parseInt(month)<10) {
+    month =  '0'+month;
+  }
+  let today = date.getDate();
+  if (parseInt(today)<10) {
+    today =  '0'+today;
+  }
+  return year + '' + month + '' + today;
+};
+
 export const checkArrayEmpty = function checkArrayEmpty(arr) {
   return arr == null || arr.length === 0;
 };
