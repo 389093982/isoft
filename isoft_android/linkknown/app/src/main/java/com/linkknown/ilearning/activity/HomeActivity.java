@@ -1,19 +1,20 @@
 package com.linkknown.ilearning.activity;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import android.view.ViewGroup;
-
-import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
+import com.linkknown.ilearning.fragment.ClassifyFragment;
+import com.linkknown.ilearning.fragment.HomeFragment;
+import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.viewpage.MainActivityViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,22 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     // 存储首页对应的三个片段
-    private List<Fragment> mFragments = new ArrayList<>();
-    List<String> titles = new ArrayList<>();
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    private List<Fragment> mFragments;
+
+    @BindView(R.id.mViewPage)
+    public MainActivityViewPager mViewPage;
+    // 底部按钮组
+    @BindView(R.id.radioGroup)
+    public RadioGroup radioGroup;
+    @BindView(R.id.imageButton0)
+    public RadioButton rb_home;
+    @BindView(R.id.imageButton1)
+    public RadioButton rb_category;
+    @BindView(R.id.imageButton2)
+    public RadioButton rb_mine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,64 +46,82 @@ public class HomeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        init();
+        // 绑定控件
+        this.init();
     }
 
-    private void init () {
+    private void init() {
         initFragment();
     }
 
-    private void initFragment () {
-        // 创建 fragment
-        SpaceFragment spaceFragment1 = new SpaceFragment();
-        SpaceFragment spaceFragment2 = new SpaceFragment();
-        SpaceFragment spaceFragment3 = new SpaceFragment();
-        SpaceFragment spaceFragment4 = new SpaceFragment();
-        SpaceFragment spaceFragment5 = new SpaceFragment();
-        SpaceFragment spaceFragment6 = new SpaceFragment();
-        SpaceFragment spaceFragment7 = new SpaceFragment();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+//            case R.id.imageButton0:
+//                mViewPage.setCurrentItem(0);
+//                break;
+//            case R.id.imageButton1:
+//                mViewPage.setCurrentItem(1);
+//                break;
+//            case R.id.imageButton2:
+//                mViewPage.setCurrentItem(2);
+//                break;
+            default:
+                break;
+        }
+        // 设置按钮组样式
+        this.setRadioGroupStatus();
+    }
 
-        mFragments.add(spaceFragment1);
-        mFragments.add(spaceFragment2);
-        mFragments.add(spaceFragment3);
-        mFragments.add(spaceFragment4);
-        mFragments.add(spaceFragment5);
-        mFragments.add(spaceFragment6);
-        mFragments.add(spaceFragment7);
+    //设置选中和未选择的状态
+    private void setRadioGroupStatus() {
+        this.setRadioButtonStatus(this.rb_home);
+        this.setRadioButtonStatus(this.rb_category);
+        this.setRadioButtonStatus(this.rb_mine);
+    }
 
-        // title 限制 2 个字
-        titles.add("首页");
-        titles.add("圈子");
-        titles.add("热门");
-        titles.add("分类");
-        titles.add("关注");
-        titles.add("发现");
-        titles.add("推荐");
+    private void setRadioButtonStatus(RadioButton rb) {
+        if (rb.isChecked()) {
+            rb.setTextColor(ContextCompat.getColor(this, R.color.button_press));
+        } else {
+            rb.setTextColor(ContextCompat.getColor(this, R.color.button_normal));
+        }
+    }
 
+    private void initFragment() {
+        mFragments = new ArrayList<>();
+        // 创建 3 个片段
+        mFragments.add(new HomeFragment());
+        mFragments.add(new ClassifyFragment());
+        mFragments.add(new MineFragment());
 
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments.get(position);
-            }
+        MainActivityFragmentAdapter fragmentAdapter = new MainActivityFragmentAdapter(getSupportFragmentManager(), mFragments);
+        mViewPage.setAdapter(fragmentAdapter);
+        //预渲染页面数量
+        mViewPage.setOffscreenPageLimit(2);
+        //禁用滑动
+        mViewPage.setOnTouchListener((v, event) -> true);
 
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
+        radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray2));
 
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                super.destroyItem(container, position, object);
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return titles.get(position);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.imageButton0:
+                    // 获取颜色使用 ContextCompat.getColor 方法
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray2));
+                    mViewPage.setCurrentItem(0);
+                    break;
+                case R.id.imageButton1:
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                    mViewPage.setCurrentItem(1);
+                    break;
+                case R.id.imageButton2:
+                    radioGroup.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                    mViewPage.setCurrentItem(2);
+                    break;
+                default:
+                    break;
             }
         });
-
-        tabLayout.setupWithViewPager(viewPager);
     }
 }
