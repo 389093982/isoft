@@ -31,19 +31,19 @@
           this.good = result.good;
         }
       },
-      refreshOrderInfo: async function () {
-        let params = {
-          'orderCode':this.$route.query.orderCode
-        };
-        const result = await GetOrderDetail(params);
-        if (result.status === "SUCCESS") {
-          this.orderInfo = result.orderInfo;
-        }
-      }
+      // refreshOrderInfo: async function () {
+      //   let params = {
+      //     'orderCode':this.$route.query.orderCode
+      //   };
+      //   const result = await GetOrderDetail(params);
+      //   if (result.status === "SUCCESS") {
+      //     this.orderInfo = result.orderInfo;
+      //   }
+      // }
     },
     mounted() {
       this.refreshGoodDetail();
-      this.refreshOrderInfo();
+      // this.refreshOrderInfo();
     }
   }
 </script>
