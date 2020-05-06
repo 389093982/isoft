@@ -4,16 +4,14 @@
               android:layout_height="250dp"
               android:background="@drawable/side_nav_bar"
               android:fitsSystemWindows="true"
-              android:orientation="vertical"
-    >
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/navigationUserHeaderInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/navigationHeaderIconView"
@@ -39,8 +37,7 @@
     <RelativeLayout
         android:id="@+id/navigationUnLoginLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"

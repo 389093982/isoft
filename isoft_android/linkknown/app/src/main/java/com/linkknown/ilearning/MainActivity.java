@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public ImageView person_head;
     @BindView(R.id.userNameText)
     public TextView userNameText;
+    @BindView(R.id.toolBarLoginLayout)
+    public LinearLayout toolBarLoginLayout;
+    @BindView(R.id.toolBarUnLoginLayout)
+    public LinearLayout toolBarUnLoginLayout;
 
 
     // 存储首页对应的三个片段
@@ -123,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationUserNameText.setText(loginUserResponse.getUserName());
 
                     // 2、--------- 顶部 toolbar 显示登录信息
+                    toolBarLoginLayout.setVisibility(View.VISIBLE);
+                    toolBarUnLoginLayout.setVisibility(View.GONE);
+
                     userNameText.setText(loginUserResponse.getUserName());
                     Glide.with(this)
                             .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
@@ -135,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     navigationUserHeaderInfoLayout.setVisibility(View.GONE);
 
                     // 2、--------- 顶部 toolbar 显示登录信息
+                    toolBarLoginLayout.setVisibility(View.VISIBLE);
+                    toolBarUnLoginLayout.setVisibility(View.GONE);
                 }
             }
         });
