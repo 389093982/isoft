@@ -111,7 +111,7 @@
 
 <script>
   import IFileUpload from "../Common/file/IFileUpload";
-  import {fileUploadUrl, GetGoodDetail, GoodEdit} from "../../api"
+  import {fileUploadUrl, GetGoodsDetail, GoodsEdit} from "../../api"
   import {checkEmpty, checkNotEmpty, copyObj, GetLoginUserName, strSplit} from "../../tools"
   import Decorate from "../Decorate/Decorate";
 
@@ -186,7 +186,7 @@
             let params = copyObj(_this.formValidate);
             params.good_images = _this.formValidate.good_images && _this.formValidate.good_images.length > 0 ?
               JSON.stringify(_this.formValidate.good_images) : '';
-            const result = await GoodEdit(params);
+            const result = await GoodsEdit(params);
             if (result.status === "SUCCESS") {
               this.$router.push({path: '/business/businessList'});
             } else {
@@ -201,7 +201,7 @@
         let params = {
           'id':good_id
         };
-        const result = await GetGoodDetail(params);
+        const result = await GetGoodsDetail(params);
         if (result.status === "SUCCESS") {
           this.formValidate = result.good;
           this.formValidate.good_images = checkNotEmpty(result.good.good_images) ? JSON.parse(result.good.good_images) : [];
