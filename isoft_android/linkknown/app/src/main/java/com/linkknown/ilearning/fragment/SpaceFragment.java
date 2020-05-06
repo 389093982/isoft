@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -27,6 +30,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// MultiTypeAdapter
 public class SpaceFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.recycleView)
@@ -108,6 +112,5 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
     }
 }
