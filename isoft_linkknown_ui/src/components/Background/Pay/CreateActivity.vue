@@ -191,6 +191,11 @@
           let params = copyObj(this.formValidate);
           params.start_date = GetDate_yyyyMMdd_byDate(params.start_date);
           params.end_date = GetDate_yyyyMMdd_byDate(params.end_date);
+          //如果是通用券，那么这里设置target_type、target_id 为空值，保险起见。
+          if (params.coupon_type === 'general') {
+            params.target_type = '';
+            params.target_id = '';
+          }
           //生成券号
           params.couponIdArrayStr = MakeCouponIdArrayStr(parseInt(params.type_entity_account));
           const result = await AddPayActivity(params);
