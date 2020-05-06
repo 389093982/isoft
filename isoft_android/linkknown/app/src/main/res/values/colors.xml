@@ -33,4 +33,6 @@
     <!--关于我的界面-->
     <color name="background_dark">#ECECEC</color>
     <color name="TableLinecolor">#fff5f5f5</color>
+
+    <color name="font_normal">#555555</color>
 </resources>
