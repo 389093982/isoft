@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.activity.HomeActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.adapter.MainActivityFragmentAdapter;
@@ -197,10 +198,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.shouye) {
-            // Handle the camera action
-            mViewPage.setCurrentItem(0);
-            //底部ImageView点击之后变色
-            rb_home.setChecked(true);
+            UIUtils.gotoActivity(this, HomeActivity.class);
+            finish();
+//            // Handle the camera action
+//            mViewPage.setCurrentItem(0);
+//            //底部ImageView点击之后变色
+//            rb_home.setChecked(true);
             setRadioGroupStatus();
         } else if (id == R.id.fenlei) {
             mViewPage.setCurrentItem(1);
