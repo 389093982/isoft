@@ -183,9 +183,10 @@ export const FilterElementByPlacement = (params) => ajax(BASE_URL + '/iwork/http
 
 
 //【Pay模块】***************************************************************************************************
+export const isoft_unifiedpay_order_api = "ws://localhost:6002/"+WECHAT_PAY+"/Order"; //支付系统的接口
 export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addPayOrder", params, 'POST');
 export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
-export const isoft_unifiedpay_order_api = "ws://localhost:6002/"+WECHAT_PAY+"/Order";
+export const AddPayActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddPayActivity", params, 'POST');
 
 
 //【Contact模块】***************************************************************************************************

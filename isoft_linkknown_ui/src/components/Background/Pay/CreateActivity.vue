@@ -2,7 +2,7 @@
 	<div style="width: 70%">
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="活动ID" prop="activity_id">
-        <Input v-model.trim="formValidate.activity_id" readonly="true"/>
+        <Input v-model.trim="formValidate.activity_id" readonly/>
       </FormItem>
       <FormItem label="活动类型" prop="activity_type">
         <RadioGroup v-model="formValidate.activity_type">
@@ -63,12 +63,21 @@
 </template>
 
 <script>
-  import {validatePatternForString} from "../../../tools/index"
-  import {GetToday_yyyyMMdd} from "../../../tools";
+  import {validatePatternForString,copyObj,GetTodayTime_yyyyMMddhhmmss,GetDate_yyyyMMdd_byDate,MakeCouponIdArrayStr} from "../../../tools/index"
+  import {AddPayActivity} from "../../../api/index"
 
 	export default {
 		name: "CreateActivity",
     data(){
+      const checkActivityId = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('活动ID不能为空！'));
+        }else if(value.length!==20){
+          callback(new Error('活动ID长度必须是20位，请重新进入此页面'));
+        }else {
+          callback();
+        }
+      };
       const checkCouponAmount = (rule,value,callback) => {
         let patrn = /^[0-9]{1,7}(.[0-9]{1,2})?$/;
         if (value === '') {
@@ -95,6 +104,17 @@
           callback();
         }
       };
+      const checkTypeEntityAccount = (rule,value,callback) => {
+        if (value === '') {
+          callback(new Error('数量必填！'));
+        }else if(value.length>6){
+          callback(new Error('暂定:数量长度建议不要超过6位数！'));
+        }else if(parseInt(value)>5000){
+          callback(new Error('暂定:数量建议不要大于5000！'));
+        }else {
+          callback();
+        }
+      };
 		  return{
         formValidate: {
           //活动信息
@@ -114,13 +134,13 @@
         ruleValidate: {
           //活动校验
           activity_id: [
-            {required: true,message:'活动ID必填', trigger: 'change blur'}
+            {required: true,validator:checkActivityId, trigger: 'change blur'}
           ],
           activity_type: [
             {required: true,message:'活动类型必填', trigger: 'change blur'}
           ],
           type_entity_account: [
-            {required: true,message:'数量必填', trigger: 'change blur'}
+            {required: true,validator:checkTypeEntityAccount, trigger: 'change blur'}
           ],
           organizer: [
             {required: true,message:'举办方必填', trigger: 'change blur'}
@@ -151,22 +171,56 @@
       }
     },
     methods:{
+		  randomActivityId:function(){
+        //随机生成活动ID
+        let random = Math.random().toString().slice(-6);
+        this.formValidate.activity_id = GetTodayTime_yyyyMMddhhmmss() +''+ random;
+      },
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            this.$Message.info('校验通过！');
+            if (this.formValidate.end_date < this.formValidate.start_date){
+              this.$Message.error('活动结束日期，不能小于开始日期！');
+              return false;
+            }
+            this.addPayActivity();
           }
         });
       },
+      addPayActivity:async function(){
+		    //如果是优惠券，走下面这个分支 -- 界面和后台流程都做个分支判断，因为不同活动类型，逻辑不一样
+		    if (this.formValidate.activity_type === 'coupon') {
+          let params = copyObj(this.formValidate);
+          params.start_date = GetDate_yyyyMMdd_byDate(params.start_date);
+          params.end_date = GetDate_yyyyMMdd_byDate(params.end_date);
+          //如果是通用券，那么这里设置target_type、target_id 为空值，保险起见。
+          if (params.coupon_type === 'general') {
+            params.target_type = '';
+            params.target_id = '';
+          }
+          //生成券号
+          params.couponIdArrayStr = MakeCouponIdArrayStr(parseInt(params.type_entity_account));
+          const result = await AddPayActivity(params);
+          if (result.status === 'SUCCESS') {
+            this.$Message.success('活动举办成功！');
+            //举办成功后，重置界面
+            this.handleReset('formValidate');
+          }else{
+            this.$Message.error('活动举办失败！');
+            this.randomActivityId();
+          }
+        }else{
+		      this.$Message.info('暂指支持优惠券！');
+        }
+      },
       handleReset(name) {
         this.$refs[name].resetFields();
+        this.randomActivityId();
       },
 
     },
     mounted:function () {
-		  //随机生成活动ID
-      let random = Math.random().toString().slice(-8);
-      this.formValidate.activity_id = GetToday_yyyyMMdd() + random;
+		  this.randomActivityId();
     },
 	}
 </script>

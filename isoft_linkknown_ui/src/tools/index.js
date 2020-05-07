@@ -27,7 +27,78 @@ export function GetToday_yyyyMMdd(){
     today =  '0'+today;
   }
   return year + '' + month + '' + today;
-};
+}
+
+/**
+ * @return {string}
+ */
+export function GetDate_yyyyMMdd_byDate(date0){
+  let date = new Date(date0);
+  let year = date.getFullYear();
+  let month = date.getMonth()+1;
+  if (parseInt(month)<10) {
+    month =  '0'+month;
+  }
+  let today = date.getDate();
+  if (parseInt(today)<10) {
+    today =  '0'+today;
+  }
+  return year + '' + month + '' + today;
+}
+
+/**
+ * @return {string}
+ */
+export function GetTodayTime_yyyyMMddhhmmss(){
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth()+1;
+  if (parseInt(month)<10) {
+    month =  '0'+month;
+  }
+  let day = date.getDate();
+  if (parseInt(day)<10) {
+    day =  '0'+day;
+  }
+  let hour = date.getHours();
+  if (parseInt(hour)<10) {
+    hour =  '0'+hour;
+  }
+  let minute = date.getMinutes();
+  if (parseInt(minute)<10) {
+    minute =  '0'+minute;
+  }
+  let second = date.getSeconds();
+  if (parseInt(second)<10) {
+    second =  '0'+second;
+  }
+  return year +''+ month +''+ day +''+ hour + '' + minute +''+ second;
+}
+
+/**
+ * @return {string}
+ * 根据count 自动生成券号
+ */
+export function MakeCouponIdArrayStr(count){
+  let time = GetTodayTime_yyyyMMddhhmmss();
+  let couponIdArrayStr = '';
+  for (let i = 1; i <= count; i++) {
+    couponIdArrayStr += (time+''+get8lenghNumber(i));
+    if (i !== count) {
+      couponIdArrayStr += ',';
+    }
+  }
+  return couponIdArrayStr;
+}
+
+/**
+ * @return {string}
+ * 八位数字符串，前面补0
+ */
+export function get8lenghNumber(i){
+  let tempStr = '00000000' + i;
+  return tempStr.substring(tempStr.length-8,tempStr.length);
+}
 
 export const checkArrayEmpty = function checkArrayEmpty(arr) {
   return arr == null || arr.length === 0;
