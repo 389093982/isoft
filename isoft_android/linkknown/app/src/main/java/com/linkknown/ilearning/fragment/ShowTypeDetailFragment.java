@@ -65,7 +65,7 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         init();
 
         sectionAdapter = new SectionedRecyclerViewAdapter();
-        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(hotClassifies);
+        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(getActivity(), hotClassifies);
         showTypeDetailClassifySection2 = new ShowTypeDetailClassifySection2(hotClassifies2);
         showTypeDetailBannerSection = new ShowTypeDetailBannerSection(bannerEntities);
         sectionAdapter.addSection(showTypeDetailBannerSection);
@@ -82,8 +82,8 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
             @Override
             public int getSpanSize(final int position) {
                 int sectionIndex = sectionAdapter.getSectionIndex(sectionAdapter.getSectionForPosition(position));
-                // 1、轮播图 2、header 占满整行
-                if (sectionIndex == 0 ||
+                // 1、轮播图容器 2、分类容器 3、header 占满整行
+                if (sectionIndex == 0 || sectionIndex == 1 ||
                         sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
                     return 4;
                 }
