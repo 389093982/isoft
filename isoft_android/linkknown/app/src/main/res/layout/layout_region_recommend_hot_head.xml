@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/item_type_img"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_category_promo" />
+
+    <TextView
+        android:id="@+id/item_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/item_type_img"
+        android:gravity="center"
+        android:text="热门推荐"
+        android:textColor="@color/font_normal"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:id="@+id/item_type_rank_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/btn_rank_bg"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_header_indicator_rank"
+        android:padding="5dp"
+        android:text="排行榜"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+
+</RelativeLayout>
+

@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,13 +10,14 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
@@ -81,6 +83,7 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         // 注册多块内容
         multiTypeAdapter.register(ShowTypeDetailService.BannerEntityWrapper.class, getMultiItemViewForBanner());
         multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, getMultiItemViewForHotClassify());
+        multiTypeAdapter.register(ShowTypeDetailService.HotClassify2.class, getMultiItemViewForHotRecommend());
 
         // 网格布局, 每行最多容量 2 个子 View
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -140,6 +143,29 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
 
     private void clearAndLoadData() {
         ShowTypeDetailService.loadData();
+    }
+
+    private MultiItemView getMultiItemViewForHotRecommend () {
+        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify2>() {
+            @NonNull
+            @Override
+            public int getLayoutId() {
+                return R.layout.layout_region_recommend_card_item;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify2 hotClassify, int position) {
+                ImageView imageView = viewHolder.getConvertView().findViewById(R.id.item_img);
+                imageView.setImageResource(hotClassify.getClassifyImage());
+                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
+                viewHolder.setText(R.id.item_review, "888");
+                viewHolder.setText(R.id.item_title, "888");
+
+                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
+                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
+            }
+        };
+        return multiItemView;
     }
 
     private MultiItemView getMultiItemViewForHotClassify () {
