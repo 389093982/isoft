@@ -76,15 +76,19 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         sectionAdapter.addSection(showTypeDetailClassifySection2);
         sectionAdapter.addSection(showTypeDetailClassifySection2);
         sectionAdapter.addSection(showTypeDetailClassifySection2);
+        // 将子视图的SpanSize都设置为 4，那么这个子视图将占整个RecyclerView可用宽度
         final GridLayoutManager glm = new GridLayoutManager(getContext(), 4);
         glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(final int position) {
-                if (position == 0){
+                int sectionIndex = sectionAdapter.getSectionIndex(sectionAdapter.getSectionForPosition(position));
+                // 1、轮播图 2、header 占满整行
+                if (sectionIndex == 0 ||
+                        sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
                     return 4;
                 }
-                if (sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
-                    return 4;
+                if (sectionIndex == 2){
+                    return 2;
                 }
                 return 1;
             }

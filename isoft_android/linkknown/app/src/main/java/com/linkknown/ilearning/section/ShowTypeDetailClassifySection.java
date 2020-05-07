@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.ShowTypeDetailService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
@@ -24,7 +22,6 @@ public class ShowTypeDetailClassifySection extends Section {
     public ShowTypeDetailClassifySection(List<ShowTypeDetailService.HotClassify> itemList) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.item_types_icon)
-//                .headerResourceId(R.layout.section_header)
                 .build());
         this.itemList = itemList;
     }

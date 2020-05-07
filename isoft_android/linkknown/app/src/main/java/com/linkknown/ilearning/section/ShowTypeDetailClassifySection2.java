@@ -21,8 +21,8 @@ public class ShowTypeDetailClassifySection2 extends Section {
 
     public ShowTypeDetailClassifySection2(List<ShowTypeDetailService.HotClassify2> itemList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.item_types_icon)
-                .headerResourceId(R.layout.item_types_icon)
+                .itemResourceId(R.layout.layout_region_recommend_card_item)
+                .headerResourceId(R.layout.layout_region_recommend_hot_head)
                 .build());
         this.itemList = itemList;
     }
@@ -46,17 +46,19 @@ public class ShowTypeDetailClassifySection2 extends Section {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
         itemHolder.item_title.setText(itemList.get(position).getClassifyName());
-        itemHolder.item_icon.setImageResource(itemList.get(position).getClassifyImage());
+        itemHolder.item_review.setText("888");
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView item_icon;
+        private final ImageView item_img;
         private final TextView item_title;
+        private final TextView item_review;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            item_icon = (ImageView) itemView.findViewById(R.id.item_icon);
+            item_img = (ImageView) itemView.findViewById(R.id.item_img);
             item_title = (TextView) itemView.findViewById(R.id.item_title);
+            item_review = (TextView) itemView.findViewById(R.id.item_review);
         }
     }
 }
