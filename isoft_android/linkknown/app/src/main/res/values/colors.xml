@@ -38,4 +38,5 @@
 
     <color name="yellow_50">#FFD11B</color>
     <color name="black_alpha_45">#71000000</color>
+    <color name="window_background">#eaeaea</color>
 </resources>
