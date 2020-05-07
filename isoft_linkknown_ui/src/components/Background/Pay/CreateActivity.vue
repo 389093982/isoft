@@ -1,98 +1,116 @@
 <template>
-	<div style="width: 70%">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-      <FormItem label="活动ID" prop="activity_id">
-        <Input v-model.trim="formValidate.activity_id" readonly/>
-      </FormItem>
-      <FormItem label="活动描述" prop="activity_desc">
-        <Input v-model.trim="formValidate.activity_desc" placeholder="例如：xxx感恩大回馈！快来领取5折！优惠券！"/>
-      </FormItem>
-      <FormItem label="活动类型" prop="activity_type">
-        <RadioGroup v-model="formValidate.activity_type">
-          <Radio label='coupon'>优惠券</Radio>
-          <Radio label='hongbao'>红包</Radio>
-        </RadioGroup>
-      </FormItem>
+	<div style="display: flex;">
 
-      <FormItem v-if="formValidate.activity_type==='coupon'" label="优惠券数量" prop="type_entity_account">
-        <Input type="number" v-model.trim="formValidate.type_entity_account"/>
-      </FormItem>
-      <FormItem v-else-if="formValidate.activity_type==='hongbao'" label="红包数量" prop="type_entity_account">
-        <Input type="number" v-model.trim="formValidate.type_entity_account"/>
-      </FormItem>
+    <div style="width: 60%">
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+        <FormItem label="活动ID" prop="activity_id">
+          <Input v-model.trim="formValidate.activity_id" readonly/>
+        </FormItem>
+        <FormItem label="活动描述" prop="activity_desc">
+          <Input v-model.trim="formValidate.activity_desc" placeholder="例如：xxx感恩大回馈！快来领取5折！优惠券！"/>
+        </FormItem>
+        <FormItem label="活动类型" prop="activity_type">
+          <RadioGroup v-model="formValidate.activity_type">
+            <Radio label='coupon'>优惠券</Radio>
+            <Radio label='hongbao'>红包</Radio>
+          </RadioGroup>
+        </FormItem>
+
+        <FormItem v-if="formValidate.activity_type==='coupon'" label="优惠券数量" prop="type_entity_account">
+          <Input type="number" v-model.trim="formValidate.type_entity_account"/>
+        </FormItem>
+        <FormItem v-else-if="formValidate.activity_type==='hongbao'" label="红包数量" prop="type_entity_account">
+          <Input type="number" v-model.trim="formValidate.type_entity_account"/>
+        </FormItem>
 
 
-              <!--优惠券配置信息-->
-              <div v-if="formValidate.activity_type==='coupon'" style="margin-left: 100px;border: 2px rgba(248,168,38,0.9) solid;margin-bottom: 20px">
-                <div style="color: rgba(242,163,37,0.99)">优惠券配置信息:</div>
-                <FormItem label="券类型" prop="coupon_type">
-                  <RadioGroup v-model="formValidate.coupon_type">
-                    <Radio label='general'>通用券</Radio>
-                    <Radio label='designated'>指定券</Radio>
-                  </RadioGroup>
-                </FormItem>
-                <div v-if="formValidate.coupon_type==='designated'">
-                  <FormItem label="被使用对象" prop="target_type">
-                    <RadioGroup v-model="formValidate.target_type">
-                      <Radio label='course'>课程</Radio>
-                    </RadioGroup>
-                  </FormItem>
-                  <FormItem label="被使用对象ID" prop="target_id">
-                    <Input type="number" v-model="formValidate.target_id" style="width: 100px" />
-                  </FormItem>
-                </div>
+        <!--优惠券配置信息-->
+        <div v-if="formValidate.activity_type==='coupon'" style="margin-left: 100px;border: 2px rgba(248,168,38,0.9) solid;margin-bottom: 20px">
+          <div style="color: rgba(242,163,37,0.99)">优惠券配置信息:</div>
+          <FormItem label="券类型" prop="coupon_type">
+            <RadioGroup v-model="formValidate.coupon_type">
+              <Radio label='general'>通用券</Radio>
+              <Radio label='designated'>指定券</Radio>
+            </RadioGroup>
+          </FormItem>
+          <div v-if="formValidate.coupon_type==='designated'">
+            <FormItem label="被使用对象" prop="target_type">
+              <RadioGroup v-model="formValidate.target_type">
+                <Radio label='course'>课程</Radio>
+              </RadioGroup>
+            </FormItem>
+            <FormItem label="被使用对象ID" prop="target_id">
+              <Input type="number" v-model="formValidate.target_id" style="width: 100px" />
+            </FormItem>
+          </div>
 
-                <div style="width: 100%;height: 2px;background-color: rgba(255,105,0,0.34)"></div>
-                <!--以下是优惠具体方式-->
+          <div style="width: 100%;height: 2px;background-color: rgba(255,105,0,0.34)"></div>
+          <!--以下是优惠具体方式-->
 
-                <FormItem label="优惠方式" prop="youhui_type">
-                  <RadioGroup v-model="formValidate.youhui_type">
-                    <Radio label='reduce'>减免</Radio>
-                    <Radio label='discount'>打折</Radio>
-                  </RadioGroup>
-                </FormItem>
-                <FormItem v-if="formValidate.youhui_type==='discount'" label="折扣率" prop="discount_rate">
-                  <Input v-model="formValidate.discount_rate" placeholder="0.68" style="width: 100px" />
-                  <span v-if="formValidate.discount_rate" style="color: grey">
+          <FormItem label="优惠方式" prop="youhui_type">
+            <RadioGroup v-model="formValidate.youhui_type">
+              <Radio label='reduce'>减免</Radio>
+              <Radio label='discount'>打折</Radio>
+            </RadioGroup>
+          </FormItem>
+          <FormItem v-if="formValidate.youhui_type==='discount'" label="折扣率" prop="discount_rate">
+            <Input v-model="formValidate.discount_rate" placeholder="0.68" style="width: 100px" />
+            <span v-if="formValidate.discount_rate" style="color: grey">
                     {{(formValidate.discount_rate*10).toFixed(2)}} 折 【表示需付款金额为：商品价格 * {{formValidate.discount_rate}}】
                   </span>
-                </FormItem>
-                <div v-if="formValidate.youhui_type==='reduce'">
-                  <FormItem label="券面金额" prop="coupon_amount">
-                    <Input v-model="formValidate.coupon_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
-                  </FormItem>
-                  <FormItem label="商品门槛金额" prop="goods_min_amount">
-                    <Input v-model="formValidate.goods_min_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
-                  </FormItem>
-                </div>
-              </div>
+          </FormItem>
+          <div v-if="formValidate.youhui_type==='reduce'">
+            <FormItem label="券面金额" prop="coupon_amount">
+              <Input v-model="formValidate.coupon_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
+            </FormItem>
+            <FormItem label="商品门槛金额" prop="goods_min_amount">
+              <Input v-model="formValidate.goods_min_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
+            </FormItem>
+          </div>
+        </div>
 
 
 
-      <FormItem label="举办方" prop="organizer">
-        <Input v-model.trim="formValidate.organizer" placeholder="例:链知网官方 or 具体合作伙伴"/>
-      </FormItem>
-      <FormItem label="活动开始日期" prop="start_date">
-        <DatePicker type="date" placeholder="活动开始日期" v-model="formValidate.start_date"></DatePicker>
-      </FormItem>
-      <FormItem label="活动结束日期" prop="end_date">
-        <DatePicker type="date" placeholder="活动结束日期" v-model="formValidate.end_date"></DatePicker>
-      </FormItem>
+        <FormItem label="举办方" prop="organizer">
+          <Input v-model.trim="formValidate.organizer" placeholder="例:链知网官方 or 具体合作伙伴"/>
+        </FormItem>
+        <FormItem label="活动开始日期" prop="start_date">
+          <DatePicker type="date" placeholder="活动开始日期" v-model="formValidate.start_date"></DatePicker>
+        </FormItem>
+        <FormItem label="活动结束日期" prop="end_date">
+          <DatePicker type="date" placeholder="活动结束日期" v-model="formValidate.end_date"></DatePicker>
+        </FormItem>
 
-      <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-        <Button style="margin-left: 8px" @click="handleReset('formValidate')">重置</Button>
-      </FormItem>
-    </Form>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+          <Button style="margin-left: 8px" @click="handleReset('formValidate')">重置</Button>
+        </FormItem>
+      </Form>
+    </div>
+    <div style="width: 40%">
+      <div v-if="formValidate.activity_type==='coupon'" style="margin: 150px 0 0 30px ">
+        <div style="font-size: 20px;color: #ff6900;text-align: center">效果图展示:</div><br>
+        <Coupon :coupon_type="formValidate.coupon_type"
+                 :youhui_type="formValidate.youhui_type"
+                 :start_date="formatCouponComponentDate(formValidate.start_date)"
+                 :end_date="formatCouponComponentDate(formValidate.end_date)"
+                 :coupon_amount="formValidate.coupon_amount"
+                 :discount_rate="formValidate.discount_rate">
+        </Coupon>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
   import {validatePatternForString,copyObj,GetTodayTime_yyyyMMddhhmmss,GetDate_yyyyMMdd_byDate,MakeCouponIdArrayStr} from "../../../tools/index"
   import {AddPayActivity} from "../../../api/index"
+  import Coupon from "../../Common/coupon/Coupon";
 
 	export default {
 		name: "CreateActivity",
+    components: {Coupon},
     data(){
       const checkActivityId = (rule,value,callback) => {
         if (value === '') {
@@ -277,6 +295,15 @@
         this.$refs[name].resetFields();
         this.randomActivityId();
       },
+      // 传入coupon组件里的date需要的是8位的字符串日期
+      formatCouponComponentDate:function (date0) {
+		    if (date0 === '') {
+		      return 'yyyyMMdd'
+        }else {
+          let date = JSON.parse(JSON.stringify(date0));
+          return GetDate_yyyyMMdd_byDate(date);
+        }
+      }
 
     },
     mounted:function () {

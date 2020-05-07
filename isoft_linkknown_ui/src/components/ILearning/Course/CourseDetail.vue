@@ -118,7 +118,14 @@
 
       <Col span="8">
         <div class="isoft_bg_white">
-          <UserAbout :userName="course.course_author" :titleLimitLenth="10"/>
+          <!--优惠券-->
+          <Coupon coupon_type="general"
+                  youhui_type="discount"
+                  start_date="20200506"
+                  end_date="20200520"
+                  coupon_amount="5"
+                  discount_rate="0.88">
+          </Coupon>
         </div>
         <div class="isoft_bg_white">
           <HotUser style="margin-left: 2px;"/>
@@ -135,7 +142,6 @@
   import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
-  import UserAbout from "../../User/UserAbout"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
@@ -143,10 +149,11 @@
   import VoteTags from "../../Decorate/VoteTags";
   import ShowMore from "../../Elementviewers/showMore";
   import SepLine from "../../Common/SepLine";
+  import Coupon from "../../Common/coupon/Coupon";
 
   export default {
     name: "CourseDetail",
-    components: {SepLine, ShowMore, CourseMeta, IEasyComment, HotRecommend, UserAbout, HotUser,VoteTags,},
+    components: {Coupon, SepLine, ShowMore, CourseMeta, IEasyComment, HotRecommend, HotUser,VoteTags,},
     data() {
       return {
         isLoading: true,
