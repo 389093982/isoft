@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,10 +15,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.service.ShowTypeDetailService;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -65,13 +69,10 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
     }
 
     private void bindAdapterData () {
-        LiveEventBus.get("listBannerEntityWrapper", List.class).observe(this, new Observer<List>() {
-            @Override
-            public void onChanged(List list) {
-                multiTypeAdapter.setItems(list);
-                multiTypeAdapter.notifyDataSetChanged();
-                finishRefreshing();
-            }
+        LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
+            multiTypeAdapter.setItems(list);
+            multiTypeAdapter.notifyDataSetChanged();
+            finishRefreshing();
         });
     }
 
@@ -79,6 +80,7 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         multiTypeAdapter = new MultiTypeAdapter();
         // 注册多块内容
         multiTypeAdapter.register(ShowTypeDetailService.BannerEntityWrapper.class, getMultiItemViewForBanner());
+        multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, getMultiItemViewForHotClassify());
 
         // 网格布局, 每行最多容量 2 个子 View
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -93,6 +95,9 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
             public int getSpanSize(int position) {
                 switch (multiTypeAdapter.getItemViewType(position)) {
                     case 0:
+                        // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
+                        return 2;
+                    case 1:
                         // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
                         return 2;
                     default:
@@ -134,7 +139,54 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
 
 
     private void clearAndLoadData() {
-        ShowTypeDetailService.loadBanner();
+        ShowTypeDetailService.loadData();
+    }
+
+    private MultiItemView getMultiItemViewForHotClassify () {
+        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify>(){
+            @NonNull
+            @Override
+            public int getLayoutId() {
+                return R.layout.layout_recycleview;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify hotClassify, int position) {
+                RecyclerView recyclerView = viewHolder.getConvertView().findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new GridLayoutManager(mContext, 8));
+
+                MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
+                // 注册多块内容
+                multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, getMultiItemViewForHotClassify2());
+                multiTypeAdapter.setItems(Arrays.asList(hotClassify,hotClassify,hotClassify,hotClassify,hotClassify,hotClassify,hotClassify));
+                recyclerView.setAdapter(multiTypeAdapter);
+            }
+        };
+        return multiItemView;
+    }
+
+    private MultiItemView getMultiItemViewForHotClassify2 () {
+        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify>(){
+            @NonNull
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_types_icon;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify hotClassify, int position) {
+                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
+                ImageView imageView = viewHolder.getConvertView().findViewById(R.id.item_icon);
+//                Glide.with(mContext)
+//                        .load(UIUtils.replaceMediaUrl(hotClassify.getClassifyImage()))
+//                        // placeholder 图片加载出来前,显示的图片
+//                        // error 图片加载失败后,显示的图片
+//                        .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+//                        .into(imageView);
+                imageView.setImageResource(hotClassify.getClassifyImage());
+            }
+        };
+        return multiItemView;
     }
 
     private MultiItemView getMultiItemViewForBanner () {

@@ -4,19 +4,67 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.ShowTypeDetailFragment;
 import com.linkknown.ilearning.model.RegistResponse;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
 
 public class ShowTypeDetailService extends ViewModel {
 
-    public static void loadBanner () {
-        LiveEventBus.get("listBannerEntityWrapper", List.class).post(getBannerEntityWrapperData());
+    public static void loadData () {
+        List<HotClassify> hotClassifyData = getHotClassifyData();
+        List<BannerEntityWrapper> bannerEntityWrapperData = getBannerEntityWrapperData();
+
+        List<Object> lst = new ArrayList<>();
+        lst.addAll(bannerEntityWrapperData);
+        lst.addAll(hotClassifyData);
+        LiveEventBus.get("showTypeDetails", List.class).post(lst);
+    }
+
+    private static List<HotClassify> getHotClassifyData () {
+        List<HotClassify> lst = new ArrayList<>();
+        HotClassify hotClassify = new HotClassify();
+        hotClassify.setClassifyName("美妆");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("服饰");
+        hotClassify.setClassifyImage(R.drawable.icon_2);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("资讯");
+        hotClassify.setClassifyImage(R.drawable.icon_3);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("健身");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("美妆");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("服饰");
+        hotClassify.setClassifyImage(R.drawable.icon_2);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("资讯");
+        hotClassify.setClassifyImage(R.drawable.icon_3);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("健身");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
+        lst.add(hotClassify);
+        return lst;
     }
 
     private static List<BannerEntityWrapper> getBannerEntityWrapperData () {
@@ -38,7 +86,13 @@ public class ShowTypeDetailService extends ViewModel {
         bannerEntitie.setLink("1111111");
         bannerEntities.add(bannerEntitie);
         wrapper.setBannerEntities(bannerEntities);
-        return Arrays.asList(wrapper, wrapper, wrapper);
+        return Arrays.asList(wrapper);
+    }
+
+    @Data
+    public static class HotClassify {
+        public String classifyName;
+        public int classifyImage;
     }
 
     @Data
