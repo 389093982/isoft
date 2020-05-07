@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.service.ShowTypeDetailService;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -32,12 +35,17 @@ import lombok.Data;
 // MultiTypeAdapter
 public class ShowTypeDetailFragment extends Fragment implements View.OnClickListener {
 
+    // 下拉刷新布局
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout refreshLayout;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
+
     private Context mContext;
     private boolean mIsRefreshing = false;
+
+    private MultiTypeAdapter multiTypeAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,27 +53,92 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         mContext = getActivity();
         ButterKnife.bind(this, rootView);
 
+        // 初始化组件
         init();
+
+        // 绑定 adapter
+        bindAdapter();
+
+        bindAdapterData();
 
         return rootView;
     }
 
-    private void init() {
-        mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        recyclerView.post(() -> {
-            mRefreshLayout.setRefreshing(true);
-            mIsRefreshing = true;
-            loadData();
+    private void bindAdapterData () {
+        LiveEventBus.get("listBannerEntityWrapper", List.class).observe(this, new Observer<List>() {
+            @Override
+            public void onChanged(List list) {
+                multiTypeAdapter.setItems(list);
+                multiTypeAdapter.notifyDataSetChanged();
+                finishRefreshing();
+            }
         });
-        mRefreshLayout.setOnRefreshListener(() -> {
-            clearData();
-            loadData();
-        });
+    }
 
-        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-
+    private void bindAdapter () {
+        multiTypeAdapter = new MultiTypeAdapter();
         // 注册多块内容
-        multiTypeAdapter.register(BannerEntityWrapper.class, new MultiItemView<BannerEntityWrapper>() {
+        multiTypeAdapter.register(ShowTypeDetailService.BannerEntityWrapper.class, getMultiItemViewForBanner());
+
+        // 网格布局, 每行最多容量 2 个子 View
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        mLayoutManager.setSpanSizeLookup(getSpanSizeLookup(multiTypeAdapter));
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(multiTypeAdapter);
+    }
+
+    private GridLayoutManager.SpanSizeLookup getSpanSizeLookup(MultiTypeAdapter multiTypeAdapter) {
+        return new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (multiTypeAdapter.getItemViewType(position)) {
+                    case 0:
+                        // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        };
+    }
+
+    private void init() {
+        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+        // 通过post(Runnable runnable)方法放到UI线程排队执行
+        recyclerView.post(() -> {
+            // 显示刷新进度条，通过直接设置setRefreshing(true)
+            refreshLayout.setRefreshing(true);
+            mIsRefreshing = true;
+            clearAndLoadData();
+        });
+
+        // refreshLayout 设置刷新监听
+        refreshLayout.setOnRefreshListener(() -> {
+            mIsRefreshing = true;
+            clearAndLoadData();
+        });
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    protected void finishRefreshing() {
+        mIsRefreshing = false;
+        refreshLayout.setRefreshing(false);
+    }
+
+
+
+    private void clearAndLoadData() {
+        ShowTypeDetailService.loadBanner();
+    }
+
+    private MultiItemView getMultiItemViewForBanner () {
+        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.BannerEntityWrapper>() {
             @NonNull
             @Override
             public int getLayoutId() {
@@ -73,7 +146,7 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull BannerEntityWrapper bannerEntityWrapper, int i) {
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.BannerEntityWrapper bannerEntityWrapper, int i) {
                 Banner banner = viewHolder.getConvertView().findViewById(R.id.banner);
                 banner.clearAnimation();
                 //设置 banner 样式
@@ -92,68 +165,8 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
                 banner.setImages(bannerImageList);
                 banner.start();
             }
-        });
-        BannerEntityWrapper wrapper = new BannerEntityWrapper();
-        List<BannerEntity> bannerEntities = new ArrayList<>();
-        BannerEntity bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
-        bannerEntities.add(bannerEntitie);
-        bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
-        bannerEntities.add(bannerEntitie);
-        bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
-        bannerEntities.add(bannerEntitie);
-        wrapper.setBannerEntities(bannerEntities);
-        multiTypeAdapter.setItems(Arrays.asList(wrapper));
-        // 网格布局, 每行最多容量 2 个子 View
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (multiTypeAdapter.getItemViewType(position)) {
-                    case 0:
-                        // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
-                        return 2;
-                    default:
-                        return 1;
-                }
-            }
-        });
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(multiTypeAdapter);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    private void loadData() {
-
-    }
-
-    private void clearData() {
-
-    }
-
-    @Data
-    public class BannerEntityWrapper {
-        public List<BannerEntity> bannerEntities;
-    }
-
-    @Data
-    public class BannerEntity {
-        public String title;
-        public String img;
-        public String link;
+        };
+        return multiItemView;
     }
 
 }
