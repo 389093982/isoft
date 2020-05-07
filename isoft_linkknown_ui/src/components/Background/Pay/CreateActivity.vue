@@ -109,6 +109,8 @@
           callback(new Error('数量必填！'));
         }else if(value.length>6){
           callback(new Error('暂定:数量长度建议不要超过6位数！'));
+        }else if(parseInt(value)>5000){
+          callback(new Error('暂定:数量建议不要大于5000！'));
         }else {
           callback();
         }
