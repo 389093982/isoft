@@ -1,6 +1,5 @@
 package com.linkknown.ilearning.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,20 +9,18 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.section.ShowTypeDetailBannerSection;
+import com.linkknown.ilearning.section.ShowTypeDetailClassifySection;
+import com.linkknown.ilearning.section.ShowTypeDetailClassifySection2;
 import com.linkknown.ilearning.service.ShowTypeDetailService;
-import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -36,9 +33,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import lombok.Data;
 
-// MultiTypeAdapter
 public class ShowTypeDetailFragment extends Fragment implements View.OnClickListener {
 
     // 下拉刷新布局
@@ -53,6 +50,11 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
 
     private MultiTypeAdapter multiTypeAdapter;
 
+    private List<ShowTypeDetailService.BannerEntity> bannerEntities = new ArrayList<>();
+    // 数组是引用传递
+    private List<ShowTypeDetailService.HotClassify> hotClassifies = new ArrayList<>();
+    private List<ShowTypeDetailService.HotClassify2> hotClassifies2 = new ArrayList<>();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_detail, container, false);
@@ -62,53 +64,79 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         // 初始化组件
         init();
 
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(hotClassifies);
+        showTypeDetailClassifySection2 = new ShowTypeDetailClassifySection2(hotClassifies2);
+        showTypeDetailBannerSection = new ShowTypeDetailBannerSection(bannerEntities);
+        sectionAdapter.addSection(showTypeDetailBannerSection);
+        sectionAdapter.addSection(showTypeDetailClassifySection);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        // 将子视图的SpanSize都设置为 4，那么这个子视图将占整个RecyclerView可用宽度
+        final GridLayoutManager glm = new GridLayoutManager(getContext(), 4);
+        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(final int position) {
+                int sectionIndex = sectionAdapter.getSectionIndex(sectionAdapter.getSectionForPosition(position));
+                // 1、轮播图 2、header 占满整行
+                if (sectionIndex == 0 ||
+                        sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                    return 4;
+                }
+                if (sectionIndex == 2){
+                    return 2;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(glm);
+        recyclerView.setAdapter(sectionAdapter);
+
         // 绑定 adapter
-        bindAdapter();
+//        bindAdapter();
 
         bindAdapterData();
 
         return rootView;
     }
 
+    private ShowTypeDetailClassifySection showTypeDetailClassifySection;
+    private ShowTypeDetailClassifySection2 showTypeDetailClassifySection2;
+    private ShowTypeDetailBannerSection showTypeDetailBannerSection;
+    private SectionedRecyclerViewAdapter sectionAdapter;
+
     private void bindAdapterData () {
         LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
-            multiTypeAdapter.setItems(list);
-            multiTypeAdapter.notifyDataSetChanged();
-            finishRefreshing();
-        });
-    }
+            hotClassifies.clear();
+            hotClassifies2.clear();
+            bannerEntities.clear();
 
-    private void bindAdapter () {
-        multiTypeAdapter = new MultiTypeAdapter();
-        // 注册多块内容
-        multiTypeAdapter.register(ShowTypeDetailService.BannerEntityWrapper.class, getMultiItemViewForBanner());
-        multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, getMultiItemViewForHotClassify());
-        multiTypeAdapter.register(ShowTypeDetailService.HotClassify2.class, getMultiItemViewForHotRecommend());
-
-        // 网格布局, 每行最多容量 2 个子 View
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mLayoutManager.setSpanSizeLookup(getSpanSizeLookup(multiTypeAdapter));
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(multiTypeAdapter);
-    }
-
-    private GridLayoutManager.SpanSizeLookup getSpanSizeLookup(MultiTypeAdapter multiTypeAdapter) {
-        return new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (multiTypeAdapter.getItemViewType(position)) {
-                    case 0:
-                        // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
-                        return 2;
-                    case 1:
-                        // 将子视图的SpanSize都设置为2，那么这个子视图将占整个RecyclerView可用宽度
-                        return 2;
-                    default:
-                        return 1;
+            for (Object obj : list){
+                if (obj instanceof ShowTypeDetailService.HotClassify) {
+                    hotClassifies.add((ShowTypeDetailService.HotClassify)obj);
+                }
+                if (obj instanceof ShowTypeDetailService.HotClassify2) {
+                    hotClassifies2.add((ShowTypeDetailService.HotClassify2)obj);
+                }
+                if (obj instanceof ShowTypeDetailService.BannerEntity) {
+                    bannerEntities.add((ShowTypeDetailService.BannerEntity)obj);
                 }
             }
-        };
+            sectionAdapter.notifyDataSetChanged();
+            finishRefreshing();
+        });
+
+//        LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
+//            multiTypeAdapter.setItems(list);
+//            multiTypeAdapter.notifyDataSetChanged();
+//            finishRefreshing();
+//        });
     }
+
 
     private void init() {
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -143,108 +171,6 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
 
     private void clearAndLoadData() {
         ShowTypeDetailService.loadData();
-    }
-
-    private MultiItemView getMultiItemViewForHotRecommend () {
-        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify2>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.layout_region_recommend_card_item;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify2 hotClassify, int position) {
-                ImageView imageView = viewHolder.getConvertView().findViewById(R.id.item_img);
-                imageView.setImageResource(hotClassify.getClassifyImage());
-                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-                viewHolder.setText(R.id.item_review, "888");
-                viewHolder.setText(R.id.item_title, "888");
-
-                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-            }
-        };
-        return multiItemView;
-    }
-
-    private MultiItemView getMultiItemViewForHotClassify () {
-        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify>(){
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.layout_recycleview;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify hotClassify, int position) {
-                RecyclerView recyclerView = viewHolder.getConvertView().findViewById(R.id.recyclerView);
-                recyclerView.setLayoutManager(new GridLayoutManager(mContext, 8));
-
-                MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-                // 注册多块内容
-                multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, getMultiItemViewForHotClassify2());
-                multiTypeAdapter.setItems(Arrays.asList(hotClassify,hotClassify,hotClassify,hotClassify,hotClassify,hotClassify,hotClassify));
-                recyclerView.setAdapter(multiTypeAdapter);
-            }
-        };
-        return multiItemView;
-    }
-
-    private MultiItemView getMultiItemViewForHotClassify2 () {
-        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.HotClassify>(){
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_types_icon;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify hotClassify, int position) {
-                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-                ImageView imageView = viewHolder.getConvertView().findViewById(R.id.item_icon);
-//                Glide.with(mContext)
-//                        .load(UIUtils.replaceMediaUrl(hotClassify.getClassifyImage()))
-//                        // placeholder 图片加载出来前,显示的图片
-//                        // error 图片加载失败后,显示的图片
-//                        .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-//                        .into(imageView);
-                imageView.setImageResource(hotClassify.getClassifyImage());
-            }
-        };
-        return multiItemView;
-    }
-
-    private MultiItemView getMultiItemViewForBanner () {
-        MultiItemView multiItemView = new MultiItemView<ShowTypeDetailService.BannerEntityWrapper>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.layout_banner;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.BannerEntityWrapper bannerEntityWrapper, int i) {
-                Banner banner = viewHolder.getConvertView().findViewById(R.id.banner);
-                banner.clearAnimation();
-                //设置 banner 样式
-                banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-                //设置图片加载器
-                banner.setImageLoader(new GlideImageLoader());
-
-                // 存放轮播图所有图片
-                ArrayList<String> bannerImageList = new ArrayList<>();
-                //清空旧数据
-                bannerImageList.clear();
-
-                for (int index = 0; index < bannerEntityWrapper.bannerEntities.size(); index++) {
-                    bannerImageList.add(bannerEntityWrapper.getBannerEntities().get(index).getImg());
-                }
-                banner.setImages(bannerImageList);
-                banner.start();
-            }
-        };
-        return multiItemView;
     }
 
 }

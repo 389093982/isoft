@@ -23,10 +23,10 @@ public class ShowTypeDetailService extends ViewModel {
     public static void loadData () {
         List<HotClassify> hotClassifyData = getHotClassifyData();
         List<HotClassify2> hotClassifyData2 = getHotClassifyData2();
-        List<BannerEntityWrapper> bannerEntityWrapperData = getBannerEntityWrapperData();
+        List<BannerEntity> bannerEntities = getBannerEntitys();
 
         List<Object> lst = new ArrayList<>();
-        lst.addAll(bannerEntityWrapperData);
+        lst.addAll(bannerEntities);
         lst.addAll(hotClassifyData);
         lst.addAll(hotClassifyData2);
         LiveEventBus.get("showTypeDetails", List.class).post(lst);
@@ -41,30 +41,6 @@ public class ShowTypeDetailService extends ViewModel {
         hotClassify = new HotClassify2();
         hotClassify.setClassifyName("服饰");
         hotClassify.setClassifyImage(R.drawable.icon_2);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("资讯");
-        hotClassify.setClassifyImage(R.drawable.icon_3);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("健身");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("美妆");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("服饰");
-        hotClassify.setClassifyImage(R.drawable.icon_2);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("资讯");
-        hotClassify.setClassifyImage(R.drawable.icon_3);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("健身");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
         lst.add(hotClassify);
         return lst;
     }
@@ -103,29 +79,35 @@ public class ShowTypeDetailService extends ViewModel {
         hotClassify.setClassifyName("健身");
         hotClassify.setClassifyImage(R.drawable.icon_1);
         lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("资讯");
+        hotClassify.setClassifyImage(R.drawable.icon_3);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("健身");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
+        lst.add(hotClassify);
         return lst;
     }
 
-    private static List<BannerEntityWrapper> getBannerEntityWrapperData () {
-        BannerEntityWrapper wrapper = new BannerEntityWrapper();
+    private static List<BannerEntity> getBannerEntitys () {
         List<BannerEntity> bannerEntities = new ArrayList<>();
         BannerEntity bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
+        bannerEntitie.setBannerImage("https://img-blog.csdn.net/20180420104431654");
+        bannerEntitie.setBannerTitle("测试11111");
+        bannerEntitie.setBannerLink("1111111");
         bannerEntities.add(bannerEntitie);
         bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
+        bannerEntitie.setBannerImage("https://img-blog.csdn.net/20180420104431654");
+        bannerEntitie.setBannerTitle("测试11111");
+        bannerEntitie.setBannerLink("1111111");
         bannerEntities.add(bannerEntitie);
         bannerEntitie = new BannerEntity();
-        bannerEntitie.setImg("https://img-blog.csdn.net/20180420104431654");
-        bannerEntitie.setTitle("测试11111");
-        bannerEntitie.setLink("1111111");
+        bannerEntitie.setBannerImage("https://img-blog.csdn.net/20180420104431654");
+        bannerEntitie.setBannerTitle("测试11111");
+        bannerEntitie.setBannerLink("1111111");
         bannerEntities.add(bannerEntitie);
-        wrapper.setBannerEntities(bannerEntities);
-        return Arrays.asList(wrapper);
+        return bannerEntities;
     }
 
     @Data
@@ -141,14 +123,9 @@ public class ShowTypeDetailService extends ViewModel {
     }
 
     @Data
-    public static class BannerEntityWrapper {
-        public List<BannerEntity> bannerEntities;
-    }
-
-    @Data
     public static class BannerEntity {
-        public String title;
-        public String img;
-        public String link;
+        public String bannerTitle;
+        public String bannerImage;
+        public String bannerLink;
     }
 }
