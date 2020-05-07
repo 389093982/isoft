@@ -35,4 +35,7 @@
     <color name="TableLinecolor">#fff5f5f5</color>
 
     <color name="font_normal">#555555</color>
+
+    <color name="yellow_50">#FFD11B</color>
+    <color name="black_alpha_45">#71000000</color>
 </resources>
