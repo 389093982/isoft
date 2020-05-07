@@ -4,6 +4,9 @@
       <FormItem label="活动ID" prop="activity_id">
         <Input v-model.trim="formValidate.activity_id" readonly/>
       </FormItem>
+      <FormItem label="活动描述" prop="activity_desc">
+        <Input v-model.trim="formValidate.activity_desc" placeholder="例如：xxx感恩大回馈！快来领取5折！优惠券！"/>
+      </FormItem>
       <FormItem label="活动类型" prop="activity_type">
         <RadioGroup v-model="formValidate.activity_type">
           <Radio label='coupon'>优惠券</Radio>
@@ -18,34 +21,56 @@
         <Input type="number" v-model.trim="formValidate.type_entity_account"/>
       </FormItem>
 
-      <div v-if="formValidate.activity_type==='coupon'" style="margin-left: 100px;border: 2px rgba(248,168,38,0.9) solid;margin-bottom: 20px">
-        <div style="color: rgba(248,168,38,0.9)">优惠券配置信息:</div>
-        <FormItem label="券类型" prop="coupon_type">
-          <RadioGroup v-model="formValidate.coupon_type">
-            <Radio label='general'>通用券</Radio>
-            <Radio label='designated'>指定券</Radio>
-          </RadioGroup>
-        </FormItem>
-        <div v-if="formValidate.coupon_type==='designated'">
-          <FormItem label="被使用对象" prop="target_type">
-            <RadioGroup v-model="formValidate.target_type">
-              <Radio label='course'>课程</Radio>
-            </RadioGroup>
-          </FormItem>
-          <FormItem label="被使用对象ID" prop="target_id">
-            <Input type="number" v-model="formValidate.target_id" style="width: 100px" />
-          </FormItem>
-        </div>
-        <FormItem label="券面金额" prop="coupon_amount">
-          <Input v-model="formValidate.coupon_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
-        </FormItem>
-        <FormItem label="商品门槛金额" prop="goods_min_amount">
-          <Input v-model="formValidate.goods_min_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
-        </FormItem>
-      </div>
+
+              <!--优惠券配置信息-->
+              <div v-if="formValidate.activity_type==='coupon'" style="margin-left: 100px;border: 2px rgba(248,168,38,0.9) solid;margin-bottom: 20px">
+                <div style="color: rgba(242,163,37,0.99)">优惠券配置信息:</div>
+                <FormItem label="券类型" prop="coupon_type">
+                  <RadioGroup v-model="formValidate.coupon_type">
+                    <Radio label='general'>通用券</Radio>
+                    <Radio label='designated'>指定券</Radio>
+                  </RadioGroup>
+                </FormItem>
+                <div v-if="formValidate.coupon_type==='designated'">
+                  <FormItem label="被使用对象" prop="target_type">
+                    <RadioGroup v-model="formValidate.target_type">
+                      <Radio label='course'>课程</Radio>
+                    </RadioGroup>
+                  </FormItem>
+                  <FormItem label="被使用对象ID" prop="target_id">
+                    <Input type="number" v-model="formValidate.target_id" style="width: 100px" />
+                  </FormItem>
+                </div>
+
+                <div style="width: 100%;height: 2px;background-color: rgba(255,105,0,0.34)"></div>
+                <!--以下是优惠具体方式-->
+
+                <FormItem label="优惠方式" prop="youhui_type">
+                  <RadioGroup v-model="formValidate.youhui_type">
+                    <Radio label='reduce'>减免</Radio>
+                    <Radio label='discount'>打折</Radio>
+                  </RadioGroup>
+                </FormItem>
+                <FormItem v-if="formValidate.youhui_type==='discount'" label="折扣率" prop="discount_rate">
+                  <Input v-model="formValidate.discount_rate" placeholder="0.68" style="width: 100px" />
+                  <span v-if="formValidate.discount_rate" style="color: grey">
+                    {{(formValidate.discount_rate*10).toFixed(2)}} 折 【表示需付款金额为：商品价格 * {{formValidate.discount_rate}}】
+                  </span>
+                </FormItem>
+                <div v-if="formValidate.youhui_type==='reduce'">
+                  <FormItem label="券面金额" prop="coupon_amount">
+                    <Input v-model="formValidate.coupon_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
+                  </FormItem>
+                  <FormItem label="商品门槛金额" prop="goods_min_amount">
+                    <Input v-model="formValidate.goods_min_amount" placeholder="000.00" style="width: 100px" /><Icon type="logo-yen" />
+                  </FormItem>
+                </div>
+              </div>
+
+
 
       <FormItem label="举办方" prop="organizer">
-        <Input v-model.trim="formValidate.organizer" placeholder=""/>
+        <Input v-model.trim="formValidate.organizer" placeholder="例:链知网官方 or 具体合作伙伴"/>
       </FormItem>
       <FormItem label="活动开始日期" prop="start_date">
         <DatePicker type="date" placeholder="活动开始日期" v-model="formValidate.start_date"></DatePicker>
@@ -74,6 +99,20 @@
           callback(new Error('活动ID不能为空！'));
         }else if(value.length!==20){
           callback(new Error('活动ID长度必须是20位，请重新进入此页面'));
+        }else {
+          callback();
+        }
+      };
+      const checkDiscountRate = (rule,value,callback) => {
+        let patrn = /^[0-9]{1,7}(.[0-9]{1,2})?$/;
+        if (value === '') {
+          callback(new Error('折扣率不能为空'));
+        }else if(!validatePatternForString(patrn,value)){
+          callback(new Error('格式不正确'));
+        }else if(value<=0){
+          callback(new Error('折扣率必须大于0'));
+        }else if(value>=1){
+          callback(new Error('折扣率必须小于1'));
         }else {
           callback();
         }
@@ -119,6 +158,7 @@
         formValidate: {
           //活动信息
           activity_id: '',
+          activity_desc: '',
           activity_type: '',
           type_entity_account: '',
           organizer:'',
@@ -128,6 +168,8 @@
           coupon_type:'general',
           target_type:'course',
           target_id:'',
+          youhui_type:'reduce',
+          discount_rate:'',
           coupon_amount:'',
           goods_min_amount:'',
         },
@@ -135,6 +177,9 @@
           //活动校验
           activity_id: [
             {required: true,validator:checkActivityId, trigger: 'change blur'}
+          ],
+          activity_desc: [
+            {required: true,message:'活动描述必填', trigger: 'change blur'}
           ],
           activity_type: [
             {required: true,message:'活动类型必填', trigger: 'change blur'}
@@ -160,6 +205,12 @@
           ],
           target_id: [
             {required: true,message:'对象ID必填', trigger: 'change blur'}
+          ],
+          youhui_type: [
+            {required: true,message:'优惠方式必填', trigger: 'change blur'}
+          ],
+          discount_rate: [
+            {required: true,validator:checkDiscountRate, trigger: 'change blur'}
           ],
           coupon_amount: [
             {required: true,validator:checkCouponAmount, trigger: 'change blur'}
@@ -191,12 +242,21 @@
 		    //如果是优惠券，走下面这个分支 -- 界面和后台流程都做个分支判断，因为不同活动类型，逻辑不一样
 		    if (this.formValidate.activity_type === 'coupon') {
           let params = copyObj(this.formValidate);
+          // 格式化活动开始和结束日期
           params.start_date = GetDate_yyyyMMdd_byDate(params.start_date);
           params.end_date = GetDate_yyyyMMdd_byDate(params.end_date);
-          //如果是通用券，那么这里设置target_type、target_id 为空值，保险起见。
           if (params.coupon_type === 'general') {
+            // 通用券不设置 target_type 、 target_id
             params.target_type = '';
             params.target_id = '';
+          }
+          if (params.youhui_type === 'discount') {
+            // 如果打折，不用设置 coupon_amount 、 goods_min_amount
+            params.coupon_amount = '';
+            params.goods_min_amount = '';
+          }else if (params.youhui_type === 'reduce') {
+            // 如果减免，不用设置 discount_rate
+            params.discount_rate = '';
           }
           //生成券号
           params.couponIdArrayStr = MakeCouponIdArrayStr(parseInt(params.type_entity_account));
