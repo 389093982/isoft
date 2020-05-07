@@ -77,6 +77,9 @@ dependencies {
     // MultiType-Adapter 优雅的实现RecyclerVIew中的复杂布局
     implementation 'com.github.LidongWen:MultiTypeAdapter:1.0.0'
 
+    // sectionedrecyclerviewadapter
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'
+
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
     testImplementation 'junit:junit:4.12'

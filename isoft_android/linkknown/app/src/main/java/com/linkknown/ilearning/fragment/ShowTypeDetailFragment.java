@@ -1,6 +1,5 @@
 package com.linkknown.ilearning.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,20 +9,18 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.section.ShowTypeDetailBannerSection;
+import com.linkknown.ilearning.section.ShowTypeDetailClassifySection;
+import com.linkknown.ilearning.section.ShowTypeDetailClassifySection2;
 import com.linkknown.ilearning.service.ShowTypeDetailService;
-import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -36,9 +33,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import lombok.Data;
 
-// MultiTypeAdapter
 public class ShowTypeDetailFragment extends Fragment implements View.OnClickListener {
 
     // 下拉刷新布局
@@ -53,6 +50,11 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
 
     private MultiTypeAdapter multiTypeAdapter;
 
+    // 数组是引用传递
+    private List<ShowTypeDetailService.HotClassify> hotClassifies = new ArrayList<>();
+    private List<ShowTypeDetailService.HotClassify2> hotClassifies2 = new ArrayList<>();
+    private List<ShowTypeDetailService.BannerEntityWrapper> bannerEntityWrappers = new ArrayList<>();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_detail, container, false);
@@ -62,20 +64,73 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         // 初始化组件
         init();
 
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(hotClassifies);
+        showTypeDetailClassifySection2 = new ShowTypeDetailClassifySection2(hotClassifies2);
+        showTypeDetailBannerSection = new ShowTypeDetailBannerSection(bannerEntityWrappers);
+        sectionAdapter.addSection(showTypeDetailBannerSection);
+        sectionAdapter.addSection(showTypeDetailClassifySection);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        sectionAdapter.addSection(showTypeDetailClassifySection2);
+        final GridLayoutManager glm = new GridLayoutManager(getContext(), 4);
+        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(final int position) {
+                if (position == 0){
+                    return 4;
+                }
+                if (sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                    return 4;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(glm);
+        recyclerView.setAdapter(sectionAdapter);
+
         // 绑定 adapter
-        bindAdapter();
+//        bindAdapter();
 
         bindAdapterData();
 
         return rootView;
     }
 
+    private ShowTypeDetailClassifySection showTypeDetailClassifySection;
+    private ShowTypeDetailClassifySection2 showTypeDetailClassifySection2;
+    private ShowTypeDetailBannerSection showTypeDetailBannerSection;
+    private SectionedRecyclerViewAdapter sectionAdapter;
+
     private void bindAdapterData () {
         LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
-            multiTypeAdapter.setItems(list);
-            multiTypeAdapter.notifyDataSetChanged();
+            hotClassifies.clear();
+            hotClassifies2.clear();
+            bannerEntityWrappers.clear();
+
+            for (Object obj : list){
+                if (obj instanceof ShowTypeDetailService.HotClassify) {
+                    hotClassifies.add((ShowTypeDetailService.HotClassify)obj);
+                }
+                if (obj instanceof ShowTypeDetailService.HotClassify2) {
+                    hotClassifies2.add((ShowTypeDetailService.HotClassify2)obj);
+                }
+                if (obj instanceof ShowTypeDetailService.BannerEntityWrapper) {
+                    bannerEntityWrappers.add((ShowTypeDetailService.BannerEntityWrapper)obj);
+                }
+            }
+            sectionAdapter.notifyDataSetChanged();
             finishRefreshing();
         });
+
+//        LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
+//            multiTypeAdapter.setItems(list);
+//            multiTypeAdapter.notifyDataSetChanged();
+//            finishRefreshing();
+//        });
     }
 
     private void bindAdapter () {

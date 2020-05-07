@@ -42,30 +42,6 @@ public class ShowTypeDetailService extends ViewModel {
         hotClassify.setClassifyName("服饰");
         hotClassify.setClassifyImage(R.drawable.icon_2);
         lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("资讯");
-        hotClassify.setClassifyImage(R.drawable.icon_3);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("健身");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("美妆");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("服饰");
-        hotClassify.setClassifyImage(R.drawable.icon_2);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("资讯");
-        hotClassify.setClassifyImage(R.drawable.icon_3);
-        lst.add(hotClassify);
-        hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("健身");
-        hotClassify.setClassifyImage(R.drawable.icon_1);
-        lst.add(hotClassify);
         return lst;
     }
 
@@ -94,6 +70,14 @@ public class ShowTypeDetailService extends ViewModel {
         hotClassify = new HotClassify();
         hotClassify.setClassifyName("服饰");
         hotClassify.setClassifyImage(R.drawable.icon_2);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("资讯");
+        hotClassify.setClassifyImage(R.drawable.icon_3);
+        lst.add(hotClassify);
+        hotClassify = new HotClassify();
+        hotClassify.setClassifyName("健身");
+        hotClassify.setClassifyImage(R.drawable.icon_1);
         lst.add(hotClassify);
         hotClassify = new HotClassify();
         hotClassify.setClassifyName("资讯");
