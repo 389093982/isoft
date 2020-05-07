@@ -22,19 +22,19 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 
 public class ShowTypeDetailBannerSection extends Section {
 
-    List<ShowTypeDetailService.BannerEntityWrapper> bannerEntityWrappers;
+    List<ShowTypeDetailService.BannerEntity> bannerEntities;
 
-    public ShowTypeDetailBannerSection(List<ShowTypeDetailService.BannerEntityWrapper> bannerEntityWrappers) {
+    public ShowTypeDetailBannerSection(List<ShowTypeDetailService.BannerEntity> bannerEntities) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.layout_banner)
 //                .headerResourceId(R.layout.section_header)
                 .build());
-        this.bannerEntityWrappers = bannerEntityWrappers;
+        this.bannerEntities = bannerEntities;
     }
 
     @Override
     public int getContentItemsTotal() {
-        return bannerEntityWrappers.size();
+        return 1;
     }
 
     @Override
@@ -54,15 +54,18 @@ public class ShowTypeDetailBannerSection extends Section {
 
         // 存放轮播图所有图片
         ArrayList<String> bannerImageList = new ArrayList<>();
+        ArrayList<String> bannerTitleList = new ArrayList<>();
         //清空旧数据
         bannerImageList.clear();
-        ShowTypeDetailService.BannerEntityWrapper bannerEntityWrapper = bannerEntityWrappers.get(position);
-        if (bannerEntityWrapper != null){
-            for (int index = 0; index < bannerEntityWrapper.bannerEntities.size(); index++) {
-                bannerImageList.add(bannerEntityWrapper.getBannerEntities().get(index).getImg());
+        bannerTitleList.clear();
+        if (bannerEntities != null){
+            for (int index = 0; index < bannerEntities.size(); index++) {
+                bannerImageList.add(bannerEntities.get(index).getBannerImage());
+                bannerTitleList.add(bannerEntities.get(index).getBannerTitle());
             }
         }
         banner.setImages(bannerImageList);
+        banner.setBannerTitles(bannerTitleList);
         banner.start();
     }
 
