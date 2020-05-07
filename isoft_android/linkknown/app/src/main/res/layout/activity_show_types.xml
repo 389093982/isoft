@@ -7,19 +7,18 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/headerToolBar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/colorPrimary"
-            android:minHeight="40dp"
+            android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:maxButtonHeight="25dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-
+            app:popupTheme="@style/ThemeOverlay.AppCompat"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
             <LinearLayout
                 android:id="@+id/headerToolBarLayout"
                 android:layout_width="wrap_content"
@@ -72,15 +71,7 @@
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <!--
-             app:tabIndicatorColor ：指示线的颜色
-             app:tabIndicatorHeight ： 指示线的高度
-             app:tabIndicatorFullWidth="false" 指示线是否铺满宽度
-             app:tabSelectedTextColor ： tab选中时的字体颜色
-             app:tabTextColor="@color/colorPrimary" ：未选中字体颜色
-             app:tabBackground="color" ： 整个tablayout颜色
-             app:tabMode="scrollable" ： 默认是fixed，固定的；scrollable：可滚动的
-         -->
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -98,15 +89,10 @@
             app:tabTextColor="@color/light_white"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--
-        在CoordinatorLayout内部，每个child都必须带一个Behavior
-        CoordinatorLayout就根据每个child所携带的Behavior信息进行协调
-    -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
