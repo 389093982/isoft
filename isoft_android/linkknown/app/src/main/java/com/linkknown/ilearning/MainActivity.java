@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.toolBarUnLoginLayout)
     public LinearLayout toolBarUnLoginLayout;
 
-
-    // 存储首页对应的三个片段
     private List<Fragment> mFragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
     @BindView(R.id.tabLayout)

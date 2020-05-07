@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +9,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.linkknown.ilearning.activity.ShowTypesActivity;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
+import com.wenld.multitypeadapter.base.OnItemClickListener;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
 import java.util.ArrayList;
@@ -49,19 +48,11 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    private void init (){
+    private void init() {
         initRecyclerView();
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    class ItemSpace {
-        String itemName;
-        int drawableImage;
-    }
-
-    private void initRecyclerView () {
+    private void initRecyclerView() {
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         List<ItemSpace> mData = new ArrayList<>();
@@ -107,10 +98,36 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
             }
         });
         adapter.setItems(mData);
+        adapter.setOnItemClickListener(new OnItemClickListener<ItemSpace>() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, ItemSpace itemSpace, int position) {
+                switch (position) {
+                    case 0:
+                        //直播
+                        startActivity(new Intent(getActivity(), ShowTypesActivity.class));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, ItemSpace itemSpace, int position) {
+                return false;
+            }
+        });
         recycleView.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View v) {
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class ItemSpace {
+        String itemName;
+        int drawableImage;
     }
 }
