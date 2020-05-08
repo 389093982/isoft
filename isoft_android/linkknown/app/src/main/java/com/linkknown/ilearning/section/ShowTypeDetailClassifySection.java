@@ -29,7 +29,7 @@ public class ShowTypeDetailClassifySection extends Section {
 
     public ShowTypeDetailClassifySection(Context mContext, List<ShowTypeDetailService.HotClassify> itemList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.layout_recycleview)
+                .itemResourceId(R.layout.layout_recycleview_bg_white)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;

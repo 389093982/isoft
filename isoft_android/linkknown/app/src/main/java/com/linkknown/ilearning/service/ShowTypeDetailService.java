@@ -1,26 +1,18 @@
 package com.linkknown.ilearning.service;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.fragment.ShowTypeDetailFragment;
-import com.linkknown.ilearning.model.RegistResponse;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
 
 public class ShowTypeDetailService extends ViewModel {
 
-    public static void loadData () {
+    public static void loadData() {
         List<HotClassify> hotClassifyData = getHotClassifyData();
         List<HotClassify2> hotClassifyData2 = getHotClassifyData2();
         List<BannerEntity> bannerEntities = getBannerEntitys();
@@ -32,7 +24,7 @@ public class ShowTypeDetailService extends ViewModel {
         LiveEventBus.get("showTypeDetails", List.class).post(lst);
     }
 
-    private static List<HotClassify2> getHotClassifyData2 () {
+    private static List<HotClassify2> getHotClassifyData2() {
         List<HotClassify2> lst = new ArrayList<>();
         HotClassify2 hotClassify = new HotClassify2();
         hotClassify.setClassifyName("美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆");
@@ -45,7 +37,7 @@ public class ShowTypeDetailService extends ViewModel {
         return lst;
     }
 
-    private static List<HotClassify> getHotClassifyData () {
+    private static List<HotClassify> getHotClassifyData() {
         List<HotClassify> lst = new ArrayList<>();
         HotClassify hotClassify = new HotClassify();
         hotClassify.setClassifyName("美妆");
@@ -90,7 +82,7 @@ public class ShowTypeDetailService extends ViewModel {
         return lst;
     }
 
-    private static List<BannerEntity> getBannerEntitys () {
+    private static List<BannerEntity> getBannerEntitys() {
         List<BannerEntity> bannerEntities = new ArrayList<>();
         BannerEntity bannerEntitie = new BannerEntity();
         bannerEntitie.setBannerImage("https://img-blog.csdn.net/20180420104431654");

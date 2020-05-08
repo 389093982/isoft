@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -77,23 +78,23 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         sectionAdapter.addSection(showTypeDetailClassifySection2);
         sectionAdapter.addSection(showTypeDetailClassifySection2);
         // 将子视图的SpanSize都设置为 4，那么这个子视图将占整个RecyclerView可用宽度
-        final GridLayoutManager glm = new GridLayoutManager(getContext(), 4);
-        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(final int position) {
-                int sectionIndex = sectionAdapter.getSectionIndex(sectionAdapter.getSectionForPosition(position));
-                // 1、轮播图容器 2、分类容器 3、header 占满整行
-                if (sectionIndex == 0 || sectionIndex == 1 ||
-                        sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
-                    return 4;
-                }
-                if (sectionIndex == 2){
-                    return 2;
-                }
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(glm);
+//        final GridLayoutManager glm = new GridLayoutManager(getContext(), 4);
+//        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(final int position) {
+//                int sectionIndex = sectionAdapter.getSectionIndex(sectionAdapter.getSectionForPosition(position));
+//                // 1、轮播图容器 2、分类容器 3、header 占满整行
+//                if (sectionIndex == 0 || sectionIndex == 1 ||
+//                        sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+//                    return 4;
+//                }
+//                if (sectionIndex == 2){
+//                    return 2;
+//                }
+//                return 1;
+//            }
+//        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(sectionAdapter);
 
         // 绑定 adapter
