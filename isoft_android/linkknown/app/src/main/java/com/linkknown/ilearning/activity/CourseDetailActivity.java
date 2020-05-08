@@ -21,6 +21,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -88,43 +90,6 @@ public class CourseDetailActivity extends AppCompatActivity {
 
 
     private void initAdapter() {
-        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(CourseDetailResponse.CVideo.class, new MultiItemView<CourseDetailResponse.CVideo>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_cvideo;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseDetailResponse.CVideo cVideo, int position) {
-                // 视频索引
-                String cVideoIndex = mContext.getResources().getString(R.string.cVideoIndex);
-                viewHolder.setText(R.id.cVideoIndex, String.format(cVideoIndex, position + 1));
-                // 视频名称,去除后缀名后
-                viewHolder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
-                // 视频时长
-                if (cVideo.getDuration() > 0) {
-                    viewHolder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
-                } else {
-                    viewHolder.setVisible(R.id.cVideoDuration, false);
-                }
-
-                viewHolder.setOnClickListener(R.id.cVideoName, v -> {
-                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
-                        intent.putExtra("course_id", cVideo.getCourse_id());
-                        intent.putExtra("video_id", cVideo.getId());
-                        intent.putExtra("first_play", cVideo.getFirst_play());
-                        return intent;
-                    });
-                });
-            }
-        });
-        multiTypeAdapter.setItems(cVideos);
-
-        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        cVideoRecyclerView.setAdapter(multiTypeAdapter);
-
         LiveEventBus.get("courseDetailResponse_" + intent.getIntExtra("course_id", -1), CourseDetailResponse.class)
                 .observeSticky(this, courseDetailResponse -> {
                     if (courseDetailResponse.isSuccess()) {
@@ -150,6 +115,13 @@ public class CourseDetailActivity extends AppCompatActivity {
                         watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
 
                         cVideos.addAll(courseDetailResponse.getCVideos());
+
+                        // 设置视频列表 section 部分
+                        SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
+                        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(this, cVideos);
+                        sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
+                        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
                     } else {
                         Log.e("onNext =>", "系统异常,请联系管理员~");
                     }
