@@ -1,12 +1,15 @@
 package com.linkknown.ilearning.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,14 +19,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.event.AppBarStateChangeEvent;
 import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -47,11 +54,15 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.tv_player)
-    TextView mTvPlayer;
-    @BindView(R.id.tv_av)
-    TextView mAvText;
+    // 播放提示文本
+    @BindView(R.id.playTipText)
+    TextView playTipText;
+    // 课程名称文本
+    @BindView(R.id.courseNameText)
+    TextView courseNameText;
+    // 课程图片
+    @BindView(R.id.video_preview)
+    ImageView courseImage;
 
     // 悬浮按钮
     @BindView(R.id.fab)
@@ -65,12 +76,36 @@ public class CourseDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
 
-        // 初始化
+        // 绑定
         ButterKnife.bind(this);
 
-        initViewPager();
-
+        // 初始化组件
         init();
+
+        // 加载数据
+        initData();
+
+        // 填充数据
+        bindData();
+    }
+
+    private void bindData () {
+        int course_id = getIntent().getIntExtra("course_id", -1);
+        LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class)
+                .observeSticky(this, new Observer<CourseDetailResponse>() {
+            @Override
+            public void onChanged(CourseDetailResponse courseDetailResponse) {
+                // 设置课程名称
+                courseNameText.setText(courseDetailResponse.getCourse().getCourse_name());
+                // 设置课程图片
+                UIUtils.setImage(getApplicationContext(), courseImage, courseDetailResponse.getCourse().getSmall_image());
+            }
+        });
+    }
+
+    private void initData () {
+        int course_id = getIntent().getIntExtra("course_id", -1);
+        CourseService.showCourseDetailForApp(course_id);
     }
 
     private void initToolBar() {
@@ -81,6 +116,11 @@ public class CourseDetailActivity extends AppCompatActivity {
         if (supportActionBar != null) {
             // 给左上角图标的左边加上一个返回的图标
             supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        // 图片也占用了状态栏,故需要使用沉浸式状态栏
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
@@ -99,12 +139,13 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private void init() {
         initToolBar();
+        initViewPager();
+        initListener();
+    }
 
-        mTvPlayer.setText("mTvPlayer");
-        mAvText.setText("mAvText");
-
+    private void initListener () {
         // 在 textView 左侧添加播放图标
-        UIUtils.setTextViewDrawbleImg(getApplicationContext(), mTvPlayer, R.drawable.ic_fab_play, 0,0,60,64);
+        UIUtils.setTextViewDrawbleImg(getApplicationContext(), playTipText, R.drawable.ic_fab_play, 0,0,60,64);
 
         // addOnOffsetChangedListener: 当 AppBarLayout 垂直方向上的偏移量发生改变时，为触发一个回调方法定义的接口
         //   // 导航栏布局垂直移动时悬浮按钮跟着变化
@@ -114,8 +155,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             public void onStateChanged(AppBarLayout appBarLayout, State state, int verticalOffset) {
                 if (state == State.EXPANDED) {
                     //展开状态
-                    mTvPlayer.setVisibility(View.GONE);
-                    mAvText.setVisibility(View.VISIBLE);
+                    playTipText.setVisibility(View.GONE);
+                    courseNameText.setVisibility(View.VISIBLE);
 
                     /**
                      * contentInsetLeft、contentInsetRight、contentInsetStart、contentInsetEnd：Toolbar的左右两侧都是默认有16dp的padding的，
@@ -128,14 +169,14 @@ public class CourseDetailActivity extends AppCompatActivity {
                     toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 15), 0);
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
-                    mTvPlayer.setVisibility(View.VISIBLE);
+                    playTipText.setVisibility(View.VISIBLE);
 
-                    mAvText.setVisibility(View.GONE);
-                    // 或者使用  mTvPlayer.setTranslationX(100) 实现
+                    courseNameText.setVisibility(View.GONE);
+                    // 或者使用  playTipText.setTranslationX(100) 实现
                     toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 150), 0);
                 } else {
-                    mTvPlayer.setVisibility(View.GONE);
-                    mAvText.setVisibility(View.VISIBLE);
+                    playTipText.setVisibility(View.GONE);
+                    courseNameText.setVisibility(View.VISIBLE);
                     toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 15), 0);
                 }
             }
@@ -153,13 +194,13 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
     }
 
-    // 缩放显示
+    // 悬浮按钮缩放显示
     private void showFloatingActionButton() {
         mFAB.animate().scaleX(1f).scaleY(1f).setInterpolator(new OvershootInterpolator()).start();
         mFAB.setClickable(true);
     }
 
-    // 缩放隐藏
+    // 悬浮按钮缩放隐藏
     private void hideFloatingActionButton() {
         mFAB.animate().scaleX(0f).scaleY(0f).setInterpolator(new AccelerateInterpolator()).start();
         mFAB.setClickable(false);

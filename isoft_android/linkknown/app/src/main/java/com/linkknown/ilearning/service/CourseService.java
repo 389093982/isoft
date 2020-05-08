@@ -2,20 +2,13 @@ package com.linkknown.ilearning.service;
 
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
-import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,27 +32,6 @@ public class CourseService {
                     public void onNext(CourseDetailResponse courseDetailResponse) {
                         if (courseDetailResponse.isSuccess()) {
                             CourseDetailResponse.Course course = courseDetailResponse.getCourse();
-//
-//                            // 异步加载图片,使用 Glide 第三方库
-//                            Glide.with(mContext)
-//                                    .load(UIUtils.replaceMediaUrl(course.getSmall_image()))
-//                                    // placeholder 图片加载出来前,显示的图片
-//                                    // error 图片加载失败后,显示的图片
-//                                    .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-//                                    .into(courseImageView);
-//
-//                            courseNameView.setText(course.getCourse_name());
-//                            courseShortDescView.setText(course.getCourse_short_desc());
-//                            courseTypeView.setText(course.getCourse_type() + "/" + course.getCourse_sub_type());
-//                            courseLabelView.setText(course.getCourse_label());
-//
-//                            String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
-//                            courseNumberView.setText(String.format(courseNumberTextDemo, course.getCourse_number()));
-//
-//                            String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
-//                            watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
-//
-//                            cVideos.addAll(courseDetailResponse.getCVideos());
                             LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
                         } else {
                             Log.e("onNext =>", "系统异常,请联系管理员~");
