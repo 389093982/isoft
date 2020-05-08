@@ -117,14 +117,26 @@
       </Col>
 
       <Col span="8">
-        <div class="isoft_bg_white">
-          <!--优惠券-->
-          <Coupon coupon_type="general"
-                  youhui_type="discount"
-                  start_date="20200506"
-                  end_date="20200520"
-                  coupon_amount="5"
-                  discount_rate="0.88">
+        <div class="isoft_bg_white" style="padding: 5px 0 0 5px ">
+          <!--指定券:减免-->
+          <Coupon v-if="designated_reduce_coupon"
+                  :coupon_type="designated_reduce_coupon.coupon_type"
+                  :youhui_type="designated_reduce_coupon.youhui_type"
+                  :start_date="designated_reduce_coupon.start_date"
+                  :end_date="designated_reduce_coupon.end_date"
+                  :coupon_amount="designated_reduce_coupon.coupon_amount"
+                  :discount_rate="designated_reduce_coupon.discount_rate">
+          </Coupon>
+          <!--分割线-->
+          <div v-if="designated_reduce_coupon && designated_discount_coupon" style="height: 5px;"></div>
+          <!--指定券:打折-->
+          <Coupon v-if="designated_discount_coupon"
+                  :coupon_type="designated_discount_coupon.coupon_type"
+                  :youhui_type="designated_discount_coupon.youhui_type"
+                  :start_date="designated_discount_coupon.start_date"
+                  :end_date="designated_discount_coupon.end_date"
+                  :coupon_amount="designated_discount_coupon.coupon_amount"
+                  :discount_rate="designated_discount_coupon.discount_rate">
           </Coupon>
         </div>
         <div class="isoft_bg_white">
@@ -139,13 +151,13 @@
 </template>
 
 <script>
-  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
-  import {CheckHasLoginConfirmDialog} from "../../../tools/index"
+  import {CheckHasLoginConfirmDialog,GetToday_yyyyMMdd} from "../../../tools/index"
   import VoteTags from "../../Decorate/VoteTags";
   import ShowMore from "../../Elementviewers/showMore";
   import SepLine from "../../Common/SepLine";
@@ -164,6 +176,8 @@
         filter_cVideos: [],
         course_collect: false,  // 课程收藏
         course_praise: false,   // 课程点赞
+        designated_reduce_coupon:'',    //指定券 - 减免
+        designated_discount_coupon:'',    //指定券 - 打折
         clickIndex:0,
         minLen:5,
         recommendCourses:[],    // 推荐课程
@@ -181,6 +195,7 @@
       getLoginUserName:function(){
         return getLoginUserName();
       },
+      // 先刷新是否已付费，再刷新课程
       refreshPaidAndCourse:async function(){
         if (this.getLoginUserName()) {
           console.log("用户已登录");
@@ -286,14 +301,31 @@
       //购买此课程
       toPay:function (type,id) {
         this.$router.push({path:'/payment/pay',query:{type:type,id:id}});
+      },
+      //刷新优惠券
+      refreshCoupon:async function () {
+        // 查指定券
+        let params = {
+          'today':GetToday_yyyyMMdd(),
+          'target_type':'course',
+          'target_id':this.$route.query.course_id,
+        };
+        const designatedResult = await QueryDesignatedCoupon(params);
+        if (designatedResult.status === 'SUCCESS') {
+          this.designated_reduce_coupon = designatedResult.designated_reduce_coupon;
+          this.designated_discount_coupon = designatedResult.designated_discount_coupon;
+        }
       }
     },
     mounted: function () {
-      //判断是否已付费 & 刷新课程
       this.refreshPaidAndCourse();
+      this.refreshCoupon();
     },
     watch: {
-      "$route.params": "refreshPaidAndCourse"      // 如果 $route.params 有变化,会再次执行该方法
+      "$route.params": function () {
+        this.refreshPaidAndCourse();
+        this.refreshCoupon();
+      }
     },
     filters: {
       filterSuffix: function (value) {

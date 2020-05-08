@@ -188,6 +188,8 @@ export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft
 export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
 export const AddPayActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddPayActivity", params, 'POST'); //举办活动
 export const QueryPagePayActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryPagePayActivity", params, 'POST'); //查询活动
+export const QueryGeneralCoupon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryGeneralCoupon", params, 'POST'); //查询通用券
+export const QueryDesignatedCoupon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryDesignatedCoupon", params, 'POST'); //查询指定券
 
 
 //【Contact模块】***************************************************************************************************

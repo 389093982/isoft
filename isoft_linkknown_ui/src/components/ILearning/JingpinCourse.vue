@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow-x: hidden;">
+  <div style="overflow-x: hidden;position: relative">
     <div class="course_title_bg" style="height: 80px;padding: 0 30px;display: flex">
       <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
         <span class="animated faster bounceInRight" style="cursor: pointer;position: absolute;top: 27px;">Stay hungry，Stay foolish</span>
@@ -14,6 +14,30 @@
 
     <!--课程分类-->
     <CourseType></CourseType>
+
+    <!--优惠券信息-->
+    <div style="width:100%;position: absolute;top: 100px;left: 740px;">
+      <!--通用券-减免-->
+      <Coupon v-if="general_reduce_coupon"
+        :coupon_type="general_reduce_coupon.coupon_type"
+        :youhui_type="general_reduce_coupon.youhui_type"
+        :start_date="general_reduce_coupon.start_date"
+        :end_date="general_reduce_coupon.end_date"
+        :coupon_amount="general_reduce_coupon.coupon_amount"
+        :discount_rate="general_reduce_coupon.discount_rate">
+      </Coupon>
+      <!--分割线-->
+      <div v-if="general_reduce_coupon && general_discount_coupon" style="height: 5px;"></div>
+      <!--通用券-打折-->
+      <Coupon v-if="general_discount_coupon"
+              :coupon_type="general_discount_coupon.coupon_type"
+              :youhui_type="general_discount_coupon.youhui_type"
+              :start_date="general_discount_coupon.start_date"
+              :end_date="general_discount_coupon.end_date"
+              :coupon_amount="general_discount_coupon.coupon_amount"
+              :discount_rate="general_discount_coupon.discount_rate">
+      </Coupon>
+    </div>
 
     <!--热门课程推荐-->
     <div class="isoft_bg_white isoft_pd10">
@@ -31,15 +55,20 @@
   import IHotRecommand from "../Common/recommend/IHotRecommand"
   import IndexCarousel from "./IndexCarousel";
   import ShowModulars from "./ShowModulars";
+  import Coupon from "../Common/coupon/Coupon";
+  import {GetToday_yyyyMMdd} from "../../tools/index"
+  import {QueryGeneralCoupon} from "../../api/index"
 
   export default {
     name: "JingpinCourse",
     components: {
+      Coupon,
       CourseType, ShowModulars, IndexCarousel, IHotRecommand, HorizontalLinks, HotRecommend, ToolBox, ISearch,
     },
     data() {
       return {
-
+        general_reduce_coupon:'',
+        general_discount_coupon:'',
       }
     },
     methods:{
@@ -57,8 +86,23 @@
       },
       toggle: function (data) {
         alert(data);
+      },
+      //刷新优惠券
+      refreshCoupon:async function () {
+        // 查指定券
+        let params = {
+          'today':GetToday_yyyyMMdd(),
+        };
+        const generalResult = await QueryGeneralCoupon(params);
+        if (generalResult.status === 'SUCCESS') {
+          this.general_reduce_coupon = generalResult.general_reduce_coupon;
+          this.general_discount_coupon = generalResult.general_discount_coupon;
+        }
       }
     },
+    mounted:function () {
+      this.refreshCoupon();
+    }
   }
 </script>
 
