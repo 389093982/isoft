@@ -63,12 +63,12 @@
                         android:textSize="16sp"
                         android:visibility="gone" />
 
+                    <!-- android:drawableStart：在你的textView文本的左处添加一个图片 -->
                     <TextView
                         android:id="@+id/tv_player"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="3dp"
-                        android:drawableStart="@drawable/ic_fab_play"
                         android:gravity="center"
                         android:text="立即播放"
                         android:textColor="@color/white"

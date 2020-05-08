@@ -3,8 +3,12 @@ package com.linkknown.ilearning.util.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
@@ -44,6 +48,17 @@ public class UIUtils {
                 .load(UIUtils.replaceMediaUrl(imageUrl))
                 .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                 .into(imageView);
+    }
+
+    public static void setTextViewDrawbleImg (Context mContext, TextView textView, int id, int left, int top, int right, int bottom) {
+        Drawable icon = ContextCompat.getDrawable(mContext, id);
+
+        //setBounds(left,top,right,bottom)里的参数从左到右分别是
+        //drawable的左边到textview左边缘+padding的距离，drawable的上边离textview上边缘+padding的距离
+        //drawable的右边边离textview左边缘+padding的距离，drawable的下边离textview上边缘+padding的距离
+        //所以right-left = drawable的宽，top - bottom = drawable的高
+        icon.setBounds(left, top,right, bottom);
+        textView.setCompoundDrawables(icon, null, null, null);
     }
 
 }

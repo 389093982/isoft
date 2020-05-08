@@ -24,7 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.event.AppBarStateChangeEvent;
 import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +103,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         mTvPlayer.setText("mTvPlayer");
         mAvText.setText("mAvText");
 
+        // 在 textView 左侧添加播放图标
+        UIUtils.setTextViewDrawbleImg(getApplicationContext(), mTvPlayer, R.drawable.ic_fab_play, 0,0,60,64);
+
         // addOnOffsetChangedListener: 当 AppBarLayout 垂直方向上的偏移量发生改变时，为触发一个回调方法定义的接口
         //   // 导航栏布局垂直移动时悬浮按钮跟着变化
         mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> setFloatingActionButtonStatus(verticalOffset));
@@ -120,16 +125,18 @@ public class CourseDetailActivity extends AppCompatActivity {
                      * setContentInsetsRelative(int,int)——对应start和end
                      * setContentInsetsAbsolute(int,int)——对应left和right
                      */
-//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 15), 0);
+                    toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 15), 0);
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
                     mTvPlayer.setVisibility(View.VISIBLE);
+
                     mAvText.setVisibility(View.GONE);
-//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 150), 0);
+                    // 或者使用  mTvPlayer.setTranslationX(100) 实现
+                    toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 150), 0);
                 } else {
                     mTvPlayer.setVisibility(View.GONE);
                     mAvText.setVisibility(View.VISIBLE);
-//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 15), 0);
+                    toolbar.setContentInsetsRelative(DisplayUtil.dp2px(getApplicationContext(), 15), 0);
                 }
             }
         });
