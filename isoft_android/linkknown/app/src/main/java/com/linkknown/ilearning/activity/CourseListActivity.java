@@ -4,8 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
@@ -13,8 +16,9 @@ import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.ui.UIUtils;
-
-import java.util.ArrayList;
+import com.wenld.multitypeadapter.MultiTypeAdapter;
+import com.wenld.multitypeadapter.base.MultiItemView;
+import com.wenld.multitypeadapter.base.ViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +29,10 @@ public class CourseListActivity extends AppCompatActivity {
     @BindView(R.id.courseListView)
     public ListView courseListView;
 
-    private Context mContext;
-    private CommonAdapter<CourseMetaResponse.CourseMeta> courseCommonAdapter;
+    @BindView(R.id.recyclerView)
+    public RecyclerView recyclerView;
 
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +48,40 @@ public class CourseListActivity extends AppCompatActivity {
         LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).observeSticky(this, new Observer<CourseMetaResponse>() {
             @Override
             public void onChanged(CourseMetaResponse courseMetaResponse) {
-                courseCommonAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>((ArrayList<CourseMetaResponse.CourseMeta>) courseMetaResponse.getCourses(), R.layout.item_course) {
+                MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
+                multiTypeAdapter.register(CourseMetaResponse.CourseMeta.class, new MultiItemView<CourseMetaResponse.CourseMeta>() {
+                    @NonNull
+                    @Override
+                    public int getLayoutId() {
+                        return R.layout.item_course;
+                    }
 
                     @Override
-                    public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
+                    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseMetaResponse.CourseMeta courseMeta, int i) {
 
-                        holder.setImage(R.id.courseImageView, UIUtils.replaceMediaUrl(courseMeta.getSmall_image()));
+                        UIUtils.setImage(getApplicationContext(),
+                                viewHolder.getConvertView().findViewById(R.id.courseImageView), courseMeta.getSmall_image());
 
-                        holder.setOnClickListener(R.id.courseImageView, v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                        viewHolder.setOnClickListener(R.id.courseImageView, v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
                             intent.putExtra("course_id", courseMeta.getId());
                             return intent;
                         }));
 
-                        holder.setText(R.id.courseNameView, courseMeta.getCourse_name());
-                        holder.setText(R.id.courseShortDescView, courseMeta.getCourse_short_desc());
-                        holder.setText(R.id.courseTypeView, courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
-                        holder.setText(R.id.courseLabelView, courseMeta.getCourse_label());
+                        viewHolder.setText(R.id.courseNameView, courseMeta.getCourse_name());
+                        viewHolder.setText(R.id.courseShortDescView, courseMeta.getCourse_short_desc());
+                        viewHolder.setText(R.id.courseTypeView, courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
+                        viewHolder.setText(R.id.courseLabelView, courseMeta.getCourse_label());
 
                         String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
-                        holder.setText(R.id.courseNumberView, String.format(courseNumberTextDemo, courseMeta.getCourse_number()));
+                        viewHolder.setText(R.id.courseNumberView, String.format(courseNumberTextDemo, courseMeta.getCourse_number()));
 
                         String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
-                        holder.setText(R.id.watchNumberView, String.format(watchNumberTextDemo, courseMeta.getWatch_number()));
+                        viewHolder.setText(R.id.watchNumberView, String.format(watchNumberTextDemo, courseMeta.getWatch_number()));
                     }
-                };
-                courseListView.setAdapter(courseCommonAdapter);
+                });
+                multiTypeAdapter.setItems(courseMetaResponse.getCourses());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setAdapter(multiTypeAdapter);
             }
         });
 

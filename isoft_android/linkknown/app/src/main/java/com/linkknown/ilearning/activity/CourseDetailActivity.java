@@ -13,10 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -74,6 +76,13 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 发送异步请求获取数据
         initData();
 
+        initAdapter();
+        // 返回箭头点击事件
+        gobackView.setOnClickListener(v -> finish());
+    }
+
+
+    private void initAdapter() {
         cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideo>((ArrayList<CourseDetailResponse.CVideo>)cVideos,R.layout.item_cvideo) {
             @Override
             public void bindView(ViewHolder holder, CourseDetailResponse.CVideo cVideo) {
@@ -100,60 +109,39 @@ public class CourseDetailActivity extends AppCompatActivity {
             }
         };
         cVideoListView.setAdapter(cVideosCommonAdapter);
-        // 返回箭头点击事件
-        gobackView.setOnClickListener(v -> finish());
+
+        LiveEventBus.get("courseDetailResponse_" + intent.getIntExtra("course_id", -1), CourseDetailResponse.class)
+                .observeSticky(this, courseDetailResponse -> {
+                    if (courseDetailResponse.isSuccess()) {
+                        CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+
+                        // 异步加载图片,使用 Glide 第三方库
+                        Glide.with(mContext)
+                                .load(UIUtils.replaceMediaUrl(course.getSmall_image()))
+                                // placeholder 图片加载出来前,显示的图片
+                                // error 图片加载失败后,显示的图片
+                                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                                .into(courseImageView);
+
+                        courseNameView.setText(course.getCourse_name());
+                        courseShortDescView.setText(course.getCourse_short_desc());
+                        courseTypeView.setText(course.getCourse_type() + "/" + course.getCourse_sub_type());
+                        courseLabelView.setText(course.getCourse_label());
+
+                        String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
+                        courseNumberView.setText(String.format(courseNumberTextDemo, course.getCourse_number()));
+
+                        String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
+                        watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
+
+                        cVideos.addAll(courseDetailResponse.getCVideos());
+                    } else {
+                        Log.e("onNext =>", "系统异常,请联系管理员~");
+                    }
+                });
     }
 
     private void initData () {
-        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(intent.getIntExtra("course_id", -1))
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new Observer<CourseDetailResponse>() {
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(CourseDetailResponse courseDetailResponse) {
-                        if (courseDetailResponse.isSuccess()) {
-                            CourseDetailResponse.Course course = courseDetailResponse.getCourse();
-
-                            // 异步加载图片,使用 Glide 第三方库
-                            Glide.with(mContext)
-                                    .load(UIUtils.replaceMediaUrl(course.getSmall_image()))
-                                    // placeholder 图片加载出来前,显示的图片
-                                    // error 图片加载失败后,显示的图片
-                                    .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                                    .into(courseImageView);
-
-                            courseNameView.setText(course.getCourse_name());
-                            courseShortDescView.setText(course.getCourse_short_desc());
-                            courseTypeView.setText(course.getCourse_type() + "/" + course.getCourse_sub_type());
-                            courseLabelView.setText(course.getCourse_label());
-
-                            String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
-                            courseNumberView.setText(String.format(courseNumberTextDemo, course.getCourse_number()));
-
-                            String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
-                            watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
-
-                            cVideos.addAll(courseDetailResponse.getCVideos());
-                        } else {
-                            Log.e("onNext =>", "系统异常,请联系管理员~");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onError =>", e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        cVideosCommonAdapter.notifyDataSetChanged();
-                    }
-                });
+        CourseService.showCourseDetailForApp(intent.getIntExtra("course_id", -1));
     }
 }
