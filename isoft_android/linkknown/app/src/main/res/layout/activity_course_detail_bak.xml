@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    tools:context=".activity.CourseDetailActivity">
 
     <RelativeLayout
         android:id="@+id/detail_title_layout"
@@ -57,15 +58,13 @@
                 android:orientation="vertical">
                 <include layout="@layout/item_course"/>
 
-                <ListView
-                    android:id="@+id/cVideoListView"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cVideoRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="#00000000"
-                    android:dividerHeight="0dip"
-                    android:listSelector="@android:color/transparent"/>
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,3 +3,9 @@ CoordinatorLayout：协调者布局
 
 在滑动一个RecyclerView,存在一个View需要在RecyclerView滑动时做相应的动作，例如，位移变化，缩放变化等等。我相信这种场景还是非常常见的吧。这种场景就可以称之为child之间联动。
 而CoordinatorLayout是怎么进行协调呢？主要依靠一个插件--Behavior。在CoordinatorLayout内部，每个child都必须带一个Behavior（其实不携带也行，不携带就不能被协调），CoordinatorLayout就根据每个child所携带的Behavior信息进行协调。
+
+android:windowBackground  页面背景色
+colorPrimaryDark 状态栏颜色
+
+使用@表示使用固定的style，而不会跟随Theme改变，这style可以在对应的style.xml中找到。
+使用？表示从Theme中查找引用的资源名，这个google叫预定义样式，用在多主题时的场景，属性值会随着主题而改变。（？需要和attr配合使用）

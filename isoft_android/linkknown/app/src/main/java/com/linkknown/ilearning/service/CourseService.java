@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,81 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseService {
+
+    public static void showCourseDetailForApp (int course_id) {
+        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new Observer<CourseDetailResponse>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CourseDetailResponse courseDetailResponse) {
+                        if (courseDetailResponse.isSuccess()) {
+                            CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+                            LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
+                        } else {
+                            Log.e("onNext =>", "系统异常,请联系管理员~");
+                            LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        CourseDetailResponse courseDetailResponse = new CourseDetailResponse();
+                        courseDetailResponse.setErrorMsg("数据加载失败!");
+                        LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public static void getHotCourseRecommend () {
+        LinkKnownApiFactory.getLinkKnownApi().getHotCourseRecommend()
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new Observer<CourseMetaResponse>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CourseMetaResponse courseMetaResponse) {
+                        if (courseMetaResponse.isSuccess() && courseMetaResponse.getCourses() != null) {
+                            LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                        } else {
+                            Log.e("onNext =>", "系统异常,请联系管理员~");
+                            LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        CourseMetaResponse courseMetaResponse = new CourseMetaResponse();
+                        courseMetaResponse.setErrorMsg("数据加载失败!");
+                        LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     public static void search(String search) {
         LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search)

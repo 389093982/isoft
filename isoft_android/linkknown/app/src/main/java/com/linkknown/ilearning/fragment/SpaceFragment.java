@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.ShowTypesActivity;
+import com.linkknown.ilearning.activity.CourseClassifyActivity;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.OnItemClickListener;
@@ -104,7 +104,7 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
                 switch (position) {
                     case 0:
                         //直播
-                        startActivity(new Intent(getActivity(), ShowTypesActivity.class));
+                        startActivity(new Intent(getActivity(), CourseClassifyActivity.class));
                         break;
                     default:
                         break;
