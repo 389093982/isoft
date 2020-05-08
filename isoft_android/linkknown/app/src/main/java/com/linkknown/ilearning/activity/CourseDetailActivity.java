@@ -3,11 +3,13 @@ package com.linkknown.ilearning.activity;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -69,7 +71,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         init();
     }
 
-    private void initToolBar () {
+    private void initToolBar() {
         toolbar.setTitle("");
         // 支持 ActionBar,方便在上面设置 menu
         setSupportActionBar(toolbar);
@@ -80,7 +82,20 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void init () {
+    // 希望点击图标左侧箭头返回上一页，需要加载选项菜单后，对于菜单项的点击事件调用如下方法
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.menu_test) {
+            ToastUtil.showText(getApplicationContext(), "点击了测试");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void init() {
         initToolBar();
 
         mTvPlayer.setText("mTvPlayer");
@@ -143,7 +158,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         mFAB.setClickable(false);
     }
 
-    private void initViewPager () {
+    private void initViewPager() {
         SpaceFragment spaceFragment1 = new SpaceFragment();
         SpaceFragment spaceFragment2 = new SpaceFragment();
         fragments.add(spaceFragment1);
@@ -187,7 +202,6 @@ public class CourseDetailActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        ToastUtil.showText(getApplicationContext(), "测试1111111111111");
         // 如果当前Activity是没有主题的，即用的主题是：Theme.AppCompat.Light.NoActionBar
         //则需要自己先添加一个toolbar并通过setSupportActionBar方法将其设置成ActionBar
         getMenuInflater().inflate(R.menu.menu_video, menu);
