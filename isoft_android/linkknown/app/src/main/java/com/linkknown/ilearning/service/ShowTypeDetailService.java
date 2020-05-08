@@ -35,11 +35,11 @@ public class ShowTypeDetailService extends ViewModel {
     private static List<HotClassify2> getHotClassifyData2 () {
         List<HotClassify2> lst = new ArrayList<>();
         HotClassify2 hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("美妆");
+        hotClassify.setClassifyName("美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆美妆");
         hotClassify.setClassifyImage(R.drawable.icon_1);
         lst.add(hotClassify);
         hotClassify = new HotClassify2();
-        hotClassify.setClassifyName("服饰");
+        hotClassify.setClassifyName("服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰服饰");
         hotClassify.setClassifyImage(R.drawable.icon_2);
         lst.add(hotClassify);
         return lst;

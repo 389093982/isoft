@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
+import com.linkknown.ilearning.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -35,6 +37,13 @@ public class UIUtils {
 
     public static String replaceMediaUrl (String url) {
         return url.replace("localhost", "192.168.1.2");
+    }
+
+    public static void setImage (Context context, ImageView imageView, String imageUrl){
+        Glide.with(context)
+                .load(UIUtils.replaceMediaUrl(imageUrl))
+                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                .into(imageView);
     }
 
 }

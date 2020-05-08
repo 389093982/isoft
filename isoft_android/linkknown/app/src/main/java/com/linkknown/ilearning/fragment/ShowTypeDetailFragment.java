@@ -65,9 +65,9 @@ public class ShowTypeDetailFragment extends Fragment implements View.OnClickList
         init();
 
         sectionAdapter = new SectionedRecyclerViewAdapter();
-        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(getActivity(), hotClassifies);
-        showTypeDetailClassifySection2 = new ShowTypeDetailClassifySection2(hotClassifies2);
         showTypeDetailBannerSection = new ShowTypeDetailBannerSection(bannerEntities);
+        showTypeDetailClassifySection = new ShowTypeDetailClassifySection(getActivity(), hotClassifies);
+        showTypeDetailClassifySection2 = new ShowTypeDetailClassifySection2(getActivity(), hotClassifies2);
         sectionAdapter.addSection(showTypeDetailBannerSection);
         sectionAdapter.addSection(showTypeDetailClassifySection);
         sectionAdapter.addSection(showTypeDetailClassifySection2);
