@@ -1,17 +1,14 @@
 package com.linkknown.ilearning.section;
 
 import android.content.Context;
-import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.service.ShowTypeDetailService;
-import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.service.CourseClassifyService;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -22,14 +19,16 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.utils.EmptyViewHolder;
 
-public class ShowTypeDetailClassifySection extends Section {
+public class CourseClassifyItemSection2 extends Section {
 
-    private List<ShowTypeDetailService.HotClassify> itemList;
+    private List<CourseClassifyService.HotClassify2> itemList;
     private Context mContext;
 
-    public ShowTypeDetailClassifySection(Context mContext, List<ShowTypeDetailService.HotClassify> itemList) {
+    public CourseClassifyItemSection2(Context mContext, List<CourseClassifyService.HotClassify2> itemList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.layout_recycleview_bg_white)
+//                .itemResourceId(R.layout.layout_region_recommend_card_item)
+                .itemResourceId(R.layout.layout_recycleview)
+                .headerResourceId(R.layout.layout_region_recommend_hot_head)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
@@ -55,33 +54,33 @@ public class ShowTypeDetailClassifySection extends Section {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(ShowTypeDetailService.HotClassify.class, new MultiItemView<ShowTypeDetailService.HotClassify>() {
+        multiTypeAdapter.register(CourseClassifyService.HotClassify2.class, new MultiItemView<CourseClassifyService.HotClassify2>() {
             @NonNull
             @Override
             public int getLayoutId() {
-                return R.layout.item_types_icon;
+                return R.layout.layout_region_recommend_card_item;
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify hotClassify, int i) {
-                viewHolder.setImageResource(R.id.item_icon, hotClassify.getClassifyImage());
-                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-                viewHolder.getConvertView().setOnClickListener(v -> ToastUtil.showText(mContext, "您点击的过快奥~~"));
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseClassifyService.HotClassify2 hotClassify2, int i) {
+                viewHolder.setImageResource(R.id.item_img, hotClassify2.getClassifyImage());
+                viewHolder.setText(R.id.item_title, hotClassify2.getClassifyName());
+                viewHolder.setText(R.id.item_play, "888");
+                viewHolder.setText(R.id.item_review, "888");
             }
         });
-        multiTypeAdapter.setItems(this.itemList);
-        itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext,4));
+        multiTypeAdapter.setItems(itemList);
+        itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
         itemHolder.recyclerView.setAdapter(multiTypeAdapter);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final RecyclerView recyclerView;
+
+        private RecyclerView recyclerView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-
             recyclerView = itemView.findViewById(R.id.recyclerView);
-
         }
     }
 }

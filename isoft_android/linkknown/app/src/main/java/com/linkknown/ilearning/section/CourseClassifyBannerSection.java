@@ -1,16 +1,12 @@
 package com.linkknown.ilearning.section;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
-import com.linkknown.ilearning.service.ShowTypeDetailService;
+import com.linkknown.ilearning.service.CourseClassifyService;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -20,11 +16,11 @@ import java.util.List;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 
-public class ShowTypeDetailBannerSection extends Section {
+public class CourseClassifyBannerSection extends Section {
 
-    List<ShowTypeDetailService.BannerEntity> bannerEntities;
+    List<CourseClassifyService.BannerEntity> bannerEntities;
 
-    public ShowTypeDetailBannerSection(List<ShowTypeDetailService.BannerEntity> bannerEntities) {
+    public CourseClassifyBannerSection(List<CourseClassifyService.BannerEntity> bannerEntities) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.layout_banner)
 //                .headerResourceId(R.layout.section_header)
@@ -44,7 +40,7 @@ public class ShowTypeDetailBannerSection extends Section {
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ShowTypeDetailBannerSection.ItemViewHolder itemHolder = (ShowTypeDetailBannerSection.ItemViewHolder) holder;
+        CourseClassifyBannerSection.ItemViewHolder itemHolder = (CourseClassifyBannerSection.ItemViewHolder) holder;
         Banner banner = itemHolder.banner;
         banner.clearAnimation();
         //设置 banner 样式

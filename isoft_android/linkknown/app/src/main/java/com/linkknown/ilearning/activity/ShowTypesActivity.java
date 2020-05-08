@@ -12,8 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.fragment.ShowTypeDetailFragment;
-import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +49,11 @@ public class ShowTypesActivity extends AppCompatActivity {
 
     private void initFragment () {
         // 创建 fragment
-        ShowTypeDetailFragment showTypeDetailFragment1 = new ShowTypeDetailFragment();
-        ShowTypeDetailFragment showTypeDetailFragment2 = new ShowTypeDetailFragment();
-        ShowTypeDetailFragment showTypeDetailFragment3 = new ShowTypeDetailFragment();
-        ShowTypeDetailFragment showTypeDetailFragment4 = new ShowTypeDetailFragment();
-        ShowTypeDetailFragment showTypeDetailFragment5 = new ShowTypeDetailFragment();
+        CourseClassifyFragment showTypeDetailFragment1 = new CourseClassifyFragment();
+        CourseClassifyFragment showTypeDetailFragment2 = new CourseClassifyFragment();
+        CourseClassifyFragment showTypeDetailFragment3 = new CourseClassifyFragment();
+        CourseClassifyFragment showTypeDetailFragment4 = new CourseClassifyFragment();
+        CourseClassifyFragment showTypeDetailFragment5 = new CourseClassifyFragment();
 
         mFragments.add(showTypeDetailFragment1);
         mFragments.add(showTypeDetailFragment2);

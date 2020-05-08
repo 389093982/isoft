@@ -10,7 +10,7 @@ import java.util.List;
 
 import lombok.Data;
 
-public class ShowTypeDetailService extends ViewModel {
+public class CourseClassifyService extends ViewModel {
 
     public static void loadData() {
         List<HotClassify> hotClassifyData = getHotClassifyData();

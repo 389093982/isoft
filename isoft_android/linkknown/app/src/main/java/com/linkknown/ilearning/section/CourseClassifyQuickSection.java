@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.service.ShowTypeDetailService;
+import com.linkknown.ilearning.service.CourseClassifyService;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -19,16 +20,14 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.utils.EmptyViewHolder;
 
-public class ShowTypeDetailClassifySection2 extends Section {
+public class CourseClassifyQuickSection extends Section {
 
-    private List<ShowTypeDetailService.HotClassify2> itemList;
+    private List<CourseClassifyService.HotClassify> itemList;
     private Context mContext;
 
-    public ShowTypeDetailClassifySection2(Context mContext, List<ShowTypeDetailService.HotClassify2> itemList) {
+    public CourseClassifyQuickSection(Context mContext, List<CourseClassifyService.HotClassify> itemList) {
         super(SectionParameters.builder()
-//                .itemResourceId(R.layout.layout_region_recommend_card_item)
-                .itemResourceId(R.layout.layout_recycleview)
-                .headerResourceId(R.layout.layout_region_recommend_hot_head)
+                .itemResourceId(R.layout.layout_recycleview_bg_white)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
@@ -54,33 +53,33 @@ public class ShowTypeDetailClassifySection2 extends Section {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(ShowTypeDetailService.HotClassify2.class, new MultiItemView<ShowTypeDetailService.HotClassify2>() {
+        multiTypeAdapter.register(CourseClassifyService.HotClassify.class, new MultiItemView<CourseClassifyService.HotClassify>() {
             @NonNull
             @Override
             public int getLayoutId() {
-                return R.layout.layout_region_recommend_card_item;
+                return R.layout.item_types_icon;
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ShowTypeDetailService.HotClassify2 hotClassify2, int i) {
-                viewHolder.setImageResource(R.id.item_img, hotClassify2.getClassifyImage());
-                viewHolder.setText(R.id.item_title, hotClassify2.getClassifyName());
-                viewHolder.setText(R.id.item_play, "888");
-                viewHolder.setText(R.id.item_review, "888");
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseClassifyService.HotClassify hotClassify, int i) {
+                viewHolder.setImageResource(R.id.item_icon, hotClassify.getClassifyImage());
+                viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
+                viewHolder.getConvertView().setOnClickListener(v -> ToastUtil.showText(mContext, "您点击的过快奥~~"));
             }
         });
-        multiTypeAdapter.setItems(itemList);
-        itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        multiTypeAdapter.setItems(this.itemList);
+        itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext,4));
         itemHolder.recyclerView.setAdapter(multiTypeAdapter);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        private RecyclerView recyclerView;
+        private final RecyclerView recyclerView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+
             recyclerView = itemView.findViewById(R.id.recyclerView);
+
         }
     }
 }
