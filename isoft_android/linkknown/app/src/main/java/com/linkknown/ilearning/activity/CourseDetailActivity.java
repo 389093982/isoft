@@ -1,72 +1,60 @@
 package com.linkknown.ilearning.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextPaint;
+import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CommonAdapter;
-import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.CourseDetailResponse;
-import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
-import com.linkknown.ilearning.service.CourseService;
-import com.linkknown.ilearning.util.ui.UIUtils;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
-
-import org.apache.commons.lang3.StringUtils;
+import com.linkknown.ilearning.event.AppBarStateChangeEvent;
+import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
-    private Context mContext;
-    private Intent intent;
-    private List<CourseDetailResponse.CVideo> cVideos = new ArrayList<>();
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.tab_layout)
+    SlidingTabLayout mSlidingTabLayout;
 
-    @BindView(R.id.detail_goback)
-    public ImageView gobackView;
+    // 顶部导航栏布局
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout mAppBarLayout;
 
-    @BindView(R.id.cVideoRecyclerView)
-    public RecyclerView cVideoRecyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-    @BindView(R.id.courseImageView)
-    public ImageView courseImageView;
-    @BindView(R.id.courseNameView)
-    public TextView courseNameView;
-    @BindView(R.id.courseShortDescView)
-    public TextView courseShortDescView;
-    @BindView(R.id.courseTypeView)
-    public TextView courseTypeView;
-    @BindView(R.id.courseLabelView)
-    public TextView courseLabelView;
-    @BindView(R.id.courseNumberView)
-    public TextView courseNumberView;
-    @BindView(R.id.watchNumberView)
-    public TextView watchNumberView;
+    @BindView(R.id.tv_player)
+    TextView mTvPlayer;
+    @BindView(R.id.tv_av)
+    TextView mAvText;
+
+    // 悬浮按钮
+    @BindView(R.id.fab)
+    FloatingActionButton mFAB;
+
+    private List<String> titles = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,68 +64,160 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 初始化
         ButterKnife.bind(this);
 
-        mContext = this;
+        initViewPager();
 
-        intent = getIntent();
-
-        // 发送异步请求获取数据
-        initData();
-
-        initAdapter();
-        // 返回箭头点击事件
-        gobackView.setOnClickListener(v -> finish());
+        init();
     }
 
-
-    private void initAdapter() {
-        LiveEventBus.get("courseDetailResponse_" + intent.getIntExtra("course_id", -1), CourseDetailResponse.class)
-                .observeSticky(this, courseDetailResponse -> {
-                    if (courseDetailResponse.isSuccess()) {
-
-                        bindViewHolderForCourse(courseDetailResponse);
-                        bindViewHolderForCVideoList();
-
-                    } else {
-                        Log.e("onNext =>", "系统异常,请联系管理员~");
-                    }
-                });
+    private void initToolBar () {
+        toolbar.setTitle("");
+        // 支持 ActionBar,方便在上面设置 menu
+        setSupportActionBar(toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            // 给左上角图标的左边加上一个返回的图标
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
-    private void bindViewHolderForCVideoList() {
-        // 设置视频列表 section 部分
-        SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(this, cVideos);
-        sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
-        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
+    private void init () {
+        initToolBar();
+
+        mTvPlayer.setText("mTvPlayer");
+        mAvText.setText("mAvText");
+
+        // addOnOffsetChangedListener: 当 AppBarLayout 垂直方向上的偏移量发生改变时，为触发一个回调方法定义的接口
+        //   // 导航栏布局垂直移动时悬浮按钮跟着变化
+        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> setFloatingActionButtonStatus(verticalOffset));
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarStateChangeEvent() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state, int verticalOffset) {
+                if (state == State.EXPANDED) {
+                    //展开状态
+                    mTvPlayer.setVisibility(View.GONE);
+                    mAvText.setVisibility(View.VISIBLE);
+
+                    /**
+                     * contentInsetLeft、contentInsetRight、contentInsetStart、contentInsetEnd：Toolbar的左右两侧都是默认有16dp的padding的，
+                     *      如果你需要让Toolbar上的内容与左右两侧的距离有变化，便可以通过以上四个属性来进行相应的设置。
+                     * 比如要让内容紧贴左侧或起始侧便可以将contentInsetLeft或contentInsetStart设为0。
+                     * 对应方法：
+                     * setContentInsetsRelative(int,int)——对应start和end
+                     * setContentInsetsAbsolute(int,int)——对应left和right
+                     */
+//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 15), 0);
+                } else if (state == State.COLLAPSED) {
+                    //折叠状态
+                    mTvPlayer.setVisibility(View.VISIBLE);
+                    mAvText.setVisibility(View.GONE);
+//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 150), 0);
+                } else {
+                    mTvPlayer.setVisibility(View.GONE);
+                    mAvText.setVisibility(View.VISIBLE);
+//                    mToolbar.setContentInsetsRelative(DisplayUtil.dp2px(VideoDetailsActivity.this, 15), 0);
+                }
+            }
+        });
     }
 
-    private void bindViewHolderForCourse(CourseDetailResponse courseDetailResponse) {
-        CourseDetailResponse.Course course = courseDetailResponse.getCourse();
-
-        // 异步加载图片,使用 Glide 第三方库
-        Glide.with(mContext)
-                .load(UIUtils.replaceMediaUrl(course.getSmall_image()))
-                // placeholder 图片加载出来前,显示的图片
-                // error 图片加载失败后,显示的图片
-                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                .into(courseImageView);
-
-        courseNameView.setText(course.getCourse_name());
-        courseShortDescView.setText(course.getCourse_short_desc());
-        courseTypeView.setText(course.getCourse_type() + "/" + course.getCourse_sub_type());
-        courseLabelView.setText(course.getCourse_label());
-
-        String courseNumberTextDemo = mContext.getResources().getString(R.string.courseNumberTextDemo);
-        courseNumberView.setText(String.format(courseNumberTextDemo, course.getCourse_number()));
-
-        String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
-        watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
-
-        cVideos.addAll(courseDetailResponse.getCVideos());
+    // 导航栏布局垂直移动时悬浮按钮跟着变化
+    private void setFloatingActionButtonStatus(int verticalOffset) {
+        // 设置垂直位移和导航栏一样，Y 轴对齐
+        mFAB.setTranslationY(verticalOffset);
+        if (verticalOffset == 0) {          // 标识向下滚动到最底部
+            showFloatingActionButton();
+        } else if (verticalOffset < 0) {    // 标识向下滚动
+            hideFloatingActionButton();
+        }
     }
 
-    private void initData () {
-        CourseService.showCourseDetailForApp(intent.getIntExtra("course_id", -1));
+    // 缩放显示
+    private void showFloatingActionButton() {
+        mFAB.animate().scaleX(1f).scaleY(1f).setInterpolator(new OvershootInterpolator()).start();
+        mFAB.setClickable(true);
     }
+
+    // 缩放隐藏
+    private void hideFloatingActionButton() {
+        mFAB.animate().scaleX(0f).scaleY(0f).setInterpolator(new AccelerateInterpolator()).start();
+        mFAB.setClickable(false);
+    }
+
+    private void initViewPager () {
+        SpaceFragment spaceFragment1 = new SpaceFragment();
+        SpaceFragment spaceFragment2 = new SpaceFragment();
+        fragments.add(spaceFragment1);
+        fragments.add(spaceFragment2);
+        titles.add("简介");
+        titles.add("评论" + "(8888888888)");
+        VideoDetailsPagerAdapter mAdapter = new VideoDetailsPagerAdapter(getSupportFragmentManager(), fragments, titles);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(2);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        measureTabLayoutTextWidth(0);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                measureTabLayoutTextWidth(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    private void measureTabLayoutTextWidth(int position) {
+        String title = titles.get(position);
+        TextView titleView = mSlidingTabLayout.getTitleView(position);
+        TextPaint paint = titleView.getPaint();
+        float textWidth = paint.measureText(title);
+        mSlidingTabLayout.setIndicatorWidth(textWidth / 3);
+    }
+
+    /**
+     * onCreateOptionsMenu() 创建选项菜单 Menu
+     * 1.选项菜单（optinosMenu）
+     * 2.上下文菜单（ContextMenu）
+     * 3.子菜单(subMenu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ToastUtil.showText(getApplicationContext(), "测试1111111111111");
+        // 如果当前Activity是没有主题的，即用的主题是：Theme.AppCompat.Light.NoActionBar
+        //则需要自己先添加一个toolbar并通过setSupportActionBar方法将其设置成ActionBar
+        getMenuInflater().inflate(R.menu.menu_video, menu);
+        return true;
+    }
+
+    public static class VideoDetailsPagerAdapter extends FragmentStatePagerAdapter {
+        private List<Fragment> fragments;
+        private List<String> titles;
+
+        VideoDetailsPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+            super(fm);
+            this.fragments = fragments;
+            this.titles = titles;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles.get(position);
+        }
+    }
+
 }
