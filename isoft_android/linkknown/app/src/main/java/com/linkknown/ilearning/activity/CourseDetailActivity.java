@@ -28,6 +28,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.event.AppBarStateChangeEvent;
+import com.linkknown.ilearning.fragment.CourseCommentFragment;
+import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.fragment.SpaceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
@@ -99,7 +101,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                     // 设置课程图片
                     UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
                     // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
-                    initViewPager(course.getComments());
+                    initViewPager(courseDetailResponse, course.getComments());
                 });
     }
 
@@ -205,15 +207,18 @@ public class CourseDetailActivity extends AppCompatActivity {
         mFAB.setClickable(false);
     }
 
-    private void initViewPager(int comments) {
-        SpaceFragment spaceFragment1 = new SpaceFragment();
-        SpaceFragment spaceFragment2 = new SpaceFragment();
-        fragments.add(spaceFragment1);
-        fragments.add(spaceFragment2);
+    private void initViewPager(CourseDetailResponse courseDetailResponse, int comments) {
+        // 课程简介片段
+        CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
+        // 课程评论片段
+        CourseCommentFragment courseCommentFragment = new CourseCommentFragment();
+        fragments.add(courseIntroduceFragment);
+        fragments.add(courseCommentFragment);
         titles.add("简介");
         titles.add("评论(" + comments + ")");
         VideoDetailsPagerAdapter mAdapter = new VideoDetailsPagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
+        // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()
         mViewPager.setOffscreenPageLimit(2);
         mSlidingTabLayout.setViewPager(mViewPager);
         measureTabLayoutTextWidth(0);
