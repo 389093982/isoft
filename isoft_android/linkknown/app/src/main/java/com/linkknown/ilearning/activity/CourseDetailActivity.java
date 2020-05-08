@@ -92,15 +92,15 @@ public class CourseDetailActivity extends AppCompatActivity {
     private void bindData () {
         int course_id = getIntent().getIntExtra("course_id", -1);
         LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class)
-                .observeSticky(this, new Observer<CourseDetailResponse>() {
-            @Override
-            public void onChanged(CourseDetailResponse courseDetailResponse) {
-                // 设置课程名称
-                courseNameText.setText(courseDetailResponse.getCourse().getCourse_name());
-                // 设置课程图片
-                UIUtils.setImage(getApplicationContext(), courseImage, courseDetailResponse.getCourse().getSmall_image());
-            }
-        });
+                .observeSticky(this, courseDetailResponse -> {
+                    CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+                    // 设置课程名称
+                    courseNameText.setText(course.getCourse_name());
+                    // 设置课程图片
+                    UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
+                    // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
+                    initViewPager(course.getComments());
+                });
     }
 
     private void initData () {
@@ -139,7 +139,6 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private void init() {
         initToolBar();
-        initViewPager();
         initListener();
     }
 
@@ -206,13 +205,13 @@ public class CourseDetailActivity extends AppCompatActivity {
         mFAB.setClickable(false);
     }
 
-    private void initViewPager() {
+    private void initViewPager(int comments) {
         SpaceFragment spaceFragment1 = new SpaceFragment();
         SpaceFragment spaceFragment2 = new SpaceFragment();
         fragments.add(spaceFragment1);
         fragments.add(spaceFragment2);
         titles.add("简介");
-        titles.add("评论" + "(8888888888)");
+        titles.add("评论(" + comments + ")");
         VideoDetailsPagerAdapter mAdapter = new VideoDetailsPagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(2);
