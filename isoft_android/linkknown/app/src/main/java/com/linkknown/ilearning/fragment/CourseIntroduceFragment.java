@@ -10,12 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.wenld.multitypeadapter.CommonAdapter;
+import com.wenld.multitypeadapter.MultiTypeAdapter;
+import com.wenld.multitypeadapter.base.MultiItemView;
+import com.wenld.multitypeadapter.base.ViewHolder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CourseIntroduceFragment extends Fragment {
 
@@ -34,6 +45,8 @@ public class CourseIntroduceFragment extends Fragment {
     public TextView courseNumberText;
     @BindView(R.id.courseShortDescText)
     public TextView courseShortDescText;
+    @BindView(R.id.courseOperateRecyclerView)
+    public RecyclerView courseOperateRecyclerView;
 
     @Nullable
     @Override
@@ -57,5 +70,24 @@ public class CourseIntroduceFragment extends Fragment {
         courseNumberText.setText(course.getCourse_number() + "");
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
+
+        List<String> courseOperates = Arrays.asList("测试1", "测试2", "测试3", "测试4");
+
+        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
+        multiTypeAdapter.register(String.class, new MultiItemView<String>() {
+            @NonNull
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_course_operate;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull String s, int i) {
+                viewHolder.setText(R.id.operateNameText, s);
+            }
+        });
+        multiTypeAdapter.setItems(courseOperates);
+        courseOperateRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        courseOperateRecyclerView.setAdapter(multiTypeAdapter);
     }
 }
