@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -20,6 +23,9 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.wenld.multitypeadapter.MultiTypeAdapter;
+import com.wenld.multitypeadapter.base.MultiItemView;
+import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,13 +44,12 @@ public class CourseDetailActivity extends AppCompatActivity {
     private Context mContext;
     private Intent intent;
     private List<CourseDetailResponse.CVideo> cVideos = new ArrayList<>();
-    private CommonAdapter<CourseDetailResponse.CVideo> cVideosCommonAdapter;
 
     @BindView(R.id.detail_goback)
     public ImageView gobackView;
 
-    @BindView(R.id.cVideoListView)
-    public ListView cVideoListView;
+    @BindView(R.id.cVideoRecyclerView)
+    public RecyclerView cVideoRecyclerView;
 
     @BindView(R.id.courseImageView)
     public ImageView courseImageView;
@@ -83,22 +88,29 @@ public class CourseDetailActivity extends AppCompatActivity {
 
 
     private void initAdapter() {
-        cVideosCommonAdapter = new CommonAdapter<CourseDetailResponse.CVideo>((ArrayList<CourseDetailResponse.CVideo>)cVideos,R.layout.item_cvideo) {
+        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
+        multiTypeAdapter.register(CourseDetailResponse.CVideo.class, new MultiItemView<CourseDetailResponse.CVideo>() {
+            @NonNull
             @Override
-            public void bindView(ViewHolder holder, CourseDetailResponse.CVideo cVideo) {
+            public int getLayoutId() {
+                return R.layout.item_cvideo;
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseDetailResponse.CVideo cVideo, int position) {
                 // 视频索引
                 String cVideoIndex = mContext.getResources().getString(R.string.cVideoIndex);
-                holder.setText(R.id.cVideoIndex, String.format(cVideoIndex, cVideos.indexOf(cVideo) + 1));
+                viewHolder.setText(R.id.cVideoIndex, String.format(cVideoIndex, position + 1));
                 // 视频名称,去除后缀名后
-                holder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
+                viewHolder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
                 // 视频时长
                 if (cVideo.getDuration() > 0) {
-                    holder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
+                    viewHolder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
                 } else {
-                    holder.setVisibility(R.id.cVideoDuration, View.INVISIBLE);
+                    viewHolder.setVisible(R.id.cVideoDuration, false);
                 }
 
-                holder.setOnClickListener(R.id.cVideoName, v -> {
+                viewHolder.setOnClickListener(R.id.cVideoName, v -> {
                     UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
                         intent.putExtra("course_id", cVideo.getCourse_id());
                         intent.putExtra("video_id", cVideo.getId());
@@ -107,8 +119,11 @@ public class CourseDetailActivity extends AppCompatActivity {
                     });
                 });
             }
-        };
-        cVideoListView.setAdapter(cVideosCommonAdapter);
+        });
+        multiTypeAdapter.setItems(cVideos);
+
+        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        cVideoRecyclerView.setAdapter(multiTypeAdapter);
 
         LiveEventBus.get("courseDetailResponse_" + intent.getIntExtra("course_id", -1), CourseDetailResponse.class)
                 .observeSticky(this, courseDetailResponse -> {
