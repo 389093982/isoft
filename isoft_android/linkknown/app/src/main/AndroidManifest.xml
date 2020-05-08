@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.ShowTypesActivity"
+            android:name=".activity.CourseClassifyActivity"
             android:label="@string/title_activity_show_types"
             android:theme="@style/AppTheme"/>
         <activity

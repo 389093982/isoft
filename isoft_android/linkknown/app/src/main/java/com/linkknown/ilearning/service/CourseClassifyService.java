@@ -6,11 +6,18 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.Data;
 
 public class CourseClassifyService extends ViewModel {
+
+    public static void loadCourseFirstClassify () {
+        CourseFirstClassify firstClassify = new CourseFirstClassify();
+        firstClassify.classifyNames = Arrays.asList("前端", "后台", "基础", "实践", "名师", "讲坛");
+        LiveEventBus.get("courseFirstClassify", CourseFirstClassify.class).post(firstClassify);
+    }
 
     public static void loadData() {
         List<HotClassify> hotClassifyData = getHotClassifyData();
@@ -119,5 +126,12 @@ public class CourseClassifyService extends ViewModel {
         public String bannerTitle;
         public String bannerImage;
         public String bannerLink;
+    }
+
+
+    // 课程一级分类
+    @Data
+    public static class CourseFirstClassify {
+        public List<String> classifyNames;
     }
 }

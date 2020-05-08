@@ -1,6 +1,5 @@
 package com.linkknown.ilearning.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,6 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private Context mContext;
     private boolean mIsRefreshing = false;
 
     private List<CourseClassifyService.BannerEntity> bannerEntities = new ArrayList<>();
@@ -47,12 +45,28 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_type_detail, container, false);
-        mContext = getActivity();
         ButterKnife.bind(this, rootView);
 
         // 初始化组件
         init();
 
+        // 加载数据
+        loadData();
+
+        // 更新 UI
+        notifyDataSetChanged();
+
+        return rootView;
+    }
+
+    // adapter
+    private SectionedRecyclerViewAdapter sectionAdapter;
+    // sections
+    private CourseClassifyBannerSection courseClassifyBannerSection;
+    private CourseClassifyQuickSection courseClassifyQuickSection;
+    private CourseClassifyItemSection2 courseClassifyItemSection2;
+
+    private void init () {
         sectionAdapter = new SectionedRecyclerViewAdapter();
         courseClassifyBannerSection = new CourseClassifyBannerSection(bannerEntities);
         courseClassifyQuickSection = new CourseClassifyQuickSection(getActivity(), hotClassifies);
@@ -67,23 +81,11 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
         sectionAdapter.addSection(courseClassifyItemSection2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(sectionAdapter);
-
-        // 绑定 adapter
-//        bindAdapter();
-
-        bindAdapterData();
-
-        return rootView;
     }
 
-    private CourseClassifyBannerSection courseClassifyBannerSection;
-    private CourseClassifyQuickSection courseClassifyQuickSection;
-    private CourseClassifyItemSection2 courseClassifyItemSection2;
-
-    private SectionedRecyclerViewAdapter sectionAdapter;
-
-    private void bindAdapterData () {
+    private void notifyDataSetChanged () {
         LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
+            // 清空旧数据
             hotClassifies.clear();
             hotClassifies2.clear();
             bannerEntities.clear();
@@ -99,19 +101,15 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
                     bannerEntities.add((CourseClassifyService.BannerEntity)obj);
                 }
             }
+            // 属性 UI
             sectionAdapter.notifyDataSetChanged();
+            // 隐藏刷新效果图标
             finishRefreshing();
         });
-
-//        LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
-//            multiTypeAdapter.setItems(list);
-//            multiTypeAdapter.notifyDataSetChanged();
-//            finishRefreshing();
-//        });
     }
 
 
-    private void init() {
+    private void loadData() {
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         // 通过post(Runnable runnable)方法放到UI线程排队执行
@@ -119,13 +117,13 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
             // 显示刷新进度条，通过直接设置setRefreshing(true)
             refreshLayout.setRefreshing(true);
             mIsRefreshing = true;
-            clearAndLoadData();
+            CourseClassifyService.loadData();
         });
 
         // refreshLayout 设置刷新监听
         refreshLayout.setOnRefreshListener(() -> {
             mIsRefreshing = true;
-            clearAndLoadData();
+            CourseClassifyService.loadData();
         });
     }
 
@@ -140,10 +138,5 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
         refreshLayout.setRefreshing(false);
     }
 
-
-
-    private void clearAndLoadData() {
-        CourseClassifyService.loadData();
-    }
 
 }

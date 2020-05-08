@@ -34,4 +34,7 @@ public interface LinkKnownApi {
                                       @Query("nickname") String nickname,
                                       @Query("verifyCode") String verifyCode,
                                       @Query("third_user_type") String third_user_type);
+
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement")
+    Observable<LoginUserResponse> filterElementByPlacement(@Query("placement") String placement);
 }
