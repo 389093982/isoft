@@ -13,22 +13,31 @@ import retrofit2.http.Query;
 
 public interface LinkKnownApi {
 
+    // 查看热门推荐的课程
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend")
     Observable<CourseMetaResponse> getHotCourseRecommend();
 
+    // 根据自定义 tag 搜索课程
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse")
+    Observable<CourseMetaResponse> queryCustomTagCourse(@Query("custom_tag") String custom_tag,
+                                                        @Query("current_page") int current_page,
+                                                        @Query("offset") int offset);
 
+    // 查询课程详情
     @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp")
     Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id);
 
-
+    // 登录接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/PostLogin")
     Observable<LoginUserResponse> postLogin(@Query("username") String username,
                                             @Query("passwd") String passwd,
                                             @Query("redirectUrl") String redirectUrl);
 
+    // 课程搜索接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList")
     Observable<CourseSearchResponse> searchCourseList(@Query("search") String search);
 
+    // 注册接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/Regist")
     Observable<RegistResponse> regist(@Query("username") String username,
                                       @Query("passwd") String passwd,
@@ -36,6 +45,7 @@ public interface LinkKnownApi {
                                       @Query("verifyCode") String verifyCode,
                                       @Query("third_user_type") String third_user_type);
 
+    // 占位符查询接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement")
     Observable<LoginUserResponse> filterElementByPlacement(@Query("placement") String placement);
 

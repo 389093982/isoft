@@ -90,7 +90,7 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
     }
 
     private void notifyDataSetChanged () {
-        LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).observeSticky(this, courseMetaResponse -> {
+        LiveEventBus.get(Constants.COURSE_CUSTOM_TAG_PREFIX, CourseMetaResponse.class).observeSticky(this, courseMetaResponse -> {
             if (courseMetaResponse != null && CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
                 hotCourseMetas.clear();
                 hotCourseMetas.addAll(courseMetaResponse.getCourses());
@@ -129,14 +129,14 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
             refreshLayout.setRefreshing(true);
             mIsRefreshing = true;
             CourseClassifyService.loadData();
-            CourseService.getHotCourseRecommend();
+            CourseService.queryCustomTagCourse("hot",1, 10);
         });
 
         // refreshLayout 设置刷新监听
         refreshLayout.setOnRefreshListener(() -> {
             mIsRefreshing = true;
             CourseClassifyService.loadData();
-            CourseService.getHotCourseRecommend();
+            CourseService.queryCustomTagCourse("hot",1, 10);
         });
     }
 

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.service.CourseClassifyService;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;

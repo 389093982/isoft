@@ -10,4 +10,5 @@ public class Constants {
 
 
     public static final String COURSE_HOT_RECOMMEND_PREFIX = "COURSE_HOT_RECOMMEND_PREFIX_";
+    public static final String COURSE_CUSTOM_TAG_PREFIX = "COURSE_CUSTOM_TAG_PREFIX_";
 }
