@@ -12,6 +12,7 @@ public class CommentResponse extends BaseResponse {
     private List<Comment> comments;
     private Paginator paginator;
 
+    @Data
     public class Comment {
 
         private String comment_type;
@@ -35,6 +36,7 @@ public class CommentResponse extends BaseResponse {
         private int vip_level;
     }
 
+    @Data
     public class Paginator {
 
         private int currpage;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.service.CommentService;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -83,8 +85,12 @@ public class CourseCommentFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CommentResponse.Comment comment, int i) {
-                viewHolder.setText(R.id.commentText, "你好卑鄙啊~~~~~");
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CommentResponse.Comment comment, int position) {
+                // 设置评论内容
+                viewHolder.setText(R.id.commentContentText, comment.getContent());
+                viewHolder.setText(R.id.nickNameText, comment.getNick_name());
+                ImageView headerIconView = viewHolder.getConvertView().findViewById(R.id.headerIcon);
+                UIUtils.setImage(mContext, headerIconView, comment.getSmall_icon());
             }
         });
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
