@@ -89,8 +89,7 @@ public class CourseCommentFragment extends Fragment {
                 // 设置评论内容
                 viewHolder.setText(R.id.commentContentText, comment.getContent());
                 viewHolder.setText(R.id.nickNameText, comment.getNick_name());
-                ImageView headerIconView = viewHolder.getConvertView().findViewById(R.id.headerIcon);
-                UIUtils.setImage(mContext, headerIconView, comment.getSmall_icon());
+                UIUtils.setImage(mContext, viewHolder.getConvertView().findViewById(R.id.headerIcon), comment.getSmall_icon());
             }
         });
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
