@@ -8,16 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.section.CourseClassifyBannerSection;
-import com.linkknown.ilearning.section.CourseClassifyItemSection2;
+import com.linkknown.ilearning.section.CourseHotRecommendSection;
 import com.linkknown.ilearning.section.CourseClassifyQuickSection;
 import com.linkknown.ilearning.service.CourseClassifyService;
+import com.linkknown.ilearning.service.CourseService;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +46,7 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
     private List<CourseClassifyService.BannerEntity> bannerEntities = new ArrayList<>();
     // 数组是引用传递
     private List<CourseClassifyService.HotClassify> hotClassifies = new ArrayList<>();
-    private List<CourseClassifyService.HotClassify2> hotClassifies2 = new ArrayList<>();
+    private List<CourseMetaResponse.CourseMeta> hotCourseMetas = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,38 +70,43 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
     // sections
     private CourseClassifyBannerSection courseClassifyBannerSection;
     private CourseClassifyQuickSection courseClassifyQuickSection;
-    private CourseClassifyItemSection2 courseClassifyItemSection2;
+    private CourseHotRecommendSection courseHotRecommendSection;
 
     private void init () {
         sectionAdapter = new SectionedRecyclerViewAdapter();
         courseClassifyBannerSection = new CourseClassifyBannerSection(bannerEntities);
         courseClassifyQuickSection = new CourseClassifyQuickSection(getActivity(), hotClassifies);
-        courseClassifyItemSection2 = new CourseClassifyItemSection2(getActivity(), hotClassifies2);
+        courseHotRecommendSection = new CourseHotRecommendSection(getActivity(), hotCourseMetas);
         sectionAdapter.addSection(courseClassifyBannerSection);
         sectionAdapter.addSection(courseClassifyQuickSection);
-        sectionAdapter.addSection(courseClassifyItemSection2);
-        sectionAdapter.addSection(courseClassifyItemSection2);
-        sectionAdapter.addSection(courseClassifyItemSection2);
-        sectionAdapter.addSection(courseClassifyItemSection2);
-        sectionAdapter.addSection(courseClassifyItemSection2);
-        sectionAdapter.addSection(courseClassifyItemSection2);
+        sectionAdapter.addSection(courseHotRecommendSection);
+        sectionAdapter.addSection(courseHotRecommendSection);
+        sectionAdapter.addSection(courseHotRecommendSection);
+        sectionAdapter.addSection(courseHotRecommendSection);
+        sectionAdapter.addSection(courseHotRecommendSection);
+        sectionAdapter.addSection(courseHotRecommendSection);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(sectionAdapter);
     }
 
     private void notifyDataSetChanged () {
+        LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).observeSticky(this, courseMetaResponse -> {
+            if (courseMetaResponse != null && CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
+                hotCourseMetas.clear();
+                hotCourseMetas.addAll(courseMetaResponse.getCourses());
+                // 属性 UI
+                sectionAdapter.notifyDataSetChanged();
+            }
+        });
+
         LiveEventBus.get("showTypeDetails", List.class).observe(this, list -> {
             // 清空旧数据
             hotClassifies.clear();
-            hotClassifies2.clear();
             bannerEntities.clear();
 
             for (Object obj : list){
                 if (obj instanceof CourseClassifyService.HotClassify) {
                     hotClassifies.add((CourseClassifyService.HotClassify)obj);
-                }
-                if (obj instanceof CourseClassifyService.HotClassify2) {
-                    hotClassifies2.add((CourseClassifyService.HotClassify2)obj);
                 }
                 if (obj instanceof CourseClassifyService.BannerEntity) {
                     bannerEntities.add((CourseClassifyService.BannerEntity)obj);
@@ -118,12 +129,14 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
             refreshLayout.setRefreshing(true);
             mIsRefreshing = true;
             CourseClassifyService.loadData();
+            CourseService.getHotCourseRecommend();
         });
 
         // refreshLayout 设置刷新监听
         refreshLayout.setOnRefreshListener(() -> {
             mIsRefreshing = true;
             CourseClassifyService.loadData();
+            CourseService.getHotCourseRecommend();
         });
     }
 

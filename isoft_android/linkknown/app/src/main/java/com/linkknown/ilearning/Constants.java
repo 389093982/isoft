@@ -7,4 +7,7 @@ public class Constants {
 
     // 每页数量
     public static final int PAGE_SIZE = 10;
+
+
+    public static final String COURSE_HOT_RECOMMEND_PREFIX = "COURSE_HOT_RECOMMEND_PREFIX_";
 }

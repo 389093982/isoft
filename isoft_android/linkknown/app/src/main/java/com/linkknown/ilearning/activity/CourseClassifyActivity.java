@@ -16,7 +16,6 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.service.CourseClassifyService;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +23,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// 课程分类页面
 public class CourseClassifyActivity extends AppCompatActivity {
-
+    // 顶部工具栏
     @BindView(R.id.headerToolBarLayout)
     public LinearLayout headerToolBarLayout;
+    // tab 标签页
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+    // tab 标签页切换的页面
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 

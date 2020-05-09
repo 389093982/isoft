@@ -3,6 +3,7 @@ package com.linkknown.ilearning.service;
 import android.util.Log;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
@@ -69,10 +70,10 @@ public class CourseService {
                     @Override
                     public void onNext(CourseMetaResponse courseMetaResponse) {
                         if (courseMetaResponse.isSuccess() && courseMetaResponse.getCourses() != null) {
-                            LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                            LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).post(courseMetaResponse);
                         } else {
                             Log.e("onNext =>", "系统异常,请联系管理员~");
-                            LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                            LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).post(courseMetaResponse);
                         }
                     }
 
@@ -81,7 +82,7 @@ public class CourseService {
                         Log.e("onError =>", e.getMessage());
                         CourseMetaResponse courseMetaResponse = new CourseMetaResponse();
                         courseMetaResponse.setErrorMsg("数据加载失败!");
-                        LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).post(courseMetaResponse);
+                        LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).post(courseMetaResponse);
                     }
 
                     @Override

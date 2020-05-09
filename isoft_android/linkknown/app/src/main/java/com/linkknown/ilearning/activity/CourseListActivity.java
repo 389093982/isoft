@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -45,7 +45,7 @@ public class CourseListActivity extends AppCompatActivity {
         // 发送异步请求获取数据
         initData();
 
-        LiveEventBus.get("courseMetaResponse", CourseMetaResponse.class).observeSticky(this, new Observer<CourseMetaResponse>() {
+        LiveEventBus.get(Constants.COURSE_HOT_RECOMMEND_PREFIX, CourseMetaResponse.class).observeSticky(this, new Observer<CourseMetaResponse>() {
             @Override
             public void onChanged(CourseMetaResponse courseMetaResponse) {
                 MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
