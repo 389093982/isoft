@@ -104,6 +104,25 @@
                 android:overScrollMode="never" />
 
         </LinearLayout>
+
+        <!-- 视频列表 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingEnd="3dp"
+            android:paddingStart="3dp"
+            android:paddingTop="10dp">
+
+            <!-- overScrollMode 去掉上拉刷新和下拉加载的阴影 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cVideoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
