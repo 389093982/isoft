@@ -71,7 +71,7 @@ public class CourseIntroduceFragment extends Fragment {
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
 
-        List<String> courseOperates = Arrays.asList("测试1", "测试2", "测试3", "测试4");
+        List<String> courseOperates = Arrays.asList("分享", "投硬币", "收藏", "缓存");
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(String.class, new MultiItemView<String>() {

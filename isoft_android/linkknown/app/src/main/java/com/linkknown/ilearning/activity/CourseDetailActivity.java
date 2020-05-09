@@ -208,6 +208,10 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     private void initViewPager(CourseDetailResponse courseDetailResponse, int comments) {
+        // 多次订阅数据会导致重复,需要先进行清理
+        fragments.clear();
+        titles.clear();
+
         // 课程简介片段
         CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
         // 课程评论片段
