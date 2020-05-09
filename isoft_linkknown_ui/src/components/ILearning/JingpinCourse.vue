@@ -16,26 +16,30 @@
     <CourseType></CourseType>
 
     <!--优惠券信息-->
-    <div style="width:100%;position: absolute;top: 100px;left: 740px;">
+    <div style="position: absolute;top: 100px;left: 740px;">
       <!--通用券-减免-->
       <Coupon v-if="general_reduce_coupon"
-        :coupon_type="general_reduce_coupon.coupon_type"
-        :youhui_type="general_reduce_coupon.youhui_type"
-        :start_date="general_reduce_coupon.start_date"
-        :end_date="general_reduce_coupon.end_date"
-        :coupon_amount="general_reduce_coupon.coupon_amount"
-        :discount_rate="general_reduce_coupon.discount_rate">
+              :activity_id="general_reduce_coupon.activity_id"
+              :coupon_type="general_reduce_coupon.coupon_type"
+              :youhui_type="general_reduce_coupon.youhui_type"
+              :start_date="general_reduce_coupon.start_date"
+              :end_date="general_reduce_coupon.end_date"
+              :coupon_amount="general_reduce_coupon.coupon_amount"
+              :discount_rate="general_reduce_coupon.discount_rate"
+              @receiveCoupon="receiveCoupon">
       </Coupon>
       <!--分割线-->
       <div v-if="general_reduce_coupon && general_discount_coupon" style="height: 5px;"></div>
       <!--通用券-打折-->
       <Coupon v-if="general_discount_coupon"
+              :activity_id="general_discount_coupon.activity_id"
               :coupon_type="general_discount_coupon.coupon_type"
               :youhui_type="general_discount_coupon.youhui_type"
               :start_date="general_discount_coupon.start_date"
               :end_date="general_discount_coupon.end_date"
               :coupon_amount="general_discount_coupon.coupon_amount"
-              :discount_rate="general_discount_coupon.discount_rate">
+              :discount_rate="general_discount_coupon.discount_rate"
+              @receiveCoupon="receiveCoupon">
       </Coupon>
     </div>
 
@@ -57,7 +61,7 @@
   import ShowModulars from "./ShowModulars";
   import Coupon from "../Common/coupon/Coupon";
   import {GetToday_yyyyMMdd} from "../../tools/index"
-  import {QueryGeneralCoupon} from "../../api/index"
+  import {QueryGeneralCoupon,ReceiveCoupon} from "../../api/index"
 
   export default {
     name: "JingpinCourse",
@@ -98,6 +102,19 @@
           this.general_reduce_coupon = generalResult.general_reduce_coupon;
           this.general_discount_coupon = generalResult.general_discount_coupon;
         }
+      },
+      //领券
+      receiveCoupon:async function (activity_id) {
+        let params = {
+          'activity_id':activity_id
+        };
+        const result = await ReceiveCoupon(params);
+        if (result.status === 'SUCCESS') {
+          this.$Message.info('领券成功！');
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
+        this.refreshCoupon();
       }
     },
     mounted:function () {

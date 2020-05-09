@@ -1,7 +1,7 @@
 <template>
 	<div>
 
-    <div class="coupon_bg" style="position: relative;cursor: pointer">
+    <div class="coupon_bg" style="width:350px;position: relative;cursor: pointer" @click="receiveCoupon()">
       <span v-if="youhui_type === 'reduce'">
         <span class="amount_icon">￥</span>
         <span class="coupon_amount">
@@ -30,11 +30,16 @@
 </template>
 
 <script>
+  import {checkHasLogin} from "../../../tools/sso"
+
 	export default {
 		name: "Coupon",
     props:{
+      activity_id:String,
+
 		  coupon_type:String,
       youhui_type:String,
+
       start_date:String,
       end_date:String,
 
@@ -43,18 +48,13 @@
 
     },
     methods:{
-      GetDate_yyyyMMdd_byDate:function(date0){
-        let date = new Date(date0);
-        let year = date.getFullYear();
-        let month = date.getMonth()+1;
-        if (parseInt(month)<10) {
-          month =  '0'+month;
+		  //用户领券
+      receiveCoupon:function () {
+        if (checkHasLogin()){
+          this.$emit('receiveCoupon',this.activity_id);
+        } else{
+          this.$Message.error('未登录！');
         }
-        let today = date.getDate();
-        if (parseInt(today)<10) {
-          today =  '0'+today;
-        }
-        return year + '' + month + '' + today;
       }
     },
 	}

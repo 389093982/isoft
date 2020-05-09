@@ -120,23 +120,27 @@
         <div class="isoft_bg_white" style="padding: 5px 0 0 5px ">
           <!--指定券:减免-->
           <Coupon v-if="designated_reduce_coupon"
+                  :activity_id="designated_reduce_coupon.activity_id"
                   :coupon_type="designated_reduce_coupon.coupon_type"
                   :youhui_type="designated_reduce_coupon.youhui_type"
                   :start_date="designated_reduce_coupon.start_date"
                   :end_date="designated_reduce_coupon.end_date"
                   :coupon_amount="designated_reduce_coupon.coupon_amount"
-                  :discount_rate="designated_reduce_coupon.discount_rate">
+                  :discount_rate="designated_reduce_coupon.discount_rate"
+                  @receiveCoupon="receiveCoupon">
           </Coupon>
           <!--分割线-->
           <div v-if="designated_reduce_coupon && designated_discount_coupon" style="height: 5px;"></div>
           <!--指定券:打折-->
           <Coupon v-if="designated_discount_coupon"
+                  :activity_id="designated_discount_coupon.activity_id"
                   :coupon_type="designated_discount_coupon.coupon_type"
                   :youhui_type="designated_discount_coupon.youhui_type"
                   :start_date="designated_discount_coupon.start_date"
                   :end_date="designated_discount_coupon.end_date"
                   :coupon_amount="designated_discount_coupon.coupon_amount"
-                  :discount_rate="designated_discount_coupon.discount_rate">
+                  :discount_rate="designated_discount_coupon.discount_rate"
+                  @receiveCoupon="receiveCoupon">
           </Coupon>
         </div>
         <div class="isoft_bg_white">
@@ -151,7 +155,7 @@
 </template>
 
 <script>
-  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon,ReceiveCoupon} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import HotUser from "../../User/HotUser"
@@ -315,6 +319,19 @@
           this.designated_reduce_coupon = designatedResult.designated_reduce_coupon;
           this.designated_discount_coupon = designatedResult.designated_discount_coupon;
         }
+      },
+      //领券
+      receiveCoupon:async function (activity_id) {
+        let params = {
+          'activity_id':activity_id
+        };
+        const result = await ReceiveCoupon(params);
+        if (result.status === 'SUCCESS') {
+          this.$Message.info('领券成功！');
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
+        this.refreshCoupon();
       }
     },
     mounted: function () {
