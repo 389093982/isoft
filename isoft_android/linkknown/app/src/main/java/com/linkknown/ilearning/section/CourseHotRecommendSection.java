@@ -2,12 +2,14 @@ package com.linkknown.ilearning.section;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.service.CourseClassifyService;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -64,10 +66,16 @@ public class CourseHotRecommendSection extends Section {
 
             @Override
             public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseMetaResponse.CourseMeta courseMeta, int i) {
-                UIUtils.setImage(mContext, viewHolder.getConvertView().findViewById(R.id.courseImage), courseMeta.getSmall_image());
+                ImageView courseImageView = viewHolder.getConvertView().findViewById(R.id.courseImage);
+                UIUtils.setImage(mContext, courseImageView, courseMeta.getSmall_image());
                 viewHolder.setText(R.id.courseName, courseMeta.getCourse_name());
                 viewHolder.setText(R.id.watchNumberText, courseMeta.getWatch_number() + "");
                 viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
+
+                courseImageView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMeta.getId());
+                    return intent;
+                }));
             }
         });
         multiTypeAdapter.setItems(itemList);
