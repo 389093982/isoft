@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.api;
 
+import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
@@ -37,4 +38,18 @@ public interface LinkKnownApi {
 
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement")
     Observable<LoginUserResponse> filterElementByPlacement(@Query("placement") String placement);
+
+    // 评论查询接口,查询一级评论
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel")
+    Observable<CommentResponse> filterCommentFirstLevel(@Query("theme_pk") int theme_pk,
+                                                          @Query("theme_type") String theme_type,
+                                                          @Query("comment_type") String comment_type,
+                                                          @Query("current_page") int current_page,
+                                                          @Query("offset") int offset);
+
+    // 评论查询接口,查询二级评论
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel")
+    Observable<CommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
+                                                         @Query("theme_type") String theme_type,
+                                                         @Query("org_parent_id") int org_parent_id);
 }

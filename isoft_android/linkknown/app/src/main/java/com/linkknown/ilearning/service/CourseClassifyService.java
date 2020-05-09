@@ -1,7 +1,5 @@
 package com.linkknown.ilearning.service;
 
-import androidx.lifecycle.ViewModel;
-
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 
@@ -11,7 +9,7 @@ import java.util.List;
 
 import lombok.Data;
 
-public class CourseClassifyService extends ViewModel {
+public class CourseClassifyService {
 
     public static void loadCourseFirstClassify () {
         CourseFirstClassify firstClassify = new CourseFirstClassify();

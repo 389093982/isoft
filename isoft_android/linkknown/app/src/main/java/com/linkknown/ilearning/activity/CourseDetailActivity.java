@@ -216,6 +216,11 @@ public class CourseDetailActivity extends AppCompatActivity {
         CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
         // 课程评论片段
         CourseCommentFragment courseCommentFragment = new CourseCommentFragment();
+        // activity 向 fragment 传参
+        Bundle bundle = new Bundle();
+        bundle.putInt("course_id", courseDetailResponse.getCourse().getId());
+        courseCommentFragment.setArguments(bundle);
+
         fragments.add(courseIntroduceFragment);
         fragments.add(courseCommentFragment);
         titles.add("简介");
