@@ -33,6 +33,17 @@
 
         </menu>
     </item>
-
+    <item android:title="空间">
+        <menu>
+            <item
+                android:id="@+id/shoucang"
+                android:icon="@drawable/ic_star"
+                android:title="我的收藏"/>
+            <item
+                android:id="@+id/guankan"
+                android:icon="@drawable/ic_history"
+                android:title="观看记录"/>
+        </menu>
+    </item>
 
 </menu>

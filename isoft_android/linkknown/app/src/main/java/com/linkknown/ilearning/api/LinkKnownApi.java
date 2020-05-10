@@ -4,6 +4,7 @@ import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
+import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 
@@ -62,4 +63,8 @@ public interface LinkKnownApi {
     Observable<CommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
                                                          @Query("theme_type") String theme_type,
                                                          @Query("org_parent_id") int org_parent_id);
+    // 查询用户收藏列表
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList")
+    Observable<FavoriteResponse> getUserFavoriteList(@Query("user_name") String user_name,
+                                                     @Query("favorite_type") String favorite_type);
 }

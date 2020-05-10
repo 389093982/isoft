@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.HomeActivity;
+import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.SpaceFragment;
@@ -267,6 +268,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
 //            }
             UserService.logout(this);
+        } else if (id == R.id.shoucang) {
+            UIUtils.gotoActivity(this, IFavoritesActivity.class);
         }
 
         // 抽屉关闭
