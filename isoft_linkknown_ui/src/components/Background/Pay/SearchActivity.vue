@@ -192,12 +192,6 @@
         if (result.status === 'SUCCESS') {
           this.page.totalCount = result.paginator.totalcount;
           this.activityDatas = result.activityDatas;
-          for (let i = 0; i < this.activityDatas.length; i++) {
-            //格式化活动类型
-            if (this.activityDatas[i].activity_type === 'coupon') {
-              this.activityDatas[i].activity_type = '优惠券';
-            }
-          }
         }
       },
       pageChange:function (page) {
