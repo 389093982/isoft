@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,21 +21,35 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class LoginActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    @BindView(R.id.userName)
+    EditText usernameEditText;
+    @BindView(R.id.passwd)
+    EditText passwordEditText;
+    @BindView(R.id.loginBtn)
+    Button loginButton;
+    @BindView(R.id.loading)
+    ProgressBar loadingProgressBar;
+    @BindView(R.id.link_regist)
+    TextView link_regist;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        ButterKnife.bind(this);
 
         fillAccountFromMemory(usernameEditText, passwordEditText, loginButton);
 
@@ -97,13 +112,8 @@ public class LoginActivity extends AppCompatActivity {
             }
             return false;
         });
-
-        loginButton.setOnClickListener(v -> {
-            // 显示登录进度 loading
-            loadingProgressBar.setVisibility(View.VISIBLE);
-            // 调用登录接口
-            UserService.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
-        });
+        loginButton.setOnClickListener(this);
+        link_regist.setOnClickListener(this);
     }
 
     // 记录上次登录参数
@@ -133,4 +143,31 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (SecurityUtil.isFastClick()) {
+            ToastUtil.showText(this, "您点击的太频繁");
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.link_regist:
+                UIUtils.gotoActivity(this, RegistActivity.class);
+                // Android中不同Activity之间的切换是不可避免的事情，那么怎么才能让Acitivity的切换更优雅呢，
+                // Android中提供了一个方法来解决这个问题，即overridePendingTransition(A，B)函数
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                finish();
+                break;
+            case R.id.back:
+                finish();
+                break;
+            case R.id.loginBtn:
+                // 显示登录进度 loading
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                // 调用登录接口
+                UserService.login(this, usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                break;
+            default:
+                break;
+        }
+    }
 }
