@@ -11,7 +11,7 @@ public class SecurityUtil {
     public static boolean isFastClick() {
         boolean flag = false;
         long curClickTime = System.currentTimeMillis();
-        if ((curClickTime - LAST_CLICK_TIME.get()) >= MIN_CLICK_DELAY_TIME) {
+        if ((curClickTime - LAST_CLICK_TIME.get()) <= MIN_CLICK_DELAY_TIME) {
             flag = true;
         }
         LAST_CLICK_TIME.set(curClickTime);

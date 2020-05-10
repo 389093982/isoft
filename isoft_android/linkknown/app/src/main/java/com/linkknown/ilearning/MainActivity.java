@@ -33,6 +33,7 @@ import com.linkknown.ilearning.fragment.SpaceFragment;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -148,13 +149,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
                             .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
                             .into(navigationHeaderIconView);
-                    navigationUserNameText.setText(loginUserResponse.getUserName());
+                    // 设置昵称或者用户名
+                    navigationUserNameText.setText(StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
 
                     // 2、--------- 顶部 toolbar 显示登录信息
                     toolBarLoginLayout.setVisibility(View.VISIBLE);
                     toolBarUnLoginLayout.setVisibility(View.GONE);
 
-                    userNameText.setText(loginUserResponse.getUserName());
+                    // 设置昵称或者用户名
+                    userNameText.setText(StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
                     Glide.with(this)
                             .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
                             .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
