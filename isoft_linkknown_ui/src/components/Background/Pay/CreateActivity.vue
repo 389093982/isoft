@@ -56,8 +56,8 @@
           <FormItem v-if="formValidate.youhui_type==='discount'" label="折扣率" prop="discount_rate">
             <Input v-model="formValidate.discount_rate" placeholder="0.68" style="width: 100px" />
             <span v-if="formValidate.discount_rate" style="color: grey">
-                    {{(formValidate.discount_rate*10).toFixed(2)}} 折 【表示需付款金额为：商品价格 * {{formValidate.discount_rate}}】
-                  </span>
+              {{formartDiscount(formValidate.discount_rate)}} 折 【表示需付款金额为：商品价格 * {{formValidate.discount_rate}}】
+            </span>
           </FormItem>
           <div v-if="formValidate.youhui_type==='reduce'">
             <FormItem label="券面金额" prop="coupon_amount">
@@ -95,6 +95,7 @@
                  :start_date="formatCouponComponentDate(formValidate.start_date)"
                  :end_date="formatCouponComponentDate(formValidate.end_date)"
                  :coupon_amount="formValidate.coupon_amount"
+                 :goods_min_amount="formValidate.goods_min_amount"
                  :discount_rate="formValidate.discount_rate">
         </Coupon>
       </div>
@@ -303,7 +304,17 @@
           let date = JSON.parse(JSON.stringify(date0));
           return formatDate_yyyyMMdd(date);
         }
-      }
+      },
+      formartDiscount:function (discount_rate) {      //例如：0.89
+        let discount = (discount_rate*10).toFixed(2); //例如：8.90折
+        if (discount.lastIndexOf(0) === 3) {
+          discount = discount.substring(0,3);
+          if (discount.lastIndexOf(0) === 2) {
+            discount = discount.substring(0,1)
+          }
+        }
+        return discount;
+      },
 
     },
     mounted:function () {
