@@ -39,7 +39,7 @@
               :start_date="general_discount_coupon.start_date"
               :end_date="general_discount_coupon.end_date"
               :coupon_amount="general_discount_coupon.coupon_amount"
-              :goods_min_amount="general_reduce_coupon.goods_min_amount"
+              :goods_min_amount="general_discount_coupon.goods_min_amount"
               :discount_rate="general_discount_coupon.discount_rate"
               @receiveCoupon="receiveCoupon">
       </Coupon>
@@ -101,8 +101,12 @@
         };
         const generalResult = await QueryGeneralCoupon(params);
         if (generalResult.status === 'SUCCESS') {
-          this.general_reduce_coupon = generalResult.general_reduce_coupon;
-          this.general_discount_coupon = generalResult.general_discount_coupon;
+          if (generalResult.general_reduce_coupon != null) {
+            this.general_reduce_coupon = generalResult.general_reduce_coupon;
+          }
+          if (generalResult.general_discount_coupon != null) {
+            this.general_discount_coupon = generalResult.general_discount_coupon;
+          }
         }
       },
       //领券
