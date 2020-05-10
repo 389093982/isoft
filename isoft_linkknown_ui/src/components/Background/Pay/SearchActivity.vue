@@ -1,13 +1,25 @@
 <template>
   <div>
 
+    <div>
+      <Row>
+        <Col span="14" style="position: relative;top: -10px;">
+          <DatePicker type="date" placeholder="开始日期" v-model="search_start_date"></DatePicker>
+          <DatePicker type="date" placeholder="结束日期" v-model="search_end_date"></DatePicker>
+          <Input v-model.trim="search_activity_id" placeholder="活动ID" style="width: 180px"/>
+          <Button type="primary" shape="circle" icon="ios-search" @click="refreshPayActivity"></Button>
+        </Col>
+        <Col span="10" style="position: relative;top: -10px;">
+          <!--分页-->
+          <div style="text-align: center;">
+            <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+          </div>
+        </Col>
+      </Row>
+    </div>
+
     <!--表格展示活动-->
     <Table width="1000" border :columns="activityColumns" :data="activityDatas" size="small"></Table>
-
-    <!--分页-->
-    <div style="text-align: center;margin-top: 10px">
-      <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
-    </div>
 
     <!--修改活动信息-->
     <Modal v-model="updateActivityModal" title="更新活动信息" @on-ok="updateActivity" @on-cancel="cancel" width="600" he>
@@ -57,6 +69,9 @@
     name: "SearchActivity",
     data () {
       return {
+        search_start_date:'',
+        search_end_date:'',
+        search_activity_id:'',
         page:{totalCount:0,currentPage:1,offset:10},
         activityColumns: [
           {
@@ -78,16 +93,6 @@
           {
             title: '数量',
             key: 'type_entity_account',
-            width: 80,
-          },
-          {
-            title: '已领取',
-            key: 'received_entity_account',
-            width: 80,
-          },
-          {
-            title: '已使用',
-            key: 'used_entity_account',
             width: 80,
           },
           {
@@ -177,6 +182,9 @@
     methods: {
       refreshPayActivity: async function () {
         let params = {
+          'search_start_date':this.search_start_date===''?null:formatDate_yyyyMMdd(this.search_start_date),
+          'search_end_date':this.search_end_date===''?null:formatDate_yyyyMMdd(this.search_end_date),
+          'search_activity_id':this.search_activity_id,
           'currentPage':this.page.currentPage,
           'offset':this.page.offset,
         };

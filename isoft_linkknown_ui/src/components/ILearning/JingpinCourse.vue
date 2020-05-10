@@ -25,6 +25,7 @@
               :start_date="general_reduce_coupon.start_date"
               :end_date="general_reduce_coupon.end_date"
               :coupon_amount="general_reduce_coupon.coupon_amount"
+              :goods_min_amount="general_reduce_coupon.goods_min_amount"
               :discount_rate="general_reduce_coupon.discount_rate"
               @receiveCoupon="receiveCoupon">
       </Coupon>
@@ -38,6 +39,7 @@
               :start_date="general_discount_coupon.start_date"
               :end_date="general_discount_coupon.end_date"
               :coupon_amount="general_discount_coupon.coupon_amount"
+              :goods_min_amount="general_reduce_coupon.goods_min_amount"
               :discount_rate="general_discount_coupon.discount_rate"
               @receiveCoupon="receiveCoupon">
       </Coupon>
