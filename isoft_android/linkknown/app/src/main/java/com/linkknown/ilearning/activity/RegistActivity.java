@@ -19,8 +19,6 @@ import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -91,8 +89,10 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.back:
                 finish();
+                break;
             case R.id.registBtn:
                 regist();
+                break;
             default:
                 break;
         }
