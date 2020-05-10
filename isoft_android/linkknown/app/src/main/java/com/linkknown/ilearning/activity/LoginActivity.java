@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -107,18 +108,18 @@ public class LoginActivity extends AppCompatActivity {
 
     // 记录上次登录参数
     private void memoryAccount(EditText usernameEditText, EditText passwordEditText) {
-        SharedPreferences preferences = this.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("username", usernameEditText.getText().toString());
-        editor.putString("passwd", passwordEditText.getText().toString());
+        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
+        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwordEditText.getText().toString());
         editor.apply();
     }
 
     // 自动填充登录表单
     private void fillAccountFromMemory(EditText usernameEditText, EditText passwordEditText, Button loginButton) {
-        SharedPreferences preferences = this.getSharedPreferences("UserSharedPreferences", Context.MODE_PRIVATE);
-        String username = preferences.getString("username", "");
-        String passwd = preferences.getString("passwd", "");
+        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
+        String passwd = preferences.getString(Constants.USER_SHARED_PREFERENCES_PASSWD, "");
         if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(passwd)) {
             usernameEditText.setText(username);
             passwordEditText.setText(passwd);

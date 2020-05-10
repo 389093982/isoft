@@ -1,6 +1,9 @@
 package com.linkknown.ilearning;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +30,13 @@ import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -105,6 +111,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 订阅登录信息
         observeLogin();
+
+        // 自动登录
+        autoLogin();
+    }
+
+    private void autoLogin () {
+        // 按返回并没有真正退出应用，TokenHeaderInterceptor.TOKEN_STRING 仍有值
+        ToastUtil.showText(this, TokenHeaderInterceptor.TOKEN_STRING.get());
+        // 没有 tokenString 代表没有登录过
+        if (StringUtils.isEmpty(TokenHeaderInterceptor.TOKEN_STRING.get())) {
+            // 获取存储的用户名和密码
+            SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+            String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
+            String passwd = preferences.getString(Constants.USER_SHARED_PREFERENCES_PASSWD, "");
+            if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(passwd)) {
+                // 自动登录
+                UserService.login(this, username, passwd);
+            }
+        }
     }
 
     private void observeLogin () {
@@ -286,5 +311,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             drawer.openDrawer(GravityCompat.START);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 按返回键清空 tokenString
+            TokenHeaderInterceptor.TOKEN_STRING.set("");
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

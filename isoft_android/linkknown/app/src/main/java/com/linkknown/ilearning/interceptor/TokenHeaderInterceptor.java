@@ -11,7 +11,9 @@ import okhttp3.Response;
 
 public class TokenHeaderInterceptor implements Interceptor {
 
-    // 解决线程安全问题
+    // Atomic 解决线程安全问题
+    // 不建议使用 static 变量,可能场景：退出程序不会清理 static,资源不足时会清理 static
+    // 改成 SharedPreferences 存储
     public static final AtomicReference<String> TOKEN_STRING = new AtomicReference<>();
 
     @Override
