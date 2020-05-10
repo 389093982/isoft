@@ -12,6 +12,27 @@ export const checkEmpty = function checkEmpty(checkStr) {
   return false;
 };
 
+
+/**
+ * @return {string}
+ */
+export function formatDate_yyyyMMdd(date0){
+  let yyyMMdd;
+  if (date0.length !== 8) {
+    if (date0.toString().indexOf('Z')!==-1){
+      // 如果是国际时间
+      yyyMMdd = formatUTCtime(date0,'yyyyMMdd')
+    }else {
+      // 否则就是中国时间
+      yyyMMdd = GetDate_yyyyMMdd_byDate(date0);
+    }
+  }else{
+    yyyMMdd = date0;
+  }
+  return yyyMMdd;
+}
+
+
 /**
  * @return {string}
  */
@@ -73,6 +94,34 @@ export function GetTodayTime_yyyyMMddhhmmss(){
     second =  '0'+second;
   }
   return year +''+ month +''+ day +''+ hour + '' + minute +''+ second;
+}
+
+// 格式化世界标准时间   2020-05-09T16:00:00.000Z
+export function formatUTCtime(time, format){
+  let t = new Date(time);
+  let tf = function (i) { return (i < 10 ? '0' : '') + i };
+  return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+    switch (a) {
+      case 'yyyy':
+        return tf(t.getFullYear());
+        break;
+      case 'MM':
+        return tf(t.getMonth() + 1);
+        break;
+      case 'mm':
+        return tf(t.getMinutes());
+        break;
+      case 'dd':
+        return tf(t.getDate());
+        break;
+      case 'HH':
+        return tf(t.getHours());
+        break;
+      case 'ss':
+        return tf(t.getSeconds());
+        break;
+    }
+  })
 }
 
 /**

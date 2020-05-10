@@ -104,7 +104,7 @@
 </template>
 
 <script>
-  import {validatePatternForString,copyObj,GetTodayTime_yyyyMMddhhmmss,GetDate_yyyyMMdd_byDate,MakeCouponIdArrayStr} from "../../../tools/index"
+  import {validatePatternForString,copyObj,GetTodayTime_yyyyMMddhhmmss,formatDate_yyyyMMdd,MakeCouponIdArrayStr} from "../../../tools/index"
   import {AddPayActivity} from "../../../api/index"
   import Coupon from "../../Common/coupon/Coupon";
 
@@ -261,8 +261,8 @@
 		    if (this.formValidate.activity_type === 'coupon') {
           let params = copyObj(this.formValidate);
           // 格式化活动开始和结束日期
-          params.start_date = GetDate_yyyyMMdd_byDate(params.start_date);
-          params.end_date = GetDate_yyyyMMdd_byDate(params.end_date);
+          params.start_date = formatDate_yyyyMMdd(params.start_date);
+          params.end_date = formatDate_yyyyMMdd(params.end_date);
           if (params.coupon_type === 'general') {
             // 通用券不设置 target_type 、 target_id
             params.target_type = '';
@@ -301,7 +301,7 @@
 		      return 'yyyyMMdd'
         }else {
           let date = JSON.parse(JSON.stringify(date0));
-          return GetDate_yyyyMMdd_byDate(date);
+          return formatDate_yyyyMMdd(date);
         }
       }
 
