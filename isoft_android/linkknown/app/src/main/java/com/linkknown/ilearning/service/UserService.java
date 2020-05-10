@@ -29,7 +29,7 @@ import retrofit2.http.Query;
 
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
-public class UserService extends ViewModel {
+public class UserService {
 
     public static void regist (Context mContext, String username, String passwd, String nickname, String verifyCode, String third_user_type) {
         LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, verifyCode, third_user_type)

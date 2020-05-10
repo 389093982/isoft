@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.activity;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -30,12 +31,13 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.event.AppBarStateChangeEvent;
 import com.linkknown.ilearning.fragment.CourseCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
-import com.linkknown.ilearning.fragment.SpaceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CourseDetailActivity extends AppCompatActivity {
+
+    private Context mContext;
 
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
@@ -77,7 +81,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-
+        mContext = this;
         // 绑定
         ButterKnife.bind(this);
 
@@ -102,6 +106,20 @@ public class CourseDetailActivity extends AppCompatActivity {
                     UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
                     // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
                     initViewPager(courseDetailResponse, course.getComments());
+                    // 点击播放图标进行播放
+                    mFAB.setOnClickListener(v -> {
+                        if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
+                            CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
+                            UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                                intent.putExtra("course_id", cVideo.getCourse_id());
+                                intent.putExtra("video_id", cVideo.getId());
+                                intent.putExtra("first_play", cVideo.getFirst_play());
+                                return intent;
+                            });
+                        } else {
+                            ToastUtil.showText(mContext, "暂无剧情，敬请期待~");
+                        }
+                    });
                 });
     }
 
@@ -208,10 +226,19 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     private void initViewPager(CourseDetailResponse courseDetailResponse, int comments) {
+        // 多次订阅数据会导致重复,需要先进行清理
+        fragments.clear();
+        titles.clear();
+
         // 课程简介片段
         CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
         // 课程评论片段
         CourseCommentFragment courseCommentFragment = new CourseCommentFragment();
+        // activity 向 fragment 传参
+        Bundle bundle = new Bundle();
+        bundle.putInt("course_id", courseDetailResponse.getCourse().getId());
+        courseCommentFragment.setArguments(bundle);
+
         fragments.add(courseIntroduceFragment);
         fragments.add(courseCommentFragment);
         titles.add("简介");

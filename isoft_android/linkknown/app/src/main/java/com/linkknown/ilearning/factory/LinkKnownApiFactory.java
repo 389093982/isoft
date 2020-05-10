@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LinkKnownApiFactory {
 
     private static LinkKnownApi linkKnownApi;
-    private static String BASE_URL = "http://192.168.1.2:6001";
+    private static String BASE_URL = "http://192.168.1.4:6001";
 //    private static String BASE_URL = "http://www.linkknown.com";
 
     public static void init (){

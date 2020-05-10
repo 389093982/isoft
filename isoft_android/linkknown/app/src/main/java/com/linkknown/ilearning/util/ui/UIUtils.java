@@ -49,7 +49,7 @@ public class UIUtils {
     }
 
     public static String replaceMediaUrl (String url) {
-        return url.replace("localhost", "192.168.1.2");
+        return url.replace("localhost", "192.168.1.4");
     }
 
     public static void setImage (Context context, ImageView imageView, String imageUrl){

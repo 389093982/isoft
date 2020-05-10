@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.IFavoritesActivity"></activity>
         <activity
             android:name=".activity.CourseClassifyActivity"
             android:label="@string/title_activity_show_types"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.HomeActivity"
             android:theme="@style/AppTheme" />

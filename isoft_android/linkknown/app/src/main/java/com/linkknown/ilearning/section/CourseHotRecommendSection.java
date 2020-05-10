@@ -2,13 +2,16 @@ package com.linkknown.ilearning.section;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.service.CourseClassifyService;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
+import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -19,14 +22,13 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.utils.EmptyViewHolder;
 
-public class CourseClassifyItemSection2 extends Section {
+public class CourseHotRecommendSection extends Section {
 
-    private List<CourseClassifyService.HotClassify2> itemList;
+    private List<CourseMetaResponse.CourseMeta> itemList;
     private Context mContext;
 
-    public CourseClassifyItemSection2(Context mContext, List<CourseClassifyService.HotClassify2> itemList) {
+    public CourseHotRecommendSection(Context mContext, List<CourseMetaResponse.CourseMeta> itemList) {
         super(SectionParameters.builder()
-//                .itemResourceId(R.layout.layout_region_recommend_card_item)
                 .itemResourceId(R.layout.layout_recycleview)
                 .headerResourceId(R.layout.layout_region_recommend_hot_head)
                 .build());
@@ -54,7 +56,7 @@ public class CourseClassifyItemSection2 extends Section {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(CourseClassifyService.HotClassify2.class, new MultiItemView<CourseClassifyService.HotClassify2>() {
+        multiTypeAdapter.register(CourseMetaResponse.CourseMeta.class, new MultiItemView<CourseMetaResponse.CourseMeta>() {
             @NonNull
             @Override
             public int getLayoutId() {
@@ -62,11 +64,17 @@ public class CourseClassifyItemSection2 extends Section {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseClassifyService.HotClassify2 hotClassify2, int i) {
-                viewHolder.setImageResource(R.id.item_img, hotClassify2.getClassifyImage());
-                viewHolder.setText(R.id.item_title, hotClassify2.getClassifyName());
-                viewHolder.setText(R.id.item_play, "888");
-                viewHolder.setText(R.id.item_review, "888");
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseMetaResponse.CourseMeta courseMeta, int i) {
+                ImageView courseImageView = viewHolder.getConvertView().findViewById(R.id.courseImage);
+                UIUtils.setImage(mContext, courseImageView, courseMeta.getSmall_image());
+                viewHolder.setText(R.id.courseName, courseMeta.getCourse_name());
+                viewHolder.setText(R.id.watchNumberText, courseMeta.getWatch_number() + "");
+                viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
+
+                courseImageView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMeta.getId());
+                    return intent;
+                }));
             }
         });
         multiTypeAdapter.setItems(itemList);

@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/default_tiny_padding"
+        android:text="9999"
         android:textColor="@color/green_300" />
 
     <ImageButton

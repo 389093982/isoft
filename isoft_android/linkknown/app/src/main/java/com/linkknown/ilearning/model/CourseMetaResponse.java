@@ -1,5 +1,7 @@
 package com.linkknown.ilearning.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper=true)
 public class CourseMetaResponse extends BaseResponse {
 
-
+    @SerializedName(value = "courses", alternate = {"custom_tag_courses"})
     List<CourseMeta> courses;
 
     @Data

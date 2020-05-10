@@ -16,20 +16,20 @@
         android:layout_height="190dp">
 
         <ImageView
-            android:id="@+id/item_img"
+            android:id="@+id/courseImage"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:scaleType="center" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_img"
+            android:layout_below="@+id/courseImage"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/item_title"
+                android:id="@+id/courseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -53,7 +53,7 @@
                 android:src="@drawable/ic_play_circle_outline_black_24dp" />
 
             <TextView
-                android:id="@+id/item_play"
+                android:id="@+id/watchNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -72,7 +72,7 @@
                 android:src="@drawable/ic_subtitles_black_24dp" />
 
             <TextView
-                android:id="@+id/item_review"
+                android:id="@+id/courseNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"

@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseDetailResponse;
-import com.wenld.multitypeadapter.CommonAdapter;
+import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +47,8 @@ public class CourseIntroduceFragment extends Fragment {
     public TextView courseShortDescText;
     @BindView(R.id.courseOperateRecyclerView)
     public RecyclerView courseOperateRecyclerView;
+    @BindView(R.id.cVideoRecyclerView)
+    public RecyclerView cVideoRecyclerView;
 
     @Nullable
     @Override
@@ -62,6 +64,7 @@ public class CourseIntroduceFragment extends Fragment {
 
     private void init () {
         CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+        List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
         // 设置课程名称
         courseNameText.setText(course.getCourse_name());
         // 设置播放次数
@@ -71,7 +74,7 @@ public class CourseIntroduceFragment extends Fragment {
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
 
-        List<String> courseOperates = Arrays.asList("测试1", "测试2", "测试3", "测试4");
+        List<String> courseOperates = Arrays.asList("分享", "投硬币", "收藏", "缓存");
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(String.class, new MultiItemView<String>() {
@@ -89,5 +92,12 @@ public class CourseIntroduceFragment extends Fragment {
         multiTypeAdapter.setItems(courseOperates);
         courseOperateRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         courseOperateRecyclerView.setAdapter(multiTypeAdapter);
+
+        // 设置视频列表 section 部分
+        SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
+        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, cVideos);
+        sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
+        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
     }
 }
