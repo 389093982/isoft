@@ -70,7 +70,7 @@
               <Col span="4">
                 <div @click="$router.push({ path: '/payment/myCouponList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="logo-usd" style="font-size: 40px" />
-                  <div style="font-size: 12px;">优惠券</div>
+                  <div style="font-size: 12px;">我的优惠券</div>
                 </div>
               </Col>
             </Row>

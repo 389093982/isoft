@@ -73,7 +73,7 @@
         </Col>
       </Row>
     </div>
-    <div style="width: 27%;margin-left: 5px;background-color: white">
+    <div style="width: 27.5%;margin-left: 5px;background-color: white">
       <div>
         <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
       </div>
@@ -90,7 +90,7 @@
 
   export default {
     name: "OrderList",
-    components:{SepLine, GetLoginUserName},
+    components:{SepLine},
     data () {
       return {
         orderData: [],

@@ -140,7 +140,7 @@
                   :start_date="designated_discount_coupon.start_date"
                   :end_date="designated_discount_coupon.end_date"
                   :coupon_amount="designated_discount_coupon.coupon_amount"
-                  :goods_min_amount="designated_reduce_coupon.goods_min_amount"
+                  :goods_min_amount="designated_discount_coupon.goods_min_amount"
                   :discount_rate="designated_discount_coupon.discount_rate"
                   @receiveCoupon="receiveCoupon">
           </Coupon>
@@ -318,8 +318,12 @@
         };
         const designatedResult = await QueryDesignatedCoupon(params);
         if (designatedResult.status === 'SUCCESS') {
-          this.designated_reduce_coupon = designatedResult.designated_reduce_coupon;
-          this.designated_discount_coupon = designatedResult.designated_discount_coupon;
+          if (designatedResult.designated_reduce_coupon != null) {
+            this.designated_reduce_coupon = designatedResult.designated_reduce_coupon;
+          }
+          if (designatedResult.designated_discount_coupon != null) {
+            this.designated_discount_coupon = designatedResult.designated_discount_coupon;
+          }
         }
       },
       //领券

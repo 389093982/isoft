@@ -135,6 +135,10 @@
             }else if (this.couponDatas[i].youhui_type === 'discount') {
               this.couponDatas[i].youhui_type = '打折';
             }
+            //格式化使用状态
+            if (this.couponDatas[i].coupon_state === 'used') {
+              this.couponDatas[i].coupon_state = '已使用';
+            }
           }
         }
       },
