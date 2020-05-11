@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseClassifyActivity;
+import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.OnItemClickListener;
@@ -55,36 +56,20 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
     private void initRecyclerView() {
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        List<ItemSpace> mData = new ArrayList<>();
+        List<Item> mData = new ArrayList<>();
 
-        mData.add(new ItemSpace("直播0", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播2", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播3", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播4", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播5", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播6", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播7", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播8", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
-        mData.add(new ItemSpace("直播9", R.drawable.item_space_live));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
+
 
         MultiTypeAdapter adapter = new MultiTypeAdapter();
-        adapter.register(ItemSpace.class, new MultiItemView<ItemSpace>() {
+        adapter.register(Item.class, new MultiItemView<Item>() {
             @NonNull
             @Override
             public int getLayoutId() {
@@ -92,27 +77,21 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull ItemSpace itemSpace, int i) {
-                viewHolder.setImageResource(R.id.item_icon, itemSpace.getDrawableImage());
-                viewHolder.setText(R.id.item_title, itemSpace.getItemName());
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull Item item, int i) {
+                viewHolder.setImageResource(R.id.item_icon, item.getDrawableImage());
+                viewHolder.setText(R.id.item_title, item.getItemName());
             }
         });
         adapter.setItems(mData);
-        adapter.setOnItemClickListener(new OnItemClickListener<ItemSpace>() {
+        adapter.setOnItemClickListener(new OnItemClickListener<Item>() {
             @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, ItemSpace itemSpace, int position) {
-                switch (position) {
-                    case 0:
-                        //直播
-                        startActivity(new Intent(getActivity(), CourseClassifyActivity.class));
-                        break;
-                    default:
-                        break;
-                }
+            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, Item item, int position) {
+                //直播
+                startActivity(new Intent(getActivity(), item.getRedirectClazz()));
             }
 
             @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, ItemSpace itemSpace, int position) {
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, Item item, int position) {
                 return false;
             }
         });
@@ -126,8 +105,10 @@ public class SpaceFragment extends Fragment implements View.OnClickListener {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    class ItemSpace {
+    class Item {
         String itemName;
         int drawableImage;
+        // 点击跳转的 Activity 类
+        Class redirectClazz;
     }
 }
