@@ -1,9 +1,29 @@
 <template>
   <div>
 
-    <div v-if="showPage" class="demo-split" style="padding-top: 30px;background-color: rgba(0,0,0,0.09)">
+    <div v-if="showPage" class="demo-split" style="padding-top: 30px;background-color: rgba(225,209,232,0.2)">
       <Row>
-        <Col span="8">&nbsp;</Col>
+        <Col span="8">&nbsp;
+          <div v-if="currentSelectCoupon" style="position: relative;top: 50px;left: 30px">
+            <div style="text-align: center">
+              <span style="position: relative;left: -40px;">正在使用的券</span>
+            </div>
+            <Coupon :activity_id="currentSelectCoupon.activity_id"
+                    :coupon_type="currentSelectCoupon.coupon_type"
+                    :youhui_type="currentSelectCoupon.youhui_type"
+                    :start_date="currentSelectCoupon.start_date"
+                    :end_date="currentSelectCoupon.end_date"
+                    :coupon_amount="currentSelectCoupon.coupon_amount"
+                    :goods_min_amount="currentSelectCoupon.goods_min_amount"
+                    :discount_rate="currentSelectCoupon.discount_rate">
+            </Coupon>
+            <div style="text-align: center">
+              <span style="position: relative;left: -40px;top: 5px;">
+                <Icon type="md-close-circle" size="25" style="cursor: pointer" @click="cancleUseCoupon()"/>
+              </span>
+            </div>
+          </div>
+        </Col>
         <Col span="8">
           <div style="margin-left: 150px">
             <Icon type="md-ribbon" style="font-size: 40px;color: #ff6900"/>
@@ -61,7 +81,60 @@
             </div>
           </div>
         </Col>
-        <Col span="8">&nbsp;</Col>
+        <Col span="8">
+          <div style="display: flex">
+            <!--彩色线条-->
+            <div v-if="showAvailableCouponList" style="width: 2px;height: 500px;position: relative;left: -15px">
+              <div style="height: 20%;background-color: rgba(255,105,0,0.56)"></div>
+              <div style="height: 30%;background-color: rgba(239,105,255,0.54)"></div>
+              <div style="height: 20%;background-color: rgba(51,255,20,0.48)"></div>
+              <div style="height: 30%;background-color: rgba(255,37,37,0.53)"></div>
+            </div>
+
+            <div>
+              <div v-if="coupons.length>0" style="margin-top: 10px;position: relative">
+                <div v-if="!showAvailableCouponList">
+                  <!--消息提示，组合成的-->
+                  <div class="tipMessage_01 animated faster bounceInRight">
+                  <span style="margin-left: 6px;">
+                    <span style="color: #ff6900">点我</span>查看您本次可用的优惠券! ^_^
+                  </span>
+                  </div>
+                  <div class="sjx animated faster bounceInRight"></div>
+                </div>
+                <div v-else>
+                  <div class="tipMessage_02 animated faster bounceInRight">
+                  <span style="margin-left: 6px;">
+                    哇,您有<span style="color: #ff6900">{{coupons.length}}</span>张可用的券哦,点击即可使用！
+                  </span>
+                  </div>
+                  <div class="sjx animated faster bounceInRight"></div>
+                </div>
+
+                <!--机器人-->
+                <div>
+                  <img @click="showAvailableCouponList=!showAvailableCouponList" src="../../../static/images/common_img/xiaodou.png" style="width: 35px;height: 40px;cursor: pointer;" class="isoft_hover_top3"/>
+                </div>
+
+                <div v-if="showAvailableCouponList">
+                  <Scroll height="400">
+                    <Row v-for="(coupon,index) in coupons" @click.native="selectThisCoupon(index)" style="margin-top: 8px">
+                      <Coupon :activity_id="coupon.activity_id" class="isoft_hover_top3"
+                              :coupon_type="coupon.coupon_type"
+                              :youhui_type="coupon.youhui_type"
+                              :start_date="coupon.start_date"
+                              :end_date="coupon.end_date"
+                              :coupon_amount="coupon.coupon_amount"
+                              :goods_min_amount="coupon.goods_min_amount"
+                              :discount_rate="coupon.discount_rate">
+                      </Coupon>
+                    </Row>
+                  </Scroll>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Col>
       </Row>
 
     </div>
@@ -76,14 +149,15 @@
 
 <script>
   import {isoft_unifiedpay_order_api} from "../../api/index"
-  import {ShowCourseDetail,queryPayOrderList,addPayOrder} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrderList,addPayOrder,SearchCouponForPay} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
-  import {CheckHasLoginConfirmDialog2} from "../../tools/index"
+  import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd} from "../../tools/index"
   import vueQr from 'vue-qr'
+  import Coupon from "../Common/coupon/Coupon";
 
   export default {
     name: "Pay",
-    components: { vueQr},
+    components: {Coupon, vueQr},
     data() {
       return {
         //是否展示页面
@@ -93,15 +167,20 @@
         goods_id:'',
         goods_desc:'',
         goods_price:'',
+        goods_price_backup:'',
         goods_img:'',
+        //可用优惠券
+        coupons:'',
+        currentSelectCoupon:'',
+        showAvailableCouponList:false,
         //支付信息
         payType: '微信支付',
-        lastTimeCodeUrl: '',
         codeUrl: '',
         imageUrl: require("../../../static/images/vipCenter/vip.png"),
         websocket:null,
         percent:0,
         showPayResult:false,
+        payResult:false,
         payResultDesc:'',
       }
     },
@@ -135,17 +214,70 @@
           if (result.course.isCharge === 'charge') {
             this.goods_desc = result.course.course_name;
             this.goods_price = result.course.price;
+            this.goods_price_backup = result.course.price; //原价格做个备份
             this.goods_img = result.course.small_image;
             this.showPage = true;
+            this.searchCourseAvailableCoupon();
           }
         }
+      },
+      //查询可用优惠券
+      searchCourseAvailableCoupon:async function(){
+        if (checkHasLogin()) {
+          let params = {
+            'userName':this.loginUserName,
+            'target_type':'course',
+            'target_id':this.goods_id,
+            'goods_price':this.goods_price,
+            'today':GetToday_yyyyMMdd(),
+          };
+          const result = await SearchCouponForPay(params);
+          if (result.status === 'SUCCESS') {
+            this.coupons = result.coupons;
+          }
+        }
+      },
+      selectThisCoupon:function(index){
+        if (this.codeUrl === '') {
+          if (this.payResult) {
+            this.$Message.info('已付款');
+          }else{
+            this.currentSelectCoupon = this.coupons[index];
+            this.$Message.info('已选择');
+            this.goods_price = '33';
+            //金额计算。。。
+          }
+        }else{
+          this.$Message.info('已下单，请尽快支付');
+        }
+
+      },
+      cancleUseCoupon:function(){
+        if (this.codeUrl === '') {
+          if (this.payResult) {
+            this.$Message.info('已付款');
+          }else{
+            this.currentSelectCoupon = '';
+            this.$Message.info('已取消');
+            this.goods_price = this.goods_price_backup;
+            //金额计算。。。
+          }
+        }else{
+          this.$Message.info('已下单，请尽快支付');
+        }
+
       },
       checkHasLogin:function(){
         return checkHasLogin();
       },
       getPayUrl: async function () {
         let _this = this;
-        if (_this.lastTimeCodeUrl !== '') {
+        if (_this.codeUrl!=='') {
+          this.$Message.info('已下单，请及时付款');
+          return false;
+        }
+        if (_this.payResult) {
+          this.$Message.info('已付款');
           return false;
         }
         CheckHasLoginConfirmDialog2(this, async function () {
@@ -210,7 +342,6 @@
         if (result.user_name === this.loginUserName) {
           if (result.code_url != null) {
             this.codeUrl = result.code_url;
-            this.lastTimeCodeUrl = result.code_url;
           }
           if (result.pay_result != null) {
             //支付成功，订单入pay_order表
@@ -229,6 +360,7 @@
             if (res.status === 'SUCCESS') {
               this.codeUrl = '';
               this.showPayResult = true;
+              this.payResult = true;
               var handler = setInterval(this.add, 50);
               //一秒后让handler失效
               setTimeout(function () {
@@ -262,6 +394,31 @@
 </script>
 
 <style scoped>
+  .tipMessage_01{
+    position:absolute;left: 50px;
+    width: 200px;height: 25px;
+    background-color:white;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .tipMessage_02{
+    position:absolute;left: 50px;
+    width: 220px;height: 25px;
+    background-color:white;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .sjx {
+    position:absolute;left: 41px;top: 5px;
+    width: 0;
+    height: 0;
+    border-width: 5px;
+    border-style: solid;
+    border-color:transparent white transparent transparent;
+  }
+
   .payCenter {
     color: #ff6900;
     font-size: 25px
