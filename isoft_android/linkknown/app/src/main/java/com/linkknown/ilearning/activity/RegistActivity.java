@@ -1,6 +1,10 @@
 package com.linkknown.ilearning.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,10 +23,14 @@ import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RegistActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Context mContext;
 
     @BindView(R.id.link_login)
     public TextView link_login;
@@ -33,26 +41,31 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.userName)
     public TextView userName;
+    // 密码和确认密码
     @BindView(R.id.passwd)
     public TextView passwd;
     @BindView(R.id.rePasswd)
     public TextView rePasswd;
+    // 验证码输入框
+    @BindView(R.id.verifyCode)
+    public TextView verifyCode;
+    // 生产验证码 tip
+    @BindView(R.id.createVerifyCodeTip)
+    public TextView createVerifyCodeTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
-
+        mContext = this;
         ButterKnife.bind(this);
 
         init();
+
+        bindData();
     }
 
-    private void init() {
-        registBtn.setOnClickListener(this);
-        back.setOnClickListener(this);
-        link_login.setOnClickListener(this);
-
+    private void bindData () {
         LiveEventBus.get("registResponse", RegistResponse.class).observe(this, new Observer<RegistResponse>() {
             @Override
             public void onChanged(RegistResponse registResponse) {
@@ -69,6 +82,45 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 //                    setResult(Activity.RESULT_OK);
 //                    finish();
 //                }
+            }
+        });
+    }
+
+    private void init() {
+        // 禁用生成验证码
+        createVerifyCodeTip.setEnabled(false);
+        back.setOnClickListener(this);
+        registBtn.setOnClickListener(this);
+        createVerifyCodeTip.setOnClickListener(this);
+        link_login.setOnClickListener(this);
+
+        userName.setOnFocusChangeListener((v, hasFocus) -> {
+            TextView textView = (TextView)v;
+            // 失去焦点事件
+            if (!hasFocus) {
+                if (UserService.isUserNameValid(StringUtils.trim(textView.getText().toString()))) {
+                    // 验证码倒计时不应该设置为 true
+                    createVerifyCodeTip.setEnabled(true);
+                } else {
+                    ToastUtil.showText(mContext, "请使用邮箱进行注册！");
+                    createVerifyCodeTip.setEnabled(false);
+                }
+            }
+        });
+        passwd.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                TextView textView = (TextView)v;
+                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
+                    ToastUtil.showText(mContext, "密码长度必须大于 5 位字符！");
+                }
+            }
+        });
+        rePasswd.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                TextView textView = (TextView)v;
+                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
+                    ToastUtil.showText(mContext, "确认密码长度必须大于 5 位字符！");
+                }
             }
         });
     }
@@ -92,6 +144,29 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.registBtn:
                 regist();
+                break;
+            case R.id.createVerifyCodeTip:
+                // 30s 倒计时,一次一秒
+                new CountDownTimer(30 * 1000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // 禁用
+                        createVerifyCodeTip.setEnabled(false);
+                        // 倒计时秒数
+                        long second = millisUntilFinished / 1000;
+                        if (second > 28) {
+                            createVerifyCodeTip.setText("发送中...");
+                        } else {
+                            createVerifyCodeTip.setText(second + "s后重新获取");
+                        }
+                    }
+                    @Override
+                    public void onFinish() {
+                        createVerifyCodeTip.setEnabled(true);
+                        createVerifyCodeTip.setText("重新获取验证码");
+
+                    }
+                }.start();
                 break;
             default:
                 break;

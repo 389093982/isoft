@@ -14,6 +14,8 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
+import com.linkknown.ilearning.util.CheckParamUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -129,21 +131,12 @@ public class UserService {
         }
     }
 
-    private static boolean isUserNameValid(String username) {
-//        if (username == null) {
-//            return false;
-//        }
-//        if (username.contains("@")) {
-//            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-//        } else {
-//            return !username.trim().isEmpty();
-//        }
-        return StringUtils.isNotBlank(username);
+    public static boolean isUserNameValid(String username) {
+        return StringUtils.isNotBlank(username) && CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL);
     }
 
-    private static boolean isPasswordValid(String password) {
-//        return password != null && password.trim().length() > 5;
-        return StringUtils.isNotBlank(password);
+    public static boolean isPasswordValid(String password) {
+        return StringUtils.isNotBlank(password) && StringUtils.length(password) > 5;
     }
 
     @Data
