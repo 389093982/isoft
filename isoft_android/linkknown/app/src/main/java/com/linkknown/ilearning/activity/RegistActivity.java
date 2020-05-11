@@ -1,16 +1,20 @@
 package com.linkknown.ilearning.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.service.UserService;
@@ -19,10 +23,14 @@ import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RegistActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Context mContext;
 
     @BindView(R.id.link_login)
     public TextView link_login;
@@ -33,42 +41,87 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.userName)
     public TextView userName;
+    // 密码和确认密码
     @BindView(R.id.passwd)
     public TextView passwd;
     @BindView(R.id.rePasswd)
     public TextView rePasswd;
+    // 验证码输入框
+    @BindView(R.id.verifyCode)
+    public TextView verifyCode;
+    // 生产验证码 tip
+    @BindView(R.id.createVerifyCodeTip)
+    public TextView createVerifyCodeTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist);
-
+        mContext = this;
         ButterKnife.bind(this);
 
         init();
+
+        bindData();
+    }
+
+    private void bindData () {
+        LiveEventBus.get("registResponse", RegistResponse.class).observe(this, registResponse -> {
+            if (registResponse.getErrorMsg() != null) {
+                ToastUtil.showText(getApplicationContext(), registResponse.getErrorMsg());
+            } else {
+                ToastUtil.showText(mContext, "注册成功！");
+                // 记住账号
+                memoryAccount(userName, passwd);
+                // 调往登录页面
+                UIUtils.gotoActivity(mContext, LoginActivity.class);
+            }
+        });
+    }
+
+    private void memoryAccount(TextView usernameEditText, TextView passwordEditText) {
+        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
+        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwordEditText.getText().toString());
+        editor.apply();
     }
 
     private void init() {
-        registBtn.setOnClickListener(this);
+        // 禁用生成验证码
+        createVerifyCodeTip.setEnabled(false);
         back.setOnClickListener(this);
+        registBtn.setOnClickListener(this);
+        createVerifyCodeTip.setOnClickListener(this);
         link_login.setOnClickListener(this);
 
-        LiveEventBus.get("registResponse", RegistResponse.class).observe(this, new Observer<RegistResponse>() {
-            @Override
-            public void onChanged(RegistResponse registResponse) {
-                if (registResponse.getErrorMsg() != null) {
-                    ToastUtil.showText(getApplicationContext(), registResponse.getErrorMsg());
-                    return;
+        userName.setOnFocusChangeListener((v, hasFocus) -> {
+            TextView textView = (TextView)v;
+            // 失去焦点事件
+            if (!hasFocus) {
+                if (UserService.isUserNameValid(StringUtils.trim(textView.getText().toString()))) {
+                    // 验证码倒计时不应该设置为 true
+                    createVerifyCodeTip.setEnabled(true);
+                } else {
+                    ToastUtil.showText(mContext, "请使用邮箱进行注册！");
+                    createVerifyCodeTip.setEnabled(false);
                 }
-//                if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-//                    // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
-//                    memoryAccount(usernameEditText, passwordEditText);
-//
-//                    updateUiWithUser(loginUserResponse);
-//
-//                    setResult(Activity.RESULT_OK);
-//                    finish();
-//                }
+            }
+        });
+        passwd.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                TextView textView = (TextView)v;
+                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
+                    ToastUtil.showText(mContext, "密码长度必须大于 5 位字符！");
+                }
+            }
+        });
+        rePasswd.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                TextView textView = (TextView)v;
+                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
+                    ToastUtil.showText(mContext, "确认密码长度必须大于 5 位字符！");
+                }
             }
         });
     }
@@ -91,17 +144,46 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.registBtn:
-                regist();
+                handleRegist();
+                break;
+            case R.id.createVerifyCodeTip:
+                handleCreateVerifyCode();
                 break;
             default:
                 break;
         }
     }
 
-    private void regist() {
-        String _userName = userName.getText().toString();
-        String _passwd = passwd.getText().toString();
-        String _rePasswd = rePasswd.getText().toString();
+    private void handleCreateVerifyCode() {
+        UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
+        // 30s 倒计时,一次一秒
+        new CountDownTimer(30 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // 禁用
+                createVerifyCodeTip.setEnabled(false);
+                // 倒计时秒数
+                long second = millisUntilFinished / 1000;
+                if (second > 28) {
+                    createVerifyCodeTip.setText("发送中...");
+                } else {
+                    createVerifyCodeTip.setText(second + "s后重新获取");
+                }
+            }
+            @Override
+            public void onFinish() {
+                createVerifyCodeTip.setEnabled(true);
+                createVerifyCodeTip.setText("重新获取验证码");
+
+            }
+        }.start();
+    }
+
+    private void handleRegist() {
+        String _userName = StringUtils.trim(userName.getText().toString());
+        String _verifyCode = StringUtils.trim(verifyCode.getText().toString());
+        String _passwd = StringUtils.trim(passwd.getText().toString());
+        String _rePasswd = StringUtils.trim(rePasswd.getText().toString());
 
         if (!validate(_userName)) {
             onSignupFailed("注册失败！");
@@ -110,7 +192,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         if (!_passwd.equals(_rePasswd)) {
             rePasswd.setError("两次密码输入不一致！");
         } else {
-            UserService.regist(this, _userName, _passwd, "小猫小狗", "123456", "linkknown");
+            UserService.regist(this, _userName, _passwd, "小猫小狗", _verifyCode, "linkknown");
         }
     }
 

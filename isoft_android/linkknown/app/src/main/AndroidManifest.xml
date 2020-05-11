@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.IFavoritesActivity"></activity>
+        <activity android:name=".activity.NewChannelActivity"></activity>
+        <activity android:name=".activity.TeacherZhaoPingActivity" />
+        <activity android:name=".activity.IFavoritesActivity" />
         <activity
             android:name=".activity.CourseClassifyActivity"
             android:label="@string/title_activity_show_types"

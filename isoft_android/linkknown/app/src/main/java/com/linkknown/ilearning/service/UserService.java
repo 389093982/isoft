@@ -12,8 +12,11 @@ import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.api.LinkKnownApi;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
+import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
+import com.linkknown.ilearning.util.CheckParamUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +33,42 @@ import retrofit2.http.Query;
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
 public class UserService {
+
+    public static void createVerifyCode(String userName) {
+        LinkKnownApiFactory.getLinkKnownApi().createVerifyCode(userName)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new Observer<CreateVerifyCodeResponse>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CreateVerifyCodeResponse createVerifyCodeResponse) {
+                        if (StringUtils.isEmpty(createVerifyCodeResponse.getErrorMsg())) {
+                            LiveEventBus.get("createVerifyCodeResponse",  CreateVerifyCodeResponse.class).post(createVerifyCodeResponse);
+                        } else {
+                            Log.e("onError =>", createVerifyCodeResponse.getErrorMsg());
+                            LiveEventBus.get("createVerifyCodeResponse",  CreateVerifyCodeResponse.class).post(createVerifyCodeResponse);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        CreateVerifyCodeResponse result = new CreateVerifyCodeResponse();
+                        result.setErrorMsg(e.getMessage());
+                        LiveEventBus.get("createVerifyCodeResponse",  CreateVerifyCodeResponse.class).post(result);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
     public static void regist (Context mContext, String username, String passwd, String nickname, String verifyCode, String third_user_type) {
         LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, verifyCode, third_user_type)
@@ -129,21 +168,12 @@ public class UserService {
         }
     }
 
-    private static boolean isUserNameValid(String username) {
-//        if (username == null) {
-//            return false;
-//        }
-//        if (username.contains("@")) {
-//            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-//        } else {
-//            return !username.trim().isEmpty();
-//        }
-        return StringUtils.isNotBlank(username);
+    public static boolean isUserNameValid(String username) {
+        return StringUtils.isNotBlank(username) && CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL);
     }
 
-    private static boolean isPasswordValid(String password) {
-//        return password != null && password.trim().length() > 5;
-        return StringUtils.isNotBlank(password);
+    public static boolean isPasswordValid(String password) {
+        return StringUtils.isNotBlank(password) && StringUtils.length(password) > 5;
     }
 
     @Data

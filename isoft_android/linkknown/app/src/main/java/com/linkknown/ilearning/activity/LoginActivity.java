@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
+import com.linkknown.ilearning.MainActivity;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -31,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Context mContext;
 
     @BindView(R.id.userName)
     EditText usernameEditText;
@@ -48,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mContext = this;
         ButterKnife.bind(this);
 
         fillAccountFromMemory(usernameEditText, passwordEditText, loginButton);
@@ -76,10 +79,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
                     memoryAccount(usernameEditText, passwordEditText);
-
-                    updateUiWithUser(loginUserResponse);
-
-                    setResult(Activity.RESULT_OK);
+                    Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_LONG).show();
+                    UIUtils.gotoActivity(mContext, MainActivity.class);
                     finish();
                 }
             }
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // 记录上次登录参数
-    private void memoryAccount(EditText usernameEditText, EditText passwordEditText) {
+    private void memoryAccount(TextView usernameEditText, TextView passwordEditText) {
         SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
@@ -126,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // 自动填充登录表单
-    private void fillAccountFromMemory(EditText usernameEditText, EditText passwordEditText, Button loginButton) {
+    private void fillAccountFromMemory(TextView usernameEditText, TextView passwordEditText, Button loginButton) {
         SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
         String passwd = preferences.getString(Constants.USER_SHARED_PREFERENCES_PASSWD, "");
@@ -135,12 +136,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             passwordEditText.setText(passwd);
             loginButton.setEnabled(true);
         }
-    }
-
-    private void updateUiWithUser(LoginUserResponse loginUserResponse) {
-        String welcome = getString(R.string.welcome) + loginUserResponse.getUserName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     @Override
