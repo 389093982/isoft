@@ -41,27 +41,36 @@ public class NewChannelActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recycler_view);
         initToolBar(toolbar, true, "拖拽排序");
 
-        final List<NewsChannelBean> enableItems = Arrays.asList(
-                new NewsChannelBean("测试","测试",1,1),
-                new NewsChannelBean("测试","测试",1,1),
-                new NewsChannelBean("测试","测试",1,1)
+        final List<ChannelBean> enableItems = Arrays.asList(
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1)
         );
-        final List<NewsChannelBean> disableItems = Arrays.asList(
-                new NewsChannelBean("测试","测试",1,1),
-                new NewsChannelBean("测试","测试",1,1),
-                new NewsChannelBean("测试","测试",1,1)
+        final List<ChannelBean> disableItems = Arrays.asList(
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1),
+                new ChannelBean("测试","测试",1,1)
         );
 
         GridLayoutManager manager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(manager);
 
         SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
-        adapter.addSection(new ChannelMineSection(this));
-        adapter.addSection(new ChannelOtherSection(this));
+        adapter.addSection(new ChannelMineSection(this, enableItems));
+        adapter.addSection(new ChannelOtherSection(this, disableItems));
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                int viewType = adapter.getItemViewType(position);
+                int viewType = adapter.getSectionItemViewType(position);
+                System.out.println("===> " + position + "===>" + viewType + "==>" + (viewType == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER));
                 return viewType == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER ? 4 : 1;
             }
         });
@@ -71,7 +80,7 @@ public class NewChannelActivity extends BaseActivity {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class NewsChannelBean {
+    public static class ChannelBean {
         private String channelId;
         private String channelName;
         private int isEnable;
