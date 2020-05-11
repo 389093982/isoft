@@ -210,17 +210,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp">
                     <Button
-                        android:id="@+id/btnToLogin"
-                        android:layout_width="100dp"
-                        android:layout_height="64dp"
-                        android:layout_centerInParent="true"
-                        android:text="前去登录"/>
-
-                    <Button
                         android:id="@+id/btnToCourseList"
                         android:layout_width="100dp"
                         android:layout_height="64dp"
-                        android:layout_toLeftOf="@id/btnToLogin"
                         android:layout_centerVertical="true"
                         android:text="查看课程"/>
                 </RelativeLayout>

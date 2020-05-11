@@ -29,15 +29,13 @@ import com.linkknown.ilearning.activity.HomeActivity;
 import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
-import com.linkknown.ilearning.fragment.SpaceFragment;
+import com.linkknown.ilearning.fragment.MoreFragment;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.StringUtilEx;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -177,21 +175,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initFragment () {
         // 创建 fragment
-        SpaceFragment spaceFragment1 = new SpaceFragment();
-        SpaceFragment spaceFragment2 = new SpaceFragment();
-        SpaceFragment spaceFragment3 = new SpaceFragment();
-        SpaceFragment spaceFragment4 = new SpaceFragment();
-        SpaceFragment spaceFragment5 = new SpaceFragment();
-        SpaceFragment spaceFragment6 = new SpaceFragment();
-        SpaceFragment spaceFragment7 = new SpaceFragment();
+        MoreFragment moreFragment1 = new MoreFragment();
+        MoreFragment moreFragment2 = new MoreFragment();
+        MoreFragment moreFragment3 = new MoreFragment();
+        MoreFragment moreFragment4 = new MoreFragment();
+        MoreFragment moreFragment5 = new MoreFragment();
+        MoreFragment moreFragment6 = new MoreFragment();
+        MoreFragment moreFragment7 = new MoreFragment();
+        MoreFragment moreFragment8 = new MoreFragment();
 
-        mFragments.add(spaceFragment1);
-        mFragments.add(spaceFragment2);
-        mFragments.add(spaceFragment3);
-        mFragments.add(spaceFragment4);
-        mFragments.add(spaceFragment5);
-        mFragments.add(spaceFragment6);
-        mFragments.add(spaceFragment7);
+        mFragments.add(moreFragment1);
+        mFragments.add(moreFragment2);
+        mFragments.add(moreFragment3);
+        mFragments.add(moreFragment4);
+        mFragments.add(moreFragment5);
+        mFragments.add(moreFragment6);
+        mFragments.add(moreFragment7);
+        mFragments.add(moreFragment8);
 
         // title 限制 2 个字
         titles.add("首页");
@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         titles.add("关注");
         titles.add("发现");
         titles.add("推荐");
+        titles.add("更多");
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @NonNull

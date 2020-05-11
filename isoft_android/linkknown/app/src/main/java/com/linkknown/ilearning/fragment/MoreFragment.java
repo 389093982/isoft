@@ -31,7 +31,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // MultiTypeAdapter
-public class SpaceFragment extends Fragment implements View.OnClickListener {
+public class MoreFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.recycleView)
     RecyclerView recycleView;

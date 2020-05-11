@@ -1,34 +1,18 @@
 package com.linkknown.ilearning.util.ui;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.MediaMetadataRetriever;
-import android.os.Build;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.linkknown.ilearning.R;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Iterator;
-import java.util.Map;
 
 public class UIUtils {
 

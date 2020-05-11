@@ -16,11 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseListActivity;
-import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.adapter.HomePageGridViewAdapter;
 import com.linkknown.ilearning.adapter.HomePageViewPagerAdapter;
@@ -30,7 +28,6 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +39,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
 
-    @BindView(R.id.btnToLogin)
-    public Button btnToLogin;
     @BindView(R.id.btnToCourseList)
     public Button btnToCourseList;
     @BindView(R.id.viewPager)
@@ -85,7 +80,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         this.initData();
 
-        btnToLogin.setOnClickListener(this);
         btnToCourseList.setOnClickListener(this);
 
         refreshLayout.setOnRefreshListener(() -> ToastUtil.showText(mContext, "onRefresh..."));
@@ -193,9 +187,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnToLogin:
-                UIUtils.gotoActivity(mContext, LoginActivity.class);
-                break;
             case R.id.btnToCourseList:
                 UIUtils.gotoActivity(mContext, CourseListActivity.class);
                 break;
