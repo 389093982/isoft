@@ -1,20 +1,20 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.service.UserService;
@@ -66,24 +66,25 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void bindData () {
-        LiveEventBus.get("registResponse", RegistResponse.class).observe(this, new Observer<RegistResponse>() {
-            @Override
-            public void onChanged(RegistResponse registResponse) {
-                if (registResponse.getErrorMsg() != null) {
-                    ToastUtil.showText(getApplicationContext(), registResponse.getErrorMsg());
-                    return;
-                }
-//                if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-//                    // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
-//                    memoryAccount(usernameEditText, passwordEditText);
-//
-//                    updateUiWithUser(loginUserResponse);
-//
-//                    setResult(Activity.RESULT_OK);
-//                    finish();
-//                }
+        LiveEventBus.get("registResponse", RegistResponse.class).observe(this, registResponse -> {
+            if (registResponse.getErrorMsg() != null) {
+                ToastUtil.showText(getApplicationContext(), registResponse.getErrorMsg());
+            } else {
+                ToastUtil.showText(mContext, "注册成功！");
+                // 记住账号
+                memoryAccount(userName, passwd);
+                // 调往登录页面
+                UIUtils.gotoActivity(mContext, LoginActivity.class);
             }
         });
+    }
+
+    private void memoryAccount(TextView usernameEditText, TextView passwordEditText) {
+        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
+        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwordEditText.getText().toString());
+        editor.apply();
     }
 
     private void init() {

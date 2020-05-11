@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void autoLogin () {
         // 按返回并没有真正退出应用，TokenHeaderInterceptor.TOKEN_STRING 仍有值
-        ToastUtil.showText(this, TokenHeaderInterceptor.TOKEN_STRING.get());
         // 没有 tokenString 代表没有登录过
         if (StringUtils.isEmpty(TokenHeaderInterceptor.TOKEN_STRING.get())) {
             // 获取存储的用户名和密码
