@@ -143,40 +143,46 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.registBtn:
-                regist();
+                handleRegist();
                 break;
             case R.id.createVerifyCodeTip:
-                // 30s 倒计时,一次一秒
-                new CountDownTimer(30 * 1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        // 禁用
-                        createVerifyCodeTip.setEnabled(false);
-                        // 倒计时秒数
-                        long second = millisUntilFinished / 1000;
-                        if (second > 28) {
-                            createVerifyCodeTip.setText("发送中...");
-                        } else {
-                            createVerifyCodeTip.setText(second + "s后重新获取");
-                        }
-                    }
-                    @Override
-                    public void onFinish() {
-                        createVerifyCodeTip.setEnabled(true);
-                        createVerifyCodeTip.setText("重新获取验证码");
-
-                    }
-                }.start();
+                handleCreateVerifyCode();
                 break;
             default:
                 break;
         }
     }
 
-    private void regist() {
-        String _userName = userName.getText().toString();
-        String _passwd = passwd.getText().toString();
-        String _rePasswd = rePasswd.getText().toString();
+    private void handleCreateVerifyCode() {
+        UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
+        // 30s 倒计时,一次一秒
+        new CountDownTimer(30 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // 禁用
+                createVerifyCodeTip.setEnabled(false);
+                // 倒计时秒数
+                long second = millisUntilFinished / 1000;
+                if (second > 28) {
+                    createVerifyCodeTip.setText("发送中...");
+                } else {
+                    createVerifyCodeTip.setText(second + "s后重新获取");
+                }
+            }
+            @Override
+            public void onFinish() {
+                createVerifyCodeTip.setEnabled(true);
+                createVerifyCodeTip.setText("重新获取验证码");
+
+            }
+        }.start();
+    }
+
+    private void handleRegist() {
+        String _userName = StringUtils.trim(userName.getText().toString());
+        String _verifyCode = StringUtils.trim(verifyCode.getText().toString());
+        String _passwd = StringUtils.trim(passwd.getText().toString());
+        String _rePasswd = StringUtils.trim(rePasswd.getText().toString());
 
         if (!validate(_userName)) {
             onSignupFailed("注册失败！");
@@ -185,7 +191,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         if (!_passwd.equals(_rePasswd)) {
             rePasswd.setError("两次密码输入不一致！");
         } else {
-            UserService.regist(this, _userName, _passwd, "小猫小狗", "123456", "linkknown");
+            UserService.regist(this, _userName, _passwd, "小猫小狗", _verifyCode, "linkknown");
         }
     }
 

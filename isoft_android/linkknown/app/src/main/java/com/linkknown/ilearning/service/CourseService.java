@@ -9,6 +9,7 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
+import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -143,7 +144,6 @@ public class CourseService {
                     @Override
                     public void onNext(CourseSearchResponse courseSearchResponse) {
                         if (StringUtils.isEmpty(courseSearchResponse.getErrorMsg())) {
-
                             LiveEventBus.get("courseSearchResponse",  CourseSearchResponse.class).post(courseSearchResponse);
                         } else {
                             Log.e("onError =>", courseSearchResponse.getErrorMsg());
@@ -153,7 +153,6 @@ public class CourseService {
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
                         Log.e("onError =>", e.getMessage());
                         CourseSearchResponse result = new CourseSearchResponse();
                         result.setErrorMsg(e.getMessage());
