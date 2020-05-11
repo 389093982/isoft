@@ -66,6 +66,8 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
         mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
         mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
+        mData.add(new Item("畅享图书", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
+        mData.add(new Item("锦鲤活动", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
 
 
         MultiTypeAdapter adapter = new MultiTypeAdapter();

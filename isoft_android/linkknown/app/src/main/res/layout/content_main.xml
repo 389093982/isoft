@@ -84,6 +84,7 @@
                  app:tabTextColor="@color/colorPrimary" ：未选中字体颜色
                  app:tabBackground="color" ： 整个tablayout颜色
                  app:tabMode="scrollable" ： 默认是fixed，固定的；scrollable：可滚动的
+                 app:tabBackground="?attr/selectableItemBackground"  点击 tab 水波纹效果
              -->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
@@ -91,19 +92,18 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                app:tabBackground="@android:color/transparent"
+                app:tabBackground="?attr/selectableItemBackground"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/white"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="@dimen/dp_3"
                 app:tabMode="scrollable"
                 app:tabTextAppearance="@style/TabLayoutNormalTextSize"
-                app:tabRippleColor="@android:color/transparent"
                 app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/light_white"/>
+                app:tabTextColor="@color/light_gray3"/>
 
             <ImageView
-                android:id="@+id/add_channel_iv"
+                android:id="@+id/add_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

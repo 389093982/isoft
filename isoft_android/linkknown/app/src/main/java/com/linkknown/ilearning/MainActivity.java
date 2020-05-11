@@ -28,6 +28,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.HomeActivity;
 import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.MoreFragment;
 import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<String> titles = new ArrayList<>();
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+    @BindView(R.id.add_channel)
+    ImageView addChannel;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
@@ -88,8 +91,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         // 绑定控件
-        this.init();
+        init();
 
+        addChannel.setOnClickListener(this);
         headerToolBarLayout.setOnClickListener(this);
     }
 
@@ -98,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (v.getId()) {
             case R.id.headerToolBarLayout:
                 toggleDrawer();
+                break;
+            case R.id.add_channel:
+                UIUtils.gotoActivity(this, NewChannelActivity.class);
+                // Android中不同Activity之间的切换是不可避免的事情，那么怎么才能让Acitivity的切换更优雅呢，
+                // Android中提供了一个方法来解决这个问题，即overridePendingTransition(A，B)函数
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 break;
             default:
                 break;
