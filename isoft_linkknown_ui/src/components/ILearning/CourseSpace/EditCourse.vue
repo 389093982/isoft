@@ -30,7 +30,8 @@
       <Col span="16">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="课程名称" prop="course_name">
-            <Input v-model.trim="formValidate.course_name" placeholder="请输入课程名称"/>
+            <Input v-if="this.$route.query.course_id != null" readonly v-model.trim="formValidate.course_name" placeholder="请输入课程名称"/>
+            <Input v-else v-model.trim="formValidate.course_name" placeholder="请输入课程名称"/>
           </FormItem>
           <FormItem label="课程类型" prop="course_type">
             <Row>
