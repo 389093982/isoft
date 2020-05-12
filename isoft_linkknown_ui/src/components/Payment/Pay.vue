@@ -152,7 +152,7 @@
 
 <script>
   import {isoft_unifiedpay_order_api} from "../../api/index"
-  import {ShowCourseDetail,queryPayOrderList,addPayOrder,SearchCouponForPay} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrderList,addPayOrder,SearchCouponForPay,UpdateCouponIsUsed} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
   import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd} from "../../tools/index"
   import vueQr from 'vue-qr'
@@ -183,7 +183,7 @@
         websocket:null,
         percent:0,
         showPayResult:false,
-        payResult:false, //true :支付成功， false:支付失败
+        paySuccess:false, //true :支付成功， false:支付失败
         payResultDesc:'',
       }
     },
@@ -242,21 +242,19 @@
       },
       selectThisCoupon:function(index){
         if (this.codeUrl === '') {
-          if (this.payResult) {
+          if (this.paySuccess) {
             this.$Message.info('已付款');
           }else{
             this.currentSelectCoupon = this.coupons[index];
             this.$Message.info('已选择');
-
-
+            // 计算金额前先将金额置为初始值
+            this.goods_price = this.goods_price_backup;
             //金额计算...
             if (this.currentSelectCoupon.youhui_type === 'reduce') {
-
+              this.goods_price = (this.goods_price - this.currentSelectCoupon.coupon_amount).toFixed(2);
             }else if (this.currentSelectCoupon.youhui_type === 'discount') {
-
+              this.goods_price = (this.goods_price * this.currentSelectCoupon.discount_rate).toFixed(2);
             }
-
-
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
@@ -265,18 +263,30 @@
       },
       cancleUseCoupon:function(){
         if (this.codeUrl === '') {
-          if (this.payResult) {
+          if (this.paySuccess) {
             this.$Message.info('已付款');
           }else{
             this.currentSelectCoupon = '';
             this.$Message.info('已取消');
+            // 取消就将金额置为初始值
             this.goods_price = this.goods_price_backup;
-            //金额计算...
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
         }
 
+      },
+      updateCouponIsUsed:async function(userName,coupon_id){
+        let params = {
+          'userName':userName,
+          'coupon_id':coupon_id
+        };
+        const result = await UpdateCouponIsUsed(params);
+        if (result.status === 'SUCCESS') {
+          //刷新优惠券
+          this.currentSelectCoupon = '';
+          this.searchCourseAvailableCoupon();
+        }
       },
       checkHasLogin:function(){
         return checkHasLogin();
@@ -287,7 +297,7 @@
           this.$Message.info('已下单，请及时付款');
           return false;
         }
-        if (_this.payResult) {
+        if (_this.paySuccess) {
           this.$Message.info('已付款');
           return false;
         }
@@ -313,7 +323,8 @@
                 //准备参数
                 let ProductId = _this.goods_id.toString();
                 let ProductDesc = _this.goods_desc;
-                let TransAmount = _this.goods_price * 100;
+                //对接微信支付，要求是分为单位，这个地方用的是int才行
+                let TransAmount = parseInt((_this.goods_price * 100).toFixed(0));
                 let TransCurrCode = 'CNY';
                 let OrderParams = {
                   'user_name':_this.loginUserName,
@@ -355,7 +366,7 @@
             this.codeUrl = result.code_url;
           }
           if (result.pay_result != null) {
-            //支付成功，订单入pay_order表
+            //不论成功和失败，先入订单 pay_order 表
             const res = await addPayOrder({
               'order_id':result.order_id,
               'trans_time':result.trans_time,
@@ -367,16 +378,22 @@
               'goods_img':this.goods_img,
               'pay_result':result.pay_result,
             });
-            //页面支付成功动态效果
-            if (res.status === 'SUCCESS') {
+            //如果支付成功，页面展示支付成功动态效果
+            if (res.status === 'SUCCESS' && result.pay_result === 'SUCCESS') {
               this.codeUrl = '';
               this.showPayResult = true;
-              this.payResult = true;
+              this.paySuccess = true;
               var handler = setInterval(this.add, 50);
               //一秒后让handler失效
               setTimeout(function () {
                 clearInterval(handler);
               }, 1000);
+
+              // 更新优惠券
+              if (this.currentSelectCoupon) {
+                this.updateCouponIsUsed(result.user_name,this.currentSelectCoupon.coupon_id);
+              }
+
             }
           }
         }

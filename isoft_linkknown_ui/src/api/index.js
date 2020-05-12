@@ -194,6 +194,7 @@ export const QueryGeneralCoupon = (params) => ajax(BASE_URL + "/iwork/httpservic
 export const QueryDesignatedCoupon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryDesignatedCoupon", params, 'POST'); //查询指定券
 export const ReceiveCoupon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ReceiveCoupon", params, 'POST'); //用户领券
 export const SearchCouponForPay = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/SearchCouponForPay", params, 'POST'); //查询券(支付中心调用)
+export const UpdateCouponIsUsed = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCouponIsUsed", params, 'POST'); //券已使用，更新状态
 
 
 //【Contact模块】***************************************************************************************************
