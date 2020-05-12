@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,11 +17,10 @@ import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +43,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     // 评论列表适配器
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
+
+    // 评论列表订阅数据, key 为分页信息, value 为当前页的订阅信息
+    private Map<Integer, Observer> observerMap = new HashMap<>();
 
     @Override
     protected boolean setIsRealTimeRefresh() {
@@ -73,10 +76,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initData() {
-        // 绑定数据
-        bindPageData(1);
         // 加载数据
         loadData();
+        // 绑定数据
+        bindPageData(1);
     }
 
     private void loadData () {
@@ -86,27 +89,29 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
     }
 
     private void loadNextPageData(int current_page) {
-        bindPageData(current_page);
         CommentService.filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, 10);
+        bindPageData(current_page);
     }
 
     private void bindPageData (int current_page) {
-        LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observe(this, commentResponse -> {
-            if (commentResponse.isSuccess()) {
-                System.out.println("#####################");
-                System.out.println("current_page = " + current_page);
-                System.out.println("commentResponse = " + commentResponse.toString());
-                System.out.println("#####################");
-                // 合并数据，当数据量过大时,需要先进行 clear 一部分
-                displayComments.addAll(commentResponse.getComments());
-                paginator = commentResponse.getPaginator();
+        // 防止同一页重复订阅
+        if (!observerMap.containsKey(current_page)) {
+            Observer<CommentResponse> observer = commentResponse -> {
+                if (commentResponse.isSuccess()) {
+                    // 合并数据，当数据量过大时,需要先进行 clear 一部分
+                    displayComments.addAll(commentResponse.getComments());
+                    paginator = commentResponse.getPaginator();
 
-                sectionedRecyclerViewAdapter.notifyDataSetChanged();
-            }
-            // 有数据回来则取消刷新
-            refreshLayout.setRefreshing(false);
-        });
-    }
+                    sectionedRecyclerViewAdapter.notifyDataSetChanged();
+                }
+                // 有数据回来则取消刷新
+                refreshLayout.setRefreshing(false);
+            };
+
+            observerMap.put(current_page, observer);
+            LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observeSticky(this, observer);
+        }
+   }
 
     private void init () {
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
@@ -127,26 +132,13 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
             @Override
             public void onLoadMore() {
                 // 还有下一页数据则加载下一页数据
-                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages() - 1) {
+                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
                     loadNextPageData(paginator.getCurrpage() + 1);
                 } else {
                     // 显示我是有底线的
                 }
             }
         });
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-
-
     }
 }
 
