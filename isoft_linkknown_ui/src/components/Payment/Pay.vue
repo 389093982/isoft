@@ -375,6 +375,9 @@
               'goods_id':result.product_id,
               'goods_desc':result.product_desc,
               'goods_price':result.trans_amount,
+              'goods_original_price':this.goods_price_backup, //原价格从备份里面获取比较方便
+              'activity_type':this.currentSelectCoupon===''?'':'coupon',
+              'activity_type_bind_id':this.currentSelectCoupon===''?'':this.currentSelectCoupon.coupon_id,
               'goods_img':this.goods_img,
               'pay_result':result.pay_result,
             });

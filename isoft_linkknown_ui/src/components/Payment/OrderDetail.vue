@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import {GetUserDetail, queryPayOrderList, ShowCourseDetail} from "../../api/index"
+  import {GetUserDetail, queryPayOrderList, ShowCourseDetail,QueryPagePayCoupon} from "../../api/index"
   import HotUser from "../User/HotUser";
   import CourseMeta from "../ILearning/Course/CourseMeta";
   import {getLoginUserName} from "../../tools/sso";
@@ -115,6 +115,16 @@
             this.getUserDetail();
           }
         }
+      },
+      queryCoupon:async function(){
+        let params = {
+          'activity_id':this.activity_id,
+          'coupon_id':this.coupon_id,
+          'currentPage':1,
+          'offset':10,
+        };
+        const result = await QueryPagePayCoupon(params);
+
       },
       queryCourseDetail:async function () {
         const result = await ShowCourseDetail({course_id:this.orders[0].goods_id});
