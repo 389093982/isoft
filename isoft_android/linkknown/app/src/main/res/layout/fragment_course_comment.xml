@@ -12,6 +12,7 @@
         <include android:id="@+id/comment_recycleview"
             layout="@layout/layout_recycleview"/>
 
+        <include layout="@layout/layout_footerview"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
 
