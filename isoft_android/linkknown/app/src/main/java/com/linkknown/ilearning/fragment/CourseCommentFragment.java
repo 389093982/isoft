@@ -2,13 +2,8 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,10 +15,6 @@ import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.ui.ToastUtil;
-import com.linkknown.ilearning.util.ui.UIUtils;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class CourseCommentFragment extends Fragment {
+public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
@@ -50,34 +41,42 @@ public class CourseCommentFragment extends Fragment {
     // 评论列表适配器
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_course_comment, container, false);
+    protected boolean setIsRealTimeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected int providelayoutId() {
+        return R.layout.fragment_course_comment;
+    }
+
+    @Override
+    protected void initView(View mRootView) {
         mContext = getActivity();
-        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, mRootView);
 
         ToastUtil.showText(mContext, "初始化啦~~~~~~~~~~~~~~");
 
-        commentRecyclerView = rootView.findViewById(R.id.comment_recycleview).findViewById(R.id.recyclerView);
+        commentRecyclerView = mRootView.findViewById(R.id.comment_recycleview).findViewById(R.id.recyclerView);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             course_id = bundle.getInt("course_id");
         }
-
         // 初始化组件
         init();
+    }
 
+    @Override
+    protected void initData() {
         // 绑定数据
         bindPageData(1);
         // 加载数据
-        initData();
-
-        return rootView;
+        loadData();
     }
 
-    private void initData () {
+    private void loadData () {
         // 加载第一页要先清空
         displayComments.clear();
         loadNextPageData(1);
@@ -108,22 +107,6 @@ public class CourseCommentFragment extends Fragment {
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         sectionedRecyclerViewAdapter.addSection(new CourseCommentSection(mContext, displayComments));
 
-//        multiTypeAdapter = new MultiTypeAdapter();
-//        multiTypeAdapter.register(CommentResponse.Comment.class, new MultiItemView<CommentResponse.Comment>() {
-//            @NonNull
-//            @Override
-//            public int getLayoutId() {
-//                return R.layout.item_course_comment;
-//            }
-//
-//            @Override
-//            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CommentResponse.Comment comment, int position) {
-//                // 设置评论内容
-//                viewHolder.setText(R.id.commentContentText, comment.getContent());
-//                viewHolder.setText(R.id.nickNameText, comment.getNick_name());
-//                UIUtils.setImage(mContext, viewHolder.getConvertView().findViewById(R.id.headerIcon), comment.getSmall_icon());
-//            }
-//        });
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         commentRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
 
@@ -131,7 +114,7 @@ public class CourseCommentFragment extends Fragment {
             // 属性中
             refreshLayout.setRefreshing(true);
             // 重新加载数据
-            initData();
+            loadData();
         });
 
         // setOnScrollListener 由于可能出现空指针的风险,已经过时.建议用addOnScrollListener
@@ -146,6 +129,11 @@ public class CourseCommentFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 }
 
