@@ -20,6 +20,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
+import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -40,6 +41,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;
+    @BindView(R.id.menuSettingLayout)
+    public LinearLayout menuSettingLayout;
+
+
+
     private Context mContext;
 
     @Nullable
@@ -63,6 +69,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         initLoginInfo();
 
         menuAboutLayout.setOnClickListener(this);
+        menuSettingLayout.setOnClickListener(this);
 
         return rootView;
     }
@@ -94,6 +101,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.menuAboutLayout:
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
+                break;
+            case R.id.menuSettingLayout:
+                UIUtils.gotoActivity(mContext, SettingActivity.class);
                 break;
             default:
                 break;

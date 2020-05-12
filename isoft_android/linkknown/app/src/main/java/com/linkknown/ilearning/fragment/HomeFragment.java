@@ -39,8 +39,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
 
-    @BindView(R.id.btnToCourseList)
-    public Button btnToCourseList;
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
 
@@ -80,7 +78,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
         this.initData();
 
-        btnToCourseList.setOnClickListener(this);
 
         refreshLayout.setOnRefreshListener(() -> ToastUtil.showText(mContext, "onRefresh..."));
     }
@@ -187,9 +184,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnToCourseList:
-                UIUtils.gotoActivity(mContext, CourseListActivity.class);
-                break;
             default:
                 break;
         }

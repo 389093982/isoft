@@ -13,16 +13,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.service.CommentService;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CourseCommentFragment extends Fragment {
@@ -32,6 +35,9 @@ public class CourseCommentFragment extends Fragment {
     private RecyclerView commentRecyclerView;
 
     private int course_id;
+
+    @BindView(R.id.refreshLayout)
+    public SwipeRefreshLayout refreshLayout;
 
     // 评论列表适配器
     MultiTypeAdapter multiTypeAdapter;
@@ -71,6 +77,9 @@ public class CourseCommentFragment extends Fragment {
             public void onChanged(CommentResponse commentResponse) {
                 multiTypeAdapter.setItems(commentResponse.getComments());
                 multiTypeAdapter.notifyDataSetChanged();
+
+                // 有数据回来则取消刷新
+                refreshLayout.setRefreshing(false);
             }
         });
     }
@@ -94,5 +103,12 @@ public class CourseCommentFragment extends Fragment {
         });
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         commentRecyclerView.setAdapter(multiTypeAdapter);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            // 属性中
+            refreshLayout.setRefreshing(true);
+            // 重新加载数据
+            initData();
+        });
     }
 }

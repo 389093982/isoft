@@ -3,6 +3,7 @@ package com.linkknown.ilearning.section;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -46,10 +47,6 @@ public class CourseHotRecommendSection extends Section {
         return new ItemViewHolder(view);
     }
 
-    @Override
-    public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
-        return new EmptyViewHolder(view);
-    }
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -82,6 +79,17 @@ public class CourseHotRecommendSection extends Section {
         itemHolder.recyclerView.setAdapter(multiTypeAdapter);
     }
 
+    @Override
+    public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
+        return new HeaderViewHolder(view);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
+        HeaderViewHolder viewHolder = (HeaderViewHolder) holder;
+        UIUtils.setTextViewDrawbleImg(mContext, viewHolder.item_type_operate_text, R.drawable.ic_header_indicator_rank, 0, 0, 40, 40);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView recyclerView;
@@ -89,6 +97,16 @@ public class CourseHotRecommendSection extends Section {
         public ItemViewHolder(View itemView) {
             super(itemView);
             recyclerView = itemView.findViewById(R.id.recyclerView);
+        }
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView item_type_operate_text;
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            item_type_operate_text = itemView.findViewById(R.id.item_type_operate_text);
         }
     }
 }

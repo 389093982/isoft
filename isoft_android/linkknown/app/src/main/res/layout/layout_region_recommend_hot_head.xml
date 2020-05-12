@@ -16,7 +16,7 @@
         android:src="@drawable/ic_category_promo" />
 
     <TextView
-        android:id="@+id/item_type_tv"
+        android:id="@+id/item_type_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -27,16 +27,17 @@
         android:textColor="@color/font_normal"
         android:textSize="14sp" />
 
-
+    <!--
+        android:drawableStart="@drawable/ic_header_indicator_rank" 无法调整大小,改由代码控制
+    -->
     <TextView
-        android:id="@+id/item_type_rank_btn"
+        android:id="@+id/item_type_operate_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:background="@drawable/btn_rank_bg"
         android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_header_indicator_rank"
         android:padding="5dp"
         android:text="排行榜"
         android:textColor="@color/white"
