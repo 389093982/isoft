@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="demo-split" style="padding-top: 30px;background-color: rgba(0,0,0,0.09)">
+    <div class="demo-split" style="padding-top: 30px;background-color: rgba(225,209,232,0.2)">
         <div style="text-align: center">
           <Icon type="md-ribbon" style="font-size: 40px;color: #ff6900"/>
           <span class="payCenter">支付中心</span>
@@ -55,7 +55,7 @@
 
 <script>
   import {GetLoginUserName} from "../../tools"
-  import {addPayOrder} from "../../api/index"
+  import {isoft_unifiedpay_order_api,addPayOrder} from "../../api/index"
   import vueQr from 'vue-qr'
 
   export default {
@@ -121,7 +121,7 @@
         this.initWebSocket(OrderParams);
       },
       initWebSocket:function(OrderParams) {
-        const wsuri = this.GLOBAL.isoft_unifiedpay_order;
+        const wsuri = isoft_unifiedpay_order_api;
         this.websocket = new WebSocket(wsuri);
         this.websocket.onopen = this.websocketonopen;
         this.websocket.onmessage = this.websocketonmessage;

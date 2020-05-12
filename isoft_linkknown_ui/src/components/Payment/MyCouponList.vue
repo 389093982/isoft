@@ -39,26 +39,47 @@
                         通用券:可以使用于任何商品
                       </span>
                       <span v-else-if="coupon.coupon_type==='designated'">
-                        指定券:<span v-if="coupon.target_type==='course'">课程:{{coupon.target_id}}</span>
+                        指定券:
+                        <span v-if="coupon.target_type==='course'">
+                          <span @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}})">
+                            <span class="isoft_tag2" style="cursor: pointer">课程:{{coupon.target_id}}</span>
+                          </span>
+                        </span>
                       </span>
 
                       <div>
                         距离活动结束天数:<span class="isoft_tag3">{{remainDays(coupon.end_date)}}</span>
                       </div>
+
                       <div>
                         活动描述:<span>{{coupon.activity_desc}}</span>
                       </div>
                     </Col>
                     <Col span="4">
                       <div v-if="coupon.coupon_state==='used'">
+                        <!--已使用-->
                         <img style="border-radius:50%;position: relative;" width=80 height=80 src="../../../static/images/order/used.jpg">
                       </div>
                       <div v-else>
+                        <!--未使用-->
                         <span v-if="isOverdue(coupon.start_date,coupon.end_date)">
-                          <img style="border-radius:50%;position: relative;" width=80 height=80 src="../../../static/images/order/overdue.jpg">
+                          <!--未使用 过期的-->
+                          <img style="border-radius:50%;position: relative;left: -100px" width=80 height=80 src="../../../static/images/order/overdue.jpg">
                         </span>
                         <span v-else>
-                          前去使用?
+                          <!--未使用 未过期-->
+                          <span v-if="coupon.coupon_type==='general'">
+                            通用券
+                          </span>
+                          <span v-else="coupon.coupon_type==='designated'">
+                            <!--指定券-->
+                            <span v-if="coupon.target_type==='course'">
+                              <span @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}})">
+                                <span class="isoft_tag2" style="cursor: pointer">前去使用</span>
+                              </span>
+                            </span>
+                          </span>
+
                         </span>
                       </div>
                     </Col>
