@@ -15,7 +15,7 @@
 ④root用户安装nginx，并配置（默认安装目录：/etc/nginx）
 
 2.打包与部署
-①终端执行 npm run build
+①终端执行,测试执行：npm run build:test  生产执行:npm run build:prod
 ②将dist下面的所有文件(静态文件)（可以先压缩为zip文件再上传）复制到apache-tomcat-8.5.51_8002下webapps目录里的isoft_linkknown_ui（新建目录）目录里
 ③修改tomcat默认端口为8002，在apache-tomcat-8.5.51_8002/conf/server.xml里，将8080修改为8002
   	并且在server.xml最下面</Host>结束标签上一行添加（配置docBase）： <Context path="" docBase="isoft_linkknown_ui" reloadable="true" />

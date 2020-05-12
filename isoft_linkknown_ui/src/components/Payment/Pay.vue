@@ -3,6 +3,7 @@
 
     <div v-if="showPage" class="demo-split" style="padding-top: 30px;background-color: rgba(225,209,232,0.2)">
       <Row>
+        <!--第一列：被选中的优惠券-->
         <Col span="8">&nbsp;
           <div v-if="currentSelectCoupon" style="position: relative;top: 50px;left: 30px">
             <div style="text-align: center">
@@ -24,6 +25,7 @@
             </div>
           </div>
         </Col>
+        <!--第二列：支付中心-->
         <Col span="8">
           <div style="margin-left: 150px">
             <Icon type="md-ribbon" style="font-size: 40px;color: #ff6900"/>
@@ -81,6 +83,7 @@
             </div>
           </div>
         </Col>
+        <!--第三列：展示本次可用的优惠券-->
         <Col span="8">
           <div style="display: flex">
             <!--彩色线条-->
@@ -180,7 +183,7 @@
         websocket:null,
         percent:0,
         showPayResult:false,
-        payResult:false,
+        payResult:false, //true :支付成功， false:支付失败
         payResultDesc:'',
       }
     },
@@ -244,8 +247,16 @@
           }else{
             this.currentSelectCoupon = this.coupons[index];
             this.$Message.info('已选择');
-            this.goods_price = '33';
-            //金额计算。。。
+
+
+            //金额计算...
+            if (this.currentSelectCoupon.youhui_type === 'reduce') {
+
+            }else if (this.currentSelectCoupon.youhui_type === 'discount') {
+
+            }
+
+
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
@@ -260,7 +271,7 @@
             this.currentSelectCoupon = '';
             this.$Message.info('已取消');
             this.goods_price = this.goods_price_backup;
-            //金额计算。。。
+            //金额计算...
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
