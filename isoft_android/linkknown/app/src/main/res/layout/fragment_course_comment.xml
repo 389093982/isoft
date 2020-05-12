@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:overScrollMode="never"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include android:id="@+id/comment_recycleview"
-        layout="@layout/layout_recycleview"/>
+    <!-- 下拉刷新控件 -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.core.widget.NestedScrollView>
+        <include android:id="@+id/comment_recycleview"
+            layout="@layout/layout_recycleview"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</FrameLayout>
 
 
 

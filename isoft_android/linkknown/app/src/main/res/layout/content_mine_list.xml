@@ -80,7 +80,7 @@
     <LinearLayout style="@style/wrap_layout">
 
         <LinearLayout
-            android:id="@+id/menu_setting"
+            android:id="@+id/menuSettingLayout"
             style="@style/single_layout"
             >
 
