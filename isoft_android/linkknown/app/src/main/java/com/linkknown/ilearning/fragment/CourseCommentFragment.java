@@ -16,6 +16,9 @@ import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +86,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
     }
 
     private void loadNextPageData(int current_page) {
-        ToastUtil.showText(mContext, displayComments.size() + "aaaaaaaa");
         bindPageData(current_page);
         CommentService.filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, 10);
     }
@@ -91,7 +93,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
     private void bindPageData (int current_page) {
         LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observe(this, commentResponse -> {
             if (commentResponse.isSuccess()) {
-                ToastUtil.showText(mContext, displayComments.size() + "bbbbbbbb" + current_page + "~~~~~~~~" + commentResponse.getComments().size());
+                System.out.println("#####################");
+                System.out.println("current_page = " + current_page);
+                System.out.println("commentResponse = " + commentResponse.toString());
+                System.out.println("#####################");
                 // 合并数据，当数据量过大时,需要先进行 clear 一部分
                 displayComments.addAll(commentResponse.getComments());
                 paginator = commentResponse.getPaginator();
@@ -134,6 +139,14 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+
     }
 }
 

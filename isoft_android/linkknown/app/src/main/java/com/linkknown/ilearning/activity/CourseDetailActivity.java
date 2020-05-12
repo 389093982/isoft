@@ -20,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
@@ -88,17 +87,17 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 初始化组件
         init();
 
-        // 加载数据
-        initData();
-
         // 填充数据
         bindData();
+
+        // 加载数据
+        initData();
     }
 
     private void bindData () {
         int course_id = getIntent().getIntExtra("course_id", -1);
         LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class)
-                .observeSticky(this, courseDetailResponse -> {
+                .observe(this, courseDetailResponse -> {
                     CourseDetailResponse.Course course = courseDetailResponse.getCourse();
                     // 设置课程名称
                     courseNameText.setText(course.getCourse_name());
