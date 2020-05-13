@@ -15,7 +15,6 @@ import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +24,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CourseCommentFragment extends BaseLazyLoadFragment {
@@ -64,8 +64,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
 
-        ToastUtil.showText(mContext, "初始化啦~~~~~~~~~~~~~~");
-
         commentRecyclerView = mRootView.findViewById(R.id.comment_recycleview).findViewById(R.id.recyclerView);
 
         Bundle bundle = this.getArguments();
@@ -95,17 +93,27 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
         bindPageData(current_page);
     }
 
+    // 绑定分页数据
     private void bindPageData (int current_page) {
         // 防止同一页重复订阅
         if (!observerMap.containsKey(current_page)) {
             Observer<CommentResponse> observer = commentResponse -> {
+                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
                 if (commentResponse.isSuccess()) {
                     // 合并数据，当数据量过大时,需要先进行 clear 一部分
                     displayComments.addAll(commentResponse.getComments());
                     paginator = commentResponse.getPaginator();
+                    // 设置内容状态
                     courseCommentSection.setState(Section.State.LOADED);
+                    // footer 设置加载完成，到最后一页了显示加载到底
+                    sectionAdapter.notifyFooterChanged(
+                            paginator.getLastpage() == paginator.getTotalpages()
+                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
+                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 } else {
+                    // 设置内容状态
                     courseCommentSection.setState(Section.State.FAILED);
+                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 }
                 sectionedRecyclerViewAdapter.notifyDataSetChanged();
                 // 有数据回来则取消刷新
@@ -138,7 +146,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
             public void onLoadMore() {
                 // 还有下一页数据则加载下一页数据
                 if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
-//                    courseCommentSection.setState(Section.State.LOADING);
+                    SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
+                    // footer 显示加载中
+                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADING);
                     loadNextPageData(paginator.getCurrpage() + 1);
                 }
             }

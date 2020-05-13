@@ -2,8 +2,8 @@ package com.linkknown.ilearning.section;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +18,12 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 
 public class CourseCommentSection extends Section {
+
+    // 用于区分 footer 显示的状态
+    // 加载中,加载完成，加载完成后没有更多数据
+    public static final int PAYLOAD_FOOTER_LOADING = 0;
+    public static final int PAYLOAD_FOOTER_LOADED = 1;
+    public static final int PAYLOAD_FOOTER_LOADED_NO_MORE = 3;
 
     private List<CommentResponse.Comment> itemList;
     private Context mContext;
@@ -58,8 +64,37 @@ public class CourseCommentSection extends Section {
     }
 
     @Override
-    public void onBindFooterViewHolder(RecyclerView.ViewHolder holder) {
-        super.onBindFooterViewHolder(holder);
+    public void onBindFooterViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
+        FooterViewHolder viewHolder = (FooterViewHolder) holder;
+        // 初始状态全部隐藏
+        int payload = (int) payloads.get(0);
+        switch (payload) {
+            case PAYLOAD_FOOTER_LOADING:
+                this.setHasFooter(true);
+                viewHolder.loadingDataLayout.setVisibility(View.VISIBLE);
+                viewHolder.noMoreDataLayout.setVisibility(View.GONE);
+                break;
+            case PAYLOAD_FOOTER_LOADED:
+                this.setHasFooter(false);
+                break;
+            case PAYLOAD_FOOTER_LOADED_NO_MORE:
+                this.setHasFooter(true);
+                viewHolder.loadingDataLayout.setVisibility(View.GONE);
+                viewHolder.noMoreDataLayout.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+
+        if (payload == PAYLOAD_FOOTER_LOADING) {
+            this.setHasFooter(true);
+            viewHolder.loadingDataLayout.setVisibility(View.VISIBLE);
+        } else if (payload == PAYLOAD_FOOTER_LOADED) {
+            this.setHasFooter(false);
+        } else if (payload == PAYLOAD_FOOTER_LOADED_NO_MORE) {
+            this.setHasFooter(true);
+            viewHolder.noMoreDataLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -87,9 +122,13 @@ public class CourseCommentSection extends Section {
     }
 
     class FooterViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout loadingDataLayout;
+        private LinearLayout noMoreDataLayout;
 
         public FooterViewHolder(View itemView) {
             super(itemView);
+            loadingDataLayout = itemView.findViewById(R.id.loadingDataLayout);
+            noMoreDataLayout = itemView.findViewById(R.id.noMoreDataLayout);
         }
     }
 
