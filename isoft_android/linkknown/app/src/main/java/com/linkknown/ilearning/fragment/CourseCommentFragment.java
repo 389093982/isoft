@@ -24,6 +24,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CourseCommentFragment extends BaseLazyLoadFragment {
@@ -43,6 +44,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     // 评论列表适配器
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
+    CourseCommentSection courseCommentSection;
 
     // 评论列表订阅数据, key 为分页信息, value 为当前页的订阅信息
     private Map<Integer, Observer> observerMap = new HashMap<>();
@@ -101,9 +103,11 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
                     // 合并数据，当数据量过大时,需要先进行 clear 一部分
                     displayComments.addAll(commentResponse.getComments());
                     paginator = commentResponse.getPaginator();
-
-                    sectionedRecyclerViewAdapter.notifyDataSetChanged();
+                    courseCommentSection.setState(Section.State.LOADED);
+                } else {
+                    courseCommentSection.setState(Section.State.FAILED);
                 }
+                sectionedRecyclerViewAdapter.notifyDataSetChanged();
                 // 有数据回来则取消刷新
                 refreshLayout.setRefreshing(false);
             };
@@ -115,7 +119,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     private void init () {
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        sectionedRecyclerViewAdapter.addSection(new CourseCommentSection(mContext, displayComments));
+        courseCommentSection = new CourseCommentSection(mContext, displayComments);
+        sectionedRecyclerViewAdapter.addSection(courseCommentSection);
 
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         commentRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
@@ -133,9 +138,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
             public void onLoadMore() {
                 // 还有下一页数据则加载下一页数据
                 if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+//                    courseCommentSection.setState(Section.State.LOADING);
                     loadNextPageData(paginator.getCurrpage() + 1);
-                } else {
-                    // 显示我是有底线的
                 }
             }
         });

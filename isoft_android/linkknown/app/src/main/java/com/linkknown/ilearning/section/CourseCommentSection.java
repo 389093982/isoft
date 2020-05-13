@@ -2,6 +2,7 @@ package com.linkknown.ilearning.section;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class CourseCommentSection extends Section {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.item_course_comment)
                 .footerResourceId(R.layout.layout_footerview)
+                .failedResourceId(R.layout.layout_failedview)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
@@ -60,6 +62,16 @@ public class CourseCommentSection extends Section {
         super.onBindFooterViewHolder(holder);
     }
 
+    @Override
+    public RecyclerView.ViewHolder getFailedViewHolder(View view) {
+        return new FailedViewHolder(view);
+    }
+
+    @Override
+    public void onBindFailedViewHolder(RecyclerView.ViewHolder holder) {
+        super.onBindFailedViewHolder(holder);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView commentContentText;
@@ -77,6 +89,13 @@ public class CourseCommentSection extends Section {
     class FooterViewHolder extends RecyclerView.ViewHolder {
 
         public FooterViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    class FailedViewHolder extends RecyclerView.ViewHolder {
+
+        public FailedViewHolder(View itemView) {
             super(itemView);
         }
     }
