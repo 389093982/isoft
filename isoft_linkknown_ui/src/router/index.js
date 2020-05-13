@@ -76,6 +76,7 @@ const UserSearch = () => import("@/components/Background/UserSearch");
 const CreateActivity = () => import("@/components/Background/Pay/CreateActivity");
 const SearchActivity = () => import("@/components/Background/Pay/SearchActivity");
 const SearchCoupon = () => import("@/components/Background/Pay/SearchCoupon");
+const FileUploadMonitor = () => import("@/components/Background/FileUploadMonitor");
 
 Vue.use(Router);
 
@@ -157,6 +158,7 @@ const ICMSReouter = [{
       {path: 'createActivity', component: CreateActivity},
       {path: 'searchActivity', component: SearchActivity},
       {path: 'searchCoupon', component: SearchCoupon},
+      {path: 'fileUploadMonitor', component: FileUploadMonitor},
     ]
 }];
 

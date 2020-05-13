@@ -68,6 +68,15 @@
                 <router-link to="/background/searchCoupon">优惠券管理</router-link>
               </MenuItem>
             </Submenu>
+            <Submenu name="8">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                风险控制
+              </template>
+              <MenuItem name="8-1">
+                <router-link to="/background/fileUploadMonitor">文件上传监控</router-link>
+              </MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Content
