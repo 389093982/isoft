@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class CourseIntroduceFragment extends Fragment {
+public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
     private CourseDetailResponse courseDetailResponse;
@@ -50,16 +50,25 @@ public class CourseIntroduceFragment extends Fragment {
     @BindView(R.id.cVideoRecyclerView)
     public RecyclerView cVideoRecyclerView;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_course_introduce, container, false);
+    protected void initView(View mRootView) {
         mContext = getActivity();
-        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, mRootView);
+    }
 
+    @Override
+    protected void initData() {
         init();
+    }
 
-        return rootView;
+    @Override
+    protected boolean setIsRealTimeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected int providelayoutId() {
+        return R.layout.fragment_course_introduce;
     }
 
     private void init () {

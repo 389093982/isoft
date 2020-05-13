@@ -5,14 +5,17 @@ import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
+@ToString
 public class CommentResponse extends BaseResponse {
     private List<Comment> comments;
     private Paginator paginator;
 
     @Data
+    @ToString
     public class Comment {
 
         private String comment_type;
@@ -37,6 +40,7 @@ public class CommentResponse extends BaseResponse {
     }
 
     @Data
+    @ToString
     public class Paginator {
 
         private int currpage;
