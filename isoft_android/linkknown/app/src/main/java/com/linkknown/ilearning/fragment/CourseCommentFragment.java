@@ -3,6 +3,7 @@ package com.linkknown.ilearning.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CommentResponse;
+import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.DisplayUtil;
@@ -33,6 +36,9 @@ import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
 
@@ -50,6 +56,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     public SwipeRefreshLayout refreshLayout;
     @BindView(R.id.addComment)
     public TextView addComment;
+    @BindView(R.id.moreOperate)
+    public TextView moreOperate;
 
     // 评论列表适配器
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
@@ -137,6 +145,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     private void init () {
         addComment.setOnClickListener(this);
+        moreOperate.setOnClickListener(this);
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         courseCommentSection = new CourseCommentSection(mContext, displayComments);
         sectionedRecyclerViewAdapter.addSection(courseCommentSection);
@@ -170,15 +179,81 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addComment:
-                ToastUtil.showText(mContext, "添加评论操作~~~");
-                showDialog();
+                showEditCommentDialog();
+                break;
+            case R.id.moreOperate:
+                showMoreDialog();
                 break;
             default:
                 break;
         }
     }
 
-    private void showDialog() {
+    private void showEditCommentDialog () {
+        Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_content_comment, null);
+        bottomDialog.setContentView(contentView);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 16f);
+        params.bottomMargin = DisplayUtil.dp2px(mContext, 8f);
+        contentView.setLayoutParams(params);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
+
+        bindEditCommentEvent(bottomDialog);
+    }
+
+    private void bindEditCommentEvent (Dialog dialog) {
+        dialog.getWindow().findViewById(R.id.commentSubmitBtn).setOnClickListener(v -> {
+            TextView textView = dialog.getWindow().findViewById(R.id.commentText);
+            String content = textView.getText().toString();
+            int theme_pk = course_id;
+            String theme_type = "course_theme_type";
+            String comment_type = "comment";
+            int parent_id = 0;  // 一级评论
+            int org_parent_id = 0;
+            String refer_user_name = "阿猫阿狗";
+            LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new io.reactivex.Observer<EditCommentResponse>() {
+
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(EditCommentResponse editCommentResponse) {
+                            if (editCommentResponse.isSuccess()) {
+                                // 对话框隐藏
+                                dialog.dismiss();
+                                refreshLayout.setRefreshing(true);
+                                // 重新加载数据
+                                loadData();
+                            } else {
+                                Log.e("onNext =>", "系统异常,请联系管理员~");
+                                ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("onError =>", e.getMessage());
+                            ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+
+        });
+    }
+
+    private void showMoreDialog() {
         Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_content_circle, null);
         bottomDialog.setContentView(contentView);

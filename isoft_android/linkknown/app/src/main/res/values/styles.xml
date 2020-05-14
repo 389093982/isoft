@@ -100,6 +100,11 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!--
+        在对话框中的按钮需要MD风格的波纹效果的话，对话框的style的parent需要设定parent="@style/Base.V7.Theme.AppCompat.Light.Dialog"，否则没有效果。
+        同时将对话框所在window的标题去掉。android:windowBackground属性一定要设置成透明，否则自定义形状的对话框背景就是默认的白色了。
+        如果不设置为透明，比如我们通常要设置的圆角对话框就没有效果。
+    -->
     <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

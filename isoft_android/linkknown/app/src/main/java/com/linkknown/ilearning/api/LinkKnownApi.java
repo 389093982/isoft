@@ -5,6 +5,7 @@ import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
+import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
@@ -64,6 +65,17 @@ public interface LinkKnownApi {
     Observable<CommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
                                                          @Query("theme_type") String theme_type,
                                                          @Query("org_parent_id") int org_parent_id);
+
+    // 新增评论接口
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/AddComment")
+    Observable<EditCommentResponse> addComment(@Query("theme_pk") int theme_pk,
+                                               @Query("theme_type") String theme_type,
+                                               @Query("comment_type") String comment_type,
+                                               @Query("content") String content,
+                                               @Query("org_parent_id") int org_parent_id,
+                                               @Query("parent_id") int parent_id,
+                                               @Query("refer_user_name") String refer_user_name);
+
     // 查询用户收藏列表
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList")
     Observable<FavoriteResponse> getUserFavoriteList(@Query("user_name") String user_name,
@@ -72,5 +84,6 @@ public interface LinkKnownApi {
     // 生成验证码接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode")
     Observable<CreateVerifyCodeResponse> createVerifyCode(@Query("username") String username);
+
 
 }
