@@ -15,7 +15,6 @@ public class CommentResponse extends BaseResponse {
     private Paginator paginator;
 
     @Data
-    @ToString
     public class Comment {
 
         private String comment_type;

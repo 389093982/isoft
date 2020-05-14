@@ -11,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.diff.CommonDiffCallback;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CommentResponse;
@@ -26,7 +28,10 @@ import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,11 +106,17 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         loadData();
     }
 
+    // 建议使用 DiffUtil 进行局部刷新
+//    // 加载第一页要先清空
+//    displayComments.clear();
+//    // list 清空同时也要刷新 adapter
+//    sectionedRecyclerViewAdapter.notifyDataSetChanged();
     private void loadData () {
-        // 加载第一页要先清空
+        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
         displayComments.clear();
-        // list 清空同时也要刷新 adapter
-        sectionedRecyclerViewAdapter.notifyDataSetChanged();
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+
         loadNextPageData(1);
     }
 
