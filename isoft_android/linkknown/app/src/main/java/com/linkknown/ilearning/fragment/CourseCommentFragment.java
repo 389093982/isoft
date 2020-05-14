@@ -15,6 +15,7 @@ import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,10 +77,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initData() {
-        // 加载数据
-        loadData();
         // 绑定数据
         bindPageData(1);
+        // 加载数据
+        loadData();
     }
 
     private void loadData () {
@@ -89,8 +90,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
     }
 
     private void loadNextPageData(int current_page) {
-        CommentService.filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, 10);
         bindPageData(current_page);
+        CommentService.filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, 10);
     }
 
     // 绑定分页数据
@@ -107,7 +108,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
                     courseCommentSection.setState(Section.State.LOADED);
                     // footer 设置加载完成，到最后一页了显示加载到底
                     sectionAdapter.notifyFooterChanged(
-                            paginator.getLastpage() == paginator.getTotalpages()
+                            // 是最后一页了
+                            paginator.getCurrpage() >= paginator.getTotalpages()
                                     ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
                                     : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 } else {
@@ -115,13 +117,13 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
                     courseCommentSection.setState(Section.State.FAILED);
                     sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 }
-                sectionedRecyclerViewAdapter.notifyDataSetChanged();
+                sectionAdapter.notifyAllItemsChanged();
                 // 有数据回来则取消刷新
                 refreshLayout.setRefreshing(false);
             };
 
             observerMap.put(current_page, observer);
-            LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observeSticky(this, observer);
+            LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observe(this, observer);
         }
    }
 

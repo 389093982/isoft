@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CommentResponse;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.List;
@@ -64,6 +65,10 @@ public class CourseCommentSection extends Section {
     }
 
     @Override
+    public void onBindFooterViewHolder(RecyclerView.ViewHolder holder) {
+    }
+
+    @Override
     public void onBindFooterViewHolder(RecyclerView.ViewHolder holder, List<Object> payloads) {
         FooterViewHolder viewHolder = (FooterViewHolder) holder;
         // 初始状态全部隐藏
@@ -84,16 +89,6 @@ public class CourseCommentSection extends Section {
                 break;
             default:
                 break;
-        }
-
-        if (payload == PAYLOAD_FOOTER_LOADING) {
-            this.setHasFooter(true);
-            viewHolder.loadingDataLayout.setVisibility(View.VISIBLE);
-        } else if (payload == PAYLOAD_FOOTER_LOADED) {
-            this.setHasFooter(false);
-        } else if (payload == PAYLOAD_FOOTER_LOADED_NO_MORE) {
-            this.setHasFooter(true);
-            viewHolder.noMoreDataLayout.setVisibility(View.VISIBLE);
         }
     }
 
