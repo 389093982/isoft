@@ -102,6 +102,7 @@ export const FilterVoteTags = (params) => ajax(BASE_URL + '/iwork/httpservice/is
 export const queryFavoriteCount = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount", params, 'GET');
 export const IsFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/IsFavorite", params, 'GET');
 export const ToggleFavorite = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ToggleFavorite", params, 'GET');// 切换收藏点赞
+export const QueryPageFileUploadLog = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryPageFileUploadLog", params, 'GET');// 查看文件上传日志
 
 
 //【Advise模块】***************************************************************************************************

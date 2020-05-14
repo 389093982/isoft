@@ -1,13 +1,23 @@
 <template>
-  <div style="margin: 10px;">
-    <ISimpleLeftRightRow>
-      <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
-    </ISimpleLeftRightRow>
+  <div>
+
+    <div>
+      <Row>
+        <Col span="6">
+          <Input v-model.trim="search" style="width: 200px"/>
+          <Button type="primary" shape="circle" icon="ios-search" @click="refreshLoginRecordList"></Button>
+        </Col>
+        <Col span="18" style="position: relative;top: -10px;">
+          <!--分页-->
+          <div style="text-align: center;">
+            <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+          </div>
+        </Col>
+      </Row>
+    </div>
 
     <Table :columns="columns1" :data="loginRecords" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer
-          :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+
   </div>
 </template>
 
@@ -95,12 +105,6 @@
         this.offset = pageSize;
         this.refreshLoginRecordList();
       },
-      handleSearch(data) {
-        this.offset = 10;
-        this.current_page = 1;
-        this.search = data;
-        this.refreshLoginRecordList();
-      }
     },
     mounted: function () {
       this.refreshLoginRecordList();

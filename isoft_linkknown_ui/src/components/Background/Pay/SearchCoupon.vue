@@ -3,12 +3,12 @@
 
     <div>
       <Row>
-        <Col span="14" style="position: relative;top: -10px;">
-          <Input v-model.trim="activity_id" placeholder="活动ID" style="width: 180px"/>
-          <Input v-model.trim="coupon_id" placeholder="券ID" style="width: 200px"/>
+        <Col span="8" style="position: relative;top: -10px;">
+          <Input v-model.trim="activity_id" placeholder="活动ID" style="width: 150px"/>
+          <Input v-model.trim="coupon_id" placeholder="券ID" style="width: 150px"/>
           <Button type="primary" shape="circle" icon="ios-search" @click="refreshPayCoupon"></Button>
         </Col>
-        <Col span="10" style="position: relative;top: -10px;">
+        <Col span="16" style="position: relative;top: -10px;">
           <!--分页-->
           <div style="text-align: center;">
             <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
