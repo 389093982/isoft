@@ -236,6 +236,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         // activity 向 fragment 传参
         Bundle bundle = new Bundle();
         bundle.putInt("course_id", courseDetailResponse.getCourse().getId());
+        bundle.putString("course_author", courseDetailResponse.getCourse().getCourse_author());
         courseCommentFragment.setArguments(bundle);
 
         fragments.add(courseIntroduceFragment);

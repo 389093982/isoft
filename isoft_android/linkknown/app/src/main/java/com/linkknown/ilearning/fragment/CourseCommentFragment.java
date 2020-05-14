@@ -47,6 +47,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private RecyclerView commentRecyclerView;
 
     private int course_id;
+    private String course_author;
     // 当前评论页面评论的分页信息
     private CommentResponse.Paginator paginator;
     // 当前评论页面显示的评论数据
@@ -86,6 +87,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             course_id = bundle.getInt("course_id");
+            course_author = bundle.getString("course_author");
         }
         // 初始化组件
         init();
@@ -102,6 +104,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private void loadData () {
         // 加载第一页要先清空
         displayComments.clear();
+        // list 清空同时也要刷新 adapter
+        sectionedRecyclerViewAdapter.notifyDataSetChanged();
         loadNextPageData(1);
     }
 
@@ -211,9 +215,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
             int theme_pk = course_id;
             String theme_type = "course_theme_type";
             String comment_type = "comment";
-            int parent_id = 0;  // 一级评论
+            int parent_id = 0;                          // 一级评论
             int org_parent_id = 0;
-            String refer_user_name = "阿猫阿狗";
+            String refer_user_name = course_author;     // 被评论人
             LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
