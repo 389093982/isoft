@@ -1,8 +1,13 @@
 package com.linkknown.ilearning.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +20,7 @@ import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
+import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
@@ -28,7 +34,7 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class CourseCommentFragment extends BaseLazyLoadFragment {
+public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
 
     private Context mContext;
 
@@ -42,6 +48,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.addComment)
+    public TextView addComment;
 
     // 评论列表适配器
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
@@ -128,6 +136,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
    }
 
     private void init () {
+        addComment.setOnClickListener(this);
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         courseCommentSection = new CourseCommentSection(mContext, displayComments);
         sectionedRecyclerViewAdapter.addSection(courseCommentSection);
@@ -155,6 +164,31 @@ public class CourseCommentFragment extends BaseLazyLoadFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.addComment:
+                ToastUtil.showText(mContext, "添加评论操作~~~");
+                showDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showDialog() {
+        Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_content_circle, null);
+        bottomDialog.setContentView(contentView);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
+        params.width = getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 16f);
+        params.bottomMargin = DisplayUtil.dp2px(mContext, 8f);
+        contentView.setLayoutParams(params);
+        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
+        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        bottomDialog.show();
     }
 }
 
