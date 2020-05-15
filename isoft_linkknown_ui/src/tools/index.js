@@ -420,8 +420,8 @@ export function handleSpecial(data) {
   // 6. # 表示书签 %23
   // 7. & URL 中指定的参数间的分隔符 %26
   // 8. = URL 中指定参数的值 %3D
-  data = data.replace(/\+/g, "%2B");
   data = data.replace(/\%/g, "%25");
+  data = data.replace(/\+/g, "%2B");
   data = data.replace(/\#/g, "%23");
   data = data.replace(/\&/g, "%26");
   return data;

@@ -79,7 +79,7 @@
   import {EditCourse, ShowCourseDetail,fileUploadUrl} from "../../../api"
   import ChooseHotCourseType from "../CourseType/ChooseHotCourseType"
   import IBeautifulCard from "../../Common/card/IBeautifulCard"
-  import {checkEmpty,validatePatternForString} from "../../../tools";
+  import {checkEmpty,validatePatternForString,handleSpecial} from "../../../tools";
   import IFileUpload from "../../Common/file/IFileUpload"
 
   export default {
@@ -191,7 +191,7 @@
       uploadComplete: async function (data) {
         if (data.status === "SUCCESS") {
           if (data.status === "SUCCESS") {
-            this.formValidate.small_image = data.fileServerPath;
+            this.formValidate.small_image = handleSpecial(data.fileServerPath);
           }
         }
       },
