@@ -140,7 +140,7 @@ func (this *WorkController) WriteResponseHeader(key, value string) {
 	this.Ctx.ResponseWriter.Header().Add(key, value)
 }
 
-func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string, err error) {
+func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFileName, fileName, tempFilePath string,fileSize int64, err error) {
 	defer func() {
 		if err1 := recover(); err1 != nil {
 			err = errorutil.ToError(err1)
@@ -155,6 +155,8 @@ func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFil
 	if h.Size > file_size {
 		panic("文件大小超过上传限制!")
 	}
+	//得到文件实际大小
+	fileSize = h.Size;
 	//关闭上传的文件，不然的话会出现临时文件不能清除的情况
 	defer f.Close()
 	tempFileName = stringutil.RandomUUID() + path.Ext(h.Filename)
@@ -164,5 +166,5 @@ func (this *WorkController) SaveFile(suffixs []string, file_size int64) (tempFil
 	tempFilePath = path.Join(sysconfig.FileSavePath, tempFileName)
 	err = this.SaveToFile("file", tempFilePath)
 	checkError(err)
-	return tempFileName, fileName, tempFilePath, nil
+	return tempFileName, fileName, tempFilePath,fileSize, nil
 }

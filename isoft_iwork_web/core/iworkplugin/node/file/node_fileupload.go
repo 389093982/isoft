@@ -27,7 +27,7 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 	fileServerAddr := this.TmpDataMap[iworkconst.STRING_PREFIX+"fileServerAddr"].(string)
 	suffixs := strings.Split(suffixStr, ",")
 	file_size := this.TmpDataMap[iworkconst.INT_PREFIX+"file_size"].(int64)
-	tempFileName, fileName, tempFilePath, err := fileUpload.SaveFile(suffixs, file_size)
+	tempFileName, fileName, tempFilePath,fileRealSize, err := fileUpload.SaveFile(suffixs, file_size)
 	if err != nil {
 		if catchError := this.TmpDataMap[iworkconst.BOOL_PREFIX+"throwInsensitiveError?"].(string); catchError == "true" {
 			panic(&interfaces.InsensitiveError{Error: errors.New(err.Error())})
@@ -38,7 +38,7 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 	paramMap := map[string]interface{}{
 		"fileName":       fileName,
 		"tempFileName":   tempFileName,
-		"fileSize":   		file_size,
+		"fileSize":   		fileRealSize, //文件实际大小
 		"fileExt":        path.Ext(fileName),
 		"tempFilePath":   tempFilePath,
 		"fileServerAddr": fileServerAddr,
