@@ -106,7 +106,7 @@ func (this *DoResponseReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels
 	paramMap := map[int][]string{
 		1: {"fileName", "最终的上传文件名称"},
 		2: {"fileServerPath", "最终的服务器地址"},
-		3: {"fileSize", "最终的服务器地址"},
+		3: {"fileSize", "文件实际大小"},
 		4: {"duration?", "视频时长"},
 		5: {"errorMsg?", "异常信息"},
 	}
