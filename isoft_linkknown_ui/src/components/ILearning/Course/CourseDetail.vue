@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Row>
+    <div style="display: flex">
       <!-- 左侧课程详情部分 -->
-      <Col span="16" style="padding-right: 5px;">
+      <div style="width: 65%;background-color: white">
         <div class="isoft_bg_white isoft_pd20">
           <!-- 头部 -->
           <Row class="header">
@@ -114,9 +114,9 @@
           <!-- 评论模块 -->
           <IEasyComment :theme_pk="course.id" theme_type="course_theme_type" style="margin-top: 50px;"/>
         </div>
-      </Col>
+      </div>
 
-      <Col span="8">
+      <div style="width: 34%;background-color: white;margin: 0 0 0 5px">
         <div class="isoft_bg_white" style="padding: 5px 0 0 5px ">
           <!--指定券:减免-->
           <Coupon v-if="designated_reduce_coupon"
@@ -151,8 +151,8 @@
         <div class="isoft_bg_white">
           <HotRecommend showMode="list" style="margin-left: 2px;"/>
         </div>
-      </Col>
-    </Row>
+      </div>
+    </div>
   </div>
 </template>
 

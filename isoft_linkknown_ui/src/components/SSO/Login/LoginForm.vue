@@ -74,7 +74,7 @@
         this.inputPasswordType=true;
       },
       storageRedirectUrl: function (){
-        let redirectUrl = "http://www.linkknon.com";
+        let redirectUrl = "http://www.linkknown.com";
         var arr = strSplit(window.location.href, "?redirectUrl=");
         if (arr.length === 2) {
           redirectUrl = arr[1];
