@@ -38,6 +38,7 @@ func (this *DoReceiveFileNode) Execute(trackingId string) {
 	paramMap := map[string]interface{}{
 		"fileName":       fileName,
 		"tempFileName":   tempFileName,
+		"fileSize":   		file_size,
 		"fileExt":        path.Ext(fileName),
 		"tempFilePath":   tempFilePath,
 		"fileServerAddr": fileServerAddr,
@@ -68,7 +69,7 @@ func (this *DoReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 }
 
 func (this *DoReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"fileName", "tempFileName", "fileExt", "tempFilePath", "fileServerAddr", "duration"})
+	return this.BPOS1([]string{"fileName", "tempFileName","fileSize", "fileExt", "tempFilePath", "fileServerAddr", "duration"})
 }
 
 func (this *DoReceiveFileNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
@@ -111,5 +112,5 @@ func (this *DoResponseReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels
 }
 
 func (this *DoResponseReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"fileName", "fileServerPath", "duration", "errorMsg"})
+	return this.BPOS1([]string{"fileName", "fileServerPath","fileSize", "duration", "errorMsg"})
 }
