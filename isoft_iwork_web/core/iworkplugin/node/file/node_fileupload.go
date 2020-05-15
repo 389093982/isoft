@@ -112,5 +112,5 @@ func (this *DoResponseReceiveFileNode) GetDefaultParamInputSchema() *iworkmodels
 }
 
 func (this *DoResponseReceiveFileNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return this.BPOS1([]string{"fileName", "fileServerPath","fileSize", "duration", "errorMsg"})
+	return this.BPOS1([]string{"fileName", "fileServerPath", "duration", "errorMsg"})
 }
