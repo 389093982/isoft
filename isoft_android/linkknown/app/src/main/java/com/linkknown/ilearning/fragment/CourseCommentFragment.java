@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.diff.CommonDiffCallback;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -28,10 +29,7 @@ import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,15 +105,11 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     }
 
     // 建议使用 DiffUtil 进行局部刷新
-//    // 加载第一页要先清空
-//    displayComments.clear();
-//    // list 清空同时也要刷新 adapter
-//    sectionedRecyclerViewAdapter.notifyDataSetChanged();
     private void loadData () {
-        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
-        displayComments.clear();
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
-        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+//        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
+//        displayComments.clear();
+//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+//        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
 
         loadNextPageData(1);
     }
@@ -130,7 +124,15 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         // 防止同一页重复订阅
         if (!observerMap.containsKey(current_page)) {
             Observer<CommentResponse> observer = commentResponse -> {
-                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
+                // 存储旧的集合
+                List<CommentResponse.Comment> oldList = new ArrayList<>(
+                        current_page == 1 ? displayComments.subList(0, Math.min(displayComments.size(), Constants.DEFAULT_PAGE_SIZE)) : displayComments
+                );
+                if (current_page == 1) {
+                    displayComments.clear();
+                }
+
+//                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
                 if (commentResponse.isSuccess()) {
                     // 合并数据，当数据量过大时,需要先进行 clear 一部分
                     displayComments.addAll(commentResponse.getComments());
@@ -138,17 +140,19 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                     // 设置内容状态
                     courseCommentSection.setState(Section.State.LOADED);
                     // footer 设置加载完成，到最后一页了显示加载到底
-                    sectionAdapter.notifyFooterChanged(
-                            // 是最后一页了
-                            paginator.getCurrpage() >= paginator.getTotalpages()
-                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
-                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
+//                    sectionAdapter.notifyFooterChanged(
+//                            // 是最后一页了
+//                            paginator.getCurrpage() >= paginator.getTotalpages()
+//                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
+//                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 } else {
                     // 设置内容状态
                     courseCommentSection.setState(Section.State.FAILED);
-                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
+//                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 }
-                sectionAdapter.notifyAllItemsChanged();
+//                sectionAdapter.notifyAllItemsChanged();
+                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+                diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
                 // 有数据回来则取消刷新
                 refreshLayout.setRefreshing(false);
             };
@@ -156,7 +160,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
             observerMap.put(current_page, observer);
             LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observe(this, observer);
         }
-   }
+    }
 
     private void init () {
         addComment.setOnClickListener(this);

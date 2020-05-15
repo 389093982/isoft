@@ -130,12 +130,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void initHotCategorysViewPage (List<Catalog> listData) {
         LayoutInflater inflater = LayoutInflater.from(this.getContext());
-        int totalPage = (int) Math.ceil(listData.size() * 1.0 / Constants.PAGE_SIZE);
+        int totalPage = (int) Math.ceil(listData.size() * 1.0 / Constants.DEFAULT_PAGE_SIZE);
         viewPagerList = new ArrayList<>();
         for (int i = 0; i < totalPage; i++) {
             //每个页面都是inflate出一个新实例
             GridView gridView = (GridView) inflater.inflate(R.layout.gridview_layout, viewPager, false);
-            gridView.setAdapter(new HomePageGridViewAdapter(this.getContext(), listData, i, Constants.PAGE_SIZE));
+            gridView.setAdapter(new HomePageGridViewAdapter(this.getContext(), listData, i, Constants.DEFAULT_PAGE_SIZE));
             //每一个GridView作为一个View对象添加到ViewPager集合中
             viewPagerList.add(gridView);
         }
