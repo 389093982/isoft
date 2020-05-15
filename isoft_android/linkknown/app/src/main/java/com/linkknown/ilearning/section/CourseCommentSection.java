@@ -6,11 +6,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CommentResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.List;
@@ -26,10 +27,11 @@ public class CourseCommentSection extends Section {
     public static final int PAYLOAD_FOOTER_LOADED = 1;
     public static final int PAYLOAD_FOOTER_LOADED_NO_MORE = 3;
 
+    private ClickListener clickListener;
     private List<CommentResponse.Comment> itemList;
     private Context mContext;
 
-    public CourseCommentSection(Context mContext, List<CommentResponse.Comment> itemList) {
+    public CourseCommentSection(Context mContext, List<CommentResponse.Comment> itemList, ClickListener clickListener) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.item_course_comment)
                 .footerResourceId(R.layout.layout_footerview)
@@ -37,6 +39,7 @@ public class CourseCommentSection extends Section {
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -57,6 +60,8 @@ public class CourseCommentSection extends Section {
         viewHolder.commentContentText.setText(comment.getContent());
         viewHolder.nickNameText.setText(comment.getNick_name());
         UIUtils.setImage(mContext, viewHolder.headerIconView, comment.getSmall_icon());
+        viewHolder.deleteIcon.setVisibility(LoginUtil.isLoginUserName(mContext, comment.getUser_name()) ? View.VISIBLE : View.GONE);
+        viewHolder.deleteIcon.setOnClickListener(v -> clickListener.onItemRootViewClicked(this, viewHolder.getAdapterPosition()));
     }
 
     @Override
@@ -107,12 +112,14 @@ public class CourseCommentSection extends Section {
         private TextView commentContentText;
         private TextView nickNameText;
         private ImageView headerIconView;
+        private TextView deleteIcon;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             commentContentText = itemView.findViewById(R.id.commentContentText);
             nickNameText = itemView.findViewById(R.id.nickNameText);
             headerIconView = itemView.findViewById(R.id.headerIcon);
+            deleteIcon = itemView.findViewById(R.id.deleteIcon);
         }
     }
 
@@ -132,5 +139,9 @@ public class CourseCommentSection extends Section {
         public FailedViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public static interface ClickListener {
+        void onItemRootViewClicked(@NonNull final CourseCommentSection section, final int itemAdapterPosition);
     }
 }

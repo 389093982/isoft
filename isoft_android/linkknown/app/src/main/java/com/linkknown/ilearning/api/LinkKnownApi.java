@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.api;
 
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
@@ -75,6 +76,14 @@ public interface LinkKnownApi {
                                                @Query("org_parent_id") int org_parent_id,
                                                @Query("parent_id") int parent_id,
                                                @Query("refer_user_name") String refer_user_name);
+
+    // 删除评论接口
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/deleteComment")
+    Observable<BaseResponse> deleteComment(@Query("level") int level,
+                                           @Query("id") int id,
+                                           @Query("theme_pk") int theme_pk,
+                                           @Query("theme_type") String theme_type,
+                                           @Query("org_parent_id") int org_parent_id);
 
     // 查询用户收藏列表
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList")

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +20,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.diff.CommonDiffCallback;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.listener.OnLoadMoreListener;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +49,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.Query;
 
-public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
+public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener,CourseCommentSection.ClickListener {
 
     private Context mContext;
 
@@ -105,11 +113,16 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     }
 
     // 建议使用 DiffUtil 进行局部刷新
+//    // 加载第一页要先清空
+//    displayComments.clear();
+//    // list 清空同时也要刷新 adapter
+//    sectionedRecyclerViewAdapter.notifyDataSetChanged();
     private void loadData () {
-//        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
-//        displayComments.clear();
-//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
-//        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+        // 加载第一页要先清空
+        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
+        displayComments.clear();
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
 
         loadNextPageData(1);
     }
@@ -124,15 +137,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         // 防止同一页重复订阅
         if (!observerMap.containsKey(current_page)) {
             Observer<CommentResponse> observer = commentResponse -> {
-                // 存储旧的集合
-                List<CommentResponse.Comment> oldList = new ArrayList<>(
-                        current_page == 1 ? displayComments.subList(0, Math.min(displayComments.size(), Constants.DEFAULT_PAGE_SIZE)) : displayComments
-                );
-                if (current_page == 1) {
-                    displayComments.clear();
-                }
-
-//                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
+                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
                 if (commentResponse.isSuccess()) {
                     // 合并数据，当数据量过大时,需要先进行 clear 一部分
                     displayComments.addAll(commentResponse.getComments());
@@ -140,19 +145,17 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                     // 设置内容状态
                     courseCommentSection.setState(Section.State.LOADED);
                     // footer 设置加载完成，到最后一页了显示加载到底
-//                    sectionAdapter.notifyFooterChanged(
-//                            // 是最后一页了
-//                            paginator.getCurrpage() >= paginator.getTotalpages()
-//                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
-//                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
+                    sectionAdapter.notifyFooterChanged(
+                            // 是最后一页了
+                            paginator.getCurrpage() >= paginator.getTotalpages()
+                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
+                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 } else {
                     // 设置内容状态
                     courseCommentSection.setState(Section.State.FAILED);
-//                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
+                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
                 }
-//                sectionAdapter.notifyAllItemsChanged();
-                DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
-                diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+                sectionAdapter.notifyAllItemsChanged();
                 // 有数据回来则取消刷新
                 refreshLayout.setRefreshing(false);
             };
@@ -166,7 +169,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         addComment.setOnClickListener(this);
         moreOperate.setOnClickListener(this);
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        courseCommentSection = new CourseCommentSection(mContext, displayComments);
+        courseCommentSection = new CourseCommentSection(mContext, displayComments, this);
         sectionedRecyclerViewAdapter.addSection(courseCommentSection);
 
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -284,5 +287,40 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         bottomDialog.show();
     }
+
+    @Override
+    public void onItemRootViewClicked(@NonNull CourseCommentSection section, int itemAdapterPosition) {
+        CommentResponse.Comment comment = displayComments.get(itemAdapterPosition);
+        int level = comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
+        int id = comment.getId();                           // 评论 id
+        int org_parent_id = comment.getOrg_parent_id();     // 父评论 id
+        int theme_pk = course_id;                           // 课程 id
+        String theme_type = "course_theme_type";
+        LinkKnownApiFactory.getLinkKnownApi().deleteComment(level, id, theme_pk, theme_type, org_parent_id)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            // 局部刷新
+                            List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
+                            displayComments.remove(itemAdapterPosition);
+                            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+                            diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+                            ToastUtil.showText(mContext, "删除成功！");
+                        } else {
+                            ToastUtil.showText(mContext, "删除失败！");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "删除失败！");
+                    }
+                });
+    }
 }
+
 
