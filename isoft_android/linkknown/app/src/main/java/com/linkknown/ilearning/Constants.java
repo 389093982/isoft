@@ -21,6 +21,8 @@ public class Constants {
     public static final String USER_SHARED_PREFERENCES_USER_NAME = "USER_SHARED_PREFERENCES_USER_NAME";
     public static final String USER_SHARED_PREFERENCES_PASSWD = "USER_SHARED_PREFERENCES_PASSWD";
 
+    public static final String USER_NAME = "USER_NAME";
+
     public static final int NEWS_CHANNEL_ENABLE = 1;
     public static final int NEWS_CHANNEL_DISABLE = 0;
 }

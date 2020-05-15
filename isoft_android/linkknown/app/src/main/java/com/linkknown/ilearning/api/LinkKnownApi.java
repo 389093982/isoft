@@ -10,6 +10,7 @@ import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
+import com.linkknown.ilearning.model.UserDetailResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -30,6 +31,11 @@ public interface LinkKnownApi {
     // 查询课程详情
     @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp")
     Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id);
+
+
+    // 登录接口
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetUserDetail")
+    Observable<UserDetailResponse> getUserDetail(@Query("userName") String userName);
 
     // 登录接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/PostLogin")
