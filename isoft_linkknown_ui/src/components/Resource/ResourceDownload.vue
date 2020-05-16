@@ -56,7 +56,7 @@
 </template>
 
 <script>
-  import {DownloadResourceFile, GetResourceInfo} from "../../api"
+  import {IsEnoughPoints,DownloadResourceFile, GetResourceInfo} from "../../api"
   import {CheckHasLoginConfirmDialog} from "../../tools/index"
 
   export default {
@@ -70,8 +70,13 @@
       openVip:function(){
         CheckHasLoginConfirmDialog(this, {path: '/vipcenter/vipIntroduction'});
       },
-      downloadResource: function (resource) {
-        DownloadResourceFile({id: resource.id});
+      downloadResource:async function (resource) {
+        const result = await IsEnoughPoints({id: resource.id});
+        if (result.status === 'SUCCESS') {
+          DownloadResourceFile({id: resource.id});
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
       },
       refreshResourceInfo: async function (id) {
         const result = await GetResourceInfo({id: id});

@@ -16,7 +16,9 @@
           <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
         </div>
         <div>
-          入驻时间：<Time :time="user.created_time" :interval="1"/>
+          入驻时间:<Time :time="user.created_time" :interval="1"/>
+          <i><span style="font-size: 12px;margin-left: 10px">积分:{{user.user_points}}</span></i>
+          <i v-if="user.vip_level>0"><span style="font-size: 12px;margin-left: 10px">VIP</span></i>
         </div>
         <div>
           <i>个性签名:
