@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <div style="width: 30.5%;margin: 0 0 0 5px ;">
+    <div style="width: 30.5%;margin: 0 0 0 5px ;background-color: white">
       <div>
         <WaitYourAnswer style="margin-bottom: 5px"></WaitYourAnswer>
         <ExpertWall></ExpertWall>

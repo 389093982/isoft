@@ -136,7 +136,8 @@ export const GetJobApplyList = (params) => ajax(BASE_URL + '/iwork/httpservice/i
 export const EditResource = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditResource', params, "POST");
 export const FilterPageResourceList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterPageResourceList', params, "POST");
 export const GetResourceInfo = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetResourceInfo', params, "POST");
-export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DownloadResourceFile', params, "GET");
+export const IsEnoughPoints = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/IsEnoughPoints', params, "POST"); //下载之前先查看积分
+export const DownloadResourceFile = (params) => download(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/DownloadResourceFile', params, "GET"); // 下载
 export const RecommendResource = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/RecommendResource', params, "POST");
 
 
