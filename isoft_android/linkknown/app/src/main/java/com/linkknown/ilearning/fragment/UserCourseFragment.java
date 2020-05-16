@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -50,14 +51,27 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
         userName = this.getArguments().getString(Constants.USER_NAME);
 
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList, () -> {
-            Log.i("initView", "execute method: UserCourseFragment initView loadPageData start");
-            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
-                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
+        CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList
+//                , () -> {
+//            Log.i("initView", "execute method: UserCourseFragment initView loadPageData start");
+//            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+//                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
+//            }
+//        }
+        );
+        sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                // header 显示 2 行
+                if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                    return 2;
+                }
+                return 1;
             }
         });
-        sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(sectionedRecyclerViewAdapter);
 
 //        refreshLayout.setColorSchemeColors();

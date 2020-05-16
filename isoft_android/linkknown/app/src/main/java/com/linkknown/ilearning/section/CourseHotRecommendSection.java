@@ -6,19 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
-import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -26,27 +19,24 @@ import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
-import io.github.luizgrp.sectionedrecyclerviewadapter.utils.EmptyViewHolder;
 
 public class CourseHotRecommendSection extends Section {
 
     private List<CourseMetaResponse.CourseMeta> itemList;
     private Context mContext;
-    private CallBackListener listener;
 
-    public CourseHotRecommendSection(Context mContext, List<CourseMetaResponse.CourseMeta> itemList, CallBackListener listener) {
+    public CourseHotRecommendSection(Context mContext, List<CourseMetaResponse.CourseMeta> itemList) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.layout_recycleview)
+                .itemResourceId(R.layout.layout_region_recommend_card_item)
                 .headerResourceId(R.layout.layout_region_recommend_hot_head)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
-        this.listener = listener;
     }
 
     @Override
     public int getContentItemsTotal() {
-        return 1;
+        return itemList.size();
     }
 
     @Override
@@ -60,43 +50,17 @@ public class CourseHotRecommendSection extends Section {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (CollectionUtils.isNotEmpty(itemList)) {
             Log.i("onBindItemViewHolder", "execute method: CourseHotRecommendSection onBindItemViewHolder start");
-            ItemViewHolder itemHolder = (ItemViewHolder) holder;
+            ItemViewHolder viewHolder = (ItemViewHolder) holder;
+            CourseMetaResponse.CourseMeta courseMeta = itemList.get(position);
 
-            Log.i("multiTypeAdapter", "execute method: CourseHotRecommendSection new MultiTypeAdapter start");
-            MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-            multiTypeAdapter.register(CourseMetaResponse.CourseMeta.class, new MultiItemView<CourseMetaResponse.CourseMeta>() {
-                @NonNull
-                @Override
-                public int getLayoutId() {
-                    return R.layout.layout_region_recommend_card_item;
-                }
-
-                @Override
-                public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseMetaResponse.CourseMeta courseMeta, int i) {
-                    Log.i("onBindViewHolder", "execute method: CourseHotRecommendSection MultiTypeAdapter onBindViewHolder start");
-                    ImageView courseImageView = viewHolder.getConvertView().findViewById(R.id.courseImage);
-                    UIUtils.setImage(mContext, courseImageView, courseMeta.getSmall_image());
-                    viewHolder.setText(R.id.courseName, courseMeta.getCourse_name());
-                    viewHolder.setText(R.id.watchNumberText, courseMeta.getWatch_number() + "");
-                    viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
-
-                    courseImageView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
-                        intent.putExtra("course_id", courseMeta.getId());
-                        return intent;
-                    }));
-                }
-            });
-            multiTypeAdapter.setItems(itemList);
-            itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-            itemHolder.recyclerView.setAdapter(multiTypeAdapter);
-            Log.i("addOnScrollListener", "execute method: CourseHotRecommendSection addOnScrollListener start");
-//            itemHolder.recyclerView.addOnScrollListener(new OnLoadMoreListener() {
-//                @Override
-//                public void onLoadMore() {
-//                    Log.i("onLoadMore", "execute method: CourseHotRecommendSection onLoadMore start");
-//                    listener.onLoadMore();
-//                }
-//            });
+            UIUtils.setImage(mContext,  viewHolder.courseImage, courseMeta.getSmall_image());
+            viewHolder.courseName.setText(courseMeta.getCourse_name());
+            viewHolder.watchNumberText.setText(courseMeta.getWatch_number() + "");
+            viewHolder.courseNumberText.setText(courseMeta.getCourse_number() + "");
+            viewHolder.courseImage.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                intent.putExtra("course_id", courseMeta.getId());
+                return intent;
+            }));
         }
     }
 
@@ -113,11 +77,17 @@ public class CourseHotRecommendSection extends Section {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private RecyclerView recyclerView;
+        private ImageView courseImage;
+        private TextView courseName;
+        private TextView watchNumberText;
+        private TextView courseNumberText;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            recyclerView = itemView.findViewById(R.id.recyclerView);
+            courseImage = itemView.findViewById(R.id.courseImage);
+            courseName = itemView.findViewById(R.id.courseName);
+            watchNumberText = itemView.findViewById(R.id.watchNumberText);
+            courseNumberText = itemView.findViewById(R.id.courseNumberText);
         }
     }
 
@@ -131,7 +101,4 @@ public class CourseHotRecommendSection extends Section {
         }
     }
 
-    public interface CallBackListener {
-        void onLoadMore();
-    }
 }

@@ -51,14 +51,20 @@ public class IFavoritesActivity extends AppCompatActivity {
         LiveEventBus.get(Constants.COURSE_FAVORITE_PREFIX, CourseMetaResponse.class).observeSticky(this, courseMetaResponse -> {
             if (courseMetaResponse != null && CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
                 SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-                CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaResponse.getCourses(), new CourseHotRecommendSection.CallBackListener() {
+                CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaResponse.getCourses());
+                sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
-                    public void onLoadMore() {
-
+                    public int getSpanSize(int position) {
+                        // header 显示 2 行
+                        if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                            return 2;
+                        }
+                        return 1;
                     }
                 });
-                sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
-                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(sectionedRecyclerViewAdapter);
             }
         });

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -76,12 +77,7 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
         sectionAdapter = new SectionedRecyclerViewAdapter();
         courseClassifyBannerSection = new CourseClassifyBannerSection(bannerEntities);
         courseClassifyQuickSection = new CourseClassifyQuickSection(getActivity(), hotClassifies);
-        courseHotRecommendSection = new CourseHotRecommendSection(getActivity(), hotCourseMetas, new CourseHotRecommendSection.CallBackListener() {
-            @Override
-            public void onLoadMore() {
-
-            }
-        });
+        courseHotRecommendSection = new CourseHotRecommendSection(getActivity(), hotCourseMetas);
         sectionAdapter.addSection(courseClassifyBannerSection);
         sectionAdapter.addSection(courseClassifyQuickSection);
         sectionAdapter.addSection(courseHotRecommendSection);
@@ -90,7 +86,24 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
         sectionAdapter.addSection(courseHotRecommendSection);
         sectionAdapter.addSection(courseHotRecommendSection);
         sectionAdapter.addSection(courseHotRecommendSection);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (sectionAdapter.getSectionForPosition(position) instanceof CourseClassifyBannerSection) {
+                    return 2;
+                }
+                if (sectionAdapter.getSectionForPosition(position) instanceof CourseClassifyQuickSection) {
+                    return 2;
+                }
+                // header 显示 2 行
+                if (sectionAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(sectionAdapter);
     }
 
