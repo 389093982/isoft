@@ -25,4 +25,6 @@ public class Constants {
 
     public static final int NEWS_CHANNEL_ENABLE = 1;
     public static final int NEWS_CHANNEL_DISABLE = 0;
+
+    public static final String TIP_SYSTEM_ERROR = "系统异常，请联系管理员~";
 }

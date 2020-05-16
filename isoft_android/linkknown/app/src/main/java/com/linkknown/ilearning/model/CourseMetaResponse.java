@@ -14,6 +14,7 @@ public class CourseMetaResponse extends BaseResponse {
 
     @SerializedName(value = "courses", alternate = {"custom_tag_courses"})
     List<CourseMeta> courses;
+    private Paginator paginator;
 
     @Data
     @ToString

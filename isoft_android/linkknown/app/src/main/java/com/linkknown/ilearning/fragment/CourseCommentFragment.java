@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.diff.CommonDiffCallback;
@@ -27,13 +26,13 @@ import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
+import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.section.CourseCommentSection;
 import com.linkknown.ilearning.service.CommentService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +45,6 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.Query;
 
 public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener,CourseCommentSection.ClickListener {
 
@@ -57,7 +55,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private int course_id;
     private String course_author;
     // 当前评论页面评论的分页信息
-    private CommentResponse.Paginator paginator;
+    private Paginator paginator;
     // 当前评论页面显示的评论数据
     private List<CommentResponse.Comment> displayComments = new ArrayList<>();
 

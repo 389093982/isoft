@@ -27,6 +27,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.event.AppBarStateChangeEvent;
 import com.linkknown.ilearning.fragment.CourseCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
@@ -243,7 +244,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         fragments.add(courseCommentFragment);
         titles.add("简介");
         titles.add("评论(" + comments + ")");
-        VideoDetailsPagerAdapter mAdapter = new VideoDetailsPagerAdapter(getSupportFragmentManager(), fragments, titles);
+        CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()
         mViewPager.setOffscreenPageLimit(2);
@@ -286,31 +287,4 @@ public class CourseDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_video, menu);
         return true;
     }
-
-    public static class VideoDetailsPagerAdapter extends FragmentStatePagerAdapter {
-        private List<Fragment> fragments;
-        private List<String> titles;
-
-        VideoDetailsPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
-            super(fm);
-            this.fragments = fragments;
-            this.titles = titles;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
-    }
-
 }
