@@ -4,19 +4,16 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModel;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.LoginActivity;
-import com.linkknown.ilearning.api.LinkKnownApi;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
+import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.util.CheckParamUtil;
-import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +25,6 @@ import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import retrofit2.http.Query;
 
 // LiveData 在实体类里可以通知指定某个字段的数据更新
 // MutableLiveData 则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
@@ -108,7 +104,7 @@ public class UserService {
     }
 
     public static void logout (Context mContext) {
-        TokenHeaderInterceptor.TOKEN_STRING.set("");
+        HeaderInterceptor.TOKEN_STRING.set("");
         LoginUserResponse result = new LoginUserResponse();
         result.setErrorMsg("用户未登录！");
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
@@ -130,7 +126,7 @@ public class UserService {
                     public void onNext(LoginUserResponse loginUserResponse) {
                         if (loginUserResponse.isSuccess()) {
                             // 存储登录后的 tokenString
-                            TokenHeaderInterceptor.TOKEN_STRING.set(loginUserResponse.getTokenString());
+                            HeaderInterceptor.TOKEN_STRING.set(loginUserResponse.getTokenString());
 
                             LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(loginUserResponse);
                         } else {

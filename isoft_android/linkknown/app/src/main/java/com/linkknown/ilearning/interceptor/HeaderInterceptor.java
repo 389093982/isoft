@@ -9,7 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TokenHeaderInterceptor implements Interceptor {
+public class HeaderInterceptor implements Interceptor {
 
     // Atomic 解决线程安全问题
     // 不建议使用 static 变量,可能场景：退出程序不会清理 static,资源不足时会清理 static
@@ -29,6 +29,7 @@ public class TokenHeaderInterceptor implements Interceptor {
     }
 
     private Request.Builder setHeader(Request.Builder requestBuilder) {
+        requestBuilder = requestBuilder.header("clientType", "app");
         String tokenString = TOKEN_STRING.get();
         if (StringUtils.isNotEmpty(tokenString)) {
             requestBuilder = requestBuilder.header("tokenString", TOKEN_STRING.get());

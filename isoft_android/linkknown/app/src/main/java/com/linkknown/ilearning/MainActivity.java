@@ -31,7 +31,7 @@ import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.MoreFragment;
-import com.linkknown.ilearning.interceptor.TokenHeaderInterceptor;
+import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void autoLogin () {
         // 按返回并没有真正退出应用，TokenHeaderInterceptor.TOKEN_STRING 仍有值
         // 没有 tokenString 代表没有登录过
-        if (StringUtils.isEmpty(TokenHeaderInterceptor.TOKEN_STRING.get())) {
+        if (StringUtils.isEmpty(HeaderInterceptor.TOKEN_STRING.get())) {
             // 获取存储的用户名和密码
             SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
             String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 按返回键清空 tokenString
-            TokenHeaderInterceptor.TOKEN_STRING.set("");
+            HeaderInterceptor.TOKEN_STRING.set("");
         }
         return super.onKeyDown(keyCode, event);
     }
