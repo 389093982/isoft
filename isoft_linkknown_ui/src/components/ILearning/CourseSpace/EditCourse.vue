@@ -191,7 +191,7 @@
       uploadComplete: async function (data) {
         if (data.status === "SUCCESS") {
           if (data.status === "SUCCESS") {
-            this.formValidate.small_image = handleSpecial(data.fileServerPath);
+            this.formValidate.small_image = data.fileServerPath;
           }
         }
       },
@@ -202,6 +202,8 @@
               this.$Message.warning("请先上传课程封面！");
               return;
             }
+            // 在真正修改前做个处理
+            this.formValidate.small_image = handleSpecial(this.formValidate.small_image);
             const result = await EditCourse(this.formValidate);
             if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
