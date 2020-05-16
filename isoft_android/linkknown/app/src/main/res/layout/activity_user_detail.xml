@@ -36,7 +36,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageview"
+                        android:id="@+id/layoutBg"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:scaleType="centerCrop"
@@ -66,7 +66,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/user_name"
+                                android:id="@+id/nickNameText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
@@ -79,18 +79,20 @@
                                 android:layout_height="wrap_content" />
 
                             <ImageView
-                                android:id="@+id/user_sex"
+                                android:id="@+id/genderView"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_user_gay_border"/>
 
                             <Space
                                 android:layout_width="@dimen/default_tiny_padding"
                                 android:layout_height="wrap_content" />
 
                             <ImageView
-                                android:id="@+id/user_lv"
+                                android:id="@+id/vipLevel"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_lv0"/>
                         </LinearLayout>
 
 
@@ -173,7 +175,7 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/user_desc"
+                            android:id="@+id/userSignature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
@@ -187,7 +189,7 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/big_headerIcon"
+                        android:id="@+id/headerIcon"
                         android:layout_width="84dp"
                         android:layout_height="84dp"
                         android:layout_marginStart="10dp"
