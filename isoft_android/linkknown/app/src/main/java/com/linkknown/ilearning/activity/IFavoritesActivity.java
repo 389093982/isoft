@@ -44,7 +44,7 @@ public class IFavoritesActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        FavoriteService.getUserFavoriteList("389093982@qq.com", Constants.FAVORITE_TYPE_COURSE_PRAISE);
+        FavoriteService.getUserFavoriteList("389093982@qq.com", Constants.FAVORITE_TYPE_COURSE_COLLECT);
     }
 
     private void bindData () {

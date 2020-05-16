@@ -14,7 +14,7 @@ public class Constants {
     public static final String COURSE_COMMENT_PREFIX = "COURSE_COMMENT_PREFIX_";
 
     // 课程收藏类型
-    public static final String FAVORITE_TYPE_COURSE_PRAISE = "FAVORITE_TYPE_COURSE_PRAISE";
+    public static final String FAVORITE_TYPE_COURSE_COLLECT = "course_collect";
 
     // 用户信息相关
     public static final String USER_SHARED_PREFERENCES = "USER_SHARED_PREFERENCES";

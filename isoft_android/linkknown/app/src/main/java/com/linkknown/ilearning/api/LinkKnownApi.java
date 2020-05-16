@@ -8,6 +8,7 @@ import com.linkknown.ilearning.model.CourseSearchResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
+import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -51,6 +52,10 @@ public interface LinkKnownApi {
     // 课程搜索接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList")
     Observable<CourseSearchResponse> searchCourseList(@Query("search") String search);
+
+    // 根据 id 列表获取课程信息
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByIds")
+    Observable<CourseMetaResponse> getCourseListByIds(@Query("ids") String ids);
 
     // 注册接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/Regist")
@@ -105,5 +110,7 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode")
     Observable<CreateVerifyCodeResponse> createVerifyCode(@Query("username") String username);
 
-
+    // 课程观看记录
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory")
+    Observable<HistoryResponse> showCourseHistory();
 }
