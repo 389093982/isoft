@@ -51,7 +51,12 @@ public class IFavoritesActivity extends AppCompatActivity {
         LiveEventBus.get(Constants.COURSE_FAVORITE_PREFIX, CourseMetaResponse.class).observeSticky(this, courseMetaResponse -> {
             if (courseMetaResponse != null && CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
                 SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-                CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaResponse.getCourses());
+                CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaResponse.getCourses(), new CourseHotRecommendSection.CallBackListener() {
+                    @Override
+                    public void onLoadMore() {
+
+                    }
+                });
                 sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
                 recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                 recyclerView.setAdapter(sectionedRecyclerViewAdapter);

@@ -76,7 +76,12 @@ public class CourseClassifyFragment extends Fragment implements View.OnClickList
         sectionAdapter = new SectionedRecyclerViewAdapter();
         courseClassifyBannerSection = new CourseClassifyBannerSection(bannerEntities);
         courseClassifyQuickSection = new CourseClassifyQuickSection(getActivity(), hotClassifies);
-        courseHotRecommendSection = new CourseHotRecommendSection(getActivity(), hotCourseMetas);
+        courseHotRecommendSection = new CourseHotRecommendSection(getActivity(), hotCourseMetas, new CourseHotRecommendSection.CallBackListener() {
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
         sectionAdapter.addSection(courseClassifyBannerSection);
         sectionAdapter.addSection(courseClassifyQuickSection);
         sectionAdapter.addSection(courseHotRecommendSection);

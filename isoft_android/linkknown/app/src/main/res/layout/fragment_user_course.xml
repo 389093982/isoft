@@ -14,7 +14,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_recycleview"/>
+            <!--
+                 RecyclerView 嵌套 RecyclerView 问题
+                 beforeDescendants：viewgroup会优先其子类控件而获取到焦点
+             -->
+            <include layout="@layout/layout_recycleview"
+                android:descendantFocusability="beforeDescendants"/>
 
             <include layout="@layout/layout_footerview"/>
         </LinearLayout>

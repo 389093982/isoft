@@ -104,18 +104,18 @@ public class UserDetailActivity extends BaseActivity {
         titles.clear();
 
         UserCourseFragment userCourseFragment = new UserCourseFragment();
-        UserCourseFragment userCourseFragment1 = new UserCourseFragment();
+//        UserCourseFragment userCourseFragment1 = new UserCourseFragment();
         fragments.add(userCourseFragment);
-        fragments.add(userCourseFragment1);
+//        fragments.add(userCourseFragment1);
 
         // activity 向 fragment 传参
         Bundle bundle = new Bundle();
         bundle.putString(Constants.USER_NAME, userName);
         userCourseFragment.setArguments(bundle);
-        userCourseFragment1.setArguments(bundle);
+//        userCourseFragment1.setArguments(bundle);
 
         titles.add("发布的课程");
-        titles.add("发布的课程");
+//        titles.add("发布的课程");
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()

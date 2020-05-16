@@ -171,7 +171,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         commentRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
 
         refreshLayout.setOnRefreshListener(() -> {
-            // 属性中
+            // 刷新中
             refreshLayout.setRefreshing(true);
             // 重新加载数据
             loadData();
