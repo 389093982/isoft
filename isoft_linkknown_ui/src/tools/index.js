@@ -149,6 +149,20 @@ export function get8lenghNumber(i){
   return tempStr.substring(tempStr.length-8,tempStr.length);
 }
 
+/**
+ * 给字符串做个省略展示
+ * @param value
+ * @param limitLenth
+ * @returns {*}
+ */
+export function filterLimitFunc(value,limitLenth) {
+  if (value.length > limitLenth) {
+    return value.slice(0,limitLenth) + ' · · ·'
+  }else {
+    return value
+  }
+}
+
 export const checkArrayEmpty = function checkArrayEmpty(arr) {
   return arr == null || arr.length === 0;
 };

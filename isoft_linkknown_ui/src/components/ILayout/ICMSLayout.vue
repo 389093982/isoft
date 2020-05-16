@@ -34,7 +34,7 @@
             <Submenu name="5">
               <template slot="title">
                 <Icon type="ios-barcode"></Icon>
-                日志管理
+                用户管理
               </template>
               <MenuItem name="5-1">
                 <router-link to="/background/sso/loginRecord">登录记录</router-link>

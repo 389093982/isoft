@@ -16,13 +16,13 @@
       </Row>
     </div>
 
-    <Table :columns="columns1" :data="loginRecords" size="small"></Table>
+    <Table width="1000" border :columns="loginRecordColumn" :data="loginRecordDatas" size="small"></Table>
 
   </div>
 </template>
 
 <script>
-  import {formatDate} from "../../tools"
+  import {formatDate,filterLimitFunc} from "../../tools"
   import {LoginRecordList} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
@@ -32,54 +32,61 @@
     components: {ISimpleLeftRightRow, ISimpleSearch},
     data() {
       return {
-        // 当前页
         current_page: 1,
-        // 总数
         total: 0,
-        // 每页记录数
         offset: 10,
-        // 搜索条件
         search: "",
-        loginRecords: [],
-        columns1: [
-          {
-            title: 'origin',
-            key: 'origin',
-            width: 180
-          },
-          {
-            title: 'referer',
-            key: 'referer',
-            width: 250
-          },
-          {
-            title: '登录ip',
-            key: 'login_ip',
-            width: 100
-          },
+        loginRecordDatas: [],
+        loginRecordColumn: [
           {
             title: '登录用户',
             key: 'user_name',
-            width: 100
+            width: 190,
+            fixed: 'left'
           },
           {
-            title: '角色名称',
+            title: '用户昵称',
+            key: 'nick_name',
+            width: 160
+          },
+          {
+            title: '角色',
             key: 'role_name',
+            width: 90
+          },
+          {
+            title: 'origin',
+            key: 'origin',
+            width: 160
+          },
+          {
+            title: '登录IP',
+            key: 'login_ip',
             width: 100
           },
           {
             title: '登录状态',
             key: 'login_status',
-            width: 100
+            width: 95
           },
           {
             title: '登录时间',
             key: 'created_time',
             render: (h, params) => {
-              return h('div',
-                formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm')
-              )
-            }
+              return h('div', formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm:ss'))
+            },
+            width: 150
+          },
+          {
+            title: 'referer',
+            key: 'referer',
+            width: 800,
+          },
+          {
+            title: '客户端类型',
+            key: 'client_type',
+            width: 100,
+            fixed: 'right'
           },
         ],
       }
@@ -93,7 +100,7 @@
         };
         const result = await LoginRecordList(params);
         if (result.status === "SUCCESS") {
-          this.loginRecords = result.loginRecords;
+          this.loginRecordDatas = result.loginRecords;
           this.total = result.paginator.totalcount;
         }
       },
