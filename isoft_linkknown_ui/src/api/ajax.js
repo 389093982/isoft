@@ -41,23 +41,23 @@ axios.interceptors.response.use(
 export const ajax = function (url, data = {}, type = 'GET') {
   return new Promise(function (resolve, reject) {
     // 执行异步ajax请求
-    let promise
+    let promise;
     if (type === 'GET') {
       // 准备url query参数数据
-      let dataStr = '' //数据拼接字符串
+      let dataStr = ''; //数据拼接字符串
       Object.keys(data).forEach(key => {
         dataStr += key + '=' + data[key] + '&'
-      })
+      });
       if (dataStr !== '') {
-        dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
+        dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'));
         url = url + '?' + dataStr
       }
       // 发送get请求,得到 promise 对象
-      promise = axios.get(url)
+      promise = axios.get(url,{headers: {'clientType': 'web',}})
     } else {
       // 发送post请求,得到 promise 对象
       // 使用 Qs.stringify 来解决 axios 发 post 请求,后端接收不到参数的解决方案
-      promise = axios.post(url, Qs.stringify(data))
+      promise = axios.post(url, Qs.stringify(data),{headers: {'clientType': 'web',}})
     }
     promise.then(function (response) {
       // 成功了调用resolve()
@@ -67,18 +67,18 @@ export const ajax = function (url, data = {}, type = 'GET') {
       reject(error)
     })
   })
-}
+};
 
 export const download = function (url, data = {}, type = 'GET') {
-  let dataStr = '' //数据拼接字符串
+  let dataStr = ''; //数据拼接字符串
   Object.keys(data).forEach(key => {
     dataStr += key + '=' + data[key] + '&'
-  })
+  });
   if (dataStr !== '') {
-    dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
+    dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'));
     url = url + '?' + dataStr
   }
   // 发送get请求
   window.location.href = url;
-}
+};
 
