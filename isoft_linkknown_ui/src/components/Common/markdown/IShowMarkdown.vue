@@ -23,7 +23,7 @@
     smartypants: false,
     highlight: function (code, lang) {
       // 复制功能主要使用的是 clipboard.js
-      let copyBtnHtml = `<div class="isoft_copy" data-clipboard-text="${code}">复制代码块</div>`;
+      let copyBtnHtml = `<div class="isoft_copy_blog_code" data-clipboard-text="${code}">复制代码块</div>`;
       var preCode = "";
       if (lang && hljs.getLanguage(lang)) {
         // highlight.js 高亮代码
@@ -94,7 +94,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.clipboard = new Clipboard('.isoft_copy');
+        this.clipboard = new Clipboard('.isoft_copy_blog_code');
         // 复制成功失败的提示
         this.clipboard.on('success', (e) => {
           this.$Message.success('复制成功!')
@@ -131,7 +131,7 @@
     margin-left: 24px;
   }
 
-  .isoft_markdown >>> .isoft_copy {
+  .isoft_markdown >>> .isoft_copy_blog_code {
     position: absolute;
     right: 4px;
     top: 4px;
