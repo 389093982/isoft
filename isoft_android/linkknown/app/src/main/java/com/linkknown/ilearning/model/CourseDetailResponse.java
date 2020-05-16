@@ -12,6 +12,7 @@ public class CourseDetailResponse extends BaseResponse {
 
     private List<CVideo> cVideos ;
     private Course course;
+    private UserDetailResponse.User user;
 
     @Data
     @ToString

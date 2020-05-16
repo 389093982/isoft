@@ -1,22 +1,22 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CourseIntroduceFragment extends BaseLazyLoadFragment {
@@ -49,6 +50,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     public RecyclerView courseOperateRecyclerView;
     @BindView(R.id.cVideoRecyclerView)
     public RecyclerView cVideoRecyclerView;
+    @BindView(R.id.headerIcon)
+    public ImageView headerIcon;
+    @BindView(R.id.userNameText)
+    public TextView userNameText;
 
     @Override
     protected void initView(View mRootView) {
@@ -84,6 +89,8 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         courseShortDescText.setText(course.getCourse_short_desc());
 
         List<String> courseOperates = Arrays.asList("分享", "投硬币", "收藏", "缓存");
+        userNameText.setText(courseDetailResponse.getUser().getNick_name());
+        UIUtils.setImage(mContext, headerIcon, courseDetailResponse.getUser().getSmall_icon());
 
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(String.class, new MultiItemView<String>() {
@@ -108,5 +115,13 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
         cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
+    }
+
+    @OnClick(R.id.userInfoLayout)
+    public void showUserDetail () {
+        UIUtils.gotoActivity(mContext, UserDetailActivity.class, intent -> {
+            intent.putExtra(Constants.USER_NAME, courseDetailResponse.getCourse().getCourse_author());
+            return intent;
+        });
     }
 }

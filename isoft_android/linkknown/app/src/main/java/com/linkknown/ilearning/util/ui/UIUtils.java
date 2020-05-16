@@ -60,4 +60,43 @@ public class UIUtils {
         Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
     }
 
+    public static int getGenderImageResource (String gender) {
+        //设置用户性别
+        switch (gender) {
+            case "男":
+            case "male":
+                return R.drawable.ic_user_male;
+            case "女":
+            case "female":
+                return R.drawable.ic_user_female;
+            default:
+                return R.drawable.ic_user_gay_border;
+        }
+    }
+
+    public static int getVipLevelImageResource (int vip) {
+        switch (vip) {
+            case 1:
+                return R.drawable.ic_lv1;
+            case 2:
+                return R.drawable.ic_lv2;
+            case 3:
+                return R.drawable.ic_lv3;
+            case 4:
+                return R.drawable.ic_lv4;
+            case 5:
+                return R.drawable.ic_lv5;
+            case 6:
+                return R.drawable.ic_lv6;
+            case 7:
+                return R.drawable.ic_lv7;
+            case 8:
+                return R.drawable.ic_lv8;
+            case 9:
+                return R.drawable.ic_lv9;
+            default:
+                return R.drawable.ic_lv0;
+        }
+    }
+
 }
