@@ -22,6 +22,11 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend")
     Observable<CourseMetaResponse> getHotCourseRecommend();
 
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName")
+    Observable<CourseMetaResponse> getCourseListByUserName(@Query("userName") String userName,
+                                                           @Query("current_page") int current_page,
+                                                           @Query("offset") int offset);
+
     // 根据自定义 tag 搜索课程
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse")
     Observable<CourseMetaResponse> queryCustomTagCourse(@Query("custom_tag") String custom_tag,

@@ -225,7 +225,6 @@
 
                     </LinearLayout>
                 </FrameLayout>
-
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -236,9 +235,25 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextAppearance="@style/ToolBar.TitleText" />
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white_80"
+            app:tl_indicator_color="@color/bili_logo_pink_color"
+            app:tl_indicator_corner_radius="1.5dp"
+            app:tl_indicator_height="3dp"
+            app:tl_textSelectColor="@color/pink_text_color"
+            app:tl_textUnselectColor="@color/font_normal" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
