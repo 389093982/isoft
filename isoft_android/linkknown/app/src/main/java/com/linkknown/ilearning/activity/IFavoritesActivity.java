@@ -53,7 +53,18 @@ public class IFavoritesActivity extends AppCompatActivity {
                 SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
                 CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaResponse.getCourses());
                 sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
-                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        // header 显示 2 行
+                        if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                            return 2;
+                        }
+                        return 1;
+                    }
+                });
+                recyclerView.setLayoutManager(gridLayoutManager);
                 recyclerView.setAdapter(sectionedRecyclerViewAdapter);
             }
         });
