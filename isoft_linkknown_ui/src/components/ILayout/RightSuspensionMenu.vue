@@ -70,7 +70,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.clipboard = new Clipboard('.isoft_copy');
+        this.clipboard = new Clipboard('.isoft_copy_contact_us');
         // 复制成功失败的提示
         this.clipboard.on('success', (e) => {
           this.$Message.success('复制成功!')
