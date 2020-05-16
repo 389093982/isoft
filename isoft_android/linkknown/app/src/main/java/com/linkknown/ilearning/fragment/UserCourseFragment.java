@@ -14,6 +14,7 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.listener.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
@@ -51,14 +52,7 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
         userName = this.getArguments().getString(Constants.USER_NAME);
 
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList
-//                , () -> {
-//            Log.i("initView", "execute method: UserCourseFragment initView loadPageData start");
-//            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
-//                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
-//            }
-//        }
-        );
+        CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
         sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -80,6 +74,15 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
             refreshLayout.setRefreshing(true);
             // 重新加载数据
             loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
+        });
+
+        recyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                    loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
+                }
+            }
         });
     }
 
