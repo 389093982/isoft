@@ -106,7 +106,7 @@
               this.users[i].gender = '女'
             }
           }
-          this.total = result.paginator.totalcount;
+          this.page.totalCount = result.paginator.totalcount;
         }
       },
       formatCreatedTime:function(fmt, date) {
