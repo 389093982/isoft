@@ -1,6 +1,9 @@
 package com.linkknown.ilearning.interceptor;
 
+import android.content.Intent;
 import android.util.Log;
+
+import com.linkknown.ilearning.common.BaseApplication;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -28,6 +31,7 @@ public class HttpLogInterceptor implements Interceptor {
         return response;
     }
 
+    // 打印响应信息日志
     private void logResponse(Response response) throws IOException {
         ResponseBody responseBody = response.body();
         BufferedSource source = responseBody.source();
@@ -40,8 +44,16 @@ public class HttpLogInterceptor implements Interceptor {
             String rBody = buffer.clone().readString(charset);
             Log.i("http_response ==>", rBody);
         }
+
+        if (response.code() == 401) {
+            // 触发自动登录
+            Intent intent = new Intent();
+            intent.setAction("com.linkknown.ilearning.broadcast.AutoLoginAction");
+            BaseApplication.getContext().sendBroadcast(intent);
+        }
     }
 
+    // 打印请求信息日志
     private void logRequest(Request request) {
         Log.i("http_url ==>", request.url().toString());
         Log.i("http_method ==>", request.method());

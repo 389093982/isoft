@@ -13,20 +13,37 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.model.LoginUserResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
+
 public class LoginUtil {
+
+    // 判断登录 tokenString 是否已经过期
+    public static boolean checkHasExpired (Context mContext) {
+        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        long expiredTime = preferences.getLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, -1);
+        return new Date().getTime() >= expiredTime;
+    }
 
     // 记住账号、密码和登录成功后的 tokenString
     // 注册时记住账号没有 tokenString，登录成功后记住账号有 tokenString
-    public static void memoryAccount(Context mContext, String userName, String passwd, String tokenString) {
+    public static void memoryAccount(Context mContext, String userName, String passwd, LoginUserResponse loginUserResponse) {
         SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, userName);
         editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwd);
-        if (StringUtils.isNotEmpty(tokenString)) {
-            editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, tokenString);
+
+        if (loginUserResponse != null && loginUserResponse.isSuccess()) {
+            editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, loginUserResponse.getTokenString());
+            editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NICK_NAME, loginUserResponse.getNickName());
+            editor.putString(Constants.USER_SHARED_PREFERENCES_IS_LOGIN, "isLogin");
+            editor.putString(Constants.USER_SHARED_PREFERENCES_ROLE_NAME, loginUserResponse.getRoleName());
+            // 过期时间,毫秒数
+            long expiredTime = new Date().getTime() + loginUserResponse.getExpireSecond() * 1000;
+            editor.putLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, expiredTime);
         }
         editor.apply();
     }

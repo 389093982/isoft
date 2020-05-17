@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
-                    LoginUtil.memoryAccount(mContext, usernameEditText.getText().toString(), passwordEditText.getText().toString(), loginUserResponse.getTokenString());
+                    LoginUtil.memoryAccount(mContext, usernameEditText.getText().toString(), passwordEditText.getText().toString(), loginUserResponse);
                     Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_LONG).show();
                     UIUtils.gotoActivity(mContext, MainActivity.class);
                     finish();
@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override

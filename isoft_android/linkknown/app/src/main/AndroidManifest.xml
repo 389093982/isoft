@@ -12,8 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activity.UserDetailActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:name=".common.BaseApplication">
+        <!-- activity 页面配置汇总 -->
+        <activity android:name=".activity.UserDetailActivity" />
         <activity android:name=".activity.CouponCenterActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.NewChannelActivity" />
@@ -60,6 +62,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
+
+        <!-- receiver 广播配置汇总 -->
+        <receiver android:name=".broadcast.AutoLoginReceiver">
+            <intent-filter>
+                <action android:name="com.linkknown.ilearning.broadcast.AutoLoginAction"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

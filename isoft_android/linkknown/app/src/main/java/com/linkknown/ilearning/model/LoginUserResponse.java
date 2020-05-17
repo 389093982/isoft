@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 public class LoginUserResponse extends BaseResponse {
 
     private String domain;
-    private String expireSecond;
+    private long expireSecond;
     private String loginStatus;
     private String loginSuccess;
     private String nickName;
