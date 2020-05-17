@@ -20,6 +20,7 @@ public class Constants {
     public static final String USER_SHARED_PREFERENCES = "USER_SHARED_PREFERENCES";
     public static final String USER_SHARED_PREFERENCES_USER_NAME = "USER_SHARED_PREFERENCES_USER_NAME";
     public static final String USER_SHARED_PREFERENCES_PASSWD = "USER_SHARED_PREFERENCES_PASSWD";
+    public static final String USER_SHARED_PREFERENCES_TOKEN_STRING = "USER_SHARED_PREFERENCES_TOKEN_STRING";
 
     public static final String USER_NAME = "USER_NAME";
 
