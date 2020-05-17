@@ -78,12 +78,12 @@
       }
     },
     methods: {
-      handleChange(page) {
-        this.current_page = page;
+      pageChange(page) {
+        this.page.current_page = page;
         this.refreshUsersList();
       },
-      handlePageSizeChange(pageSize) {
-        this.offset = pageSize;
+      pageSizeChange(pageSize) {
+        this.page.offset = pageSize;
         this.refreshUsersList();
       },
       refreshUsersList: async function () {
@@ -106,7 +106,7 @@
               this.users[i].gender = '女'
             }
           }
-          this.total = result.paginator.totalcount;
+          this.page.totalCount = result.paginator.totalcount;
         }
       },
       formatCreatedTime:function(fmt, date) {
