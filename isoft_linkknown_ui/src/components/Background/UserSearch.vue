@@ -78,11 +78,11 @@
       }
     },
     methods: {
-      handleChange(page) {
+      pageChange(page) {
         this.page.current_page = page;
         this.refreshUsersList();
       },
-      handlePageSizeChange(pageSize) {
+      pageSizeChange(pageSize) {
         this.page.offset = pageSize;
         this.refreshUsersList();
       },
