@@ -19,6 +19,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.CheckParamUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -72,19 +73,11 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             } else {
                 ToastUtil.showText(mContext, "注册成功！");
                 // 记住账号
-                memoryAccount(userName, passwd);
+                LoginUtil.memoryAccount(mContext, userName.getText().toString(), passwd.getText().toString(), null);
                 // 调往登录页面
                 UIUtils.gotoActivity(mContext, LoginActivity.class);
             }
         });
-    }
-
-    private void memoryAccount(TextView usernameEditText, TextView passwordEditText) {
-        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
-        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwordEditText.getText().toString());
-        editor.apply();
     }
 
     private void init() {

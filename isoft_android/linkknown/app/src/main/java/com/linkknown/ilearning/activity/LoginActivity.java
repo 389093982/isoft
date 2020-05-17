@@ -22,6 +22,7 @@ import com.linkknown.ilearning.MainActivity;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 if (StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     // 登录成功后记录登录账号,供下次登录自动填充表单,不用再次输入
-                    memoryAccount(usernameEditText, passwordEditText);
+                    LoginUtil.memoryAccount(mContext, usernameEditText.getText().toString(), passwordEditText.getText().toString(), loginUserResponse.getTokenString());
                     Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_LONG).show();
                     UIUtils.gotoActivity(mContext, MainActivity.class);
                     finish();
@@ -115,15 +116,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         loginButton.setOnClickListener(this);
         link_regist.setOnClickListener(this);
-    }
-
-    // 记录上次登录参数
-    private void memoryAccount(TextView usernameEditText, TextView passwordEditText) {
-        SharedPreferences preferences = this.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, usernameEditText.getText().toString());
-        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwordEditText.getText().toString());
-        editor.apply();
     }
 
     // 自动填充登录表单

@@ -9,17 +9,38 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class LoginUtil {
 
-    public static void logout (Context mContext) {
+    // 记住账号、密码和登录成功后的 tokenString
+    // 注册时记住账号没有 tokenString，登录成功后记住账号有 tokenString
+    public static void memoryAccount(Context mContext, String userName, String passwd, String tokenString) {
         SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        preferences.edit().clear().apply();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, userName);
+        editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwd);
+        if (StringUtils.isNotEmpty(tokenString)) {
+            editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, tokenString);
+        }
+        editor.apply();
+    }
+
+    // 获取登录后的 tokenString
+    public static String getTokenString (Context mContext) {
+        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        return preferences.getString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, "");
+    }
+
+    // 注销登出时只清除 tokenString,而不清除账号和密码
+    public static void logout(Context mContext) {
+        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        preferences.edit().remove(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING).apply();
     }
 
     public static boolean isLoginUserName(Context mContext, String userName) {
@@ -28,20 +49,28 @@ public class LoginUtil {
         return StringUtils.equals(userName, userName0);
     }
 
-    public static String getLoginUserName (Context mContext) {
+    public static String getLoginUserName(Context mContext) {
         SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
     }
 
-    public static boolean checkHasLogin (Context mContext) {
-        return StringUtils.isNotEmpty(getLoginUserName (mContext));
+    // 判断是否登录,需要判断用户名是否有效和 tokenString 是否有效
+    public static boolean checkHasLogin(Context mContext) {
+        return StringUtils.isNotEmpty(getLoginUserName(mContext)) && StringUtils.isNotEmpty(getTokenString(mContext));
     }
 
-    public static void showLoginOrAutoLoginDialog (Context context, ConfirmDialogCallback callback) {
+    public static void showLoginOrAutoLoginDialog(Context context, ConfirmDialogCallback callback) {
         // 弹出对话框前去登录
-        showLoginConfirmDialog(context, callback);
+        showLoginConfirmDialog2(context, callback);
         // 自动登录
 
+    }
+
+    public static void showLoginConfirmDialog2(final Context context, final ConfirmDialogCallback callback) {
+        new AlertDialog.Builder(context).setTitle("您还未登录，前去登录？")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton("确定", (dialog, which) -> callback.onPositive())
+                .setNegativeButton("返回", (dialog, which) -> callback.onNegative()).show();
     }
 
     /**
@@ -94,6 +123,7 @@ public class LoginUtil {
 
     public static interface ConfirmDialogCallback {
         void onPositive();
+
         void onNegative();
     }
 }
