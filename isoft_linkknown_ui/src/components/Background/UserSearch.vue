@@ -79,11 +79,11 @@
     },
     methods: {
       handleChange(page) {
-        this.current_page = page;
+        this.page.current_page = page;
         this.refreshUsersList();
       },
       handlePageSizeChange(pageSize) {
-        this.offset = pageSize;
+        this.page.offset = pageSize;
         this.refreshUsersList();
       },
       refreshUsersList: async function () {
