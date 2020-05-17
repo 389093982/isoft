@@ -4,7 +4,7 @@
     <div>
       <Row>
         <Col span="6">
-          <Input v-model.trim="user_name" style="width: 200px"/>
+          <Input v-model.trim="user_name" placeholder="user_name" style="width: 200px"/>
           <Button type="primary" shape="circle" icon="ios-search" @click="refreshLoginRecordList"></Button>
         </Col>
         <Col span="18" style="position: relative;top: -10px;">

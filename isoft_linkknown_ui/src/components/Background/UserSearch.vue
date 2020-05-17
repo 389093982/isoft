@@ -1,24 +1,38 @@
 <template>
   <div>
+
+    <div>
+      <Row>
+        <Col span="8" style="position: relative;top: -10px;">
+          <Input v-model.trim="user_name" placeholder="用户名" style="width: 150px"/>
+          <Input v-model.trim="nick_name" placeholder="昵称" style="width: 150px"/>
+          <Button type="primary" shape="circle" icon="ios-search" @click="refreshUsersList"></Button>
+        </Col>
+        <Col span="16" style="position: relative;top: -10px;">
+          <!--分页-->
+          <div style="text-align: center;">
+            <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
+          </div>
+        </Col>
+      </Row>
+    </div>
+
+
     <Table border :columns="userColumns" :data="users" size="small"></Table>
 
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
 </template>
 
 <script>
-  import {QueryAllUsers} from "../../api"
+  import {QueryUsers} from "../../api"
 
   export default {
     name: "UserSearch",
     data() {
       return {
-        // 当前页
-        current_page: 1,
-        // 总数
-        total: 0,
-        // 每页记录数
-        offset: 20,
+        user_name:'',
+        nick_name:'',
+        page:{totalCount:0,currentPage:1,offset:10},
         users: [],
         userColumns: [
           {
@@ -66,14 +80,20 @@
     methods: {
       handleChange(page) {
         this.current_page = page;
-        this.refreshAllUsersList();
+        this.refreshUsersList();
       },
       handlePageSizeChange(pageSize) {
         this.offset = pageSize;
-        this.refreshAllUsersList();
+        this.refreshUsersList();
       },
-      refreshAllUsersList: async function () {
-        const result = await QueryAllUsers(this.offset, this.current_page);
+      refreshUsersList: async function () {
+        let params = {
+          'user_name':this.user_name,
+          'nick_name':this.nick_name,
+          'offset':this.page.offset,
+          'current_page':this.page.current_page,
+        };
+        const result = await QueryUsers(params);
         if (result.status === "SUCCESS") {
           this.users = result.users;
           for (let i = 0; i < this.users.length; i++) {
@@ -114,7 +134,7 @@
       },
     },
     mounted() {
-      this.refreshAllUsersList();
+      this.refreshUsersList();
     }
   }
 </script>

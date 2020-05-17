@@ -18,7 +18,7 @@ export const EditUserSignature = (params) => ajax(BASE_URL + '/iwork/httpservice
 export const UpdateUserDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserDetail', params, 'POST');
 export const RefreshToken = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/RefreshToken", params, 'POST');
 export const GitHubLogin = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GitHubLogin", params, 'POST');
-export const QueryAllUsers = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryAllUsers", params, 'POST');// 查询所有用户
+export const QueryUsers = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryUsers", params, 'POST');// 查询所有用户
 export const LoginRecordList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/LoginRecordList", params, 'POST');// 登录记录分页查询
 export const AppRegisterList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList", params, 'POST');// 系统注册分页查询
 export const AddAppRegister = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddAppRegister", params, 'POST');// 添加系统注册
