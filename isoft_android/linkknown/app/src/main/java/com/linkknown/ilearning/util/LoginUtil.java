@@ -37,16 +37,20 @@ public class LoginUtil {
         return new Date().getTime() >= getExpiredTime(mContext);
     }
 
+    public static SharedPreferences getUserInfoSharedPreferences(Context mContext) {
+        return mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+    }
+
     // 获取登录过期时间
     private static long getExpiredTime(Context mContext) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         return preferences.getLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, -1);
     }
 
     // 记住账号、密码和登录成功后的 tokenString
     // 注册时记住账号没有 tokenString，登录成功后记住账号有 tokenString
     public static void memoryAccount(Context mContext, String userName, String passwd, LoginUserResponse loginUserResponse) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, userName);
         editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwd);
@@ -63,26 +67,36 @@ public class LoginUtil {
         editor.apply();
     }
 
+    public static void memoryRefreshToken(Context mContext, String tokenString, long expireSecond) {
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, tokenString);
+        // 过期时间,毫秒数
+        long expiredTime = new Date().getTime() + expireSecond * 1000;
+        editor.putLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, expiredTime);
+        editor.apply();
+    }
+
     // 获取登录后的 tokenString
     public static String getTokenString (Context mContext) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, "");
     }
 
     // 注销登出时只清除 tokenString,而不清除账号和密码
     public static void logout(Context mContext) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         preferences.edit().remove(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING).apply();
     }
 
     public static boolean isLoginUserName(Context mContext, String userName) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         String userName0 = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
         return StringUtils.equals(userName, userName0);
     }
 
     public static String getLoginUserName(Context mContext) {
-        SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
     }
 

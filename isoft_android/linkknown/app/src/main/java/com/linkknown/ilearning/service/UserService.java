@@ -105,7 +105,6 @@ public class UserService {
     }
 
     public static void logout (Context mContext) {
-        HeaderInterceptor.TOKEN_STRING.set("");
         LoginUserResponse result = new LoginUserResponse();
         result.setErrorMsg("用户未登录！");
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
@@ -128,9 +127,6 @@ public class UserService {
                     @Override
                     public void onNext(LoginUserResponse loginUserResponse) {
                         if (loginUserResponse.isSuccess()) {
-                            // 存储登录后的 tokenString
-                            HeaderInterceptor.TOKEN_STRING.set(loginUserResponse.getTokenString());
-
                             LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(loginUserResponse);
                         } else {
                             Log.e("onNext =>", "login failed！" + loginUserResponse.getErrorMsg());

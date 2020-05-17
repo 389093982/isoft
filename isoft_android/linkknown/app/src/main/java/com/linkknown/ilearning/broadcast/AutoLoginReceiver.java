@@ -54,7 +54,12 @@ public class AutoLoginReceiver extends BroadcastReceiver {
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<RefreshTokenResponse>() {
                     @Override
-                    public void onNext(RefreshTokenResponse o) {
+                    public void onNext(RefreshTokenResponse refreshTokenResponse) {
+                        if (refreshTokenResponse.isSuccess()) {
+                            String tokenString = refreshTokenResponse.getTokenString();
+                            long expireSecond = refreshTokenResponse.getExpireSecond();
+                            LoginUtil.memoryRefreshToken(context, tokenString, expireSecond);
+                        }
                         dismissDelay(dialog);
                     }
 
