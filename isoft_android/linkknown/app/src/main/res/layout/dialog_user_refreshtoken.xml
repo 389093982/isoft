@@ -17,7 +17,7 @@
                 android:background="@color/colorPrimary"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:text="温馨提示"
+                android:text="自动登录中..."
                 android:textSize="20sp"
                 android:layout_alignParentTop="true" />
 
@@ -31,39 +31,12 @@
                     android:id="@+id/dialog_tip"
                     android:layout_width="300.0dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30.0dip"
-                    android:text="您还未登录，前去登录？"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="自动登录中,请耐心等待~"
                     android:layout_centerHorizontal="true"
                     android:textSize="18sp"
                     android:textColor="@color/black"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_below="@+id/dialog_tip"
-                    android:layout_centerHorizontal="true">
-                    <Button
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
-                        android:id="@+id/dialog_btn_close"
-                        android:background="@color/gray"
-                        android:layout_width="100dp"
-                        android:layout_height="38dp"
-                        android:text="取消" />
-                    <View
-                        android:layout_width="25.0dip"
-                        android:layout_height="fill_parent" />
-                    <Button
-                        android:textSize="20sp"
-                        android:textColor="@color/white"
-                        android:id="@+id/dialog_btn_ok"
-                        android:background="@color/colorPrimary"
-                        android:layout_width="100dp"
-                        android:layout_height="38dp"
-                        android:text="确定" />
-                </LinearLayout>
             </RelativeLayout>
 
         </RelativeLayout>

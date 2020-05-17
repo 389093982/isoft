@@ -21,11 +21,26 @@ import java.util.Date;
 
 public class LoginUtil {
 
+    // 判断过期时间是否是最近 3 小时之内
+    public static boolean checkRecently (Context mContext) {
+        return new Date().getTime() - getExpiredTime(mContext) <  3 * 3600 * 1000;
+    }
+
+    // 之前登录过，即有 tokenString
+    // 在最近过期 N 小时内才可以自动登录
+    public static boolean checkCanRefreshToken (Context mContext) {
+        return StringUtils.isNotEmpty(getTokenString(mContext)) && checkRecently(mContext);
+    }
+
     // 判断登录 tokenString 是否已经过期
     public static boolean checkHasExpired (Context mContext) {
+        return new Date().getTime() >= getExpiredTime(mContext);
+    }
+
+    // 获取登录过期时间
+    private static long getExpiredTime(Context mContext) {
         SharedPreferences preferences = mContext.getSharedPreferences(Constants.USER_SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        long expiredTime = preferences.getLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, -1);
-        return new Date().getTime() >= expiredTime;
+        return preferences.getLong(Constants.USER_SHARED_PREFERENCES_EXPIRED_TIME, -1);
     }
 
     // 记住账号、密码和登录成功后的 tokenString
@@ -112,15 +127,15 @@ public class LoginUtil {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.CENTER;
 
-        final View mView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.dialog_login_confirm, null);
+        final View mView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.dialog_user_loginconfirm, null);
         TextView dialog_tip = (TextView) mView.findViewById(R.id.dialog_tip);
-        TextView dialog_btn_ok = (TextView) mView.findViewById(R.id.dialog_btn_ok);
-        TextView dialog_btn_close = (TextView) mView.findViewById(R.id.dialog_btn_close);
+        TextView btn_submit = (TextView) mView.findViewById(R.id.btn_submit);
+        TextView btn_cancel = (TextView) mView.findViewById(R.id.btn_cancel);
 
-        dialog_btn_ok.setText("重新登录");
-        dialog_btn_close.setText("退出登录");
+        btn_submit.setText("重新登录");
+        btn_cancel.setText("退出登录");
         dialog_tip.setText("该账户在其他设备登录,若不是您在操作,请及时修改密码以防泄露信息");
-        dialog_btn_ok.setOnClickListener(new View.OnClickListener() {
+        btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 隐藏弹窗
@@ -129,7 +144,7 @@ public class LoginUtil {
             }
         });
 
-        dialog_btn_close.setOnClickListener(v -> {
+        btn_cancel.setOnClickListener(v -> {
             mWindowManager.removeView(mView);
             callback.onNegative();
         });
