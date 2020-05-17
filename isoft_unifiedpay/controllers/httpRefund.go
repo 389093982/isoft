@@ -38,7 +38,7 @@ func (this *MainController) WeChatRefund() (string, error) {
 	//transCurrCode := "CNY"
 	//refundReason := "手机发热严重"
 	logs.Info("退货请求上来了...")
-	logs.Info(fmt.Sprintf("请求参数:orgOrderId=%v,transAmount=%v,transCurrCode=%v,refundReason=%v", orgOrderId, transAmount, transCurrCode, refundReason))
+	logs.Info(fmt.Sprintf("请求参数:orgOrderId=%v,transAmount=%v(单位:分),transCurrCode=%v,refundReason=%v", orgOrderId, transAmount, transCurrCode, refundReason))
 	now := time.Now().Format("20060102150405")
 
 	//查询原交易，获取商品基本参数(主要获取商户ID和描述)
@@ -56,7 +56,7 @@ func (this *MainController) WeChatRefund() (string, error) {
 	order.ProductDesc = orgOrder.ProductDesc
 	order.TransTime = now
 	amount, _ := strconv.Atoi(transAmount)
-	order.TransAmount = int64(amount)
+	order.TransAmount = float64(amount)/100
 	order.TransCurrCode = transCurrCode
 	order.RefundReason = refundReason
 
@@ -83,10 +83,10 @@ func (this *MainController) WeChatRefund() (string, error) {
 	reqXml.Mch_id = beego.AppConfig.String("WeChatPay_MerchantNo")
 	reqXml.Nonce_str = "2ddd1a30ac87aa2db72f57a2375d8fec"
 	reqXml.Out_refund_no = order.OrderId
-	reqXml.Refund_fee = strconv.Itoa(int(order.TransAmount))
+	reqXml.Refund_fee = strconv.Itoa(amount)
 	reqXml.Refund_fee_type = order.TransCurrCode
 	reqXml.Out_trade_no = order.OrgOrderId
-	reqXml.Total_fee = strconv.Itoa(int(orgOrder.TransAmount))
+	reqXml.Total_fee = strconv.Itoa(amount)
 	reqXml.Refund_desc = order.RefundReason
 	reqXml.Notify_url = beego.AppConfig.String("WeChatPay_RefNotifyUrl")
 	reqXml.Sign = "3CB01533B8C1EF103065174F50BCA002"

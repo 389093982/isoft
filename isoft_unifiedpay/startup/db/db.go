@@ -46,7 +46,6 @@ func init() {
 
 func registerModel() {
 	orm.RegisterModel(new(models.Order))
-	orm.RegisterModel(new(models.User))
 }
 
 // 自动建表

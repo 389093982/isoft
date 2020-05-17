@@ -35,9 +35,9 @@ func (this *MainController) QueryOrder() {
 	if len(TransTime) > 0 {
 		qs = qs.Filter("TransTime__istartswith", TransTime)
 	}
-	if len(TransAmount) > 0 {
-		amount, _ := strconv.ParseFloat(TransAmount, 64) //string 转 float
-		qs = qs.Filter("TransAmount", int64(amount*100))
+	amount, _ := strconv.ParseFloat(TransAmount, 64) //string 转 float
+	if amount > 0 {
+		qs = qs.Filter("TransAmount", amount)
 	}
 	totalCount, _ := qs.Count()
 	qs = qs.OrderBy("-TransTime").Limit(pageSize, (currentPage-1)*pageSize)
