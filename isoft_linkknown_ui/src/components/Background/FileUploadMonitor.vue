@@ -65,7 +65,7 @@
             width: 150,
           },
           {
-            title: '文件大小',
+            title: '文件大小(b)',
             key: 'file_size',
             width: 100,
             fixed: 'right'

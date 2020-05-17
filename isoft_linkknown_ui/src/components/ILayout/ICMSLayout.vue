@@ -34,13 +34,13 @@
             <Submenu name="5">
               <template slot="title">
                 <Icon type="ios-barcode"></Icon>
-                日志管理
+                用户管理
               </template>
               <MenuItem name="5-1">
-                <router-link to="/background/sso/loginRecord">登录记录</router-link>
+                <router-link to="/background/userSearch">用户查询</router-link>
               </MenuItem>
               <MenuItem name="5-2">
-                <router-link to="/background/userSearch">用户查询</router-link>
+                <router-link to="/background/sso/loginRecord">登录记录</router-link>
               </MenuItem>
               <MenuItem name="5-3">权限管理</MenuItem>
             </Submenu>

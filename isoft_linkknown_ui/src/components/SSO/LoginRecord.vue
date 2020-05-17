@@ -4,7 +4,7 @@
     <div>
       <Row>
         <Col span="6">
-          <Input v-model.trim="search" style="width: 200px"/>
+          <Input v-model.trim="user_name" placeholder="user_name" style="width: 200px"/>
           <Button type="primary" shape="circle" icon="ios-search" @click="refreshLoginRecordList"></Button>
         </Col>
         <Col span="18" style="position: relative;top: -10px;">
@@ -16,7 +16,7 @@
       </Row>
     </div>
 
-    <Table :columns="columns1" :data="loginRecords" size="small"></Table>
+    <Table width="1000" border :columns="loginRecordColumn" :data="loginRecordDatas" size="small"></Table>
 
   </div>
 </template>
@@ -32,16 +32,46 @@
     components: {ISimpleLeftRightRow, ISimpleSearch},
     data() {
       return {
-        // 当前页
         current_page: 1,
-        // 总数
         total: 0,
-        // 每页记录数
         offset: 10,
-        // 搜索条件
-        search: "",
-        loginRecords: [],
-        columns1: [
+        user_name: "",
+        loginRecordDatas: [],
+        loginRecordColumn: [
+          {
+            title: '登录用户',
+            key: 'user_name',
+            width: 190,
+            fixed: 'left'
+          },
+          {
+            title: '用户昵称',
+            key: 'nick_name',
+            width: 160
+          },
+          {
+            title: '角色',
+            key: 'role_name',
+            width: 90
+          },
+          {
+            title: '登录时间',
+            key: 'created_time',
+            render: (h, params) => {
+              return h('div', formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm:ss'))
+            },
+            width: 150
+          },
+          {
+            title: '登录状态',
+            key: 'login_status',
+            width: 95
+          },
+          {
+            title: '登录IP',
+            key: 'login_ip',
+            width: 140
+          },
           {
             title: 'origin',
             key: 'origin',
@@ -50,36 +80,13 @@
           {
             title: 'referer',
             key: 'referer',
-            width: 250
+            width: 800,
           },
           {
-            title: '登录ip',
-            key: 'login_ip',
-            width: 100
-          },
-          {
-            title: '登录用户',
-            key: 'user_name',
-            width: 100
-          },
-          {
-            title: '角色名称',
-            key: 'role_name',
-            width: 100
-          },
-          {
-            title: '登录状态',
-            key: 'login_status',
-            width: 100
-          },
-          {
-            title: '登录时间',
-            key: 'created_time',
-            render: (h, params) => {
-              return h('div',
-                formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm')
-              )
-            }
+            title: '客户端类型',
+            key: 'client_type',
+            width: 100,
+            fixed: 'right'
           },
         ],
       }
@@ -89,11 +96,11 @@
         let params = {
           'offset':this.offset,
           'current_page':this.current_page,
-          'search':this.search,
+          'user_name':this.user_name,
         };
         const result = await LoginRecordList(params);
         if (result.status === "SUCCESS") {
-          this.loginRecords = result.loginRecords;
+          this.loginRecordDatas = result.loginRecords;
           this.total = result.paginator.totalcount;
         }
       },

@@ -124,9 +124,6 @@
           }else {
             this.orders[0].pay_result = '支付失败'
           }
-          //格式化金额
-          this.orders[0].goods_price = this.formatAmount(this.orders[0].goods_price);
-          this.orders[0].goods_original_price = this.formatAmount(this.orders[0].goods_original_price);
           // 格式化交易时间
           this.orders[0].trans_time = this.formatTransTime(this.orders[0].trans_time);
 
@@ -176,13 +173,6 @@
           //格式化会员过期时间
           this.user.vip_expired_time = this.formatVipExpiredTime('YYYY-mm-dd HH:MM:SS',this.user.vip_expired_time);
         }
-      },
-      formatAmount:function (amount) {
-        let newAmount = (amount/100).toString();
-        if (newAmount.indexOf('.')<0) {
-          newAmount = newAmount+".00"
-        }
-        return newAmount;
       },
       formatTransTime:function (trans_time) {
         let date = trans_time.slice(0,8);
