@@ -49,7 +49,7 @@
                 <Row>
                   <div style="margin-top: 10px">
                     <Icon type="logo-yen" style="font-size: 12px"/>
-                    <span style="font-size: 20px">{{formatAmount(goods.goods_price)}}</span>
+                    <span style="font-size: 20px">{{goods.goods_price}}</span>
                   </div>
                 </Row>
                 <Row style="margin-top: 10px">
@@ -127,13 +127,6 @@
           this.page.totalCount = result.paginator.totalcount;
         }
 
-      },
-      formatAmount:function (amount) {
-        let newAmount = (amount/100).toString();
-        if (newAmount.indexOf('.')<0) {
-          newAmount = newAmount+".00"
-        }
-        return newAmount;
       },
       formatTransTime:function (trans_time) {
         let date = trans_time.slice(0,8);

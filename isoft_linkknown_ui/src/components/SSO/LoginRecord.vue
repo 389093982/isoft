@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {formatDate,filterLimitFunc} from "../../tools"
+  import {formatDate} from "../../tools"
   import {LoginRecordList} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
