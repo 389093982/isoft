@@ -18,7 +18,7 @@ type Order struct {
 	ProductId            string //商品ID
 	ProductDesc          string //商品描述
 	TransTime            string //交易时间
-	TransAmount          int64  //交易金额
+	TransAmount          float64  //交易金额
 	TransCurrCode        string //交易币种
 	OrderResultCode      string //下单业务结果
 	OrderResultDesc      string //下单结果描述
@@ -41,7 +41,7 @@ type Order struct {
 	RefundReqErrCodeDesc string //退货请求错误代码描述
 	RefundStatus         string //退款状态
 	RefundSuccessTime    string //退款成功时间
-	RefundedAmount       int64  //已退金额
+	RefundedAmount       float64  //已退金额
 }
 
 //下单

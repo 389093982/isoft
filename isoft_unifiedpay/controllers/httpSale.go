@@ -152,7 +152,7 @@ func (this *MainController) Pay(now string, orderId string, orderParams OrderPar
 	//transAmount := "5888"
 	//transCurrCode := "CNY"
 	logs.Info("微信扫码支付请求上来了...")
-	logs.Info(fmt.Sprintf("请求参数:productId=%v,productDesc=%v,transAmount=%v,transCurrCode=%v", productId, productDesc, transAmount, transCurrCode))
+	logs.Info(fmt.Sprintf("请求参数:productId=%v,productDesc=%v,transAmount=%v(单位：分),transCurrCode=%v", productId, productDesc, transAmount, transCurrCode))
 
 	//组装订单
 	order := models.Order{}
@@ -163,7 +163,7 @@ func (this *MainController) Pay(now string, orderId string, orderParams OrderPar
 	order.ProductId = productId
 	order.ProductDesc = productDesc
 	order.TransTime = now
-	order.TransAmount = transAmount
+	order.TransAmount = float64(transAmount)/100
 	order.TransCurrCode = transCurrCode
 
 	//入库
@@ -192,7 +192,7 @@ func (this *MainController) Pay(now string, orderId string, orderParams OrderPar
 	//	reqXml.Out_trade_no = order.OrderId
 	//	reqXml.Trade_type = beego.AppConfig.String("WeChatPay_TradeType")
 	//	reqXml.Fee_type = order.TransCurrCode
-	//	reqXml.Total_fee = strconv.Itoa(int(order.TransAmount))
+	//	reqXml.Total_fee = strconv.Itoa(int(transAmount))
 	//	reqXml.Body = order.ProductDesc
 	//	reqXml.Spbill_create_ip = beego.AppConfig.String("WeChatPay_SpbillCreateIp")
 	//	reqXml.Notify_url = beego.AppConfig.String("WeChatPay_NotifyUrl")
