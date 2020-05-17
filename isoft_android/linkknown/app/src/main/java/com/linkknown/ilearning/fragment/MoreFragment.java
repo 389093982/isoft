@@ -18,6 +18,8 @@ import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseClassifyActivity;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
+import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.OnItemClickListener;
@@ -71,6 +73,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         mData.add(new Item("畅享图书", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
         mData.add(new Item("锦鲤活动", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
         mData.add(new Item("领券中心", R.drawable.item_space_zhaomu, CouponCenterActivity.class));
+        mData.add(new Item("个人中心", R.drawable.item_space_zhaomu, UserDetailActivity.class));
 
 
         MultiTypeAdapter adapter = new MultiTypeAdapter();
@@ -91,8 +94,8 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         adapter.setOnItemClickListener(new OnItemClickListener<Item>() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, Item item, int position) {
-                //直播
-                startActivity(new Intent(getActivity(), item.getRedirectClazz()));
+                // 跳转 Activity
+                UIUtils.gotoActivity(getActivity(), item.getRedirectClazz());
             }
 
             @Override

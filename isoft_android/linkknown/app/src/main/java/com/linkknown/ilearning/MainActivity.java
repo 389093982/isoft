@@ -34,6 +34,7 @@ import com.linkknown.ilearning.fragment.MoreFragment;
 import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.PermissionUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        PermissionUtil.requestOverlayPermission(this);
 
         // 绑定控件
         init();

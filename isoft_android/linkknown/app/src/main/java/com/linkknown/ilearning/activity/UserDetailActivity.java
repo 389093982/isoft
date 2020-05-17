@@ -1,15 +1,15 @@
 package com.linkknown.ilearning.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.linkknown.ilearning.Constants;
@@ -17,10 +17,9 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.fragment.CourseCommentFragment;
-import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -31,13 +30,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class UserDetailActivity extends BaseActivity {
 
+    private Context mContext;
     private String userName;
+
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
     @BindView(R.id.nickNameText)
@@ -61,13 +61,32 @@ public class UserDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
-
-        userName = getIntent().getStringExtra(Constants.USER_NAME);
+        mContext = this;
 
         ButterKnife.bind(this);
 
         initToolBar(toolbar, true, "");
-        initView();
+
+        // 有用户名则是查看第三方用户
+        userName = getIntent().getStringExtra(Constants.USER_NAME);
+        if (StringUtils.isEmpty(userName) && !LoginUtil.checkHasLogin(mContext)) {
+            // 全局对话框登录拦截
+            LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
+                @Override
+                public void onPositive() {
+                    UIUtils.gotoActivity(mContext, LoginActivity.class);
+                    finish();
+                }
+
+                @Override
+                public void onNegative() {
+                    finish();
+                }
+            });
+        } else {
+            userName = LoginUtil.getLoginUserName(mContext);
+            initView();
+        }
     }
 
     private void initView () {
@@ -103,23 +122,27 @@ public class UserDetailActivity extends BaseActivity {
         fragments.clear();
         titles.clear();
 
-        UserCourseFragment fragment1 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_NEW);
-        UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
-        UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
-        fragments.add(fragment1);
-        fragments.add(fragment2);
-        fragments.add(fragment3);
-
         // activity 向 fragment 传参
         Bundle bundle = new Bundle();
         bundle.putString(Constants.USER_NAME, userName);
-        fragment1.setArguments(bundle);
-        fragment2.setArguments(bundle);
-        fragment3.setArguments(bundle);
 
+        UserCourseFragment fragment1 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_NEW);
+        fragments.add(fragment1);
+        fragment1.setArguments(bundle);
         titles.add("发布的课程");
-        titles.add("收藏的课程");
-        titles.add("观看的课程");
+
+        if (LoginUtil.isLoginUserName(getApplicationContext(), userName)) {
+            UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
+            fragments.add(fragment2);
+            fragment2.setArguments(bundle);
+            titles.add("收藏的课程");
+
+            UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
+            fragments.add(fragment3);
+            fragment3.setArguments(bundle);
+            titles.add("观看的课程");
+        }
+
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()

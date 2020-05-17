@@ -14,6 +14,7 @@ import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.util.CheckParamUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -108,7 +109,9 @@ public class UserService {
         LoginUserResponse result = new LoginUserResponse();
         result.setErrorMsg("用户未登录！");
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(result);
-        UIUtils.gotoActivity(mContext, LoginActivity.class);
+
+        LoginUtil.logout(mContext);
+       UIUtils.gotoActivity(mContext, LoginActivity.class);
     }
 
     public static void login(Context mContext, String username, String passwd) {
