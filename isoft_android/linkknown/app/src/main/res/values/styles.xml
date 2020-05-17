@@ -115,6 +115,7 @@
         <item name="android:windowExitAnimation">@anim/translate_dialog_out</item>
     </style>
 
+    <!-- backgroundDimEnabled 设置为 false, 则弹出的对话框背景是亮的, 为 true, 则弹出的对话框背景变暗 -->
     <style name="LinkKnownDialog"  parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- 背景颜色及透明程度 -->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -125,7 +126,7 @@
         <!-- 是否浮现在activity之上 -->
         <item name="android:windowIsFloating">true</item>
         <!-- 是否背景模糊 -->
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
         <!-- 设置背景模糊的透明度-->
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
