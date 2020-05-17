@@ -4,7 +4,7 @@
     <div>
       <Row>
         <Col span="6">
-          <Input v-model.trim="search" style="width: 200px"/>
+          <Input v-model.trim="user_name" style="width: 200px"/>
           <Button type="primary" shape="circle" icon="ios-search" @click="refreshLoginRecordList"></Button>
         </Col>
         <Col span="18" style="position: relative;top: -10px;">
@@ -35,7 +35,7 @@
         current_page: 1,
         total: 0,
         offset: 10,
-        search: "",
+        user_name: "",
         loginRecordDatas: [],
         loginRecordColumn: [
           {
@@ -55,14 +55,12 @@
             width: 90
           },
           {
-            title: 'origin',
-            key: 'origin',
-            width: 160
-          },
-          {
-            title: '登录IP',
-            key: 'login_ip',
-            width: 100
+            title: '登录时间',
+            key: 'created_time',
+            render: (h, params) => {
+              return h('div', formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm:ss'))
+            },
+            width: 150
           },
           {
             title: '登录状态',
@@ -70,12 +68,14 @@
             width: 95
           },
           {
-            title: '登录时间',
-            key: 'created_time',
-            render: (h, params) => {
-              return h('div', formatDate(new Date(params.row.created_time), 'yyyy-MM-dd hh:mm:ss'))
-            },
-            width: 150
+            title: '登录IP',
+            key: 'login_ip',
+            width: 140
+          },
+          {
+            title: 'origin',
+            key: 'origin',
+            width: 180
           },
           {
             title: 'referer',
@@ -96,7 +96,7 @@
         let params = {
           'offset':this.offset,
           'current_page':this.current_page,
-          'search':this.search,
+          'user_name':this.user_name,
         };
         const result = await LoginRecordList(params);
         if (result.status === "SUCCESS") {
