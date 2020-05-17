@@ -1,20 +1,17 @@
 package com.linkknown.ilearning.interceptor;
 
+import com.linkknown.ilearning.common.BaseApplication;
+import com.linkknown.ilearning.util.LoginUtil;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class HeaderInterceptor implements Interceptor {
-
-    // Atomic 解决线程安全问题
-    // 不建议使用 static 变量,可能场景：退出程序不会清理 static,资源不足时会清理 static
-    // 改成 SharedPreferences 存储
-    public static final AtomicReference<String> TOKEN_STRING = new AtomicReference<>();
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -30,9 +27,9 @@ public class HeaderInterceptor implements Interceptor {
 
     private Request.Builder setHeader(Request.Builder requestBuilder) {
         requestBuilder = requestBuilder.header("clientType", "app");
-        String tokenString = TOKEN_STRING.get();
+        String tokenString = LoginUtil.getTokenString(BaseApplication.getContext());
         if (StringUtils.isNotEmpty(tokenString)) {
-            requestBuilder = requestBuilder.header("tokenString", TOKEN_STRING.get());
+            requestBuilder = requestBuilder.header("tokenString", tokenString);
         }
         return requestBuilder;
     }

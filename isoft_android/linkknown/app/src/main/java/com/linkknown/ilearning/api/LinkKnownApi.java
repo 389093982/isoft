@@ -10,6 +10,7 @@ import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 
@@ -48,6 +49,9 @@ public interface LinkKnownApi {
     Observable<LoginUserResponse> postLogin(@Query("username") String username,
                                             @Query("passwd") String passwd,
                                             @Query("redirectUrl") String redirectUrl);
+
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/RefreshToken")
+    Observable<RefreshTokenResponse> refreshToken(@Query("tokenString") String tokenString);
 
     // 课程搜索接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList")
