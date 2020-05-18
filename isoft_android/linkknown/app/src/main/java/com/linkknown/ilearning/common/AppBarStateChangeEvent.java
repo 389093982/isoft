@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.event;
+package com.linkknown.ilearning.common;
 
 import com.google.android.material.appbar.AppBarLayout;
 

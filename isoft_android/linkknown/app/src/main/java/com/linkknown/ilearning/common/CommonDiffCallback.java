@@ -1,4 +1,4 @@
-package com.linkknown.ilearning.diff;
+package com.linkknown.ilearning.common;
 
 import androidx.recyclerview.widget.DiffUtil;
 

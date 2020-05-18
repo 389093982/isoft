@@ -10,10 +10,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.api.LinkKnownApi;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.listener.OnLoadMoreListener;
+import com.linkknown.ilearning.common.OnLoadMoreListener;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
@@ -35,7 +34,6 @@ import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.HttpException;
 
 // 用户关联课程类
 public class UserCourseFragment extends BaseLazyLoadFragment {
