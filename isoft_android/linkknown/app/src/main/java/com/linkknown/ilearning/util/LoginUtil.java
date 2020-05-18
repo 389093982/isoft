@@ -19,7 +19,21 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
+import retrofit2.HttpException;
+
 public class LoginUtil {
+
+    public static boolean isNotUnauthorized (Throwable e) {
+        return !isUnauthorized(e);
+    }
+
+    private static boolean isUnauthorized (Throwable e) {
+        if (e instanceof HttpException) {
+            int code = ((HttpException) e).code();
+            return code == 401;
+        }
+        return false;
+    }
 
     // 判断过期时间是否是最近 3 小时之内
     public static boolean checkRecently (Context mContext) {

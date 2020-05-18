@@ -19,9 +19,9 @@ import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.HttpException;
 
 // 用户关联课程类
 public class UserCourseFragment extends BaseLazyLoadFragment {
@@ -130,8 +131,10 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("onError=>", Constants.TIP_SYSTEM_ERROR);
-                            ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                            if (LoginUtil.isNotUnauthorized(e)) {
+                                Log.e("onError=>", Constants.TIP_SYSTEM_ERROR);
+                                ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                            }
                             refreshLayout.setRefreshing(false);
                         }
                     });
