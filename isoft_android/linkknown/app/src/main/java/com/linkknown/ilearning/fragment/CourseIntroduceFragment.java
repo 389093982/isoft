@@ -15,11 +15,15 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.section.CommonTagSection;
 import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -79,6 +83,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     private void init () {
         CourseDetailResponse.Course course = courseDetailResponse.getCourse();
         List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
+        String course_label = courseDetailResponse.getCourse().getCourse_label();
         // 设置课程名称
         courseNameText.setText(course.getCourse_name());
         // 设置播放次数
@@ -111,7 +116,9 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
         // 设置视频列表 section 部分
         SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
+        CommonTagSection commonTagSection = new CommonTagSection(mContext, CommonUtil.splitCommonTag(course_label));
         CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, cVideos);
+        sectionedRecyclerViewAdapter.addSection(commonTagSection);
         sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
         cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
