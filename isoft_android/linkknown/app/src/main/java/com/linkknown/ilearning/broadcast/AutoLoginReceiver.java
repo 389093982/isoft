@@ -13,6 +13,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -25,6 +27,8 @@ import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -61,6 +65,15 @@ public class AutoLoginReceiver extends BroadcastReceiver {
 
         // 定时修改顶部 tip ... 动画效果,一个点二个点三个点逐渐显示
         this.intervalChangeHeaderTip(dialog);
+
+        ImageView headerIcon = dialog.findViewById(R.id.headerIcon);
+
+        // 替换默认头像
+        if (StringUtils.isNotEmpty(LoginUtil.getHeaderIcon(context))){
+            UIUtils.setImage(context, headerIcon, LoginUtil.getHeaderIcon(context));
+        }
+        // 为头像设置旋转动画
+        headerIcon.startAnimation(AnimationUtils.loadAnimation(context, R.anim.rotate_anim));
 
         LinkKnownApiFactory.getLinkKnownApi().refreshToken(LoginUtil.getTokenString(context))
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
@@ -109,7 +122,7 @@ public class AutoLoginReceiver extends BroadcastReceiver {
          * 第一个参数表示总时间，第二个参数表示间隔时间。
          * 意思就是每隔一秒会回调一次方法onTick，然后1秒之后会回调onFinish方法。
          */
-        CountDownTimer timer = new CountDownTimer(Constants.REFRESH_TOKEN_DIALOG_SHOW_TIME * 1000, 1000) {
+        CountDownTimer timer = new CountDownTimer(Constants.REFRESH_TOKEN_DIALOG_SHOW_TIME * 1000, 800) {
             public void onTick(long millisUntilFinished) {
                 TextView refreshTokenHeaderText = dialog.findViewById(R.id.refreshTokenHeaderText);
 

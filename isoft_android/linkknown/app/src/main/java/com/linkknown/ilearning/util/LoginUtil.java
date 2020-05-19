@@ -72,6 +72,7 @@ public class LoginUtil {
         if (loginUserResponse != null && loginUserResponse.isSuccess()) {
             editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, loginUserResponse.getTokenString());
             editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NICK_NAME, loginUserResponse.getNickName());
+            editor.putString(Constants.USER_SHARED_PREFERENCES_USER_HEADER_ICON, loginUserResponse.getHeaderIcon());
             editor.putString(Constants.USER_SHARED_PREFERENCES_IS_LOGIN, "isLogin");
             editor.putString(Constants.USER_SHARED_PREFERENCES_ROLE_NAME, loginUserResponse.getRoleName());
             // 过期时间,毫秒数
@@ -107,6 +108,11 @@ public class LoginUtil {
         SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         String userName0 = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
         return StringUtils.equals(userName, userName0);
+    }
+
+    public static String getHeaderIcon(Context mContext) {
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
+        return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_HEADER_ICON, "");
     }
 
     public static String getLoginUserName(Context mContext) {
