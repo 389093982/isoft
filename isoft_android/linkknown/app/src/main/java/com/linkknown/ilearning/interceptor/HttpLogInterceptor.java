@@ -48,7 +48,7 @@ public class HttpLogInterceptor implements Interceptor {
         if (response.code() == 401) {
             // 触发自动登录
             Intent intent = new Intent();
-            intent.setAction("com.linkknown.ilearning.broadcast.AutoLoginAction");
+            intent.setAction("com.linkknown.ilearning.broadcast.UnAuthorizedLogin");
             BaseApplication.getContext().sendBroadcast(intent);
         }
     }

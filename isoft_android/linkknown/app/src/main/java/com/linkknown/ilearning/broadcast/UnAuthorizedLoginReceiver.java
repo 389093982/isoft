@@ -36,7 +36,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 // 自动登录广播
-public class AutoLoginReceiver extends BroadcastReceiver {
+public class UnAuthorizedLoginReceiver extends BroadcastReceiver {
 
     private Handler handler = new Handler();
     private long startTime;
@@ -46,13 +46,15 @@ public class AutoLoginReceiver extends BroadcastReceiver {
         // 记录开始时间
         startTime = System.currentTimeMillis();
         if (LoginUtil.checkCanRefreshToken(context)) {
-            refreshTokenDialog(context);
+            // 自动弹框并刷新 tokenString
+            showRefreshTokenDialog(context);
         } else {
-            redirectToLoginConfirmDialog(context);
+            // 弹框提示用户去登录
+            showRedirectLoginConfirmDialog(context);
         }
     }
 
-    private void refreshTokenDialog(Context context) {
+    private void showRefreshTokenDialog(Context context) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context, R.style.LinkKnownDialog);
         alertDialog.setView(R.layout.dialog_user_refreshtoken);
         AlertDialog dialog = alertDialog.create();
@@ -96,7 +98,7 @@ public class AutoLoginReceiver extends BroadcastReceiver {
 
                         ToastUtil.showText(context, "服务器异常，请稍后重试~");
                         // 延迟一秒再弹出去登录对话框
-//                        redirectToLoginConfirmDialog(context);
+//                        showRedirectLoginConfirmDialog(context);
                     }
 
                     private void dismissDelay(AlertDialog dialog) {
@@ -145,7 +147,7 @@ public class AutoLoginReceiver extends BroadcastReceiver {
     }
 
 
-    private void redirectToLoginConfirmDialog(Context context) {
+    private void showRedirectLoginConfirmDialog(Context context) {
         /**
          * 对话框弹框以下错误解决方案：
          * Caused by: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.

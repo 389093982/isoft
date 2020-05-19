@@ -36,4 +36,6 @@ public class Constants {
 
     // 刷新 tokenString 对话框显示时长,单位秒
     public static final int REFRESH_TOKEN_DIALOG_SHOW_TIME = 4;
+
+    public static final String REFRESH_TOKEN_LOGIN_SUCCESS = "登录成功";
 }

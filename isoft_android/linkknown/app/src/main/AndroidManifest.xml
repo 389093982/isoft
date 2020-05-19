@@ -64,9 +64,9 @@
             android:theme="@style/AppTheme" />
 
         <!-- receiver 广播配置汇总 -->
-        <receiver android:name=".broadcast.AutoLoginReceiver">
+        <receiver android:name=".broadcast.UnAuthorizedLoginReceiver">
             <intent-filter>
-                <action android:name="com.linkknown.ilearning.broadcast.AutoLoginAction"/>
+                <action android:name="com.linkknown.ilearning.broadcast.UnAuthorizedLogin"/>
             </intent-filter>
         </receiver>
     </application>
