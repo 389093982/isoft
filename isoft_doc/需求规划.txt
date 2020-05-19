@@ -87,3 +87,4 @@ iwork 框架 sql 不支持;结尾
 
 
 阿里巴巴矢量图库 https://www.iconfont.cn/
+File -> Setting -> Plugins -> Browser repositories -> 搜"svg2VectorDrawable" -> 安装并重启Android Studio

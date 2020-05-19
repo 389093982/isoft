@@ -17,11 +17,12 @@
         android:textColor="@color/green_300" />
 
     <ImageButton
+        android:id="@+id/operateIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/daily_video_action_bg"
         android:clickable="false"
-        android:src="@drawable/ic_share_green" />
+        android:src="@drawable/ic_shoucang" />
 
     <TextView
         android:id="@+id/operateNameText"

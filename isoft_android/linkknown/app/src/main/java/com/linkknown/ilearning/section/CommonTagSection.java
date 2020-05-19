@@ -4,14 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.internal.FlowLayout;
 import com.linkknown.ilearning.R;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
 
 import java.util.List;
 
@@ -51,26 +47,6 @@ public class CommonTagSection extends Section {
             textView.setText(tagList.get(i));
             viewHolder.flowLayout.addView(textView);
         }
-
-//        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-//        multiTypeAdapter.register(String.class, new MultiItemView<String>() {
-//            @NonNull
-//            @Override
-//            public int getLayoutId() {
-//                return R.layout.item_common_tag;
-//            }
-//
-//            @Override
-//            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull String tag, int position) {
-//                viewHolder.setText(R.id.tagName, tag);
-//            }
-//        });
-//        multiTypeAdapter.setItems(tagList);
-//
-//
-//        FlowLayout flowLayout = new FlowLayout(mContext);
-//        viewHolder.recyclerView.setLayoutManager(flowLayout);
-//        viewHolder.recyclerView.setAdapter(multiTypeAdapter);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

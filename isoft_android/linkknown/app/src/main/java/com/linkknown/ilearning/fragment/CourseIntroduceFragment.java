@@ -93,10 +93,11 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
 
-        List<String> courseOperates = Arrays.asList("分享", "投硬币", "收藏", "缓存");
         userNameText.setText(courseDetailResponse.getUser().getNick_name());
         UIUtils.setImage(mContext, headerIcon, courseDetailResponse.getUser().getSmall_icon());
 
+        List<String> courseOperates = Arrays.asList("分享", "投硬币", "收藏", "缓存");
+        List<Integer> operateIcons = Arrays.asList(R.drawable.ic_share, R.drawable.ic_share, R.drawable.ic_shoucang, R.drawable.ic_shoucang);
         MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(String.class, new MultiItemView<String>() {
             @NonNull
@@ -108,6 +109,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             @Override
             public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull String s, int i) {
                 viewHolder.setText(R.id.operateNameText, s);
+                viewHolder.setImageResource(R.id.operateIcon, operateIcons.get(i));
             }
         });
         multiTypeAdapter.setItems(courseOperates);
