@@ -14,6 +14,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.linkknown.ilearning.R;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class UIUtils {
 
     public static void gotoActivity (Context ctx, Class clazz){
@@ -38,10 +40,12 @@ public class UIUtils {
     }
 
     public static void setImage (Context context, ImageView imageView, String imageUrl){
-        Glide.with(context)
-                .load(UIUtils.replaceMediaUrl(imageUrl))
-                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                .into(imageView);
+        if (StringUtils.isNotEmpty(imageUrl)){
+            Glide.with(context)
+                    .load(UIUtils.replaceMediaUrl(imageUrl))
+                    .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                    .into(imageView);
+        }
     }
 
     public static void setTextViewDrawbleImg (Context mContext, TextView textView, int id, int left, int top, int right, int bottom) {
