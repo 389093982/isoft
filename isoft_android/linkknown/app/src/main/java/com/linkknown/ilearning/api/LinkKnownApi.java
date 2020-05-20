@@ -9,6 +9,7 @@ import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
+import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
@@ -117,4 +118,11 @@ public interface LinkKnownApi {
     // 课程观看记录
     @GET("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory")
     Observable<HistoryResponse> showCourseHistory();
+
+
+    // 是否收藏
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/IsFavorite")
+    Observable<IsFavoriteResponse> isFavorite(@Query("user_name") String user_name,
+                                              @Query("favorite_id") int favorite_id,
+                                              @Query("favorite_type") String favorite_type);
 }

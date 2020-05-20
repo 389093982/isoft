@@ -15,7 +15,23 @@ android {
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     buildTypes {
+        // 本地调试版本
+        debug {
+            buildConfigField "String", "BASE_URL", '"http://192.168.1.4:6001"'
+
+
+        }
+        // 测试环境
+        // ProductFlavor names cannot start with 'test' 命名不能叫 test
+        envTest {
+            buildConfigField "String", "BASE_URL", '"http://www.test.linkknown.com"'
+
+        }
+        // 生产环境,最终发布版本,需要适配混淆
         release {
+            buildConfigField "String", "BASE_URL", '"http://www.linkknown.com"'
+
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

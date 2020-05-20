@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.factory;
 
+import com.linkknown.ilearning.BuildConfig;
 import com.linkknown.ilearning.interceptor.HttpLogInterceptor;
 import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.api.LinkKnownApi;
@@ -12,8 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LinkKnownApiFactory {
 
     private static LinkKnownApi linkKnownApi;
-    private static String BASE_URL = "http://192.168.1.4:6001";
-//    private static String BASE_URL = "http://www.linkknown.com";
+    private static String BASE_URL = BuildConfig.BASE_URL;
 
     public static void init (){
         // okhttp设置部分,此处还可再设置网络参数

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.linkknown.ilearning.BuildConfig;
 import com.linkknown.ilearning.R;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +37,7 @@ public class UIUtils {
     }
 
     public static String replaceMediaUrl (String url) {
-        return url.replace("localhost", "192.168.1.4");
+        return url.replace("http://localhost:6001", BuildConfig.BASE_URL);
     }
 
     public static void setImage (Context context, ImageView imageView, String imageUrl){
