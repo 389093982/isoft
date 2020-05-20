@@ -61,13 +61,11 @@
             android:textColor="@color/black_alpha_45"
             android:textSize="14sp" />
 
-<!--        <com.zhy.view.flowlayout.TagFlowLayout-->
-<!--            android:id="@+id/tags_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="@dimen/default_tiny_padding"-->
-<!--            android:layout_marginStart="@dimen/default_tiny_padding"-->
-<!--            app:max_select="-1" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tagRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
 
 
 <!--        <android.support.v4.widget.NestedScrollView-->
