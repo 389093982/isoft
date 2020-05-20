@@ -30,6 +30,7 @@ import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
+import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.fragment.MoreFragment;
 import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MoreFragment moreFragment4 = new MoreFragment();
         MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
-        MoreFragment moreFragment7 = new MoreFragment();
+        FindFragment findFragment = new FindFragment();
         MoreFragment moreFragment8 = new MoreFragment();
 
         mFragments.add(moreFragment1);
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragments.add(moreFragment4);
         mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
-        mFragments.add(moreFragment7);
+        mFragments.add(findFragment);
         mFragments.add(moreFragment8);
 
         // title 限制 2 个字
@@ -213,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         titles.add("热门");
         titles.add("分类");
         titles.add("关注");
-        titles.add("发现");
         titles.add("推荐");
+        titles.add("发现");
         titles.add("更多");
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
