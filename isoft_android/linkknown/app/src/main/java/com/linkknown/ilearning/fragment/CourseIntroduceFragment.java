@@ -1,7 +1,8 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,33 +17,28 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
-import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseDetailResponse;
-import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
-import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
 import com.linkknown.ilearning.section.CommonTagSection;
 import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.DrawableUtil;
 import com.linkknown.ilearning.util.LoginUtil;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -138,17 +134,18 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             }
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseOperate operate, int i) {
+            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseOperate operate, int position) {
                 // 设置操作名称
                 viewHolder.setText(R.id.operateNameText, operate.getOperateName());
-
                 // 主要是 tint 属性
                 VectorDrawableCompat vectorDrawableCompat =
                         VectorDrawableCompat.create(getResources(), operate.getOperateIcon(), mContext.getTheme());
-                vectorDrawableCompat.setTint(operate.getOperateStatus() == 1 ?
-                                ContextCompat.getColor(mContext, R.color.colorPrimary) : ContextCompat.getColor(mContext, R.color.gray));
+                // 颜色
+                int color = operate.getOperateStatus() == 1 ?
+                        ContextCompat.getColor(mContext, R.color.colorPrimary) : ContextCompat.getColor(mContext, R.color.gray);
                 // 设置图标和图标颜色
-                viewHolder.setImageDrawable(R.id.operateIcon, vectorDrawableCompat);
+                // 使用工具类解决着色共享状态的 bug
+                viewHolder.setImageDrawable(R.id.operateIcon, DrawableUtil.tintDrawable(vectorDrawableCompat, color));
             }
         });
         multiTypeAdapter.setItems(courseOperates);
@@ -164,8 +161,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                         if (isFavoriteResponse.isSuccess()) {
                             CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
                             operate.setOperateStatus(isFavoriteResponse.isFavorite ? 1 : 0);
-                            operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_HUANCUN);
-                            operate.setOperateStatus(isFavoriteResponse.isFavorite ? 1 : 0);
+
                         }
                         multiTypeAdapter.notifyDataSetChanged();
                     }

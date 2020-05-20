@@ -9,11 +9,13 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -85,8 +87,14 @@ public class UnAuthorizedLoginReceiver extends BroadcastReceiver {
         View btnSubmit = dialog.findViewById(R.id.btn_submit);
 
         // 点击关闭对话框
-        btnCancel.setOnClickListener(v -> dialog.dismiss());
-        btnSubmit.setOnClickListener(v -> dialog.dismiss());
+        btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        btnSubmit.setOnClickListener(v -> {
+            // 关闭对话框并前往登录页面
+            dialog.dismiss();
+            UIUtils.gotoActivity(context, LoginActivity.class);
+        });
     }
 
 }
