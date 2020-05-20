@@ -50,6 +50,8 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function3;
+import io.reactivex.functions.Function4;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseIntroduceFragment extends BaseLazyLoadFragment {
@@ -138,27 +140,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         CourseDetailResponse.Course course = courseDetailResponse.getCourse();
         switch (operateName) {
             case CourseOperate.OPERATE_SHOU_CANG:
-                LinkKnownApiFactory.getLinkKnownApi().toggleFavorite(course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT)
-                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                        .subscribe(new LinkKnownObserver<BaseResponse>() {
-
-                            @Override
-                            public void onNext(BaseResponse response) {
-                                if (response.isSuccess()) {
-                                    ToastUtil.showText(mContext, "课程收藏成功！");
-                                    // 收藏成功后刷新收藏区域
-                                    refreshCourseOperateArea(course);
-                                } else {
-                                    ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
-                            }
-                        });
+                toggleFavorite(course, Constants.FAVORITE_TYPE_COURSE_COLLECT, "课程收藏成功！");
+                break;
+            case CourseOperate.OPERATE_PRIASE:
+                toggleFavorite(course, Constants.FAVORITE_TYPE_COURSE_PRIASE, "课程点赞成功！");
                 break;
             case CourseOperate.OPERATE_PLAY:
                 List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
@@ -176,24 +161,54 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 } else {
                     ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
                 }
-
                 break;
             default:
                 break;
         }
     }
 
+    private void toggleFavorite(CourseDetailResponse.Course course, String favorite_type, String successTip) {
+        LinkKnownApiFactory.getLinkKnownApi().toggleFavorite(course.getId(), favorite_type)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        if (response.isSuccess()) {
+                            ToastUtil.showText(mContext, successTip);
+                            // 收藏成功后刷新收藏区域
+                            refreshCourseOperateArea(course);
+                        } else {
+                            ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                    }
+                });
+    }
+
     private void refreshCourseOperateArea(CourseDetailResponse.Course course) {
         Observable.zip(
                 LinkKnownApiFactory.getLinkKnownApi().queryFavoriteCount(course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT),
+                LinkKnownApiFactory.getLinkKnownApi().queryFavoriteCount(course.getId(), Constants.FAVORITE_TYPE_COURSE_PRIASE),
                 // 是否收藏应该从请求头中获取用户名，不强制登录，没登录不发送请求
                 LinkKnownApiFactory.getLinkKnownApi().isFavorite(LoginUtil.getLoginUserName(mContext), course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT),
-                new BiFunction<FavoriteCountResponse, IsFavoriteResponse, CourseOperate.CourseOperateResponseWrapper>() {
+                LinkKnownApiFactory.getLinkKnownApi().isFavorite(LoginUtil.getLoginUserName(mContext), course.getId(), Constants.FAVORITE_TYPE_COURSE_PRIASE),
+                new Function4<FavoriteCountResponse, FavoriteCountResponse, IsFavoriteResponse, IsFavoriteResponse, CourseOperate.CourseOperateResponseWrapper>() {
                     @Override
-                    public CourseOperate.CourseOperateResponseWrapper apply(FavoriteCountResponse favoriteCountResponse, IsFavoriteResponse isFavoriteResponse) throws Exception {
+                    public CourseOperate.CourseOperateResponseWrapper
+                    apply(FavoriteCountResponse collectFavoriteCountResponse, FavoriteCountResponse priaseFavoriteCountResponse,
+                          IsFavoriteResponse collectIsFavoriteResponse, IsFavoriteResponse priaseIsFavoriteResponse) throws Exception {
+                        // 将多个对象组装成一个对象
                         CourseOperate.CourseOperateResponseWrapper wrapper = new CourseOperate.CourseOperateResponseWrapper();
-                        wrapper.setFavoriteCountResponse(favoriteCountResponse);
-                        wrapper.setIsFavoriteResponse(isFavoriteResponse);
+                        wrapper.setCollectFavoriteCountResponse(collectFavoriteCountResponse);
+                        wrapper.setCollectIsFavoriteResponse(collectIsFavoriteResponse);
+                        wrapper.setPriaseFavoriteCountResponse(priaseFavoriteCountResponse);
+                        wrapper.setPriaseIsFavoriteResponse(priaseIsFavoriteResponse);
                         return wrapper;
                     }
                 }
@@ -206,14 +221,24 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                         CourseOperate operatePlay = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_PLAY);
                         operatePlay.setOperateNum(courseDetailResponse.getCourse().getWatch_number());
                         // 课程是否收藏
-                        if (wrapper.getIsFavoriteResponse().isSuccess()) {
+                        if (wrapper.getCollectIsFavoriteResponse().isSuccess()) {
                             CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
-                            operate.setOperateStatus(wrapper.getIsFavoriteResponse().isFavorite ? 1 : 0);
+                            operate.setOperateStatus(wrapper.getCollectIsFavoriteResponse().isFavorite ? 1 : 0);
                         }
                         // 课程收藏数量
-                        if (wrapper.getFavoriteCountResponse().isSuccess()) {
+                        if (wrapper.getCollectFavoriteCountResponse().isSuccess()) {
                             CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
-                            operate.setOperateNum(wrapper.getFavoriteCountResponse().getCounts());
+                            operate.setOperateNum(wrapper.getCollectFavoriteCountResponse().getCounts());
+                        }
+                        // 课程是否点赞
+                        if (wrapper.getPriaseIsFavoriteResponse().isSuccess()) {
+                            CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_PRIASE);
+                            operate.setOperateStatus(wrapper.getPriaseIsFavoriteResponse().isFavorite ? 1 : 0);
+                        }
+                        // 课程收藏点赞
+                        if (wrapper.getPriaseFavoriteCountResponse().isSuccess()) {
+                            CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_PRIASE);
+                            operate.setOperateNum(wrapper.getPriaseFavoriteCountResponse().getCounts());
                         }
                         courseOperateAdapter.notifyDataSetChanged();
                     }

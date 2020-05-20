@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 public class CourseOperate {
 
     public static final String OPERATE_SHARE = "分享";
-    public static final String OPERATE_TOUBI = "投硬币";
+    public static final String OPERATE_PRIASE = "点赞";
     public static final String OPERATE_SHOU_CANG = "收藏";
     public static final String OPERATE_PLAY = "播放";
 
@@ -38,8 +38,8 @@ public class CourseOperate {
         operates.add(operate);
 
         operate = new CourseOperate();
-        operate.setOperateName(OPERATE_TOUBI);
-        operate.setOperateIcon(R.drawable.ic_share);
+        operate.setOperateName(OPERATE_PRIASE);
+        operate.setOperateIcon(R.drawable.ic_priase);
         operates.add(operate);
 
         operate = new CourseOperate();
@@ -65,7 +65,11 @@ public class CourseOperate {
 
     @Data
     public static class CourseOperateResponseWrapper {
-        private IsFavoriteResponse isFavoriteResponse;
-        private FavoriteCountResponse favoriteCountResponse;
+        // 收藏
+        private IsFavoriteResponse collectIsFavoriteResponse;
+        private FavoriteCountResponse collectFavoriteCountResponse;
+        // 点赞
+        private IsFavoriteResponse priaseIsFavoriteResponse;
+        private FavoriteCountResponse priaseFavoriteCountResponse;
     }
 }
