@@ -18,13 +18,15 @@ public class CommonTagSection extends Section {
 
     private List<String> tagList;
     private Context mContext;
+    private ClickListener listener;
 
-    public CommonTagSection(Context mContext, List<String> tagList) {
+    public CommonTagSection(Context mContext, ClickListener listener, List<String> tagList) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.layout_flow)
                 .build());
         this.tagList = tagList;
         this.mContext = mContext;
+        this.listener = listener;
     }
 
     @Override
@@ -46,6 +48,11 @@ public class CommonTagSection extends Section {
             TextView textView = (TextView) View.inflate(viewHolder.flowLayout.getContext(), R.layout.item_common_tag, null);
             textView.setText(tagList.get(i));
             viewHolder.flowLayout.addView(textView);
+
+            if (listener != null){
+                String tagText = tagList.get(i);
+                textView.setOnClickListener(v -> listener.onClickTag(tagText));
+            }
         }
     }
 
@@ -57,5 +64,9 @@ public class CommonTagSection extends Section {
             super(itemView);
             flowLayout = itemView.findViewById(R.id.flowLayout);
         }
+    }
+
+    public static interface ClickListener {
+        void onClickTag(String tagText);
     }
 }

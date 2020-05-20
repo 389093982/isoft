@@ -1,14 +1,17 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseSearchActivity;
 import com.linkknown.ilearning.section.CommonTagSection;
 import com.linkknown.ilearning.section.ShowAndCloseMoreSection;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +19,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMoreSection.ClickListener {
+public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMoreSection.ClickListener, CommonTagSection.ClickListener {
     private Context mContext;
 
     @BindView(R.id.tagRecyclerView)
@@ -38,8 +42,8 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
     private void initTagView () {
         tagRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         showTagList = new ArrayList<>(Arrays.asList("测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2"));
-        CommonTagSection showCommonTagSection = new CommonTagSection(mContext, showTagList);
-        CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, hideTagList);
+        CommonTagSection showCommonTagSection = new CommonTagSection(mContext, this, showTagList);
+        CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, this, hideTagList);
         ShowAndCloseMoreSection showAndCloseMoreSection = new ShowAndCloseMoreSection(mContext, this);
         tagRecyclerViewAdapter.addSection(showCommonTagSection);
         tagRecyclerViewAdapter.addSection(hideCommonTagSection);
@@ -73,5 +77,24 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
     public void closeMore() {
         hideTagList.clear();
         tagRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 前往搜索界面
+     */
+    @OnClick(R.id.searchCardView)
+    void startSearchActivity() {
+        UIUtils.gotoActivity(mContext, CourseSearchActivity.class);
+    }
+
+    @Override
+    public void onClickTag(String tagText) {
+        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, new UIUtils.IntentParamWrapper() {
+            @Override
+            public Intent wrapper(Intent intent) {
+                intent.putExtra("search", tagText);
+                return intent;
+            }
+        });
     }
 }

@@ -7,13 +7,14 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
+        android:name=".common.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/linkknown"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".common.BaseApplication">
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.CourseSearchActivity"></activity>
         <!-- activity 页面配置汇总 -->
         <activity android:name=".activity.UserDetailActivity" />
         <activity android:name=".activity.CouponCenterActivity" />
@@ -61,12 +62,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
-
-        <!-- receiver 广播配置汇总 -->
+            android:theme="@style/AppTheme" /> <!-- receiver 广播配置汇总 -->
         <receiver android:name=".broadcast.UnAuthorizedLoginReceiver">
             <intent-filter>
-                <action android:name="com.linkknown.ilearning.broadcast.UnAuthorizedLogin"/>
+                <action android:name="com.linkknown.ilearning.broadcast.UnAuthorizedLogin" />
             </intent-filter>
         </receiver>
     </application>
