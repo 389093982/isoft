@@ -38,4 +38,6 @@ public class Constants {
     public static final int REFRESH_TOKEN_DIALOG_SHOW_TIME = 4;
 
     public static final String REFRESH_TOKEN_LOGIN_SUCCESS = "登录成功";
+
+    public static final String COURSE_PLAY_NO_COURSE_NUM_TIP = "暂无剧情，敬请期待~";
 }

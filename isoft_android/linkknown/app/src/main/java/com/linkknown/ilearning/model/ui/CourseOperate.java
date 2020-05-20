@@ -7,7 +7,6 @@ import com.linkknown.ilearning.model.IsFavoriteResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import lombok.Data;
@@ -20,7 +19,7 @@ public class CourseOperate {
     public static final String OPERATE_SHARE = "分享";
     public static final String OPERATE_TOUBI = "投硬币";
     public static final String OPERATE_SHOU_CANG = "收藏";
-    public static final String OPERATE_HUANCUN = "缓存";
+    public static final String OPERATE_PLAY = "播放";
 
     // 操作名称
     private String operateName;
@@ -49,8 +48,8 @@ public class CourseOperate {
         operates.add(operate);
 
         operate = new CourseOperate();
-        operate.setOperateName(OPERATE_HUANCUN);
-        operate.setOperateIcon(R.drawable.ic_shoucang);
+        operate.setOperateName(OPERATE_PLAY);
+        operate.setOperateIcon(R.drawable.ic_play);
         operates.add(operate);
         return operates;
     }

@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.activity.VideoPlayActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -35,6 +37,8 @@ import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 import java.util.function.Function;
@@ -156,6 +160,24 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                             }
                         });
                 break;
+            case CourseOperate.OPERATE_PLAY:
+                List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
+                if (CollectionUtils.isNotEmpty(cVideos)) {
+                    CourseDetailResponse.CVideo cVideo = cVideos.get(0);
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
+                        @Override
+                        public Intent wrapper(Intent intent) {
+                            intent.putExtra("course_id", cVideo.getCourse_id());
+                            intent.putExtra("video_id", cVideo.getId());
+                            intent.putExtra("first_play", cVideo.getFirst_play());
+                            return intent;
+                        }
+                    });
+                } else {
+                    ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
+                }
+
+                break;
             default:
                 break;
         }
@@ -180,10 +202,15 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 .subscribe(new LinkKnownOnNextObserver<CourseOperate.CourseOperateResponseWrapper>() {
                     @Override
                     public void onNext(CourseOperate.CourseOperateResponseWrapper wrapper) {
+                        // 课程播放次数
+                        CourseOperate operatePlay = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_PLAY);
+                        operatePlay.setOperateNum(courseDetailResponse.getCourse().getWatch_number());
+                        // 课程是否收藏
                         if (wrapper.getIsFavoriteResponse().isSuccess()) {
                             CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
                             operate.setOperateStatus(wrapper.getIsFavoriteResponse().isFavorite ? 1 : 0);
                         }
+                        // 课程收藏数量
                         if (wrapper.getFavoriteCountResponse().isSuccess()) {
                             CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
                             operate.setOperateNum(wrapper.getFavoriteCountResponse().getCounts());

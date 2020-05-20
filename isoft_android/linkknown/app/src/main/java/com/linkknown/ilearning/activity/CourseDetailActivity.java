@@ -24,6 +24,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.AppBarStateChangeEvent;
@@ -115,7 +116,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                                 return intent;
                             });
                         } else {
-                            ToastUtil.showText(mContext, "暂无剧情，敬请期待~");
+                            ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
                         }
                     });
                 });
