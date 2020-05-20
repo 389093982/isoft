@@ -32,7 +32,7 @@ public class Constants {
     public static final int NEWS_CHANNEL_ENABLE = 1;
     public static final int NEWS_CHANNEL_DISABLE = 0;
 
-    public static final String TIP_SYSTEM_ERROR = "系统异常，请联系管理员~";
+    public static final String TIP_SYSTEM_ERROR = "系统繁忙，请稍后重试~";
 
     // 刷新 tokenString 对话框显示时长,单位秒
     public static final int REFRESH_TOKEN_DIALOG_SHOW_TIME = 4;

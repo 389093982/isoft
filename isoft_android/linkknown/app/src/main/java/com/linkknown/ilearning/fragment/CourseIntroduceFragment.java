@@ -17,9 +17,12 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
 import com.linkknown.ilearning.section.CommonTagSection;
@@ -34,12 +37,15 @@ import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
 import java.util.List;
+import java.util.function.Function;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseIntroduceFragment extends BaseLazyLoadFragment {
@@ -68,7 +74,9 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
+    // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
+    private MultiTypeAdapter courseOperateAdapter;
 
     @Override
     protected void initView(View mRootView) {
@@ -96,8 +104,9 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
         String course_label = courseDetailResponse.getCourse().getCourse_label();
 
-        // 操作区域刷新
-        refreshOperateArea(course);
+        // 操作区域初始化并刷新刷新
+        initCourseOperateArea();
+        refreshCourseOperateArea(course);
 
         // 设置课程名称
         courseNameText.setText(course.getCourse_name());
@@ -121,12 +130,75 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
     }
 
-    // 操作区域刷新
-    private void refreshOperateArea(CourseDetailResponse.Course course) {
+    private void handleCourseOperateClick (String operateName) {
+        CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+        switch (operateName) {
+            case CourseOperate.OPERATE_SHOU_CANG:
+                LinkKnownApiFactory.getLinkKnownApi().toggleFavorite(course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT)
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+
+                            @Override
+                            public void onNext(BaseResponse response) {
+                                if (response.isSuccess()) {
+                                    ToastUtil.showText(mContext, "课程收藏成功！");
+                                    // 收藏成功后刷新收藏区域
+                                    refreshCourseOperateArea(course);
+                                } else {
+                                    ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
+                            }
+                        });
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void refreshCourseOperateArea(CourseDetailResponse.Course course) {
+        Observable.zip(
+                LinkKnownApiFactory.getLinkKnownApi().queryFavoriteCount(course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT),
+                // 是否收藏应该从请求头中获取用户名，不强制登录，没登录不发送请求
+                LinkKnownApiFactory.getLinkKnownApi().isFavorite(LoginUtil.getLoginUserName(mContext), course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT),
+                new BiFunction<FavoriteCountResponse, IsFavoriteResponse, CourseOperate.CourseOperateResponseWrapper>() {
+                    @Override
+                    public CourseOperate.CourseOperateResponseWrapper apply(FavoriteCountResponse favoriteCountResponse, IsFavoriteResponse isFavoriteResponse) throws Exception {
+                        CourseOperate.CourseOperateResponseWrapper wrapper = new CourseOperate.CourseOperateResponseWrapper();
+                        wrapper.setFavoriteCountResponse(favoriteCountResponse);
+                        wrapper.setIsFavoriteResponse(isFavoriteResponse);
+                        return wrapper;
+                    }
+                }
+        ).subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownOnNextObserver<CourseOperate.CourseOperateResponseWrapper>() {
+                    @Override
+                    public void onNext(CourseOperate.CourseOperateResponseWrapper wrapper) {
+                        if (wrapper.getIsFavoriteResponse().isSuccess()) {
+                            CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
+                            operate.setOperateStatus(wrapper.getIsFavoriteResponse().isFavorite ? 1 : 0);
+                        }
+                        if (wrapper.getFavoriteCountResponse().isSuccess()) {
+                            CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
+                            operate.setOperateNum(wrapper.getFavoriteCountResponse().getCounts());
+                        }
+                        courseOperateAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private void initCourseOperateArea() {
         // 获取初始操作信息
         courseOperates = CourseOperate.getInitialCourseOperates();
-        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(CourseOperate.class, new MultiItemView<CourseOperate>() {
+        courseOperateAdapter = new MultiTypeAdapter();
+
+        courseOperateAdapter.register(CourseOperate.class, new MultiItemView<CourseOperate>() {
             @NonNull
             @Override
             public int getLayoutId() {
@@ -146,26 +218,13 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 // 设置图标和图标颜色
                 // 使用工具类解决着色共享状态的 bug
                 viewHolder.setImageDrawable(R.id.operateIcon, DrawableUtil.tintDrawable(vectorDrawableCompat, color));
+                viewHolder.setText(R.id.operateNum, operate.getOperateNum() + "");
+                viewHolder.setOnClickListener(R.id.operateIcon, v -> handleCourseOperateClick(operate.getOperateName()));
             }
         });
-        multiTypeAdapter.setItems(courseOperates);
+        courseOperateAdapter.setItems(courseOperates);
         courseOperateRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        courseOperateRecyclerView.setAdapter(multiTypeAdapter);
-
-        LinkKnownApiFactory.getLinkKnownApi().isFavorite(LoginUtil.getLoginUserName(mContext), course.getId(), Constants.FAVORITE_TYPE_COURSE_COLLECT)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownOnNextObserver<IsFavoriteResponse>() {
-                    @Override
-                    public void onNext(IsFavoriteResponse isFavoriteResponse) {
-                        if (isFavoriteResponse.isSuccess()) {
-                            CourseOperate operate = CourseOperate.getCourseOperateByName(courseOperates, CourseOperate.OPERATE_SHOU_CANG);
-                            operate.setOperateStatus(isFavoriteResponse.isFavorite ? 1 : 0);
-
-                        }
-                        multiTypeAdapter.notifyDataSetChanged();
-                    }
-                });
+        courseOperateRecyclerView.setAdapter(courseOperateAdapter);
     }
 
     @OnClick(R.id.userInfoLayout)
@@ -175,4 +234,6 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             return intent;
         });
     }
+
 }
+

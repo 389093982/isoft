@@ -1,6 +1,8 @@
 package com.linkknown.ilearning.model.ui;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.model.FavoriteCountResponse;
+import com.linkknown.ilearning.model.IsFavoriteResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -62,4 +64,9 @@ public class CourseOperate {
         return null;
     }
 
+    @Data
+    public static class CourseOperateResponseWrapper {
+        private IsFavoriteResponse isFavoriteResponse;
+        private FavoriteCountResponse favoriteCountResponse;
+    }
 }

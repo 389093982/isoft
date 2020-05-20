@@ -7,6 +7,7 @@ import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CourseSearchResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
+import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
@@ -125,4 +126,14 @@ public interface LinkKnownApi {
     Observable<IsFavoriteResponse> isFavorite(@Query("user_name") String user_name,
                                               @Query("favorite_id") int favorite_id,
                                               @Query("favorite_type") String favorite_type);
+
+    // 切换收藏状态
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/ToggleFavorite")
+    Observable<BaseResponse> toggleFavorite(@Query("favorite_id") int favorite_id,
+                                              @Query("favorite_type") String favorite_type);
+
+    // 查询收藏总人数
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount")
+    Observable<FavoriteCountResponse> queryFavoriteCount(@Query("favorite_id") int favorite_id,
+                                                         @Query("favorite_type") String favorite_type);
 }
