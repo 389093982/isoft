@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.rxbinding4.view.RxView;
@@ -20,7 +19,6 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
 import com.linkknown.ilearning.util.KeyBoardUtil;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -150,4 +149,9 @@ public class CourseSearchActivity extends BaseActivity {
         }
     }
 
+    // 返回
+    @OnClick(R.id.goback)
+    public void goback () {
+        finish();
+    }
 }

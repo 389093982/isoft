@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
@@ -54,8 +53,8 @@ public class ShowAndCloseMoreSection extends Section {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView showMore;
-        private TextView closeMore;
+        private View showMore;
+        private View closeMore;
 
         public ItemViewHolder(View itemView) {
             super(itemView);

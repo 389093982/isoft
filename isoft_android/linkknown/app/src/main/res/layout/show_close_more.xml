@@ -10,42 +10,61 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="2dp"
         android:layout_weight="1"
-        android:background="@color/gray_light" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/gray_light"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/showMore"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/default_tiny_padding"
-        android:drawableStart="@drawable/ic_arrow_down_gray_round"
-        android:gravity="center"
-        android:paddingEnd="@dimen/default_tiny_padding"
-        android:paddingStart="@dimen/default_tiny_padding"
-        android:text="查看更多"
-        android:textColor="@color/font_normal"
-        android:textSize="12sp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_round"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/default_tiny_padding"
+            android:gravity="center"
+            android:paddingEnd="@dimen/default_tiny_padding"
+            android:paddingStart="@dimen/default_tiny_padding"
+            android:text="查看更多"
+            android:textColor="@color/font_normal"
+            android:textSize="12sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/closeMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/default_tiny_padding"
-        android:drawableStart="@drawable/ic_arrow_up_gray_round"
-        android:gravity="center"
-        android:paddingEnd="@dimen/default_tiny_padding"
-        android:paddingStart="@dimen/default_tiny_padding"
-        android:text="收起"
-        android:textColor="@color/font_normal"
-        android:textSize="12sp"
-        android:visibility="gone"/>
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_round"
+            android:rotation="180"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/default_tiny_padding"
+            android:gravity="center"
+            android:paddingEnd="@dimen/default_tiny_padding"
+            android:paddingStart="@dimen/default_tiny_padding"
+            android:text="收起"
+            android:textColor="@color/font_normal"
+            android:textSize="12sp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="2dp"
         android:layout_weight="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/gray_light" />
 </LinearLayout>

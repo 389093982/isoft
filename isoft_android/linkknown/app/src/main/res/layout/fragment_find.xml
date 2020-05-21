@@ -24,10 +24,11 @@
             app:cardElevation="0dp">
             <ImageView
                 android:id="@+id/search_scan"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:src="@drawable/ic_hint_search"/>
+                android:padding="12dp"
+                android:src="@drawable/ic_search"/>
 
             <TextView
                 android:id="@+id/search_edit"
@@ -35,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center|end"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:maxLines="1"
@@ -44,12 +46,12 @@
 
             <ImageView
                 android:id="@+id/search_img"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
                 android:clickable="true"
-                android:padding="@dimen/default_general_margin"
-                android:src="@drawable/ic_scan"/>
+                android:padding="12dp"
+                android:src="@drawable/ic_scanner"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
