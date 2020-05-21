@@ -14,6 +14,7 @@ import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -57,10 +58,18 @@ public class CourseHotRecommendSection extends Section {
             viewHolder.courseName.setText(courseMeta.getCourse_name());
             viewHolder.watchNumberText.setText(courseMeta.getWatch_number() + "");
             viewHolder.courseNumberText.setText(courseMeta.getCourse_number() + "");
+
             viewHolder.courseImage.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
                 intent.putExtra("course_id", courseMeta.getId());
                 return intent;
             }));
+
+            if (StringUtils.isNotEmpty(courseMeta.getIsCharge())) {
+                viewHolder.isCharge.setVisibility(View.VISIBLE);
+                viewHolder.isCharge.setText(StringUtils.equals(courseMeta.getIsCharge(), "charge") ? "付费课程" : "免费");
+            } else {
+                viewHolder.isCharge.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -81,6 +90,7 @@ public class CourseHotRecommendSection extends Section {
         private TextView courseName;
         private TextView watchNumberText;
         private TextView courseNumberText;
+        private TextView isCharge;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -88,6 +98,7 @@ public class CourseHotRecommendSection extends Section {
             courseName = itemView.findViewById(R.id.courseName);
             watchNumberText = itemView.findViewById(R.id.watchNumberText);
             courseNumberText = itemView.findViewById(R.id.courseNumberText);
+            isCharge = itemView.findViewById(R.id.isCharge);
         }
     }
 
