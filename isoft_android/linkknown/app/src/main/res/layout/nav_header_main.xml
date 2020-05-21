@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="250dp"
-              android:background="@drawable/side_nav_bar"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/side_nav_bar"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/navigationUserHeaderInfoLayout"
@@ -15,11 +16,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/navigationHeaderIconView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/cutecat"/>
@@ -27,11 +28,22 @@
         <TextView
             android:id="@+id/navigationUserNameText"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:text="@string/need_login"
+            android:text="用户昵称"
             android:textColor="#ffffff"
             android:textSize="16sp"/>
+
+        <!-- 轮播名人名言 -->
+        <com.superluo.textbannerlibrary.TextBannerView
+            android:id="@+id/mingyanTextbanner"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            app:setAnimDuration="1000"
+            app:setGravity="center"
+            app:setTextSize="12sp"
+            app:setTextColor="#fff"/>
     </LinearLayout>
 
     <RelativeLayout

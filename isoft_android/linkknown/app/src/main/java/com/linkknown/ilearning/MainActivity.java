@@ -39,6 +39,7 @@ import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.PermissionUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.superluo.textbannerlibrary.TextBannerView;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RelativeLayout navigationUnLoginLayout;
 
     ImageView navigationHeaderIconView;
+    TextBannerView mingyanTextbanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,8 +253,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 用户名和头像
         navigationUserNameText = headerView.findViewById(R.id.navigationUserNameText);
         navigationHeaderIconView = headerView.findViewById(R.id.navigationHeaderIconView);
+        mingyanTextbanner = headerView.findViewById(R.id.mingyanTextbanner);
 
 
+
+
+        //设置数据
+        List<String> list = new ArrayList<>();
+
+        list.add("发现程序之美，遇见最好的自己");
+        list.add("今天你学习了吗？");
+        list.add("你是最棒的，奔跑吧孩子！");
+        list.add("路漫漫其修远兮，吾将上下而求索");
+
+        //调用setDatas(List<String>)方法后,TextBannerView自动开始轮播
+        //注意：此方法目前只接受List<String>类型
+        mingyanTextbanner.setDatas(list);
     }
 
     // navigation view 点击事件
@@ -335,5 +351,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             LoginUtil.logout(this);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // onResume()和onStop()方法分别调用startViewAnimator()和stopViewAnimator()，防止返回页面出现文字重影问题
+        mingyanTextbanner.startViewAnimator();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mingyanTextbanner.stopViewAnimator();
     }
 }
