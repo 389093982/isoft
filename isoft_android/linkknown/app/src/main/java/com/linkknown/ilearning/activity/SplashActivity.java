@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import com.linkknown.ilearning.MainActivity;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.superluo.textbannerlibrary.TextBannerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +42,8 @@ public class SplashActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView)
     public ImageView imageView;
+    @BindView(R.id.tipTextbanner)
+    public TextBannerView tipTextbanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,5 +74,37 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+
+        initView();
+    }
+
+    private void initView () {
+        initTipTextbanner();
+    }
+
+    private void initTipTextbanner () {
+        //设置数据
+        List<String> list = new ArrayList<>();
+
+        list.add("发现程序之美，遇见最好的自己");
+        list.add("今天你学习了吗？");
+        list.add("你是最棒的，奔跑吧孩子！");
+
+        //调用setDatas(List<String>)方法后,TextBannerView自动开始轮播
+        //注意：此方法目前只接受List<String>类型
+        tipTextbanner.setDatas(list);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // onResume()和onStop()方法分别调用startViewAnimator()和stopViewAnimator()，防止返回页面出现文字重影问题
+        tipTextbanner.startViewAnimator();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        tipTextbanner.stopViewAnimator();
     }
 }

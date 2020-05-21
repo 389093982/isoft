@@ -188,29 +188,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initFragment () {
         // 创建 fragment
         MoreFragment moreFragment1 = new MoreFragment();
-        MoreFragment moreFragment2 = new MoreFragment();
-        MoreFragment moreFragment3 = new MoreFragment();
-        MoreFragment moreFragment4 = new MoreFragment();
-        MoreFragment moreFragment5 = new MoreFragment();
+//        MoreFragment moreFragment2 = new MoreFragment();
+//        MoreFragment moreFragment3 = new MoreFragment();
+//        MoreFragment moreFragment4 = new MoreFragment();
+//        MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
         FindFragment findFragment = new FindFragment();
         MoreFragment moreFragment8 = new MoreFragment();
 
         mFragments.add(moreFragment1);
-        mFragments.add(moreFragment2);
-        mFragments.add(moreFragment3);
-        mFragments.add(moreFragment4);
-        mFragments.add(moreFragment5);
+//        mFragments.add(moreFragment2);
+//        mFragments.add(moreFragment3);
+//        mFragments.add(moreFragment4);
+//        mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
         mFragments.add(findFragment);
         mFragments.add(moreFragment8);
 
         // title 限制 2 个字
         titles.add("首页");
-        titles.add("圈子");
-        titles.add("热门");
-        titles.add("分类");
-        titles.add("关注");
+//        titles.add("圈子");
+//        titles.add("热门");
+//        titles.add("分类");
+//        titles.add("关注");
         titles.add("推荐");
         titles.add("发现");
         titles.add("更多");

@@ -51,9 +51,9 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     // Android 图片加载框架 Glide
-    implementation 'com.github.bumptech.glide:glide:4.3.1'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     // lombok 依赖
     implementation 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
@@ -118,6 +118,9 @@ dependencies {
     implementation 'com.jakewharton.rxbinding4:rxbinding-viewpager2:4.0.0'
     // rxbinding 依赖： Google 'material' library bindings
     implementation 'com.jakewharton.rxbinding4:rxbinding-material:4.0.0'
+
+    // 文字轮播控件，跑马灯
+    implementation 'com.superluo:textbannerview:1.0.5'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
