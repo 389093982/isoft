@@ -127,6 +127,8 @@ public class UserService {
                     @Override
                     public void onNext(LoginUserResponse loginUserResponse) {
                         if (loginUserResponse.isSuccess()) {
+                            // 记录 token 信息
+                            LoginUtil.memoryRefreshToken(mContext, loginUserResponse.getTokenString(), loginUserResponse.getExpireSecond());
                             LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(loginUserResponse);
                         } else {
                             Log.e("onNext =>", "login failed！" + loginUserResponse.getErrorMsg());
