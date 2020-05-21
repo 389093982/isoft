@@ -90,12 +90,9 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
 
     @Override
     public void onClickTag(String tagText) {
-        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, new UIUtils.IntentParamWrapper() {
-            @Override
-            public Intent wrapper(Intent intent) {
-                intent.putExtra("search", tagText);
-                return intent;
-            }
+        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+            intent.putExtra("search", tagText);
+            return intent;
         });
     }
 }

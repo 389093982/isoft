@@ -5,7 +5,9 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+
+public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 初始化 Toolbar
