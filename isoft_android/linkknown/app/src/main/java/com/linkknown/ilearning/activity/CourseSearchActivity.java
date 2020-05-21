@@ -8,21 +8,29 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.CourseSearchResponse;
+import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.section.CourseHotRecommendSection;
 import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -37,6 +45,11 @@ public class CourseSearchActivity extends BaseActivity {
     public ImageView searchEditTextClear;
     @BindView(R.id.searchBtn)
     public ImageView searchBtn;
+
+    @BindView(R.id.recyclerView)
+    public RecyclerView recyclerView;
+    private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
+    SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +108,31 @@ public class CourseSearchActivity extends BaseActivity {
             LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search)
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<CourseSearchResponse>() {
+                    .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
                         @Override
-                        public void onNext(CourseSearchResponse courseSearchResponse) {
-                            if (courseSearchResponse.isSuccess()) {
-                                ToastUtil.showText(mContext, courseSearchResponse.toString());
+                        public void onNext(CourseMetaResponse courseMetaResponse) {
+                            if (courseMetaResponse.isSuccess()) {
+                                courseMetaList.addAll(courseMetaResponse.getCourses());
+
+                                sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
+                                CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
+
+                                sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
+
+                                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+                                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                                    @Override
+                                    public int getSpanSize(int position) {
+                                        // header 显示 2 行
+                                        if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
+                                            return 2;
+                                        }
+                                        return 1;
+                                    }
+                                });
+
+                                recyclerView.setLayoutManager(gridLayoutManager);
+                                recyclerView.setAdapter(sectionedRecyclerViewAdapter);
                             }
                         }
 

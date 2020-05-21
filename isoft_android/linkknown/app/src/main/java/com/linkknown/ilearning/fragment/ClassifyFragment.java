@@ -2,6 +2,7 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
-import com.linkknown.ilearning.service.CourseService;
-import com.linkknown.ilearning.model.CourseSearchResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
-
-import org.apache.commons.lang3.StringUtils;
+import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ClassifyFragment extends Fragment {
 
@@ -91,24 +91,33 @@ public class ClassifyFragment extends Fragment {
             showLoading(true);
 
             // 加载右侧视频数据
-            loadCourseList(mData.get(position));
-        });
+            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position))
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
+                        @Override
+                        public void onNext(CourseMetaResponse courseMetaResponse) {
+                            if (courseMetaResponse.isSuccess()) {
+                                CommonAdapter rightCourseListAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>((ArrayList<CourseMetaResponse.CourseMeta>) courseMetaResponse.getCourses(), R.layout.classify_right_item) {
 
-        LiveEventBus.get("courseSearchResponse", CourseSearchResponse.class).observe(this, courseSearchResponse -> {
-            if (StringUtils.isEmpty(courseSearchResponse.getErrorMsg())) {
-                CommonAdapter rightCourseListAdapter = new CommonAdapter<CourseSearchResponse.Course>((ArrayList<CourseSearchResponse.Course>) courseSearchResponse.getCourses(), R.layout.classify_right_item) {
+                                    @Override
+                                    public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
+                                        holder.setText(R.id.courseName, courseMeta.getCourse_name());
+                                    }
+                                };
+                                rightCourseListView.setAdapter(rightCourseListAdapter);
+                            }
+                            // 去掉加载效果
+                            showLoading(false);
+                        }
 
-                    @Override
-                    public void bindView(ViewHolder holder, CourseSearchResponse.Course course) {
-                        holder.setText(R.id.courseName, course.getCourse_name());
-                    }
-                };
-                rightCourseListView.setAdapter(rightCourseListAdapter);
-            } else {
-                ToastUtil.showText(getContext(),"数据加载异常");
-            }
-            // 去掉加载效果
-            showLoading(false);
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("searchCourseList error", e.getMessage());
+                            // 去掉加载效果
+                            showLoading(false);
+                        }
+                    });
         });
 
 //        //商品类别菜单点击事件
@@ -149,9 +158,5 @@ public class ClassifyFragment extends Fragment {
     private void showLoading(boolean isLoading) {
         mProgressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         rightCourseListView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-    }
-
-    private void loadCourseList (String search) {
-        CourseService.search(search);
     }
 }
