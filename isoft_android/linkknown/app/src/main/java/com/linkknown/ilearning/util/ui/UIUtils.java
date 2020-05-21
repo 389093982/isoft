@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.util.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,16 +21,22 @@ import org.apache.commons.lang3.StringUtils;
 public class UIUtils {
 
     public static void gotoActivity (Context ctx, Class clazz){
-        Intent intent = new Intent();
-        intent.setClass(ctx, clazz);
-        ctx.startActivity(intent);
+        gotoActivity(ctx, clazz, null);
     }
 
     public static void gotoActivity (Context ctx, Class clazz, IntentParamWrapper wrapper){
         Intent intent = new Intent();
         intent.setClass(ctx, clazz);
-        intent = wrapper.wrapper(intent);
+        if (wrapper != null) {
+            intent = wrapper.wrapper(intent);
+        }
         ctx.startActivity(intent);
+
+        if (ctx instanceof Activity) {
+            // Android中不同Activity之间的切换是不可避免的事情，那么怎么才能让Acitivity的切换更优雅呢，
+            // Android中提供了一个方法来解决这个问题，即overridePendingTransition(A，B)函数
+            ((Activity)ctx).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+        }
     }
 
     public interface IntentParamWrapper {

@@ -128,9 +128,6 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.link_login:
                 UIUtils.gotoActivity(this, LoginActivity.class);
-                // Android中不同Activity之间的切换是不可避免的事情，那么怎么才能让Acitivity的切换更优雅呢，
-                // Android中提供了一个方法来解决这个问题，即overridePendingTransition(A，B)函数
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 finish();
                 break;
             case R.id.back:

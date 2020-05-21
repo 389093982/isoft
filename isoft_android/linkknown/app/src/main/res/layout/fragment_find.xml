@@ -27,9 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
-                android:layout_marginStart="@dimen/default_general_margin"
-                android:src="@drawable/ic_hint_search"
-                android:tint="@color/gray_20" />
+                android:src="@drawable/ic_hint_search"/>
+
             <TextView
                 android:id="@+id/search_edit"
                 android:layout_width="match_parent"
@@ -42,6 +41,7 @@
                 android:text="搜索课程名称或者视频关键词"
                 android:textColor="@color/black_alpha_45"
                 android:textSize="14sp" />
+
             <ImageView
                 android:id="@+id/search_img"
                 android:layout_width="wrap_content"
@@ -49,8 +49,7 @@
                 android:layout_gravity="center|end"
                 android:clickable="true"
                 android:padding="@dimen/default_general_margin"
-                android:src="@drawable/ic_scan"
-                android:tint="@color/gray_20" />
+                android:src="@drawable/ic_scan"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
