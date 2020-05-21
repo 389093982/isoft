@@ -42,7 +42,7 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
 
     private void initTagView () {
         tagRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        showTagList = new ArrayList<>(Arrays.asList("测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2"));
+        showTagList = new ArrayList<>(Arrays.asList("docker", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2"));
         CommonTagSection showCommonTagSection = new CommonTagSection(mContext, this, showTagList);
         CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, this, hideTagList);
         ShowAndCloseMoreSection showAndCloseMoreSection = new ShowAndCloseMoreSection(mContext, this);
@@ -70,7 +70,7 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
 
     @Override
     public void showMore() {
-        hideTagList.addAll(new ArrayList<>(Arrays.asList("测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2")));
+        hideTagList.addAll(new ArrayList<>(Arrays.asList("docker", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2")));
         tagRecyclerViewAdapter.notifyDataSetChanged();
     }
 
