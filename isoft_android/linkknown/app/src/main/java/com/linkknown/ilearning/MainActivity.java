@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageView navigationHeaderIconView;
     TextBannerView mingyanTextbanner;
+    TextBannerView mingyanTextbanner2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,10 +254,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 用户名和头像
         navigationUserNameText = headerView.findViewById(R.id.navigationUserNameText);
         navigationHeaderIconView = headerView.findViewById(R.id.navigationHeaderIconView);
+
+        // 名人名言两处显示
         mingyanTextbanner = headerView.findViewById(R.id.mingyanTextbanner);
-
-
-
+        mingyanTextbanner2 = findViewById(R.id.mingyanTextbanner2);
 
         //设置数据
         List<String> list = new ArrayList<>();
@@ -269,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //调用setDatas(List<String>)方法后,TextBannerView自动开始轮播
         //注意：此方法目前只接受List<String>类型
         mingyanTextbanner.setDatas(list);
+        mingyanTextbanner2.setDatas(list);
     }
 
     // navigation view 点击事件

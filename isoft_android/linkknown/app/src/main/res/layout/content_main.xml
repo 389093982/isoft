@@ -21,7 +21,7 @@
 
             <LinearLayout
                 android:id="@+id/headerToolBarLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -57,7 +57,7 @@
 
                 <LinearLayout
                     android:id="@+id/toolBarUnLoginLayout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical">
 
@@ -67,6 +67,22 @@
                         android:text="登录"
                         android:textColor="#ffffff"
                         android:textSize="16sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+                    <!-- 轮播名人名言 -->
+                    <com.superluo.textbannerlibrary.TextBannerView
+                        android:id="@+id/mingyanTextbanner2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        app:setAnimDuration="1000"
+                        app:setGravity="center"
+                        app:setTextSize="12sp"
+                        app:setTextColor="#fff"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
