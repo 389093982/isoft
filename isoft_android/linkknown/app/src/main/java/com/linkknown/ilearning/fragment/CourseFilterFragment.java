@@ -27,9 +27,10 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseIsChargeFragment extends BaseLazyLoadFragment {
+public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
+    private String search;
     private String isCharge;
 
     @BindView(R.id.recyclerView)
@@ -46,6 +47,7 @@ public class CourseIsChargeFragment extends BaseLazyLoadFragment {
         // 从 activity 中接受参数
         Bundle bundle = this.getArguments();
         if (bundle != null) {
+            search = bundle.getString(search);
             isCharge = bundle.getString("isCharge");
         }
 
@@ -76,7 +78,7 @@ public class CourseIsChargeFragment extends BaseLazyLoadFragment {
     protected void initData() {
         changeSectionState(courseHotRecommendSection, Section.State.LOADING);
 
-        LinkKnownApiFactory.getLinkKnownApi().searchCourseList("", isCharge)
+        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, isCharge)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
@@ -160,6 +162,6 @@ public class CourseIsChargeFragment extends BaseLazyLoadFragment {
 
     @Override
     protected int providelayoutId() {
-        return R.layout.fragment_course_ischarge;
+        return R.layout.fragment_course_filter;
     }
 }

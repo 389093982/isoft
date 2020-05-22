@@ -1,6 +1,5 @@
 package com.linkknown.ilearning;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -30,11 +29,9 @@ import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
-import com.linkknown.ilearning.fragment.CourseIsChargeFragment;
+import com.linkknown.ilearning.fragment.CourseFilterFragment;
 import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.fragment.MoreFragment;
-import com.linkknown.ilearning.fragment.UserCourseFragment;
-import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -194,13 +191,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initFragment () {
         // 创建 fragment
         MoreFragment moreFragment1 = new MoreFragment();
-        CourseIsChargeFragment courseIsChargeFragment1 = new CourseIsChargeFragment();
-        CourseIsChargeFragment courseIsChargeFragment2 = new CourseIsChargeFragment();
-        CourseIsChargeFragment courseIsChargeFragment3 = new CourseIsChargeFragment();
+        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
+        CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
+        CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
         // activity 向 fragment 传参
-        courseIsChargeFragment1.setArguments(CommonUtil.createBundle("isCharge", "free"));
-        courseIsChargeFragment2.setArguments(CommonUtil.createBundle("isCharge", "charge"));
-        courseIsChargeFragment3.setArguments(CommonUtil.createBundle("isCharge", ""));
+        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
+        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
 
 //        MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
@@ -208,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MoreFragment moreFragment8 = new MoreFragment();
 
         mFragments.add(moreFragment1);
-        mFragments.add(courseIsChargeFragment1);
-        mFragments.add(courseIsChargeFragment2);
-        mFragments.add(courseIsChargeFragment3);
+        mFragments.add(courseFilterFragment1);
+        mFragments.add(courseFilterFragment2);
+        mFragments.add(courseFilterFragment3);
 //        mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
         mFragments.add(findFragment);

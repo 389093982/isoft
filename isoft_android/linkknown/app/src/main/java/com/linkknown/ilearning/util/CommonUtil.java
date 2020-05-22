@@ -20,4 +20,11 @@ public class CommonUtil {
         bundle.putString(key, value);
         return bundle;
     }
+
+    public static Bundle createBundle2 (String key1, String value1, String key2, String value2) {
+        Bundle bundle = new Bundle();
+        bundle.putString(key1, value1);
+        bundle.putString(key2, value2);
+        return bundle;
+    }
 }
