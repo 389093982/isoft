@@ -51,6 +51,12 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
             isCharge = bundle.getString("isCharge");
         }
 
+        // 初始化并绑定 adapter
+        initAndBindRecyclerViewAdapter();
+    }
+
+    // 初始化并绑定 adapter
+    private void initAndBindRecyclerViewAdapter() {
         sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
 
@@ -76,6 +82,11 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initData() {
+        // adapter 只初始化一次
+        if (sectionedRecyclerViewAdapter == null) {
+            initAndBindRecyclerViewAdapter();
+        }
+
         changeSectionState(courseHotRecommendSection, Section.State.LOADING);
 
         LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, isCharge)
