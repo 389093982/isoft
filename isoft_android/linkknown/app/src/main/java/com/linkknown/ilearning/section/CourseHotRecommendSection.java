@@ -30,6 +30,8 @@ public class CourseHotRecommendSection extends Section {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.layout_region_recommend_card_item)
                 .headerResourceId(R.layout.layout_region_recommend_hot_head)
+                .emptyResourceId(R.layout.layout_region_recommend_empty)
+                .loadingResourceId(R.layout.layout_region_recommend_loading)
                 .build());
         this.itemList = itemList;
         this.mContext = mContext;
@@ -84,6 +86,27 @@ public class CourseHotRecommendSection extends Section {
         UIUtils.setTextViewDrawbleImg(mContext, viewHolder.item_type_operate_text, R.drawable.ic_header_indicator_rank, 0, 0, 40, 40);
     }
 
+    @Override
+    public RecyclerView.ViewHolder getEmptyViewHolder(View view) {
+        return new EmptyViewHolder(view);
+    }
+
+    @Override
+    public void onBindEmptyViewHolder(RecyclerView.ViewHolder holder) {
+        EmptyViewHolder viewHolder = (EmptyViewHolder) holder;
+        viewHolder.emptyTipText.setText("什么也没有搜到啊");
+    }
+
+    @Override
+    public RecyclerView.ViewHolder getLoadingViewHolder(View view) {
+        return new EmptyViewHolder(view);
+    }
+
+    @Override
+    public void onBindLoadingViewHolder(RecyclerView.ViewHolder holder) {
+        super.onBindLoadingViewHolder(holder);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView courseImage;
@@ -112,4 +135,13 @@ public class CourseHotRecommendSection extends Section {
         }
     }
 
+    class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView emptyTipText;
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+            emptyTipText = itemView.findViewById(R.id.emptyTipText);
+        }
+    }
 }

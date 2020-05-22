@@ -190,8 +190,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initFragment () {
         // 创建 fragment
         MoreFragment moreFragment1 = new MoreFragment();
-//        MoreFragment moreFragment2 = new MoreFragment();
-//        MoreFragment moreFragment3 = new MoreFragment();
+        MoreFragment moreFragment2 = new MoreFragment();
+        MoreFragment moreFragment3 = new MoreFragment();
 //        MoreFragment moreFragment4 = new MoreFragment();
 //        MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
@@ -199,8 +199,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MoreFragment moreFragment8 = new MoreFragment();
 
         mFragments.add(moreFragment1);
-//        mFragments.add(moreFragment2);
-//        mFragments.add(moreFragment3);
+        mFragments.add(moreFragment2);
+        mFragments.add(moreFragment3);
 //        mFragments.add(moreFragment4);
 //        mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
@@ -209,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // title 限制 2 个字
         titles.add("首页");
-//        titles.add("圈子");
-//        titles.add("热门");
+        titles.add("免费");
+        titles.add("全部");
 //        titles.add("分类");
 //        titles.add("关注");
         titles.add("推荐");
