@@ -13,8 +13,13 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
     public abstract void onLoadMore();
 
+    private boolean isUpPull = false;
+
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        // 大于0表示正在向上滑动，小于等于0表示停止或向下滑动
+        isUpPull = dy > 0;
+
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
             layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
@@ -25,7 +30,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
             return;
         }
 
-        if (lastItemCount != itemCount && lastPosition == itemCount - 1) {
+        if (lastItemCount != itemCount && lastPosition == itemCount - 1 && isUpPull) {
             lastItemCount = itemCount;
             this.onLoadMore();
         }

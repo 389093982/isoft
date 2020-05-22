@@ -57,7 +57,9 @@ public interface LinkKnownApi {
     // 课程搜索接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList")
     Observable<CourseMetaResponse> searchCourseList(@Query("search") String search,
-                                                    @Query("isCharge") String isCharge);
+                                                    @Query("isCharge") String isCharge,
+                                                    @Query("current_page") int current_page,
+                                                    @Query("offset") int offset);
 
     // 根据 id 列表获取课程信息
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByIds")

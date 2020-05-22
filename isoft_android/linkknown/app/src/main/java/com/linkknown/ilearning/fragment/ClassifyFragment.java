@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -91,7 +92,7 @@ public class ClassifyFragment extends Fragment {
             showLoading(true);
 
             // 加载右侧视频数据
-            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position), "")
+            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position), "", 1, Constants.DEFAULT_PAGE_SIZE)
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                     .subscribe(new LinkKnownObserver<CourseMetaResponse>() {

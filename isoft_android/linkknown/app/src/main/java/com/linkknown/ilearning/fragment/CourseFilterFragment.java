@@ -8,11 +8,17 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jakewharton.rxbinding4.recyclerview.RecyclerViewScrollEvent;
+import com.jakewharton.rxbinding4.recyclerview.RxRecyclerView;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.common.OnLoadMoreListener;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -25,6 +31,10 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseFilterFragment extends BaseLazyLoadFragment {
@@ -40,6 +50,9 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     CourseHotRecommendSection courseHotRecommendSection;
 
+    // 分页信息
+    private Paginator paginator;
+
     @Override
     protected void initView(View mRootView) {
         mContext = getActivity();
@@ -53,6 +66,18 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
         // 初始化并绑定 adapter
         initAndBindRecyclerViewAdapter();
+        registerRecyclerViewListener();
+    }
+
+    private void registerRecyclerViewListener () {
+        recyclerView.addOnScrollListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                    loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
+                }
+            }
+        });
     }
 
     // 初始化并绑定 adapter
@@ -82,6 +107,10 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initData() {
+        loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
+    }
+
+    private void loadPageData(int current_page, int pageSize) {
         // adapter 只初始化一次
         if (sectionedRecyclerViewAdapter == null) {
             initAndBindRecyclerViewAdapter();
@@ -89,7 +118,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
         changeSectionState(courseHotRecommendSection, Section.State.LOADING);
 
-        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, isCharge)
+        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, isCharge, current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
@@ -98,8 +127,10 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                         if (courseMetaResponse.isSuccess()) {
                             // 有数据
                             if (CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
-                                // 先清空再添加
-                                courseMetaList.clear();
+                                if (current_page == 1) {
+                                    // 先清空再添加
+                                    courseMetaList.clear();
+                                }
                                 courseMetaList.addAll(courseMetaResponse.getCourses());
                                 // 修改状态为
                                 changeSectionState(courseHotRecommendSection, Section.State.LOADED);
@@ -108,6 +139,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                                 // 修改状态为
                                 changeSectionState(courseHotRecommendSection, Section.State.EMPTY);
                             }
+                            paginator = courseMetaResponse.getPaginator();
                         }
                     }
 
