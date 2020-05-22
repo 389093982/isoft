@@ -1,53 +1,36 @@
-package com.linkknown.ilearning.activity;
+package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jakewharton.rxbinding4.view.RxView;
-import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
-import com.linkknown.ilearning.util.KeyBoardUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseSearchActivity extends BaseActivity {
+public class CourseIsChargeFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
-    private String search;
-
-    @BindView(R.id.searchEditText)
-    public EditText searchEditText;
-    @BindView(R.id.searchEditTextClear)
-    public ImageView searchEditTextClear;
-    @BindView(R.id.searchBtn)
-    public ImageView searchBtn;
+    private String isCharge;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -57,91 +40,43 @@ public class CourseSearchActivity extends BaseActivity {
     CourseHotRecommendSection courseHotRecommendSection;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // 解决安卓软键盘遮挡输入框
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-        setContentView(R.layout.activity_course_search);
-
-        ButterKnife.bind(this);
-        mContext = this;
-
-        initView();
-
-        initData();
-    }
-
-    private void initView() {
-        initSearchText();
-    }
-
-    private void initSearchText() {
-        search = getIntent().getStringExtra("search");
-        if (StringUtils.isNotEmpty(search)) {
-            searchEditText.setText(search);
+    protected void initView(View mRootView) {
+        mContext = getActivity();
+        ButterKnife.bind(this, mRootView);
+        // 从 activity 中接受参数
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            isCharge = bundle.getString("isCharge");
         }
 
-        // 有内容显示 clear 图标,没有则隐藏
-        RxTextView.textChanges(searchEditText)
-                .map(CharSequence::toString)
-                .subscribe(s -> {
-                    if (!TextUtils.isEmpty(s)) {
-                        searchEditTextClear.setVisibility(View.VISIBLE);
-                    } else {
-                        searchEditTextClear.setVisibility(View.GONE);
-                    }
-                });
-        // 清空输入框
-        RxView.clicks(searchEditTextClear)
-                .subscribe(aVoid -> searchEditText.setText(""));
+        sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
+        courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
 
-        RxView.clicks(searchBtn)
-                .throttleFirst(2, TimeUnit.SECONDS)
-                .map(aVoid -> searchEditText.getText().toString().trim())
-                .filter(s -> !TextUtils.isEmpty(s))
-                .subscribe(s -> {
-                    // 关闭软键盘
-                    KeyBoardUtil.closeKeybord(searchEditText, mContext);
-//                    showSearchAnim();
-//                    clearData();
-                    search = s;
-                    initSearchData();
-                });
+        sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
 
-    }
-
-    private void initSearchData() {
-        if (StringUtils.isEmpty(search)) {
-            return;
-        }
-        // 防止重复创建 adapter
-        if (sectionedRecyclerViewAdapter == null) {
-            sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-            courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
-
-            sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
-
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
-            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    // header 显示 2 行
-                    if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER
-                            || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_EMPTY
-                            || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_LOADING) {
-                        return 2;
-                    }
-                    return 1;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                // header 显示 2 行
+                if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER
+                        || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_EMPTY
+                        || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_LOADING) {
+                    return 2;
                 }
-            });
+                return 1;
+            }
+        });
 
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(sectionedRecyclerViewAdapter);
-        }
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(sectionedRecyclerViewAdapter);
+    }
+
+    @Override
+    protected void initData() {
         changeSectionState(courseHotRecommendSection, Section.State.LOADING);
 
-        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, "")
+        LinkKnownApiFactory.getLinkKnownApi().searchCourseList("", isCharge)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
@@ -218,15 +153,13 @@ public class CourseSearchActivity extends BaseActivity {
         }
     }
 
-    private void initData() {
-        if (StringUtils.isNotEmpty(search)) {
-            initSearchData();
-        }
+    @Override
+    protected boolean setIsRealTimeRefresh() {
+        return false;
     }
 
-    // 返回
-    @OnClick(R.id.goback)
-    public void goback() {
-        finish();
+    @Override
+    protected int providelayoutId() {
+        return R.layout.fragment_course_ischarge;
     }
 }

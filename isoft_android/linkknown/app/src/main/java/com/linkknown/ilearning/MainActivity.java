@@ -30,11 +30,14 @@ import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
+import com.linkknown.ilearning.fragment.CourseIsChargeFragment;
 import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.fragment.MoreFragment;
+import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.PermissionUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -191,18 +194,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initFragment () {
         // 创建 fragment
         MoreFragment moreFragment1 = new MoreFragment();
-        MoreFragment moreFragment2 = new MoreFragment();
-        MoreFragment moreFragment3 = new MoreFragment();
-//        MoreFragment moreFragment4 = new MoreFragment();
+        CourseIsChargeFragment courseIsChargeFragment1 = new CourseIsChargeFragment();
+        CourseIsChargeFragment courseIsChargeFragment2 = new CourseIsChargeFragment();
+        CourseIsChargeFragment courseIsChargeFragment3 = new CourseIsChargeFragment();
+        // activity 向 fragment 传参
+        courseIsChargeFragment1.setArguments(CommonUtil.createBundle("isCharge", "free"));
+        courseIsChargeFragment2.setArguments(CommonUtil.createBundle("isCharge", "charge"));
+        courseIsChargeFragment3.setArguments(CommonUtil.createBundle("isCharge", ""));
+
 //        MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
         FindFragment findFragment = new FindFragment();
         MoreFragment moreFragment8 = new MoreFragment();
 
         mFragments.add(moreFragment1);
-        mFragments.add(moreFragment2);
-        mFragments.add(moreFragment3);
-//        mFragments.add(moreFragment4);
+        mFragments.add(courseIsChargeFragment1);
+        mFragments.add(courseIsChargeFragment2);
+        mFragments.add(courseIsChargeFragment3);
 //        mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
         mFragments.add(findFragment);
@@ -211,8 +219,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // title 限制 2 个字
         titles.add("首页");
         titles.add("免费");
+        titles.add("付费");
         titles.add("全部");
-//        titles.add("分类");
 //        titles.add("关注");
         titles.add("推荐");
         titles.add("发现");

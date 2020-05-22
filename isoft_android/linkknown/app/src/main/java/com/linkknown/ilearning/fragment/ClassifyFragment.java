@@ -91,7 +91,7 @@ public class ClassifyFragment extends Fragment {
             showLoading(true);
 
             // 加载右侧视频数据
-            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position))
+            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position), "")
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                     .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
