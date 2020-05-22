@@ -47,7 +47,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
         // 从 activity 中接受参数
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            search = bundle.getString(search);
+            search = bundle.getString("search");
             isCharge = bundle.getString("isCharge");
         }
 
@@ -163,5 +163,11 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     @Override
     protected int providelayoutId() {
         return R.layout.fragment_course_filter;
+    }
+
+    public void refreshFragment (String search, String isCharge) {
+        this.search = search;
+        this.isCharge = isCharge;
+        this.initData();
     }
 }

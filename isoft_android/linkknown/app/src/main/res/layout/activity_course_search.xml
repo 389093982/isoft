@@ -8,5 +8,9 @@
 
     <include layout="@layout/layout_card_search" />
 
-    <include layout="@layout/layout_recycleview"/>
+    <FrameLayout
+        android:id="@+id/courseFilterFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

@@ -194,10 +194,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
         CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
         CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
+        CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
         // activity 向 fragment 传参
         courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
         courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
         courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
+        courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","github","isCharge", ""));
 
 //        MoreFragment moreFragment5 = new MoreFragment();
         MoreFragment moreFragment6 = new MoreFragment();
@@ -208,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFragments.add(courseFilterFragment1);
         mFragments.add(courseFilterFragment2);
         mFragments.add(courseFilterFragment3);
+        mFragments.add(courseFilterFragment4);
 //        mFragments.add(moreFragment5);
         mFragments.add(moreFragment6);
         mFragments.add(findFragment);
@@ -218,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         titles.add("免费");
         titles.add("付费");
         titles.add("全部");
+        titles.add("github专栏");
 //        titles.add("关注");
         titles.add("推荐");
         titles.add("发现");
