@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,10 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
 
+        refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        refreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+
         // 从 activity 中接受参数
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -75,9 +80,16 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     private void registerListener () {
         // refreshLayout 设置刷新监听
         refreshLayout.setOnRefreshListener(() -> {
-            mIsRefreshing = true;
-            initData();
+            if (canRefresh()) {
+                refreshLayout.setRefreshing(true);
+                mIsRefreshing = true;
+                initData();
+            }
         });
+    }
+
+    private boolean canRefresh () {
+        return mIsRefreshing == false;
     }
 
     protected void finishRefreshing() {
@@ -88,13 +100,8 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     // 初始化并绑定 adapter
     private void initAndBindRecyclerViewAdapter() {
         courseCardAdapter = new CourseCardAdapter(mContext, courseMetaList);
-
         // 是否自动加载下一页（默认为true）
         courseCardAdapter.getLoadMoreModule().setAutoLoadMore(true);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
-        recyclerView.setAdapter(courseCardAdapter);
-
         // 设置加载更多监听事件
         courseCardAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
             if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
@@ -111,6 +118,9 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                 });
             }
         });
+
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+        recyclerView.setAdapter(courseCardAdapter);
     }
 
     @Override
@@ -165,6 +175,9 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                                 courseCardAdapter.getLoadMoreModule().loadMoreComplete();
 
                             } else {
+                                if (current_page == 1) {
+                                    courseCardAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
+                                }
                                 courseCardAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                             paginator = courseMetaResponse.getPaginator();
