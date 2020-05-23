@@ -2,21 +2,29 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnLoadMoreListener;
+import com.chad.library.adapter.base.module.LoadMoreModuleConfig;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
+import com.linkknown.ilearning.adapter.CourseCardAdapter;
+import com.linkknown.ilearning.common.CommonLoadMoreView;
 import com.linkknown.ilearning.common.LinkKnownObserver;
-import com.linkknown.ilearning.common.OnLoadMoreListener;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
-import com.linkknown.ilearning.section.CourseHotRecommendSection;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -25,13 +33,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseFilterFragment extends BaseLazyLoadFragment {
+
+    private Handler handler = new Handler();
 
     private Context mContext;
     private String search;
@@ -44,9 +51,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     private boolean mIsRefreshing = false;
 
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
-    SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
-
-    CourseHotRecommendSection courseHotRecommendSection;
+    CourseCardAdapter courseCardAdapter;
 
     // 分页信息
     private Paginator paginator;
@@ -55,6 +60,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     protected void initView(View mRootView) {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
+
         // 从 activity 中接受参数
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -62,20 +68,11 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
             isCharge = bundle.getString("isCharge");
         }
 
-        // 初始化并绑定 adapter
-        initAndBindRecyclerViewAdapter();
+        // 注册事件监听
         registerListener();
     }
 
     private void registerListener () {
-        recyclerView.addOnScrollListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
-                    loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
-                }
-            }
-        });
         // refreshLayout 设置刷新监听
         refreshLayout.setOnRefreshListener(() -> {
             mIsRefreshing = true;
@@ -90,27 +87,30 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     // 初始化并绑定 adapter
     private void initAndBindRecyclerViewAdapter() {
-        sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
+        courseCardAdapter = new CourseCardAdapter(mContext, courseMetaList);
 
-        sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
+        // 是否自动加载下一页（默认为true）
+        courseCardAdapter.getLoadMoreModule().setAutoLoadMore(true);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                // header 显示 2 行
-                if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER
-                        || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_EMPTY
-                        || sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_LOADING) {
-                    return 2;
-                }
-                return 1;
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+        recyclerView.setAdapter(courseCardAdapter);
+
+        // 设置加载更多监听事件
+        courseCardAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
         });
-
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(sectionedRecyclerViewAdapter);
+        // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
+        courseCardAdapter.addChildClickViewIds(R.id.courseImage);
+        courseCardAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.courseImage) {
+                UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMetaList.get(position).getId());
+                    return intent;
+                });
+            }
+        });
     }
 
     @Override
@@ -119,13 +119,25 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     }
 
     private void loadPageData(int current_page, int pageSize) {
-        // adapter 只初始化一次
-        if (sectionedRecyclerViewAdapter == null) {
+        // adapter 只初始化一次, 而且只在发送请求前初始化
+        if (courseCardAdapter == null) {
             initAndBindRecyclerViewAdapter();
         }
 
-        changeSectionState(courseHotRecommendSection, Section.State.LOADING);
+        // 状态手动置为"加载中"，并且会调用加载更多监听
+        // 一般情况下，不需要自己设置'加载中'状态
+        courseCardAdapter.getLoadMoreModule().loadMoreToLoading();
 
+        // 第一页不延时执行
+        if (current_page == 1) {
+            executeLoadPageData(current_page, pageSize);
+        } else {
+            // 后续页面，延迟执行，让加载效果更好
+            handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
+        }
+    }
+
+    private void executeLoadPageData(int current_page, int pageSize) {
         LinkKnownApiFactory.getLinkKnownApi().searchCourseList(search, isCharge, current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -139,15 +151,30 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                                     // 先清空再添加
                                     courseMetaList.clear();
                                 }
+                                // 加载成功后才设置头部
+                                if (!courseCardAdapter.hasHeaderLayout()) {
+                                    View headerView = getLayoutInflater().inflate(R.layout.layout_region_recommend_hot_head, recyclerView, false);
+                                    // 指定添加位置
+                                    courseCardAdapter.addHeaderView(headerView, 1);
+                                }
                                 courseMetaList.addAll(courseMetaResponse.getCourses());
-                                // 修改状态为
-                                changeSectionState(courseHotRecommendSection, Section.State.LOADED);
+                                // setNewInstance: 设置新的数据实例，替换原有内存引用
+                                // setList: 不会替换原有的内存引用，只是替换内容
+                                courseCardAdapter.setList(courseMetaList);
+                                // 当前这次数据加载完毕，调用此方法
+                                courseCardAdapter.getLoadMoreModule().loadMoreComplete();
+
                             } else {
-                                // 没数据
-                                // 修改状态为
-                                changeSectionState(courseHotRecommendSection, Section.State.EMPTY);
+                                courseCardAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                             paginator = courseMetaResponse.getPaginator();
+
+                            // 最后一页
+                            if (isLastPage()) {
+                                courseCardAdapter.getLoadMoreModule().loadMoreEnd();
+                            }
+                        } else {
+                            courseCardAdapter.getLoadMoreModule().loadMoreFail();
                         }
                         finishRefreshing();
                     }
@@ -155,57 +182,15 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                     @Override
                     public void onError(Throwable e) {
                         Log.e("searchCourseList error", e.getMessage());
-                        changeSectionState(courseHotRecommendSection, Section.State.LOADED);
                         finishRefreshing();
+                        // 当前这次数据加载错误，调用此方法
+                        courseCardAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
     }
 
-    private void changeSectionState (Section section, Section.State state) {
-        SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(section);
-        // 改变当前 section 状态之前先存储当前 section 的信息
-        final Section.State previousState = section.getState();
-        final int previousItemsQty = section.getContentItemsTotal();
-        final boolean hasHeader = section.hasHeader();
-        if (state == Section.State.EMPTY) {
-            // 移除头部
-            section.setHasHeader(false);
-            if (hasHeader) {
-                sectionAdapter.notifyHeaderRemoved();
-            }
-            // 设置空状态
-            section.setState(Section.State.EMPTY);
-            // 根据先前状态进行设置
-            if (previousState == Section.State.LOADED){
-                // LOADED 状态转变有数量改变动画效果
-                sectionAdapter.notifyStateChangedFromLoaded(previousItemsQty);
-            } else {
-                sectionAdapter.notifyNotLoadedStateChanged(previousState);
-            }
-        } else if (state == Section.State.LOADING) {
-            // 移除头部
-            section.setHasHeader(false);
-            if (hasHeader) {
-                sectionAdapter.notifyHeaderRemoved();
-            }
-            // 设置空状态
-            section.setState(Section.State.LOADING);
-            // 根据先前状态进行设置
-            if (previousState == Section.State.LOADED){
-                sectionAdapter.notifyStateChangedFromLoaded(previousItemsQty);
-            } else {
-                sectionAdapter.notifyNotLoadedStateChanged(previousState);
-            }
-        } else if (state == Section.State.LOADED) {
-            // 添加头部
-            section.setHasHeader(true);
-            if (!hasHeader) {
-                sectionAdapter.notifyHeaderInserted();
-            }
-            // 设置状态
-            section.setState(Section.State.LOADED);
-            sectionAdapter.notifyStateChangedToLoaded(previousState);
-        }
+    private boolean isLastPage () {
+        return paginator != null && paginator.getCurrpage() == paginator.getTotalpages();
     }
 
     @Override
