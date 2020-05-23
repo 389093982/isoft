@@ -7,9 +7,8 @@ import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.jakewharton.rxbinding4.recyclerview.RecyclerViewScrollEvent;
-import com.jakewharton.rxbinding4.recyclerview.RxRecyclerView;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -18,7 +17,6 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.section.CourseHotRecommendSection;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -31,10 +29,6 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseFilterFragment extends BaseLazyLoadFragment {
@@ -45,6 +39,10 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    public SwipeRefreshLayout refreshLayout;
+    private boolean mIsRefreshing = false;
+
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
     SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
 
@@ -66,10 +64,10 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
         // 初始化并绑定 adapter
         initAndBindRecyclerViewAdapter();
-        registerRecyclerViewListener();
+        registerListener();
     }
 
-    private void registerRecyclerViewListener () {
+    private void registerListener () {
         recyclerView.addOnScrollListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -78,6 +76,16 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                 }
             }
         });
+        // refreshLayout 设置刷新监听
+        refreshLayout.setOnRefreshListener(() -> {
+            mIsRefreshing = true;
+            initData();
+        });
+    }
+
+    protected void finishRefreshing() {
+        mIsRefreshing = false;
+        refreshLayout.setRefreshing(false);
     }
 
     // 初始化并绑定 adapter
@@ -141,12 +149,14 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                             }
                             paginator = courseMetaResponse.getPaginator();
                         }
+                        finishRefreshing();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("searchCourseList error", e.getMessage());
                         changeSectionState(courseHotRecommendSection, Section.State.LOADED);
+                        finishRefreshing();
                     }
                 });
     }
