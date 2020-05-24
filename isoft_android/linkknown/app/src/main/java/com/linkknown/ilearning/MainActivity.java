@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.IFavoritesActivity;
@@ -28,8 +29,8 @@ import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
-import com.linkknown.ilearning.fragment.HomeFragment2;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.LoginUtil;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     // 登陆后在头像下方显示的用户名
     private TextView navigationUserNameText;
 
-
+    List<Fragment> fgLists = new ArrayList<>();
     // 底部导航栏
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
@@ -92,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         // 初始化导航栏
         initNavigation();
-        // 初始化底部导航栏
-        initBottomNavigation();
         // fragment相关
         initFragment();
+        // 初始化底部导航栏
+        initBottomNavigation();
         // 订阅登录信息
         observeLogin();
         // 自动登录
@@ -103,8 +104,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBottomNavigation() {
+        //设置适配器用于装载Fragment,ViewPager的好朋友
+        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return fgLists.get(position);  //得到Fragment
+            }
+
+            @Override
+            public int getCount() {
+                return fgLists.size();  //得到数量
+            }
+        };
         //设置导航切换监听
         bottomNavigationView.setOnNavigationItemSelectedListener(changeFragment);
+        // 默认场景下超过三个图标只显示选中图标的文字，此处是所有文字都显示
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
         /**
          * ViewPager的监听
          */
@@ -123,12 +138,16 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
                     return true;
                 }
+                case R.id.action_tuijian: {
+                    viewPager.setCurrentItem(2);
+                    return true;
+                }
                 case R.id.action_classfiy: {
                     viewPager.setCurrentItem(1);
                     return true;
                 }
                 case R.id.action_mine: {
-                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(3);
                     return true;
                 }
             }
@@ -279,25 +298,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragment() {
         //底部导航栏有几项就有几个Fragment
-        final ArrayList<Fragment> fgLists = new ArrayList<>(4);
+        fgLists = new ArrayList<>(4);
         // 创建 3 个片段
-        fgLists.add(new HomeFragment2());
         fgLists.add(new HomeFragment());
+        fgLists.add(new TuijianFragment());
         fgLists.add(new ClassifyFragment());
         fgLists.add(new MineFragment());
-
-        //设置适配器用于装载Fragment,ViewPager的好朋友
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fgLists.get(position);  //得到Fragment
-            }
-
-            @Override
-            public int getCount() {
-                return fgLists.size();  //得到数量
-            }
-        };
     }
 
     @Override

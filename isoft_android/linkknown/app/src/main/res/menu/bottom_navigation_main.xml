@@ -8,10 +8,10 @@
         android:title="首页"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_home2"
+        android:id="@+id/action_tuijian"
         android:enabled="true"
         android:icon="@drawable/home_button_selector"
-        android:title="首页2"
+        android:title="推荐"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_classfiy"

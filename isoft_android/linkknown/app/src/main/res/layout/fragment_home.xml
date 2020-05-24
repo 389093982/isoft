@@ -1,209 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/title"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="italic|bold" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/headerToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="40dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:maxButtonHeight="25dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-        <SearchView
-            android:id="@+id/home_serachview"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:background="@color/white"
-            android:focusable="false"
-            android:iconifiedByDefault="false"
-            android:queryHint="@string/home_search"></SearchView>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/headerToolBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:src="@drawable/ic_drawer_home"
+                    android:scaleType="fitXY"
+                    android:layout_marginEnd="10dp"/>
 
-    <!-- 下拉刷新控件 -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- ScrollView称为滚动视图 -->
-        <ScrollView
+                <LinearLayout
+                    android:id="@+id/toolBarLoginLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/person_head"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="3dp"
+                        android:src="@drawable/cutecat"/>
+
+                    <TextView
+                        android:id="@+id/userNameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="匿名用户"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/toolBarUnLoginLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="登录"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+                    <!-- 轮播名人名言 -->
+                    <com.superluo.textbannerlibrary.TextBannerView
+                        android:id="@+id/mingyanTextbanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="5dp"
+                        app:setAnimDuration="1000"
+                        app:setGravity="center"
+                        app:setTextSize="12sp"
+                        app:setTextColor="#fff"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_alignParentStart="true">
+            android:orientation="horizontal">
+            <!--
+                 app:tabIndicatorColor ：指示线的颜色
+                 app:tabIndicatorHeight ： 指示线的高度
+                 app:tabIndicatorFullWidth="false" 指示线是否铺满宽度
+                 app:tabSelectedTextColor ： tab选中时的字体颜色
+                 app:tabTextColor="@color/colorPrimary" ：未选中字体颜色
+                 app:tabBackground="color" ： 整个tablayout颜色
+                 app:tabMode="scrollable" ： 默认是fixed，固定的；scrollable：可滚动的
+                 app:tabBackground="?attr/selectableItemBackground"  点击 tab 水波纹效果
+             -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                app:tabBackground="?attr/selectableItemBackground"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="@dimen/dp_3"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/TabLayoutNormalTextSize"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextColor="@color/light_gray3"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/add_channel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
+                android:maxHeight="?attr/actionBarSize"
+                android:paddingBottom="4dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="4dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_add_white_24dp"/>
+        </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/product"
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:background="#FFFFFF">
+    </com.google.android.material.appbar.AppBarLayout>
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="11dp" />
+    <!--
+        在CoordinatorLayout内部，每个child都必须带一个Behavior
+        CoordinatorLayout就根据每个child所携带的Behavior信息进行协调
+    -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-                    <LinearLayout
-                        android:id="@+id/points"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:orientation="horizontal" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/banner_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/product"
-                    android:layout_margin="15dp"
-                    android:orientation="vertical">
-
-                    <com.youth.banner.Banner
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp" />
-
-                    <!-- 分割线 -->
-                    <include layout="@layout/item_line"/>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/hotCourseLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@+id/banner_layout"
-                    android:layout_alignParentStart="true">
-
-                    <ImageView
-                        android:layout_width="50px"
-                        android:layout_height="50px"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/hot_title"
-                        android:src="@drawable/home53" />
-
-                    <TextView
-                        android:id="@+id/hot_title"
-                        android:layout_width="200px"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:paddingLeft="5dp"
-                        android:text="@string/hotCourse"
-                        android:textColor="#FF4040"
-                        android:textSize="45px" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/hotproduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/hotCourseLayout"
-                    android:orientation="vertical">
-
-                    <!-- 分割线 -->
-                    <include layout="@layout/item_line"/>
-
-                    <GridView
-                        android:id="@+id/hot_gridview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/TableLinecolor"
-                        android:horizontalSpacing="0.5dp"
-                        android:numColumns="2"
-                        android:verticalSpacing="0.5dp"
-                        android:visibility="gone" />
-
-                    <ProgressBar
-                        android:id="@+id/hot_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-
-                    <!-- 分割线 -->
-                    <include layout="@layout/item_line"/>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/recommendLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@+id/hotproduct"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="50px"
-                        android:layout_height="50px"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/recommend_title"
-                        android:src="@drawable/recommend" />
-
-                    <TextView
-                        android:id="@+id/recommend_title"
-                        android:layout_width="200px"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:paddingLeft="5dp"
-                        android:text="@string/recommendCourse"
-                        android:textColor="#FFC125"
-                        android:textSize="45px" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/recommendproduct"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recommendLayout"
-                    android:orientation="vertical">
-
-                    <!-- 分割线 -->
-                    <include layout="@layout/item_line"/>
-
-                    <GridView
-                        android:id="@+id/recommend_gridview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/TableLinecolor"
-                        android:horizontalSpacing="1dp"
-                        android:numColumns="2"
-                        android:verticalSpacing="15dp"
-                        android:visibility="gone" />
-
-                    <ProgressBar
-                        android:id="@+id/recommend_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-
-                    <!-- 分割线 -->
-                    <include layout="@layout/item_line"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-        </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
