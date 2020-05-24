@@ -7,20 +7,14 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnLoadMoreListener;
-import com.chad.library.adapter.base.module.LoadMoreModuleConfig;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.adapter.CourseCardAdapter;
-import com.linkknown.ilearning.common.CommonLoadMoreView;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
