@@ -27,9 +27,6 @@
             android:label="@string/title_activity_show_types"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.HomeActivity"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/AppTheme">
             <intent-filter>

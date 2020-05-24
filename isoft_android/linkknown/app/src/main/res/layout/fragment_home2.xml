@@ -75,7 +75,7 @@
                     android:gravity="center_vertical">
                     <!-- 轮播名人名言 -->
                     <com.superluo.textbannerlibrary.TextBannerView
-                        android:id="@+id/mingyanTextbanner2"
+                        android:id="@+id/mingyanTextbanner"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginStart="5dp"
@@ -147,4 +147,3 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
