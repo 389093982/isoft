@@ -115,6 +115,11 @@ public class LoginUtil {
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_HEADER_ICON, "");
     }
 
+    public static String getLoginNickName(Context mContext) {
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
+        return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NICK_NAME, "");
+    }
+
     public static String getLoginUserName(Context mContext) {
         SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
@@ -122,7 +127,8 @@ public class LoginUtil {
 
     // 判断是否登录,需要判断用户名是否有效和 tokenString 是否有效
     public static boolean checkHasLogin(Context mContext) {
-        return StringUtils.isNotEmpty(getLoginUserName(mContext)) && StringUtils.isNotEmpty(getTokenString(mContext));
+        return StringUtils.isNotEmpty(getLoginUserName(mContext)) && StringUtils.isNotEmpty(getTokenString(mContext))
+                && !checkHasExpired(mContext);
     }
 
     public static void showLoginOrAutoLoginDialog(Context context, ConfirmDialogCallback callback) {

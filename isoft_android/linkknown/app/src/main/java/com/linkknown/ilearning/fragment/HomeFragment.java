@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.fragment;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.superluo.textbannerlibrary.TextBannerView;
@@ -32,6 +34,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseLazyLoadFragment {
+    private Context mContext;
+
     // 存储所有 fragment
     private List<Fragment> mFragments = new ArrayList<>();
     // 存储 fragment 的标题
@@ -63,6 +67,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
     @Override
     protected void initView(View mRootView) {
         ButterKnife.bind(this, mRootView);
+        mContext = getContext();
         // 初始化 fragment
         initFragment();
         // 初始化名人名言
@@ -181,19 +186,15 @@ public class HomeFragment extends BaseLazyLoadFragment {
     }
 
     private void observeLogin () {
+        if (LoginUtil.checkHasLogin(mContext)) {
+            initLoginView(LoginUtil.getHeaderIcon(mContext), LoginUtil.getLoginNickName(mContext));
+        } else {
+
+        }
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
             if (loginUserResponse != null){
                 if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                    // 2、--------- 顶部 toolbar 显示登录信息
-                    toolBarLoginLayout.setVisibility(View.VISIBLE);
-                    toolBarUnLoginLayout.setVisibility(View.GONE);
-
-                    // 设置昵称或者用户名
-                    userNameText.setText(StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
-                    Glide.with(this)
-                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                            .into(person_head);
+                    initLoginView(loginUserResponse.getHeaderIcon(), StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
                 } else {
                     // 顶部 toolbar 显示登录信息
                     toolBarLoginLayout.setVisibility(View.VISIBLE);
@@ -201,5 +202,19 @@ public class HomeFragment extends BaseLazyLoadFragment {
                 }
             }
         });
+    }
+
+    private void initLoginView(String headerIcon, String userName) {
+        // 2、--------- 顶部 toolbar 显示登录信息
+        toolBarLoginLayout.setVisibility(View.VISIBLE);
+        toolBarUnLoginLayout.setVisibility(View.GONE);
+
+        // 设置昵称或者用户名
+        Glide.with(this)
+                .load(UIUtils.replaceMediaUrl(headerIcon))
+                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                .into(person_head);
+        userNameText.setText(userName);
+
     }
 }

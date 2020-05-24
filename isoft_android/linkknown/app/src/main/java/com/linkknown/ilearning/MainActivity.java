@@ -138,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
                     return true;
                 }
-                case R.id.action_tuijian: {
-                    viewPager.setCurrentItem(2);
-                    return true;
-                }
                 case R.id.action_classfiy: {
                     viewPager.setCurrentItem(1);
+                    return true;
+                }
+                case R.id.action_tuijian: {
+                    viewPager.setCurrentItem(2);
                     return true;
                 }
                 case R.id.action_mine: {
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             if (id == R.id.shouye) {
                 viewPager.setCurrentItem(0);
             } else if (id == R.id.fenlei) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
             } else if (id == R.id.wode) {
                 viewPager.setCurrentItem(3);
             } else if (id == R.id.denglu) {
@@ -255,9 +255,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void autoLogin () {
-        // 按返回并没有真正退出应用
-        // 没有 tokenString 代表没有登录过
-        if (StringUtils.isEmpty(LoginUtil.getTokenString(this))) {
+        // 没有 tokenString 代表没有登录过,登录过期也需要重新登录
+        if (StringUtils.isEmpty(LoginUtil.getTokenString(this)) || LoginUtil.checkHasExpired(this)) {
             // 获取存储的用户名和密码
             SharedPreferences preferences = LoginUtil.getUserInfoSharedPreferences(this);
             String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
@@ -270,30 +269,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeLogin () {
-        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
-            if (loginUserResponse != null){
-                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                    // 1、--------- 左侧 navigationView 显示登录信息
-                    // 登录成功，显示登录布局
-                    navigationLoginLayout.setVisibility(View.VISIBLE);
-                    navigationUnLoginLayout.setVisibility(View.GONE);
-
-                    // 设置登录信息
-                    // 异步加载图片,使用 Glide 第三方库
-                    Glide.with(this)
-                            .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                            .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                            .into(navigationHeaderIconView);
-                    // 设置昵称或者用户名
-                    navigationUserNameText.setText(StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
-                } else {
-                    // 1、--------- 左侧 navigationView 显示登录信息
-                    // 登录失败
-                    navigationUnLoginLayout.setVisibility(View.VISIBLE);
-                    navigationLoginLayout.setVisibility(View.GONE);
+        if (LoginUtil.checkHasLogin(this)) {
+            initLoginView(LoginUtil.getHeaderIcon(this), LoginUtil.getLoginNickName(this));
+        } else {
+            LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
+                if (loginUserResponse != null){
+                    if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+                        // 1、--------- 左侧 navigationView 显示登录信息
+                        initLoginView(loginUserResponse.getHeaderIcon(),
+                                StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
+                    } else {
+                        // 1、--------- 左侧 navigationView 显示登录信息
+                        // 登录失败
+                        navigationUnLoginLayout.setVisibility(View.VISIBLE);
+                        navigationLoginLayout.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    private void initLoginView(String headerIcon, String userName) {
+        // 登录成功，显示登录布局
+        navigationLoginLayout.setVisibility(View.VISIBLE);
+        navigationUnLoginLayout.setVisibility(View.GONE);
+
+        // 设置登录信息
+        // 异步加载图片,使用 Glide 第三方库
+        Glide.with(this)
+                .load(UIUtils.replaceMediaUrl(headerIcon))
+                .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                .into(navigationHeaderIconView);
+        // 设置昵称或者用户名
+        navigationUserNameText.setText(userName);
     }
 
     private void initFragment() {
@@ -301,8 +309,8 @@ public class MainActivity extends AppCompatActivity {
         fgLists = new ArrayList<>(4);
         // 创建 3 个片段
         fgLists.add(new HomeFragment());
-        fgLists.add(new TuijianFragment());
         fgLists.add(new ClassifyFragment());
+        fgLists.add(new TuijianFragment());
         fgLists.add(new MineFragment());
     }
 
