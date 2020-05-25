@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="italic|bold" />
 
 
@@ -29,7 +29,7 @@
             android:id="@+id/home_serachview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:background="@color/white"
             android:focusable="false"
             android:iconifiedByDefault="false"
@@ -49,12 +49,22 @@
 
             <!--左侧商品类别列表-->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/classifyRecyclerView"
+                android:id="@+id/levelOneClassifyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="2"
+                android:layout_weight="3"
+                android:background="@color/colorRecyclerBg"
+                android:overScrollMode="never"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/levelTwoClassifyRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="3"
                 android:background="@color/colorRecyclerBg"
                 android:overScrollMode="never"/>
 
@@ -63,7 +73,7 @@
                 android:id="@+id/courseFilterFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="2"/>
 
         </LinearLayout>
     </RelativeLayout>

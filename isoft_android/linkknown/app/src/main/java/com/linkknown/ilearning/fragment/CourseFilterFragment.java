@@ -33,6 +33,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CourseFilterFragment extends BaseLazyLoadFragment {
 
+    private int spanCount;
+    public CourseFilterFragment() {}
+
+    public CourseFilterFragment(int spanCount) {
+        this.spanCount = spanCount;
+    }
+
     private Handler handler = new Handler();
 
     private Context mContext;
@@ -113,7 +120,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
             }
         });
 
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext,spanCount > 0 ? spanCount : 2));
         recyclerView.setAdapter(courseCardAdapter);
     }
 
