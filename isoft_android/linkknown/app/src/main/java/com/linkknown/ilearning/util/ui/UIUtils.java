@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,12 @@ import com.linkknown.ilearning.R;
 import org.apache.commons.lang3.StringUtils;
 
 public class UIUtils {
+
+
+    public static Animation loadAnimation (Context mContext, int animResId) {
+        Animation animation = AnimationUtils.loadAnimation(mContext, animResId);
+        return animation;
+    }
 
     public static void gotoActivity (Context ctx, Class clazz){
         gotoActivity(ctx, clazz, null);

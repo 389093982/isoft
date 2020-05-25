@@ -23,7 +23,7 @@
             app:cardCornerRadius="1dp"
             app:cardElevation="0dp">
             <ImageView
-                android:id="@+id/search_scan"
+                android:id="@+id/search_img"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
@@ -45,7 +45,7 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:id="@+id/search_img"
+                android:id="@+id/search_scan"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"

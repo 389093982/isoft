@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,11 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
     @BindView(R.id.tagRecyclerView)
     public RecyclerView tagRecyclerView;
 
+    @BindView(R.id.search_scan)
+    public ImageView search_scan;
+    @BindView(R.id.search_img)
+    public ImageView search_img;
+
     @BindView(R.id.searchTextView)
     public TextView searchTextView;
     private Disposable searchTextViewDisposable;
@@ -53,6 +59,10 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
 
         initTagView();
         initSearchTextView();
+
+        // setAnimation 待会要执行什么动画, startAnimation 立马执行该动画
+        search_scan.startAnimation(UIUtils.loadAnimation(mContext, R.anim.base_img_anim));
+        search_img.startAnimation(UIUtils.loadAnimation(mContext, R.anim.base_img_anim));
     }
 
     private void initSearchTextView () {
