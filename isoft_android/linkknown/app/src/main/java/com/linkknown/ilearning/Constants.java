@@ -41,4 +41,9 @@ public class Constants {
     public static final String REFRESH_TOKEN_LOGIN_SUCCESS = "登录成功";
 
     public static final String COURSE_PLAY_NO_COURSE_NUM_TIP = "暂无剧情，敬请期待~";
+
+    // ----------------- 占位符 --------------
+    // 首页热门课程分类
+    public static final String PLACEMENT_HOT_COURSE_TYPE_CAROUSEL = "placement_host_course_type_carousel";
+
 }

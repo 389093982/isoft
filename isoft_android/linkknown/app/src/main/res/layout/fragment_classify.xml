@@ -48,8 +48,8 @@
             android:orientation="horizontal">
 
             <!--左侧商品类别列表-->
-            <ListView
-                android:id="@+id/left"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/leftClassifyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"

@@ -6,6 +6,7 @@ import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
+import com.linkknown.ilearning.model.ElementResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
@@ -75,7 +76,7 @@ public interface LinkKnownApi {
 
     // 占位符查询接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement")
-    Observable<LoginUserResponse> filterElementByPlacement(@Query("placement") String placement);
+    Observable<ElementResponse> filterElementByPlacement(@Query("placement") String placement);
 
     // 评论查询接口,查询一级评论
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel")

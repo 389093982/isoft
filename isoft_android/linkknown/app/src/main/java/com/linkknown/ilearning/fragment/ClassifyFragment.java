@@ -1,40 +1,43 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CommonAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.model.ElementResponse;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ClassifyFragment extends Fragment {
+public class ClassifyFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
-    //一级菜单，两个ListView控件
-    @BindView(R.id.left)
-    public ListView leftClassifyListView;
+    @BindView(R.id.leftClassifyRecyclerView)
+    public RecyclerView leftClassifyRecyclerView;
     @BindView(R.id.right)
     public ListView rightCourseListView;
     @BindView(R.id.progress)
@@ -42,113 +45,108 @@ public class ClassifyFragment extends Fragment {
     @BindView(R.id.home_serachview)
     public SearchView searchView;
 
-    @Nullable
+    // 存储所有的分类占位符数据
+    List<ElementResponse.Element> classifyElements = new ArrayList<>();
+    BaseQuickAdapter classifyAdapter;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_classify, container, false);
+    protected void initView(View mRootView) {
         mContext = getActivity();
-        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, mRootView);
 
-        init();
-
-//        //从服务器获取商品类别列表
-//        getDataFromServer();
-//
-//        handler = new Handler();
-//
-//
-//        //设置searchView点击事件
-//        setSearchViewIntent();
-
-        return rootView;
+        initLeftClassfiyView();
     }
 
-    private void init() {
-        ArrayList<String> mData = new ArrayList<>();
-        mData.add("前端");
-        mData.add("后台");
-        mData.add("数据库");
-        mData.add("docker");
-        mData.add("自动化测试");
-        mData.add("其它");
-        mData.add("全部");
+    @Override
+    protected void initData() {
+        LinkKnownApiFactory.getLinkKnownApi().filterElementByPlacement(Constants.PLACEMENT_HOT_COURSE_TYPE_CAROUSEL)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<ElementResponse>() {
+                    @Override
+                    public void onNext(ElementResponse elementResponse) {
+                        if (elementResponse.isSuccess()) {
+                            classifyElements.clear();
+                            classifyElements.addAll(elementResponse.getElements());
+                            classifyAdapter.setList(classifyElements);
+                        }
+                    }
 
-        CommonAdapter leftClassifyListAdapter = new CommonAdapter<String>(mData, R.layout.classify_left_item) {
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError", e.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    protected boolean setIsRealTimeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected int providelayoutId() {
+        return R.layout.fragment_classify;
+    }
+
+    private void initLeftClassfiyView() {
+        classifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.classify_left_item, classifyElements) {
+
             @Override
-            public void bindView(ViewHolder holder, String str) {
-                holder.setText(R.id.classifyName, str);
+            protected void convert(@NotNull BaseViewHolder baseViewHolder, ElementResponse.Element element) {
+                baseViewHolder.setText(R.id.classifyName, element.getElement_label());
             }
         };
-        leftClassifyListView.setAdapter(leftClassifyListAdapter);
-        leftClassifyListView.setOnItemClickListener((parent, view, position, id) -> {
-            leftClassifyListAdapter.forEachHolder((position1, viewHolder) -> {
-                if (position == position1){
-                    viewHolder.setChecked(R.id.radioButton, true);
+        leftClassifyRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        leftClassifyRecyclerView.setAdapter(classifyAdapter);
+        classifyAdapter.addChildClickViewIds(R.id.classifyName);
+        classifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() != R.id.classifyName) {
+                return;
+            }
+            for (int index = 0; index < classifyElements.size(); index ++) {
+                if (index == position) {
+                    ((TextView)view).setText(((TextView)view).getText() + "~");
                 } else {
-                    viewHolder.setChecked(R.id.radioButton, false);
+                    TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
+                    textView.setText((StringUtils.replace(textView.getText().toString(), "~", "")));
                 }
-            });
+            }
             //加载中动效
             showLoading(true);
-
             // 加载右侧视频数据
-            LinkKnownApiFactory.getLinkKnownApi().searchCourseList(mData.get(position), "", 1, Constants.DEFAULT_PAGE_SIZE)
-                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
-                        @Override
-                        public void onNext(CourseMetaResponse courseMetaResponse) {
-                            if (courseMetaResponse.isSuccess()) {
-                                CommonAdapter rightCourseListAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>((ArrayList<CourseMetaResponse.CourseMeta>) courseMetaResponse.getCourses(), R.layout.classify_right_item) {
-
-                                    @Override
-                                    public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
-                                        holder.setText(R.id.courseName, courseMeta.getCourse_name());
-                                    }
-                                };
-                                rightCourseListView.setAdapter(rightCourseListAdapter);
-                            }
-                            // 去掉加载效果
-                            showLoading(false);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("searchCourseList error", e.getMessage());
-                            // 去掉加载效果
-                            showLoading(false);
-                        }
-                    });
+            searchCourse(classifyElements.get(position).getElement_label());
         });
+    }
 
-//        //商品类别菜单点击事件
-//        mCommodityTypeListView.setOnItemClickListener((parent, view, position, id) -> {
-//            if (mCommodityTypeListAdapter != null) {
-//                mCommodityTypeListAdapter.setSelectedPos(position);
-//            }
-//            if (mListView2Adapter != null) {
-//                mListView2Adapter.setSelectedPos(-1);
-//            }
-//
-//            CommodityTypeModel menuData = (CommodityTypeModel) parent.getItemAtPosition(position);
-//
-//            //根据类型id从服务器获取商品列表
-//            getCommodityFromServerByTypeId(menuData.getId());
-//            //加载中动效
-//            loadingAnim(true);
-//        });
+    private void searchCourse(String searchText) {
+        LinkKnownApiFactory.getLinkKnownApi().searchCourseList(searchText, "", 1, Constants.DEFAULT_PAGE_SIZE)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
+                    @Override
+                    public void onNext(CourseMetaResponse courseMetaResponse) {
+                        if (courseMetaResponse.isSuccess()) {
+                            CommonAdapter rightCourseListAdapter = new CommonAdapter<CourseMetaResponse.CourseMeta>((ArrayList<CourseMetaResponse.CourseMeta>) courseMetaResponse.getCourses(), R.layout.classify_right_item) {
 
-//        //商品item点击事件
-//        mCommodityListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                CommodityModel commodity = (CommodityModel) adapterView.getItemAtPosition(position);
-//                //跳转到详情
-//                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-//                intent.putExtra("id", commodity.getId() + "");
-//                startActivity(intent);
-//            }
-//        });
+                                @Override
+                                public void bindView(ViewHolder holder, CourseMetaResponse.CourseMeta courseMeta) {
+                                    holder.setText(R.id.courseName, courseMeta.getCourse_name());
+                                }
+                            };
+                            rightCourseListView.setAdapter(rightCourseListAdapter);
+                        }
+                        // 去掉加载效果
+                        showLoading(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("searchCourseList error", e.getMessage());
+                        // 去掉加载效果
+                        showLoading(false);
+                    }
+                });
     }
 
     /**
