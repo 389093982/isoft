@@ -49,33 +49,21 @@
 
             <!--左侧商品类别列表-->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/leftClassifyRecyclerView"
+                android:id="@+id/classifyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
-                android:scrollbars="none" />
+                android:background="@color/colorRecyclerBg"
+                android:overScrollMode="never"/>
 
             <!--右侧商品列表-->
-            <ListView
-                android:id="@+id/right"
+            <FrameLayout
+                android:id="@+id/courseFilterFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <!--进度条动画,默认隐藏-->
-            <RelativeLayout
-                android:id="@+id/progress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="gone">
-
-                <ProgressBar
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
         </LinearLayout>
     </RelativeLayout>

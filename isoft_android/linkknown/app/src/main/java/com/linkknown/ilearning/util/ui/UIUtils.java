@@ -73,6 +73,10 @@ public class UIUtils {
     }
 
 
+    public static int getResourceColor(Context mContext, int colorId) {
+        return ContextCompat.getColor(mContext, colorId);
+    }
+
     /**
      * 给color添加透明度
      * @param alpha 透明度 0f～1f

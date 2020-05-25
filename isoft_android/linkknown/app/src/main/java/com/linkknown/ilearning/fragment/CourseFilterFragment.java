@@ -170,8 +170,11 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
 
                             } else {
                                 if (current_page == 1) {
+                                    courseMetaList.clear();
+                                    courseCardAdapter.setList(courseMetaList);
                                     courseCardAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
                                 }
+                                courseCardAdapter.getLoadMoreModule().loadMoreComplete();
                                 courseCardAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                             paginator = courseMetaResponse.getPaginator();

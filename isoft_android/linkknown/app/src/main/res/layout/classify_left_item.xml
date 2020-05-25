@@ -12,12 +12,13 @@
         android:id="@+id/classifyName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_weight="1"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:gravity="center_vertical"
-        android:text="name"
+        android:text="分类名称"
         android:textColor="@color/colorGray"
         android:textSize="14sp"/>
-
-
 </LinearLayout>
