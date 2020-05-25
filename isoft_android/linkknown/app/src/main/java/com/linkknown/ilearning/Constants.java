@@ -1,5 +1,8 @@
 package com.linkknown.ilearning;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 
     // 新安装应用时, 申请权限
@@ -45,5 +48,7 @@ public class Constants {
     // ----------------- 占位符 --------------
     // 首页热门课程分类
     public static final String PLACEMENT_HOT_COURSE_TYPE_CAROUSEL = "placement_host_course_type_carousel";
+
+    public static final List<String> COURSE_SEARCH_HINT_LIST = Arrays.asList("搜索课程名称或者视频关键词进行搜索", "学习如逆水行舟不进则退", "书读百遍其义自见", "每日坚持学习做最好的自己");
 
 }

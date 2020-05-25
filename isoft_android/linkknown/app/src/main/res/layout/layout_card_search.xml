@@ -23,7 +23,7 @@
         android:src="@drawable/ic_back" />
 
     <EditText
-        android:id="@+id/searchEditText"
+        android:id="@+id/searchTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center|end"
@@ -31,7 +31,7 @@
         android:layout_marginStart="40dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:hint="请输入搜索内容"
+        android:hint="@string/searchHint"
         android:imeOptions="actionSearch"
         android:maxLines="1"
         android:paddingLeft="10dp"

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CourseFilterFragment;
 import com.linkknown.ilearning.util.KeyBoardUtil;
@@ -21,18 +22,25 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CourseSearchActivity extends BaseActivity {
 
     private Context mContext;
     private String search;
 
-    @BindView(R.id.searchEditText)
-    public EditText searchEditText;
+    @BindView(R.id.searchTextView)
+    public EditText searchTextView;
     @BindView(R.id.searchEditTextClear)
     public ImageView searchEditTextClear;
     @BindView(R.id.searchBtn)
     public ImageView searchBtn;
+
+    private Disposable searchTextViewDisposable;
+    private int showHintIndex = 0;
 
     // 过滤课程的 fragment
     private CourseFilterFragment courseFilterFragment;
@@ -73,11 +81,11 @@ public class CourseSearchActivity extends BaseActivity {
     private void initSearchText() {
         search = getIntent().getStringExtra("search");
         if (StringUtils.isNotEmpty(search)) {
-            searchEditText.setText(search);
+            searchTextView.setText(search);
         }
 
         // 有内容显示 clear 图标,没有则隐藏
-        RxTextView.textChanges(searchEditText)
+        RxTextView.textChanges(searchTextView)
                 .map(CharSequence::toString)
                 .subscribe(s -> {
                     if (!TextUtils.isEmpty(s)) {
@@ -88,21 +96,29 @@ public class CourseSearchActivity extends BaseActivity {
                 });
         // 清空输入框
         RxView.clicks(searchEditTextClear)
-                .subscribe(aVoid -> searchEditText.setText(""));
+                .subscribe(aVoid -> searchTextView.setText(""));
 
         RxView.clicks(searchBtn)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .map(aVoid -> searchEditText.getText().toString().trim())
+                .map(aVoid -> searchTextView.getText().toString().trim())
                 .filter(s -> !TextUtils.isEmpty(s))
                 .subscribe(s -> {
                     // 关闭软键盘
-                    KeyBoardUtil.closeKeybord(searchEditText, mContext);
+                    KeyBoardUtil.closeKeybord(searchTextView, mContext);
 //                    showSearchAnim();
 //                    clearData();
                     search = s;
                     refreshFragment();
                 });
 
+        // 定时任务定时修改 TextView 中的提示文字
+        searchTextViewDisposable = Observable.interval(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(aLong -> {
+                    searchTextView.setHint(Constants.COURSE_SEARCH_HINT_LIST.get(showHintIndex));
+                    showHintIndex = showHintIndex == Constants.COURSE_SEARCH_HINT_LIST.size() - 1 ? 0 : ++ showHintIndex;
+                });
     }
 
     private void refreshFragment() {
@@ -116,5 +132,13 @@ public class CourseSearchActivity extends BaseActivity {
     @OnClick(R.id.goback)
     public void goback() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (searchTextViewDisposable != null) {
+            searchTextViewDisposable.dispose();
+        }
     }
 }
