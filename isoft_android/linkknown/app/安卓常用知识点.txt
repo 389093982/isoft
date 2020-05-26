@@ -9,3 +9,8 @@ colorPrimaryDark 状态栏颜色
 
 使用@表示使用固定的style，而不会跟随Theme改变，这style可以在对应的style.xml中找到。
 使用？表示从Theme中查找引用的资源名，这个google叫预定义样式，用在多主题时的场景，属性值会随着主题而改变。（？需要和attr配合使用）
+
+Butterknife 导致 Fragment already added：
+组件里面使用了Butterknife来找控件，然后在这个组件里面我多定义了一个控件，而这个控件对应的id实际是不存在的，就会导致 IllegalStateException，然后导致 Fragment already added
+就是在FragmentPageAdapter加载Fragment的过程中，只要是遇到了IllegalStateException的错误，会直接捕获到，然后自己做处理，但是这个处理的代码中还会继续报错，也就是Fragment already added异常，具体原因还要仔细查看源码。
+为了测试这个问题，尝试手动Fragment初始化的过程中抛出IllegalStateException，发现在logcat同样也会报同样的错误

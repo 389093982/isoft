@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|start"
         android:padding="12dp"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_back"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/searchTextView"
@@ -34,6 +35,8 @@
         android:hint="@string/searchHint"
         android:imeOptions="actionSearch"
         android:maxLines="1"
+        android:inputType="text"
+        android:lines="1"
         android:paddingLeft="10dp"
         android:textColor="@color/font_normal"
         android:textSize="14sp" />

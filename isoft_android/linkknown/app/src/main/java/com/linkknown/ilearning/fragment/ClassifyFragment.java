@@ -2,21 +2,26 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.jakewharton.rxbinding4.view.RxView;
+import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.ElementResponse;
+import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,22 +29,34 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ClassifyFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
+    @BindView(R.id.searchTextView)
+    public EditText searchTextView;
+    @BindView(R.id.searchEditTextClear)
+    public ImageView searchEditTextClear;
+    @BindView(R.id.searchBtn)
+    public ImageView searchBtn;
+
+    private String search;
+    private Disposable searchTextViewDisposable;
+    private int showHintIndex = 0;
+
     @BindView(R.id.levelOneClassifyRecyclerView)
     public RecyclerView levelOneClassifyRecyclerView;
     @BindView(R.id.levelTwoClassifyRecyclerView)
     public RecyclerView levelTwoClassifyRecyclerView;
-    @BindView(R.id.home_serachview)
-    public SearchView searchView;
 
     // 存储所有的分类占位符数据
     private List<ElementResponse.Element> levelOneClassifyElements = new ArrayList<>();
@@ -56,11 +73,51 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     protected void initView(View mRootView) {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
+
+        initSearchView();
         // 左侧分类
         initLeftClassfiyView();
         // 右侧搜索结果，一行只显示一个
         courseFilterFragment = new CourseFilterFragment(1);
         getChildFragmentManager().beginTransaction().add(R.id.courseFilterFragment, courseFilterFragment).commit();
+    }
+
+    private void initSearchView () {
+        // 有内容显示 clear 图标,没有则隐藏
+        RxTextView.textChanges(searchTextView)
+                .map(CharSequence::toString)
+                .subscribe(s -> {
+                    if (!TextUtils.isEmpty(s)) {
+                        searchEditTextClear.setVisibility(View.VISIBLE);
+                    } else {
+                        searchEditTextClear.setVisibility(View.GONE);
+                    }
+                });
+        // 清空输入框
+        RxView.clicks(searchEditTextClear)
+                .subscribe(aVoid -> searchTextView.setText(""));
+
+        RxView.clicks(searchBtn)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .map(aVoid -> searchTextView.getText().toString().trim())
+                .filter(s -> !TextUtils.isEmpty(s))
+                .subscribe(s -> {
+                    // 关闭软键盘
+                    KeyBoardUtil.closeKeybord(searchTextView, mContext);
+//                    showSearchAnim();
+//                    clearData();
+                    search = s;
+                    courseFilterFragment.refreshFragment(search, "");
+                });
+
+        // 定时任务定时修改 TextView 中的提示文字
+        searchTextViewDisposable = Observable.interval(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(aLong -> {
+                    searchTextView.setHint(Constants.COURSE_SEARCH_HINT_LIST.get(showHintIndex));
+                    showHintIndex = showHintIndex == Constants.COURSE_SEARCH_HINT_LIST.size() - 1 ? 0 : ++ showHintIndex;
+                });
     }
 
     @Override
@@ -196,5 +253,13 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
             }
             courseFilterFragment.refreshFragment(levelTwoClassifyElements.get(position).getElement_label(), "");
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (searchTextViewDisposable != null) {
+            searchTextViewDisposable.dispose();
+        }
     }
 }

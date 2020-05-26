@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBottomNavigation() {
+        // FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 参考文章 https://www.jianshu.com/p/94515681e335
         //设置适配器用于装载Fragment,ViewPager的好朋友
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

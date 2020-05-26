@@ -38,6 +38,8 @@ public class CourseSearchActivity extends BaseActivity {
     public ImageView searchEditTextClear;
     @BindView(R.id.searchBtn)
     public ImageView searchBtn;
+    @BindView(R.id.goback)
+    public ImageView goback;
 
     private Disposable searchTextViewDisposable;
     private int showHintIndex = 0;
@@ -61,6 +63,7 @@ public class CourseSearchActivity extends BaseActivity {
 
     // 初始化搜索框和 fragment
     private void initView() {
+        goback.setVisibility(View.VISIBLE);
         initSearchText();
 
         courseFilterFragment = new CourseFilterFragment();
