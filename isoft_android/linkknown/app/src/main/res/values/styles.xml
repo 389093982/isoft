@@ -58,6 +58,13 @@
         <item name="android:layout_weight">1</item>
     </style>
 
+    <style name="couponTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black_alpha_45</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <!-- 文本右边箭头样式 -->
     <style name="img_arrow">
         <item name="android:layout_width">20dp</item>

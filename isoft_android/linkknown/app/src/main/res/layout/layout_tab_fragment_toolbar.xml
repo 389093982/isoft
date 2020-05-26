@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/AppBarLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        <!--
+             app:tabIndicatorColor ：指示线的颜色
+             app:tabIndicatorHeight ： 指示线的高度
+             app:tabIndicatorFullWidth="false" 指示线是否铺满宽度
+             app:tabSelectedTextColor ： tab选中时的字体颜色
+             app:tabTextColor="@color/colorPrimary" ：未选中字体颜色
+             app:tabBackground="color" ： 整个tablayout颜色
+             app:tabMode="scrollable" ： 默认是fixed，固定的；scrollable：可滚动的
+             app:tabBackground="?attr/selectableItemBackground"  点击 tab 水波纹效果
+         -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            app:tabBackground="?attr/selectableItemBackground"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="@dimen/dp_3"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutNormalTextSize"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/light_gray3"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--
+        在CoordinatorLayout内部，每个child都必须带一个Behavior
+        CoordinatorLayout就根据每个child所携带的Behavior信息进行协调
+    -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
