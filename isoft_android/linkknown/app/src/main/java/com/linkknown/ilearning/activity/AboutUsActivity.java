@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +13,10 @@ import com.linkknown.ilearning.util.ui.UIUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener {
+public class AboutUsActivity extends BaseActivity {
 
-    // 返回按钮
-    @BindView(R.id.btnToBack)
-    public ImageView btnToBack;
+    @BindView(R.id.toolbar)
+    public Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +25,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
 
         ButterKnife.bind(this);
 
-        btnToBack.setOnClickListener(this);
+        initView();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnToBack:
-                finish();
-                break;
-            default:
-                break;
-        }
+    private void initView () {
+        initToolBar(toolbar, true, "关于");
     }
 }
