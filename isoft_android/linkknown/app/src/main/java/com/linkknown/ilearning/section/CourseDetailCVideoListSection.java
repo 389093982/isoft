@@ -22,13 +22,15 @@ public class CourseDetailCVideoListSection extends Section {
 
     private Context mContext;
     private List<CourseDetailResponse.CVideo> cVideos;
+    private CourseDetailResponse.Course course;
 
-    public CourseDetailCVideoListSection(Context mContext, List<CourseDetailResponse.CVideo> cVideos) {
+    public CourseDetailCVideoListSection(Context mContext, CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
         super(SectionParameters.builder()
                 .itemResourceId(R.layout.item_cvideo)
                 .build());
         this.mContext = mContext;
         this.cVideos = cVideos;
+        this.course = course;
     }
 
     @Override
@@ -58,6 +60,8 @@ public class CourseDetailCVideoListSection extends Section {
         }
         itemViewHolder.cVideoName.setOnClickListener(v -> {
             UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                intent.putExtra("course_name", course.getCourse_name());
+                intent.putExtra("video_name", cVideo.getVideo_name());
                 intent.putExtra("course_id", cVideo.getCourse_id());
                 intent.putExtra("video_id", cVideo.getId());
                 intent.putExtra("first_play", cVideo.getFirst_play());

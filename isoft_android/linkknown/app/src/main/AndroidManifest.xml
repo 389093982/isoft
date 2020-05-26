@@ -42,6 +42,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.VideoPlayActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.CourseDetailActivity"

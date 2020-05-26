@@ -110,6 +110,8 @@ public class CourseDetailActivity extends AppCompatActivity {
                         if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
                             CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
                             UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                                intent.putExtra("course_name", course.getCourse_name());
+                                intent.putExtra("video_name", cVideo.getVideo_name());
                                 intent.putExtra("course_id", cVideo.getCourse_id());
                                 intent.putExtra("video_id", cVideo.getId());
                                 intent.putExtra("first_play", cVideo.getFirst_play());

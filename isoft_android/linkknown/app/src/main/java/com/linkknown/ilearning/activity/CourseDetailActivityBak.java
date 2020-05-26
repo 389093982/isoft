@@ -32,6 +32,7 @@ public class CourseDetailActivityBak extends AppCompatActivity {
     private Context mContext;
     private Intent intent;
     private List<CourseDetailResponse.CVideo> cVideos = new ArrayList<>();
+    private CourseDetailResponse.Course course;
 
     @BindView(R.id.detail_goback)
     public ImageView gobackView;
@@ -92,7 +93,7 @@ public class CourseDetailActivityBak extends AppCompatActivity {
     private void bindViewHolderForCVideoList() {
         // 设置视频列表 section 部分
         SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(this, cVideos);
+        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(this, course, cVideos);
         sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
         cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
@@ -120,6 +121,7 @@ public class CourseDetailActivityBak extends AppCompatActivity {
         String watchNumberTextDemo = mContext.getResources().getString(R.string.watchNumberTextDemo);
         watchNumberView.setText(String.format(watchNumberTextDemo, course.getWatch_number()));
 
+        course = courseDetailResponse.getCourse();
         cVideos.addAll(courseDetailResponse.getCVideos());
     }
 

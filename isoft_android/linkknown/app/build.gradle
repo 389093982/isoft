@@ -82,8 +82,8 @@ dependencies {
     // 安卓图片轮播
     implementation 'com.youth.banner:banner:1.4.10'
 
-    // 节操播放器
-    implementation 'fm.jiecao:jiecaovideoplayer:4.8.3'
+    // 播放器
+    implementation 'cn.jzvd:jiaozivideoplayer:7.3.0'
 
     implementation 'org.apache.commons:commons-lang3:3.8.1'
 

@@ -129,7 +129,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         // 设置视频列表 section 部分
         SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         CommonTagSection commonTagSection = new CommonTagSection(mContext, null, CommonUtil.splitCommonTag(course_label));
-        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, cVideos);
+        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, course, cVideos);
         sectionedRecyclerViewAdapter.addSection(commonTagSection);
         sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
         cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -152,6 +152,8 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                     UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
                         @Override
                         public Intent wrapper(Intent intent) {
+                            intent.putExtra("course_name", course.getCourse_name());
+                            intent.putExtra("video_name", cVideo.getVideo_name());
                             intent.putExtra("course_id", cVideo.getCourse_id());
                             intent.putExtra("video_id", cVideo.getId());
                             intent.putExtra("first_play", cVideo.getFirst_play());
