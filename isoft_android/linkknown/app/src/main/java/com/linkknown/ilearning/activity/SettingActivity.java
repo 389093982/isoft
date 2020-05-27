@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.fragment.SettingFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,5 +27,14 @@ public class SettingActivity extends BaseActivity {
 
     private void initView () {
         initToolBar(toolbar, true, "设置");
+
+        initFragment();
+    }
+
+    private void initFragment () {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, new SettingFragment())
+                .commit();
     }
 }
