@@ -33,6 +33,8 @@ public class VideoPlayActivity extends AppCompatActivity {
         String first_play = intent.getStringExtra("first_play");
 
         player.setUp(UIUtils.replaceMediaUrl(first_play), video_name);
+        // 自动播放
+        player.startVideo();
     }
 
     @Override
