@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
         app:key="clearCache"
         app:title="清除缓存"
         app:summary="0.0Mb"/>
+
+    <Preference
+        app:key="userAgreement"
+        android:layout="@layout/item_setting_base"/>
+
+    <Preference
+        app:key="versionUpdate"
+        app:title="版本更新"
+        app:summary="版本更新"/>
+
+    <Preference
+        app:key="logout"
+        app:title="退出登录"
+        app:summary="退出登录"/>
 </PreferenceScreen>
