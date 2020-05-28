@@ -76,8 +76,11 @@ public class UIUtils {
     }
 
     // SnackBar 显示消息
-    public static void showMessageForSnackBar (View view, String text) {
-        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
+    public static void showMessageForSnackBar (Context mContext, View view, String text) {
+        Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_SHORT);
+        // 为Snackbar添加背景颜色
+        snackbar.getView().setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
+        snackbar.show();
     }
 
 

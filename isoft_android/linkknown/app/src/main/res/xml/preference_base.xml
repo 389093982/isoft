@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference
-        app:key="clearCache"
-        app:title="清除缓存"
-        app:summary="0.0Mb"/>
+    <!--
+        androidx.preference.PreferenceScreen 去除左边空白: 新建res/values-sw360dp-v13/values-preference.xml文件
+     -->
+    <PreferenceCategory
+        android:title="基本设置">
+        <Preference
+            app:key="clearCache"
+            app:title="清除缓存"
+            app:summary="0.0Mb"/>
 
-    <Preference
-        app:key="userAgreement"
-        android:layout="@layout/item_setting_base"/>
+        <Preference
+            app:key="userAgreement"
+            app:title="用户协议"
+            app:summary="查看用户协议"/>
 
-    <Preference
-        app:key="versionUpdate"
-        app:title="版本更新"
-        app:summary="版本更新"/>
+        <Preference
+            app:key="versionUpdate"
+            app:title="版本更新"
+            app:summary="检查版本更新"/>
 
-    <Preference
-        app:key="logout"
-        app:title="退出登录"
-        app:summary="退出登录"/>
+        <Preference
+            app:key="logout"
+            app:title="退出登录"
+            app:summary="退出链知 App 账号"/>
+    </PreferenceCategory>
 </PreferenceScreen>
