@@ -4,14 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -25,6 +20,8 @@ import com.linkknown.ilearning.util.NetUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TuijianFragment extends Fragment implements View.OnClickListener {
+public class TuijianFragment extends BaseLazyLoadFragment implements OnBannerListener {
 
     private Context mContext;
 
@@ -43,31 +40,22 @@ public class TuijianFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.banner)
     public Banner banner;
     // 存放轮播图所有图片
-    private ArrayList<String> bannerImageList = new ArrayList<>();
+    private ArrayList<Integer> bannerImageList;
 
     // GridView 作为一个 View 对象添加到 ViewPager 集合中
     private List<View> viewPagerList;
-
-    // GridView小圆点指示器
-    @BindView(R.id.points)
-    public ViewGroup points;
-    // 小圆点指示器图片集合
-    private ImageView[] ivPoints;
-
-
-    private View rootView;
 
     // 下拉刷新的layout
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_tuijian, container, false);
-        mContext = getActivity();
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    protected void initView(View mRootView) {
+        mContext = getContext();
+        ButterKnife.bind(this, mRootView);
+
+        //加载轮播图
+        initBannerView();
     }
 
     @Override
@@ -79,7 +67,8 @@ public class TuijianFragment extends Fragment implements View.OnClickListener {
         refreshLayout.setOnRefreshListener(() -> ToastUtil.showText(mContext, "onRefresh..."));
     }
 
-    private void initData () {
+    @Override
+    public void initData () {
         //判断网络状态，并初始化数据
         if (!NetUtil.isNetworkAvailable(this.getContext())) {
             ToastUtil.showText(mContext, "亲，网络异常，无法获取数据请检查网络！");
@@ -88,30 +77,46 @@ public class TuijianFragment extends Fragment implements View.OnClickListener {
         // 初始化热门课程分类
         initHotCategorys();
 
-        //加载轮播图
-        initBanner();
-
 //            //获取热评商品
 //            initCommodityList(Constants.HOME_PAGE_LIMIT, 0, true);
+    }
+
+    @Override
+    protected boolean setIsRealTimeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected int providelayoutId() {
+        return R.layout.fragment_tuijian;
     }
 
     /**
      * 初始化广告页
      */
-    private void initBanner() {
+    private void initBannerView() {
+        bannerImageList = new ArrayList<>();
+        bannerImageList.add(R.drawable.banner_coupon);
+        bannerImageList.add(R.drawable.banner_coupon);
+        bannerImageList.add(R.drawable.banner_coupon);
+        bannerImageList.add(R.drawable.banner_coupon);
+
         //设置 banner 样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
+        //设置轮播的动画效果,里面有很多种特效,可以都看看效果
+        banner.setBannerAnimation(Transformer.Accordion);
+        //设置轮播间隔时间
+        banner.setDelayTime(3000);
+        //设置是否为自动轮播，默认是true
+        banner.isAutoPlay(true);
+        //设置指示器的位置，小点点，居中显示
+        banner.setIndicatorGravity(BannerConfig.CENTER);
 
-        //清空旧数据
-        bannerImageList.clear();
-        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
-        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
-        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
-        bannerImageList.add("https://img-blog.csdn.net/20180420104431654");
-        banner.setImages(bannerImageList);
-        banner.start();
+        banner.setImages(bannerImageList)
+                //轮播图的监听
+                .setOnBannerListener(this).start();
     }
 
     private void initHotCategorys () {
@@ -147,8 +152,7 @@ public class TuijianFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int position) {
-                //改变小圆圈指示器的切换效果
-                setImageBackground(position);
+
             }
 
             @Override
@@ -157,47 +161,10 @@ public class TuijianFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        // 小圆点指示器
-        ivPoints = new ImageView[totalPage];
-        for (int i = 0; i < ivPoints.length; i++) {
-            ImageView imageView = new ImageView(getContext());
-            //设置图片的宽高
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
-            if (i == 0) {
-                imageView.setBackgroundResource(R.drawable.page__selected_indicator);
-            } else {
-                imageView.setBackgroundResource(R.drawable.page__normal_indicator);
-            }
-            ivPoints[i] = imageView;
-            LinearLayout.LayoutParams layoutParams =
-                    new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            layoutParams.leftMargin = 10;//设置点点点view的左边距
-            layoutParams.rightMargin = 10;//设置点点点view的右边距
-            points.addView(imageView, layoutParams);
-        }
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 设置GridView图片背景
-     *
-     * @param selectItems 选中项index
-     */
-    private void setImageBackground(int selectItems) {
-        for (int i = 0; i < ivPoints.length; i++) {
-            if (i == selectItems) {
-                ivPoints[i].setBackgroundResource(R.drawable.page__selected_indicator);
-            } else {
-                ivPoints[i].setBackgroundResource(R.drawable.page__normal_indicator);
-            }
-        }
+    public void OnBannerClick(int position) {
+        ToastUtil.showText(mContext, "点击了图片");
     }
 }
