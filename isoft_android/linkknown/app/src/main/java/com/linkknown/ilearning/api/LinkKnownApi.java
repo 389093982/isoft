@@ -146,12 +146,13 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList")
     Observable<CouponListResponse> queryPersonalCouponList(@Query("isExpired") String isExpired,
                                                            @Query("isUsed") String isUsed,
-                                                           @Query("current_page") int current_page);
+                                                           @Query("current_page") int current_page,
+                                                           @Query("offset") int pageSize);
 
 
     // 查询我的订单
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
-                                                      @Query("user_name") String user_name);
+                                                   @Query("user_name") String user_name);
 }
