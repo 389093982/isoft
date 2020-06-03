@@ -43,6 +43,7 @@ const Pay = () => import("@/components/Payment/Pay");
 const OrderList = () => import("@/components/Payment/OrderList");
 const OrderDetail = () => import("@/components/Payment/OrderDetail");
 const MyCouponList = () => import("@/components/Payment/MyCouponList");
+const CouponCenter = () => import("@/components/Payment/CouponCenter");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
@@ -266,6 +267,7 @@ const Payment = [{
     {path: 'orderList', component: OrderList},
     {path: 'orderDetail', component: OrderDetail},
     {path: 'myCouponList', component: MyCouponList},
+    {path: 'couponCenter', component: CouponCenter},
   ]
 }];
 

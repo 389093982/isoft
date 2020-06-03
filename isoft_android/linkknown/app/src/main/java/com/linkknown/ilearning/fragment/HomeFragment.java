@@ -94,7 +94,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
 
         // 创建 fragment
-        MoreFragment moreFragment1 = new MoreFragment();
         CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
         CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
         CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
@@ -110,7 +109,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         FindFragment findFragment = new FindFragment();
         MoreFragment moreFragment8 = new MoreFragment();
 
-        mFragments.add(moreFragment1);
         mFragments.add(courseFilterFragment1);
         mFragments.add(courseFilterFragment2);
         mFragments.add(courseFilterFragment3);
@@ -121,7 +119,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         mFragments.add(moreFragment8);
 
         // title 限制 2 个字
-        titles.add("首页");
         titles.add("免费");
         titles.add("付费");
         titles.add("全部");

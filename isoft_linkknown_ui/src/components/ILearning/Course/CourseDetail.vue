@@ -146,6 +146,9 @@
           </Coupon>
         </div>
         <div class="isoft_bg_white">
+          <img src="../../../../static/images/order/banner_coupon.png" style="width: 300px;height: 130px;"
+               class="isoft_point_cursor" @click="$router.push('/payment/couponCenter')"/>
+
           <HotUser style="margin-left: 2px;"/>
         </div>
         <div class="isoft_bg_white">

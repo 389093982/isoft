@@ -2,6 +2,7 @@ package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
+import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
@@ -141,11 +142,16 @@ public interface LinkKnownApi {
     Observable<FavoriteCountResponse> queryFavoriteCount(@Query("favorite_id") int favorite_id,
                                                          @Query("favorite_type") String favorite_type);
 
+    // 查询收藏总人数
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList")
+    Observable<CouponListResponse> queryPersonalCouponList(@Query("isExpired") String isExpired,
+                                                           @Query("isUsed") String isUsed,
+                                                           @Query("current_page") int current_page,
+
 
     // 查询我的订单
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
-                                                   @Query("user_name") String user_name);
-
+                                                      @Query("offset") int offset);
 }

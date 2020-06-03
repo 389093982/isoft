@@ -17,29 +17,33 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             <TextView
+                android:id="@+id/youhuiTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1折"
+                android:text="1折/￥88"
                 android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/jianmianTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="满 99 元可用"
+                android:text="满 99 元减 50 元"
                 style="@style/couponTextStyle"/>
         </LinearLayout>
 
         <TextView
+            android:id="@+id/couponSceneView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="适用于：链知 App 和 web 多端通用，全部课程"
+            android:text="适用场景：链知 app 和 web 多端通用，全部课程"
             style="@style/couponTextStyle"/>
 
         <TextView
+            android:id="@+id/endTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -48,6 +52,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/submitBgView"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:layout_alignParentEnd="true"
@@ -58,9 +63,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="28dp">
         <TextView
+            android:id="@+id/submitBtnView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即使用"
