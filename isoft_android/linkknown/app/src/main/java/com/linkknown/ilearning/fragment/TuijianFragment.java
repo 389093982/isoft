@@ -12,12 +12,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.adapter.HomePageGridViewAdapter;
 import com.linkknown.ilearning.adapter.HomePageViewPagerAdapter;
 import com.linkknown.ilearning.model.Catalog;
 import com.linkknown.ilearning.util.NetUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -29,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TuijianFragment extends BaseLazyLoadFragment implements OnBannerListener {
+public class TuijianFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
@@ -114,11 +116,18 @@ public class TuijianFragment extends BaseLazyLoadFragment implements OnBannerLis
         //设置指示器的位置，小点点，居中显示
         banner.setIndicatorGravity(BannerConfig.CENTER);
 
-        banner.setImages(bannerImageList)
-                //轮播图的监听
-                .setOnBannerListener(this).start();
+        //轮播图的监听
+        banner.setOnBannerListener(position -> {
+            switch (position) {
+                case 0:
+                    UIUtils.gotoActivity(mContext, CouponCenterActivity.class);
+                    break;
+                default:
+                    break;
+            }
+        });
+        banner.setImages(bannerImageList).start();
     }
-
     private void initHotCategorys () {
         List<Catalog> listData = new ArrayList<>();
         for (int i=0; i<30; i++) {
@@ -163,8 +172,4 @@ public class TuijianFragment extends BaseLazyLoadFragment implements OnBannerLis
 
     }
 
-    @Override
-    public void OnBannerClick(int position) {
-        ToastUtil.showText(mContext, "点击了图片");
-    }
 }

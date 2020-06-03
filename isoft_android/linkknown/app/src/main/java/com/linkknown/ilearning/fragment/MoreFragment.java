@@ -1,7 +1,6 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,11 +61,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         List<Item> mData = new ArrayList<>();
 
-        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
-        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
-        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
-        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
-        mData.add(new Item("直播0", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("分类", R.drawable.item_space_live, CourseClassifyActivity.class));
         mData.add(new Item("考试", R.drawable.item_space_live, CourseClassifyActivity.class));
         mData.add(new Item("推荐视频", R.drawable.item_space_zhaomu, CourseListActivity.class));
         mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
