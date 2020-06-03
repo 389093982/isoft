@@ -26,7 +26,6 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initView () {
-        // TODO 为啥没显示？
         initToolBar(toolbar, true, "设置");
 
         initFragment();
