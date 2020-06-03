@@ -20,19 +20,19 @@
 
         <!-- 分割线 -->
         <View style="@style/bg_line"/>
+
         <!-- 无圆角-->
         <LinearLayout
-            android:id="@+id/menu_bought"
+            android:id="@+id/menuOrderLayout"
             style="@style/mid_layout">
-
             <TextView
                 style="@style/usertext"
-                android:text="历史购买"/>
-
+                android:text="我的订单" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
         <View style="@style/bg_line"/>
+
         <!-- 下圆角-->
         <LinearLayout
             android:id="@+id/menu_user"
@@ -40,7 +40,7 @@
 
             <TextView
                 style="@style/usertext"
-                android:text="个人中心"/>
+                android:text="个人中心" />
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
