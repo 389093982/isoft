@@ -198,6 +198,7 @@ export const ReceiveCoupon = (params) => ajax(BASE_URL + "/iwork/httpservice/iso
 export const SearchCouponForPay = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/SearchCouponForPay", params, 'POST'); //查询券(支付中心调用)
 export const UpdateCouponIsUsed = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCouponIsUsed", params, 'POST'); //券已使用，更新状态
 export const QueryCouponCenterList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCouponCenterList", params, 'POST'); //券已使用，更新状态
+export const QueryPersonalCouponList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList", params, 'POST'); //券已使用，更新状态
 
 
 //【Contact模块】***************************************************************************************************

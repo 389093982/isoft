@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%;">
 
-  <div style="display: flex">
+  <div style="display: flex;">
     <div style="width: 68%;background-color: white">
       <Row>
         <!--左侧空出一点-->
@@ -11,10 +11,9 @@
         <!--右侧展示券信息-->
         <Col span="22">
           <div style="position: relative;top: 10px">
-            <i-switch v-model="isAvailable" size="large" @click.native="click2RefreshCouponList">
-              <span slot="open">可用</span>
-              <span slot="close">无用</span>
-            </i-switch>
+            <span @click="click2RefreshCouponList(0)" :class="pattern === 0 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已领取</span>
+            <span @click="click2RefreshCouponList(1)" :class="pattern === 1 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已使用</span>
+            <span @click="click2RefreshCouponList(2)" :class="pattern === 2 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已过期</span>
             <span style="margin-left: 20px">数量:{{page.totalCount}}</span>
           </div>
           <Row v-for="(coupon, index) in couponDatas" style="margin-top: 20px">
@@ -113,7 +112,7 @@
 </template>
 
 <script>
-  import {QueryPagePayCoupon} from "../../api/index"
+  import {QueryPersonalCouponList} from "../../api/index"
   import SepLine from "../Common/SepLine";
   import Coupon from "../Common/coupon/Coupon";
   import {GetLoginUserName,CheckHasLoginConfirmDialog,checkFastClick,GetToday_yyyyMMdd} from "../../tools/index";
@@ -126,13 +125,12 @@
       return {
         couponDatas: [],
         page:{totalCount:0,currentPage:1,offset:10},
-        //查询条件
-        isAvailable:true,
-
+        pattern: 0,     // 搜索模式
       }
     },
     methods: {
-      click2RefreshCouponList:function(){
+      click2RefreshCouponList:function(pattern){
+        this.pattern = pattern;
         if (checkFastClick()) {
           this.$Message.error("点击过快,请稍后重试!");
           return false;
@@ -142,24 +140,30 @@
       },
       refreshCouponList:async function(){
         if (checkHasLogin()) {
+          var isExpired = "";
+          var isUsed = "";
+          if (this.pattern === 0) {
+            // 已领取状态
+            isExpired = "false";
+            isUsed = "false";
+          } else if (this.pattern === 1) {
+            // 已使用状态
+            isUsed = "true";
+          } else if (this.pattern === 2) {
+            // 已过期状态(没使用)
+            isExpired = "true";
+            isUsed = "false";
+          }
           let params = {
-            'userName':this.loginUserName,
-            'searchRange':'myCouponList',
-            'isAvailable':this.isAvailable,
-            'today':GetToday_yyyyMMdd(),
+            'isExpired': isExpired,
+            'isUsed': isUsed,
             'currentPage':this.page.currentPage,
             'offset':this.page.offset,
           };
-          const result = await QueryPagePayCoupon(params);
+          const result = await QueryPersonalCouponList(params);
           if (result.status === 'SUCCESS') {
-            if (this.isAvailable) {
-              this.couponDatas = result.availableCouponList;
-              this.page.totalCount = result.availableCouponList_paginator.totalcount;
-            }else{
-              this.couponDatas = result.notAvailableCouponList;
-              this.page.totalCount = result.notAvailableCouponList_paginator.totalcount;
-            }
-
+              this.couponDatas = result.coupons;
+              this.page.totalCount = result.paginator.totalcount;
           }
         }else {
           CheckHasLoginConfirmDialog(this, {path: "/payment/myCouponList"});
