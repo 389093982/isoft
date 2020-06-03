@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CouponCenterFragment;
+import com.linkknown.ilearning.util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,14 @@ public class CouponCenterActivity extends BaseActivity {
         CouponCenterFragment couponCenterFragment1 = new CouponCenterFragment();
         CouponCenterFragment couponCenterFragment2 = new CouponCenterFragment();
         CouponCenterFragment couponCenterFragment3 = new CouponCenterFragment();
+
+        // activity 向 fragment 传参
+        // 已领取
+        couponCenterFragment1.setArguments(CommonUtil.createBundle2("isExpired", "false", "isUsed", "false"));
+        // 已使用
+        couponCenterFragment2.setArguments(CommonUtil.createBundle2("isExpired", "", "isUsed", "true"));
+        // 已过期
+        couponCenterFragment3.setArguments(CommonUtil.createBundle2("isExpired", "true", "isUsed", "false"));
 
         mFragments.add(couponCenterFragment1);
         mFragments.add(couponCenterFragment2);

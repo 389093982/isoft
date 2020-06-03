@@ -61,6 +61,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp">
         <TextView
+            android:id="@+id/submitBtnView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="立即使用"
