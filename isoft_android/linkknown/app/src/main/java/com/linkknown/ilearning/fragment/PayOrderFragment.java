@@ -111,6 +111,9 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                                 }
                                 orderList.addAll(payOrderResponse.getOrders());
                                 ToastUtil.showText(getContext(),"刷新成功！");
+                            }else{
+                                orderList.clear();
+                                ToastUtil.showText(getContext(),"查不到数据！");
                             }
 
                         } else {
