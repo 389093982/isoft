@@ -101,12 +101,8 @@
         };
         const generalResult = await QueryGeneralCoupon(params);
         if (generalResult.status === 'SUCCESS') {
-          if (generalResult.general_reduce_coupon != null) {
-            this.general_reduce_coupon = generalResult.general_reduce_coupon;
-          }
-          if (generalResult.general_discount_coupon != null) {
-            this.general_discount_coupon = generalResult.general_discount_coupon;
-          }
+          this.general_reduce_coupon = generalResult.general_reduce_coupon;
+          this.general_discount_coupon = generalResult.general_discount_coupon;
         }
       },
       //领券
