@@ -20,6 +20,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
+import com.linkknown.ilearning.activity.CourseOrderActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -41,6 +42,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;
+
+    @BindView(R.id.menuOrderLayout)
+    public LinearLayout menuOrderLayout;
+
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
 
@@ -69,14 +74,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         initLoginInfo();
 
         menuAboutLayout.setOnClickListener(this);
+        menuOrderLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
 
         return rootView;
     }
 
     private void initLoginInfo () {
-
-
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
             if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                 small_headerIcon.setVisibility(View.VISIBLE);
@@ -104,6 +108,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.menuSettingLayout:
                 UIUtils.gotoActivity(mContext, SettingActivity.class);
+                break;
+            case R.id.menuOrderLayout:
+                UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
                 break;
             default:
                 break;

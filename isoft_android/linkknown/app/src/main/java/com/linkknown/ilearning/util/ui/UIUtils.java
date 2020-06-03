@@ -38,6 +38,7 @@ public class UIUtils {
         if (wrapper != null) {
             intent = wrapper.wrapper(intent);
         }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(intent);
 
         if (ctx instanceof Activity) {

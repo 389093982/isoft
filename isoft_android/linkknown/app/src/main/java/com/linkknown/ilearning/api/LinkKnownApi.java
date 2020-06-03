@@ -12,6 +12,7 @@ import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -139,4 +140,12 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount")
     Observable<FavoriteCountResponse> queryFavoriteCount(@Query("favorite_id") int favorite_id,
                                                          @Query("favorite_type") String favorite_type);
+
+
+    // 查询我的订单
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
+                                                   @Query("offset") int pageSize,
+                                                   @Query("user_name") String user_name);
+
 }
