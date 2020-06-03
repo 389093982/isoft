@@ -153,5 +153,5 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
-                                                      @Query("offset") int offset);
+                                                      @Query("user_name") String user_name);
 }
