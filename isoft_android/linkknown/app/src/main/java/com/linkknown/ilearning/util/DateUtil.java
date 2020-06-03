@@ -29,4 +29,20 @@ public class DateUtil {
         }
     }
 
+    public static String formateDate (Date date) {
+        DateFormat dateFormat = new SimpleDateFormat(PATTERN);
+        return dateFormat.format(date);
+    }
+
+    public static String formateYYYYMMDDToDate (String date) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(PATTERN2);
+            Date dateTime = dateFormat.parse(date);
+            return formateDate(dateTime);
+        } catch (ParseException e) {
+            Log.e("DateUtil", "DateUtil dateFormat.parse error!");
+            return date;
+        }
+    }
+
 }
