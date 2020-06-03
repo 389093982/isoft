@@ -146,7 +146,7 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList")
     Observable<CouponListResponse> queryPersonalCouponList(@Query("isExpired") String isExpired,
                                                            @Query("isUsed") String isUsed,
-                                                           @Query("current_page") int current_page,
+                                                           @Query("current_page") int current_page);
 
 
     // 查询我的订单
