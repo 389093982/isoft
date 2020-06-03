@@ -9,30 +9,27 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.api.LinkKnownApi;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CouponListResponse;
-import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.DateUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class CouponCenterFragment extends BaseLazyLoadFragment {
@@ -41,6 +38,11 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
+
+    @BindView(R.id.refreshLayout)
+    public SwipeRefreshLayout refreshLayout;
+    private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
+
     private List<CouponListResponse.Coupon> couponList = new ArrayList<>();
     private BaseQuickAdapter baseQuickAdapter;
 
@@ -51,6 +53,10 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
     protected void initView(View mRootView) {
         mContext = getContext();
         ButterKnife.bind(this, mRootView);
+
+        swipeRefreshLayoutHelper.bind(mContext, refreshLayout);
+        swipeRefreshLayoutHelper.initStyle();
+        swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         // 接收传递过来的参数
         isExpired = getArguments().getString("isExpired", "");
@@ -119,11 +125,12 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
                             couponList.addAll(couponListResponse.getCoupons());
                             baseQuickAdapter.setList(couponList);
                         }
+                        swipeRefreshLayoutHelper.finishRefreshing();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        swipeRefreshLayoutHelper.finishRefreshing();
                     }
                 });
     }
@@ -135,6 +142,6 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
 
     @Override
     protected int providelayoutId() {
-        return R.layout.layout_recycleview;
+        return R.layout.fragment_coupon_center;
     }
 }
