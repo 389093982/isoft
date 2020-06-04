@@ -42,7 +42,6 @@ public class SplashActivity extends AppCompatActivity {
 
     @BindView(R.id.imageView)
     public ImageView imageView;
-    public TextBannerView tipTextbanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

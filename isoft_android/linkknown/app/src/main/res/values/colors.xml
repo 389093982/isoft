@@ -8,6 +8,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="theme_red">#FF0000</color>
 
+    <color name="color_FCFDECEC">#FCFDECEC</color>
+
     <!-- 按钮样式 -->
     <color name="button_normal">#858585</color>
     <color name="button_press">#F61302</color>

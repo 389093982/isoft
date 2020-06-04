@@ -98,7 +98,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/orderLayout3"
+            android:id="@+id/huodongLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -106,21 +106,21 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/iv_order3"
+                android:id="@+id/iv_huodong"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="8dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_coupon"
+                android:src="@drawable/ic_huodong"
                 android:tint="@color/white"/>
             <TextView
-                android:id="@+id/tv_order3"
+                android:id="@+id/tv_huodong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="占位符"
+                android:text="活动中心"
                 android:textSize="11sp" />
         </LinearLayout>
 
