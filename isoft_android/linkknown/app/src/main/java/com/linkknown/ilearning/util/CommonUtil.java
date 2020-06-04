@@ -2,6 +2,8 @@ package com.linkknown.ilearning.util;
 
 import android.os.Bundle;
 
+import com.linkknown.ilearning.model.Paginator;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -9,6 +11,9 @@ import java.util.List;
 
 public class CommonUtil {
 
+    public static boolean isLastPage (Paginator paginator) {
+        return paginator != null && paginator.getCurrpage() == paginator.getTotalpages();
+    }
     public static List<String> splitCommonTag (String str) {
         str = StringUtils.replace(str, "|", "/");
         String[] arr = StringUtils.split(str, "/");
