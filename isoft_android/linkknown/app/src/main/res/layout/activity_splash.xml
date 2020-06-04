@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary">
 
     <TextView
@@ -17,36 +18,69 @@
         android:paddingEnd="10dp"
         android:background="@drawable/common_tag_free"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:paddingTop="150dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="50dp">
 
-        <ImageView
+        <com.linkknown.ilearning.widget.SpreadView
+            android:id="@+id/spreadView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:spread_delay_milliseconds="150"
+            app:spread_distance="5"
+            app:spread_max_radius="90"
+            app:spread_radius="100" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
             android:src="@drawable/linkknown"
-            android:scaleType="fitXY"/>
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"/>
 
         <TextView
+            android:id="@+id/linkknown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:layout_above="@+id/linkknown2"/>
 
         <TextView
+            android:id="@+id/linkknown2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:text="@string/app_description"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:textStyle="italic" />
-    </LinearLayout>
+            android:textStyle="italic"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/copyRight"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="《用户协议》《隐私政策》和《商业合作》"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/copyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
 </RelativeLayout>

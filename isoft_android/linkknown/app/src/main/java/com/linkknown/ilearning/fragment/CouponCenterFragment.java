@@ -17,6 +17,7 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.util.CommonUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -111,7 +112,7 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
                             paginator = couponListResponse.getPaginator();
 
                             // 最后一页
-                            if (isLastPage()) {
+                            if (CommonUtil.isLastPage(paginator)) {
                                 baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                         } else {
@@ -127,10 +128,6 @@ public class CouponCenterFragment extends BaseLazyLoadFragment {
                         baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
-    }
-
-    private boolean isLastPage () {
-        return paginator != null && paginator.getCurrpage() == paginator.getTotalpages();
     }
 
     @Override

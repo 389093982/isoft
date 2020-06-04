@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.model;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -16,7 +17,7 @@ public class MessageListResponse extends BaseResponse {
     public static class Message {
 
         private int id;
-        private String last_updated_time;
+        private Date last_updated_time;
         private String message_text;
         private String message_type;
         private String user_name;

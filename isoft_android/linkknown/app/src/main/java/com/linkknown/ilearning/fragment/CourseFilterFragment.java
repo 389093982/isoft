@@ -19,6 +19,7 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -187,7 +188,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                             paginator = courseMetaResponse.getPaginator();
 
                             // 最后一页
-                            if (isLastPage()) {
+                            if (CommonUtil.isLastPage(paginator)) {
                                 courseCardAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                         } else {
@@ -204,10 +205,6 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                         courseCardAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
-    }
-
-    private boolean isLastPage () {
-        return paginator != null && paginator.getCurrpage() == paginator.getTotalpages();
     }
 
     @Override
