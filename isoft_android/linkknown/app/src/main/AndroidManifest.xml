@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CourseOrderActivity"></activity>
+        <activity android:name=".activity.PayOrderDetailActivity"></activity>
+        <activity android:name=".activity.CourseOrderActivity" />
         <activity android:name=".activity.CourseSearchActivity" /> <!-- activity 页面配置汇总 -->
         <activity android:name=".activity.UserDetailActivity" />
         <activity android:name=".activity.CouponCenterActivity" />
