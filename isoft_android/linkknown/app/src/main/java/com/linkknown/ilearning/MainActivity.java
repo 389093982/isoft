@@ -1,5 +1,6 @@
 package com.linkknown.ilearning;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,7 +35,6 @@ import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.LoginUtil;
-import com.linkknown.ilearning.util.PermissionUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.superluo.textbannerlibrary.TextBannerView;
@@ -48,6 +48,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+
+    String[] perms = {Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private Context mContext;
 
@@ -80,11 +84,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        if (!EasyPermissions.hasPermissions(this, perms)) {
+//            EasyPermissions.requestPermissions(this, "请打开相关权限", 1, perms);
+//        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getApplication();
         ButterKnife.bind(this);
-        PermissionUtil.requestOverlayPermission(this);
 
         // 绑定控件
         initView();

@@ -20,7 +20,9 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
+import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseOrderActivity;
+import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -31,6 +33,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
+
+    @BindView(R.id.iv_coupon)
+    public ImageView iv_coupon;
+    @BindView(R.id.iv_order)
+    public ImageView iv_order;
+    @BindView(R.id.iv_message)
+    public ImageView iv_message;
 
     // 登录用户头像和用户名
     @BindView(R.id.small_headerIcon)
@@ -49,8 +58,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
 
-
-
     private Context mContext;
 
     @Nullable
@@ -60,7 +67,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mContext = getActivity();
         ButterKnife.bind(this, rootView);
 
-//        if (DEV_MODE) {
+        initView();
+
+        return rootView;
+    }
+
+    private void initView() {
+        //        if (DEV_MODE) {
 //            // 严格模式的开启可以放在Application或者Activity以及其他组件的onCreate方法
 //            // 可以用来帮助开发者发现代码中的一些不规范的问题，以达到提升应用响应能力的目的
 //            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -73,11 +86,19 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // 初始化登录相关信息
         initLoginInfo();
 
+        // 中间图标入口
+        initMenuImageView();
+
         menuAboutLayout.setOnClickListener(this);
         menuOrderLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
+    }
 
-        return rootView;
+    private void initMenuImageView () {
+        // 点击调往对应页面
+        iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
+        iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseOrderActivity.class));
+        iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
     }
 
     private void initLoginInfo () {

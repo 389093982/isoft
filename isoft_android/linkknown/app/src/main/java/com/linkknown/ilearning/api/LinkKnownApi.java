@@ -13,6 +13,7 @@ import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
@@ -149,10 +150,14 @@ public interface LinkKnownApi {
                                                            @Query("current_page") int current_page,
                                                            @Query("offset") int pageSize);
 
-
     // 查询我的订单
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
                                                    @Query("user_name") String user_name);
+
+    // 查询消息
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList")
+    Observable<MessageListResponse> queryPageMessageList(@Query("current_page") int current_page,
+                                                         @Query("offset") int pageSize);
 }

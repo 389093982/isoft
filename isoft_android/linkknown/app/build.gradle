@@ -129,6 +129,8 @@ dependencies {
 
     // 文字轮播控件，跑马灯
     implementation 'com.superluo:textbannerview:1.0.5'
+    // 申请权限的库
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
