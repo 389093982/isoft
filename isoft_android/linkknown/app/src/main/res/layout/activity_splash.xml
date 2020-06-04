@@ -63,4 +63,24 @@
             android:textStyle="italic"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/copyRight"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="《用户协议》《隐私政策》和《商业合作》"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/copyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
 </RelativeLayout>
