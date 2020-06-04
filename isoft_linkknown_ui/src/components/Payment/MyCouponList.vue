@@ -11,9 +11,9 @@
         <!--右侧展示券信息-->
         <Col span="22">
           <div style="position: relative;top: 10px">
-            <span @click="click2RefreshCouponList(0)" :class="pattern === 0 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已领取</span>
-            <span @click="click2RefreshCouponList(1)" :class="pattern === 1 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已使用</span>
-            <span @click="click2RefreshCouponList(2)" :class="pattern === 2 ? 'isoft_info_tip2': 'isoft_info_tip'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已过期</span>
+            <span @click="click2RefreshCouponList(0)" :class="pattern === 0 ? 'isoft_tag5': 'isoft_tag2'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已领取</span>
+            <span @click="click2RefreshCouponList(1)" :class="pattern === 1 ? 'isoft_tag5': 'isoft_tag2'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已使用</span>
+            <span @click="click2RefreshCouponList(2)" :class="pattern === 2 ? 'isoft_tag5': 'isoft_tag2'" class="isoft_font12 isoft_mr10 isoft_point_cursor">已过期</span>
             <span style="margin-left: 20px">数量:{{page.totalCount}}</span>
           </div>
           <Row v-for="(coupon, index) in couponDatas" style="margin-top: 20px">
@@ -94,7 +94,7 @@
           </Row>
 
           <!--分页-->
-          <div style="text-align: center;margin-top: 10px">
+          <div style="text-align: center;margin-top: 10px;margin-bottom: 10px">
             <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
           </div>
 

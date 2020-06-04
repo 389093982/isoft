@@ -155,7 +155,7 @@
               'goods_type':'vip',
               'goods_id':result.product_id,
               'goods_desc':result.product_desc,
-              'goods_price':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库
+              'paid_amount':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库
               'goods_original_price':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库   （会员就不设置优惠了，就是原价格）
               'goods_img':'',
               'pay_result':result.pay_result,

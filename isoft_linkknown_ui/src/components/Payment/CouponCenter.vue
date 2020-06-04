@@ -1,36 +1,45 @@
 <template>
-  <div class="isoft_bg_white isoft_mg10 isoft_pd20" style="min-height: 500px">
-    <Row>
-      <Col span="8" v-for="(coupon, index) in coupons" style="margin-bottom: 20px;">
-        <!--通用券-减免-->
-        <Coupon v-if="coupon.coupon_type === 'general'"
-                :activity_id="coupon.activity_id"
-                :coupon_type="coupon.coupon_type"
-                :youhui_type="coupon.youhui_type"
-                :start_date="coupon.start_date"
-                :end_date="coupon.end_date"
-                :coupon_amount="coupon.coupon_amount"
-                :goods_min_amount="coupon.goods_min_amount"
-                :discount_rate="coupon.discount_rate"
-                @receiveCoupon="receiveCoupon">
-        </Coupon>
-        <!--通用券-打折-->
-        <Coupon v-else
-                :activity_id="coupon.activity_id"
-                :coupon_type="coupon.coupon_type"
-                :youhui_type="coupon.youhui_type"
-                :start_date="coupon.start_date"
-                :end_date="coupon.end_date"
-                :coupon_amount="coupon.coupon_amount"
-                :goods_min_amount="coupon.goods_min_amount"
-                :discount_rate="coupon.discount_rate"
-                @receiveCoupon="receiveCoupon">
-        </Coupon>
-      </Col>
-    </Row>
-    <Page :total="total" :page-size="offset" show-total show-sizer
-          :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+  <div class="isoft_bg_white" style="min-height: 600px;">
+    <div v-if="coupons.length>0">
+      <Row>
+        <Col span="8" v-for="(coupon, index) in coupons" style="margin-bottom: 20px;">
+          <!--通用券-减免-->
+          <Coupon v-if="coupon.coupon_type === 'general'"
+                  :activity_id="coupon.activity_id"
+                  :coupon_type="coupon.coupon_type"
+                  :youhui_type="coupon.youhui_type"
+                  :start_date="coupon.start_date"
+                  :end_date="coupon.end_date"
+                  :coupon_amount="coupon.coupon_amount"
+                  :goods_min_amount="coupon.goods_min_amount"
+                  :discount_rate="coupon.discount_rate"
+                  @receiveCoupon="receiveCoupon">
+          </Coupon>
+          <!--通用券-打折-->
+          <Coupon v-else
+                  :activity_id="coupon.activity_id"
+                  :coupon_type="coupon.coupon_type"
+                  :youhui_type="coupon.youhui_type"
+                  :start_date="coupon.start_date"
+                  :end_date="coupon.end_date"
+                  :coupon_amount="coupon.coupon_amount"
+                  :goods_min_amount="coupon.goods_min_amount"
+                  :discount_rate="coupon.discount_rate"
+                  @receiveCoupon="receiveCoupon">
+          </Coupon>
+        </Col>
+      </Row>
+      <Page :total="total" :page-size="offset" show-total show-sizer
+            :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+    </div>
+    <div v-else>
+      <div style="text-align: center;">
+        <div style="position: relative;top: 200px;color: #ff6900;font-size: 20px">
+          暂时没有活动哦...
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
