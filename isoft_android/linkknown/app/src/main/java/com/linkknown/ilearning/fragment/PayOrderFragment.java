@@ -19,6 +19,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.PayOrderDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -43,8 +44,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
 
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
-
-    public boolean mIsRefreshing;
+    private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
     //获取订单数据
     private List<PayOrderResponse.PayOrder> orderList = new ArrayList<PayOrderResponse.PayOrder>();
@@ -52,14 +52,9 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
     @Override
     protected void initView(View mRootView) {
         ButterKnife.bind(this, mRootView);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (mIsRefreshing==false){
-                    initData();
-                }
-            }
-        });
+        swipeRefreshLayoutHelper.bind(getContext(), refreshLayout);
+        swipeRefreshLayoutHelper.initStyle();
+        swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         adapter = new RecyclerView.Adapter() {
             @NonNull
@@ -104,7 +99,6 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
 
     @Override
     protected void initData() {
-        mIsRefreshing = true;
         //网络请求
         loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
     }
@@ -139,22 +133,18 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                             ToastUtil.showText(getContext(),"查不到数据！");
                         }
                         adapter.notifyDataSetChanged();
-                        finishRefreshing();
+                        swipeRefreshLayoutHelper.finishRefreshing();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("searchPayOrders error", e.getMessage());
-                        finishRefreshing();
+                        swipeRefreshLayoutHelper.finishRefreshing();
+
                         ToastUtil.showText(getContext(),"查询失败！");
                     }
                 });
     }
-
-    public void finishRefreshing(){
-        mIsRefreshing = false;
-        refreshLayout.setRefreshing(false);
-    };
 
     @Override
     protected boolean setIsRealTimeRefresh() {

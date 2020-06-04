@@ -47,13 +47,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public ImageView small_headerIcon;
     @BindView(R.id.big_headerIcon)
     public ImageView big_headerIcon;
-//    @BindView(R.id.cat_title)
-//    public TextView cat_title;
-
-    @BindView(R.id.menuAboutLayout)
-    public LinearLayout menuAboutLayout;
-    @BindView(R.id.menuAboutLayoutTextView)
-    public TextView menuAboutLayoutTextView;
 
     //购物车
     @BindView(R.id.menuShoppingCart)
@@ -73,11 +66,19 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.menuPersonalCenterTextView)
     public TextView menuPersonalCenterTextView;
 
+    //关于
+    @BindView(R.id.menuAboutLayout)
+    public LinearLayout menuAboutLayout;
+    @BindView(R.id.menuAboutLayoutTextView)
+    public TextView menuAboutLayoutTextView;
+
+    //检查更新
     @BindView(R.id.menuCheckUpdate)
     public LinearLayout menuCheckUpdate;
     @BindView(R.id.menuCheckUpdateTextView)
     public TextView menuCheckUpdateTextView;
 
+    //设置
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
     @BindView(R.id.menuSettingLayoutTextView)
