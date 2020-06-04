@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,12 +52,36 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;
+    @BindView(R.id.menuAboutLayoutTextView)
+    public TextView menuAboutLayoutTextView;
 
+    //购物车
+    @BindView(R.id.menuShoppingCart)
+    public LinearLayout menuShoppingCart;
+    @BindView(R.id.menuShoppingCartTextView)
+    public TextView menuShoppingCartTextView;
+
+    //我的订单
     @BindView(R.id.menuOrderLayout)
     public LinearLayout menuOrderLayout;
+    @BindView(R.id.menuOrderTextView)
+    public TextView menuOrderTextView;
+
+    //个人中心
+    @BindView(R.id.menuPersonalCenter)
+    public LinearLayout menuPersonalCenter;
+    @BindView(R.id.menuPersonalCenterTextView)
+    public TextView menuPersonalCenterTextView;
+
+    @BindView(R.id.menuCheckUpdate)
+    public LinearLayout menuCheckUpdate;
+    @BindView(R.id.menuCheckUpdateTextView)
+    public TextView menuCheckUpdateTextView;
 
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
+    @BindView(R.id.menuSettingLayoutTextView)
+    public TextView menuSettingLayoutTextView;
 
     private Context mContext;
 
@@ -80,6 +105,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //            StrictMode.setVmPolicy(builder.build());
 //            builder.detectFileUriExposure();
 //        }
+        bindMenuDrawnStart();
 
         initAppBar();
 
@@ -177,4 +203,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+    /**
+     * 菜单前面添加图标
+     */
+    public void bindMenuDrawnStart(){
+        UIUtils.setTextViewDrawbleImg(mContext, menuShoppingCartTextView, R.drawable.ic_shopping_cart, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuOrderTextView, R.drawable.ic_order2, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenterTextView, R.drawable.ic_personal_center, 0, 2, 40, 42);
+
+        UIUtils.setTextViewDrawbleImg(mContext, menuAboutLayoutTextView, R.drawable.ic_about, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuCheckUpdateTextView, R.drawable.ic_check_update, 0, 2, 40, 42);
+
+        UIUtils.setTextViewDrawbleImg(mContext, menuSettingLayoutTextView, R.drawable.ic_setup, 0, 2, 40, 42);
+    }
+
+
 }
