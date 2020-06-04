@@ -140,4 +140,15 @@ public class UIUtils {
         }
     }
 
+    /**
+     * 输入14位时间戳 返回 标准时间 yyyyMMdd hh:mm:ss
+     * @return
+     */
+    public static String formatDate_StandardForm(String timeStamp){
+        String formatDate =  timeStamp.substring(0,4)+"-"+timeStamp.substring(4,6)+"-"+timeStamp.substring(6,8) + " "
+                + timeStamp.substring(8,10)+":"+timeStamp.substring(10,12)+":"+timeStamp.substring(12,14);
+        return formatDate;
+    }
+
+
 }

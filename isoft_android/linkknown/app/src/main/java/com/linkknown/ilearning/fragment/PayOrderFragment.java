@@ -1,10 +1,10 @@
 package com.linkknown.ilearning.fragment;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.PayOrderDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -27,7 +29,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,13 +74,20 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                 ViewHolder viewHolder = (ViewHolder) holder;
                 UIUtils.setImage(getContext(),viewHolder.goodsImg,orderList.get(position).getGoods_img());
                 viewHolder.goodsDesc.setText(orderList.get(position).getGoods_desc());
-                viewHolder.goodsPrice.setText("￥"+orderList.get(position).getGoods_price()+"");
+                viewHolder.paidAmount.setText("￥"+orderList.get(position).getPaid_amount()+"");
                 String transTime = orderList.get(position).getTrans_time();
-                viewHolder.transTime.setText(transTime.substring(0,4)+"-"+transTime.substring(4,6)+"-"+transTime.substring(6,8) + " " + transTime.substring(8,10)+":"+transTime.substring(10,12)+":"+transTime.substring(12,14));
+                viewHolder.transTime.setText(UIUtils.formatDate_StandardForm(transTime));
                 viewHolder.queryDeatilBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtil.showText(getContext(),orderList.get(position).getOrder_id());
+                        UIUtils.gotoActivity(getContext(), PayOrderDetailActivity.class, new UIUtils.IntentParamWrapper() {
+                            @Override
+                            public Intent wrapper(Intent intent) {
+                                Gson gson = new Gson();
+                                intent.putExtra("payOrderDetail",orderList.get(position));
+                                return intent;
+                            }
+                        });
                     }
                 });
             }
@@ -162,7 +170,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView goodsImg;
         TextView goodsDesc;
-        TextView goodsPrice;
+        TextView paidAmount;
         TextView transTime;
         TextView queryDeatilBtn;
 
@@ -171,7 +179,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
             super(itemView);
             goodsImg = itemView.findViewById(R.id.goodsImg);
             goodsDesc = itemView.findViewById(R.id.goodsDesc);
-            goodsPrice = itemView.findViewById(R.id.goodsPrice);
+            paidAmount = itemView.findViewById(R.id.paidAmount);
             transTime = itemView.findViewById(R.id.transTime);
             queryDeatilBtn = itemView.findViewById(R.id.queryDeatilBtn);
         }
