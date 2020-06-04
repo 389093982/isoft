@@ -3,6 +3,7 @@ package com.linkknown.ilearning.fragment;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,8 +18,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -52,6 +55,9 @@ public class HomeFragment extends BaseLazyLoadFragment {
     // 名人名言
     @BindView(R.id.mingyanTextbanner)
     TextBannerView mingyanTextbanner;
+    // 铃铛(消息)
+    @BindView(R.id.lingdang)
+    ImageView lingdang;
 
     // 工具栏中的用户布局
     @BindView(R.id.toolBarLoginLayout)
@@ -72,8 +78,15 @@ public class HomeFragment extends BaseLazyLoadFragment {
         initFragment();
         // 初始化名人名言
         initMingYan();
+        // 初始化铃铛(消息)
+        initLingDang();
         // 订阅登录信息,然后显示用户名和头像
         observeLogin();
+    }
+
+    private void initLingDang () {
+        lingdang.setAnimation(AnimationUtil.getShakeAnimation(3));
+        lingdang.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
     }
 
     private void initMingYan() {

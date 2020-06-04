@@ -69,7 +69,7 @@
                         android:textSize="16sp"/>
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical">
@@ -77,13 +77,24 @@
                     <com.superluo.textbannerlibrary.TextBannerView
                         android:id="@+id/mingyanTextbanner"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
+                        android:layout_marginEnd="40dp"
                         app:setAnimDuration="1000"
                         app:setGravity="center"
                         app:setTextSize="12sp"
                         app:setTextColor="#fff"/>
-                </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/lingdang"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_lingdang"
+                        android:padding="4dp"
+                        android:layout_marginEnd="10dp"
+                        android:tint="@color/white"/>
+                </RelativeLayout>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
