@@ -2,7 +2,6 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -25,17 +22,12 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseOrderActivity;
+import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +38,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public ImageView iv_coupon;
     @BindView(R.id.iv_order)
     public ImageView iv_order;
+    @BindView(R.id.iv_message)
+    public ImageView iv_message;
 
     // 登录用户头像和用户名
     @BindView(R.id.small_headerIcon)
@@ -104,6 +98,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // 点击调往对应页面
         iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseOrderActivity.class));
+        iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
     }
 
     private void initLoginInfo () {
