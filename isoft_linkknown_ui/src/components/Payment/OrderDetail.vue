@@ -82,7 +82,7 @@
           },
           {
             title: '支付金额',
-            key: 'goods_price',
+            key: 'paid_amount',
             width:130
           },
           {

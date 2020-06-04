@@ -43,13 +43,13 @@
                   </div>
                 </Row>
               </Col>
-              <!--商品价格-->
+              <!--支付金额-->
               <Col span="5" style="color: #ff6900;">
                 <Row style="margin-top: 10px">&nbsp;</Row>
                 <Row>
                   <div style="margin-top: 10px">
                     <Icon type="logo-yen" style="font-size: 12px"/>
-                    <span style="font-size: 20px">{{goods.goods_price}}</span>
+                    <span style="font-size: 20px">{{goods.paid_amount}}</span>
                   </div>
                 </Row>
                 <Row style="margin-top: 10px">
@@ -102,7 +102,7 @@
         goods_type:'',
         goods_id:'',
         goods_desc:'',
-        goods_price:'',
+        paid_amount:'',
         pay_result:'SUCCESS',
       }
     },
@@ -116,7 +116,7 @@
           'goods_type':this.goods_type,
           'goods_id':this.goods_id,
           'goods_desc':this.goods_desc,
-          'goods_price':this.goods_price,
+          'paid_amount':this.paid_amount,
           'pay_result':this.pay_result,
           'currentPage':this.page.currentPage,
           'offset':this.page.offset,

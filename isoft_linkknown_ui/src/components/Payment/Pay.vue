@@ -43,7 +43,7 @@
                 </Row>
                 <br>
                 <Row>
-                  <a style="color: #ff6600">支付金额: <Icon type="logo-yen" /></a><a style="font-size: 20px ;color: #ff6900">{{goods_price}}</a>
+                  <a style="color: #ff6600">支付金额: <Icon type="logo-yen" /></a><a style="font-size: 20px ;color: #ff6900">{{paid_amount}}</a>
                 </Row>
                 <br>
                 <Row>
@@ -70,7 +70,7 @@
           </div>
           <div style="margin-left: 150px">
             <div v-if="codeUrl">
-              扫码支付金额：<Icon type="logo-yen" />{{goods_price}}
+              扫码支付金额：<Icon type="logo-yen" />{{paid_amount}}
               <br>
               <vue-qr :logoSrc="imageUrl" :text="codeUrl" :size="180"></vue-qr>
             </div>
@@ -169,8 +169,8 @@
         goods_type:'',
         goods_id:'',
         goods_desc:'',
-        goods_price:'',
-        goods_price_backup:'',
+        paid_amount:'',
+        paid_amount_backup:'',
         goods_img:'',
         //可用优惠券
         coupons:'',
@@ -216,8 +216,8 @@
         if (result.status === "SUCCESS") {
           if (result.course.isCharge === 'charge') {
             this.goods_desc = result.course.course_name;
-            this.goods_price = result.course.price;
-            this.goods_price_backup = result.course.price; //原价格做个备份
+            this.paid_amount = result.course.price;
+            this.paid_amount_backup = result.course.price; //原价格做个备份
             this.goods_img = result.course.small_image;
             this.showPage = true;
             this.searchCourseAvailableCoupon();
@@ -231,7 +231,7 @@
             'userName':this.loginUserName,
             'target_type':'course',
             'target_id':this.goods_id,
-            'goods_price':this.goods_price,
+            'paid_amount':this.paid_amount,
             'today':GetToday_yyyyMMdd(),
           };
           const result = await SearchCouponForPay(params);
@@ -248,12 +248,12 @@
             this.currentSelectCoupon = this.coupons[index];
             this.$Message.info('已选择');
             // 计算金额前先将金额置为初始值
-            this.goods_price = this.goods_price_backup;
+            this.paid_amount = this.paid_amount_backup;
             //金额计算...
             if (this.currentSelectCoupon.youhui_type === 'reduce') {
-              this.goods_price = (this.goods_price - this.currentSelectCoupon.coupon_amount).toFixed(2);
+              this.paid_amount = (this.paid_amount - this.currentSelectCoupon.coupon_amount).toFixed(2);
             }else if (this.currentSelectCoupon.youhui_type === 'discount') {
-              this.goods_price = (this.goods_price * this.currentSelectCoupon.discount_rate).toFixed(2);
+              this.paid_amount = (this.paid_amount * this.currentSelectCoupon.discount_rate).toFixed(2);
             }
           }
         }else{
@@ -269,7 +269,7 @@
             this.currentSelectCoupon = '';
             this.$Message.info('已取消');
             // 取消就将金额置为初始值
-            this.goods_price = this.goods_price_backup;
+            this.paid_amount = this.paid_amount_backup;
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
@@ -324,7 +324,7 @@
                 let ProductId = _this.goods_id.toString();
                 let ProductDesc = _this.goods_desc;
                 //对接微信支付，要求是分为单位，这个地方用的是int才行
-                let TransAmount = parseInt((_this.goods_price * 100).toFixed(0));
+                let TransAmount = parseInt((_this.paid_amount * 100).toFixed(0));
                 let TransCurrCode = 'CNY';
                 let OrderParams = {
                   'user_name':_this.loginUserName,
@@ -374,8 +374,8 @@
               'goods_type':'course_theme_type',
               'goods_id':result.product_id,
               'goods_desc':result.product_desc,
-              'goods_price':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库
-              'goods_original_price':this.goods_price_backup,
+              'paid_amount':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库
+              'goods_original_price':this.paid_amount_backup,
               'activity_type':this.currentSelectCoupon===''?'':'coupon',
               'activity_type_bind_id':this.currentSelectCoupon===''?'':this.currentSelectCoupon.coupon_id,
               'goods_img':this.goods_img,

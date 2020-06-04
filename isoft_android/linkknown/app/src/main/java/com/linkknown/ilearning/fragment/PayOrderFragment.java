@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,16 +17,17 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -61,16 +64,24 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
             @NonNull
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View item = LayoutInflater.from(getContext()).inflate(R.layout.item_course_order , parent ,false);
+                View item = LayoutInflater.from(getContext()).inflate(R.layout.item_pay_order_list, parent ,false);
                 return new ViewHolder(item);
             }
 
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                 ViewHolder viewHolder = (ViewHolder) holder;
-                viewHolder.order_id.setText(orderList.get(position).getOrder_id());
-//                viewHolder.goodsType.setText(orderList.get(position).getGoodsType());
-//                viewHolder.goodsPrice.setText(orderList.get(position).getGoodsPrice()+"");
+                UIUtils.setImage(getContext(),viewHolder.goodsImg,orderList.get(position).getGoods_img());
+                viewHolder.goodsDesc.setText(orderList.get(position).getGoods_desc());
+                viewHolder.goodsPrice.setText("￥"+orderList.get(position).getGoods_price()+"");
+                String transTime = orderList.get(position).getTrans_time();
+                viewHolder.transTime.setText(transTime.substring(0,4)+"-"+transTime.substring(4,6)+"-"+transTime.substring(6,8) + " " + transTime.substring(8,10)+":"+transTime.substring(10,12)+":"+transTime.substring(12,14));
+                viewHolder.queryDeatilBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtil.showText(getContext(),orderList.get(position).getOrder_id());
+                    }
+                });
             }
 
             @Override
@@ -110,7 +121,6 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                                     orderList.clear();
                                 }
                                 orderList.addAll(payOrderResponse.getOrders());
-                                ToastUtil.showText(getContext(),"刷新成功！");
                             }else{
                                 orderList.clear();
                                 ToastUtil.showText(getContext(),"查不到数据！");
@@ -150,33 +160,20 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView order_id;
-        TextView transTime;
-        TextView userName;
-        TextView goodsType;
-        TextView goodsId;
+        ImageView goodsImg;
         TextView goodsDesc;
         TextView goodsPrice;
-        TextView goodsImg;
-        TextView payResult;
-        TextView goodsOriginalPrice;
-        TextView activityType;
-        TextView activityTypeBindId;
+        TextView transTime;
+        TextView queryDeatilBtn;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
-            order_id = itemView.findViewById(R.id.order_id);
-//            transTime = itemView.findViewById(R.id.transTime);
-//            userName = itemView.findViewById(R.id.userName);
-//            goodsType = itemView.findViewById(R.id.goodsType);
-//            goodsId = itemView.findViewById(R.id.goodsId);
-//            goodsDesc = itemView.findViewById(R.id.goodsDesc);
-//            goodsPrice = itemView.findViewById(R.id.goodsPrice);
-//            goodsImg = itemView.findViewById(R.id.goodsImg);
-//            payResult = itemView.findViewById(R.id.payResult);
-//            goodsOriginalPrice = itemView.findViewById(R.id.goodsOriginalPrice);
-//            activityType = itemView.findViewById(R.id.activityType);
-//            activityTypeBindId = itemView.findViewById(R.id.activityTypeBindId);
+            goodsImg = itemView.findViewById(R.id.goodsImg);
+            goodsDesc = itemView.findViewById(R.id.goodsDesc);
+            goodsPrice = itemView.findViewById(R.id.goodsPrice);
+            transTime = itemView.findViewById(R.id.transTime);
+            queryDeatilBtn = itemView.findViewById(R.id.queryDeatilBtn);
         }
     }
 
