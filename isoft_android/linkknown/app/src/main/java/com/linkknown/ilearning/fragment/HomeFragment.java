@@ -3,6 +3,7 @@ package com.linkknown.ilearning.fragment;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -83,6 +85,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
     }
 
     private void initLingDang () {
+        lingdang.setAnimation(AnimationUtil.getShakeAnimation(3));
         lingdang.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
     }
 
