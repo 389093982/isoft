@@ -8,12 +8,12 @@
     <LinearLayout style="@style/wrap_layout">
         <!-- 上圆角-->
         <LinearLayout
-            android:id="@+id/menu_cart"
+            android:id="@+id/menuShoppingCart"
             style="@style/top_layout">
-            top_layout
             <TextView
+                android:id="@+id/menuShoppingCartTextView"
                 style="@style/usertext"
-                android:text="购物车"/>
+                android:text="  购物车"/>
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
@@ -26,8 +26,9 @@
             android:id="@+id/menuOrderLayout"
             style="@style/mid_layout">
             <TextView
+                android:id="@+id/menuOrderTextView"
                 style="@style/usertext"
-                android:text="我的订单" />
+                android:text="  我的订单" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
@@ -35,12 +36,13 @@
 
         <!-- 下圆角-->
         <LinearLayout
-            android:id="@+id/menu_user"
+            android:id="@+id/menuPersonalCenter"
             style="@style/bottom_layout">
 
             <TextView
+                android:id="@+id/menuPersonalCenterTextView"
                 style="@style/usertext"
-                android:text="个人中心" />
+                android:text="  个人中心" />
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
@@ -53,11 +55,12 @@
 
         <LinearLayout
             android:id="@+id/menuAboutLayout"
-            style="@style/single_layout">
+            style="@style/top_layout">
 
             <TextView
+                android:id="@+id/menuAboutLayoutTextView"
                 style="@style/usertext"
-                android:text="@string/about"/>
+                android:text="  关于"/>
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
@@ -65,12 +68,13 @@
         <View style="@style/bg_line"/>
         <!-- 下圆角-->
         <LinearLayout
-            android:id="@+id/menu_update"
+            android:id="@+id/menuCheckUpdate"
             style="@style/bottom_layout">
 
             <TextView
+                android:id="@+id/menuCheckUpdateTextView"
                 style="@style/usertext"
-                android:text="检查更新"/>
+                android:text="  检查更新"/>
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
@@ -81,12 +85,12 @@
 
         <LinearLayout
             android:id="@+id/menuSettingLayout"
-            style="@style/single_layout"
-            >
+            style="@style/single_layout">
 
             <TextView
+                android:id="@+id/menuSettingLayoutTextView"
                 style="@style/usertext"
-                android:text="设置"/>
+                android:text="  设置"/>
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
