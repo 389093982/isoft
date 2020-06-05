@@ -31,6 +31,10 @@ public class Constants {
     public static final String USER_SHARED_PREFERENCES_ROLE_NAME = "USER_SHARED_PREFERENCES_ROLE_NAME";
     public static final String USER_SHARED_PREFERENCES_EXPIRED_TIME = "USER_SHARED_PREFERENCES_EXPIRED_TIME";
 
+    // 搜索历史
+    public static final String SEARCH_HISTORY_SHARED_PREFERENCES = "SEARCH_HISTORY";
+    public static final String SEARCH_HISTORY_SHARED_PREFERENCES_KEYWORDS = "SEARCH_HISTORY__SHARED_PREFERENCES_KEYWORDS";
+
     public static final String USER_NAME = "USER_NAME";
 
     public static final int NEWS_CHANNEL_ENABLE = 1;
@@ -50,5 +54,4 @@ public class Constants {
     public static final String PLACEMENT_HOT_COURSE_TYPE_CAROUSEL = "placement_host_course_type_carousel";
 
     public static final List<String> COURSE_SEARCH_HINT_LIST = Arrays.asList("搜索课程名称或者视频关键词进行搜索", "学习如逆水行舟不进则退", "书读百遍其义自见", "每日坚持学习做最好的自己");
-
 }

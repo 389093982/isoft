@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CourseFilterFragment;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.KeyBoardUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -111,6 +112,10 @@ public class CourseSearchActivity extends BaseActivity {
 //                    showSearchAnim();
 //                    clearData();
                     search = s;
+
+                    // 记录搜索历史
+                    CommonUtil.recordSearchHistory(mContext, search);
+
                     refreshFragment();
                 });
 

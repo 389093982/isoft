@@ -21,6 +21,8 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.ElementResponse;
+import com.linkknown.ilearning.popup.SearchHistoryPopupWindow;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -48,6 +50,8 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     public ImageView searchEditTextClear;
     @BindView(R.id.searchBtn)
     public ImageView searchBtn;
+    @BindView(R.id.searchHistory)
+    public TextView searchHistory;
 
     private String search;
     private Disposable searchTextViewDisposable;
@@ -69,17 +73,36 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     private ElementResponse element_response;
     private Handler handler = new Handler();
 
+    private SearchHistoryPopupWindow searchHistoryPopupWindow;
+
     @Override
     protected void initView(View mRootView) {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
 
         initSearchView();
+        initHistoryView();
         // 左侧分类
         initLeftClassfiyView();
         // 右侧搜索结果，一行只显示一个
         courseFilterFragment = new CourseFilterFragment(1);
         getChildFragmentManager().beginTransaction().add(R.id.courseFilterFragment, courseFilterFragment).commit();
+    }
+
+    private void initHistoryView () {
+        searchHistory.setOnClickListener(v -> {
+            if (searchHistoryPopupWindow == null) {
+                // 创建 popupwindow 并注册事件监听
+                searchHistoryPopupWindow = new SearchHistoryPopupWindow(getActivity());
+                searchHistoryPopupWindow.registerListener(text -> {
+                    searchTextView.setText(text);
+                    search = text;
+                    courseFilterFragment.refreshFragment(search, "");
+                });
+            }
+            // 显示 popupwindow
+            searchHistoryPopupWindow.show();
+        });
     }
 
     private void initSearchView () {
@@ -107,6 +130,10 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
 //                    showSearchAnim();
 //                    clearData();
                     search = s;
+
+                    // 记录搜索历史
+                    CommonUtil.recordSearchHistory(mContext, search);
+
                     courseFilterFragment.refreshFragment(search, "");
                 });
 
