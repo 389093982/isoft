@@ -32,12 +32,12 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
      * 在此方法中设置item数据
      */
     @Override
-    protected void convert(@NotNull BaseViewHolder helper, @NotNull CourseMetaResponse.CourseMeta courseMeta) {
-        helper.setText(R.id.courseName, courseMeta.getCourse_name());
-        helper.setText(R.id.watchNumberText, courseMeta.getWatch_number() + "");
-        helper.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
+    protected void convert(@NotNull BaseViewHolder viewHolder, @NotNull CourseMetaResponse.CourseMeta courseMeta) {
+        viewHolder.setText(R.id.courseName, courseMeta.getCourse_name());
+        viewHolder.setText(R.id.watchNumberText, courseMeta.getWatch_number() + "");
+        viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
 
-        UIUtils.setImage(mContext,  helper.findView(R.id.courseImage), courseMeta.getSmall_image());
+        UIUtils.setImage(mContext,  viewHolder.findView(R.id.courseImage), courseMeta.getSmall_image());
 //
 //        viewHolder.courseImage.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
 //            intent.putExtra("course_id", courseMeta.getId());
@@ -45,10 +45,10 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
 //        }));
 
         if (StringUtils.isNotEmpty(courseMeta.getIsCharge())) {
-            helper.setVisible(R.id.isCharge, true);
-            helper.setText(R.id.isCharge, StringUtils.equals(courseMeta.getIsCharge(), "charge") ? "付费课程" : "免费");
+            viewHolder.setVisible(R.id.isCharge, true);
+            viewHolder.setText(R.id.isCharge, StringUtils.equals(courseMeta.getIsCharge(), "charge") ? "付费课程" : "免费");
         } else {
-            helper.setVisible(R.id.isCharge, false);
+            viewHolder.setVisible(R.id.isCharge, false);
         }
 
     }
