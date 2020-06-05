@@ -238,10 +238,12 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
             for (int index = 0; index < levelOneClassifyElements.size(); index ++) {
                 if (index == position) {
                     TextView textView = (TextView)view;
+                    textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.white));
                     textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
                 } else {
                     TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
                     if (textView != null) {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorRecyclerBg));
                         textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorGray));
                     }
                 }
@@ -270,10 +272,12 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
             for (int index = 0; index < levelTwoClassifyElements.size(); index ++) {
                 if (index == position) {
                     TextView textView = (TextView)view;
+                    textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.white));
                     textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
                 } else {
                     TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
                     if (textView != null) {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorRecyclerBg));
                         textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorGray));
                     }
                 }

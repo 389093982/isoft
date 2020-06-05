@@ -42,7 +42,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="3"
                 android:background="@color/colorRecyclerBg"
-                android:padding="5dp"
                 android:overScrollMode="never"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -53,7 +52,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="3"
                 android:background="@color/colorRecyclerBg"
-                android:padding="5dp"
                 android:overScrollMode="never"/>
 
             <!--右侧商品列表-->
