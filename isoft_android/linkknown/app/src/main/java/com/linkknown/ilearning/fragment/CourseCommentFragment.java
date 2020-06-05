@@ -30,9 +30,11 @@ import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DisplayUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,7 +234,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private void bindEditCommentEvent (Dialog dialog) {
         dialog.getWindow().findViewById(R.id.commentSubmitBtn).setOnClickListener(v -> {
             TextView textView = dialog.getWindow().findViewById(R.id.commentText);
-            String content = textView.getText().toString();
+            String content = StringUtils.trim(textView.getText().toString());
+            if (StringUtils.isEmpty(content)) {
+                return;
+            }
             int theme_pk = course_id;
             String theme_type = "course_theme_type";
             String comment_type = "comment";
