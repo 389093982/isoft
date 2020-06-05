@@ -2,7 +2,13 @@
 <resources>
     <color name="colorPrimary">#F61302</color>
     <color name="colorPrimaryDark">#F61302</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">@color/orange</color>
+
+    <!-- 基本颜色 -->
+    <color name="purple">#7A71E9</color>
+    <color name="orange">#F16755</color>
+    <color name="pink">#F06CA7</color>
+    <color name="brown">#847534</color>
 
     <color name="colorGray">#657180</color>
     <color name="colorWhite">#FFFFFF</color>
