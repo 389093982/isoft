@@ -28,6 +28,7 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -41,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -48,6 +50,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     private Context mContext;
     private Handler handler = new Handler();
+    private BottomQuickEidtDialog editCommentDialog;
 
     private RecyclerView commentRecyclerView;
 
@@ -217,59 +220,43 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     }
 
     private void showEditCommentDialog () {
-        Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_content_comment, null);
-        bottomDialog.setContentView(contentView);
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 16f);
-        params.bottomMargin = DisplayUtil.dp2px(mContext, 8f);
-        contentView.setLayoutParams(params);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
-
-        bindEditCommentEvent(bottomDialog);
+        editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
+            handleSubmitComment(text);
+        });
     }
 
-    private void bindEditCommentEvent (Dialog dialog) {
-        dialog.getWindow().findViewById(R.id.commentSubmitBtn).setOnClickListener(v -> {
-            TextView textView = dialog.getWindow().findViewById(R.id.commentText);
-            String content = StringUtils.trim(textView.getText().toString());
-            if (StringUtils.isEmpty(content)) {
-                return;
-            }
-            int theme_pk = course_id;
-            String theme_type = "course_theme_type";
-            String comment_type = "comment";
-            int parent_id = 0;                          // 一级评论
-            int org_parent_id = 0;
-            String refer_user_name = course_author;     // 被评论人
-            LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
-                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<EditCommentResponse>() {
+    private void handleSubmitComment (String content) {
+        int theme_pk = course_id;
+        String theme_type = "course_theme_type";
+        String comment_type = "comment";
+        int parent_id = 0;                          // 一级评论
+        int org_parent_id = 0;
+        String refer_user_name = course_author;     // 被评论人
+        LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<EditCommentResponse>() {
 
-                        @Override
-                        public void onNext(EditCommentResponse editCommentResponse) {
-                            if (editCommentResponse.isSuccess()) {
-                                // 对话框隐藏
-                                dialog.dismiss();
-                                // 重新加载数据
-                                initData();
-                            } else {
-                                Log.e("onNext =>", "系统异常,请联系管理员~");
-                                ToastUtil.showText(mContext, "系统异常,请联系管理员~");
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("onError =>", e.getMessage());
+                    @Override
+                    public void onNext(EditCommentResponse editCommentResponse) {
+                        if (editCommentResponse.isSuccess()) {
+                            // 对话框隐藏
+                            editCommentDialog.dismiss();
+                            // 重新加载数据
+                            initData();
+                        } else {
+                            Log.e("onNext =>", "系统异常,请联系管理员~");
                             ToastUtil.showText(mContext, "系统异常,请联系管理员~");
                         }
-                    });
+                    }
 
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                    }
+                });
+
     }
 
     private void showMoreDialog() {
