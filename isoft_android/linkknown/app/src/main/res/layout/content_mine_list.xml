@@ -34,6 +34,19 @@
 
         <View style="@style/bg_line"/>
 
+        <!-- 无圆角-->
+        <LinearLayout
+            android:id="@+id/menuAdviseLayout"
+            style="@style/mid_layout">
+            <TextView
+                android:id="@+id/menuAdviseTextView"
+                style="@style/usertext"
+                android:text="  我要吐槽" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+
+        <View style="@style/bg_line"/>
+
         <!-- 下圆角-->
         <LinearLayout
             android:id="@+id/menuPersonalCenter"
