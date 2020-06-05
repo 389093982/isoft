@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AdviseActivity"></activity>
+        <activity android:name=".activity.CouponReceiveCenterActivity"></activity>
+        <activity android:name=".activity.AdviseActivity" />
         <activity android:name=".activity.HuodongActivity" />
         <activity android:name=".activity.MessageInfoActivity" />
         <activity android:name=".activity.PayOrderDetailActivity" />

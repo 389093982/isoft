@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
+import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.adapter.HomePageGridViewAdapter;
@@ -119,7 +120,7 @@ public class TuijianFragment extends BaseLazyLoadFragment {
         banner.setOnBannerListener(position -> {
             switch (position) {
                 case 0:
-                    UIUtils.gotoActivity(mContext, CouponCenterActivity.class);
+                    UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class);
                     break;
                 case 1:
                     UIUtils.gotoActivity(mContext, HuodongActivity.class);

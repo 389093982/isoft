@@ -143,11 +143,16 @@ public interface LinkKnownApi {
     Observable<FavoriteCountResponse> queryFavoriteCount(@Query("favorite_id") int favorite_id,
                                                          @Query("favorite_type") String favorite_type);
 
-    // 查询收藏总人数
+    // 查询个人优惠券信息
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList")
     Observable<CouponListResponse> queryPersonalCouponList(@Query("isExpired") String isExpired,
                                                            @Query("isUsed") String isUsed,
                                                            @Query("current_page") int current_page,
+                                                           @Query("offset") int pageSize);
+
+    // 查询领券中心分页优惠券信息
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryCouponCenterList")
+    Observable<CouponListResponse> queryCouponCenterList(@Query("current_page") int current_page,
                                                            @Query("offset") int pageSize);
 
     // 查询我的订单
