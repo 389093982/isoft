@@ -14,4 +14,8 @@
         <!--扩散延迟间隔-->
         <attr name="spread_delay_milliseconds" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="loading_color" format="color"/>
+    </declare-styleable>
 </resources>

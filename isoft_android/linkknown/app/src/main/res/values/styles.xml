@@ -144,4 +144,10 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="loading_color">@color/colorAccent</item>
+    </style>
 </resources>

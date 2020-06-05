@@ -15,6 +15,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CouponReceiveCenterAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.fragment.dialog.WaitingDialog;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
@@ -34,7 +35,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CouponReceiveCenterActivity extends BaseActivity {
 
-    private Context mContext;
+    private WaitingDialog waitingDialog;
+
+   private Context mContext;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -63,6 +66,7 @@ public class CouponReceiveCenterActivity extends BaseActivity {
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
+        waitingDialog = new WaitingDialog();
         initView();
 
         initData();
@@ -90,6 +94,8 @@ public class CouponReceiveCenterActivity extends BaseActivity {
     }
 
     private void receiveCoupon(String activity_id) {
+        waitingDialog.showDialog(this);
+
         LinkKnownApiFactory.getLinkKnownApi().receiveCoupon(activity_id)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -102,11 +108,13 @@ public class CouponReceiveCenterActivity extends BaseActivity {
                         } else {
                             ToastUtil.showText(mContext, baseResponse.getErrorMsg());
                         }
+                        waitingDialog.dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         ToastUtil.showText(mContext, "领取失败！");
+                        waitingDialog.dismissDialog();
                     }
                 });
     }
