@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
+import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
 import com.linkknown.ilearning.activity.CourseClassifyActivity;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
@@ -67,7 +68,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
         mData.add(new Item("畅享图书", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
         mData.add(new Item("锦鲤活动", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
-        mData.add(new Item("领券中心", R.drawable.item_space_zhaomu, CouponCenterActivity.class));
+        mData.add(new Item("领券中心", R.drawable.item_space_zhaomu, CouponReceiveCenterActivity.class));
         mData.add(new Item("个人中心", R.drawable.item_space_zhaomu, UserDetailActivity.class));
 
 

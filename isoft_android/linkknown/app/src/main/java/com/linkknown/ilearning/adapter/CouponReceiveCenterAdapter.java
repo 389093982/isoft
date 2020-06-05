@@ -22,10 +22,12 @@ import java.util.List;
 public class CouponReceiveCenterAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
+    private ListenerCallback listener;
 
-    public CouponReceiveCenterAdapter(Context mContext, List<CouponListResponse.Coupon> couponList) {
+    public CouponReceiveCenterAdapter(Context mContext, List<CouponListResponse.Coupon> couponList, ListenerCallback listener) {
         super(R.layout.item_coupon, couponList);
         this.mContext = mContext;
+        this.listener = listener;
     }
 
     @Override
@@ -58,8 +60,15 @@ public class CouponReceiveCenterAdapter extends BaseQuickAdapter<CouponListRespo
 
         TextView submitBtnView = viewHolder.findView(R.id.submitBtnView);
         ImageView submitBgView = viewHolder.findView(R.id.submitBgView);
-        submitBtnView.setText("立即领取");
+        submitBtnView.setText("去领取");
         matrix.setSaturation(1);
         submitBgView.setColorFilter(new ColorMatrixColorFilter(matrix));
+
+        // 注册点击事件
+        submitBgView.setOnClickListener(v -> listener.onClickReciveCoupon(coupon.getActivity_id()));
+    }
+
+    public static interface ListenerCallback {
+        void onClickReciveCoupon(String activity_id);
     }
 };

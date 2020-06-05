@@ -16,9 +16,11 @@ import com.linkknown.ilearning.adapter.CouponReceiveCenterAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -73,7 +75,7 @@ public class CouponReceiveCenterActivity extends BaseActivity {
     private void initView() {
         initToolBar(toolbar, true, "领券中心");
 
-        baseQuickAdapter =  new CouponReceiveCenterAdapter(mContext, couponList);
+        baseQuickAdapter =  new CouponReceiveCenterAdapter(mContext, couponList, activity_id -> receiveCoupon(activity_id));
 
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
@@ -85,6 +87,28 @@ public class CouponReceiveCenterActivity extends BaseActivity {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
+    }
+
+    private void receiveCoupon(String activity_id) {
+        LinkKnownApiFactory.getLinkKnownApi().receiveCoupon(activity_id)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            ToastUtil.showText(mContext, "领取成功！");
+                        } else {
+                            ToastUtil.showText(mContext, baseResponse.getErrorMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.showText(mContext, "领取失败！");
+                    }
+                });
     }
 
     private void loadPageData(int current_page, int pageSize) {

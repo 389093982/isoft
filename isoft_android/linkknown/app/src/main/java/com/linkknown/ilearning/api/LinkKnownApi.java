@@ -155,6 +155,9 @@ public interface LinkKnownApi {
     Observable<CouponListResponse> queryCouponCenterList(@Query("current_page") int current_page,
                                                            @Query("offset") int pageSize);
 
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/ReceiveCoupon")
+    Observable<BaseResponse> receiveCoupon(@Query("activity_id") String activity_id);
+
     // 查询我的订单
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
