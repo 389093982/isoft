@@ -13,4 +13,16 @@ public class StringUtilEx {
         }
         return "";
     }
+
+    public static boolean isAllNotEmpty (String ... strs) {
+        if (strs == null || strs.length == 0){
+            return false;
+        }
+        for (String str : strs){
+            if (StringUtils.isEmpty(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

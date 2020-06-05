@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.CheckParamUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -28,6 +33,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RegistActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,7 +60,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     // 验证码输入框
     @BindView(R.id.verifyCode)
     public TextView verifyCode;
-    // 生产验证码 tip
+    // 生成验证码 tip
     @BindView(R.id.createVerifyCodeTip)
     public TextView createVerifyCodeTip;
 
@@ -61,26 +71,10 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         mContext = this;
         ButterKnife.bind(this);
 
-        init();
-
-        bindData();
+        initView();
     }
 
-    private void bindData () {
-        LiveEventBus.get("registResponse", RegistResponse.class).observe(this, registResponse -> {
-            if (registResponse.getErrorMsg() != null) {
-                ToastUtil.showText(getApplicationContext(), registResponse.getErrorMsg());
-            } else {
-                ToastUtil.showText(mContext, "注册成功！");
-                // 记住账号
-                LoginUtil.memoryAccount(mContext, userName.getText().toString(), passwd.getText().toString(), null);
-                // 调往登录页面
-                UIUtils.gotoActivity(mContext, LoginActivity.class);
-            }
-        });
-    }
-
-    private void init() {
+    private void initView() {
         // 禁用生成验证码
         createVerifyCodeTip.setEnabled(false);
         back.setOnClickListener(this);
@@ -117,6 +111,23 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    // 只要有用户名、密码、确认密码、验证码一个发生改变就触发
+    // 校验成功则输入框可点击
+    @OnTextChanged({R.id.userName, R.id.passwd, R.id.rePasswd, R.id.verifyCode})
+    public void onTextChanged() {
+        String _userName = StringUtils.trim(userName.getText().toString());
+        String _verifyCode = StringUtils.trim(verifyCode.getText().toString());
+        String _passwd = StringUtils.trim(passwd.getText().toString());
+        String _rePasswd = StringUtils.trim(rePasswd.getText().toString());
+
+        // 简单的条件判断: 用户名和密码不能为空.
+        if (StringUtilEx.isAllNotEmpty(_userName, _passwd, _rePasswd, _verifyCode) && StringUtils.equals(_passwd, _rePasswd)) {
+            registBtn.setEnabled(true);
+        } else {
+            registBtn.setEnabled(false);
+        }
     }
 
     @Override
@@ -182,8 +193,35 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         if (!_passwd.equals(_rePasswd)) {
             rePasswd.setError("两次密码输入不一致！");
         } else {
-            UserService.regist(this, _userName, _passwd, "小猫小狗", _verifyCode, "linkknown");
+            regist(_userName, _passwd, "小猫小狗", _verifyCode, "linkknown");
         }
+    }
+
+    public void regist (String username, String passwd, String nickname, String verifyCode, String third_user_type) {
+        LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, verifyCode, third_user_type)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<RegistResponse>() {
+                    @Override
+                    public void onNext(RegistResponse registResponse) {
+                        if (registResponse.isSuccess()) {
+                            ToastUtil.showText(mContext, "注册成功！");
+                            // 记住账号
+                            LoginUtil.memoryAccount(mContext, userName.getText().toString(), passwd, null);
+                            // 调往登录页面
+                            UIUtils.gotoActivity(mContext, LoginActivity.class);
+                        } else {
+                            Log.e("onNext =>", "regist failed！" + registResponse.getErrorMsg());
+                            ToastUtil.showText(mContext, registResponse.getErrorMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, mContext.getResources().getString(R.string.regist_failed));
+                    }
+                });
     }
 
     public void onSignupFailed(String message) {

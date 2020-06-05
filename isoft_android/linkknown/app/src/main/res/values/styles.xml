@@ -137,4 +137,11 @@
         <!-- 设置背景模糊的透明度-->
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
+
+    <style name="userInfoButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
