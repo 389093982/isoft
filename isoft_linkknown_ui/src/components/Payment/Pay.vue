@@ -415,8 +415,8 @@
       },
   },
   mounted:function () {
-    this.goods_type = this.$route.query.type;
-    this.goods_id = this.$route.query.id;
+    this.goods_type = this.$route.params.type;
+    this.goods_id = this.$route.params.id;
     if (this.goods_type === 'course') {
       this.refreshCourseDetail();
     }

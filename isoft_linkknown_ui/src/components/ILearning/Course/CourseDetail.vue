@@ -15,17 +15,24 @@
                 </div>
                 <div class="ico_play"></div>
               </div>
-              <div class="showPriceAndBuy" style="margin: 5px 0 0 0">
+              <div class="showPriceAndBuy" style="margin: 10px 0 0 0">
                 <div v-if="course.isCharge==='charge'" style="color: #ff6900">
                   <Row>
-                    <Col span="8" offset="2">
+                    <Col span="24">
                       <span class="showPrice">
                         <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
                       </span>
                     </Col>
+                  </Row>
+                  <Row>
+                    <Col span="9">
+                      <span @click="addToShoppingCart('course',course.id,course.price)">
+                        <div class="addToShoppingCart">加入购物车</div>
+                      </span>
+                    </Col>
                     <Col span="6">
-                      <span class="showBuy" @click="toPay('course',course.id)">
-                        <Icon type="md-cart" /><span>购买</span>
+                      <span @click="toPay('course',course.id)">
+                        <div class="toBuy">立即购买</div>
                       </span>
                     </Col>
                   </Row>
@@ -160,13 +167,13 @@
 </template>
 
 <script>
-  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon,ReceiveCoupon} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon,ReceiveCoupon,addToShoppingCart} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
-  import {CheckHasLoginConfirmDialog,GetToday_yyyyMMdd} from "../../../tools/index"
+  import {checkFastClick, CheckHasLoginConfirmDialog, GetToday_yyyyMMdd,CheckHasLoginConfirmDialog2} from "../../../tools/index"
   import VoteTags from "../../Decorate/VoteTags";
   import ShowMore from "../../Elementviewers/showMore";
   import SepLine from "../../Common/SepLine";
@@ -307,9 +314,39 @@
       changeShowMore:function (showMore) {
         showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
       },
+      //加入购物车
+      addToShoppingCart:async function(type,id,price){
+        if (checkFastClick()) {
+          this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
+
+        let _this = this;
+        CheckHasLoginConfirmDialog2(_this, async function () {
+          let params = {
+            'goods_type':type,
+            'goods_id':id,
+            'goods_price_on_add':price
+          };
+          const result = await addToShoppingCart(params);
+          if (result.status === 'SUCCESS') {
+            _this.$Message.success('加入成功！');
+          }else{
+            _this.$Message.error(result.errorMsg)
+          }
+        });
+
+      },
       //购买此课程
       toPay:function (type,id) {
-        this.$router.push({path:'/payment/pay',query:{type:type,id:id}});
+        if (checkFastClick()) {
+          this.$Message.error("点击过快,请稍后重试!");
+          return;
+        }
+        let _this = this;
+        CheckHasLoginConfirmDialog2(_this, async function () {
+          _this.$router.push({path:'/payment/pay',name:'pay',params:{type:type,id:id}});
+        });
       },
       //刷新优惠券
       refreshCoupon:async function () {
@@ -429,18 +466,37 @@
     100% {left:-130px;}
   }
 
-  .showPriceAndBuy:hover .showBuy{
-    display: block;
-  }
-
   .showPrice{
     cursor: pointer;
   }
-  /*.showPrice:hover +.showBuy{*/
-    /**/
-  /*}*/
-  .showBuy{
+
+  .addToShoppingCart{
+    font-size: 12px;
     cursor: pointer;
-    display:none;
+    padding: 0 0 2px 6px ;
+    height: 25px;
+    width: 75px;
+    background-color: rgba(220, 220, 220, 0.39);
+    border-radius: 20px;
+    border: 2px orange solid;
+  }
+  .addToShoppingCart:hover{
+    color: rgba(255, 105, 0, 0.65);
+    background-color: rgba(214, 214, 214, 0.99);
+  }
+
+  .toBuy{
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 0 2px 10px ;
+    height: 25px;
+    width: 75px;
+    background-color: rgba(220, 220, 220, 0.39);
+    border-radius: 20px;
+    border: 2px orange solid;
+  }
+  .toBuy:hover{
+    color: rgba(255, 105, 0, 0.65);
+    background-color: rgba(214, 214, 214, 0.99);
   }
 </style>

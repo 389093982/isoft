@@ -187,7 +187,10 @@ export const FilterElementByPlacement = (params) => ajax(BASE_URL + '/iwork/http
 //【Pay模块】***************************************************************************************************
 export const isoft_unifiedpay_order_api = "ws://localhost:6002/"+WECHAT_PAY+"/Order"; //支付系统的接口
 export const addPayOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addPayOrder", params, 'POST');
-export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST');
+export const queryPayOrderList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayOrderList", params, 'POST'); //订单查询
+export const addToShoppingCart = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/addToShoppingCart", params, 'POST'); //加入购物车
+export const queryPayShoppingCartList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/queryPayShoppingCartList", params, 'POST'); //查看购物车
+export const deleteFromShoppingCart = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/deleteFromShoppingCart", params, 'POST'); //购物车中移出
 export const AddPayActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddPayActivity", params, 'POST'); //举办活动
 export const QueryPagePayActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryPagePayActivity", params, 'POST'); //查询活动
 export const UpdateActivity = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateActivity", params, 'POST'); //更新活动

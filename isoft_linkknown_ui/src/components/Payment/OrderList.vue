@@ -10,6 +10,10 @@
         </Col>
         <!--右侧展示商品-->
         <Col span="20">
+          <div style="position: relative;top: 10px">
+            <span class="isoft_tag5 isoft_font12 isoft_mr10 isoft_point_cursor">全部</span>
+            <span style="margin-left: 20px">数量:{{page.totalCount}}</span>
+          </div>
           <!--一行一个商品-->
           <Row v-for="(goods, index) in orderData" style="margin-top: 20px">
             <Row>
@@ -37,7 +41,7 @@
                 </Row>
                 <Row style="margin-top: 10px">
                   <div style="display: flex">
-                    <div class="orderTipService" @click="$router.push({path:'/payment/orderDetail',query:{order_id:goods.order_id}})">查看详情</div>
+                    <div class="orderTipService" @click="$router.push({path:'/payment/orderDetail',query:{order_id:goods.order_id}})">订单详情</div>
                     <div class="orderTipService" style="margin-left: 10px">查看发票</div>
                     <div class="orderTipService" @click="$router.push({path:'/contact/contactList'})" style="margin-left: 10px">联系客服</div>
                   </div>
@@ -66,7 +70,7 @@
           </Row>
 
           <!--分页-->
-          <div style="text-align: center;margin-top: 10px">
+          <div style="text-align: center;margin-top: 10px;margin-bottom: 10px">
             <Page :total="page.totalCount" :page-size="page.offset" :current="page.currentPage" show-total show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
           </div>
 

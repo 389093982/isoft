@@ -45,31 +45,37 @@
           <!--第一行是主菜单: 发布博客、 我的课程、 书单列表、 我的订单 -->
           <div v-if="isLoginUserName(user.user_name)" style="background-color: white;height: 80px">
             <Row>
-              <Col span="4" offset="3">
+              <Col span="3" offset="3">
                 <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-create-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">发布博客</div>
                 </div>
               </Col>
-              <Col span="4">
+              <Col span="3">
                 <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-videocam-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的课程</div>
                 </div>
               </Col>
-              <Col span="4">
+              <Col span="3">
                 <div @click="$router.push({path:'/ibook/bookList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-book-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">书单列表</div>
                 </div>
               </Col>
-              <Col span="4">
+              <Col span="3">
+                <div @click="$router.push({ path: '/payment/shoppingCart'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-cart-outline" style="font-size: 40px"/>
+                  <div style="font-size: 12px;">购物车</div>
+                </div>
+              </Col>
+              <Col span="3">
                 <div @click="$router.push({ path: '/payment/orderList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-list-box-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的订单</div>
                 </div>
               </Col>
-              <Col span="4">
+              <Col span="3">
                 <div @click="$router.push({ path: '/payment/myCouponList'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="logo-usd" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的优惠券</div>
