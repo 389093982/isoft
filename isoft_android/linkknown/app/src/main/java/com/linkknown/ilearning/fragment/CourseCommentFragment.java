@@ -3,6 +3,7 @@ package com.linkknown.ilearning.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,45 +11,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.adapter.CourseCommentAdapter;
 import com.linkknown.ilearning.common.CommonDiffCallback;
+import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.common.OnLoadMoreListener;
+import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
-import com.linkknown.ilearning.section.CourseCommentSection;
-import com.linkknown.ilearning.service.CommentService;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionAdapter;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener,CourseCommentSection.ClickListener {
+public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
 
     private Context mContext;
+    private Handler handler = new Handler();
 
     private RecyclerView commentRecyclerView;
 
@@ -61,17 +58,15 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
+    private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
+
     @BindView(R.id.addComment)
     public TextView addComment;
     @BindView(R.id.moreOperate)
     public TextView moreOperate;
 
     // 评论列表适配器
-    SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
-    CourseCommentSection courseCommentSection;
-
-    // 评论列表订阅数据, key 为分页信息, value 为当前页的订阅信息
-    private Map<Integer, Observer> observerMap = new HashMap<>();
+    BaseQuickAdapter baseQuickAdapter;
 
     @Override
     protected boolean setIsRealTimeRefresh() {
@@ -87,109 +82,122 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     protected void initView(View mRootView) {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
+        swipeRefreshLayoutHelper.bind(mContext, refreshLayout);
+        swipeRefreshLayoutHelper.initStyle();
+        swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         commentRecyclerView = mRootView.findViewById(R.id.comment_recycleview).findViewById(R.id.recyclerView);
 
+        initBundleParam();
+        // 初始化组件
+        initCommentView();
+    }
+
+    private void initBundleParam() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             course_id = bundle.getInt("course_id");
             course_author = bundle.getString("course_author");
         }
-        // 初始化组件
-        init();
     }
 
     @Override
     protected void initData() {
-        // 绑定数据
-        bindPageData(1);
         // 加载数据
-        loadData();
+        loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
     }
 
-    // 建议使用 DiffUtil 进行局部刷新
-//    // 加载第一页要先清空
-//    displayComments.clear();
-//    // list 清空同时也要刷新 adapter
-//    sectionedRecyclerViewAdapter.notifyDataSetChanged();
-    private void loadData () {
-        // 加载第一页要先清空
-        List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
-        displayComments.clear();
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
-        diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
-
-        loadNextPageData(1);
-    }
-
-    private void loadNextPageData(int current_page) {
-        bindPageData(current_page);
-        CommentService.filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, 10);
-    }
-
-    // 绑定分页数据
-    private void bindPageData (int current_page) {
-        // 防止同一页重复订阅
-        if (!observerMap.containsKey(current_page)) {
-            Observer<CommentResponse> observer = commentResponse -> {
-                SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
-                if (commentResponse.isSuccess()) {
-                    // 合并数据，当数据量过大时,需要先进行 clear 一部分
-                    displayComments.addAll(commentResponse.getComments());
-                    paginator = commentResponse.getPaginator();
-                    // 设置内容状态
-                    courseCommentSection.setState(Section.State.LOADED);
-                    // footer 设置加载完成，到最后一页了显示加载到底
-                    sectionAdapter.notifyFooterChanged(
-                            // 是最后一页了
-                            paginator.getCurrpage() >= paginator.getTotalpages()
-                                    ? CourseCommentSection.PAYLOAD_FOOTER_LOADED_NO_MORE
-                                    : CourseCommentSection.PAYLOAD_FOOTER_LOADED);
-                } else {
-                    // 设置内容状态
-                    courseCommentSection.setState(Section.State.FAILED);
-                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADED);
-                }
-                sectionAdapter.notifyAllItemsChanged();
-                // 有数据回来则取消刷新
-                refreshLayout.setRefreshing(false);
-            };
-
-            observerMap.put(current_page, observer);
-            LiveEventBus.get(CommentService.getKey(course_id,"course_theme_type", "comment", current_page), CommentResponse.class).observe(this, observer);
+    private void loadPageData (int current_page, int pageSize) {
+        // 第一页不延时执行
+        if (current_page == 1) {
+            executeLoadPageData(current_page, pageSize);
+        } else {
+            // 后续页面，延迟执行，让加载效果更好
+            handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
         }
+        executeLoadPageData(current_page, pageSize);
+
     }
 
-    private void init () {
+    private void executeLoadPageData(int current_page, int pageSize) {
+        // 状态手动置为"加载中"，并且会调用加载更多监听
+        // 一般情况下，不需要自己设置'加载中'状态
+        baseQuickAdapter.getLoadMoreModule().loadMoreToLoading();
+
+        LinkKnownApiFactory.getLinkKnownApi().filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, pageSize)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<CommentResponse>() {
+                    @Override
+                    public void onNext(CommentResponse commentResponse) {
+                        if (commentResponse.isSuccess()) {
+                            if (CollectionUtils.isNotEmpty(commentResponse.getComments())) {
+                                if (current_page == 1) {
+                                    // 先清空再添加
+                                    displayComments.clear();
+                                }
+                                displayComments.addAll(commentResponse.getComments());
+                                baseQuickAdapter.setList(displayComments);
+
+                                // 当前这次数据加载完毕，调用此方法
+                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                            } else {
+                                if (current_page == 1) {
+                                    displayComments.clear();
+                                    baseQuickAdapter.setList(displayComments);
+                                    baseQuickAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
+                                    TextView emptyTipText = baseQuickAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
+                                    emptyTipText.setText("暂无评论");
+                                }
+                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                            }
+
+                            paginator = commentResponse.getPaginator();
+
+                            // 最后一页
+                            if (CommonUtil.isLastPage(paginator)) {
+                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                            }
+                        } else {
+                            baseQuickAdapter.getLoadMoreModule().loadMoreFail();
+                        }
+                        swipeRefreshLayoutHelper.finishRefreshing();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        swipeRefreshLayoutHelper.finishRefreshing();
+                        // 当前这次数据加载错误，调用此方法
+                        baseQuickAdapter.getLoadMoreModule().loadMoreFail();
+                    }
+                });
+    }
+
+    private void initCommentView () {
         addComment.setOnClickListener(this);
         moreOperate.setOnClickListener(this);
-        sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        courseCommentSection = new CourseCommentSection(mContext, displayComments, this);
-        sectionedRecyclerViewAdapter.addSection(courseCommentSection);
 
-        commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        commentRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
-
-        refreshLayout.setOnRefreshListener(() -> {
-            // 刷新中
-            refreshLayout.setRefreshing(true);
-            // 重新加载数据
-            loadData();
-        });
-
-        // setOnScrollListener 由于可能出现空指针的风险,已经过时.建议用addOnScrollListener
-        commentRecyclerView.addOnScrollListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                // 还有下一页数据则加载下一页数据
-                if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
-                    SectionAdapter sectionAdapter = sectionedRecyclerViewAdapter.getAdapterForSection(courseCommentSection);
-                    // footer 显示加载中
-                    sectionAdapter.notifyFooterChanged(CourseCommentSection.PAYLOAD_FOOTER_LOADING);
-                    loadNextPageData(paginator.getCurrpage() + 1);
-                }
+        baseQuickAdapter = new CourseCommentAdapter(mContext, displayComments);
+        // 是否自动加载下一页（默认为true）
+        baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        // 设置加载更多监听事件
+        baseQuickAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
         });
+        // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
+        baseQuickAdapter.addChildClickViewIds(R.id.deleteIcon);
+        baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.deleteIcon) {
+                CommentResponse.Comment comment = displayComments.get(position);
+                deleteComment(comment, position);
+            }
+        });
+
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        commentRecyclerView.setAdapter(baseQuickAdapter);
     }
 
     @Override
@@ -234,21 +242,15 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
             LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new io.reactivex.Observer<EditCommentResponse>() {
-
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
+                    .subscribe(new LinkKnownObserver<EditCommentResponse>() {
 
                         @Override
                         public void onNext(EditCommentResponse editCommentResponse) {
                             if (editCommentResponse.isSuccess()) {
                                 // 对话框隐藏
                                 dialog.dismiss();
-                                refreshLayout.setRefreshing(true);
                                 // 重新加载数据
-                                loadData();
+                                initData();
                             } else {
                                 Log.e("onNext =>", "系统异常,请联系管理员~");
                                 ToastUtil.showText(mContext, "系统异常,请联系管理员~");
@@ -259,11 +261,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                         public void onError(Throwable e) {
                             Log.e("onError =>", e.getMessage());
                             ToastUtil.showText(mContext, "系统异常,请联系管理员~");
-                        }
-
-                        @Override
-                        public void onComplete() {
-
                         }
                     });
 
@@ -283,9 +280,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         bottomDialog.show();
     }
 
-    @Override
-    public void onItemRootViewClicked(@NonNull CourseCommentSection section, int itemAdapterPosition) {
-        CommentResponse.Comment comment = displayComments.get(itemAdapterPosition);
+    public void deleteComment(CommentResponse.Comment comment, int position) {
         int level = comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
         int id = comment.getId();                           // 评论 id
         int org_parent_id = comment.getOrg_parent_id();     // 父评论 id
@@ -300,9 +295,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                         if (baseResponse.isSuccess()) {
                             // 局部刷新
                             List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
-                            displayComments.remove(itemAdapterPosition);
+                            displayComments.remove(position);
                             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
-                            diffResult.dispatchUpdatesTo(sectionedRecyclerViewAdapter);
+                            diffResult.dispatchUpdatesTo(baseQuickAdapter);
                             ToastUtil.showText(mContext, "删除成功！");
                         } else {
                             ToastUtil.showText(mContext, "删除失败！");

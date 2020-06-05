@@ -15,9 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-		<activity android:name=".activity.MessageInfoActivity"></activity>
-        <activity android:name=".activity.PayOrderDetailActivity"></activity>
-        <activity android:name=".activity.SearchHistoryActivity"></activity>
+        <activity android:name=".activity.AdviseActivity"></activity>
+        <activity android:name=".activity.HuodongActivity" />
+        <activity android:name=".activity.MessageInfoActivity" />
+        <activity android:name=".activity.PayOrderDetailActivity" />
+        <activity android:name=".activity.SearchHistoryActivity" />
         <activity android:name=".activity.CourseOrderActivity" />
         <activity android:name=".activity.CourseSearchActivity" /> <!-- activity 页面配置汇总 -->
         <activity android:name=".activity.UserDetailActivity" />

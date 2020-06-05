@@ -67,43 +67,6 @@ public class UserService {
                 });
     }
 
-    public static void regist (Context mContext, String username, String passwd, String nickname, String verifyCode, String third_user_type) {
-        LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, verifyCode, third_user_type)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new Observer<RegistResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(RegistResponse registResponse) {
-                        if (registResponse.isSuccess()) {
-                            LiveEventBus.get("registResponse", RegistResponse.class).post(registResponse);
-                        } else {
-                            Log.e("onNext =>", "regist failed！" + registResponse.getErrorMsg());
-                            RegistResponse result = new RegistResponse();
-                            result.setErrorMsg(registResponse.getErrorMsg());
-                            LiveEventBus.get("registResponse", RegistResponse.class).post(result);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onError =>", e.getMessage());
-                        RegistResponse result = new RegistResponse();
-                        result.setErrorMsg(mContext.getResources().getString(R.string.regist_failed));
-                        LiveEventBus.get("registResponse", RegistResponse.class).post(result);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
     public static void logout (Context mContext) {
         LoginUserResponse result = new LoginUserResponse();
         result.setErrorMsg("用户未登录！");

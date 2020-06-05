@@ -74,7 +74,7 @@
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp" />
+                        android:layout_height="180dp" />
 
                     <!-- 分割线 -->
                     <include layout="@layout/item_line"/>

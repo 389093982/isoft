@@ -17,7 +17,7 @@ android {
     buildTypes {
         // 本地调试版本
         debug {
-            buildConfigField "String", "BASE_URL", '"http://192.168.1.3:6001"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.1.6:6001"'
 
 
         }
@@ -133,6 +133,8 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
     // 流式布局
     implementation 'com.google.android:flexbox:1.1.0'
+    // 适用 viewPager 好看的指示器
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

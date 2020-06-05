@@ -21,8 +21,10 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
+import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseOrderActivity;
+import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -41,6 +43,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public ImageView iv_order;
     @BindView(R.id.iv_message)
     public ImageView iv_message;
+    @BindView(R.id.iv_huodong)
+    public ImageView iv_huodong;
 
     // 登录用户头像和用户名
     @BindView(R.id.small_headerIcon)
@@ -59,6 +63,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public LinearLayout menuOrderLayout;
     @BindView(R.id.menuOrderTextView)
     public TextView menuOrderTextView;
+
+    //我要吐槽(提出意见)
+    @BindView(R.id.menuAdviseLayout)
+    public LinearLayout menuAdviseLayout;
+    @BindView(R.id.menuAdviseTextView)
+    public TextView menuAdviseTextView;
 
     //个人中心
     @BindView(R.id.menuPersonalCenter)
@@ -118,6 +128,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         menuAboutLayout.setOnClickListener(this);
         menuOrderLayout.setOnClickListener(this);
+        menuAdviseLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
     }
 
@@ -126,6 +137,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseOrderActivity.class));
         iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
+        iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
     }
 
     private void initLoginInfo () {
@@ -159,6 +171,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.menuOrderLayout:
                 UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
+                break;
+            case R.id.menuAdviseLayout:
+                UIUtils.gotoActivity(mContext, AdviseActivity.class);
                 break;
             default:
                 break;
@@ -211,6 +226,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void bindMenuDrawnStart(){
         UIUtils.setTextViewDrawbleImg(mContext, menuShoppingCartTextView, R.drawable.ic_shopping_cart, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuOrderTextView, R.drawable.ic_order2, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuAdviseTextView, R.drawable.ic_advise, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenterTextView, R.drawable.ic_personal_center, 0, 2, 40, 42);
 
         UIUtils.setTextViewDrawbleImg(mContext, menuAboutLayoutTextView, R.drawable.ic_about, 0, 2, 40, 42);
