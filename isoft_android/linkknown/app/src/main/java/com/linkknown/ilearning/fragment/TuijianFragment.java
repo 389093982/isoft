@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
+import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.adapter.HomePageGridViewAdapter;
 import com.linkknown.ilearning.adapter.HomePageViewPagerAdapter;
@@ -99,9 +100,7 @@ public class TuijianFragment extends BaseLazyLoadFragment {
     private void initBannerView() {
         bannerImageList = new ArrayList<>();
         bannerImageList.add(R.drawable.banner_coupon);
-        bannerImageList.add(R.drawable.banner_coupon);
-        bannerImageList.add(R.drawable.banner_coupon);
-        bannerImageList.add(R.drawable.banner_coupon);
+        bannerImageList.add(R.drawable.banner_huodong);
 
         //设置 banner 样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -121,6 +120,9 @@ public class TuijianFragment extends BaseLazyLoadFragment {
             switch (position) {
                 case 0:
                     UIUtils.gotoActivity(mContext, CouponCenterActivity.class);
+                    break;
+                case 1:
+                    UIUtils.gotoActivity(mContext, HuodongActivity.class);
                     break;
                 default:
                     break;
