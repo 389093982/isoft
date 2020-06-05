@@ -10,4 +10,5 @@
     <dimen name="dp_3">3dp</dimen>
     <dimen name="default_tiny_padding">5dp</dimen>
     <dimen name="default_general_margin">10dp</dimen>
+    <dimen name="size_400">400dp</dimen>
 </resources>

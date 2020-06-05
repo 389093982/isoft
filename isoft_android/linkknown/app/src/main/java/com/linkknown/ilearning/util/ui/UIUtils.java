@@ -3,6 +3,7 @@ package com.linkknown.ilearning.util.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +20,8 @@ import com.linkknown.ilearning.BuildConfig;
 import com.linkknown.ilearning.R;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Random;
 
 public class UIUtils {
 
@@ -84,7 +87,26 @@ public class UIUtils {
         snackbar.show();
     }
 
+    private static final int[] RANDOM_COLORS = new int[]{
+            Color.parseColor("#90C5F0"),
+            Color.parseColor("#91CED5"),
+            Color.parseColor("#F88F55"),
+            Color.parseColor("#C0AFD0"),
+            Color.parseColor("#E78F8F"),
+            Color.parseColor("#67CCB7"),
+            Color.parseColor("#F6BC7E")
+    };
 
+    public static int getRandomResourceColor() {
+        Random random = new Random();
+        return RANDOM_COLORS[random.nextInt(RANDOM_COLORS.length)];
+    }
+
+    public static int getRandomResourceColor(int position) {
+        return RANDOM_COLORS[position % RANDOM_COLORS.length];
+    }
+
+    // 根据资源目录下的颜色 id 获取颜色
     public static int getResourceColor(Context mContext, int colorId) {
         return ContextCompat.getColor(mContext, colorId);
     }
