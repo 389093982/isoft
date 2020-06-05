@@ -43,10 +43,18 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="toolItemBox" @click="$router.push({path:'/user/userDetail'})">
+    <div class="toolItemBox" @click="viewPersonalCenter()">
       <Icon type="ios-contact-outline" :size="28"/>
       <p>我的</p>
       <span class="tipBox"><div class="tipInfo">快来看看您都有哪些</div></span>
+    </div>
+
+    <div class="item-line"></div>
+
+    <div class="toolItemBox" @click="viewShoppingCart()">
+      <Icon type="ios-cart-outline" :size="28"/>
+      <p>购物车</p>
+      <span class="tipBox"><div class="tipInfo">查看我的购物车</div></span>
     </div>
   </div>
 </template>
@@ -54,6 +62,7 @@
 <script>
   import Clipboard from 'clipboard';
   import ContactUs from "../Common/contactUs/contactUs";    // 引入剪切板
+  import {CheckHasLoginConfirmDialog} from "../../tools/index"
 
   export default {
     name: "RightSuspensionMenu",
@@ -66,6 +75,12 @@
     methods:{
       handle11: function () {
 
+      },
+      viewPersonalCenter:function(){
+        CheckHasLoginConfirmDialog(this, {path: "/user/userDetail"});
+      },
+      viewShoppingCart:function () {
+        CheckHasLoginConfirmDialog(this, {path: "/payment/shoppingCart"});
       }
     },
     mounted () {

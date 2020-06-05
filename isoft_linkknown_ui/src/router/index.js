@@ -44,6 +44,7 @@ const OrderList = () => import("@/components/Payment/OrderList");
 const OrderDetail = () => import("@/components/Payment/OrderDetail");
 const MyCouponList = () => import("@/components/Payment/MyCouponList");
 const CouponCenter = () => import("@/components/Payment/CouponCenter");
+const ShoppingCart = () => import("@/components/Payment/ShoppingCart");
 const AdvApply = () => import("@/components/Advertisement/Apply");
 const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
@@ -263,11 +264,12 @@ const VipCenterReouter = [{
 const Payment = [{
   path: '/payment', component: ILayout,
   children: [
-    {path: 'pay', component: Pay},
+    {path: 'pay',name:'pay', component: Pay},
     {path: 'orderList', component: OrderList},
     {path: 'orderDetail', component: OrderDetail},
     {path: 'myCouponList', component: MyCouponList},
     {path: 'couponCenter', component: CouponCenter},
+    {path: 'shoppingCart', component: ShoppingCart},
   ]
 }];
 

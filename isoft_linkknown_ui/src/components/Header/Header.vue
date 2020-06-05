@@ -41,13 +41,13 @@
               </span>
             </template>
             <MenuGroup title="账户管理">
-              <MenuItem name="8-1" @click.native="$router.push({path:'/user/userDetail'})">个人中心</MenuItem>
+              <MenuItem name="8-1" @click.native="$router.push({path:'/user/userDetail'})" v-if="isLogin()">个人中心</MenuItem>
               <MenuItem name="8-2" @click.native="cancelUser">
                 <span v-if="isLogin()">重新</span><span>登录</span>
               </MenuItem>
               <MenuItem name="8-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
-              <MenuItem name="8-3" @click.native="$router.push({path:'/sso/regist',query:{pattern:1}})" v-if="!isLogin()">注册</MenuItem>
-              <MenuItem name="8-4" @click.native="$router.push({path:'/background/adviseList'})" v-if="isAdmin()">控制台</MenuItem>
+              <MenuItem name="8-4" @click.native="$router.push({path:'/sso/regist',query:{pattern:1}})" v-if="!isLogin()">注册</MenuItem>
+              <MenuItem name="8-5" @click.native="$router.push({path:'/background/adviseList'})" v-if="isAdmin()">控制台</MenuItem>
             </MenuGroup>
           </Submenu>
           <MenuItem name="9">
