@@ -4,15 +4,15 @@
         <menu>
             <item
                 android:id="@+id/shouye"
-                android:icon="@drawable/home"
+                android:icon="@drawable/ic_home"
                 android:title="首页"/>
             <item
                 android:id="@+id/fenlei"
-                android:icon="@drawable/category"
+                android:icon="@drawable/ic_classify"
                 android:title="分类"/>
             <item
                 android:id="@+id/wode"
-                android:icon="@drawable/mine"
+                android:icon="@drawable/ic_mine"
                 android:title="我的"/>
         </menu>
     </item>

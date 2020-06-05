@@ -4,25 +4,25 @@
     <item
         android:id="@+id/action_home"
         android:enabled="true"
-        android:icon="@drawable/home_button_selector"
+        android:icon="@drawable/ic_home"
         android:title="首页"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_classfiy"
         android:enabled="true"
-        android:icon="@drawable/category_button_selector"
+        android:icon="@drawable/ic_classify"
         android:title="分类"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_tuijian"
         android:enabled="true"
-        android:icon="@drawable/home_button_selector"
+        android:icon="@drawable/ic_recommend"
         android:title="推荐"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_mine"
         android:enabled="true"
-        android:icon="@drawable/mine_button_selector"
+        android:icon="@drawable/ic_mine"
         android:title="我的"
         app:showAsAction="ifRoom"/>
 </menu>
