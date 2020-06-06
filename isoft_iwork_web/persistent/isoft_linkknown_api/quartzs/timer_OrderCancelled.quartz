@@ -1,0 +1,12 @@
+<CronMeta>
+	<Id>271</Id>
+	<AppId>5</AppId>
+	<TaskName>timer_OrderCancelled</TaskName>
+	<TaskType>iwork_quartz</TaskType>
+	<CronStr>0 */5 * * * ?</CronStr>
+	<Enable>true</Enable>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-06-06T12:58:38+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-06-06T12:58:38+08:00</LastUpdatedTime>
+</CronMeta>
