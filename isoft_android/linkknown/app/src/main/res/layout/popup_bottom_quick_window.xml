@@ -10,15 +10,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="问卷调查"/>
-
-    <pl.droidsonroids.gif.GifImageButton
-        android:id="@+id/smallxiongmao"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:scaleType="fitXY"
-        android:background="@color/touming"
-        android:src="@drawable/ic_xiongmao"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"/>
-
 </RelativeLayout>

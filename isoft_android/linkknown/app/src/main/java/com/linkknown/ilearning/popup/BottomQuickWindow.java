@@ -38,7 +38,7 @@ public class BottomQuickWindow extends PopupWindow {
 
         ButterKnife.bind(this, view);
 
-        setAnimationStyle(R.style.pop_animation);
+        setAnimationStyle(R.style.popwindow_animation);
         initView();
     }
 
