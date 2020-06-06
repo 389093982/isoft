@@ -67,8 +67,8 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     private Disposable searchTextViewDisposable;
     private int showHintIndex = 0;
 
-    @BindView(R.id.levelOneClassifyRecyclerView)
-    public RecyclerView levelOneClassifyRecyclerView;
+    @BindView(R.id.leftClassifyRecyclerView)
+    public RecyclerView leftClassifyRecyclerView;
 
     @BindView(R.id.magic_indicator)
     public MagicIndicator magicIndicator;
@@ -76,8 +76,8 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     ViewPager viewPager;
 
     // 存储所有的分类占位符数据
-    private List<ElementResponse.Element> levelOneClassifyElements = new ArrayList<>();
-    private BaseQuickAdapter levelOneClassifyAdapter;
+    private List<ElementResponse.Element> leftClassifyElements = new ArrayList<>();
+    private BaseQuickAdapter leftClassifyAdapter;
 
     private ElementResponse element_response;
     private Handler handler = new Handler();
@@ -169,9 +169,9 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
                     public void onNext(ElementResponse elementResponse) {
                         element_response = elementResponse;
                         if (elementResponse.isSuccess()) {
-                            levelOneClassifyElements.clear();
-                            levelOneClassifyElements.addAll(getLevelOneClassifyElements(elementResponse.getElements()));
-                            levelOneClassifyAdapter.setList(levelOneClassifyElements);
+                            leftClassifyElements.clear();
+                            leftClassifyElements.addAll(ElementResponse.getLevelOneClassifyElements(elementResponse.getElements()));
+                            leftClassifyAdapter.setList(leftClassifyElements);
 
                             // 选中第一项
                             initCheckFirst();
@@ -189,33 +189,14 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
         // 延迟 100 ms 执行,因为界面显示是异步的
         handler.postDelayed(() -> {
             // 默认选中第 1 个
-            TextView textView = (TextView) levelOneClassifyAdapter.getViewByPosition(0, R.id.classifyName);
+            TextView textView = (TextView) leftClassifyAdapter.getViewByPosition(0, R.id.classifyName);
             if (textView != null) {
                 textView.performClick();
             }
         }, 100);
     }
 
-    private List<ElementResponse.Element> getLevelOneClassifyElements (List<ElementResponse.Element> elements) {
-        List<ElementResponse.Element> levelOneElements = new ArrayList<>();
-        for (ElementResponse.Element element : elements) {
-            if (element.getNavigation_level() == 0) {
-                levelOneElements.add(element);
-            }
-        }
-        Collections.sort(levelOneElements, (o1, o2) -> getLevelTwoClassifyElements(elements, o2.getId()).size() - getLevelTwoClassifyElements(elements, o1.getId()).size());
-        return levelOneElements;
-    }
 
-    private List<ElementResponse.Element> getLevelTwoClassifyElements (List<ElementResponse.Element> elements, int parentId) {
-        List<ElementResponse.Element> levelTwoElements = new ArrayList<>();
-        for (ElementResponse.Element element : elements) {
-            if (element.getNavigation_parent_id() == parentId) {
-                levelTwoElements.add(element);
-            }
-        }
-        return levelTwoElements;
-    }
 
     @Override
     protected boolean setIsRealTimeRefresh() {
@@ -228,39 +209,22 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     }
 
     private void initTopClassfiyView (List<String> mTitleDataList) {
+        // 创建指示器并绑定到 viewPager
         CommonNavigator commonNavigator = CommonNavigatorCreater.setDefaultNavigator(getContext(), mTitleDataList, viewPager);
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, viewPager);
 
+        // 动态创建多个 fragment
         List<Fragment> mFragments = new ArrayList<>();
         for (String title : mTitleDataList) {
             CourseFilterFragment courseFilterFragment = new CourseFilterFragment();
             courseFilterFragment.setArguments(CommonUtil.createBundle2("search",title,"isCharge", "free"));
             mFragments.add(courseFilterFragment);
         }
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return mFragments.get(position);
-            }
 
-            @Override
-            public int getCount() {
-                return mFragments.size();
-            }
-
-            @Override
-            public void destroyItem(ViewGroup container, int position, Object object) {
-                super.destroyItem(container, position, object);
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTitleDataList.get(position);
-            }
-        });
-
+        // 给 viewPager 绑定 fragment
+        com.linkknown.ilearning.helper.ViewPagerHelper.bindQuickAdapter(viewPager, mFragments, mTitleDataList, getChildFragmentManager());
+        // 给 viewPager 添加事假监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -277,6 +241,7 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
                 magicIndicator.onPageScrollStateChanged(state);
             }
         });
+        // 默认选中第一项
         if (mTitleDataList.size() > 0) {
             viewPager.setCurrentItem(0);
         }
@@ -284,49 +249,46 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
 
     private void initLeftClassfiyView() {
         // 一级分类
-        levelOneClassifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.classify_left_item, levelOneClassifyElements) {
+        leftClassifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.classify_left_item, leftClassifyElements) {
 
             @Override
             protected void convert(@NotNull BaseViewHolder baseViewHolder, ElementResponse.Element element) {
                 baseViewHolder.setText(R.id.classifyName, element.getElement_label());
             }
         };
-        levelOneClassifyRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        levelOneClassifyRecyclerView.setAdapter(levelOneClassifyAdapter);
-        levelOneClassifyAdapter.addChildClickViewIds(R.id.classifyName);
-        levelOneClassifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() != R.id.classifyName) {
-                return;
-            }
+        leftClassifyRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        leftClassifyRecyclerView.setAdapter(leftClassifyAdapter);
+        leftClassifyAdapter.addChildClickViewIds(R.id.classifyName);
 
-            for (int index = 0; index < levelOneClassifyElements.size(); index ++) {
-                if (index == position) {
-                    TextView textView = (TextView)view;
-                    textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.white));
-                    textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
-                } else {
-                    TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
-                    if (textView != null) {
-                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorRecyclerBg));
-                        textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorGray));
+        leftClassifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.classifyName) {
+                for (int index = 0; index < leftClassifyElements.size(); index ++) {
+                    if (index == position) {
+                        TextView textView = (TextView)view;
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.white));
+                        textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
+                    } else {
+                        TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
+                        if (textView != null) {
+                            textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorRecyclerBg));
+                            textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorGray));
+                        }
                     }
                 }
-            }
 
-            List<String> mTitleDataList = new ArrayList<>();
-            List<ElementResponse.Element> levelTwoClassifyElements = getLevelTwoClassifyElements(element_response.getElements(), levelOneClassifyElements.get(position).getId());
-            for (ElementResponse.Element element: levelTwoClassifyElements) {
-                mTitleDataList.add(element.getElement_label());
+                List<String> mTitleDataList = new ArrayList<>();
+                List<ElementResponse.Element> levelTwoClassifyElements = ElementResponse.getLevelTwoClassifyElements(element_response.getElements(), leftClassifyElements.get(position).getId());
+                for (ElementResponse.Element element: levelTwoClassifyElements) {
+                    mTitleDataList.add(element.getElement_label());
+                }
+                initTopClassfiyView(mTitleDataList);
             }
-            initTopClassfiyView(mTitleDataList);
         });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (searchTextViewDisposable != null) {
-            searchTextViewDisposable.dispose();
-        }
+        UIUtils.disposeSecurity(searchTextViewDisposable);
     }
 }

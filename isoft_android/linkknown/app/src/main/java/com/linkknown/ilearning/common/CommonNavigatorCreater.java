@@ -2,7 +2,6 @@ package com.linkknown.ilearning.common;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +15,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 
 import java.util.List;
 
+//  ViewPager 指示器
 public class CommonNavigatorCreater {
 
 	public static CommonNavigator setDefaultNavigator(Context context, final List<String> titles, final ViewPager viewPager) {
@@ -28,6 +28,12 @@ public class CommonNavigatorCreater {
 				return titles.size();
 			}
 
+			/**
+			 * 标题布局
+			 * @param context
+			 * @param index
+			 * @return
+			 */
 			@Override
 			public IPagerTitleView getTitleView(Context context, final int index) {
 				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -43,6 +49,11 @@ public class CommonNavigatorCreater {
 				return colorTransitionPagerTitleView;
 			}
 
+			/**
+			 * 指示器样式
+			 * @param context
+			 * @return
+			 */
 			@Override
 			public IPagerIndicator getIndicator(Context context) {
 				LinePagerIndicator indicator = new LinePagerIndicator(context);

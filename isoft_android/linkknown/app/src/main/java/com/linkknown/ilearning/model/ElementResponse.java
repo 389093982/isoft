@@ -1,5 +1,7 @@
 package com.linkknown.ilearning.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Data;
@@ -44,5 +46,26 @@ public class ElementResponse extends BaseResponse {
         private String placement_label;
         private String placement_name;
         private String placement_type;
+    }
+
+    public static List<ElementResponse.Element> getLevelOneClassifyElements (List<ElementResponse.Element> elements) {
+        List<ElementResponse.Element> levelOneElements = new ArrayList<>();
+        for (ElementResponse.Element element : elements) {
+            if (element.getNavigation_level() == 0) {
+                levelOneElements.add(element);
+            }
+        }
+        Collections.sort(levelOneElements, (o1, o2) -> getLevelTwoClassifyElements(elements, o2.getId()).size() - getLevelTwoClassifyElements(elements, o1.getId()).size());
+        return levelOneElements;
+    }
+
+    public static List<ElementResponse.Element> getLevelTwoClassifyElements (List<ElementResponse.Element> elements, int parentId) {
+        List<ElementResponse.Element> levelTwoElements = new ArrayList<>();
+        for (ElementResponse.Element element : elements) {
+            if (element.getNavigation_parent_id() == parentId) {
+                levelTwoElements.add(element);
+            }
+        }
+        return levelTwoElements;
     }
 }
