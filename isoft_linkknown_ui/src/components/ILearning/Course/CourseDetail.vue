@@ -26,7 +26,7 @@
                   </Row>
                   <Row>
                     <Col span="9">
-                      <span @click="addToShoppingCart('course',course.id,course.price)">
+                      <span @click="addToShoppingCart('course_theme_type',course.id,course.price)">
                         <div class="addToShoppingCart">加入购物车</div>
                       </span>
                     </Col>
