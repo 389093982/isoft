@@ -152,9 +152,9 @@
 
 <script>
   import {isoft_unifiedpay_order_api} from "../../api/index"
-  import {ShowCourseDetail,queryPayOrderList,addPayOrder,SearchCouponForPay,UpdateCouponIsUsed} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrderList,addPayOrder,updatePayOrder,SearchCouponForPay,UpdateCouponIsUsed,queryCouponById,OrderCancelledById} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
-  import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd} from "../../tools/index"
+  import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd,checkEmpty} from "../../tools/index"
   import vueQr from 'vue-qr'
   import Coupon from "../Common/coupon/Coupon";
 
@@ -165,15 +165,17 @@
       return {
         //是否展示页面
         showPage:false,
+        //从订单中心过来--继续支付
+        pre_order_id:'',
         //商品信息
         goods_type:'',
         goods_id:'',
         goods_desc:'',
         paid_amount:'',
-        paid_amount_backup:'',
+        goods_original_price:'',
         goods_img:'',
         //可用优惠券
-        coupons:'',
+        coupons:[],
         currentSelectCoupon:'',
         showAvailableCouponList:false,
         //支付信息
@@ -217,10 +219,43 @@
           if (result.course.isCharge === 'charge') {
             this.goods_desc = result.course.course_name;
             this.paid_amount = result.course.price;
-            this.paid_amount_backup = result.course.price; //原价格做个备份
+            this.goods_original_price = result.course.price; //原价格做个备份
             this.goods_img = result.course.small_image;
             this.showPage = true;
-            this.searchCourseAvailableCoupon();
+            const res = await this.searchCourseAvailableCoupon();
+            if (res === "ok") {
+              return "ok";
+            }
+          }
+        }
+      },
+      //从订单中心过来的订单--继续支付
+      refreshPreOrder:async function(){
+        //1.根据订单号查询订单详情
+        let params = {
+          'order_id':this.pre_order_id,
+          'currentPage':1,
+          'offset':10,
+        };
+        const result = await queryPayOrderList(params);
+        if (result.status === 'SUCCESS' && result.orders.length ===1 ) {
+          let preOrder = result.orders[0];
+          //如果是课程走这个分支
+          if (preOrder.goods_type==='course_theme_type') {
+            this.goods_type = 'course_theme_type';
+            this.goods_id = preOrder.goods_id;
+            const res = await this.refreshCourseDetail();
+            if (res === "ok") {
+              this.showAvailableCouponList = true;
+              if (preOrder.activity_type === 'coupon') {
+                let _this = this;
+                this.selectCoupon(preOrder.activity_type_bind_id,function () {
+                  _this.codeUrl = preOrder.code_url;
+                });
+              }else{
+                this.codeUrl = preOrder.code_url;
+              }
+            }
           }
         }
       },
@@ -237,7 +272,19 @@
           const result = await SearchCouponForPay(params);
           if (result.status === 'SUCCESS') {
             this.coupons = result.coupons;
+            return "ok";
           }
+        }
+      },
+      selectCoupon:async function(coupon_id,callback){
+        let params = {
+          'coupon_id':coupon_id
+        };
+        const result = await queryCouponById(params);
+        if (result.status === 'SUCCESS') {
+          this.coupons.push(result.coupon);//push到最后一位
+          this.selectThisCoupon(this.coupons.length-1);
+          callback();
         }
       },
       selectThisCoupon:function(index){
@@ -248,7 +295,7 @@
             this.currentSelectCoupon = this.coupons[index];
             this.$Message.info('已选择');
             // 计算金额前先将金额置为初始值
-            this.paid_amount = this.paid_amount_backup;
+            this.paid_amount = this.goods_original_price;
             //金额计算...
             if (this.currentSelectCoupon.youhui_type === 'reduce') {
               this.paid_amount = (this.paid_amount - this.currentSelectCoupon.coupon_amount).toFixed(2);
@@ -269,7 +316,7 @@
             this.currentSelectCoupon = '';
             this.$Message.info('已取消');
             // 取消就将金额置为初始值
-            this.paid_amount = this.paid_amount_backup;
+            this.paid_amount = this.goods_original_price;
           }
         }else{
           this.$Message.info('已下单，请尽快支付');
@@ -303,7 +350,7 @@
         }
         CheckHasLoginConfirmDialog2(this, async function () {
           //检查该商品是否已经下过单
-          if (_this.goods_type === 'course') {
+          if (_this.goods_type === 'course_theme_type') {
             //发送请求到订单表做个查询
             const result = await queryPayOrderList({
               'user_name':_this.loginUserName,
@@ -313,9 +360,22 @@
               'offset':10,
             });
             if (result.status === 'SUCCESS') {
-              if (result.orders.length===1 && result.orders[0].pay_result==='SUCCESS') {
+              if (result.orders.length>0 && result.orders[0].pay_result==='SUCCESS') {
                 _this.$Message.warning("该课程您已购买过，无需再次购买^_^");
               }else {
+                //如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
+                if (!checkEmpty(_this.currentSelectCoupon.coupon_id)) {
+                  let params = {
+                    'coupon_id':_this.currentSelectCoupon.coupon_id
+                  };
+                  const res = await queryCouponById(params);
+                  if (res.status === 'SUCCESS' && res.coupon.coupon_state === 'used') {
+                    _this.$Message.info('当前券已被使用，请重新选择！');
+                    _this.currentSelectCoupon = '';
+                    _this.refreshCourseDetail();
+                    return false;
+                  }
+                }
                 //清理上次付款结果
                 _this.showPayResult = false;
                 _this.payResultDesc = '';
@@ -329,7 +389,7 @@
                 let OrderParams = {
                   'user_name':_this.loginUserName,
                   'product_id': ProductId,
-                  'poduct_desc': ProductDesc,
+                  'product_desc': ProductDesc,
                   'trans_amount': TransAmount,
                   'trans_curr_code': TransCurrCode
                 };
@@ -362,26 +422,40 @@
         console.log("WebSocket 数据接收: " + JSON.stringify(e.data));
         let result = JSON.parse(e.data);
         if (result.user_name === this.loginUserName) {
+          //下单返回结果
           if (result.code_url != null) {
             this.codeUrl = result.code_url;
-          }
-          if (result.pay_result != null) {
-            //不论成功和失败，先入订单 pay_order 表
+            //订单先入库
             const res = await addPayOrder({
               'order_id':result.order_id,
-              'trans_time':result.trans_time,
               'user_name':result.user_name,
               'goods_type':'course_theme_type',
               'goods_id':result.product_id,
               'goods_desc':result.product_desc,
               'paid_amount':(result.trans_amount/100).toFixed(2), //接收再将分转为元，入库
-              'goods_original_price':this.paid_amount_backup,
+              'goods_original_price':this.goods_original_price,
               'activity_type':this.currentSelectCoupon===''?'':'coupon',
               'activity_type_bind_id':this.currentSelectCoupon===''?'':this.currentSelectCoupon.coupon_id,
               'goods_img':this.goods_img,
+              'pay_result':"", //待支付
+              'code_url':result.code_url
+            });
+            if (res.status === 'SUCCESS') {
+              // 更新优惠券
+              if (this.currentSelectCoupon) {
+                this.updateCouponIsUsed(result.user_name,this.currentSelectCoupon.coupon_id);
+              }
+            }
+          }
+          //用户扫码支付后返回结果
+          if (result.pay_result != null) {
+            //更新支付状态
+            const res = await updatePayOrder({
+              'order_id':result.order_id,
+              'user_name':result.user_name,
               'pay_result':result.pay_result,
             });
-            //如果支付成功，页面展示支付成功动态效果
+            //如果更新成功，页面展示支付成功动态效果
             if (res.status === 'SUCCESS' && result.pay_result === 'SUCCESS') {
               this.codeUrl = '';
               this.showPayResult = true;
@@ -391,12 +465,6 @@
               setTimeout(function () {
                 clearInterval(handler);
               }, 1000);
-
-              // 更新优惠券
-              if (this.currentSelectCoupon) {
-                this.updateCouponIsUsed(result.user_name,this.currentSelectCoupon.coupon_id);
-              }
-
             }
           }
         }
@@ -415,11 +483,20 @@
       },
   },
   mounted:function () {
-    this.goods_type = this.$route.params.type;
-    this.goods_id = this.$route.params.id;
-    if (this.goods_type === 'course') {
-      this.refreshCourseDetail();
-    }
+      //从订单中心过来继续支付
+      this.pre_order_id = this.$route.params.order_id;
+      //直接来购买的
+      this.goods_type = this.$route.params.type;
+      this.goods_id = this.$route.params.id;
+
+      //根据来源做展示
+      if (!checkEmpty(this.pre_order_id)){
+        this.refreshPreOrder();
+      } else if (!checkEmpty(this.goods_type) && !checkEmpty(this.goods_id)) {
+        if (this.goods_type === 'course_theme_type') {
+          this.refreshCourseDetail();
+        }
+      }
   }
   }
 </script>

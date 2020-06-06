@@ -121,8 +121,12 @@
           //给金额和支付状态格式化
           if (this.orders[0].pay_result === 'SUCCESS') {
             this.orders[0].pay_result = '支付成功'
-          }else {
+          }else if (this.orders[0].pay_result === 'FAIL') {
             this.orders[0].pay_result = '支付失败'
+          }else if (this.orders[0].pay_result === '') {
+            this.orders[0].pay_result = '待支付...'
+          }else if (this.orders[0].pay_result === 'CANCELLED') {
+            this.orders[0].pay_result = '订单被取消'
           }
           // 格式化交易时间
           this.orders[0].trans_time = this.formatTransTime(this.orders[0].trans_time);

@@ -114,7 +114,7 @@
         let OrderParams = {
           'user_name':this.loginUserName,
           'product_id': ProductId,
-          'poduct_desc': ProductDesc,
+          'product_desc': ProductDesc,
           'trans_amount': TransAmount,
           'trans_curr_code': TransCurrCode
         };

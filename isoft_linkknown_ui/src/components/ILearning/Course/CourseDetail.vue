@@ -31,7 +31,7 @@
                       </span>
                     </Col>
                     <Col span="6">
-                      <span @click="toPay('course',course.id)">
+                      <span @click="toPay('course_theme_type',course.id)">
                         <div class="toBuy">立即购买</div>
                       </span>
                     </Col>

@@ -22,7 +22,7 @@ var infoMap sync.Map
 type OrderParams struct {
 	UserName string  `json:"user_name"`
 	ProductId string  `json:"product_id"`
-	PoductDesc string`json:"poduct_desc"`
+	ProductDesc string`json:"product_desc"`
 	TransAmount int64 `json:"trans_amount"`
 	TransCurrCode string`json:"trans_curr_code"`
 }
@@ -30,7 +30,12 @@ type OrderParams struct {
 //下单返回参数
 type OrderResult struct {
 	UserName string  `json:"user_name"`
+	OrderId string  `json:"order_id"`
 	CodeUrl string  `json:"code_url"`
+	ProductId string  `json:"product_id"`
+	ProductDesc string  `json:"product_desc"`
+	TransAmount int64 `json:"trans_amount"`
+	TransCurrCode string`json:"trans_curr_code"`
 }
 
 // 解决跨域问题
@@ -67,8 +72,9 @@ func (this *MainController) Order() {
 		userMap.Store("orderId",orderId)
 		userMap.Store("transTime",now)
 		userMap.Store("productId",orderParams.ProductId)
-		userMap.Store("productDesc",orderParams.PoductDesc)
+		userMap.Store("productDesc",orderParams.ProductDesc)
 		userMap.Store("transAmount",orderParams.TransAmount)
+		userMap.Store("transCurrCode",orderParams.TransCurrCode)
 		infoMap.Store(orderParams.UserName,userMap)
 		//调下单方法
 		this.Pay(now, orderId, orderParams, orderChan)
@@ -81,7 +87,12 @@ func (this *MainController) Order() {
 			//返回信息
 			var orderResult OrderResult
 			orderResult.UserName = orderParams.UserName
+			orderResult.OrderId = orderId
 			orderResult.CodeUrl = fmt.Sprintf("%s",code_url);
+			orderResult.ProductId = orderParams.ProductId
+			orderResult.ProductDesc = orderParams.ProductDesc
+			orderResult.TransAmount = orderParams.TransAmount
+			orderResult.TransCurrCode = orderParams.TransCurrCode
 			resultMessageContent, _ := json.Marshal(orderResult)
 			err = conn.WriteMessage(messageType, resultMessageContent)
 			if err != nil {
@@ -103,6 +114,7 @@ type PaySuccessNotify struct {
 	ProductId string  `json:"product_id"`
 	ProductDesc string  `json:"product_desc"`
 	TransAmount int64  `json:"trans_amount"`
+	TransCurrCode string`json:"trans_curr_code"`
 }
 
 //微信支付官方通知支付成功 -- 模拟
@@ -117,6 +129,7 @@ func (this *MainController)TestNotify()  {
 		product_id, _ := userMap.Load("productId")
 		product_desc, _ := userMap.Load("productDesc")
 		trans_amount, _ := userMap.Load("transAmount")
+		trans_curr_code, _ := userMap.Load("transCurrCode")
 		messageType := messageType_value.(int)
 		conn := conn_value.(*websocket.Conn)
 		orderId := order_id.(string)
@@ -124,6 +137,7 @@ func (this *MainController)TestNotify()  {
 		productId := product_id.(string)
 		productDesc := product_desc.(string)
 		transAmount := trans_amount.(int64)
+		transCurrCode := trans_curr_code.(string)
 		defer conn.Close()
 		var paySuccessNotify PaySuccessNotify
 		paySuccessNotify.UserName = userName
@@ -133,6 +147,7 @@ func (this *MainController)TestNotify()  {
 		paySuccessNotify.ProductId = productId
 		paySuccessNotify.ProductDesc = productDesc
 		paySuccessNotify.TransAmount = transAmount
+		paySuccessNotify.TransCurrCode = transCurrCode
 		payResult, _ := json.Marshal(paySuccessNotify)
 		conn.WriteMessage(messageType, []byte(payResult))
 	}
@@ -144,7 +159,7 @@ func (this *MainController) Pay(now string, orderId string, orderParams OrderPar
 	o := orm.NewOrm()
 	//界面接收的参数
 	productId := orderParams.ProductId
-	productDesc := orderParams.PoductDesc
+	productDesc := orderParams.ProductDesc
 	transAmount := orderParams.TransAmount
 	transCurrCode := orderParams.TransCurrCode
 	//productId := "001256"

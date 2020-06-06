@@ -57,13 +57,13 @@
                     <Col span="4">
                       <div v-if="coupon.coupon_state==='used'">
                         <!--已使用-->
-                        <img style="border-radius:50%;position: relative;" width=80 height=80 src="../../../static/images/order/used.jpg">
+                        <img style="border-radius:50%;position: relative;left: -40px;" width=80 height=80 src="../../../static/images/order/used.jpg">
                       </div>
                       <div v-else>
                         <!--未使用-->
                         <span v-if="isOverdue(coupon.start_date,coupon.end_date)">
                           <!--未使用 过期的-->
-                          <img style="border-radius:50%;position: relative;left: -100px" width=80 height=80 src="../../../static/images/order/overdue.jpg">
+                          <img style="border-radius:50%;position: relative;left: -40px" width=80 height=80 src="../../../static/images/order/overdue.jpg">
                         </span>
                         <span v-else>
                           <!--未使用 未过期-->
@@ -130,11 +130,11 @@
     },
     methods: {
       click2RefreshCouponList:function(pattern){
-        this.pattern = pattern;
         if (checkFastClick()) {
           this.$Message.error("点击过快,请稍后重试!");
           return false;
         }else {
+          this.pattern = pattern;
           this.refreshCouponList();
         }
       },

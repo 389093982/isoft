@@ -43,7 +43,7 @@
                   </Row>
                 </Col>
                 <!--支付金额-->
-                <Col span="7" style="color: #ff6900;">
+                <Col span="6" style="color: #ff6900;">
                   <Row>
                     <div style="margin-top: 20px">
                       <Icon type="logo-yen" style="font-size: 12px"/>
@@ -58,6 +58,11 @@
                       <code style="color: grey">{{formatAddTime(goods.add_time)}}</code>
                     </Row>
                   </Row>
+                </Col>
+                <Col span="1">
+                  <div style="width: 0;height: 0">
+                    <img style="position: relative;top: -20px;left: -100px;z-index:0" src="../../../static/images/vipCenter/shopping_cart.png" height="80" width="100"/>
+                  </div>
                 </Col>
               </Row>
               <!--彩色分底线-->
