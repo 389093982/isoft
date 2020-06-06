@@ -136,6 +136,10 @@ dependencies {
     // 适用 viewPager 好看的指示器
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    // 支持 gif 动画图片
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+    // FloatWindow 安卓任意界面悬浮窗
+    implementation 'com.github.yhaolpz:FloatWindow:1.0.9'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

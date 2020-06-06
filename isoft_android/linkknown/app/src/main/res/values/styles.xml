@@ -172,4 +172,9 @@
         <item name="android:layout_height">45dp</item>
         <item name="loading_color">@color/colorAccent</item>
     </style>
+
+    <style name="popwindow_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popwindow_in</item>
+        <item name="android:windowExitAnimation">@anim/popwindow_gone</item>
+    </style>
 </resources>
