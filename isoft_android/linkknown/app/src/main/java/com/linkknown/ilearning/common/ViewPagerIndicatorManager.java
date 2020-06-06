@@ -2,6 +2,7 @@ package com.linkknown.ilearning.common;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.widget.LinearLayout;
 
 import androidx.viewpager.widget.ViewPager;
@@ -87,9 +88,10 @@ public class ViewPagerIndicatorManager {
 				};
 
 				// 设置颜色和选中时的颜色
-				colorTransitionPagerTitleView.setNormalColor(UIUtils.getResourceColor(context, R.color.gray1));
-				colorTransitionPagerTitleView.setSelectedColor(Color.RED);
+				colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#999999"));
+				colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#333333"));
 				colorTransitionPagerTitleView.setTextSize(14);
+				colorTransitionPagerTitleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 				colorTransitionPagerTitleView.setLayoutParams(params);
 				colorTransitionPagerTitleView.setText(titles.get(index));
 				colorTransitionPagerTitleView.setOnClickListener(view -> viewPager.setCurrentItem(index));
