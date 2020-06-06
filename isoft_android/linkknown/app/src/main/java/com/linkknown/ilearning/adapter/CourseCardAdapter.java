@@ -38,11 +38,6 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
         viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
 
         UIUtils.setImage(mContext,  viewHolder.findView(R.id.courseImage), courseMeta.getSmall_image());
-//
-//        viewHolder.courseImage.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
-//            intent.putExtra("course_id", courseMeta.getId());
-//            return intent;
-//        }));
 
         if (StringUtils.isNotEmpty(courseMeta.getIsCharge())) {
             viewHolder.setVisible(R.id.isCharge, true);
