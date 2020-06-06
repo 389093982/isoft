@@ -3,6 +3,7 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -18,10 +19,14 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.AdviseListResponse;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,11 @@ public class AdviseActivity extends BaseActivity {
     public Toolbar toolbar;
 
     private Context mContext;
+
+    @BindView(R.id.editAdviseBtn)
+    public TextView editAdviseBtn;
+
+    private BottomQuickEidtDialog editAdviseDialog;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -146,5 +156,35 @@ public class AdviseActivity extends BaseActivity {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
+
+        editAdviseBtn.setOnClickListener(v -> handleEditAdvise());
+    }
+
+    private void handleEditAdvise() {
+        editAdviseDialog = new BottomQuickEidtDialog(mContext, text -> {
+
+            LinkKnownApiFactory.getLinkKnownApi().insertAdvise(text, "advise")
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse baseResponse) {
+                            if (baseResponse.isSuccess()) {
+                                editAdviseDialog.dismiss();
+                                // 刷新列表
+                                initData();
+                            } else {
+                                ToastUtil.showText(mContext, baseResponse.getErrorMsg());
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            editAdviseDialog.dismiss();
+                        }
+                    });
+
+        });
     }
 }

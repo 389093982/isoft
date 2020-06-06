@@ -171,8 +171,11 @@ public interface LinkKnownApi {
                                                          @Query("offset") int pageSize);
 
     // 意见、建议或吐槽
-
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPageAdvise")
     Observable<AdviseListResponse> queryPageAdvise(@Query("current_page") int current_page,
                                                    @Query("offset") int pageSize);
+
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/InsertAdvise")
+    Observable<BaseResponse> insertAdvise(@Query("advise") String advise,
+                                                   @Query("advise_type") String advise_type);
 }
