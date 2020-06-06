@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.fragment.CourseClassifyFragment;
+import com.linkknown.ilearning.fragment.CourseTagFragment;
 import com.linkknown.ilearning.service.CourseClassifyService;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 // 课程分类页面
-public class CourseClassifyActivity extends AppCompatActivity {
+public class CourseTagActivity extends AppCompatActivity {
     // 顶部工具栏
     @BindView(R.id.headerToolBarLayout)
     public LinearLayout headerToolBarLayout;
@@ -39,7 +39,7 @@ public class CourseClassifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_types);
+        setContentView(R.layout.activity_course_tag);
 
         ButterKnife.bind(this);
 
@@ -70,7 +70,7 @@ public class CourseClassifyActivity extends AppCompatActivity {
 
                 for (String classifyName : courseFirstClassify.classifyNames){
                     // 创建 fragment
-                    CourseClassifyFragment fragment = new CourseClassifyFragment();
+                    CourseTagFragment fragment = new CourseTagFragment();
                     mFragments.add(fragment);
                     // title 限制 2 个字，好看点
                     titles.add(classifyName);

@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.linkknown.ilearning.util.NetUtil;
+import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
+
 public abstract class BaseLazyLoadFragment extends Fragment {
 
     private View mRootView;
@@ -21,6 +25,11 @@ public abstract class BaseLazyLoadFragment extends Fragment {
         if (mRootView==null){
             mRootView = inflater.inflate(providelayoutId(),container,false);
             initView(mRootView);
+
+            //判断网络状态，并初始化数据
+            if (!NetUtil.isNetworkAvailable(this.getContext())) {
+                ToastUtil.showText(getContext(), "亲，网络异常，无法获取数据请检查网络！");
+            }
         }
         return mRootView;
     }

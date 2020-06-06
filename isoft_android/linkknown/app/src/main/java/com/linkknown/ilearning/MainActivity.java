@@ -1,11 +1,15 @@
 package com.linkknown.ilearning;
 
 import android.Manifest;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,19 +29,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
-import com.linkknown.ilearning.fragment.ClassifyFragment;
+import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
 import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.popup.BottomQuickWindow;
 import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.superluo.textbannerlibrary.TextBannerView;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -46,6 +53,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.droidsonroids.gif.GifImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -108,6 +116,36 @@ public class MainActivity extends AppCompatActivity {
         observeLogin();
         // 自动登录
         autoLogin();
+
+        initXiaoxiongmao();
+    }
+
+    private void initXiaoxiongmao() {
+        ImageView xiaomingmao = new GifImageButton(MainActivity.this);
+        xiaomingmao.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.touming));
+        xiaomingmao.setScaleType(ImageView.ScaleType.FIT_XY);
+        xiaomingmao.setImageResource(R.drawable.ic_xiongmao);
+
+            FloatWindow
+              .with(getApplicationContext())
+                .setView(xiaomingmao)
+                .setWidth(Screen.width,0.15f)
+                .setHeight(Screen.width,0.2f)
+                .setX(Screen.width,0.7f)
+                .setY(Screen.height,0.75f)
+                .setDesktopShow(true)                          //桌面显示
+//                .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
+//                .setPermissionListener(mPermissionListener)  //监听权限申请结果
+                .setFilter(true, MainActivity.class)     //指定界面显示,其他界面隐藏
+                .setMoveType(MoveType.slide)
+                .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
+                .build();
+
+        BottomQuickWindow bottomQuickWindow = new BottomQuickWindow(MainActivity.this);
+        xiaomingmao.setOnClickListener(v -> {
+            // 显示 popupwindow
+            bottomQuickWindow.show();
+        });
     }
 
     private void initBottomNavigation() {
@@ -205,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
                 UserService.logout(mContext);
             } else if (id == R.id.shoucang) {
-                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
+//                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
             }
 
             // 抽屉关闭
@@ -317,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
         fgLists = new ArrayList<>(4);
         // 创建 3 个片段
         fgLists.add(new HomeFragment());
-        fgLists.add(new ClassifyFragment());
+        fgLists.add(new CourseClassifyFragment());
         fgLists.add(new TuijianFragment());
         fgLists.add(new MineFragment());
     }
@@ -333,5 +371,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mingyanTextbanner.stopViewAnimator();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //销毁
+        FloatWindow.destroy();
     }
 }

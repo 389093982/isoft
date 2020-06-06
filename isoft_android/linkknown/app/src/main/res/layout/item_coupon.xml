@@ -57,7 +57,8 @@
         android:layout_height="120dp"
         android:layout_alignParentEnd="true"
         android:scaleType="fitXY"
-        android:src="@drawable/coupon" />
+        android:src="@drawable/coupon"
+        android:foreground="?attr/selectableItemBackground"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
