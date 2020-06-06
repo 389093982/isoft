@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
-import com.linkknown.ilearning.activity.CourseClassifyActivity;
+import com.linkknown.ilearning.activity.CourseTagActivity;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
@@ -62,8 +61,8 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         List<Item> mData = new ArrayList<>();
 
-        mData.add(new Item("分类", R.drawable.item_space_live, CourseClassifyActivity.class));
-        mData.add(new Item("考试", R.drawable.item_space_live, CourseClassifyActivity.class));
+        mData.add(new Item("分类", R.drawable.item_space_live, CourseTagActivity.class));
+        mData.add(new Item("考试", R.drawable.item_space_live, CourseTagActivity.class));
         mData.add(new Item("推荐视频", R.drawable.item_space_zhaomu, CourseListActivity.class));
         mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
         mData.add(new Item("畅享图书", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));

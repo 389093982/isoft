@@ -27,9 +27,8 @@
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.NewChannelActivity" />
         <activity android:name=".activity.TeacherZhaoPingActivity" />
-        <activity android:name=".activity.IFavoritesActivity" />
         <activity
-            android:name=".activity.CourseClassifyActivity"
+            android:name=".activity.CourseTagActivity"
             android:label="@string/title_activity_show_types"
             android:theme="@style/AppTheme" />
         <activity

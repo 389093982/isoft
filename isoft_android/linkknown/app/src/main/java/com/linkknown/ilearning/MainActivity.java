@@ -25,10 +25,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.linkknown.ilearning.activity.IFavoritesActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
-import com.linkknown.ilearning.fragment.ClassifyFragment;
+import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
 import com.linkknown.ilearning.fragment.TuijianFragment;
@@ -205,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
                 UserService.logout(mContext);
             } else if (id == R.id.shoucang) {
-                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
+//                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
             }
 
             // 抽屉关闭
@@ -317,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
         fgLists = new ArrayList<>(4);
         // 创建 3 个片段
         fgLists.add(new HomeFragment());
-        fgLists.add(new ClassifyFragment());
+        fgLists.add(new CourseClassifyFragment());
         fgLists.add(new TuijianFragment());
         fgLists.add(new MineFragment());
     }
