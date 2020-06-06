@@ -5,14 +5,11 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -24,8 +21,8 @@ import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseSearchActivity;
-import com.linkknown.ilearning.common.CommonNavigatorCreater;
 import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.common.ViewPagerIndicatorManager;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.ElementResponse;
 import com.linkknown.ilearning.popup.SearchHistoryPopupWindow;
@@ -34,13 +31,10 @@ import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -209,11 +203,6 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
     }
 
     private void initTopClassfiyView (List<String> mTitleDataList) {
-        // 创建指示器并绑定到 viewPager
-        CommonNavigator commonNavigator = CommonNavigatorCreater.setDefaultNavigator(getContext(), mTitleDataList, viewPager);
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
-
         // 动态创建多个 fragment
         List<Fragment> mFragments = new ArrayList<>();
         for (String title : mTitleDataList) {
@@ -224,23 +213,13 @@ public class ClassifyFragment extends BaseLazyLoadFragment {
 
         // 给 viewPager 绑定 fragment
         com.linkknown.ilearning.helper.ViewPagerHelper.bindQuickAdapter(viewPager, mFragments, mTitleDataList, getChildFragmentManager());
-        // 给 viewPager 添加事假监听
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                magicIndicator.onPageSelected(position);
-            }
+        // 创建 viewPager + 指示器管理类
+        ViewPagerIndicatorManager viewPagerIndicatorManager =
+                new ViewPagerIndicatorManager(getContext(), magicIndicator, mTitleDataList, viewPager);
+        // 由管理类统一进行绑定
+        viewPagerIndicatorManager.bind();
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                magicIndicator.onPageScrollStateChanged(state);
-            }
-        });
         // 默认选中第一项
         if (mTitleDataList.size() > 0) {
             viewPager.setCurrentItem(0);
