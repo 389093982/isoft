@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.api;
 
+import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
@@ -168,4 +169,10 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList")
     Observable<MessageListResponse> queryPageMessageList(@Query("current_page") int current_page,
                                                          @Query("offset") int pageSize);
+
+    // 意见、建议或吐槽
+
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPageAdvise")
+    Observable<AdviseListResponse> queryPageAdvise(@Query("current_page") int current_page,
+                                                   @Query("offset") int pageSize);
 }
