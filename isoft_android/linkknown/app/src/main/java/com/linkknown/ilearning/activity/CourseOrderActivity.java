@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.PayOrderFragment;
+import com.linkknown.ilearning.util.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +44,34 @@ public class CourseOrderActivity extends BaseActivity {
         initView();
     }
 
-
     private void initView(){
         initToolBar(toolbar, true, "我的订单");
-        mFragments.add(new PayOrderFragment());
-        mFragments.add(new PayOrderFragment());
+
+        titles.add("全部");
+        Fragment showOrderFragment = new PayOrderFragment();
+        showOrderFragment.setArguments(CommonUtil.createBundle("scope","ALL"));
+        mFragments.add(showOrderFragment);
+
         titles.add("待付款");
-        titles.add("历史订单");
+        showOrderFragment = new PayOrderFragment();
+        showOrderFragment.setArguments(CommonUtil.createBundle("scope","WAIT_FOR_PAY"));
+        mFragments.add(showOrderFragment);
+
+        titles.add("已付款");
+        showOrderFragment = new PayOrderFragment();
+        showOrderFragment.setArguments(CommonUtil.createBundle("scope","PAID"));
+        mFragments.add(showOrderFragment);
+
+        titles.add("已取消");
+        showOrderFragment = new PayOrderFragment();
+        showOrderFragment.setArguments(CommonUtil.createBundle("scope","CANCELLED"));
+        mFragments.add(showOrderFragment);
+
+        titles.add("失败");
+        showOrderFragment = new PayOrderFragment();
+        showOrderFragment.setArguments(CommonUtil.createBundle("scope","FAIL"));
+        mFragments.add(showOrderFragment);
+
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @NonNull
             @Override
@@ -74,6 +96,5 @@ public class CourseOrderActivity extends BaseActivity {
         });
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
 }

@@ -49,9 +49,9 @@
                       <Icon type="logo-yen" style="font-size: 12px"/>
                       <span style="font-size: 20px">{{goods.price}}</span>
                     </div>
-                    <Row v-if="goods.goods_price_on_add < goods.price">
+                    <Row v-if="goods.goods_price_on_add > goods.price">
                       <div style="color: #cc2517;font-size: 12px">
-                        比加入时降 {{goods.price - goods.goods_price_on_add}} 元
+                        比加入时降 {{goods.goods_price_on_add - goods.price}} 元
                       </div>
                     </Row>
                     <Row style="margin-top: 5px">

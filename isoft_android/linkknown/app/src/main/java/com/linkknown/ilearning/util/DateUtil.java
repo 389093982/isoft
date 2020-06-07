@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateUtil {
 
@@ -50,5 +51,30 @@ public class DateUtil {
         DateFormat dateFormat = new SimpleDateFormat(pattern);
         return dateFormat.format(date);
     }
+
+    /**
+     * 输入14位时间戳 返回 标准时间 yyyyMMdd hh:mm:ss
+     * 或者输入一个Date 做格式化
+     * @return
+     */
+    public static String formatDate_StandardForm(String timeStamp) {
+        String formatDate = "";
+        if (timeStamp.length()==14){
+            formatDate =  timeStamp.substring(0,4)+"-"+timeStamp.substring(4,6)+"-"+timeStamp.substring(6,8) + " "
+                    + timeStamp.substring(8,10)+":"+timeStamp.substring(10,12)+":"+timeStamp.substring(12,14);
+        }else if (timeStamp.indexOf("T")>0){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date date = null;
+            try {
+                date = sdf.parse(timeStamp);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        }
+        return formatDate;
+    }
+
+
 
 }

@@ -27,6 +27,8 @@ import com.linkknown.ilearning.activity.CourseOrderActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
+import com.linkknown.ilearning.activity.ShoppingCartActivity;
+import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -126,8 +128,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // 中间图标入口
         initMenuImageView();
 
+        //设置点击事件
         menuAboutLayout.setOnClickListener(this);
         menuOrderLayout.setOnClickListener(this);
+        menuPersonalCenter.setOnClickListener(this);
+        menuShoppingCart.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
     }
@@ -160,6 +165,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * 跳转到新的界面
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -171,6 +179,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.menuOrderLayout:
                 UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
+                break;
+            case R.id.menuPersonalCenter:
+                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+                break;
+            case R.id.menuShoppingCart:
+                UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
                 break;
             case R.id.menuAdviseLayout:
                 UIUtils.gotoActivity(mContext, AdviseActivity.class);

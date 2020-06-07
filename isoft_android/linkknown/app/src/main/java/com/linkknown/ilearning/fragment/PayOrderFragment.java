@@ -21,6 +21,7 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -46,11 +47,16 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
     public SwipeRefreshLayout refreshLayout;
     private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
+    //展示范围scope
+    private String scope;
+
     //获取订单数据
     private List<PayOrderResponse.PayOrder> orderList = new ArrayList<PayOrderResponse.PayOrder>();
 
     @Override
     protected void initView(View mRootView) {
+        // 接收传递过来的参数
+        scope = getArguments().getString("scope", "ALL");
         ButterKnife.bind(this, mRootView);
         swipeRefreshLayoutHelper.bind(getContext(), refreshLayout);
         swipeRefreshLayoutHelper.initStyle();
@@ -70,21 +76,41 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                 UIUtils.setImage(getContext(),viewHolder.goodsImg,orderList.get(position).getGoods_img());
                 viewHolder.goodsDesc.setText(orderList.get(position).getGoods_desc());
                 viewHolder.paidAmount.setText("￥"+orderList.get(position).getPaid_amount()+"");
-                String transTime = orderList.get(position).getTrans_time();
-                viewHolder.transTime.setText(UIUtils.formatDate_StandardForm(transTime));
-                viewHolder.queryDeatilBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UIUtils.gotoActivity(getContext(), PayOrderDetailActivity.class, new UIUtils.IntentParamWrapper() {
-                            @Override
-                            public Intent wrapper(Intent intent) {
-                                Gson gson = new Gson();
-                                intent.putExtra("payOrderDetail",orderList.get(position));
-                                return intent;
-                            }
-                        });
-                    }
-                });
+                String payResult = orderList.get(position).getPay_result();
+
+                //成功和失败展示交易时间， 待支付和被取消展示下单时间
+                if ("SUCCESS".equals(payResult) || "FAIL".equals(payResult)) {
+                    String transTime = orderList.get(position).getTrans_time();
+                    viewHolder.transTime.setText(DateUtil.formatDate_StandardForm(transTime));
+                    viewHolder.orderTime.setVisibility(View.GONE);
+                    viewHolder.transTime.setVisibility(View.VISIBLE);
+                }else if ("CANCELLED".equals(payResult) || "".equals(payResult.trim())){
+                    String orderTime = orderList.get(position).getOrder_time();
+                    viewHolder.orderTime.setText(DateUtil.formatDate_StandardForm(orderTime));
+                    viewHolder.transTime.setVisibility(View.GONE);
+                    viewHolder.orderTime.setVisibility(View.VISIBLE);
+                }
+
+                //只有交易成功和失败可以看到 "订单详情" 按钮
+                if ("SUCCESS".equals(payResult) || "FAIL".equals(payResult)){
+                    viewHolder.queryDeatilBtn.setVisibility(View.VISIBLE);
+                    viewHolder.queryDeatilBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UIUtils.gotoActivity(getContext(), PayOrderDetailActivity.class, new UIUtils.IntentParamWrapper() {
+                                @Override
+                                public Intent wrapper(Intent intent) {
+                                    Gson gson = new Gson();
+                                    intent.putExtra("payOrderDetail",orderList.get(position));
+                                    return intent;
+                                }
+                            });
+                        }
+                    });
+                }else{
+                    viewHolder.queryDeatilBtn.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -109,7 +135,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
 
     //加载数据
     private void executeLoadPageData(int current_page, int pageSize,String user_name) {
-        LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(current_page, pageSize,user_name)
+        LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(current_page, pageSize,user_name,scope)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<PayOrderResponse>() {
@@ -162,8 +188,8 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
         TextView goodsDesc;
         TextView paidAmount;
         TextView transTime;
+        TextView orderTime;
         TextView queryDeatilBtn;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -171,6 +197,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
             goodsDesc = itemView.findViewById(R.id.goodsDesc);
             paidAmount = itemView.findViewById(R.id.paidAmount);
             transTime = itemView.findViewById(R.id.transTime);
+            orderTime = itemView.findViewById(R.id.orderTime);
             queryDeatilBtn = itemView.findViewById(R.id.queryDeatilBtn);
         }
     }

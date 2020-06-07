@@ -31,6 +31,8 @@ public class PayOrderResponse extends BaseResponse{
         private BigDecimal goods_original_price;
         private String activity_type;
         private String activity_type_bind_id;
+        private String order_time;
+        private String code_url;
 
     }
 
