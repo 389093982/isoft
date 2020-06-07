@@ -16,6 +16,7 @@ import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.model.PayShoppinpCartResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -163,7 +164,21 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
-                                                   @Query("user_name") String user_name);
+                                                   @Query("user_name") String user_name,
+                                                   @Query("scope") String scope);
+
+
+    // 查询购物车
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayShoppingCartList")
+    Observable<PayShoppinpCartResponse> queryPayShoppingCartList(@Query("current_page") int current_page,
+                                                                 @Query("offset") int pageSize);
+
+
+    // 从购物车里删除
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/deleteFromShoppingCart")
+    Observable<BaseResponse> deleteFromShoppingCart(@Query("goods_type") String goodsType,
+                                                    @Query("goods_id") String goodsId);
+
 
     // 查询消息
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList")

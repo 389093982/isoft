@@ -25,6 +25,9 @@ import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.LoginUtil;
+import com.linkknown.ilearning.activity.ShoppingCartActivity;
+import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -139,8 +142,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // 中间图标入口
         initMenuImageView();
 
+        //设置点击事件
         menuAboutLayout.setOnClickListener(this);
         menuOrderLayout.setOnClickListener(this);
+        menuPersonalCenter.setOnClickListener(this);
+        menuShoppingCart.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
     }
@@ -179,17 +185,23 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private void initLoginView () {
         if (LoginUtil.checkHasLogin(mContext)) {
             userInfoLayout.setVisibility(View.VISIBLE);
-            UserDetailResponse.User user = LoginUtil.getLoginUserInfo(mContext).getUserDetailResponse().getUser();
-            // 展示用户头像、用户名、积分和个性签名
-            UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
-            userName.setText("学友" + LoginUtil.getLoginNickName(mContext));
-            userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
-            userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+            LoginUserResponse loginUserInfo = LoginUtil.getLoginUserInfo(mContext);
+            if (loginUserInfo!=null){
+                UserDetailResponse.User user = loginUserInfo.getUserDetailResponse().getUser();
+                // 展示用户头像、用户名、积分和个性签名
+                UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
+                userName.setText("学友" + LoginUtil.getLoginNickName(mContext));
+                userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
+                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+            }
         } else {
             userInfoLayout.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * 跳转到新的界面
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -201,6 +213,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.menuOrderLayout:
                 UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
+                break;
+            case R.id.menuPersonalCenter:
+                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+                break;
+            case R.id.menuShoppingCart:
+                UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
                 break;
             case R.id.menuAdviseLayout:
                 UIUtils.gotoActivity(mContext, AdviseActivity.class);
