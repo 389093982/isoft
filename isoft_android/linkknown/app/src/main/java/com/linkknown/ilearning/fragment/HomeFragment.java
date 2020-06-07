@@ -37,17 +37,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseLazyLoadFragment {
+
     private Context mContext;
 
     // 存储所有 fragment
     private List<Fragment> mFragments = new ArrayList<>();
+
     // 存储 fragment 的标题
     private List<String> titles = new ArrayList<>();
+
     // tabLayout 和 viewPager 用于切换 fragment
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
     // 添加更多频道的图标
     @BindView(R.id.add_channel)
     ImageView addChannel;
@@ -55,6 +60,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
     // 名人名言
     @BindView(R.id.mingyanTextbanner)
     TextBannerView mingyanTextbanner;
+
     // 铃铛(消息)
     @BindView(R.id.lingdang)
     ImageView lingdang;
@@ -62,11 +68,14 @@ public class HomeFragment extends BaseLazyLoadFragment {
     // 工具栏中的用户布局
     @BindView(R.id.toolBarLoginLayout)
     public LinearLayout toolBarLoginLayout;
+
     @BindView(R.id.toolBarUnLoginLayout)
     public LinearLayout toolBarUnLoginLayout;
+
     // 用户布局中的用户名和头像
     @BindView(R.id.person_head)
     public ImageView person_head;
+
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
@@ -106,40 +115,42 @@ public class HomeFragment extends BaseLazyLoadFragment {
     private void initFragment () {
         addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
 
-        // 创建 fragment
-        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
-        CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
+        titles.add("全部");
         CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
-        CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
-        // activity 向 fragment 传参
-        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
-        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
         courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
-        courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","github","isCharge", ""));
-
-//        MoreFragment moreFragment5 = new MoreFragment();
-        MoreFragment moreFragment6 = new MoreFragment();
-        FindFragment findFragment = new FindFragment();
-        MoreFragment moreFragment8 = new MoreFragment();
-
-        mFragments.add(courseFilterFragment1);
-        mFragments.add(courseFilterFragment2);
         mFragments.add(courseFilterFragment3);
+
+        titles.add("免费");
+        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
+        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
+        mFragments.add(courseFilterFragment1);
+
+        titles.add("付费");
+        CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
+        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        mFragments.add(courseFilterFragment2);
+
+        titles.add("github专栏");
+        CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
+        courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","github","isCharge", ""));
         mFragments.add(courseFilterFragment4);
+
+//        titles.add("关注");
+//        MoreFragment moreFragment5 = new MoreFragment();
 //        mFragments.add(moreFragment5);
+
+        titles.add("推荐");
+        MoreFragment moreFragment6 = new MoreFragment();
         mFragments.add(moreFragment6);
+
+        titles.add("发现");
+        FindFragment findFragment = new FindFragment();
         mFragments.add(findFragment);
+
+        titles.add("更多");
+        MoreFragment moreFragment8 = new MoreFragment();
         mFragments.add(moreFragment8);
 
-        // title 限制 2 个字
-        titles.add("免费");
-        titles.add("付费");
-        titles.add("全部");
-        titles.add("github专栏");
-//        titles.add("关注");
-        titles.add("推荐");
-        titles.add("发现");
-        titles.add("更多");
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(this.getChildFragmentManager()) {
             @NonNull
