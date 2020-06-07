@@ -139,10 +139,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
 //        MoreFragment moreFragment5 = new MoreFragment();
 //        mFragments.add(moreFragment5);
 
-        titles.add("推荐");
-        MoreFragment moreFragment6 = new MoreFragment();
-        mFragments.add(moreFragment6);
-
         titles.add("发现");
         FindFragment findFragment = new FindFragment();
         mFragments.add(findFragment);
