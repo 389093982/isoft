@@ -64,6 +64,7 @@
     <color name="gray_20">#B3B3B3</color>
     <color name="gray_light">#dcdcdc</color>
     <color name="colorRecyclerBg">#070FFF00</color>
+    <color name="gray_80">#BEBBB4</color>
 
     <color name="translucent">#CC737373</color>
 </resources>
