@@ -12,6 +12,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
         <TextView
+            android:id="@+id/customTagName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="热门"
@@ -45,6 +46,14 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/gray_light"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,6 +72,14 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_refresh"
             android:tint="@color/gray1" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/gray_light" />
 
     </LinearLayout>
 
