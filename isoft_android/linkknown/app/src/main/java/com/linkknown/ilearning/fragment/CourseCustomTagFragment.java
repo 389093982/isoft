@@ -2,9 +2,11 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.fragment.dialog.WaitingDialog;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -43,6 +46,8 @@ import io.reactivex.schedulers.Schedulers;
 public class CourseCustomTagFragment extends Fragment {
 
     private Context mContext;
+    private Handler handler = new Handler();
+    private WaitingDialog waitingDialog;
 
     @BindView(R.id.customTagLayout)
     public LinearLayout customTagLayout;
@@ -73,6 +78,7 @@ public class CourseCustomTagFragment extends Fragment {
 
         custom_tag = getArguments().getString("custom_tag", "");
 
+        waitingDialog = new WaitingDialog();
         initView();
         initData();
 
@@ -82,10 +88,17 @@ public class CourseCustomTagFragment extends Fragment {
     private void registerListener () {
         moreView.setOnClickListener(v -> ToastUtil.showText(mContext, "点击了更多"));
         refreshNextLayout.setOnClickListener(v -> {
+            waitingDialog.showDialog(this);
             // 动画效果
-            refreshNextBtn.animate().rotation(360).setInterpolator(new LinearInterpolator()).setDuration(1000).start();
-            // 加载下一页,最后一页的话加载第一页
-            loadPageData(CommonUtil.isLastPage(paginator) ? 1 : paginator.getCurrpage() + 1);
+            // 属性动画属性值不变,动画不会再次执行,所以此处不能写 360,得写变化值
+            refreshNextBtn.animate().rotation(refreshNextBtn.getRotation() + 360).setInterpolator(new LinearInterpolator()).setDuration(1000).start();
+
+            // 转圈转完再加载下一页
+            handler.postDelayed(() -> {
+                // 加载下一页,最后一页的话加载第一页
+                loadPageData(CommonUtil.isLastPage(paginator) ? 1 : paginator.getCurrpage() + 1);
+            }, 1000);
+
         });
     }
 
@@ -127,11 +140,13 @@ public class CourseCustomTagFragment extends Fragment {
                         } else {
                             customTagLayout.setVisibility(View.GONE);
                         }
+                        waitingDialog.dismissDialog();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         customTagLayout.setVisibility(View.GONE);
+                        waitingDialog.dismissDialog();
                     }
                 });
     }
