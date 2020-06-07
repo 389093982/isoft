@@ -98,14 +98,15 @@ public class UserDetailActivity extends BaseActivity {
                     public void onNext(UserDetailResponse userDetailResponse) {
                         if (userDetailResponse.isSuccess()){
                             UserDetailResponse.User user = userDetailResponse.getUser();
-                            // 设置用户头像、用户昵称、用户会员等级、用户标签语
-                            UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
-                            nickNameText.setText(user.getNick_name());
-                            vipLevel.setImageResource(UIUtils.getVipLevelImageResource(user.getVip_level()));
-                            userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
-                            genderView.setImageResource(UIUtils.getGenderImageResource(user.getGender()));
-
-                            initFragments(user.getUser_name());
+                            if (user!=null){
+                                // 设置用户头像、用户昵称、用户会员等级、用户标签语
+                                UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
+                                nickNameText.setText(user.getNick_name());
+                                vipLevel.setImageResource(UIUtils.getVipLevelImageResource(user.getVip_level()));
+                                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+                                genderView.setImageResource(UIUtils.getGenderImageResource(user.getGender()));
+                                initFragments(user.getUser_name());
+                            }
                         }
                     }
 
