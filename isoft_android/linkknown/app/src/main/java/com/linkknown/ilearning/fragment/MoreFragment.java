@@ -61,14 +61,14 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         List<Item> mData = new ArrayList<>();
 
-        mData.add(new Item("分类", R.drawable.item_space_live, CourseTagActivity.class));
-        mData.add(new Item("考试", R.drawable.item_space_live, CourseTagActivity.class));
-        mData.add(new Item("推荐视频", R.drawable.item_space_zhaomu, CourseListActivity.class));
-        mData.add(new Item("名师招募令", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
-        mData.add(new Item("畅享图书", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
-        mData.add(new Item("锦鲤活动", R.drawable.item_space_zhaomu, TeacherZhaoPingActivity.class));
-        mData.add(new Item("领券中心", R.drawable.item_space_zhaomu, CouponReceiveCenterActivity.class));
-        mData.add(new Item("个人中心", R.drawable.item_space_zhaomu, UserDetailActivity.class));
+        mData.add(new Item("分类", R.drawable.ic_fenlei, CourseTagActivity.class));
+        mData.add(new Item("考试", R.drawable.ic_test, CourseTagActivity.class));
+        mData.add(new Item("推荐视频", R.drawable.ic_video, CourseListActivity.class));
+        mData.add(new Item("名师招募令", R.drawable.ic_hire, TeacherZhaoPingActivity.class));
+        mData.add(new Item("畅享图书", R.drawable.ic_books, TeacherZhaoPingActivity.class));
+        mData.add(new Item("锦鲤活动", R.drawable.ic_huodong, TeacherZhaoPingActivity.class));
+        mData.add(new Item("领券中心", R.drawable.ic_coupon, CouponReceiveCenterActivity.class));
+        mData.add(new Item("个人中心", R.drawable.ic_personal_center, UserDetailActivity.class));
 
 
         MultiTypeAdapter adapter = new MultiTypeAdapter();
