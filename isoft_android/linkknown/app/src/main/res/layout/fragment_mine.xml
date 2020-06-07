@@ -10,19 +10,64 @@
         android:orientation="vertical">
 
         <!-- 用户信息 -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/userInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/small_headerIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/cutecat"/>
+                android:id="@+id/headerIcon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/cutecat"
+                android:layout_alignParentStart="true"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="学友 xxxx"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_toRightOf="@id/headerIcon"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                android:layout_toRightOf="@id/headerIcon"
+                android:layout_below="@id/userName">
+                <TextView
+                    android:id="@+id/userPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分"/>
+
+                <TextView
+                    android:id="@+id/userSignature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="用户标签语"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="每日签到"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:background="@drawable/common_tag_border"/>
+
+        </RelativeLayout>
 
         <!-- 卡片嵌套轮播图 -->
         <androidx.cardview.widget.CardView

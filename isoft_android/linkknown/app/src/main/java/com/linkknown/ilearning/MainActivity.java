@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         // 自动登录
         autoLogin();
 
-        initXiaoxiongmao();
+//        initXiaoxiongmao();
     }
 
     private void initXiaoxiongmao() {

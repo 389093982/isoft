@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
@@ -25,14 +23,17 @@ import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
-import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,10 +53,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public ImageView iv_huodong;
 
     @BindView(R.id.userInfoLayout)
-    public LinearLayout userInfoLayout;
+    public RelativeLayout userInfoLayout;
     // 登录用户头像和用户名
-    @BindView(R.id.small_headerIcon)
-    public ImageView small_headerIcon;
+    @BindView(R.id.headerIcon)
+    public ImageView headerIcon;
+    @BindView(R.id.userName)
+    public TextView userName;
+    @BindView(R.id.userPoint)
+    public TextView userPoint;
+    @BindView(R.id.userSignature)
+    public TextView userSignature;
 
     //购物车
     @BindView(R.id.menuShoppingCart)
@@ -127,7 +134,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         bindMenuDrawnStart();
 
         // 初始化登录相关信息
-        initLoginInfo();
+        initLoginView();
 
         // 中间图标入口
         initMenuImageView();
@@ -169,22 +176,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
     }
 
-    private void initLoginInfo () {
-        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
-            if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                userInfoLayout.setVisibility(View.VISIBLE);
-                small_headerIcon.setVisibility(View.VISIBLE);
-                // 登录成功
-                Glide.with(getContext())
-                        .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                        .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                        .into(small_headerIcon);
-            } else {
-                userInfoLayout.setVisibility(View.GONE);
-                // 登录失败
-                small_headerIcon.setVisibility(View.GONE);
-            }
-        });
+    private void initLoginView () {
+        if (LoginUtil.checkHasLogin(mContext)) {
+            userInfoLayout.setVisibility(View.VISIBLE);
+            UserDetailResponse.User user = LoginUtil.getLoginUserInfo(mContext).getUserDetailResponse().getUser();
+            // 展示用户头像、用户名、积分和个性签名
+            UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
+            userName.setText("学友" + LoginUtil.getLoginNickName(mContext));
+            userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
+            userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+        } else {
+            userInfoLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
