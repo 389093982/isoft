@@ -18,4 +18,6 @@ public class LoginUserResponse extends BaseResponse {
     private String userName;
     private String headerIcon;
 
+    // 包含当前登录用户信息
+    private UserDetailResponse userDetailResponse;
 }

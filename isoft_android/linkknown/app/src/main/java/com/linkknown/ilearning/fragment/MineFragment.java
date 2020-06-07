@@ -7,18 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
@@ -27,17 +22,29 @@ import com.linkknown.ilearning.activity.CourseOrderActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
+import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
+
+    @BindView(R.id.banner)
+    public Banner banner;
 
     @BindView(R.id.iv_coupon)
     public ImageView iv_coupon;
@@ -48,11 +55,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
 
+    @BindView(R.id.userInfoLayout)
+    public RelativeLayout userInfoLayout;
     // 登录用户头像和用户名
-    @BindView(R.id.small_headerIcon)
-    public ImageView small_headerIcon;
-    @BindView(R.id.big_headerIcon)
-    public ImageView big_headerIcon;
+    @BindView(R.id.headerIcon)
+    public ImageView headerIcon;
+    @BindView(R.id.userName)
+    public TextView userName;
+    @BindView(R.id.userPoint)
+    public TextView userPoint;
+    @BindView(R.id.userSignature)
+    public TextView userSignature;
 
     //购物车
     @BindView(R.id.menuShoppingCart)
@@ -118,12 +131,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //            StrictMode.setVmPolicy(builder.build());
 //            builder.detectFileUriExposure();
 //        }
+
+        initBanner();
+
         bindMenuDrawnStart();
 
-        initAppBar();
-
         // 初始化登录相关信息
-        initLoginInfo();
+        initLoginView();
 
         // 中间图标入口
         initMenuImageView();
@@ -137,6 +151,29 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         menuSettingLayout.setOnClickListener(this);
     }
 
+    // 初始化顶部轮播图组件
+    private void initBanner() {
+        banner.clearAnimation();
+        //设置 banner 样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+
+        // 存放轮播图所有图片
+        ArrayList<Integer> bannerImageList = new ArrayList<>();
+        ArrayList<String> bannerTitleList = new ArrayList<>();
+        //清空旧数据
+        bannerImageList.clear();
+        bannerTitleList.clear();
+        bannerImageList.add(R.drawable.banner_biancheng);
+        bannerImageList.add(R.drawable.banner_shaoer);
+        bannerTitleList.add("编程思维");
+        bannerTitleList.add("少儿编程");
+        banner.setImages(bannerImageList);
+        banner.setBannerTitles(bannerTitleList);
+        banner.start();
+    }
+
     private void initMenuImageView () {
         // 点击调往对应页面
         iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
@@ -145,24 +182,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
     }
 
-    private void initLoginInfo () {
-        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observe(this, loginUserResponse -> {
-            if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                small_headerIcon.setVisibility(View.VISIBLE);
-                // 登录成功
-                Glide.with(getContext())
-                        .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                        .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                        .into(small_headerIcon);
-                Glide.with(getContext())
-                        .load(UIUtils.replaceMediaUrl(loginUserResponse.getHeaderIcon()))
-                        .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
-                        .into(big_headerIcon);
-            } else {
-                // 登录失败
-                small_headerIcon.setVisibility(View.INVISIBLE);
-            }
-        });
+    private void initLoginView () {
+        if (LoginUtil.checkHasLogin(mContext)) {
+            userInfoLayout.setVisibility(View.VISIBLE);
+            UserDetailResponse.User user = LoginUtil.getLoginUserInfo(mContext).getUserDetailResponse().getUser();
+            // 展示用户头像、用户名、积分和个性签名
+            UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
+            userName.setText("学友" + LoginUtil.getLoginNickName(mContext));
+            userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
+            userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+        } else {
+            userInfoLayout.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -194,50 +225,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @BindView(R.id.appbar)
-    public AppBarLayout appbar;
-    @BindView(R.id.collapsing_toolbar)
-    public CollapsingToolbarLayout collapsing_toolbar;
-    @BindView(R.id.minePageToolBar)
-    public Toolbar minePageToolBar;
-
-    private CollapsingToolbarLayoutState state;
-    // 先写一个枚举定义出CollapsingToolbarLayout展开、折叠、中间，这三种状态。
-    private enum CollapsingToolbarLayoutState {
-        EXPANDED,
-        COLLAPSED,
-        INTERNEDIATE
-    }
-
-    private void initAppBar () {
-        appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            if (verticalOffset == 0) {
-                if (state != CollapsingToolbarLayoutState.EXPANDED) {
-                    state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
-                    collapsing_toolbar.setTitle("EXPANDED");//设置title为EXPANDED
-                }
-            } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-                if (state != CollapsingToolbarLayoutState.COLLAPSED) {
-                    collapsing_toolbar.setTitle("");//设置title不显示
-                    minePageToolBar.setVisibility(View.VISIBLE);//隐藏 toolbar
-                    state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
-                }
-            } else {
-                if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-                    if(state == CollapsingToolbarLayoutState.COLLAPSED){
-                        minePageToolBar.setVisibility(View.GONE);//由折叠变为中间状态时隐藏 toolbar
-                    }
-                    collapsing_toolbar.setTitle("INTERNEDIATE");//设置title为INTERNEDIATE
-                    state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
-                }
-            }
-        });
-    }
-
     /**
      * 菜单前面添加图标
      */
-    public void bindMenuDrawnStart(){
+    public void bindMenuDrawnStart() {
         UIUtils.setTextViewDrawbleImg(mContext, menuShoppingCartTextView, R.drawable.ic_shopping_cart, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuOrderTextView, R.drawable.ic_order2, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAdviseTextView, R.drawable.ic_advise, 0, 2, 40, 42);
@@ -248,6 +239,4 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         UIUtils.setTextViewDrawbleImg(mContext, menuSettingLayoutTextView, R.drawable.ic_setup, 0, 2, 40, 42);
     }
-
-
 }

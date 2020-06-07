@@ -13,15 +13,20 @@ import com.linkknown.ilearning.interceptor.HeaderInterceptor;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.RegistResponse;
+import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.CheckParamUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,6 +83,14 @@ public class UserService {
 
     public static void login(Context mContext, String username, String passwd) {
         LinkKnownApiFactory.getLinkKnownApi().postLogin(username, passwd, "http://www.linkknown.com?index=helloworld")
+                .flatMap((Function<LoginUserResponse, ObservableSource<LoginUserResponse>>) loginUserResponse -> {
+                    return Observable.zip(Observable.just(loginUserResponse),
+                            LinkKnownApiFactory.getLinkKnownApi().getUserDetail(loginUserResponse.getUserName()),
+                            (loginUserResponse1, userDetailResponse) -> {
+                                loginUserResponse1.setUserDetailResponse(userDetailResponse);
+                                return loginUserResponse1;
+                            });
+                })
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new Observer<LoginUserResponse>() {
@@ -90,6 +103,7 @@ public class UserService {
                     @Override
                     public void onNext(LoginUserResponse loginUserResponse) {
                         if (loginUserResponse.isSuccess()) {
+                            LoginUtil.memoryAccount(mContext, username, passwd, loginUserResponse);
                             // 记录 token 信息
                             LoginUtil.memoryRefreshToken(mContext, loginUserResponse.getTokenString(), loginUserResponse.getExpireSecond());
                             LiveEventBus.get("loginUserResponse", LoginUserResponse.class).post(loginUserResponse);

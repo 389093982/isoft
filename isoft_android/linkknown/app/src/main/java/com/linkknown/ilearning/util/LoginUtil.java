@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -68,6 +69,7 @@ public class LoginUtil {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.USER_SHARED_PREFERENCES_USER_NAME, userName);
         editor.putString(Constants.USER_SHARED_PREFERENCES_PASSWD, passwd);
+        editor.putString(Constants.USER_SHARED_PREFERENCES_USER_INFO, new Gson().toJson(loginUserResponse));
 
         if (loginUserResponse != null && loginUserResponse.isSuccess()) {
             editor.putString(Constants.USER_SHARED_PREFERENCES_TOKEN_STRING, loginUserResponse.getTokenString());
@@ -113,6 +115,11 @@ public class LoginUtil {
     public static String getHeaderIcon(Context mContext) {
         SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         return preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_HEADER_ICON, "");
+    }
+
+    public static LoginUserResponse getLoginUserInfo(Context mContext) {
+        SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
+        return new Gson().fromJson(preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_INFO, ""), LoginUserResponse.class);
     }
 
     public static String getLoginNickName(Context mContext) {
