@@ -3,10 +3,13 @@ package com.linkknown.ilearning.fragment;
 import android.content.Context;
 import android.view.View;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.NetUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -36,8 +39,9 @@ public class TuijianFragment extends BaseLazyLoadFragment {
 
         //加载轮播图
         initBannerView();
-    }
 
+        initCustomTagCourseView();
+    }
 
     @Override
     public void initData () {
@@ -93,5 +97,23 @@ public class TuijianFragment extends BaseLazyLoadFragment {
             }
         });
         banner.setImages(bannerImageList).start();
+    }
+
+    private void initCustomTagCourseView() {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+
+        CourseCustomTagFragment customTagFragment = new CourseCustomTagFragment();
+        customTagFragment.setArguments(CommonUtil.createBundle("custom_tag", "hot"));
+        transaction.replace(R.id.courseCustomTagHotLayout, customTagFragment);
+
+        CourseCustomTagFragment customTagFragment2 = new CourseCustomTagFragment();
+        customTagFragment2.setArguments(CommonUtil.createBundle("custom_tag", "recommend"));
+        transaction.replace(R.id.courseCustomTagHotLayout2, customTagFragment2);
+
+        CourseCustomTagFragment customTagFragment3 = new CourseCustomTagFragment();
+        customTagFragment3.setArguments(CommonUtil.createBundle("custom_tag", "views"));
+        transaction.replace(R.id.courseCustomTagHotLayout3, customTagFragment3);
+
+        transaction.commit();
     }
 }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/courseImageView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/linkknown" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/hotIconView"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_toRightOf="@+id/courseImageView"-->
+<!--        android:src="@drawable/linkknown"-->
+<!--        android:visibility="gone" />-->
+
+    <TextView
+        android:id="@+id/courseNameView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/courseImageView"
+        android:layout_alignLeft="@+id/courseImageView"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="课程名称"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/userNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/courseNameView"
+        android:layout_alignLeft="@+id/courseImageView"
+        android:layout_marginTop="2dp"
+        android:text="作者"
+        android:textSize="11sp" />
+</RelativeLayout>

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.linkknown.ilearning.BuildConfig;
@@ -71,10 +72,30 @@ public class UIUtils {
     }
 
     public static void setImage (Context context, ImageView imageView, String imageUrl){
-        if (StringUtils.isNotEmpty(imageUrl)){
+        setImage(context, imageView, imageUrl, -1);
+    }
+
+    /**
+     * radius 圆角图片角度
+     * @param context
+     * @param imageView
+     * @param imageUrl
+     * @param radius
+     */
+    public static void setImage (Context context, ImageView imageView, String imageUrl, int radius) {
+        if (StringUtils.isNotEmpty(imageUrl)) {
+            RequestOptions options;
+            if (radius > 0){
+                //设置图片圆角角度
+                RoundedCorners roundedCorners = new RoundedCorners(radius);
+                options = RequestOptions.bitmapTransform(roundedCorners);
+            } else {
+                options = new RequestOptions();
+            }
+
             Glide.with(context)
                     .load(UIUtils.replaceMediaUrl(imageUrl))
-                    .apply(new RequestOptions().placeholder(R.drawable.loading).error(R.drawable.error_image))
+                    .apply(options.placeholder(R.drawable.loading).error(R.drawable.error_image))
                     .into(imageView);
         }
     }
