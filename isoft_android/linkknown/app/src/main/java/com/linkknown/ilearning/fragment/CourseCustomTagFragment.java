@@ -33,6 +33,7 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -56,6 +57,9 @@ public class CourseCustomTagFragment extends Fragment {
     // 更多
     @BindView(R.id.moreView)
     public TextView moreView;
+    // 头部标题
+    @BindView(R.id.customTagName)
+    public TextView customTagName;
 
     @BindView(R.id.refreshNextLayout)
     public LinearLayout refreshNextLayout;
@@ -112,6 +116,8 @@ public class CourseCustomTagFragment extends Fragment {
                 UIUtils.setImage(mContext, viewHolder.findView(R.id.courseImageView), courseMeta.getSmall_image(), 20);
                 viewHolder.setText(R.id.courseNameView, courseMeta.getCourse_name());
                 viewHolder.setText(R.id.userNameText, courseMeta.getCourse_author());
+                // 设置顶部标题
+                customTagName.setText(courseMeta.getCustom_tag_name());
             }
         };
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));

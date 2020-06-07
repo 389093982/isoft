@@ -31,5 +31,7 @@ public class CourseMetaResponse extends BaseResponse {
         private int watch_number;
         private String course_label;
         private String isCharge;
+        private String custom_tag;
+        private String custom_tag_name;
     }
 }
