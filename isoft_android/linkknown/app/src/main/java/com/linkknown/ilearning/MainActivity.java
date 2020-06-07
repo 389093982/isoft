@@ -66,27 +66,36 @@ public class MainActivity extends AppCompatActivity {
     // 抽屉布局
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawer;
+    
     // 抽屉中的导航
     @BindView(R.id.navigationView)
     public NavigationView navigationView;
 
     // 用户登录之后显示用户头像及昵称
     private LinearLayout navigationLoginLayout;
+    
     // 未登录时显示提示信息的布局
     private RelativeLayout navigationUnLoginLayout;
-    // 用户头像
-    ImageView navigationHeaderIconView;
+    
     // 登陆后在头像下方显示的用户名
     private TextView navigationUserNameText;
 
-    List<Fragment> fgLists = new ArrayList<>();
+    //存放4个fragment
+    List<Fragment> fragmentList = new ArrayList<>();
+
+    //fragment适配器
+    public FragmentPagerAdapter mPagerAdapter;
+    
     // 底部导航栏
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
+    
     @BindView(R.id.bottom_navigation)
     public BottomNavigationView bottomNavigationView;
-    public FragmentPagerAdapter mPagerAdapter;
 
+    // 用户头像
+    ImageView navigationHeaderIconView;
+    
     // 名人名言
     TextBannerView mingyanTextbanner;
 
@@ -108,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         // 初始化导航栏
         initNavigation();
-        // fragment相关
+        // 4个fragment相关
         initFragment();
         // 初始化底部导航栏
         initBottomNavigation();
@@ -116,91 +125,14 @@ public class MainActivity extends AppCompatActivity {
         observeLogin();
         // 自动登录
         autoLogin();
-
+//        小熊猫-- 暂时取消
 //        initXiaoxiongmao();
     }
 
-    private void initXiaoxiongmao() {
-        ImageView xiaomingmao = new GifImageButton(MainActivity.this);
-        xiaomingmao.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.touming));
-        xiaomingmao.setScaleType(ImageView.ScaleType.FIT_XY);
-        xiaomingmao.setImageResource(R.drawable.ic_xiongmao);
 
-            FloatWindow
-              .with(getApplicationContext())
-                .setView(xiaomingmao)
-                .setWidth(Screen.width,0.15f)
-                .setHeight(Screen.width,0.2f)
-                .setX(Screen.width,0.7f)
-                .setY(Screen.height,0.75f)
-                .setDesktopShow(true)                          //桌面显示
-//                .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
-//                .setPermissionListener(mPermissionListener)  //监听权限申请结果
-                .setFilter(true, MainActivity.class)     //指定界面显示,其他界面隐藏
-                .setMoveType(MoveType.slide)
-                .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
-                .build();
-
-        BottomQuickWindow bottomQuickWindow = new BottomQuickWindow(MainActivity.this);
-        xiaomingmao.setOnClickListener(v -> {
-            // 显示 popupwindow
-            bottomQuickWindow.show();
-        });
-    }
-
-    private void initBottomNavigation() {
-        // FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 参考文章 https://www.jianshu.com/p/94515681e335
-        //设置适配器用于装载Fragment,ViewPager的好朋友
-        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return fgLists.get(position);  //得到Fragment
-            }
-
-            @Override
-            public int getCount() {
-                return fgLists.size();  //得到数量
-            }
-        };
-        //设置导航切换监听
-        bottomNavigationView.setOnNavigationItemSelectedListener(changeFragment);
-        // 默认场景下超过三个图标只显示选中图标的文字，此处是所有文字都显示
-        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
-        /**
-         * ViewPager的监听
-         */
-        setViewPagerListener();
-
-        viewPager.setAdapter(mPagerAdapter);   //设置适配器
-        viewPager.setOffscreenPageLimit(4); //预加载所有页
-    }
-
-    //判断选择的菜单,点击哪个就设置到对应的Fragment
-    private BottomNavigationView.OnNavigationItemSelectedListener changeFragment = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_home: {
-                    viewPager.setCurrentItem(0);
-                    return true;
-                }
-                case R.id.action_classfiy: {
-                    viewPager.setCurrentItem(1);
-                    return true;
-                }
-                case R.id.action_tuijian: {
-                    viewPager.setCurrentItem(2);
-                    return true;
-                }
-                case R.id.action_mine: {
-                    viewPager.setCurrentItem(3);
-                    return true;
-                }
-            }
-            return false;
-        }
-    };
-
+    /**
+     * 初始化导航栏
+     */
     private void initNavigation () {
         navigationView.setNavigationItemSelectedListener(item -> {
             // navigation view 点击事件
@@ -258,62 +190,59 @@ public class MainActivity extends AppCompatActivity {
         // 用户名和头像
         navigationUserNameText = headerView.findViewById(R.id.navigationUserNameText);
         navigationHeaderIconView = headerView.findViewById(R.id.navigationHeaderIconView);
-
         // 初始化名人名言
         initMingYan(headerView);
     }
+    
 
-    private void initMingYan(View headerView) {
-        // 名人名言
-        mingyanTextbanner = headerView.findViewById(R.id.mingyanTextbanner);
-        //设置数据
-        List<String> list = new ArrayList<>();
-
-        list.add("发现程序之美，遇见最好的自己");
-        list.add("今天你学习了吗？");
-        list.add("你是最棒的，奔跑吧孩子！");
-        list.add("路漫漫其修远兮，吾将上下而求索");
-
-        //调用setDatas(List<String>)方法后,TextBannerView自动开始轮播
-        //注意：此方法目前只接受List<String>类型
-        mingyanTextbanner.setDatas(list);
+    /**
+     * 初始化4个主菜单
+     */
+    private void initFragment() {
+        //底部导航栏有几项就有几个Fragment
+        fragmentList = new ArrayList<>(4);
+        // 创建 3 个片段
+        fragmentList.add(new HomeFragment());
+        fragmentList.add(new CourseClassifyFragment());
+        fragmentList.add(new TuijianFragment());
+        fragmentList.add(new MineFragment());
     }
 
-    //这里有3中滑动过程,我们用点击后就可以
-    private void setViewPagerListener() {
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
+    /**
+     * 初始化底部导航栏
+     */
+    private void initBottomNavigation() {
+        // FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 参考文章 https://www.jianshu.com/p/94515681e335
+        //设置适配器用于装载Fragment,ViewPager的好朋友
+        mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
-            public void onPageSelected(int position) {
-                //滑动页面后做的事，这里与BottomNavigationView结合，使其与正确page对应
-                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+            public Fragment getItem(int position) {
+                return fragmentList.get(position);  //得到Fragment
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public int getCount() {
+                return fragmentList.size();  //得到数量
             }
-        });
+        };
+        //设置导航切换监听
+        bottomNavigationView.setOnNavigationItemSelectedListener(changeFragment);
+        // 默认场景下超过三个图标只显示选中图标的文字，此处是所有文字都显示
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        /**
+         * ViewPager的监听
+         */
+        setViewPagerListener();
+
+        viewPager.setAdapter(mPagerAdapter);   //设置适配器
+        viewPager.setOffscreenPageLimit(4); //预加载所有页
     }
 
-    private void autoLogin () {
-        // 没有 tokenString 代表没有登录过,登录过期也需要重新登录
-        if (StringUtils.isEmpty(LoginUtil.getTokenString(this)) || LoginUtil.checkHasExpired(this)) {
-            // 获取存储的用户名和密码
-            SharedPreferences preferences = LoginUtil.getUserInfoSharedPreferences(this);
-            String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
-            String passwd = preferences.getString(Constants.USER_SHARED_PREFERENCES_PASSWD, "");
-            if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(passwd)) {
-                // 自动登录
-                UserService.login(this, username, passwd);
-            }
-        }
-    }
 
+    /**
+     * 初始化登录信息
+     */
     private void observeLogin () {
         if (LoginUtil.checkHasLogin(this)) {
             initLoginView(LoginUtil.getHeaderIcon(this), LoginUtil.getLoginNickName(this));
@@ -335,11 +264,132 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * 自动登录
+     */
+    private void autoLogin () {
+        // 没有 tokenString 代表没有登录过,登录过期也需要重新登录
+        if (StringUtils.isEmpty(LoginUtil.getTokenString(this)) || LoginUtil.checkHasExpired(this)) {
+            // 获取存储的用户名和密码
+            SharedPreferences preferences = LoginUtil.getUserInfoSharedPreferences(this);
+            String username = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
+            String passwd = preferences.getString(Constants.USER_SHARED_PREFERENCES_PASSWD, "");
+            if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(passwd)) {
+                // 自动登录
+                UserService.login(this, username, passwd);
+            }
+        }
+    }
+
+
+    /**
+     * 初始化小熊猫
+     */
+    private void initXiaoxiongmao() {
+        ImageView xiaomingmao = new GifImageButton(MainActivity.this);
+        xiaomingmao.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.touming));
+        xiaomingmao.setScaleType(ImageView.ScaleType.FIT_XY);
+        xiaomingmao.setImageResource(R.drawable.ic_xiongmao);
+
+            FloatWindow
+              .with(getApplicationContext())
+                .setView(xiaomingmao)
+                .setWidth(Screen.width,0.15f)
+                .setHeight(Screen.width,0.2f)
+                .setX(Screen.width,0.7f)
+                .setY(Screen.height,0.75f)
+                .setDesktopShow(true)                          //桌面显示
+//                .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
+//                .setPermissionListener(mPermissionListener)  //监听权限申请结果
+                .setFilter(true, MainActivity.class)     //指定界面显示,其他界面隐藏
+                .setMoveType(MoveType.slide)
+                .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
+                .build();
+
+        BottomQuickWindow bottomQuickWindow = new BottomQuickWindow(MainActivity.this);
+        xiaomingmao.setOnClickListener(v -> {
+            // 显示 popupwindow
+            bottomQuickWindow.show();
+        });
+    }
+    
+
+    //4个fragment 的对应跳转
+    private BottomNavigationView.OnNavigationItemSelectedListener changeFragment = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_home: {
+                    viewPager.setCurrentItem(0);
+                    return true;
+                }
+                case R.id.action_classfiy: {
+                    viewPager.setCurrentItem(1);
+                    return true;
+                }
+                case R.id.action_tuijian: {
+                    viewPager.setCurrentItem(2);
+                    return true;
+                }
+                case R.id.action_mine: {
+                    viewPager.setCurrentItem(3);
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+
+    /**
+     * 初始化名人名言
+     * @param headerView
+     */
+    private void initMingYan(View headerView) {
+        // 名人名言
+        mingyanTextbanner = headerView.findViewById(R.id.mingyanTextbanner);
+        //设置数据
+        List<String> list = new ArrayList<>();
+        list.add("发现程序之美，遇见最好的自己");
+        list.add("今天你学习了吗？");
+        list.add("你是最棒的，奔跑吧孩子！");
+        list.add("路漫漫其修远兮，吾将上下而求索");
+        //调用setDatas(List<String>)方法后,TextBannerView自动开始轮播
+        //注意：此方法目前只接受List<String>类型
+        mingyanTextbanner.setDatas(list);
+    }
+    
+
+    //这里有3中滑动过程,我们用点击后就可以
+    private void setViewPagerListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+            @Override
+            public void onPageSelected(int position) {
+                //滑动页面后做的事，这里与BottomNavigationView结合，使其与正确page对应
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 初始化登录视图
+     * @param headerIcon
+     * @param userName
+     */
     private void initLoginView(String headerIcon, String userName) {
         // 登录成功，显示登录布局
         navigationLoginLayout.setVisibility(View.VISIBLE);
         navigationUnLoginLayout.setVisibility(View.GONE);
-
         // 设置登录信息
         // 异步加载图片,使用 Glide 第三方库
         Glide.with(this)
@@ -350,16 +400,7 @@ public class MainActivity extends AppCompatActivity {
         navigationUserNameText.setText(userName);
     }
 
-    private void initFragment() {
-        //底部导航栏有几项就有几个Fragment
-        fgLists = new ArrayList<>(4);
-        // 创建 3 个片段
-        fgLists.add(new HomeFragment());
-        fgLists.add(new CourseClassifyFragment());
-        fgLists.add(new TuijianFragment());
-        fgLists.add(new MineFragment());
-    }
-
+    
     @Override
     protected void onResume() {
         super.onResume();
@@ -367,16 +408,20 @@ public class MainActivity extends AppCompatActivity {
         mingyanTextbanner.startViewAnimator();
     }
 
+    
     @Override
     protected void onStop() {
         super.onStop();
         mingyanTextbanner.stopViewAnimator();
     }
 
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //销毁
         FloatWindow.destroy();
     }
+    
+    
 }
