@@ -18,7 +18,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
-import com.linkknown.ilearning.activity.CourseOrderActivity;
+import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
@@ -33,7 +33,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -182,7 +181,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private void initMenuImageView () {
         // 点击调往对应页面
         iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
-        iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseOrderActivity.class));
+        iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
         iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
     }
@@ -219,7 +218,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 UIUtils.gotoActivity(mContext, SettingActivity.class);
                 break;
             case R.id.menuOrderLayout:
-                UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
+                UIUtils.gotoActivity(mContext, PayOrderActivity.class);
                 break;
             case R.id.toEditLayout:     // 用户布局去编辑点击事件
             case R.id.menuPersonalCenter:

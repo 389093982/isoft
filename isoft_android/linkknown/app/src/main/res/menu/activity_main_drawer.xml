@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="导航">
+    <item android:title="课程">
         <menu>
             <item
-                android:id="@+id/shouye"
-                android:icon="@drawable/ic_home"
-                android:title="首页"/>
+                android:id="@+id/course"
+                android:icon="@drawable/ic_order"
+                android:title="我的课程"/>
             <item
-                android:id="@+id/fenlei"
-                android:icon="@drawable/ic_classify"
-                android:title="分类"/>
+                android:id="@+id/shoucang"
+                android:icon="@drawable/ic_star"
+                android:title="我的收藏"/>
             <item
-                android:id="@+id/wode"
-                android:icon="@drawable/ic_mine"
-                android:title="我的"/>
-            <item
-                android:id="@+id/share"
-                android:icon="@drawable/ic_share"
-                android:title="分享"/>
+                android:id="@+id/guankan"
+                android:icon="@drawable/ic_history"
+                android:title="观看记录"/>
         </menu>
     </item>
     <item android:title="账户">
@@ -37,16 +33,12 @@
 
         </menu>
     </item>
-    <item android:title="空间">
+    <item android:title="分享">
         <menu>
             <item
-                android:id="@+id/shoucang"
-                android:icon="@drawable/ic_star"
-                android:title="我的收藏"/>
-            <item
-                android:id="@+id/guankan"
-                android:icon="@drawable/ic_history"
-                android:title="观看记录"/>
+                android:id="@+id/share"
+                android:icon="@drawable/ic_share"
+                android:title="分享"/>
         </menu>
     </item>
 

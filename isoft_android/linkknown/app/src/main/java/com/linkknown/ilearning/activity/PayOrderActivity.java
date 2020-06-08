@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CourseOrderActivity extends BaseActivity {
+public class PayOrderActivity extends BaseActivity {
 
     private Context mContext;
 
@@ -38,7 +38,7 @@ public class CourseOrderActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_order);
+        setContentView(R.layout.activity_pay_order);
         ButterKnife.bind(this);
         mContext = this;
         initView();
@@ -48,29 +48,29 @@ public class CourseOrderActivity extends BaseActivity {
         initToolBar(toolbar, true, "我的订单");
 
         titles.add("全部");
-        Fragment showOrderFragment = new PayOrderFragment();
-        showOrderFragment.setArguments(CommonUtil.createBundle("scope","ALL"));
-        mFragments.add(showOrderFragment);
+        Fragment payrderFragment = new PayOrderFragment();
+        payrderFragment.setArguments(CommonUtil.createBundle("scope","ALL"));
+        mFragments.add(payrderFragment);
 
         titles.add("待付款");
-        showOrderFragment = new PayOrderFragment();
-        showOrderFragment.setArguments(CommonUtil.createBundle("scope","WAIT_FOR_PAY"));
-        mFragments.add(showOrderFragment);
+        payrderFragment = new PayOrderFragment();
+        payrderFragment.setArguments(CommonUtil.createBundle("scope","WAIT_FOR_PAY"));
+        mFragments.add(payrderFragment);
 
         titles.add("已付款");
-        showOrderFragment = new PayOrderFragment();
-        showOrderFragment.setArguments(CommonUtil.createBundle("scope","PAID"));
-        mFragments.add(showOrderFragment);
+        payrderFragment = new PayOrderFragment();
+        payrderFragment.setArguments(CommonUtil.createBundle("scope","PAID"));
+        mFragments.add(payrderFragment);
 
         titles.add("已取消");
-        showOrderFragment = new PayOrderFragment();
-        showOrderFragment.setArguments(CommonUtil.createBundle("scope","CANCELLED"));
-        mFragments.add(showOrderFragment);
+        payrderFragment = new PayOrderFragment();
+        payrderFragment.setArguments(CommonUtil.createBundle("scope","CANCELLED"));
+        mFragments.add(payrderFragment);
 
         titles.add("失败");
-        showOrderFragment = new PayOrderFragment();
-        showOrderFragment.setArguments(CommonUtil.createBundle("scope","FAIL"));
-        mFragments.add(showOrderFragment);
+        payrderFragment = new PayOrderFragment();
+        payrderFragment.setArguments(CommonUtil.createBundle("scope","FAIL"));
+        mFragments.add(payrderFragment);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @NonNull
