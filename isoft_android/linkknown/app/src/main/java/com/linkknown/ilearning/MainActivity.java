@@ -26,11 +26,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
+import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.fragment.PayOrderFragment;
 import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.popup.BottomQuickWindow;
@@ -135,13 +138,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             // navigation view 点击事件
             int id = item.getItemId();
-            if (id == R.id.shouye) {
-                viewPager.setCurrentItem(0);
-            } else if (id == R.id.fenlei) {
-                viewPager.setCurrentItem(1);
-            } else if (id == R.id.wode) {
-                viewPager.setCurrentItem(3);
-            } else if (id == R.id.share) {
+            if (id == R.id.share) {
                 CommonUtil.send(mContext, Constants.SHARE_APK_INFO);
             } else if (id == R.id.denglu) {
 //            //intent跳转
@@ -176,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
                 UserService.logout(mContext);
             } else if (id == R.id.shoucang) {
 //                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
+            } else if (id == R.id.course) {
+                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
             }
 
             // 抽屉关闭
