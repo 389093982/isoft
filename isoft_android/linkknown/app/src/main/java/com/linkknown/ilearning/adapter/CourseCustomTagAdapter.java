@@ -1,12 +1,14 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +37,7 @@ public class CourseCustomTagAdapter extends BaseMultiItemQuickAdapter<CourseMeta
 
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, CourseMetaResponse.MultiItemTypeCourseMeta multiItemTypeCourseMeta) {
+        Log.e("图片==》", viewHolder.getAdapterPosition() + "==>" + multiItemTypeCourseMeta.getCourseMeta().getCourse_name() + "~~~~~" +  multiItemTypeCourseMeta.getCourseMeta().getSmall_image());
         // 根据返回的 type 分别设置数据
         switch (viewHolder.getItemViewType()) {
             case CourseMetaResponse.MultiItemTypeCourseMeta.ITEM_TYPE_LIST:

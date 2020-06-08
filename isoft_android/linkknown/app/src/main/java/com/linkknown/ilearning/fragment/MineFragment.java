@@ -158,6 +158,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
+        banner.setDelayTime(3000);
 
         // 存放轮播图所有图片
         ArrayList<Integer> bannerImageList = new ArrayList<>();

@@ -74,8 +74,6 @@ public class TuijianFragment extends BaseLazyLoadFragment {
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
-        //设置轮播的动画效果,里面有很多种特效,可以都看看效果
-        banner.setBannerAnimation(Transformer.Accordion);
         //设置轮播间隔时间
         banner.setDelayTime(3000);
         //设置是否为自动轮播，默认是true
