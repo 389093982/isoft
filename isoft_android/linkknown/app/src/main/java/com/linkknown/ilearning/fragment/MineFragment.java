@@ -98,12 +98,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.menuAboutLayoutTextView)
     public TextView menuAboutLayoutTextView;
 
-    //检查更新
-    @BindView(R.id.menuCheckUpdate)
-    public LinearLayout menuCheckUpdate;
-    @BindView(R.id.menuCheckUpdateTextView)
-    public TextView menuCheckUpdateTextView;
-
     //设置
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
@@ -243,10 +237,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         UIUtils.setTextViewDrawbleImg(mContext, menuOrderTextView, R.drawable.ic_order2, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAdviseTextView, R.drawable.ic_advise, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenterTextView, R.drawable.ic_personal_center, 0, 2, 40, 42);
-
         UIUtils.setTextViewDrawbleImg(mContext, menuAboutLayoutTextView, R.drawable.ic_about, 0, 2, 40, 42);
-        UIUtils.setTextViewDrawbleImg(mContext, menuCheckUpdateTextView, R.drawable.ic_check_update, 0, 2, 40, 42);
-
         UIUtils.setTextViewDrawbleImg(mContext, menuSettingLayoutTextView, R.drawable.ic_setup, 0, 2, 40, 42);
     }
 }

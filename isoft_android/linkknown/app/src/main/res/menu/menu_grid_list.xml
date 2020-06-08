@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/menu_grid"
-        android:icon="@drawable/ic_menu_grd"
+        android:icon="@drawable/ic_menu_list"
         app:showAsAction="ifRoom"
         android:title="列表"/>
 
     <item
         android:id="@+id/menu_list"
-        android:icon="@drawable/ic_menu_list"
+        android:icon="@drawable/ic_menu_grd"
         app:showAsAction="ifRoom"
         android:title="列表"/>
 

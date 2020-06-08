@@ -1,12 +1,16 @@
 package com.linkknown.ilearning.activity;
 
 
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,6 +24,7 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -41,13 +46,12 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class AdviseActivity extends BaseActivity {
 
+    private int itemType = CourseMetaResponse.MultiItemTypeCourseMeta.ITEM_TYPE_GRID;
+
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
     private Context mContext;
-
-    @BindView(R.id.editAdviseBtn)
-    public TextView editAdviseBtn;
 
     private BottomQuickEidtDialog editAdviseDialog;
 
@@ -78,8 +82,25 @@ public class AdviseActivity extends BaseActivity {
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         initView();
-
         initData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menu_add) {
+            handleEditAdvise();
+        }
+
+        return true;
     }
 
     private void loadPageData(int current_page, int pageSize) {
@@ -156,8 +177,6 @@ public class AdviseActivity extends BaseActivity {
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
-
-        editAdviseBtn.setOnClickListener(v -> handleEditAdvise());
     }
 
     private void handleEditAdvise() {

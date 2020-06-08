@@ -4,7 +4,7 @@
         <menu>
             <item
                 android:id="@+id/course"
-                android:icon="@drawable/ic_order"
+                android:icon="@drawable/ic_video_black"
                 android:title="我的课程"/>
             <item
                 android:id="@+id/shoucang"
