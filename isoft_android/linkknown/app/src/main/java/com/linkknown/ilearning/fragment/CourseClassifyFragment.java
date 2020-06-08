@@ -109,7 +109,7 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
         //初始化热门搜索视图
         initHotSearchView();
         //初始化历史视图
-        initHistoryView();
+        initHistorySearchView();
         // 初始化左侧分类
         initLeftClassfiyView();
     }
@@ -227,8 +227,7 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
 
             //显示弹框
             bottomPopupWindow_hotSearch.setLeftTip("大家都在搜索");
-            bottomPopupWindow_hotSearch.showLeftTip(true);
-            bottomPopupWindow_hotSearch.showRightTip(false);
+            bottomPopupWindow_hotSearch.showLeftRightTip(true, false);
             bottomPopupWindow_hotSearch.showTagView(true);
             bottomPopupWindow_hotSearch.show();
         });
@@ -236,10 +235,11 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
 
 
     /**
-     * 初始化历史视图
+     * 初始化搜索历史视图
      */
-    private void initHistoryView () {
+    private void initHistorySearchView () {
         searchHistory.setOnClickListener(v -> {
+            // popwindow 只初始化一次，后面只切换显示和隐藏
             if (bottomPopupWindow_searchHistory == null) {
                 // 创建 popupwindow 并注册事件监听
                 bottomPopupWindow_searchHistory = new BottomPopupWindow(getActivity()) {
@@ -289,8 +289,7 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             //显示弹框
             bottomPopupWindow_searchHistory.setLeftTip("搜索历史");
             bottomPopupWindow_searchHistory.setRightTip("清空");
-            bottomPopupWindow_searchHistory.showLeftTip(true);
-            bottomPopupWindow_searchHistory.showRightTip(true);
+            bottomPopupWindow_searchHistory.showLeftRightTip(true, true);
             bottomPopupWindow_searchHistory.showTextView(true);
             bottomPopupWindow_searchHistory.show();
         });
