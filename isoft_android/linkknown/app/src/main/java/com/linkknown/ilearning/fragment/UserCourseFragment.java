@@ -13,6 +13,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.common.OnLoadMoreListener;
+import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
@@ -48,6 +49,8 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
     // 下拉全局刷新组件
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
+    private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
+
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
     private SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
     private String userName;
@@ -61,7 +64,6 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
 
     @Override
     protected void initView(View mRootView) {
-        Log.i("initView", "execute method: UserCourseFragment initView start");
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
 
@@ -84,14 +86,6 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(sectionedRecyclerViewAdapter);
 
-//        refreshLayout.setColorSchemeColors();
-        refreshLayout.setOnRefreshListener(() -> {
-            // 刷新中
-            refreshLayout.setRefreshing(true);
-            // 重新加载数据
-            loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
-        });
-
         recyclerView.addOnScrollListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -100,6 +94,10 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
                 }
             }
         });
+
+        swipeRefreshLayoutHelper.bind(getContext(), refreshLayout);
+        swipeRefreshLayoutHelper.initStyle();
+        swipeRefreshLayoutHelper.registerListener(() -> initData());
     }
 
     @Override
@@ -124,7 +122,7 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
                                 paginator = courseMetaResponse.getPaginator();
                             }
                             // 取消刷新效果
-                            refreshLayout.setRefreshing(false);
+                            swipeRefreshLayoutHelper.finishRefreshing();
                         }
 
                         @Override
@@ -133,7 +131,7 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
                                 Log.e("onError=>", Constants.TIP_SYSTEM_ERROR);
                                 ToastUtil.showText(mContext, Constants.TIP_SYSTEM_ERROR);
                             }
-                            refreshLayout.setRefreshing(false);
+                            swipeRefreshLayoutHelper.finishRefreshing();
                         }
                     });
         }

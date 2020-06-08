@@ -14,6 +14,10 @@
                 android:id="@+id/wode"
                 android:icon="@drawable/ic_mine"
                 android:title="我的"/>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/ic_share"
+                android:title="分享"/>
         </menu>
     </item>
     <item android:title="账户">

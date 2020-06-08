@@ -31,7 +31,7 @@
         android:layout_below="@id/courseNameView"
         android:layout_alignLeft="@+id/courseImageView"
         android:layout_marginTop="2dp"
-        android:ellipsize="end"
         android:text="课程类型"
+        android:ellipsize="end"
         android:textSize="11sp" />
 </RelativeLayout>

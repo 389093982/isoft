@@ -1,7 +1,9 @@
 package com.linkknown.ilearning.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.linkknown.ilearning.Constants;
@@ -71,5 +73,21 @@ public class CommonUtil {
     public static Set<String> getSearchHistory (Context mContext) {
         SharedPreferences preferences = mContext.getSharedPreferences(Constants.SEARCH_HISTORY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         return preferences.getStringSet(Constants.SEARCH_HISTORY_SHARED_PREFERENCES_KEYWORDS, new LinkedHashSet<>());
+    }
+
+    public static void send(Context context, String shareText) {
+        Intent shareIntent = new Intent()
+                .setAction(Intent.ACTION_SEND)
+                .setType("text/plain")
+                .putExtra(Intent.EXTRA_TEXT, shareText);
+        context.startActivity(Intent.createChooser(shareIntent, "分享"));
+    }
+
+    public static void sendImage(Context context, Uri uri) {
+        Intent shareIntent = new Intent()
+                .setAction(Intent.ACTION_SEND)
+                .setType("image/*")
+                .putExtra(Intent.EXTRA_STREAM, uri);
+        context.startActivity(Intent.createChooser(shareIntent, "分享"));
     }
 }

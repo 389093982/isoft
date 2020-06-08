@@ -10,6 +10,7 @@ public class Constants {
 
     // 每页数量
     public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE2 = 15;
 
     public static final String COURSE_HOT_RECOMMEND_PREFIX = "COURSE_HOT_RECOMMEND_PREFIX_";
     public static final String COURSE_CUSTOM_TAG_PREFIX = "COURSE_CUSTOM_TAG_PREFIX_";
@@ -53,4 +54,6 @@ public class Constants {
     public static final String PLACEMENT_HOT_COURSE_TYPE_CAROUSEL = "placement_host_course_type_carousel";
 
     public static final List<String> COURSE_SEARCH_HINT_LIST = Arrays.asList("搜索课程名称或者视频关键词进行搜索", "学习如逆水行舟不进则退", "书读百遍其义自见", "每日坚持学习做最好的自己");
+
+    public static final String SHARE_APK_INFO = "链知晓课堂【专注，只为成为链接知识的桥梁】: http://www.linkknown.com/download/apk";
 }

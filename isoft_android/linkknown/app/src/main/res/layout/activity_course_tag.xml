@@ -11,6 +11,9 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
+        <!--
+            此处 menu 图标大小需要进行调整,不能使用这个属性：android:layout_height="?attr/actionBarSize"
+        -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

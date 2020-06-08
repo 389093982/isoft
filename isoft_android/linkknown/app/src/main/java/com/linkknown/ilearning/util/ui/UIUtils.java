@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.linkknown.ilearning.BuildConfig;
 import com.linkknown.ilearning.R;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -83,21 +84,22 @@ public class UIUtils {
      * @param radius
      */
     public static void setImage (Context context, ImageView imageView, String imageUrl, int radius) {
-        if (StringUtils.isNotEmpty(imageUrl)) {
-            RequestOptions options;
-            if (radius > 0){
-                //设置图片圆角角度
-                RoundedCorners roundedCorners = new RoundedCorners(radius);
-                options = RequestOptions.bitmapTransform(roundedCorners);
-            } else {
-                options = new RequestOptions();
-            }
+        imageUrl = ObjectUtils.defaultIfNull(imageUrl, "");
 
-            Glide.with(context)
-                    .load(UIUtils.replaceMediaUrl(imageUrl))
-                    .apply(options.placeholder(R.drawable.loading).error(R.drawable.error_image))
-                    .into(imageView);
+        // 此处无需对 imageUrl 进行判空，否则会导致空图片地址无法设置复用的问题
+        RequestOptions options;
+        if (radius > 0){
+            //设置图片圆角角度
+            RoundedCorners roundedCorners = new RoundedCorners(radius);
+            options = RequestOptions.bitmapTransform(roundedCorners);
+        } else {
+            options = new RequestOptions();
         }
+
+        Glide.with(context)
+                .load(UIUtils.replaceMediaUrl(imageUrl))
+                .apply(options.placeholder(R.drawable.loading).error(R.drawable.not_found))
+                .into(imageView);
     }
 
     public static void setTextViewDrawbleImg (Context mContext, TextView textView, int id, int left, int top, int right, int bottom) {
