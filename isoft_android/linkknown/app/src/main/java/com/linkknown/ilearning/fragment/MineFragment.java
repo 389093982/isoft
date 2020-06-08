@@ -57,6 +57,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.userInfoLayout)
     public RelativeLayout userInfoLayout;
+    @BindView(R.id.toEditLayout)
+    public LinearLayout toEditLayout;
     // 登录用户头像和用户名
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
@@ -132,12 +134,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //            builder.detectFileUriExposure();
 //        }
 
+        // 初始化登录相关信息
+        initLoginView();
+
         initBanner();
 
         bindMenuDrawnStart();
-
-        // 初始化登录相关信息
-        initLoginView();
 
         // 中间图标入口
         initMenuImageView();
@@ -149,6 +151,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         menuShoppingCart.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
+        // 去编辑用户信息
+        toEditLayout.setOnClickListener(this);
     }
 
     // 初始化顶部轮播图组件
@@ -206,6 +210,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            // 菜单项点击事件
             case R.id.menuAboutLayout:
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
                 break;
@@ -215,6 +221,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.menuOrderLayout:
                 UIUtils.gotoActivity(mContext, CourseOrderActivity.class);
                 break;
+            case R.id.toEditLayout:     // 用户布局去编辑点击事件
             case R.id.menuPersonalCenter:
                 UIUtils.gotoActivity(mContext, UserDetailActivity.class);
                 break;

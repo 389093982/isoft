@@ -36,7 +36,6 @@ public class CourseCustomTagAdapter extends BaseMultiItemQuickAdapter<CourseMeta
 
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, CourseMetaResponse.MultiItemTypeCourseMeta multiItemTypeCourseMeta) {
-        Log.e("图片==》", viewHolder.getAdapterPosition() + "==>" + multiItemTypeCourseMeta.getCourseMeta().getCourse_name() + "~~~~~" +  multiItemTypeCourseMeta.getCourseMeta().getSmall_image());
         // 根据返回的 type 分别设置数据
         switch (viewHolder.getItemViewType()) {
             // 列表类型展示
