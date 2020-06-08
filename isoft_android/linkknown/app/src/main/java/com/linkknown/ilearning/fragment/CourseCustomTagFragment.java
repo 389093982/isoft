@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseCustomTagListActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -73,6 +75,7 @@ public class CourseCustomTagFragment extends Fragment {
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
 
     private String custom_tag;
+    private String custom_tag_tag;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,7 +93,10 @@ public class CourseCustomTagFragment extends Fragment {
     }
 
     private void registerListener () {
-        moreView.setOnClickListener(v -> ToastUtil.showText(mContext, "点击了更多"));
+        moreView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseCustomTagListActivity.class, intent -> {
+            intent.putExtra("custom_tag", custom_tag);
+            return intent;
+        }));
         refreshNextLayout.setOnClickListener(v -> {
             waitingDialog.showDialog(this);
             // 动画效果
@@ -118,6 +124,7 @@ public class CourseCustomTagFragment extends Fragment {
                 viewHolder.setText(R.id.userNameText, courseMeta.getCourse_author());
                 // 设置顶部标题
                 customTagName.setText(courseMeta.getCustom_tag_name());
+                custom_tag_tag = courseMeta.getCustom_tag_name();
             }
         };
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));

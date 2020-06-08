@@ -10,6 +10,7 @@ public class Constants {
 
     // 每页数量
     public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE2 = 15;
 
     public static final String COURSE_HOT_RECOMMEND_PREFIX = "COURSE_HOT_RECOMMEND_PREFIX_";
     public static final String COURSE_CUSTOM_TAG_PREFIX = "COURSE_CUSTOM_TAG_PREFIX_";
