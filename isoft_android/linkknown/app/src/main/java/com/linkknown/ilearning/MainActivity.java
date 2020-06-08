@@ -1,13 +1,10 @@
 package com.linkknown.ilearning;
 
 import android.Manifest;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
@@ -38,6 +35,7 @@ import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.popup.BottomQuickWindow;
 import com.linkknown.ilearning.service.UserService;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -143,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(1);
             } else if (id == R.id.wode) {
                 viewPager.setCurrentItem(3);
+            } else if (id == R.id.share) {
+                CommonUtil.send(mContext, Constants.SHARE_APK_INFO);
             } else if (id == R.id.denglu) {
 //            //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
