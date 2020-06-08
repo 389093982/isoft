@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"    android:background="@color/white">
+    android:padding="10dp"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,8 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/tv_clear"
-            android:layout_toStartOf="@+id/tv_clear"
             android:text="左侧提示"
             android:textSize="14sp"/>
 

@@ -121,23 +121,13 @@ public abstract class BottomPopupWindow extends android.widget.PopupWindow imple
         right_tip.setText(tip);
     };
 
-    //左侧提示是否展示
-    public void showLeftTip(Boolean flag){
-        if (flag){
-            left_tip.setVisibility(View.VISIBLE);
-        }else{
-            left_tip.setVisibility(View.GONE);
-        }
-    };
-
-    //右侧提示是否展示
-    public void showRightTip(Boolean flag){
-        if (flag){
-            right_tip.setVisibility(View.VISIBLE);
-        }else{
-            right_tip.setVisibility(View.GONE);
-        }
-    };
+    // 是否展示左侧和右侧提示
+    public void showLeftRightTip (boolean showLeftTip, boolean showRightTip) {
+        //左侧提示是否展示
+        left_tip.setVisibility(showLeftTip ? View.VISIBLE : View.GONE);
+        //右侧提示是否展示
+        right_tip.setVisibility(showRightTip ? View.VISIBLE : View.GONE);
+    }
 
     //显示 showTextView
     public void showTextView(Boolean flag){
