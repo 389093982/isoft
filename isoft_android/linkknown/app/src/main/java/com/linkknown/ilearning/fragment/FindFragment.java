@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMoreSection.ClickListener, CommonTagSection.ClickListener {
+public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMoreSection.ClickListener {
     private Context mContext;
 
     @BindView(R.id.tagRecyclerView)
@@ -79,8 +79,8 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
     private void initTagView () {
         tagRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
         showTagList = new ArrayList<>(Arrays.asList("docker", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2","测试1", "测试2"));
-        CommonTagSection showCommonTagSection = new CommonTagSection(mContext, this, showTagList);
-        CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, this, hideTagList);
+        CommonTagSection showCommonTagSection = new CommonTagSection(mContext, showTagList);
+        CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, hideTagList);
         ShowAndCloseMoreSection showAndCloseMoreSection = new ShowAndCloseMoreSection(mContext, this);
         tagRecyclerViewAdapter.addSection(showCommonTagSection);
         tagRecyclerViewAdapter.addSection(hideCommonTagSection);
@@ -122,14 +122,6 @@ public class FindFragment extends BaseLazyLoadFragment implements ShowAndCloseMo
     @OnClick(R.id.searchCardView)
     void startSearchActivity() {
         UIUtils.gotoActivity(mContext, CourseSearchActivity.class);
-    }
-
-    @Override
-    public void onClickTag(String tagText) {
-        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
-            intent.putExtra("search", tagText);
-            return intent;
-        });
     }
 
     // 释放资源

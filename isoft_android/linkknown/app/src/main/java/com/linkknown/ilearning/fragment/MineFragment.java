@@ -190,7 +190,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 UserDetailResponse.User user = loginUserInfo.getUserDetailResponse().getUser();
                 // 展示用户头像、用户名、积分和个性签名
                 UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
-                userName.setText("学友" + LoginUtil.getLoginNickName(mContext));
+                userName.setText(LoginUtil.getLoginNickName(mContext));
                 userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
                 userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
             }

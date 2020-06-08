@@ -128,7 +128,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
         // 设置视频列表 section 部分
         SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CommonTagSection commonTagSection = new CommonTagSection(mContext, null, CommonUtil.splitCommonTag(course_label));
+        CommonTagSection commonTagSection = new CommonTagSection(mContext, CommonUtil.splitCommonTag(course_label));
         CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, course, cVideos);
         sectionedRecyclerViewAdapter.addSection(commonTagSection);
         sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
