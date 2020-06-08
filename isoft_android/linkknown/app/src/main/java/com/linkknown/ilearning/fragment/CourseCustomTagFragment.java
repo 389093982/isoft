@@ -24,6 +24,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseCustomTagListActivity;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -121,12 +122,25 @@ public class CourseCustomTagFragment extends Fragment {
             protected void convert(@NotNull BaseViewHolder viewHolder, CourseMetaResponse.CourseMeta courseMeta) {
                 UIUtils.setImage(mContext, viewHolder.findView(R.id.courseImageView), courseMeta.getSmall_image(), 20);
                 viewHolder.setText(R.id.courseNameView, courseMeta.getCourse_name());
-                viewHolder.setText(R.id.userNameText, courseMeta.getCourse_author());
+                viewHolder.setText(R.id.courseTypeView, courseMeta.getCourse_type() + "/" + courseMeta.getCourse_sub_type());
                 // 设置顶部标题
                 customTagName.setText(courseMeta.getCustom_tag_name());
                 custom_tag_tag = courseMeta.getCustom_tag_name();
             }
         };
+
+        // 先注册需要点击的子控件id
+        baseQuickAdapter.addChildClickViewIds(R.id.courseImageView);
+        baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.courseImageView) {
+                // 调往课程详情页面
+                UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMetaList.get(position).getId());
+                    return intent;
+                });
+            }
+        });
+
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         recyclerView.setAdapter(baseQuickAdapter);
     }

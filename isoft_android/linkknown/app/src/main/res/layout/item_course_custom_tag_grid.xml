@@ -25,12 +25,13 @@
         android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/userNameText"
+        android:id="@+id/courseTypeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/courseNameView"
         android:layout_alignLeft="@+id/courseImageView"
         android:layout_marginTop="2dp"
-        android:text="作者"
+        android:text="课程类型"
+        android:ellipsize="end"
         android:textSize="11sp" />
 </RelativeLayout>

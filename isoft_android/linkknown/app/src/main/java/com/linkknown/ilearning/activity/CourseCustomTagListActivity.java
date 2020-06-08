@@ -2,6 +2,7 @@ package com.linkknown.ilearning.activity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -95,14 +97,17 @@ public class CourseCustomTagListActivity extends BaseActivity {
                 loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE2);
             }
         });
-        // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
-//        baseQuickAdapter.addChildClickViewIds(R.id.deleteIcon);
-//        baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-//            if (view.getId() == R.id.deleteIcon) {
-//                CommentResponse.Comment comment = displayComments.get(position);
-//                deleteComment(comment, position);
-//            }
-//        });
+        // 先注册需要点击的子控件id
+        baseQuickAdapter.addChildClickViewIds(R.id.courseImageView);
+        baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.courseImageView) {
+                // 调往课程详情页面
+                UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", courseMetaList.get(position).getCourseMeta().getId());
+                    return intent;
+                });
+            }
+        });
 
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(baseQuickAdapter);
