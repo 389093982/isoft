@@ -1,9 +1,11 @@
 package com.linkknown.ilearning.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class BaseResponse {
+public class BaseResponse implements Serializable {
 
     // 状态
     private String status;

@@ -1,12 +1,16 @@
 package com.linkknown.ilearning.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.linkknown.ilearning.widget.CourseVideoView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +22,11 @@ public class VideoPlayActivity extends AppCompatActivity {
     @BindView(R.id.video_player)
     public JzvdStd player;
 
+    @BindView(R.id.courseVideoView)
+    public CourseVideoView courseVideoView;
+
+    private List<CourseDetailResponse.CVideo> cVideos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +35,27 @@ public class VideoPlayActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String course_name = intent.getStringExtra("course_name");
-        String video_name = intent.getStringExtra("video_name");
-        int course_id = intent.getIntExtra("course_id", -1);
-        int video_id = intent.getIntExtra("video_id", -1);
-        String first_play = intent.getStringExtra("first_play");
+        CourseDetailResponse courseDetailResponse = (CourseDetailResponse)intent.getExtras().getSerializable("courseDetailResponse");
+        int position = intent.getExtras().getInt("position");
+        cVideos = courseDetailResponse.getCVideos();
 
-        player.setUp(UIUtils.replaceMediaUrl(first_play), video_name);
+        initVideoInfo();
+        initVideoPlayer(position);
+    }
+
+    private void initVideoInfo() {
+        courseVideoView.setCallBackListener(position -> {
+            CourseDetailResponse.CVideo cVideo = cVideos.get(position);
+            player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), cVideo.getVideo_name());
+            // 自动播放
+            player.startVideo();
+        });
+        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_GRID));
+    }
+
+    private void initVideoPlayer(int position) {
+        CourseDetailResponse.CVideo cVideo = cVideos.get(position);
+        player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), cVideo.getVideo_name());
         // 自动播放
         player.startVideo();
     }

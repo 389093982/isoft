@@ -1,16 +1,18 @@
 package com.linkknown.ilearning.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserDetailResponse extends BaseResponse {
+public class UserDetailResponse extends BaseResponse implements Serializable {
 
     private User user;
 
     @Data
-    public static class User {
+    public static class User implements Serializable {
         private String birthday;
         private String created_time;
         private String current_residence;

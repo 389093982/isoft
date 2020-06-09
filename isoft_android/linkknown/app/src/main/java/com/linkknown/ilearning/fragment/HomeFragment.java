@@ -41,6 +41,8 @@ public class HomeFragment extends BaseLazyLoadFragment {
 
     private CallBackListener listener;
 
+    public HomeFragment () {}
+
     public HomeFragment (CallBackListener listener) {
         this.listener = listener;
     }

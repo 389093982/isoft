@@ -2,6 +2,7 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
@@ -34,6 +36,7 @@ import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.CommonTagView;
+import com.linkknown.ilearning.widget.CourseVideoView;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -75,14 +78,12 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.courseTagView)
     public CommonTagView courseTagView;
 
-    @BindView(R.id.cVideoRecyclerView)
-    public RecyclerView cVideoRecyclerView;
+    @BindView(R.id.courseVideoView)
+    public CourseVideoView courseVideoView;
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
     @BindView(R.id.userNameText)
     public TextView userNameText;
-
-
 
     // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
@@ -137,42 +138,20 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     }
 
     private void initCVideoView(CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
-        BaseQuickAdapter baseQuickAdapter = new BaseQuickAdapter<CourseDetailResponse.CVideo, BaseViewHolder>(R.layout.item_cvideo, cVideos) {
-
+        courseVideoView.setCallBackListener(new CourseVideoView.CallBackListener() {
             @Override
-            protected void convert(@NotNull BaseViewHolder viewHolder, CourseDetailResponse.CVideo cVideo) {
-
-                // 视频索引
-                String cVideoIndex = mContext.getResources().getString(R.string.cVideoIndex);
-                viewHolder.setText(R.id.cVideoIndex, String.format(cVideoIndex, viewHolder.getAdapterPosition()));
-                // 视频名称,去除后缀名后
-                viewHolder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
-                // 视频时长
-                if (cVideo.getDuration() > 0) {
-                    viewHolder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
-                } else {
-                    viewHolder.setVisible(R.id.cVideoDuration, true);
-                }
-            }
-        };
-        baseQuickAdapter.addChildClickViewIds(R.id.cVideoName);
-        baseQuickAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                if (view.getId() == R.id.cVideoName){
-                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
-                        intent.putExtra("course_name", course.getCourse_name());
-                        intent.putExtra("video_name", cVideos.get(position).getVideo_name());
-                        intent.putExtra("course_id", cVideos.get(position).getCourse_id());
-                        intent.putExtra("video_id", cVideos.get(position).getId());
-                        intent.putExtra("first_play", cVideos.get(position).getFirst_play());
-                        return intent;
-                    });
-                }
+            public void onConfirm(int position) {
+                CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
+                UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("courseDetailResponse", courseDetailResponse);
+                    bundle.putInt("position", position);
+                    intent.putExtras(bundle);
+                    return intent;
+                });
             }
         });
-        cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        cVideoRecyclerView.setAdapter(baseQuickAdapter);
+        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_GRID));
     }
 
     private void handleCourseOperateClick (String operateName) {
@@ -188,16 +167,11 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
                 if (CollectionUtils.isNotEmpty(cVideos)) {
                     CourseDetailResponse.CVideo cVideo = cVideos.get(0);
-                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
-                        @Override
-                        public Intent wrapper(Intent intent) {
-                            intent.putExtra("course_name", course.getCourse_name());
-                            intent.putExtra("video_name", cVideo.getVideo_name());
-                            intent.putExtra("course_id", cVideo.getCourse_id());
-                            intent.putExtra("video_id", cVideo.getId());
-                            intent.putExtra("first_play", cVideo.getFirst_play());
-                            return intent;
-                        }
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("courseDetailResponse", courseDetailResponse);
+                        intent.putExtras(bundle);
+                        return intent;
                     });
                 } else {
                     ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
