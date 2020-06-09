@@ -154,7 +154,7 @@
   import {isoft_unifiedpay_order_api} from "../../api/index"
   import {ShowCourseDetail,queryPayOrderList,addPayOrder,updatePayOrder,SearchCouponForPay,UpdateCouponIsUsed,queryCouponById,OrderCancelledById} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
-  import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd,checkEmpty} from "../../tools/index"
+  import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd,checkEmpty,GetTodayTime_yyyyMMddhhmmss} from "../../tools/index"
   import vueQr from 'vue-qr'
   import Coupon from "../Common/coupon/Coupon";
 
@@ -454,6 +454,7 @@
               'order_id':result.order_id,
               'user_name':result.user_name,
               'pay_result':result.pay_result,
+              'trans_time':GetTodayTime_yyyyMMddhhmmss()
             });
             //如果更新成功，页面展示支付成功动态效果
             if (res.status === 'SUCCESS' && result.pay_result === 'SUCCESS') {
