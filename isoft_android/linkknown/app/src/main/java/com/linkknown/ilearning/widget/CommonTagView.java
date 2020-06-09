@@ -41,7 +41,12 @@ public class CommonTagView extends LinearLayout {
             textView.setText(tagNames.get(i));
             flowLayout.addView(textView);
 
-            textView.setOnClickListener(v -> listener.onConfirm(textView.getText().toString()));
+            textView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onConfirm(textView.getText().toString());
+                }
+
+            });
         }
     }
 

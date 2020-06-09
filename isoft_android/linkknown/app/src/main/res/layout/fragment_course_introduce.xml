@@ -159,11 +159,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingBottom="10dp"
             android:paddingEnd="3dp"
             android:paddingStart="3dp"
             android:paddingTop="10dp">
+
+            <com.linkknown.ilearning.widget.CommonTagView
+                android:id="@+id/courseTagView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <!-- overScrollMode 去掉上拉刷新和下拉加载的阴影 -->
             <androidx.recyclerview.widget.RecyclerView

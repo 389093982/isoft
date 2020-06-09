@@ -2,8 +2,6 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
@@ -27,30 +28,27 @@ import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
-import com.linkknown.ilearning.section.CommonTagSection;
-import com.linkknown.ilearning.section.CourseDetailCVideoListSection;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DrawableUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.linkknown.ilearning.widget.CommonTagView;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.function.Function;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function3;
 import io.reactivex.functions.Function4;
 import io.reactivex.schedulers.Schedulers;
 
@@ -73,12 +71,18 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     public TextView courseShortDescText;
     @BindView(R.id.courseOperateRecyclerView)
     public RecyclerView courseOperateRecyclerView;
+    // 课程自定义标签语
+    @BindView(R.id.courseTagView)
+    public CommonTagView courseTagView;
+
     @BindView(R.id.cVideoRecyclerView)
     public RecyclerView cVideoRecyclerView;
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
     @BindView(R.id.userNameText)
     public TextView userNameText;
+
+
 
     // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
@@ -126,14 +130,49 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         userNameText.setText(courseDetailResponse.getUser().getNick_name());
         UIUtils.setImage(mContext, headerIcon, courseDetailResponse.getUser().getSmall_icon());
 
-        // 设置视频列表 section 部分
-        SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CommonTagSection commonTagSection = new CommonTagSection(mContext, CommonUtil.splitCommonTag(course_label));
-        CourseDetailCVideoListSection courseDetailCVideoListSection = new CourseDetailCVideoListSection(mContext, course, cVideos);
-        sectionedRecyclerViewAdapter.addSection(commonTagSection);
-        sectionedRecyclerViewAdapter.addSection(courseDetailCVideoListSection);
+        // 初始化自定义标签语
+        courseTagView.setList(CommonUtil.splitCommonTag(course_label));
+
+        initCVideoView(course, cVideos);
+    }
+
+    private void initCVideoView(CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
+        BaseQuickAdapter baseQuickAdapter = new BaseQuickAdapter<CourseDetailResponse.CVideo, BaseViewHolder>(R.layout.item_cvideo, cVideos) {
+
+            @Override
+            protected void convert(@NotNull BaseViewHolder viewHolder, CourseDetailResponse.CVideo cVideo) {
+
+                // 视频索引
+                String cVideoIndex = mContext.getResources().getString(R.string.cVideoIndex);
+                viewHolder.setText(R.id.cVideoIndex, String.format(cVideoIndex, viewHolder.getAdapterPosition()));
+                // 视频名称,去除后缀名后
+                viewHolder.setText(R.id.cVideoName, StringUtils.substringBefore(cVideo.getVideo_name(), "."));
+                // 视频时长
+                if (cVideo.getDuration() > 0) {
+                    viewHolder.setText(R.id.cVideoDuration, String.format("%d s", cVideo.getDuration()));
+                } else {
+                    viewHolder.setVisible(R.id.cVideoDuration, true);
+                }
+            }
+        };
+        baseQuickAdapter.addChildClickViewIds(R.id.cVideoName);
+        baseQuickAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                if (view.getId() == R.id.cVideoName){
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                        intent.putExtra("course_name", course.getCourse_name());
+                        intent.putExtra("video_name", cVideos.get(position).getVideo_name());
+                        intent.putExtra("course_id", cVideos.get(position).getCourse_id());
+                        intent.putExtra("video_id", cVideos.get(position).getId());
+                        intent.putExtra("first_play", cVideos.get(position).getFirst_play());
+                        return intent;
+                    });
+                }
+            }
+        });
         cVideoRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        cVideoRecyclerView.setAdapter(sectionedRecyclerViewAdapter);
+        cVideoRecyclerView.setAdapter(baseQuickAdapter);
     }
 
     private void handleCourseOperateClick (String operateName) {
