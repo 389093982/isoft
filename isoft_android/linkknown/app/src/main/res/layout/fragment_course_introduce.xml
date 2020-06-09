@@ -170,12 +170,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!-- overScrollMode 去掉上拉刷新和下拉加载的阴影 -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cVideoRecyclerView"
+            <com.linkknown.ilearning.widget.CourseVideoView
+                android:id="@+id/courseVideoView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </LinearLayout>
