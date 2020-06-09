@@ -26,6 +26,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <ImageView
+                    android:id="@+id/showLeftNavView"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:src="@drawable/ic_drawer_home"
@@ -50,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="匿名用户"
+                        android:text="用户名"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -64,7 +65,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="登录"
+                        android:text="前去登录"
                         android:textColor="#ffffff"
                         android:textSize="16sp"/>
                 </LinearLayout>

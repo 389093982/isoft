@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -37,6 +38,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseLazyLoadFragment {
+
+    private CallBackListener listener;
+
+    public HomeFragment (CallBackListener listener) {
+        this.listener = listener;
+    }
 
     private Context mContext;
 
@@ -65,10 +72,14 @@ public class HomeFragment extends BaseLazyLoadFragment {
     @BindView(R.id.lingdang)
     ImageView lingdang;
 
-    // 工具栏中的用户布局
+    // 显示左边导航栏
+    @BindView(R.id.showLeftNavView)
+    ImageView showLeftNavView;
+
+    // 工具栏中的用户布局【已登录】
     @BindView(R.id.toolBarLoginLayout)
     public LinearLayout toolBarLoginLayout;
-
+    // 【未登录】
     @BindView(R.id.toolBarUnLoginLayout)
     public LinearLayout toolBarUnLoginLayout;
 
@@ -193,27 +204,34 @@ public class HomeFragment extends BaseLazyLoadFragment {
         mingyanTextbanner.stopViewAnimator();
     }
 
+    // 订阅登录信息
     private void observeLogin () {
+        // 1、先从缓存中获取登录信息
         if (LoginUtil.checkHasLogin(mContext)) {
             initLoginView(LoginUtil.getHeaderIcon(mContext), LoginUtil.getLoginNickName(mContext));
         } else {
-
+            toolBarLoginLayout.setVisibility(View.GONE);
+            toolBarUnLoginLayout.setVisibility(View.VISIBLE);
         }
+        // 2、再从自动登录响应结果中订阅登录信息
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
             if (loginUserResponse != null){
                 if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
                     initLoginView(loginUserResponse.getHeaderIcon(), StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
                 } else {
                     // 顶部 toolbar 显示登录信息
-                    toolBarLoginLayout.setVisibility(View.VISIBLE);
-                    toolBarUnLoginLayout.setVisibility(View.GONE);
+                    toolBarLoginLayout.setVisibility(View.GONE);
+                    toolBarUnLoginLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+        toolBarUnLoginLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext, LoginActivity.class));
+        showLeftNavView.setOnClickListener(v -> listener.showLeftNav());
     }
 
     private void initLoginView(String headerIcon, String userName) {
-        // 2、--------- 顶部 toolbar 显示登录信息
+        // 顶部 toolbar 显示登录信息
         toolBarLoginLayout.setVisibility(View.VISIBLE);
         toolBarUnLoginLayout.setVisibility(View.GONE);
 
@@ -224,5 +242,11 @@ public class HomeFragment extends BaseLazyLoadFragment {
                 .into(person_head);
         userNameText.setText(userName);
 
+    }
+
+    // 回调监听
+    public interface CallBackListener {
+        // 显示左侧导航栏
+        void showLeftNav();
     }
 }
