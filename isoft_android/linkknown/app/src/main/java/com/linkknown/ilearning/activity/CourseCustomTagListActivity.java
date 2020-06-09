@@ -60,8 +60,10 @@ public class CourseCustomTagListActivity extends BaseActivity {
     public SwipeRefreshLayout refreshLayout;
     private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
-    private LinearLayoutManager mLinearLayoutManager;
+    //栅格布局
     private GridLayoutManager mGridLayoutManager;
+    //列表布局
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

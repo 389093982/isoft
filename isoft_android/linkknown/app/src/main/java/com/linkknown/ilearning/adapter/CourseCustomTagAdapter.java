@@ -44,6 +44,8 @@ public class CourseCustomTagAdapter extends BaseMultiItemQuickAdapter<CourseMeta
                 UIUtils.setImage(mContext, viewHolder.findView(R.id.courseImageView), multiItemTypeCourseMeta.getCourseMeta().getSmall_image());
                 viewHolder.setText(R.id.courseNameView, multiItemTypeCourseMeta.getCourseMeta().getCourse_name());
                 viewHolder.setText(R.id.courseShortDescText, multiItemTypeCourseMeta.getCourseMeta().getCourse_short_desc());
+                viewHolder.setText(R.id.watchNumberText, multiItemTypeCourseMeta.getCourseMeta().getWatch_number()+"");
+                viewHolder.setText(R.id.courseNumberText, multiItemTypeCourseMeta.getCourseMeta().getCourse_number()+"");
                 break;
             // 网格类型展示
             case CourseMetaResponse.MultiItemTypeCourseMeta.ITEM_TYPE_GRID:
