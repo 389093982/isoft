@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     // 抽屉布局
     @BindView(R.id.drawer_layout)
     public DrawerLayout drawer;
-    
+
     // 抽屉中的导航
     @BindView(R.id.navigationView)
     public NavigationView navigationView;
@@ -206,7 +206,9 @@ public class MainActivity extends AppCompatActivity {
         //底部导航栏有几项就有几个Fragment
         fragmentList = new ArrayList<>(4);
         // 创建 3 个片段
-        fragmentList.add(new HomeFragment());
+        fragmentList.add(new HomeFragment(() -> {
+            drawer.openDrawer(navigationView);
+        }));
         fragmentList.add(new CourseClassifyFragment());
         fragmentList.add(new MoreFragment());
         fragmentList.add(new MineFragment());
