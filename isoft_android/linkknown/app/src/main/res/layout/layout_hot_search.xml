@@ -22,10 +22,19 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+
+    <com.linkknown.ilearning.widget.CommonTagView
         android:id="@+id/showTagView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:layout_height="wrap_content"/>
 
+    <com.linkknown.ilearning.widget.CommonTagView
+        android:id="@+id/hideTagView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.linkknown.ilearning.widget.ShowAndCloseMoreView
+        android:id="@+id/showAndCloseMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
