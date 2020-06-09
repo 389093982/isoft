@@ -141,6 +141,13 @@ dependencies {
     // FloatWindow 安卓任意界面悬浮窗
     implementation 'com.github.yhaolpz:FloatWindow:1.0.9'
 
+    // popwindow 弹框 1
+    implementation 'com.lxj:xpopup:1.9.5'
+    // popwindow 弹框 2
+    implementation 'com.github.razerdp:BasePopup:2.2.3'
+    // 绘制图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

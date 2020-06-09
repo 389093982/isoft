@@ -1,11 +1,9 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +16,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.google.android.flexbox.FlexboxLayout;
 import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.Constants;
@@ -28,23 +25,19 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.ViewPagerIndicatorManager;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.ElementResponse;
-import com.linkknown.ilearning.popup.BottomPopupWindow;
-import com.linkknown.ilearning.section.CommonTagSection;
-import com.linkknown.ilearning.section.ShowAndCloseMoreSection;
+import com.linkknown.ilearning.popup.HotSearchPopView;
+import com.linkknown.ilearning.popup.SearchHistoryPopView;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -96,9 +89,6 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
 
     private ElementResponse element_response;
     private Handler handler = new Handler();
-
-    private BottomPopupWindow bottomPopupWindow_searchHistory;
-    private BottomPopupWindow bottomPopupWindow_hotSearch;
 
     @Override
     protected void initView(View mRootView) {
@@ -169,67 +159,16 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
      */
     private void initHotSearchView(){
         hotSearch.setOnClickListener(v -> {
-            if (bottomPopupWindow_hotSearch == null) {
-                // 创建 popupwindow 并注册事件监听
-                bottomPopupWindow_hotSearch = new BottomPopupWindow(getActivity()) {
-                    @Override
-                    public TextView createView(Integer position, FlexboxLayout layout, String text) {
-                        tagRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-                        showTagList = new ArrayList<>(Arrays.asList("java1", "java2","java3", "java4","java5", "java6","java7","java8"));
-                        CommonTagSection showCommonTagSection = new CommonTagSection(mContext, showTagList);
-                        CommonTagSection hideCommonTagSection = new CommonTagSection(mContext, hideTagList);
-                        ShowAndCloseMoreSection showAndCloseMoreSection = new ShowAndCloseMoreSection(mContext, new ShowAndCloseMoreSection.ClickListener() {
-                            @Override
-                            public void showMore() {
-                                hideTagList.clear();
-                                hideTagList.addAll(new ArrayList<>(Arrays.asList("go1", "go2","go3", "go4","go5", "go6","go7", "go8")));
-                                tagRecyclerViewAdapter.notifyDataSetChanged();
-                            }
-                            @Override
-                            public void closeMore() {
-                                hideTagList.clear();
-                                tagRecyclerViewAdapter.notifyDataSetChanged();
-                            }
-                        });
-                        tagRecyclerViewAdapter.addSection(showCommonTagSection);
-                        tagRecyclerViewAdapter.addSection(hideCommonTagSection);
-                        tagRecyclerViewAdapter.addSection(showAndCloseMoreSection);
-                        showTagView.setLayoutManager(new LinearLayoutManager(mContext));
-                        showTagView.setAdapter(tagRecyclerViewAdapter);
-
-                        final TextView textView = (TextView) View.inflate(mContext, R.layout.item_common_tag, null);
-                        // 点击事件
-                        textView.setOnClickListener(v -> {
-                            onConfirm(textView.getText().toString());
-                            // 点击完成后隐藏 popupwindow
-                            onDismiss();
-                            dismiss();
-                        });
-                        return textView;
-                    }
-
-                    @Override
-                    public void initData() {
-                        createView(null, null, null);
-                    }
-
-                    @Override
-                    public void onConfirm(String text) {
-                        searchTextView.setText(text);
+            new XPopup.Builder(getContext())
+                    .hasShadowBg(true)
+                    .asCustom(new HotSearchPopView(mContext, text -> {
+                        // TODO 确认只查免费？
                         UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
-                            intent.putExtra("search",text);
+                            intent.putExtra("search", text);
                             intent.putExtra("isCharge", "free");
                             return intent;
                         });
-                    };
-                };
-            };
-
-            //显示弹框
-            bottomPopupWindow_hotSearch.setLeftTip("大家都在搜索");
-            bottomPopupWindow_hotSearch.showLeftRightTip(true, false);
-            bottomPopupWindow_hotSearch.showTagView(true);
-            bottomPopupWindow_hotSearch.show();
+                    })).show();
         });
     };
 
@@ -238,61 +177,72 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
      * 初始化搜索历史视图
      */
     private void initHistorySearchView () {
-        searchHistory.setOnClickListener(v -> {
-            // popwindow 只初始化一次，后面只切换显示和隐藏
-            if (bottomPopupWindow_searchHistory == null) {
-                // 创建 popupwindow 并注册事件监听
-                bottomPopupWindow_searchHistory = new BottomPopupWindow(getActivity()) {
-                    @Override
-                    public TextView createView(Integer position, FlexboxLayout layout, String text) {
-                        // 根据布局动 id 态创建 TextView
-                        final TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag, layout, false);
-                        textView.setText(text);
-                        // 设置随机背景色，文字使用白色
-                        textView.setBackgroundColor(UIUtils.getRandomResourceColor(position));
-                        textView.setTextColor(Color.WHITE);
+        searchHistory.setOnClickListener(v -> new XPopup.Builder(getContext())
+                .hasShadowBg(true)
+                .asCustom(new SearchHistoryPopView(mContext, text -> {
+                    // TODO 确认只查免费？
+                    UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+                    intent.putExtra("search",text);
+                    intent.putExtra("isCharge", "free");
+                    return intent;
+                });
+            })).show());
 
-                        // 点击事件
-                        textView.setOnClickListener(v -> {
-                            onConfirm(textView.getText().toString());
-                            // 点击完成后隐藏 popupwindow
-                            onDismiss();
-                            dismiss();
-                        });
-                        return textView;
-                    }
-
-                    @Override
-                    public void initData() {
-                        // TODO 显示排序有点问题
-                        Set<String> searchTexts = CommonUtil.getSearchHistory(mContext);
-                        LinkedList<String> searchTextList = new LinkedList<>(searchTexts);
-                        showTextView.removeAllViews();
-                        for (int i = 0; i < searchTextList.size(); i++) {
-                            final TextView textView = createView(i, showTextView, searchTextList.get(i));
-                            showTextView.addView(textView);
-                        }
-                    }
-
-                    @Override
-                    public void onConfirm(String text) {
-                        searchTextView.setText(text);
-                        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
-                            intent.putExtra("search",text);
-                            intent.putExtra("isCharge", "free");
-                            return intent;
-                        });
-                    };
-                };
-            };
-
-            //显示弹框
-            bottomPopupWindow_searchHistory.setLeftTip("搜索历史");
-            bottomPopupWindow_searchHistory.setRightTip("清空");
-            bottomPopupWindow_searchHistory.showLeftRightTip(true, true);
-            bottomPopupWindow_searchHistory.showTextView(true);
-            bottomPopupWindow_searchHistory.show();
-        });
+//        searchHistory.setOnClickListener(v -> {
+//            // popwindow 只初始化一次，后面只切换显示和隐藏
+//            if (bottomPopupWindow_searchHistory == null) {
+//                // 创建 popupwindow 并注册事件监听
+//                bottomPopupWindow_searchHistory = new BottomPopupWindow(getActivity()) {
+//                    @Override
+//                    public TextView createView(Integer position, FlexboxLayout layout, String text) {
+//                        // 根据布局动 id 态创建 TextView
+//                        final TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag, layout, false);
+//                        textView.setText(text);
+//                        // 设置随机背景色，文字使用白色
+//                        textView.setBackgroundColor(UIUtils.getRandomResourceColor(position));
+//                        textView.setTextColor(Color.WHITE);
+//
+//                        // 点击事件
+//                        textView.setOnClickListener(v -> {
+//                            onConfirm(textView.getText().toString());
+//                            // 点击完成后隐藏 popupwindow
+//                            onDismiss();
+//                            dismiss();
+//                        });
+//                        return textView;
+//                    }
+//
+//                    @Override
+//                    public void initData() {
+//                        // TODO 显示排序有点问题
+//                        Set<String> searchTexts = CommonUtil.getSearchHistory(mContext);
+//                        LinkedList<String> searchTextList = new LinkedList<>(searchTexts);
+//                        showTextView.removeAllViews();
+//                        for (int i = 0; i < searchTextList.size(); i++) {
+//                            final TextView textView = createView(i, showTextView, searchTextList.get(i));
+//                            showTextView.addView(textView);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onConfirm(String text) {
+//                        searchTextView.setText(text);
+//                        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+//                            intent.putExtra("search",text);
+//                            intent.putExtra("isCharge", "free");
+//                            return intent;
+//                        });
+//                    };
+//                };
+//            };
+//
+//            //显示弹框
+//            bottomPopupWindow_searchHistory.setLeftTip("搜索历史");
+//            bottomPopupWindow_searchHistory.setRightTip("清空");
+//            bottomPopupWindow_searchHistory.showLeftRightTip(true, true);
+//            bottomPopupWindow_searchHistory.showTextView(true);
+//            bottomPopupWindow_searchHistory.show();
+//        });
     }
 
 

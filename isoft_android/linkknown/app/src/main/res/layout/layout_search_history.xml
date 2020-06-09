@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="左侧提示"
+            android:text="搜索历史"
             android:textSize="14sp"/>
 
         <TextView
@@ -28,18 +28,12 @@
             android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackground"
             android:foreground="?attr/selectableItemBackground"
-            android:text="右侧提示"/>
+            android:text="清空"/>
     </RelativeLayout>
 
     <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/showTextView"
+        android:id="@+id/flexboxLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/showTagView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
 
 </LinearLayout>
