@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="课程">
+    <item android:title="">
         <menu>
             <item
                 android:id="@+id/course"
                 android:icon="@drawable/ic_video_black"
                 android:title="我的课程"/>
             <item
-                android:id="@+id/shoucang"
-                android:icon="@drawable/ic_star"
-                android:title="我的收藏"/>
+                android:id="@+id/orders"
+                android:icon="@drawable/ic_order"
+                android:title="订单列表"/>
             <item
-                android:id="@+id/guankan"
-                android:icon="@drawable/ic_history"
-                android:title="观看记录"/>
-        </menu>
-    </item>
-    <item android:title="账户">
-        <menu>
+                android:id="@+id/shoppingCart"
+                android:icon="@drawable/ic_shopping_cart"
+                android:title="购物车"/>
             <item
                 android:id="@+id/denglu"
                 android:icon="@drawable/icon_login"
@@ -27,19 +23,13 @@
                 android:icon="@drawable/icon_signup"
                 android:title="注册"/>
             <item
-                android:id="@+id/zhuxiao"
+                android:id="@+id/logout"
                 android:icon="@drawable/icon_login"
                 android:title="退出"/>
-
-        </menu>
-    </item>
-    <item android:title="分享">
-        <menu>
             <item
                 android:id="@+id/share"
                 android:icon="@drawable/ic_share"
                 android:title="分享"/>
         </menu>
     </item>
-
 </menu>

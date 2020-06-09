@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -19,12 +20,14 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 

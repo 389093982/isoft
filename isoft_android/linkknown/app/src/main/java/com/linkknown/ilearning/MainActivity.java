@@ -29,6 +29,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
+import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
@@ -117,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        // 初始化导航栏
+        // 初始化左侧弹框导航栏
         initNavigation();
-        // 4个fragment相关
+        // 底部4个fragment相关
         initFragment();
         // 初始化底部导航栏
         initBottomNavigation();
@@ -139,9 +140,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             // navigation view 点击事件
             int id = item.getItemId();
-            if (id == R.id.share) {
-                CommonUtil.send(mContext, Constants.SHARE_APK_INFO);
-            } else if (id == R.id.denglu) {
+            if (id == R.id.course) {
+                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+            }else if (id == R.id.orders) {
+                UIUtils.gotoActivity(mContext, PayOrderActivity.class);
+            }else if (id == R.id.shoppingCart) {
+                UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
+            }
+            else if (id == R.id.denglu) {
 //            //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
 //                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
@@ -149,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 //                UIUtils.gotoActivity(this, LoginActivity.class);
 //            }
                 UIUtils.gotoActivity(mContext, LoginActivity.class);
-            } else if (id == R.id.zhuce) {
+            }else if (id == R.id.zhuce) {
                 //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
 //                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
@@ -158,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
                 UIUtils.gotoActivity(mContext, RegistActivity.class);
-            } else if (id == R.id.zhuxiao) {
+            }else if (id == R.id.logout) {
                 //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
 //                SharedPreferences.Editor editor = getSharedPreferences("userInfo", 0).edit();
@@ -172,10 +178,8 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "您未登录不用注销", Toast.LENGTH_SHORT).show();
 //            }
                 UserService.logout(mContext);
-            } else if (id == R.id.shoucang) {
-//                UIUtils.gotoActivity(mContext, IFavoritesActivity.class);
-            } else if (id == R.id.course) {
-                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+            }else if (id == R.id.share) {
+                CommonUtil.send(mContext, Constants.SHARE_APK_INFO);
             }
 
             // 抽屉关闭
