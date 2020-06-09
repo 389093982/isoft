@@ -33,6 +33,7 @@ import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
+import com.linkknown.ilearning.fragment.MoreFragment;
 import com.linkknown.ilearning.fragment.PayOrderFragment;
 import com.linkknown.ilearning.fragment.TuijianFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         // 创建 3 个片段
         fragmentList.add(new HomeFragment());
         fragmentList.add(new CourseClassifyFragment());
-        fragmentList.add(new TuijianFragment());
+        fragmentList.add(new MoreFragment());
         fragmentList.add(new MineFragment());
     }
 
@@ -327,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(1);
                     return true;
                 }
-                case R.id.action_tuijian: {
+                case R.id.action_find: {
                     viewPager.setCurrentItem(2);
                     return true;
                 }
