@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:id="@+id/left_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="大家都在搜索"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+
+    <com.linkknown.ilearning.widget.CommonTagView
+        android:id="@+id/showTagView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.linkknown.ilearning.widget.CommonTagView
+        android:id="@+id/hideTagView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.linkknown.ilearning.widget.ShowAndCloseMoreView
+        android:id="@+id/showAndCloseMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
