@@ -130,11 +130,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
         mFragments.add(courseFilterFragment2);
 
-        titles.add("github专栏");
-        CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
-        courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","github","isCharge", ""));
-        mFragments.add(courseFilterFragment4);
-
 //        titles.add("关注");
 //        MoreFragment moreFragment5 = new MoreFragment();
 //        mFragments.add(moreFragment5);

@@ -64,7 +64,8 @@
 
 
     <!-- 全圆角-->
-    <LinearLayout style="@style/wrap_layout">
+    <LinearLayout style="@style/wrap_layout"
+        android:layout_marginBottom="40dp">     <!--底部预留一点空间-->
 
         <LinearLayout
             android:id="@+id/menuAboutLayout"
@@ -81,24 +82,8 @@
         <View style="@style/bg_line"/>
         <!-- 下圆角-->
         <LinearLayout
-            android:id="@+id/menuCheckUpdate"
-            style="@style/bottom_layout">
-
-            <TextView
-                android:id="@+id/menuCheckUpdateTextView"
-                style="@style/usertext"
-                android:text="  检查更新"/>
-
-            <ImageView style="@style/img_arrow"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 全圆角-->
-    <LinearLayout style="@style/wrap_layout">
-
-        <LinearLayout
             android:id="@+id/menuSettingLayout"
-            style="@style/single_layout">
+            style="@style/bottom_layout">
 
             <TextView
                 android:id="@+id/menuSettingLayoutTextView"
@@ -107,7 +92,6 @@
 
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>
