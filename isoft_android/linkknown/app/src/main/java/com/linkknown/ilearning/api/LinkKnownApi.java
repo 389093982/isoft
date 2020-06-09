@@ -4,6 +4,7 @@ import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CommentResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
+import com.linkknown.ilearning.model.CouponDatasResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.CreateVerifyCodeResponse;
@@ -166,6 +167,12 @@ public interface LinkKnownApi {
                                                    @Query("offset") int pageSize,
                                                    @Query("user_name") String user_name,
                                                    @Query("scope") String scope);
+
+    // 根据优惠券ID查询优惠券
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPagePayCoupon")
+    Observable<CouponDatasResponse> QueryPagePayCoupon(@Query("coupon_id") String coupon_id,
+                                                  @Query("currentPage") int current_page,
+                                                  @Query("offset") int pageSize);
 
 
     // 查询购物车
