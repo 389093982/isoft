@@ -127,28 +127,27 @@ public class HomeFragment extends BaseLazyLoadFragment {
         addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
 
         titles.add("全部");
-        CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
-        courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
-        mFragments.add(courseFilterFragment3);
-
-        titles.add("免费");
         CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
-        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
+        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
         mFragments.add(courseFilterFragment1);
 
-        titles.add("付费");
+        titles.add("免费");
         CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
-        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
         mFragments.add(courseFilterFragment2);
+
+        titles.add("付费");
+        CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
+        courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        mFragments.add(courseFilterFragment3);
+
+        titles.add("推荐");
+        TuijianFragment tuijianFragment = new TuijianFragment();
+        mFragments.add(tuijianFragment);
 
 //        titles.add("关注");
 //        MoreFragment moreFragment5 = new MoreFragment();
 //        mFragments.add(moreFragment5);
-
-        titles.add("更多");
-        MoreFragment moreFragment8 = new MoreFragment();
-        mFragments.add(moreFragment8);
-
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(this.getChildFragmentManager()) {
             @NonNull

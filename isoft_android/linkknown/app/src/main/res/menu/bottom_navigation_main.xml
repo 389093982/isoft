@@ -14,10 +14,10 @@
         android:title="分类"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_tuijian"
+        android:id="@+id/action_find"
         android:enabled="true"
-        android:icon="@drawable/ic_recommend"
-        android:title="推荐"
+        android:icon="@drawable/ic_find"
+        android:title="发现"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_mine"
