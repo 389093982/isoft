@@ -2,6 +2,7 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserDetailActivity;
@@ -161,11 +163,9 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if (view.getId() == R.id.cVideoName){
                     UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
-                        intent.putExtra("course_name", course.getCourse_name());
-                        intent.putExtra("video_name", cVideos.get(position).getVideo_name());
-                        intent.putExtra("course_id", cVideos.get(position).getCourse_id());
-                        intent.putExtra("video_id", cVideos.get(position).getId());
-                        intent.putExtra("first_play", cVideos.get(position).getFirst_play());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("courseDetailResponse", courseDetailResponse);
+                        intent.putExtras(bundle);
                         return intent;
                     });
                 }
@@ -188,16 +188,11 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 List<CourseDetailResponse.CVideo> cVideos = courseDetailResponse.getCVideos();
                 if (CollectionUtils.isNotEmpty(cVideos)) {
                     CourseDetailResponse.CVideo cVideo = cVideos.get(0);
-                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, new UIUtils.IntentParamWrapper() {
-                        @Override
-                        public Intent wrapper(Intent intent) {
-                            intent.putExtra("course_name", course.getCourse_name());
-                            intent.putExtra("video_name", cVideo.getVideo_name());
-                            intent.putExtra("course_id", cVideo.getCourse_id());
-                            intent.putExtra("video_id", cVideo.getId());
-                            intent.putExtra("first_play", cVideo.getFirst_play());
-                            return intent;
-                        }
+                    UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("courseDetailResponse", courseDetailResponse);
+                        intent.putExtras(bundle);
+                        return intent;
                     });
                 } else {
                     ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);

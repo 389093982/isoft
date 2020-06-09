@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.VideoPlayActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <cn.jzvd.JzvdStd
             android:id="@+id/video_player"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
     </LinearLayout>
 
-    <!-- 此处显示选集列表 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:background="@color/gray">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分集视频"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
+        <ImageView
+            android:id="@+id/showListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_list"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/showGrdView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_grd"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <!-- 此处显示选集列表 -->
+    <include layout="@layout/layout_recycleview"/>
 </LinearLayout>
