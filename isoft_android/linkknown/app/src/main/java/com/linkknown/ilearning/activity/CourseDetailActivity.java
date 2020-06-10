@@ -147,7 +147,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             payOrderResponseObservable =
                     LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(1, 1, "course_theme_type", 10, LoginUtil.getLoginUserName(mContext));
         } else {
-            payOrderResponseObservable = Observable.just(null);
+            // 没登录则返回空订单
+            payOrderResponseObservable = Observable.just(new PayOrderResponse());
         }
         return payOrderResponseObservable;
     }
