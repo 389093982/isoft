@@ -152,7 +152,7 @@
 
 <script>
   import {isoft_unifiedpay_order_api} from "../../api/index"
-  import {ShowCourseDetail,queryPayOrderList,addPayOrder,updatePayOrder,SearchCouponForPay,UpdateCouponIsUsed,queryCouponById,OrderCancelledById} from "../../api/index"
+  import {ShowCourseDetail,queryPayOrderList,addPayOrder,updatePayOrder,SearchCouponForPay,UpdateCouponIsUsed,queryCouponById} from "../../api/index"
   import {checkHasLogin,getLoginUserName} from "../../tools/sso"
   import {CheckHasLoginConfirmDialog2,GetToday_yyyyMMdd,checkEmpty,GetTodayTime_yyyyMMddhhmmss} from "../../tools/index"
   import vueQr from 'vue-qr'
@@ -349,7 +349,7 @@
           return false;
         }
         CheckHasLoginConfirmDialog2(this, async function () {
-          //检查该商品是否已经下过单
+          //1. 检查该商品是否已经下过单
           if (_this.goods_type === 'course_theme_type') {
             //发送请求到订单表做个查询
             const result = await queryPayOrderList({
@@ -364,9 +364,20 @@
                 _this.$Message.warning("该课程您已购买过，无需再次购买^_^");
               }else {
 
-                //如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+                //2. 如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+                let params = {
+                  'user_name':_this.loginUserName,
+                  'scope':'WAIT_FOR_PAY',
+                  'currentPage':1,
+                  'offset':10,
+                };
+                const res = await queryPayOrderList(params);
+                if (res.status === 'SUCCESS' && res.orders.length > 0) {
+                  _this.$Message.error('您有待付款的订单，请先去处理！');
+                  return false;
+                }
 
-                //如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
+                //3. 如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
                 if (!checkEmpty(_this.currentSelectCoupon.coupon_id)) {
                   let params = {
                     'coupon_id':_this.currentSelectCoupon.coupon_id
@@ -428,7 +439,7 @@
           //下单返回结果
           if (result.code_url != null) {
             this.codeUrl = result.code_url;
-            //订单先入库
+            //1.订单先入库
             const res = await addPayOrder({
               'order_id':result.order_id,
               'user_name':result.user_name,
@@ -444,7 +455,7 @@
               'code_url':result.code_url
             });
             if (res.status === 'SUCCESS') {
-              // 更新优惠券,这里是下单的时候需要更新一次。
+              // 2.更新优惠券,这里是下单的时候需要更新一次。
               if (this.currentSelectCoupon) {
                 this.updateCouponIsUsed(result.user_name,this.currentSelectCoupon.coupon_id);
               }
@@ -452,7 +463,7 @@
           }
           //用户扫码支付后返回结果
           if (result.pay_result != null) {
-            //更新支付状态
+            //1.更新支付状态
             const res = await updatePayOrder({
               'order_id':result.order_id,
               'user_name':result.user_name,
@@ -460,10 +471,10 @@
               'trans_time':GetTodayTime_yyyyMMddhhmmss()
             });
             if (res.status === 'SUCCESS' && res.updatedOrder.activity_type === 'coupon') {
-              // 更新优惠券，支付成功后需要再次更新，防止新开界面取消订单，在老页面继续扫码付款。
+              // 2.更新优惠券，支付成功后需要再次更新，防止新开界面取消订单，在老页面继续扫码付款。
               this.updateCouponIsUsed( res.updatedOrder.user_name,res.updatedOrder.activity_type_bind_id);
             }
-            //如果更新成功，页面展示支付成功动态效果
+            //3.如果更新成功，页面展示支付成功动态效果
             if (res.status === 'SUCCESS' && result.pay_result === 'SUCCESS') {
               this.codeUrl = '';
               this.showPayResult = true;
