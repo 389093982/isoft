@@ -168,6 +168,14 @@ public interface LinkKnownApi {
                                                    @Query("user_name") String user_name,
                                                    @Query("scope") String scope);
 
+    // 查询商品（课程）是否被购买
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
+                                                   @Query("offset") int pageSize,
+                                                   @Query("goods_type") String goods_type,
+                                                   @Query("goods_id") int goods_id,
+                                                   @Query("user_name") String user_name);
+
     // 根据优惠券ID查询优惠券
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPagePayCoupon")
     Observable<CouponDatasResponse> QueryPagePayCoupon(@Query("coupon_id") String coupon_id,

@@ -5,17 +5,11 @@ import android.util.Log;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.model.UserDetailResponse;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseService {
@@ -55,55 +49,6 @@ public class CourseService {
                     }
                 });
     }
-
-    public static void showCourseDetailForApp (int course_id) {
-
-        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
-                .flatMap((Function<CourseDetailResponse, ObservableSource<CourseDetailResponse>>) (CourseDetailResponse courseDetailResponse) -> {
-                    return Observable.zip(Observable.just(courseDetailResponse),
-                            LinkKnownApiFactory.getLinkKnownApi().getUserDetail(courseDetailResponse.getCourse().getCourse_author()),
-                            new BiFunction<CourseDetailResponse, UserDetailResponse, CourseDetailResponse>() {
-                                @Override
-                                public CourseDetailResponse apply(CourseDetailResponse courseDetailResponse, UserDetailResponse userDetailResponse) throws Exception {
-                                    courseDetailResponse.setUser(userDetailResponse.getUser());
-                                    return courseDetailResponse;
-                                }
-                            });
-                })
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new Observer<CourseDetailResponse>() {
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(CourseDetailResponse courseDetailResponse) {
-                        if (courseDetailResponse.isSuccess()) {
-                            LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
-                        } else {
-                            Log.e("onNext =>", "系统异常,请联系管理员~");
-                            LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onError =>", e.getMessage());
-                        CourseDetailResponse courseDetailResponse = new CourseDetailResponse();
-                        courseDetailResponse.setErrorMsg("数据加载失败!");
-                        LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class).post(courseDetailResponse);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
 
     public static void getHotCourseRecommend () {
         LinkKnownApiFactory.getLinkKnownApi().getHotCourseRecommend()

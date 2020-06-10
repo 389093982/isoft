@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,9 +30,12 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.AppBarStateChangeEvent;
+import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.CourseCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -44,6 +48,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -77,6 +89,8 @@ public class CourseDetailActivity extends AppCompatActivity {
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
 
+    private int course_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,47 +99,74 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 绑定
         ButterKnife.bind(this);
 
-        // 初始化组件
-        init();
+        course_id = getIntent().getIntExtra("course_id", -1);
 
-        // 填充数据
-        bindData();
+        // 初始化组件
+        initView();
 
         // 加载数据
         initData();
     }
 
-    private void bindData () {
-        int course_id = getIntent().getIntExtra("course_id", -1);
-        LiveEventBus.get("courseDetailResponse_" + course_id, CourseDetailResponse.class)
-                .observe(this, courseDetailResponse -> {
-                    CourseDetailResponse.Course course = courseDetailResponse.getCourse();
-                    // 设置课程名称
-                    courseNameText.setText(course.getCourse_name());
-                    // 设置课程图片
-                    UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
-                    // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
-                    initViewPager(courseDetailResponse, course.getComments());
-                    // 点击播放图标进行播放
-                    mFAB.setOnClickListener(v -> {
-                        if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
-                            CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
-                            UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("courseDetailResponse", courseDetailResponse);
-                                intent.putExtras(bundle);
-                                return intent;
-                            });
-                        } else {
-                            ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
-                        }
-                    });
+    private void renderUI (CourseDetailResponse courseDetailResponse) {
+        CourseDetailResponse.Course course = courseDetailResponse.getCourse();
+        // 设置课程名称
+        courseNameText.setText(course.getCourse_name());
+        // 设置课程图片
+        UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
+        // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
+        initViewPager(courseDetailResponse, course.getComments());
+        // 点击播放图标进行播放
+        mFAB.setOnClickListener(v -> {
+            if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
+                CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
+                UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("courseDetailResponse", courseDetailResponse);
+                    intent.putExtras(bundle);
+                    return intent;
                 });
+            } else {
+                ToastUtil.showText(mContext, Constants.COURSE_PLAY_NO_COURSE_NUM_TIP);
+            }
+        });
     }
 
     private void initData () {
-        int course_id = getIntent().getIntExtra("course_id", -1);
-        CourseService.showCourseDetailForApp(course_id);
+        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
+                .flatMap((Function<CourseDetailResponse, ObservableSource<CourseDetailResponse>>) (CourseDetailResponse courseDetailResponse) -> {
+                    return Observable.zip(Observable.just(courseDetailResponse),
+                            LinkKnownApiFactory.getLinkKnownApi().getUserDetail(courseDetailResponse.getCourse().getCourse_author()),
+                            new BiFunction<CourseDetailResponse, UserDetailResponse, CourseDetailResponse>() {
+                                @Override
+                                public CourseDetailResponse apply(CourseDetailResponse courseDetailResponse, UserDetailResponse userDetailResponse) throws Exception {
+                                    courseDetailResponse.setUser(userDetailResponse.getUser());
+                                    return courseDetailResponse;
+                                }
+                            });
+                })
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<CourseDetailResponse>() {
+
+                    @Override
+                    public void onNext(CourseDetailResponse courseDetailResponse) {
+                        if (courseDetailResponse.isSuccess()) {
+                            // 加载成功后渲染 UI
+                            renderUI(courseDetailResponse);
+                        } else {
+                            Log.e("onNext =>", "系统异常,请联系管理员~");
+                            ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "数据加载失败！");
+                    }
+
+                });
     }
 
     private void initToolBar() {
@@ -157,7 +198,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void init() {
+    private void initView() {
         initToolBar();
         initListener();
     }
