@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CourseVideoAdapter;
 import com.linkknown.ilearning.model.CourseDetailResponse;
-import com.linkknown.ilearning.model.PayOrderResponse;
 
 import java.util.ArrayList;
 import java.util.List;

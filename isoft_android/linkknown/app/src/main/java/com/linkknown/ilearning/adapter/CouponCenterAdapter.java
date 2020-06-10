@@ -11,8 +11,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CouponGoodActivity;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.util.DateUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -64,6 +66,7 @@ public class CouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Cou
         } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("已领取");
             matrix.setSaturation(1);
+            viewHolder.findView(R.id.couponLayout).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class));
         } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);

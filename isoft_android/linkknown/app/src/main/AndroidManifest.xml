@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CourseCustomTagListActivity"></activity>
+        <activity android:name=".activity.CouponGoodActivity"></activity>
+        <activity android:name=".activity.CourseCustomTagListActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.CouponReceiveCenterActivity" />
         <activity android:name=".activity.AdviseActivity" />
