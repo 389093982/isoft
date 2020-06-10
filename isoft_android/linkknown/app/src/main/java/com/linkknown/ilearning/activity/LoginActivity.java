@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Context mContext;
 
+    @BindView(R.id.back)
+    public ImageView back;
     @BindView(R.id.userName)
     EditText usernameEditText;
     @BindView(R.id.passwd)
@@ -49,13 +52,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.link_regist)
     TextView link_regist;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mContext = this;
         ButterKnife.bind(this);
+        back.setOnClickListener(this);
 
         fillAccountFromMemory(usernameEditText, passwordEditText, loginButton);
 
