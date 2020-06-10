@@ -51,7 +51,7 @@ public class VideoPlayActivity extends AppCompatActivity {
         courseVideoView.setCallBackListener(position -> {
             initVideoPlayer(position);
         });
-        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
+        courseVideoView.setList(courseDetailResponse, CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void initVideoPlayer(int position) {

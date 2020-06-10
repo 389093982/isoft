@@ -17,6 +17,7 @@ public class CourseDetailResponse extends BaseResponse implements Serializable {
     private List<CVideo> cVideos ;
     private Course course;
     private UserDetailResponse.User user;
+    private PayOrderResponse.PayOrder payOrder;
 
     @Data
     @ToString

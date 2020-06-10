@@ -28,16 +28,20 @@ import com.google.gson.Gson;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.api.LinkKnownApi;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.AppBarStateChangeEvent;
 import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.CourseCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.DisplayUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -55,6 +59,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
 public class CourseDetailActivity extends AppCompatActivity {
@@ -119,7 +124,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 点击播放图标进行播放
         mFAB.setOnClickListener(v -> {
             if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
-                CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
+//                CourseDetailResponse.CVideo cVideo = courseDetailResponse.getCVideos().get(0);
                 UIUtils.gotoActivity(mContext, VideoPlayActivity.class, intent -> {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("courseDetailResponse", courseDetailResponse);
@@ -132,20 +137,48 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 获取支付订单信息
+     * @return
+     */
+    private Observable<PayOrderResponse> getPayOrderResponseObservable () {
+        Observable<PayOrderResponse> payOrderResponseObservable;
+        if (LoginUtil.checkHasLogin(mContext)) {
+            payOrderResponseObservable =
+                    LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(1, 1, "course_theme_type", 10, LoginUtil.getLoginUserName(mContext));
+        } else {
+            payOrderResponseObservable = Observable.just(null);
+        }
+        return payOrderResponseObservable;
+    }
+
     private void initData () {
-        LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
+        // 1、调用 showCourseDetailForApp 接口返回课程信息
+        // 2、通过 flatMap 方法将 CourseDetailResponse 转换成 CourseDetailResponse
+        // 转换的逻辑是通过 Observable.zip 方法合并三个网络请求
+        Observable<CourseDetailResponse> courseDetailResponseObservable = LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
                 .flatMap((Function<CourseDetailResponse, ObservableSource<CourseDetailResponse>>) (CourseDetailResponse courseDetailResponse) -> {
+                    // 返回合并的三个网络请求: 课程信息，课程作者信息，当前登录用户购买订单信息
                     return Observable.zip(Observable.just(courseDetailResponse),
                             LinkKnownApiFactory.getLinkKnownApi().getUserDetail(courseDetailResponse.getCourse().getCourse_author()),
-                            new BiFunction<CourseDetailResponse, UserDetailResponse, CourseDetailResponse>() {
+                            getPayOrderResponseObservable(),
+                            new Function3<CourseDetailResponse, UserDetailResponse, PayOrderResponse, CourseDetailResponse>() {
+                                // 合并逻辑实现
                                 @Override
-                                public CourseDetailResponse apply(CourseDetailResponse courseDetailResponse, UserDetailResponse userDetailResponse) throws Exception {
+                                public CourseDetailResponse apply(CourseDetailResponse courseDetailResponse, UserDetailResponse userDetailResponse, PayOrderResponse payOrderResponse) throws Exception {
+                                    // 给课程添加作者信息
                                     courseDetailResponse.setUser(userDetailResponse.getUser());
+                                    // 给课程添加当前登录用户购买的订单信息
+                                    courseDetailResponse.setPayOrder(CollectionUtils.isEmpty(payOrderResponse.getOrders()) ? null : payOrderResponse.getOrders().get(0));
                                     return courseDetailResponse;
                                 }
                             });
-                })
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                });
+        comsumerData(courseDetailResponseObservable);
+    }
+
+    private void comsumerData(Observable<CourseDetailResponse> courseDetailResponseObservable) {
+        courseDetailResponseObservable.subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CourseDetailResponse>() {
 
