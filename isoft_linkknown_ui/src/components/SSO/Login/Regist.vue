@@ -18,6 +18,12 @@
       <FormItem label="用户昵称" prop="nickname">
           <Input v-model.trim="formValidate.nickname" placeholder="请输入用户昵称"></Input>
       </FormItem>
+      <FormItem label="性别" prop="gender">
+        <RadioGroup v-model="formValidate.gender">
+          <Radio label="male">男</Radio>
+          <Radio label="female">女</Radio>
+        </RadioGroup>
+      </FormItem>
       <FormItem label="密码" prop="passwd">
         <Input v-model.trim="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
       </FormItem>
@@ -101,6 +107,7 @@
           username: '',
           verifycode: '',
           nickname: '',
+          gender:'',
           passwd: '',
           repasswd: '',
           protocol: [],
@@ -114,6 +121,9 @@
           ],
           nickname: [
             {required: true, validator: checkNickName, trigger: 'blur'}
+          ],
+          gender:[
+            {required: true, message:'请选择性别', trigger: 'blur'}
           ],
           passwd: [
             {required: true, validator: checkPassRuleValidator, trigger: 'blur'},
@@ -181,6 +191,7 @@
           third_user_type: "linkknown",
           passwd: this.formValidate.passwd,
           nickname: this.formValidate.nickname,
+          gender: this.formValidate.gender,
           verifyCode: this.formValidate.verifycode,
         });
         if (result.status === "SUCCESS") {
