@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.CourseVideoView;
 
@@ -43,29 +44,25 @@ public class VideoPlayActivity extends AppCompatActivity {
 
         initVideoInfo();
         initVideoPlayer(position);
-
-        // 图片也占用了状态栏,故需要使用沉浸式状态栏
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
     }
 
     private void initVideoInfo() {
         courseVideoView.setCallBackListener(position -> {
-            CourseDetailResponse.CVideo cVideo = cVideos.get(position);
-            player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), cVideo.getVideo_name());
-            // 自动播放
-            player.startVideo();
+            initVideoPlayer(position);
         });
         courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void initVideoPlayer(int position) {
         CourseDetailResponse.CVideo cVideo = cVideos.get(position);
-        player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), cVideo.getVideo_name());
+        player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), StringUtilEx.getFileNameNoEx(cVideo.getVideo_name()));
         // 自动播放
         player.startVideo();
+        // 设置容器内播放器高,解决黑边（视频全屏）
+        player.setVideoImageDisplayType(JzvdStd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+
+//        UIUtils.setImage(this, player., "");
+//        Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJzvdStd.thumbImageView);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.linkknown.ilearning.service.UserService;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -31,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -117,6 +119,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
         loginButton.setOnClickListener(this);
         link_regist.setOnClickListener(this);
+    }
+
+    // 只要有用户名、密码一个发生改变就触发
+    // 校验成功则输入框可点击
+    @OnTextChanged({R.id.userName, R.id.passwd})
+    public void onTextChanged() {
+        String _userName = StringUtils.trim(usernameEditText.getText().toString());
+        String _passwd = StringUtils.trim(passwordEditText.getText().toString());
+
+        // 简单的条件判断: 用户名和密码不能为空.
+        if (StringUtilEx.isAllNotEmpty(_userName, _passwd)) {
+            loginButton.setEnabled(true);
+        } else {
+            loginButton.setEnabled(false);
+        }
     }
 
     // 自动填充登录表单

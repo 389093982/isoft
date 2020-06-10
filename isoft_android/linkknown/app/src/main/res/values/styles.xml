@@ -28,6 +28,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <!-- colorAccent CheckBox，RadioButton，SwitchCompat等一般控件的选中效果默认采用该颜色 -->
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/orange2</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
