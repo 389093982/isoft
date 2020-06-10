@@ -1,7 +1,9 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +43,12 @@ public class VideoPlayActivity extends AppCompatActivity {
 
         initVideoInfo();
         initVideoPlayer(position);
+
+        // 图片也占用了状态栏,故需要使用沉浸式状态栏
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     private void initVideoInfo() {
@@ -50,7 +58,7 @@ public class VideoPlayActivity extends AppCompatActivity {
             // 自动播放
             player.startVideo();
         });
-        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_GRID));
+        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void initVideoPlayer(int position) {

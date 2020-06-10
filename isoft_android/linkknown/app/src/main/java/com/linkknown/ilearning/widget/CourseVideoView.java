@@ -22,7 +22,7 @@ import java.util.List;
 public class CourseVideoView extends LinearLayout {
 
     // 默认以网格形式展示
-    private int itemType = CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_GRID;
+    private int itemType = CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST;
 
     private ImageView showListView;
     private ImageView showGrdView;
@@ -56,19 +56,19 @@ public class CourseVideoView extends LinearLayout {
 
         // 创建 2 种布局
         mLinearLayoutManager = new LinearLayoutManager(mContext);
-        mGridLayoutManager = new GridLayoutManager(mContext, 3);
+        mGridLayoutManager = new GridLayoutManager(mContext, 5);
         initView();
     }
 
     private void initView() {
         baseQuickAdapter = new CourseVideoAdapter(mContext, cVideos);
-        baseQuickAdapter.addChildClickViewIds(R.id.cVideoName);
+        baseQuickAdapter.addChildClickViewIds(R.id.cVideoName, R.id.cVideoIndex);
         baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (listener != null) {
                 listener.onConfirm(position);
             }
         });
-        recyclerView.setLayoutManager(mGridLayoutManager);
+        recyclerView.setLayoutManager(mLinearLayoutManager);
         recyclerView.setAdapter(baseQuickAdapter);
 
         showListView.setOnClickListener(v -> {

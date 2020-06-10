@@ -7,13 +7,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="5dp"
-        android:background="@color/gray">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@color/light_gray">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分集视频"
+            android:layout_margin="10dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"/>
@@ -23,17 +27,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_list"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"/>
+            android:padding="10dp"
+            android:layout_alignParentEnd="true"/>
         <ImageView
             android:id="@+id/showGrdView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_grd"
-            android:layout_alignParentEnd="true"/>
+            android:padding="10dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 
-    <!-- 此处显示选集列表 -->
-    <include layout="@layout/layout_recycleview"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <!-- 此处显示选集列表 -->
+        <include layout="@layout/layout_recycleview"/>
+    </LinearLayout>
 
 </LinearLayout>

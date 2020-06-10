@@ -151,7 +151,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 });
             }
         });
-        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_GRID));
+        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void handleCourseOperateClick (String operateName) {

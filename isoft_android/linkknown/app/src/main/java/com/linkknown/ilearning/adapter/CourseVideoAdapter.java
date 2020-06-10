@@ -3,12 +3,10 @@ package com.linkknown.ilearning.adapter;
 import android.content.Context;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
-import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
 
