@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     // 底部导航栏
     @BindView(R.id.viewPager)
     public ViewPager viewPager;
-    
+
+    //左侧导航
     @BindView(R.id.bottom_navigation)
     public BottomNavigationView bottomNavigationView;
 

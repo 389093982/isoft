@@ -77,6 +77,7 @@ public interface LinkKnownApi {
     Observable<RegistResponse> regist(@Query("username") String username,
                                       @Query("passwd") String passwd,
                                       @Query("nickname") String nickname,
+                                      @Query("gender") String gender,
                                       @Query("verifyCode") String verifyCode,
                                       @Query("third_user_type") String third_user_type);
 
