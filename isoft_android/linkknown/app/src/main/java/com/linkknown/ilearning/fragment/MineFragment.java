@@ -61,10 +61,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
 
+    //用户信息  &&  去编辑
     @BindView(R.id.userInfoLayout)
     public RelativeLayout userInfoLayout;
     @BindView(R.id.toEditLayout)
     public LinearLayout toEditLayout;
+
     // 登录用户头像和用户名
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;

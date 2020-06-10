@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +54,18 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.registBtn)
     public Button registBtn;
 
+    //用户名
     @BindView(R.id.userName)
     public TextView userName;
+
+    //昵称
+    @BindView(R.id.nickName)
+    public TextView nickName;
+
+    //性别radio  && 文本
+    @BindView(R.id.gender)
+    public RadioGroup gender;
+    public String gender_text;
 
     // 密码和确认密码
     @BindView(R.id.passwd)
@@ -100,6 +112,23 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+        nickName.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                TextView textView = (TextView)v;
+                if (StringUtils.trim(textView.getText().toString()).length()>10) {
+                    ToastUtil.showText(mContext, "昵称? 请不要超过10个字符哦");
+                }
+            }
+        });
+        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            // 参数1：你点击的RadioButton的组 参数2：是你选中的控件的id
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) findViewById(checkedId);
+                gender_text = rb.getText().toString();
+                onTextChanged();
+            }
+        });
         passwd.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 TextView textView = (TextView)v;
@@ -118,17 +147,18 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    // 只要有用户名、密码、确认密码、验证码一个发生改变就触发
+
+    // 只要有用户名、密码、确认密码、验证码、昵称，一个发生改变就触发
     // 校验成功则输入框可点击
-    @OnTextChanged({R.id.userName, R.id.passwd, R.id.rePasswd, R.id.verifyCode})
+    @OnTextChanged({R.id.userName, R.id.verifyCode,R.id.nickName,R.id.passwd, R.id.rePasswd})
     public void onTextChanged() {
         String _userName = StringUtils.trim(userName.getText().toString());
         String _verifyCode = StringUtils.trim(verifyCode.getText().toString());
+        String _nickName = StringUtils.trim(nickName.getText().toString());
         String _passwd = StringUtils.trim(passwd.getText().toString());
         String _rePasswd = StringUtils.trim(rePasswd.getText().toString());
 
-        // 简单的条件判断: 用户名和密码不能为空.
-        if (StringUtilEx.isAllNotEmpty(_userName, _passwd, _rePasswd, _verifyCode) && StringUtils.equals(_passwd, _rePasswd)) {
+        if (StringUtilEx.isAllNotEmpty(_userName,_nickName,gender_text, _passwd, _rePasswd, _verifyCode)) {
             registBtn.setEnabled(true);
         } else {
             registBtn.setEnabled(false);
@@ -185,25 +215,53 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }.start();
     }
 
+    //前去注册
     private void handleRegist() {
+        String _nickName = StringUtils.trim(nickName.getText().toString());
         String _userName = StringUtils.trim(userName.getText().toString());
         String _verifyCode = StringUtils.trim(verifyCode.getText().toString());
         String _passwd = StringUtils.trim(passwd.getText().toString());
         String _rePasswd = StringUtils.trim(rePasswd.getText().toString());
+        String _gender = "";
+        if ("男".equals(gender_text.trim())){
+            _gender = "male";
+        }else{
+            _gender = "female";
+        }
 
-        if (!validate(_userName)) {
-            onSignupFailed("注册失败！");
+        if (StringUtils.isEmpty(_nickName)) {
+            onSignupFailed("请填写昵称！");
+            return;
+        }
+        if (!validate(_userName)) {   //验证账号，使用了单独方法
+            onSignupFailed("请填写账号！");
+            return;
+        }
+        if (StringUtils.isEmpty(_verifyCode)) {
+            onSignupFailed("请填写验证码！");
+            return;
+        }
+        if (StringUtils.isEmpty(_passwd)) {
+            onSignupFailed("请填写验证码！");
+            return;
+        }
+        if (StringUtils.isEmpty(_rePasswd)) {
+            onSignupFailed("请填写验证码！");
             return;
         }
         if (!_passwd.equals(_rePasswd)) {
-            rePasswd.setError("两次密码输入不一致！");
-        } else {
-            regist(_userName, _passwd, "小猫小狗", _verifyCode, "linkknown");
+            onSignupFailed("两次密码输入不一致！");
+            return;
         }
+        if (StringUtils.isEmpty(gender_text) || StringUtils.isEmpty(_gender)) {
+            onSignupFailed("请选择性别！");
+            return;
+        }
+        regist(_userName, _passwd, _nickName, _gender, _verifyCode, "linkknown");
     }
 
-    public void regist (String username, String passwd, String nickname, String verifyCode, String third_user_type) {
-        LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, verifyCode, third_user_type)
+    public void regist (String username, String passwd, String nickname, String gender, String verifyCode, String third_user_type) {
+        LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, gender, verifyCode, third_user_type)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<RegistResponse>() {
