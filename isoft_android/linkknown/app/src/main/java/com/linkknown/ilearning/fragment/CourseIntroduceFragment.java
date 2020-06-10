@@ -134,10 +134,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         // 初始化自定义标签语
         courseTagView.setList(CommonUtil.splitCommonTag(course_label));
 
-        initCVideoView(course, cVideos);
+        initCVideoView(courseDetailResponse, course, cVideos);
     }
 
-    private void initCVideoView(CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
+    private void initCVideoView(CourseDetailResponse courseDetailResponse, CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
         courseVideoView.setCallBackListener(new CourseVideoView.CallBackListener() {
             @Override
             public void onConfirm(int position) {
@@ -151,7 +151,8 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 });
             }
         });
-        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
+        // 传递视频信息，并刷新页面
+        courseVideoView.setList(courseDetailResponse, CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void handleCourseOperateClick (String operateName) {

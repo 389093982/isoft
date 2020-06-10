@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CourseVideoAdapter;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.PayOrderResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,11 @@ public class CourseVideoView extends LinearLayout {
     //列表布局
     private LinearLayoutManager mLinearLayoutManager;
 
-    private BaseQuickAdapter baseQuickAdapter;
+    private CourseVideoAdapter baseQuickAdapter;
 
     private CallBackListener listener;
 
-    // 存储数据
+   // 存储数据
     private List<CourseDetailResponse.MultiItemTypeCVideo> cVideos = new ArrayList<>();
 
     private Context mContext;
@@ -89,9 +90,10 @@ public class CourseVideoView extends LinearLayout {
         });
     }
 
-    public void setList(List<CourseDetailResponse.MultiItemTypeCVideo> cVideos) {
+    public void setList(CourseDetailResponse courseDetailResponse, List<CourseDetailResponse.MultiItemTypeCVideo> cVideos) {
         this.cVideos.clear();
         this.cVideos.addAll(cVideos);
+        baseQuickAdapter.setCourseDetailResponse(courseDetailResponse);
         baseQuickAdapter.notifyDataSetChanged();
     }
 

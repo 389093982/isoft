@@ -29,6 +29,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     public CourseVideoView courseVideoView;
 
     private List<CourseDetailResponse.CVideo> cVideos;
+    private CourseDetailResponse courseDetailResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class VideoPlayActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        CourseDetailResponse courseDetailResponse = (CourseDetailResponse)intent.getExtras().getSerializable("courseDetailResponse");
+        courseDetailResponse = (CourseDetailResponse)intent.getExtras().getSerializable("courseDetailResponse");
         int position = intent.getExtras().getInt("position");
         cVideos = courseDetailResponse.getCVideos();
 
@@ -50,19 +51,22 @@ public class VideoPlayActivity extends AppCompatActivity {
         courseVideoView.setCallBackListener(position -> {
             initVideoPlayer(position);
         });
-        courseVideoView.setList(CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
+        courseVideoView.setList(courseDetailResponse, CourseDetailResponse.MultiItemTypeCVideo.setItemType(cVideos, CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST));
     }
 
     private void initVideoPlayer(int position) {
         CourseDetailResponse.CVideo cVideo = cVideos.get(position);
         player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), StringUtilEx.getFileNameNoEx(cVideo.getVideo_name()));
-        // 自动播放
-        player.startVideo();
+
+        player.titleTextView.setTextSize(14);
+        player.titleTextView.setTextColor(UIUtils.getResourceColor(this, R.color.white));
+        UIUtils.setImage(this, player.posterImageView, courseDetailResponse.getCourse().getSmall_image());
+
         // 设置容器内播放器高,解决黑边（视频全屏）
         player.setVideoImageDisplayType(JzvdStd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
 
-//        UIUtils.setImage(this, player., "");
-//        Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJzvdStd.thumbImageView);
+        // 自动播放
+        player.startVideo();
     }
 
     @Override
