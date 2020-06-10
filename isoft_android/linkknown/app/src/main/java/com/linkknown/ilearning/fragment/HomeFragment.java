@@ -127,6 +127,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
 
     private void initFragment () {
         addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
+        addChannel.setVisibility(View.GONE);
 
         titles.add("全部");
         CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
@@ -146,10 +147,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         titles.add("推荐");
         TuijianFragment tuijianFragment = new TuijianFragment();
         mFragments.add(tuijianFragment);
-
-//        titles.add("关注");
-//        MoreFragment moreFragment5 = new MoreFragment();
-//        mFragments.add(moreFragment5);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(this.getChildFragmentManager()) {
             @NonNull

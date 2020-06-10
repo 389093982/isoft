@@ -181,7 +181,6 @@ public class AdviseActivity extends BaseActivity {
 
     private void handleEditAdvise() {
         editAdviseDialog = new BottomQuickEidtDialog(mContext, text -> {
-
             LinkKnownApiFactory.getLinkKnownApi().insertAdvise(text, "advise")
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行

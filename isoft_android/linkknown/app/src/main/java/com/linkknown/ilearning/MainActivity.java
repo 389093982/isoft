@@ -34,9 +34,7 @@ import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.CourseClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
-import com.linkknown.ilearning.fragment.MoreFragment;
-import com.linkknown.ilearning.fragment.PayOrderFragment;
-import com.linkknown.ilearning.fragment.TuijianFragment;
+import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.popup.BottomQuickWindow;
 import com.linkknown.ilearning.service.UserService;
@@ -210,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             drawer.openDrawer(navigationView);
         }));
         fragmentList.add(new CourseClassifyFragment());
-        fragmentList.add(new MoreFragment());
+        fragmentList.add(new FindFragment());
         fragmentList.add(new MineFragment());
     }
 

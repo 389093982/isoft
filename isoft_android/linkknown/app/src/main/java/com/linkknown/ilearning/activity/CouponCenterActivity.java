@@ -2,6 +2,8 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CouponCenterFragment;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +33,14 @@ public class CouponCenterActivity extends BaseActivity {
 
     // 存储所有 fragment
     private List<Fragment> mFragments = new ArrayList<>();
+
     // 存储 fragment 的标题
     private List<String> titles = new ArrayList<>();
+
     // tabLayout 和 viewPager 用于切换 fragment
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
@@ -44,7 +50,6 @@ public class CouponCenterActivity extends BaseActivity {
         setContentView(R.layout.layout_tab_fragment_toolbar);
         ButterKnife.bind(this);
         mContext = this;
-
         initView();
     }
 
@@ -95,4 +100,25 @@ public class CouponCenterActivity extends BaseActivity {
         });
         tabLayout.setupWithViewPager(viewPager);
     }
+
+
+    //添加右上角 领券中心 图标
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.coupon_center, menu);
+        return true;
+    }
+
+    //跳转到领券中心
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.coupon_center) {
+            UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class);
+        }
+        return true;
+    }
+
 }

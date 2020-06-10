@@ -45,12 +45,19 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.banner)
     public Banner banner;
 
+    //优惠券
     @BindView(R.id.iv_coupon)
     public ImageView iv_coupon;
+
+    //订单
     @BindView(R.id.iv_order)
     public ImageView iv_order;
+
+    //消息
     @BindView(R.id.iv_message)
     public ImageView iv_message;
+
+    //活动中心
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
 
