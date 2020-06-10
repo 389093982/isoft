@@ -19,12 +19,12 @@
                 android:icon="@drawable/icon_login"
                 android:title="登录"/>
             <item
-                android:id="@+id/zhuce"
+                android:id="@+id/regist"
                 android:icon="@drawable/icon_signup"
                 android:title="注册"/>
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/icon_login"
+                android:icon="@drawable/ic_logout"
                 android:title="退出"/>
             <item
                 android:id="@+id/share"

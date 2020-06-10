@@ -45,21 +45,26 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
     @BindView(R.id.link_login)
     public TextView link_login;
+
     @BindView(R.id.back)
     public ImageView back;
+
     @BindView(R.id.registBtn)
     public Button registBtn;
 
     @BindView(R.id.userName)
     public TextView userName;
+
     // 密码和确认密码
     @BindView(R.id.passwd)
     public TextView passwd;
     @BindView(R.id.rePasswd)
     public TextView rePasswd;
+
     // 验证码输入框
     @BindView(R.id.verifyCode)
     public TextView verifyCode;
+
     // 生成验证码 tip
     @BindView(R.id.createVerifyCodeTip)
     public TextView createVerifyCodeTip;

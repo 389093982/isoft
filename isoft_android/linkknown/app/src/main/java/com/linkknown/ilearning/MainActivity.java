@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 //                UIUtils.gotoActivity(this, LoginActivity.class);
 //            }
                 UIUtils.gotoActivity(mContext, LoginActivity.class);
-            }else if (id == R.id.zhuce) {
+            }else if (id == R.id.regist) {
                 //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
 //                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();
