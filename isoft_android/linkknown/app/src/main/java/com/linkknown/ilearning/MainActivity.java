@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             }else if (id == R.id.shoppingCart) {
                 UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
             }
-            else if (id == R.id.denglu) {
+            else if (id == R.id.login) {
 //            //intent跳转
 //            if (LoginCheckUtil.isLogin(this)) {
 //                Toast.makeText(this, "您已登录过了，请先注销", Toast.LENGTH_SHORT).show();

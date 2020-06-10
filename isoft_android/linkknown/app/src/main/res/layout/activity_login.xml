@@ -18,21 +18,28 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:maxButtonHeight="25dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="20dp"
-                android:layout_height="25dp"
-                android:layout_gravity="left"
-                android:src="@drawable/back"/>
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:gravity="center"
-                android:text="登录"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="left"
+                    android:src="@drawable/back"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:translationX="-10dp"
+                    android:text="登录"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,10 +53,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/person_head"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:src="@drawable/cutecat"/>
