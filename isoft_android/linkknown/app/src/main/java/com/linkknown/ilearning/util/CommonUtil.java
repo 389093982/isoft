@@ -22,6 +22,17 @@ import java.util.Set;
 
 public class CommonUtil {
 
+    // 将秒数时间转换成界面显示时间
+    public static String formateSecondToUI (int seconds) {
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60;
+        if (minutes > 0) {
+            return String.format("%d:%d", minutes, remainingSeconds);
+        } else {
+            return String.format("%d s", remainingSeconds);
+        }
+    }
+
     // 判断当前页是否是最后一页
     public static boolean isLastPage (Paginator paginator) {
         return paginator != null && paginator.getCurrpage() == paginator.getTotalpages();

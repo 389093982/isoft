@@ -8,6 +8,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +55,12 @@ public class CourseVideoAdapter extends BaseMultiItemQuickAdapter<CourseDetailRe
                 // 设置课程信息图片名称和描述等
                 viewHolder.setText(R.id.cVideoIndex, viewHolder.getAdapterPosition() + 1 + "");
                 viewHolder.setText(R.id.cVideoName, multiItemTypeCVideo.getCVideo().getVideo_name());
-                viewHolder.setText(R.id.cVideoDuration, multiItemTypeCVideo.getCVideo().getDuration() + "");
+
+                if (multiItemTypeCVideo.getCVideo().getDuration() > 0) {
+                    viewHolder.setText(R.id.cVideoDuration, CommonUtil.formateSecondToUI(multiItemTypeCVideo.getCVideo().getDuration()));
+                } else {
+                    viewHolder.setText(R.id.cVideoDuration, "");
+                }
 
                 if (isBuy) {
                     // 已购买隐藏付费标志
