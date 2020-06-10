@@ -363,6 +363,9 @@
               if (result.orders.length>0 && result.orders[0].pay_result==='SUCCESS') {
                 _this.$Message.warning("该课程您已购买过，无需再次购买^_^");
               }else {
+
+                //如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+
                 //如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
                 if (!checkEmpty(_this.currentSelectCoupon.coupon_id)) {
                   let params = {
@@ -441,7 +444,7 @@
               'code_url':result.code_url
             });
             if (res.status === 'SUCCESS') {
-              // 更新优惠券
+              // 更新优惠券,这里是下单的时候需要更新一次。
               if (this.currentSelectCoupon) {
                 this.updateCouponIsUsed(result.user_name,this.currentSelectCoupon.coupon_id);
               }
@@ -456,6 +459,10 @@
               'pay_result':result.pay_result,
               'trans_time':GetTodayTime_yyyyMMddhhmmss()
             });
+            if (res.status === 'SUCCESS' && res.updatedOrder.activity_type === 'coupon') {
+              // 更新优惠券，支付成功后需要再次更新，防止新开界面取消订单，在老页面继续扫码付款。
+              this.updateCouponIsUsed( res.updatedOrder.user_name,res.updatedOrder.activity_type_bind_id);
+            }
             //如果更新成功，页面展示支付成功动态效果
             if (res.status === 'SUCCESS' && result.pay_result === 'SUCCESS') {
               this.codeUrl = '';
