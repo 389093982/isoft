@@ -37,7 +37,7 @@ public class CourseVideoAdapter extends BaseMultiItemQuickAdapter<CourseDetailRe
             // 列表类型展示
             case CourseDetailResponse.MultiItemTypeCVideo.ITEM_TYPE_LIST:
                 // 设置课程信息图片名称和描述等
-                        viewHolder.setText(R.id.cVideoIndex, viewHolder.getAdapterPosition() + "");
+                        viewHolder.setText(R.id.cVideoIndex, viewHolder.getAdapterPosition() + 1 + "");
                 viewHolder.setText(R.id.cVideoName, multiItemTypeCVideo.getCVideo().getVideo_name());
                 viewHolder.setText(R.id.cVideoDuration, multiItemTypeCVideo.getCVideo().getDuration() + "");
                 break;
