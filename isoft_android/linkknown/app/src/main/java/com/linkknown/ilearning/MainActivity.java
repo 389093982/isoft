@@ -94,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     public BottomNavigationView bottomNavigationView;
 
+    // 绑定小熊猫
+    @BindView(R.id.xiaoxiongmao)
+    public ImageView xiaoxiongmao;
+
     // 用户头像
     ImageView navigationHeaderIconView;
     
@@ -126,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
         observeLogin();
         // 自动登录
         autoLogin();
-//        小熊猫-- 暂时取消
-//        initXiaoxiongmao();
+//        小熊猫
+        initXiaoxiongmao();
     }
 
 
@@ -286,38 +290,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * 初始化小熊猫
      */
     private void initXiaoxiongmao() {
-        ImageView xiaomingmao = new GifImageButton(MainActivity.this);
-        xiaomingmao.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.touming));
-        xiaomingmao.setScaleType(ImageView.ScaleType.FIT_XY);
-        xiaomingmao.setImageResource(R.drawable.ic_xiongmao);
-
-            FloatWindow
-              .with(getApplicationContext())
-                .setView(xiaomingmao)
-                .setWidth(Screen.width,0.15f)
-                .setHeight(Screen.width,0.2f)
-                .setX(Screen.width,0.7f)
-                .setY(Screen.height,0.75f)
-                .setDesktopShow(true)                          //桌面显示
-//                .setViewStateListener(mViewStateListener)    //监听悬浮控件状态改变
-//                .setPermissionListener(mPermissionListener)  //监听权限申请结果
-                .setFilter(true, MainActivity.class)     //指定界面显示,其他界面隐藏
-                .setMoveType(MoveType.slide)
-                .setMoveStyle(500, new AccelerateInterpolator())  //贴边动画时长为500ms，加速插值器
-                .build();
-
         BottomQuickWindow bottomQuickWindow = new BottomQuickWindow(MainActivity.this);
-        xiaomingmao.setOnClickListener(v -> {
+        xiaoxiongmao.setOnClickListener(v -> {
             // 显示 popupwindow
             bottomQuickWindow.show();
         });
     }
-    
 
     //4个fragment 的对应跳转
     private BottomNavigationView.OnNavigationItemSelectedListener changeFragment = new BottomNavigationView.OnNavigationItemSelectedListener() {
