@@ -1,10 +1,17 @@
 package com.linkknown.ilearning.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CouponCenterFragment;
+import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -41,13 +49,18 @@ public class CouponCenterActivity extends BaseActivity {
     @BindView(R.id.tabLayout)
     TabLayout tabLayout;
 
+    @BindView(R.id.receiveCouponLayout)
+    LinearLayout receiveCouponLayout;
+    @BindView(R.id.receiveCouponText)
+    TextView receiveCouponText;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_tab_fragment_toolbar);
+        setContentView(R.layout.layout_coupon_center);
         ButterKnife.bind(this);
         mContext = this;
         initView();
@@ -55,6 +68,24 @@ public class CouponCenterActivity extends BaseActivity {
 
     private void initView () {
         initToolBar(toolbar, true, "优惠券");
+
+        initFragment();
+
+        initReceiveCouponView();
+    }
+
+    private void initReceiveCouponView() {
+        new Handler().postDelayed(() -> {
+            receiveCouponLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class));
+            int width = receiveCouponText.getWidth();
+            // 平移 translation
+            ObjectAnimator animator = ObjectAnimator.ofFloat(receiveCouponLayout, "translationX", 10, width + 10, 10).setDuration(5000);
+            animator.setRepeatCount(-1);
+            animator.start();
+        }, 2000);
+    }
+
+    private void initFragment() {
         // 创建 fragment
         CouponCenterFragment couponCenterFragment1 = new CouponCenterFragment();
         CouponCenterFragment couponCenterFragment2 = new CouponCenterFragment();

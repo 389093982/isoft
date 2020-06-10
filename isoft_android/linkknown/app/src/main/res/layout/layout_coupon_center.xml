@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_tab_fragment_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/receiveCouponLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:padding="10dp"
+        android:background="@drawable/textview_border"
+        android:translationX="2dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_coupon"/>
+
+        <TextView
+            android:id="@+id/receiveCouponText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="一批优惠券溜出来啦"/>
+    </LinearLayout>
+</RelativeLayout>
