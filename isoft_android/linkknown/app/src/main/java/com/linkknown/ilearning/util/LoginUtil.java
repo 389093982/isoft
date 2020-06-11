@@ -152,7 +152,9 @@ public class LoginUtil {
         new XPopup.Builder(context)
                 .hasShadowBg(true)
                 .asConfirm("温馨提示", "未登录,前去登录？", () -> {
-                    UIUtils.gotoActivity(context, LoginActivity.class);
+                    callback.onPositive();
+                }, () -> {
+                    callback.onNegative();
                 }).show();
     }
 
