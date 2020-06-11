@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/classifyImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/linkknown"/>
+
+    <TextView
+        android:id="@+id/classifyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分类名称"
+        android:lines="1"
+        android:ellipsize="end"
+        android:layout_below="@+id/classifyImage"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="10dp"/>
+</RelativeLayout>
