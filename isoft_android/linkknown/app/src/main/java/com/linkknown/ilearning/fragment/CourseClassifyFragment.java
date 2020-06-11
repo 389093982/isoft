@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -147,6 +149,23 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
                     searchTextView.setHint(Constants.COURSE_SEARCH_HINT_LIST.get(showHintIndex));
                     showHintIndex = showHintIndex == Constants.COURSE_SEARCH_HINT_LIST.size() - 1 ? 0 : ++ showHintIndex;
                 });
+
+        // 软键盘搜索
+        searchTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String searchText = searchTextView.getText().toString().trim();
+                    UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+                        intent.putExtra("search",searchText);
+                        intent.putExtra("isCharge", "free");
+                        return intent;
+                    });
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
