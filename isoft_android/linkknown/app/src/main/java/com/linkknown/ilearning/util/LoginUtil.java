@@ -109,7 +109,7 @@ public class LoginUtil {
     public static boolean isLoginUserName(Context mContext, String userName) {
         SharedPreferences preferences = getUserInfoSharedPreferences(mContext);
         String userName0 = preferences.getString(Constants.USER_SHARED_PREFERENCES_USER_NAME, "");
-        return StringUtils.equals(userName, userName0);
+        return checkHasLogin(mContext) && StringUtils.equals(userName, userName0);
     }
 
     public static String getHeaderIcon(Context mContext) {
