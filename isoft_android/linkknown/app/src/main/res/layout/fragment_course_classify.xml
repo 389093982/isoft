@@ -7,28 +7,28 @@
 
     <include layout="@layout/layout_card_search" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="搜索条件:"/>
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/hotSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="热门搜索"/>
+            android:layout_toLeftOf="@id/searchHistory"
+            android:text="热门搜索"
+            android:textSize="12dp"
+            android:textColor="@color/gray1"
+            android:padding="10dp"/>
         <TextView
             android:id="@+id/searchHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="搜索历史"/>
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:text="搜索历史"
+            android:textSize="12dp"
+            android:textColor="@color/gray1"
+            android:padding="10dp"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,7 +44,6 @@
                 android:id="@+id/leftClassifyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_weight="3"
                 android:overScrollMode="never"/>
 
@@ -52,7 +51,6 @@
                 android:id="@+id/rightClassifyRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:overScrollMode="never"/>
         </LinearLayout>
