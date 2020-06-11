@@ -104,18 +104,21 @@ public class VideoPlayActivity extends AppCompatActivity {
 
 
     private void initVideoPlayer(int position) {
-        CourseDetailResponse.CVideo cVideo = cVideos.get(position);
-        player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), StringUtilEx.getFileNameNoEx(cVideo.getVideo_name()));
 
-        player.titleTextView.setTextSize(14);
-        player.titleTextView.setTextColor(UIUtils.getResourceColor(this, R.color.white));
         UIUtils.setImage(this, player.posterImageView, courseDetailResponse.getCourse().getSmall_image());
 
-        // 设置容器内播放器高,解决黑边（视频全屏）
-        player.setVideoImageDisplayType(JzvdStd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+        if (checkCanPlay(courseDetailResponse, position)) {
+            CourseDetailResponse.CVideo cVideo = cVideos.get(position);
+            player.setUp(UIUtils.replaceMediaUrl(cVideo.getFirst_play()), StringUtilEx.getFileNameNoEx(cVideo.getVideo_name()));
 
-        // 自动播放
-        player.startVideo();
+            player.titleTextView.setTextSize(14);
+            player.titleTextView.setTextColor(UIUtils.getResourceColor(this, R.color.white));
+            // 设置容器内播放器高,解决黑边（视频全屏）
+            player.setVideoImageDisplayType(JzvdStd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+
+            // 自动播放
+            player.startVideo();
+        }
     }
 
     @Override

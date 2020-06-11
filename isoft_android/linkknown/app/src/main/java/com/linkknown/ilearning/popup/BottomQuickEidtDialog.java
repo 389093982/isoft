@@ -38,7 +38,7 @@ public class BottomQuickEidtDialog {
         dialog.setContentView(contentView);
 
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
-        params.width = mContext.getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 16f);
+        params.width = mContext.getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 8f);
         params.bottomMargin = DisplayUtil.dp2px(mContext, 8f);
         contentView.setLayoutParams(params);
         dialog.getWindow().setGravity(Gravity.BOTTOM);

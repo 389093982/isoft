@@ -22,8 +22,8 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/commentSubmitBtn"
         style="@style/userInfoButton"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:padding="12dp"
         android:stateListAnimator="@null"
         android:text="确定"

@@ -25,11 +25,6 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="发表评论"/>
-                <TextView
-                    android:id="@+id/moreOperate"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="更多操作"/>
             </LinearLayout>
 
             <include android:id="@+id/comment_recycleview"

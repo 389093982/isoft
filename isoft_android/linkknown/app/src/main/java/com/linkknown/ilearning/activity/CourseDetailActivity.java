@@ -24,22 +24,17 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.api.LinkKnownApi;
-import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.AppBarStateChangeEvent;
+import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
-import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.CourseCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
-import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.DisplayUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -54,10 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
@@ -147,7 +139,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             payOrderResponseObservable =
                     LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(1, 1, "course_theme_type", 10, LoginUtil.getLoginUserName(mContext));
         } else {
-            payOrderResponseObservable = Observable.just(null);
+            // 没登录则返回空订单
+            payOrderResponseObservable = Observable.just(new PayOrderResponse());
         }
         return payOrderResponseObservable;
     }
