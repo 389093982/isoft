@@ -32,6 +32,7 @@ import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,10 +158,9 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             new XPopup.Builder(getContext())
                     .hasShadowBg(true)
                     .asCustom(new HotSearchPopView(mContext, text -> {
-                        // TODO 确认只查免费？
                         UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                             intent.putExtra("search", text);
-                            intent.putExtra("isCharge", "free");
+                            intent.putExtra("isCharge", "");
                             return intent;
                         });
                     })).show();
@@ -175,10 +175,9 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
         searchHistory.setOnClickListener(v -> new XPopup.Builder(getContext())
                 .hasShadowBg(true)
                 .asCustom(new SearchHistoryPopView(mContext, text -> {
-                    // TODO 确认只查免费？
                     UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                     intent.putExtra("search",text);
-                    intent.putExtra("isCharge", "free");
+                    intent.putExtra("isCharge", "");
                     return intent;
                 });
             })).show());
@@ -207,22 +206,6 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             if (view.getId() == R.id.classifyName) {
                 selectLeftClassifyIndex = position;
                 leftClassifyAdapter.notifyDataSetChanged();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        for (int i =0; i< leftClassifyElements.size(); i++) {
-//                            View cView = leftClassifyAdapter.getViewByPosition(i, R.id.classifyName);
-//                            if (cView != null) {
-//                                if (i == position) {
-//                                    selectLeftClassifyIndex =
-//                                    cView.setSelected(true);
-//                                } else {
-//                                    cView.setSelected(false);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }, 100);
                 List<ElementResponse.Element> levelTwoClassifyElements = ElementResponse.getLevelTwoClassifyElements(element_response.getElements(), leftClassifyElements.get(position).getId());
                 initRightClassfiyView(levelTwoClassifyElements);
             }
@@ -243,11 +226,14 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
         };
         rightClassifyRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         rightClassifyRecyclerView.setAdapter(rightClassifyAdapter);
-        rightClassifyAdapter.addChildClickViewIds(R.id.classifyName);
-
+        rightClassifyAdapter.addChildClickViewIds(R.id.classifyImage);
         rightClassifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.classifyName) {
-                ToastUtil.showText(mContext, "点击了");
+            if (view.getId() == R.id.classifyImage) {
+                UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+                    intent.putExtra("search", ((TextView)adapter.getViewByPosition(position, R.id.classifyName)).getText());
+                    intent.putExtra("isCharge", "");
+                    return intent;
+                });
             }
         });
     }
