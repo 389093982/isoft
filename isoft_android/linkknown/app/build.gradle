@@ -16,7 +16,11 @@ android {
     }
     sourceSets {
         main {
-            res.srcDirs += "src/main/res-common"
+            res.srcDirs += "src/main/res-app/res-common"
+            res.srcDirs += "src/main/res-app/res-shape"
+            res.srcDirs += "src/main/res-app/res-img"
+            res.srcDirs += "src/main/res-app/res-layout-order"
+            res.srcDirs += "src/main/res-app/res-layout-coupon"
         }
     }
     buildTypes {
