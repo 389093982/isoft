@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.activity.VideoPlayActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -30,6 +31,7 @@ import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DrawableUtil;
@@ -38,6 +40,7 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.CommonTagView;
 import com.linkknown.ilearning.widget.CourseVideoView;
+import com.lxj.xpopup.XPopup;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
@@ -65,24 +68,38 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         this.courseDetailResponse = courseDetailResponse;
     }
 
+    //课程名称
     @BindView(R.id.courseNameText)
     public TextView courseNameText;
+
+    //播放次数
     @BindView(R.id.playNumberText)
     public TextView playNumberText;
+
+    //课程集数
     @BindView(R.id.courseNumberText)
     public TextView courseNumberText;
+
+    //课程描述
     @BindView(R.id.courseShortDescText)
     public TextView courseShortDescText;
+
     @BindView(R.id.courseOperateRecyclerView)
     public RecyclerView courseOperateRecyclerView;
+
     // 课程自定义标签语
     @BindView(R.id.courseTagView)
     public CommonTagView courseTagView;
 
+    //分集视频
     @BindView(R.id.courseVideoView)
     public CourseVideoView courseVideoView;
+
+    //用户头像
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
+
+    //用户名称
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
@@ -93,6 +110,12 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
     private MultiTypeAdapter courseOperateAdapter;
+
+    //关注按钮
+    @BindView(R.id.attention_off)
+    public TextView attention_off;
+    @BindView(R.id.attention_on)
+    public TextView attention_on;
 
     @Override
     protected void initView(View mRootView) {
@@ -142,7 +165,108 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         initCVideoView(courseDetailResponse, course, cVideos);
         // 初始化购买按钮
         initBuyView(courseDetailResponse);
+
+        //关注按钮的展示与否
+        attentionBtnShow();
+
+        //关注按钮的事件绑定
+        initAttentionBtn();
     }
+
+    //关注按钮的展示与否
+    public void attentionBtnShow(){
+        //关注按钮的显示与隐藏
+        if (LoginUtil.isLoginUserName(mContext, courseDetailResponse.getCourse().getCourse_author())){
+            attention_off.setVisibility(View.GONE);
+            attention_on.setVisibility(View.GONE);
+        }else{
+            LinkKnownApiFactory.getLinkKnownApi().QueryIsAttention("user",courseDetailResponse.getCourse().getCourse_author())
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<QueryIsAttentionResponse>() {
+                        @Override
+                        public void onNext(QueryIsAttentionResponse o) {
+                            if (o.isSuccess() && o.getAttention_records() > 0){
+                                //大于0 则表示已关注
+                                attention_off.setVisibility(View.GONE);
+                                attention_on.setVisibility(View.VISIBLE);
+                            }else{
+                                attention_off.setVisibility(View.VISIBLE);
+                                attention_on.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {}
+                    });
+        }
+    };
+
+    //关注点击事件
+    public void initAttentionBtn(){
+        attention_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!LoginUtil.checkHasLogin(mContext)){
+                    new XPopup.Builder(mContext)
+                            .hasShadowBg(true)
+                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
+                                UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            }).show();
+                    return;
+                }
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",courseDetailResponse.getCourse().getCourse_author(),"on")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if (o.isSuccess()){
+                                    ToastUtil.showText(mContext,"关注成功");
+                                    attention_off.setVisibility(View.GONE);
+                                    attention_on.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtil.showText(mContext,"系统异常");
+                            }
+                        });
+            }
+        });
+        attention_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!LoginUtil.checkHasLogin(mContext)){
+                    new XPopup.Builder(mContext)
+                            .hasShadowBg(true)
+                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
+                                UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            }).show();
+                    return;
+                }
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",courseDetailResponse.getCourse().getCourse_author(),"off")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if (o.isSuccess()){
+                                    ToastUtil.showText(mContext,"取消成功");
+                                    attention_off.setVisibility(View.VISIBLE);
+                                    attention_on.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtil.showText(mContext,"系统异常");
+                            }
+                        });
+            }
+        });
+    };
 
     private void initBuyView(CourseDetailResponse courseDetailResponse) {
         buyView.setOnClickListener(new View.OnClickListener() {
