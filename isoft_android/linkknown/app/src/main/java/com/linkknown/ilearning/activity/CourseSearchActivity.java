@@ -139,7 +139,8 @@ public class CourseSearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String searchText = searchTextView.getText().toString().trim();
                     search = searchText;
-
+                    // 关闭软键盘
+                    KeyBoardUtil.closeKeybord(searchTextView, mContext);
                     // 记录搜索历史
                     CommonUtil.recordSearchHistory(mContext, search);
 
