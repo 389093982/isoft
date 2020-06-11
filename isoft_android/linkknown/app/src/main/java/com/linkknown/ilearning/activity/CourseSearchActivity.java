@@ -3,10 +3,13 @@ package com.linkknown.ilearning.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding4.view.RxView;
 import com.jakewharton.rxbinding4.widget.RxTextView;
@@ -15,6 +18,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.fragment.CourseFilterFragment;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.KeyBoardUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -127,6 +131,25 @@ public class CourseSearchActivity extends BaseActivity {
                     searchTextView.setHint(Constants.COURSE_SEARCH_HINT_LIST.get(showHintIndex));
                     showHintIndex = showHintIndex == Constants.COURSE_SEARCH_HINT_LIST.size() - 1 ? 0 : ++ showHintIndex;
                 });
+
+        // 软键盘搜索
+        searchTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String searchText = searchTextView.getText().toString().trim();
+                    search = searchText;
+                    // 关闭软键盘
+                    KeyBoardUtil.closeKeybord(searchTextView, mContext);
+                    // 记录搜索历史
+                    CommonUtil.recordSearchHistory(mContext, search);
+
+                    refreshFragment();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void refreshFragment() {

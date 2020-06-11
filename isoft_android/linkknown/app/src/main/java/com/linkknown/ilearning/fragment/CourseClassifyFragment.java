@@ -4,15 +4,16 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -22,19 +23,18 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseSearchActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
-import com.linkknown.ilearning.common.ViewPagerIndicatorManager;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.ElementResponse;
 import com.linkknown.ilearning.popup.HotSearchPopView;
 import com.linkknown.ilearning.popup.SearchHistoryPopView;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.KeyBoardUtil;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 
-import net.lucode.hackware.magicindicator.MagicIndicator;
-
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -64,9 +63,6 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
     //热门搜索
     @BindView(R.id.hotSearch)
     public TextView hotSearch;
-    private SectionedRecyclerViewAdapter tagRecyclerViewAdapter;
-    List<String> showTagList = new ArrayList<>();
-    List<String> hideTagList = new ArrayList<>();
 
     //搜索历史
     @BindView(R.id.searchHistory)
@@ -78,14 +74,17 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
     @BindView(R.id.leftClassifyRecyclerView)
     public RecyclerView leftClassifyRecyclerView;
 
-    @BindView(R.id.magic_indicator)
-    public MagicIndicator magicIndicator;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    @BindView(R.id.rightClassifyRecyclerView)
+    public RecyclerView rightClassifyRecyclerView;
+
 
     // 存储所有的分类占位符数据
     private List<ElementResponse.Element> leftClassifyElements = new ArrayList<>();
     private BaseQuickAdapter leftClassifyAdapter;
+
+    // 存储所有的分类占位符数据
+    private List<ElementResponse.Element> rightClassifyElements = new ArrayList<>();
+    private BaseQuickAdapter rightClassifyAdapter;
 
     private ElementResponse element_response;
     private Handler handler = new Handler();
@@ -103,7 +102,6 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
         // 初始化左侧分类
         initLeftClassfiyView();
     }
-
 
     /**
      * 初始化查询视图
@@ -151,6 +149,23 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
                     searchTextView.setHint(Constants.COURSE_SEARCH_HINT_LIST.get(showHintIndex));
                     showHintIndex = showHintIndex == Constants.COURSE_SEARCH_HINT_LIST.size() - 1 ? 0 : ++ showHintIndex;
                 });
+
+        // 软键盘搜索
+        searchTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String searchText = searchTextView.getText().toString().trim();
+                    UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+                        intent.putExtra("search",searchText);
+                        intent.putExtra("isCharge", "free");
+                        return intent;
+                    });
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -162,10 +177,9 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             new XPopup.Builder(getContext())
                     .hasShadowBg(true)
                     .asCustom(new HotSearchPopView(mContext, text -> {
-                        // TODO 确认只查免费？
                         UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                             intent.putExtra("search", text);
-                            intent.putExtra("isCharge", "free");
+                            intent.putExtra("isCharge", "");
                             return intent;
                         });
                     })).show();
@@ -180,82 +194,27 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
         searchHistory.setOnClickListener(v -> new XPopup.Builder(getContext())
                 .hasShadowBg(true)
                 .asCustom(new SearchHistoryPopView(mContext, text -> {
-                    // TODO 确认只查免费？
                     UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                     intent.putExtra("search",text);
-                    intent.putExtra("isCharge", "free");
+                    intent.putExtra("isCharge", "");
                     return intent;
                 });
             })).show());
-
-//        searchHistory.setOnClickListener(v -> {
-//            // popwindow 只初始化一次，后面只切换显示和隐藏
-//            if (bottomPopupWindow_searchHistory == null) {
-//                // 创建 popupwindow 并注册事件监听
-//                bottomPopupWindow_searchHistory = new BottomPopupWindow(getActivity()) {
-//                    @Override
-//                    public TextView createView(Integer position, FlexboxLayout layout, String text) {
-//                        // 根据布局动 id 态创建 TextView
-//                        final TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag, layout, false);
-//                        textView.setText(text);
-//                        // 设置随机背景色，文字使用白色
-//                        textView.setBackgroundColor(UIUtils.getRandomResourceColor(position));
-//                        textView.setTextColor(Color.WHITE);
-//
-//                        // 点击事件
-//                        textView.setOnClickListener(v -> {
-//                            onConfirm(textView.getText().toString());
-//                            // 点击完成后隐藏 popupwindow
-//                            onDismiss();
-//                            dismiss();
-//                        });
-//                        return textView;
-//                    }
-//
-//                    @Override
-//                    public void initData() {
-//                        // TODO 显示排序有点问题
-//                        Set<String> searchTexts = CommonUtil.getSearchHistory(mContext);
-//                        LinkedList<String> searchTextList = new LinkedList<>(searchTexts);
-//                        showTextView.removeAllViews();
-//                        for (int i = 0; i < searchTextList.size(); i++) {
-//                            final TextView textView = createView(i, showTextView, searchTextList.get(i));
-//                            showTextView.addView(textView);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onConfirm(String text) {
-//                        searchTextView.setText(text);
-//                        UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
-//                            intent.putExtra("search",text);
-//                            intent.putExtra("isCharge", "free");
-//                            return intent;
-//                        });
-//                    };
-//                };
-//            };
-//
-//            //显示弹框
-//            bottomPopupWindow_searchHistory.setLeftTip("搜索历史");
-//            bottomPopupWindow_searchHistory.setRightTip("清空");
-//            bottomPopupWindow_searchHistory.showLeftRightTip(true, true);
-//            bottomPopupWindow_searchHistory.showTextView(true);
-//            bottomPopupWindow_searchHistory.show();
-//        });
     }
 
+    private int selectLeftClassifyIndex = 0;    // 左侧分类默认选中项
 
     /**
      * 初始化左侧分类
      */
     private void initLeftClassfiyView() {
         // 一级分类
-        leftClassifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.classify_left_item, leftClassifyElements) {
+        leftClassifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.item_course_type_left_classify, leftClassifyElements) {
 
             @Override
             protected void convert(@NotNull BaseViewHolder baseViewHolder, ElementResponse.Element element) {
                 baseViewHolder.setText(R.id.classifyName, element.getElement_label());
+                baseViewHolder.findView(R.id.classifyName).setSelected(selectLeftClassifyIndex == baseViewHolder.getAdapterPosition());
             }
         };
         leftClassifyRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -264,26 +223,36 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
 
         leftClassifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.classifyName) {
-                for (int index = 0; index < leftClassifyElements.size(); index ++) {
-                    if (index == position) {
-                        TextView textView = (TextView)view;
-                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.white));
-                        textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorPrimary));
-                    } else {
-                        TextView textView = (TextView) adapter.getViewByPosition(index, R.id.classifyName);
-                        if (textView != null) {
-                            textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.colorRecyclerBg));
-                            textView.setTextColor(UIUtils.getResourceColor(mContext, R.color.colorGray));
-                        }
-                    }
-                }
-
-                List<String> mTitleDataList = new ArrayList<>();
+                selectLeftClassifyIndex = position;
+                leftClassifyAdapter.notifyDataSetChanged();
                 List<ElementResponse.Element> levelTwoClassifyElements = ElementResponse.getLevelTwoClassifyElements(element_response.getElements(), leftClassifyElements.get(position).getId());
-                for (ElementResponse.Element element: levelTwoClassifyElements) {
-                    mTitleDataList.add(element.getElement_label());
-                }
-                initTopClassfiyView(mTitleDataList);
+                initRightClassfiyView(levelTwoClassifyElements);
+            }
+        });
+    }
+
+    private void initRightClassfiyView(List<ElementResponse.Element> levelTwoClassifyElements) {
+        rightClassifyElements.clear();
+        rightClassifyElements.addAll(levelTwoClassifyElements);
+        // 二级分类
+        rightClassifyAdapter = new BaseQuickAdapter<ElementResponse.Element, BaseViewHolder>(R.layout.item_course_type_right_classify, rightClassifyElements) {
+
+            @Override
+            protected void convert(@NotNull BaseViewHolder baseViewHolder, ElementResponse.Element element) {
+                UIUtils.setImage(mContext, baseViewHolder.findView(R.id.classifyImage), element.getImg_path());
+                baseViewHolder.setText(R.id.classifyName, element.getElement_label());
+            }
+        };
+        rightClassifyRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        rightClassifyRecyclerView.setAdapter(rightClassifyAdapter);
+        rightClassifyAdapter.addChildClickViewIds(R.id.classifyImage);
+        rightClassifyAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.classifyImage) {
+                UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
+                    intent.putExtra("search", ((TextView)adapter.getViewByPosition(position, R.id.classifyName)).getText());
+                    intent.putExtra("isCharge", "");
+                    return intent;
+                });
             }
         });
     }
@@ -336,30 +305,6 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
     @Override
     protected int providelayoutId() {
         return R.layout.fragment_course_classify;
-    }
-
-    private void initTopClassfiyView (List<String> mTitleDataList) {
-        // 动态创建多个 fragment
-        List<Fragment> mFragments = new ArrayList<>();
-        for (String title : mTitleDataList) {
-            CourseFilterFragment courseFilterFragment = new CourseFilterFragment();
-            courseFilterFragment.setArguments(CommonUtil.createBundle2("search",title,"isCharge", "free"));
-            mFragments.add(courseFilterFragment);
-        }
-
-        // 给 viewPager 绑定 fragment
-        com.linkknown.ilearning.helper.ViewPagerHelper.bindQuickAdapter(viewPager, mFragments, mTitleDataList, getChildFragmentManager());
-
-        // 创建 viewPager + 指示器管理类
-        ViewPagerIndicatorManager viewPagerIndicatorManager =
-                new ViewPagerIndicatorManager(getContext(), magicIndicator, mTitleDataList, viewPager);
-        // 由管理类统一进行绑定
-        viewPagerIndicatorManager.bind();
-
-        // 默认选中第一项
-        if (mTitleDataList.size() > 0) {
-            viewPager.setCurrentItem(0);
-        }
     }
 
 
