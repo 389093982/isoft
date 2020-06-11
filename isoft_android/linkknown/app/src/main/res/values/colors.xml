@@ -39,6 +39,7 @@
     <color name="light_gray">#E0E0E0</color>
     <color name="light_gray2">#34E0E0E0</color>
     <color name="light_gray3">#9cffffff</color>
+    <color name="light_gray4">#F1F3F4</color>
 
     <!-- "我的" 界面描边颜色 -->
     <color name="border_color">#ccc</color>

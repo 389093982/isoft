@@ -29,6 +29,7 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
+import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DrawableUtil;
@@ -85,6 +86,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
+    // 购买按钮
+    @BindView(R.id.buyView)
+    public TextView buyView;
+
     // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
     private MultiTypeAdapter courseOperateAdapter;
@@ -135,6 +140,31 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         courseTagView.setList(CommonUtil.splitCommonTag(course_label));
 
         initCVideoView(courseDetailResponse, course, cVideos);
+        // 初始化购买按钮
+        initBuyView(courseDetailResponse);
+    }
+
+    private void initBuyView(CourseDetailResponse courseDetailResponse) {
+        buyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showText(mContext, "去购买");
+            }
+        });
+        if (StringUtils.equalsIgnoreCase(courseDetailResponse.getCourse().getIsCharge(), "charge")) {
+            if (LoginUtil.checkHasLogin(mContext)) {
+                if (courseDetailResponse.getPayOrder() != null) {
+                    // 已购买
+                    buyView.setVisibility(View.GONE);
+                } else {
+                    buyView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                buyView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            buyView.setVisibility(View.GONE);
+        }
     }
 
     private void initCVideoView(CourseDetailResponse courseDetailResponse, CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {
