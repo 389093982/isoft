@@ -14,7 +14,10 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -146,10 +149,11 @@ public class LoginUtil {
     }
 
     public static void showLoginConfirmDialog2(final Context context, final ConfirmDialogCallback callback) {
-        new AlertDialog.Builder(context).setTitle("您还未登录，前去登录？")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton("确定", (dialog, which) -> callback.onPositive())
-                .setNegativeButton("返回", (dialog, which) -> callback.onNegative()).show();
+        new XPopup.Builder(context)
+                .hasShadowBg(true)
+                .asConfirm("温馨提示", "未登录,前去登录？", () -> {
+                    UIUtils.gotoActivity(context, LoginActivity.class);
+                }).show();
     }
 
     /**

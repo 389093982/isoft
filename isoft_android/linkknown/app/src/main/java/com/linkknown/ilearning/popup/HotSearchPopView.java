@@ -38,8 +38,8 @@ public class HotSearchPopView extends BottomPopupView {
     @Override
     protected void onCreate() {
         super.onCreate();
-        showTagList = new ArrayList<>(Arrays.asList("java1", "java2","java3", "java4","java5", "java6","java7","java8"));
-        hideTagList = new ArrayList<>(Arrays.asList("go1", "go2","go3", "go4","go5", "go6","go7", "go8"));
+        showTagList = new ArrayList<>(Arrays.asList("前端", "后端","数据库", "基础","运维", "测试","游戏","全栈","人工智能"));
+        hideTagList = new ArrayList<>(Arrays.asList("大数据", "云计算", "爬虫","算法", "自动化","区块链", "深度学习"));
 
         CommonTagView showTagView = findViewById(R.id.showTagView);
         CommonTagView hideTagView = findViewById(R.id.hideTagView);
