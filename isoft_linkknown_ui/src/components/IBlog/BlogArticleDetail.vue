@@ -78,7 +78,14 @@
           <div style="margin: 20px 0 0 0 ;border-bottom: 1px solid gainsboro;">
             <div style="margin-bottom: 20px">
               <ButtonGroup>
-                <Button><Icon type="ios-eye" style="font-size: 20px" />关注</Button>
+                <Button>
+                  <span v-if="blog_attention===true" style="color: #ff6900" @click="DoAttention('blog_theme_type',blog.id,'off','取消关注')">
+                    <Icon type="ios-eye" style="font-size: 20px" />已关注
+                  </span>
+                  <span v-else @click="DoAttention('blog_theme_type',blog.id,'on','关注')">
+                    <Icon type="ios-add" style="font-size: 20px" />关注
+                  </span>
+                </Button>
                 <Button>
                   <span v-if="blog_collect===true" style="color: #ff6900" @click="toggle_favorite(blog.id,'blog_collect', '取消收藏')">
                     <Icon type="md-bookmark" style="font-size: 20px" />已收藏
@@ -115,7 +122,7 @@
 </template>
 
 <script>
-  import {ShowBlogArticleDetail,ArticleDelete,IsFavorite,ToggleFavorite,queryFavoriteCount} from "../../api"
+  import {ShowBlogArticleDetail,ArticleDelete,IsFavorite,ToggleFavorite,queryFavoriteCount,QueryIsAttention,DoAttention} from "../../api"
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import IEasyComment from "../Comment/IEasyComment"
   import {CheckHasLogin, GetLoginUserName, RenderNickName,RenderUserIcon,RenderVipLevel,
@@ -137,6 +144,8 @@
         blog_praise: false,
         // 收藏博客
         blog_collect: false,
+        //关注
+        blog_attention:false,
         //点赞数量
         blog_praise_counts:0,
         //右侧-上下速度控制
@@ -153,6 +162,7 @@
           this.userInfos = await RenderUserInfoByName(result.blog.author);
           this.blog = result.blog;
           this.refreshFavoriteStatus();
+          this.refreshAttention();
         }
       },
       refreshFavoriteStatus: async function () {
@@ -182,6 +192,32 @@
           }
         }else {
           CheckHasLoginConfirmDialog(this, {path: "/iblog/blogArticleDetail?blog_id="+this.$route.query.blog_id});
+        }
+      },
+      refreshAttention:async function(){
+        let params = {
+          'attention_object_type':'blog_theme_type',
+          'attention_object_id':this.blog.id
+        };
+        const result = await QueryIsAttention(params);
+        if (result.status === 'SUCCESS' && result.attention_records > 0) {
+          this.blog_attention = true;
+        }
+      },
+      DoAttention:async function(attention_object_type, attention_object_id, state,message){
+        let params = {
+          'attention_object_type':attention_object_type,
+          'attention_object_id':attention_object_id,
+          'state':state
+        };
+        const result = await DoAttention(params);
+        if (result.status === 'SUCCESS') {
+          if (state === 'on') {
+            this.blog_attention = true;
+          }else{
+            this.blog_attention = false;
+          }
+          this.$Message.success(message + "成功")
         }
       },
       renderNickName: function (user_name) {

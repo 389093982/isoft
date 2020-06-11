@@ -23,6 +23,9 @@ export const LoginRecordList = (params) => ajax(BASE_URL + "/iwork/httpservice/i
 export const AppRegisterList = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AppRegisterList", params, 'POST');// 系统注册分页查询
 export const AddAppRegister = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/AddAppRegister", params, 'POST');// 添加系统注册
 export const Regist = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/Regist", params, 'POST');// 注册接口
+export const QueryIsAttention = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryIsAttention", params, 'POST');// 关注查询
+export const DoAttention = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/DoAttention", params, 'POST');// 关注 （user/book/course）
+
 // UpdateUserPoints 未直接使用，被其他流程调用
 // insert_loginRecord 未直接使用，被其他流程调用
 // SsoFilter 未直接使用，被其他流程调用
