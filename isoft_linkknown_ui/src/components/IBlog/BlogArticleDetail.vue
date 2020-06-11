@@ -2,7 +2,7 @@
   <div id="blogArticleDetail">
 
     <!--左侧博客内容-->
-    <div v-if="blog" style="float: left;width: 72%;margin-left: 40px">
+    <div v-if="blog" style="float: left;width: 70%;margin-left: 40px">
       <div style="margin: 10px;padding: 20px;width:100%;min-height: 800px;background: #ffffff;">
 
         <Row>
@@ -64,7 +64,7 @@
     </div>
 
     <!--右侧点赞板-->
-    <div style="float:right;width: 18%;position: fixed;top: 80px;right: 65px;background-color: white;border-radius: 5px;text-align: center">
+    <div style="float:right;width: 19%;position: fixed;top: 80px;right: 65px;background-color: white;border-radius: 5px;text-align: center">
       <div style="min-height: 355px;">
         <div style="width: 86%;margin: 18px 0 18px 18px;">
           <div class="TOTOP" @click="toTop()">
@@ -79,19 +79,19 @@
             <div style="margin-bottom: 20px">
               <ButtonGroup>
                 <Button>
-                  <span v-if="blog_attention===true" style="color: #ff6900" @click="DoAttention('blog_theme_type',blog.id,'off','取消关注')">
-                    <Icon type="ios-eye" style="font-size: 20px" />已关注
+                  <span v-if="user_attention===true" style="color: #ff6900" @click="DoAttention('user',blog.author,'off','取消关注作者')">
+                    已关注作者
                   </span>
-                  <span v-else @click="DoAttention('blog_theme_type',blog.id,'on','关注')">
-                    <Icon type="ios-add" style="font-size: 20px" />关注
+                  <span v-else @click="DoAttention('user',blog.author,'on','关注作者')">
+                    <Icon type="ios-add" style="font-size: 20px" />关注作者
                   </span>
                 </Button>
                 <Button>
                   <span v-if="blog_collect===true" style="color: #ff6900" @click="toggle_favorite(blog.id,'blog_collect', '取消收藏')">
-                    <Icon type="md-bookmark" style="font-size: 20px" />已收藏
+                    已收藏博客
                   </span>
                   <span v-else @click="toggle_favorite(blog.id,'blog_collect', '收藏')">
-                    <Icon type="md-bookmark" style="font-size: 20px" />收藏
+                    <Icon type="md-bookmark" style="font-size: 20px" />收藏博客
                   </span>
                 </Button>
               </ButtonGroup>
@@ -145,7 +145,7 @@
         // 收藏博客
         blog_collect: false,
         //关注
-        blog_attention:false,
+        user_attention:false,
         //点赞数量
         blog_praise_counts:0,
         //右侧-上下速度控制
@@ -201,7 +201,7 @@
         };
         const result = await QueryIsAttention(params);
         if (result.status === 'SUCCESS' && result.attention_records > 0) {
-          this.blog_attention = true;
+          this.user_attention = true;
         }
       },
       DoAttention:async function(attention_object_type, attention_object_id, state,message){
@@ -213,9 +213,9 @@
         const result = await DoAttention(params);
         if (result.status === 'SUCCESS') {
           if (state === 'on') {
-            this.blog_attention = true;
+            this.user_attention = true;
           }else{
-            this.blog_attention = false;
+            this.user_attention = false;
           }
           this.$Message.success(message + "成功")
         }
