@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,11 +20,14 @@ import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.UserCourseFragment;
+import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,16 +45,31 @@ public class UserDetailActivity extends BaseActivity {
     private Context mContext;
     private String userName;
 
+    //用户头像
     @BindView(R.id.headerIcon)
     public ImageView headerIcon;
+
+    //昵称
     @BindView(R.id.nickNameText)
     public TextView nickNameText;
+
+    //vip等级
     @BindView(R.id.vipLevel)
     public ImageView vipLevel;
+
+    //个性签名
     @BindView(R.id.userSignature)
     public TextView userSignature;
+
+    //性别
     @BindView(R.id.genderView)
     public ImageView genderView;
+
+    @BindView(R.id.attention_off)
+    public TextView attention_off;
+    @BindView(R.id.attention_on)
+    public TextView attention_on;
+
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.tab_layout)
@@ -65,34 +84,69 @@ public class UserDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         mContext = this;
-
         ButterKnife.bind(this);
-
         initToolBar(toolbar, true, "");
+        //绑定关注事件
+        initAttentionBtn();
 
-        // 有用户名则是查看第三方用户
+        // 查看别人 userName会传值， 如果userName为空，那就是查看自己的。 （查看自己不传这个参数）
         userName = getIntent().getStringExtra(Constants.USER_NAME);
-        if (StringUtils.isEmpty(userName) && !LoginUtil.checkHasLogin(mContext)) {
-            // 全局对话框登录拦截
-            LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
-                @Override
-                public void onPositive() {
-                    UIUtils.gotoActivity(mContext, LoginActivity.class);
-                    finish();
-                }
+        if (StringUtils.isEmpty(userName)) {
+            //查看自己
+            if (!LoginUtil.checkHasLogin(mContext)){
+                // 全局对话框登录拦截
+                LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
+                    @Override
+                    public void onPositive() {
+                        UIUtils.gotoActivity(mContext, LoginActivity.class);
+                        finish();
+                    }
 
-                @Override
-                public void onNegative() {
-                    finish();
-                }
-            });
-        } else {
-            userName = LoginUtil.getLoginUserName(mContext);
+                    @Override
+                    public void onNegative() {
+                        finish();
+                    }
+                });
+            }else{
+                userName = LoginUtil.getLoginUserName(mContext);
+                //查看自己
+                initView();
+            }
+        }else {
+            //查看别人
             initView();
         }
     }
 
+
     private void initView () {
+        //关注按钮的显示与隐藏
+        if (LoginUtil.isLoginUserName(getApplicationContext(), userName)){
+            attention_off.setVisibility(View.GONE);
+            attention_on.setVisibility(View.GONE);
+        }else{
+            LinkKnownApiFactory.getLinkKnownApi().QueryIsAttention("user",userName)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<QueryIsAttentionResponse>() {
+                        @Override
+                        public void onNext(QueryIsAttentionResponse o) {
+                            if (o.isSuccess() && o.getAttention_records() > 0){
+                                //大于0 则表示已关注
+                                attention_off.setVisibility(View.GONE);
+                                attention_on.setVisibility(View.VISIBLE);
+                            }else{
+                                attention_off.setVisibility(View.VISIBLE);
+                                attention_on.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {}
+                    });
+        }
+
+        //查看基本信息
         LinkKnownApiFactory.getLinkKnownApi().getUserDetail(userName)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -120,6 +174,74 @@ public class UserDetailActivity extends BaseActivity {
                     }
                 });
     }
+
+
+    //关注点击事件
+    public void initAttentionBtn(){
+        attention_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!LoginUtil.checkHasLogin(mContext)){
+                    new XPopup.Builder(mContext)
+                            .hasShadowBg(true)
+                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
+                                UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            }).show();
+                    return;
+                }
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"on")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if (o.isSuccess()){
+                                    ToastUtil.showText(mContext,"关注成功");
+                                    attention_off.setVisibility(View.GONE);
+                                    attention_on.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtil.showText(mContext,"系统异常");
+                            }
+                        });
+            }
+        });
+        attention_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!LoginUtil.checkHasLogin(mContext)){
+                    new XPopup.Builder(mContext)
+                            .hasShadowBg(true)
+                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
+                                UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            }).show();
+                    return;
+                }
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"off")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if (o.isSuccess()){
+                                    ToastUtil.showText(mContext,"取消成功");
+                                    attention_off.setVisibility(View.VISIBLE);
+                                    attention_on.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtil.showText(mContext,"系统异常");
+                            }
+                        });
+            }
+        });
+    };
+
 
     private void initFragments(String userName){
         // 多次订阅数据会导致重复,需要先进行清理

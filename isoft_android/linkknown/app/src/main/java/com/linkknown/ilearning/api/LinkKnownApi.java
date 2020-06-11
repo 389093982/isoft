@@ -18,6 +18,7 @@ import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.PayShoppinpCartResponse;
+import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -209,4 +210,18 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/InsertAdvise")
     Observable<BaseResponse> insertAdvise(@Query("advise") String advise,
                                                    @Query("advise_type") String advise_type);
+
+
+    // 查看是否已关注
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryIsAttention")
+    Observable<QueryIsAttentionResponse> QueryIsAttention(@Query("attention_object_type") String attention_object_type,
+                                                          @Query("attention_object_id") String attention_object_id);
+
+    // 关注 和 取消关注
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/DoAttention")
+    Observable<BaseResponse> DoAttention(@Query("attention_object_type") String attention_object_type,
+                                         @Query("attention_object_id") String attention_object_id,
+                                         @Query("state") String state);
+
+
 }

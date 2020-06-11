@@ -205,19 +205,23 @@
         }
       },
       DoAttention:async function(attention_object_type, attention_object_id, state,message){
-        let params = {
-          'attention_object_type':attention_object_type,
-          'attention_object_id':attention_object_id,
-          'state':state
-        };
-        const result = await DoAttention(params);
-        if (result.status === 'SUCCESS') {
-          if (state === 'on') {
-            this.user_attention = true;
-          }else{
-            this.user_attention = false;
+        if (CheckHasLogin()) {
+          let params = {
+            'attention_object_type':attention_object_type,
+            'attention_object_id':attention_object_id,
+            'state':state
+          };
+          const result = await DoAttention(params);
+          if (result.status === 'SUCCESS') {
+            if (state === 'on') {
+              this.user_attention = true;
+            }else{
+              this.user_attention = false;
+            }
+            this.$Message.success(message + "成功")
           }
-          this.$Message.success(message + "成功")
+        }else{
+          CheckHasLoginConfirmDialog(this, {path: "/iblog/blogArticleDetail?blog_id="+this.$route.query.blog_id});
         }
       },
       renderNickName: function (user_name) {
