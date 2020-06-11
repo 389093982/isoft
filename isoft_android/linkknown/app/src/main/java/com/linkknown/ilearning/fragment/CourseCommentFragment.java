@@ -1,14 +1,10 @@
 package com.linkknown.ilearning.fragment;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DiffUtil;
@@ -30,19 +26,15 @@ import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.CommonUtil;
-import com.linkknown.ilearning.util.DisplayUtil;
-import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -67,8 +59,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @BindView(R.id.addComment)
     public TextView addComment;
-    @BindView(R.id.moreOperate)
-    public TextView moreOperate;
 
     // 评论列表适配器
     BaseQuickAdapter baseQuickAdapter;
@@ -181,7 +171,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     private void initCommentView () {
         addComment.setOnClickListener(this);
-        moreOperate.setOnClickListener(this);
 
         baseQuickAdapter = new CourseCommentAdapter(mContext, displayComments);
         // 是否自动加载下一页（默认为true）
@@ -210,9 +199,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         switch (v.getId()) {
             case R.id.addComment:
                 showEditCommentDialog();
-                break;
-            case R.id.moreOperate:
-                showMoreDialog();
                 break;
             default:
                 break;
@@ -257,19 +243,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                     }
                 });
 
-    }
-
-    private void showMoreDialog() {
-        Dialog bottomDialog = new Dialog(mContext, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(mContext).inflate(R.layout.dialog_content_circle, null);
-        bottomDialog.setContentView(contentView);
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) contentView.getLayoutParams();
-        params.width = getResources().getDisplayMetrics().widthPixels - DisplayUtil.dp2px(mContext, 16f);
-        params.bottomMargin = DisplayUtil.dp2px(mContext, 8f);
-        contentView.setLayoutParams(params);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
     }
 
     public void deleteComment(CommentResponse.Comment comment, int position) {
