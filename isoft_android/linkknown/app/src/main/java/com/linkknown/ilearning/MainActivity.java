@@ -43,9 +43,6 @@ import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.superluo.textbannerlibrary.TextBannerView;
-import com.yhao.floatwindow.FloatWindow;
-import com.yhao.floatwindow.MoveType;
-import com.yhao.floatwindow.Screen;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -406,8 +403,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //销毁
-        FloatWindow.destroy();
     }
     
     
