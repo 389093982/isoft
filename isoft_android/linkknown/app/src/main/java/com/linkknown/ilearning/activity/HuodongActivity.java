@@ -3,6 +3,7 @@ package com.linkknown.ilearning.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.WebChromeClient;
+import com.linkknown.ilearning.BuildConfig;
 import com.linkknown.ilearning.R;
 
 import butterknife.BindView;
@@ -48,7 +50,7 @@ public class HuodongActivity extends BaseActivity {
                 .useDefaultIndicator()
                 .createAgentWeb()
                 .ready()
-                .go("http://www.jd.com");
+                .go(BuildConfig.FRONT_URL + "/isoft_webapp_ui/huodong/luckywheel");
 
         //获取网页的标题
         mAgentWeb.getWebCreator().getWebView().setWebChromeClient(new WebChromeClient() {
@@ -61,7 +63,15 @@ public class HuodongActivity extends BaseActivity {
                 super.onReceivedTitle(view, title);
             }
         });
+    }
 
+    // 处理 webView 的键盘事件
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mAgentWeb.handleKeyEvent(keyCode, event)) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

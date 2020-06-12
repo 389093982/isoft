@@ -9,23 +9,25 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    proxyTable: {
-      '/wechatPayApi': { // 匹配所有以 '/wechatPayApi'开头的请求路径
-        target: 'http://localhost:6002', // 代理目标的基础路径
-        changeOrigin: true, // 支持跨域
-      }
-    },
+    assetsPublicPath: '/isoft_webapp_ui/',
+    proxyTable: {},
 
     // Various Dev Server settings
     // host 是 localhost 时无法使用 ip(非 127.0.0.1) 访问,改成 0.0.0.0 则可以
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 8003, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8004, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
+    // Use Eslint Loader?
+    // If true, your code will be linted during bundling and
+    // linting errors and warnings will be shown in the console.
+    useEslint: false,
+    // If true, eslint errors and warnings will also be shown in the error overlay
+    // in the browser.
+    showEslintErrorsInOverlay: false,
 
     /**
      * Source Maps
@@ -49,7 +51,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/isoft_unifiedpay_ui/',
+    assetsPublicPath: '/isoft_webapp_ui/',
 
     /**
      * Source Maps
@@ -63,7 +65,7 @@ module.exports = {
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
-    productionGzip: false,
+    productionGzip: true,
     productionGzipExtensions: ['js', 'css'],
 
     // Run the build command with an extra argument to
