@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 // 参数校验工具类
 public class CheckParamUtil {
 
-    public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    public static final String REGEX_EMAIL = "^([a-zA-Z]|[0-9])(\\w|\\-)+@[a-zA-Z0-9]+\\.([a-zA-Z]{2,4})$";
+    public static final String REGEX_PASSWD = "^[a-zA-Z0-9]{6,20}$";
 
     public static boolean checkRegex (String checkStr, String regex) {
         if (StringUtils.isNotEmpty(checkStr)) {

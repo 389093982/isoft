@@ -9,7 +9,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">密码必须由数字或字母组合，长度 6-20</string>
     <string name="login_failed">登录失败！</string>
     <string name="regist_failed">注册失败！</string>
 

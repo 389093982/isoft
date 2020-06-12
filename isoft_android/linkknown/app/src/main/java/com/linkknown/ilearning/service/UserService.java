@@ -134,7 +134,7 @@ public class UserService {
         LoginFormState state = new LoginFormState();
         if (!isUserNameValid(username)) {
             state.setUsernameError(R.string.invalid_username);
-        } else if (!isPasswordValid(password)) {
+        } else if (!CheckParamUtil.checkRegex(password, CheckParamUtil.REGEX_PASSWD)) {
             state.setPasswordError(R.string.invalid_password);
         } else {
             state.setDataValid(true);
@@ -146,9 +146,6 @@ public class UserService {
         return StringUtils.isNotBlank(username) && CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL);
     }
 
-    public static boolean isPasswordValid(String password) {
-        return StringUtils.isNotBlank(password) && StringUtils.length(password) > 5;
-    }
 
     @Data
     @NoArgsConstructor
