@@ -47,7 +47,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseClassifyFragment extends BaseLazyLoadFragment {
+public class ClassifyFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
@@ -156,9 +156,11 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String searchText = searchTextView.getText().toString().trim();
+                    // 记录搜索历史
+                    CommonUtil.recordSearchHistory(mContext, searchText);
                     UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                         intent.putExtra("search",searchText);
-                        intent.putExtra("isCharge", "free");
+                        intent.putExtra("isCharge", "");
                         return intent;
                     });
                     return true;
@@ -177,6 +179,8 @@ public class CourseClassifyFragment extends BaseLazyLoadFragment {
             new XPopup.Builder(getContext())
                     .hasShadowBg(true)
                     .asCustom(new HotSearchPopView(mContext, text -> {
+                        // 记录搜索历史
+                        CommonUtil.recordSearchHistory(mContext, text);
                         UIUtils.gotoActivity(mContext, CourseSearchActivity.class, intent -> {
                             intent.putExtra("search", text);
                             intent.putExtra("isCharge", "");

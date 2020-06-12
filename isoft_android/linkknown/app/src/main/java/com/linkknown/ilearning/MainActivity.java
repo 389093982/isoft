@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +30,7 @@ import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
-import com.linkknown.ilearning.fragment.CourseClassifyFragment;
+import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
 import com.linkknown.ilearning.fragment.FindFragment;
@@ -51,7 +50,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pl.droidsonroids.gif.GifImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -209,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(new HomeFragment(() -> {
             drawer.openDrawer(navigationView);
         }));
-        fragmentList.add(new CourseClassifyFragment());
+        fragmentList.add(new ClassifyFragment());
         fragmentList.add(new FindFragment());
         fragmentList.add(new MineFragment());
     }

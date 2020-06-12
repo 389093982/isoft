@@ -115,8 +115,8 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         nickName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 TextView textView = (TextView)v;
-                if (StringUtils.trim(textView.getText().toString()).length()>10) {
-                    ToastUtil.showText(mContext, "昵称? 请不要超过10个字符哦");
+                if (StringUtils.isEmpty(StringUtils.trim(textView.getText().toString()))){
+                    ToastUtil.showText(mContext, "昵称不能为空！");
                 }
             }
         });
@@ -132,24 +132,27 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         passwd.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 TextView textView = (TextView)v;
-                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
-                    ToastUtil.showText(mContext, "密码长度必须大于 5 位字符！");
+                if (StringUtils.isEmpty(textView.getText().toString())) {
+                    ToastUtil.showText(mContext, "密码不能为空！");
                 }
             }
         });
         rePasswd.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 TextView textView = (TextView)v;
-                if (!UserService.isPasswordValid(StringUtils.trim(textView.getText().toString()))) {
-                    ToastUtil.showText(mContext, "确认密码长度必须大于 5 位字符！");
+                if (StringUtils.isEmpty(textView.getText().toString())) {
+                    ToastUtil.showText(mContext, "确认密码不能为空！");
                 }
             }
         });
     }
 
 
-    // 只要有用户名、密码、确认密码、验证码、昵称，一个发生改变就触发
-    // 校验成功则输入框可点击
+    /**
+     * 1.只要有用户名、密码、确认密码、验证码、昵称，一个发生改变就触发
+     * 2.性别 radio 发生变化单独调了该方法
+     * 3.界面参数全部非空，才显示 "注册" 按钮
+     */
     @OnTextChanged({R.id.userName, R.id.verifyCode,R.id.nickName,R.id.passwd, R.id.rePasswd})
     public void onTextChanged() {
         String _userName = StringUtils.trim(userName.getText().toString());
@@ -164,6 +167,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             registBtn.setEnabled(false);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -190,6 +194,8 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+
+    //发送验证码
     private void handleCreateVerifyCode() {
         UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
         // 30s 倒计时,一次一秒
@@ -215,7 +221,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }.start();
     }
 
-    //前去注册
+    //点击注册按钮
     private void handleRegist() {
         String _nickName = StringUtils.trim(nickName.getText().toString());
         String _userName = StringUtils.trim(userName.getText().toString());
@@ -228,38 +234,65 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }else{
             _gender = "female";
         }
-
-        if (StringUtils.isEmpty(_nickName)) {
-            onSignupFailed("请填写昵称！");
-            return;
+        if (validateParams(_nickName,_userName,_verifyCode,_passwd,_rePasswd,_gender)){
+            regist(_userName, _passwd, _nickName, _gender, _verifyCode, "linkknown");
         }
-        if (!validate(_userName)) {   //验证账号，使用了单独方法
-            onSignupFailed("请填写账号！");
-            return;
-        }
-        if (StringUtils.isEmpty(_verifyCode)) {
-            onSignupFailed("请填写验证码！");
-            return;
-        }
-        if (StringUtils.isEmpty(_passwd)) {
-            onSignupFailed("请填写验证码！");
-            return;
-        }
-        if (StringUtils.isEmpty(_rePasswd)) {
-            onSignupFailed("请填写验证码！");
-            return;
-        }
-        if (!_passwd.equals(_rePasswd)) {
-            onSignupFailed("两次密码输入不一致！");
-            return;
-        }
-        if (StringUtils.isEmpty(gender_text) || StringUtils.isEmpty(_gender)) {
-            onSignupFailed("请选择性别！");
-            return;
-        }
-        regist(_userName, _passwd, _nickName, _gender, _verifyCode, "linkknown");
     }
 
+
+    //统一校验参数
+    private boolean validateParams(String _nickName, String _userName, String _verifyCode, String _passwd, String _rePasswd, String _gender) {
+        //校验昵称
+        if (StringUtils.isEmpty(_nickName)){
+            ToastUtil.showText(mContext,"昵称不能为空");
+            return false;
+        }
+        if (_nickName.length()>10){
+            ToastUtil.showText(mContext,"昵称长度不能超过10个字符");
+            return false;
+        }
+        //校验用户名
+        if (StringUtils.isEmpty(_userName)) {
+            ToastUtil.showText(mContext,"请填写邮箱");
+            return false;
+        }
+        if (!CheckParamUtil.checkRegex(_userName, CheckParamUtil.REGEX_EMAIL)) {
+            ToastUtil.showText(mContext,"邮箱不合法");
+            return false;
+        }
+        //验证码
+        if (StringUtils.isEmpty(_verifyCode) || _verifyCode.length()!=6) {
+            ToastUtil.showText(mContext,"请填写6位验证码");
+            return false;
+        }
+        //密码
+        if (StringUtils.isEmpty(_passwd)) {
+            ToastUtil.showText(mContext,"请填写密码");
+            return false;
+        }
+        if (!CheckParamUtil.checkRegex(_passwd, CheckParamUtil.REGEX_PASSWD)){
+            ToastUtil.showText(mContext,"密码必须由数字或字母组合，长度 6-20");
+            return false;
+        }
+        //确认密码
+        if (StringUtils.isEmpty(_rePasswd)) {
+            ToastUtil.showText(mContext,"请填写确认密码");
+            return false;
+        }
+        if (!_passwd.equals(_rePasswd)) {
+            ToastUtil.showText(mContext,"两次密码输入不一致");
+            return false;
+        }
+        //性别
+        if (StringUtils.isEmpty(gender_text) || StringUtils.isEmpty(_gender)) {
+            ToastUtil.showText(mContext,"请选择性别");
+            return false;
+        }
+        return true;
+    }
+
+
+    //注册请求
     public void regist (String username, String passwd, String nickname, String gender, String verifyCode, String third_user_type) {
         LinkKnownApiFactory.getLinkKnownApi().regist(username, passwd, nickname, gender, verifyCode, third_user_type)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
@@ -287,16 +320,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 });
     }
 
-    public void onSignupFailed(String message) {
-        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
-        registBtn.setEnabled(true);
-    }
 
-    private boolean validate(String username) {
-        if (CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL)) {
-            return true;
-        }
-        return false;
-    }
+
 
 }

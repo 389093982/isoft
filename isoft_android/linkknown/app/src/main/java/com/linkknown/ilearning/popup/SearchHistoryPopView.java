@@ -64,7 +64,7 @@ public class SearchHistoryPopView extends BottomPopupView {
 
     @Override
     protected int getMaxHeight() {
-        return (int) (XPopupUtils.getWindowHeight(getContext())*.65f);
+        return (int) (XPopupUtils.getWindowHeight(getContext())*.45f);
     }
 
     public interface CallbackListener {

@@ -38,7 +38,7 @@ public class HotSearchPopView extends BottomPopupView {
     @Override
     protected void onCreate() {
         super.onCreate();
-        showTagList = new ArrayList<>(Arrays.asList("前端", "后端","数据库", "基础","运维", "测试","游戏","全栈","人工智能"));
+        showTagList = new ArrayList<>(Arrays.asList("前端", "后端","数据库", "基础","运维", "测试","游戏","全栈","人工智能","github专栏"));
         hideTagList = new ArrayList<>(Arrays.asList("大数据", "云计算", "爬虫","算法", "自动化","区块链", "深度学习"));
 
         CommonTagView showTagView = findViewById(R.id.showTagView);
@@ -68,7 +68,7 @@ public class HotSearchPopView extends BottomPopupView {
 
     @Override
     protected int getMaxHeight() {
-        return (int) (XPopupUtils.getWindowHeight(getContext())*.65f);
+        return (int) (XPopupUtils.getWindowHeight(getContext())*.45f);
     }
 
     public interface CallbackListener {
