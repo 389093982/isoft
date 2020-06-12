@@ -13,7 +13,7 @@ function getRootRouters() {
 }
 
 const HuodongRouter = [{
-  path: '/huodong/luckywheel', component: LuckyWheel,
+  path: '/huodong/luckywheel', component: LuckyWheel, meta: { title: '幸运大抽奖'},
 }];
 
 function getAllRouters() {

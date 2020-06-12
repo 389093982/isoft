@@ -49,14 +49,15 @@
 </template>
 <script>
   import { prizeList } from './config'
-  const CIRCLE_ANGLE = 360
+
+  const CIRCLE_ANGLE = 360;
   const config = {
     // 总旋转时间
     duration: 4000,
     // 旋转圈数
     circle: 8,
     mode: 'ease-in-out'
-  }
+  };
   export default {
     data() {
       return {
@@ -70,11 +71,11 @@
     },
     created() {
       // 初始化一些值
-      this.angleList = []
+      this.angleList = [];
       // 是否正在旋转
-      this.isRotating = false
+      this.isRotating = false;
       // 基本配置
-      this.config = config
+      this.config = config;
       // 获取奖品列表
       this.initPrizeList();
     },
@@ -107,35 +108,35 @@
       // 格式化奖品列表，计算每个奖品的位置
       formatPrizeList (list) {
         // 记录每个奖的位置
-        const angleList = []
-        const l = list.length
+        const angleList = [];
+        const l = list.length;
         // 计算单个奖项所占的角度
-        const average = CIRCLE_ANGLE / l
-        const half = average / 2
+        const average = CIRCLE_ANGLE / l;
+        const half = average / 2;
         // 循环计算给每个奖项添加style属性
         list.forEach((item, i) => {
           // 每个奖项旋转的位置为 当前 i * 平均值 + 平均值 / 2
-          const angle = -((i * average) + half)
+          const angle = -((i * average) + half);
           // 增加 style
           item.style = `-webkit-transform: rotate(${angle}deg);
-                      transform: rotate(${angle}deg);`
+                      transform: rotate(${angle}deg);`;
           // 记录每个奖项的角度范围
           angleList.push((i * average) + half )
-        })
-        this.angleList = angleList
+        });
+        this.angleList = angleList;
         return list
       },
       beginRotate() {
         // 添加次数校验
 
-        if(this.count === 0) return
+        if(this.count === 0) return;
         // 开始抽奖
         // 这里这里向服务端发起请求，得到要获得的奖
         // 可以返回下标，也可以返回奖品 id，通过查询 奖品列表，最终得到下标
         // 随机获取下标
         this.index = this.random(this.prizeList.length - 1);
         // 减少剩余抽奖次数
-        this.count--
+        this.count--;
 
         // 开始旋转
         this.rotating()
@@ -144,9 +145,9 @@
         return parseInt(Math.random() * (max - min + 1) + min)
       },
       rotating() {
-        const { isRotating, angleList, config, rotateAngle, index } = this
-        if (isRotating) return
-        this.isRotating = true
+        const { isRotating, angleList, config, rotateAngle, index } = this;
+        if (isRotating) return;
+        this.isRotating = true;
 
         // 计算角度
         const angle =
@@ -156,19 +157,22 @@
           config.circle * CIRCLE_ANGLE +
           // 奖项的角度
           angleList[index] -
-          (rotateAngle % CIRCLE_ANGLE)
-
-        this.rotateAngle = angle
+          (rotateAngle % CIRCLE_ANGLE);
+        // 旋转角度
+        this.rotateAngle = angle;
         // 旋转结束后，允许再次触发
         setTimeout(() => {
-
+          // 旋转结束后再过 1 s执行
           this.rotateOver()
         }, config.duration + 1000)
       },
+      // 旋转结束
       rotateOver () {
-        this.isRotating = false
-        this.prize = prizeList[this.index]
-        console.log(this.prize, this.index)
+        // 设置正在旋转标识为 false
+        this.isRotating = false;
+        // 设置抽中的奖品信息
+        // prize 抽中的奖品, index 抽中的奖品索引
+        this.prize = prizeList[this.index];
       },
       //关闭弹窗
       closeToast() {
@@ -276,7 +280,6 @@
     top: 0.175rem;
     left: 0;
     background: rgb(243, 109, 86);
-    width: 100%;
     height: 5.1875rem;
     font-size: 1.125rem;
     color: #ffeb39;
