@@ -50,8 +50,8 @@ public class HuodongActivity extends BaseActivity {
         mAgentWeb = AgentWeb.with(this)
                 //传入AgentWeb 的父控件,如果父控件为 RelativeLayout,那么第二参数需要传入 RelativeLayout.LayoutParams,第一个参数和第二个参数应该对应
                 .setAgentWebParent((LinearLayout) huodongLayout, new LinearLayout.LayoutParams(-1, -1))
-                // 使用默认进度条
-                .useDefaultIndicator()
+                // 关闭进度条
+                .closeIndicator()
                 // 使用默认进度条颜色
                 .createAgentWeb()
                 .ready()
