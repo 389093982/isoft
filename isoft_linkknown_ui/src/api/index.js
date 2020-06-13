@@ -215,6 +215,12 @@ export const AddContactMessage = (params) => ajax(BASE_URL + '/iwork/httpservice
 export const GetContactMessage = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetContactMessage', params, "POST");
 export const GetContactUserList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetContactUserList', params, "POST");
 
+//【Kaoshi模块】***************************************************************************************************
+export const QueryPageKaoshiClassify = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiClassify', params, "POST");
+export const QueryAllKaoshiClassify = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify', params, "POST");
+export const EditKaoshiClassify = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditKaoshiClassify', params, "POST");
+export const QueryPageKaoshiTimu = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiTimu', params, "POST");
+export const EditKaoshiTimu = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditKaoshiTimu', params, "POST");
 
 
 //跨模块使用,模块化部署时需要使用 nginx 代理**************************************************************************

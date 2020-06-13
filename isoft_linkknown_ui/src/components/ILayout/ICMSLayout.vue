@@ -77,6 +77,18 @@
                 <router-link to="/background/fileUploadMonitor">文件上传监控</router-link>
               </MenuItem>
             </Submenu>
+            <Submenu name="9">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                考试管理
+              </template>
+              <MenuItem name="9-1">
+                <router-link to="/background/kaoshiClassify">题目分类管理</router-link>
+              </MenuItem>
+              <MenuItem name="9-2">
+                <router-link to="/background/kaoshiTimu">题目管理</router-link>
+              </MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Content

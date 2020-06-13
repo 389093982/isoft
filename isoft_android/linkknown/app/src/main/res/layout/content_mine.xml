@@ -125,7 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/orderLayout4"
+            android:id="@+id/kaoshiLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -133,13 +133,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/iv_order4"
+                android:id="@+id/iv_kaoshi"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="8dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_coupon"
+                android:src="@drawable/ic_kaoshi"
                 android:tint="@color/white"/>
             <TextView
                 android:id="@+id/tv_order4"
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="占位符"
+                android:text="考试"
                 android:textSize="11sp" />
         </LinearLayout>
 

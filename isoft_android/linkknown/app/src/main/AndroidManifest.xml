@@ -15,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.KaoShiDetailActivity"></activity>
+        <activity android:name=".activity.KaoShiResultListActivity" />
+        <activity android:name=".activity.KaoShiActivity" />
         <activity android:name=".activity.CouponGoodActivity" />
         <activity android:name=".activity.CourseCustomTagListActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
@@ -70,8 +73,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.PayOrderCommitActivity" />
-        <activity android:name=".activity.AvailableCouponForPayActivity" /> <!-- receiver 广播配置汇总 -->
+        <activity android:name=".activity.PayOrderCommitActivity" /> <!-- receiver 广播配置汇总 -->
         <receiver android:name=".broadcast.UnAuthorizedLoginReceiver">
             <intent-filter>
                 <action android:name="com.linkknown.ilearning.broadcast.UnAuthorizedLogin" />
