@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PayOrderCommitActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/payTypeTip"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付方式:">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/payType"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在线支付">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/goodsDescTip"
+                android:layout_below="@+id/payTypeTip"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="商品描述:">
+
+            </TextView>
+            <TextView
+                android:id="@+id/goodsDesc"
+                android:layout_below="@+id/payTypeTip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="xxx">
+
+            </TextView>
+
+
+            <ImageView
+                android:id="@+id/goodsImg"
+                android:layout_below="@+id/goodsDescTip"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:scaleType="fitXY"
+                android:text="商品图片">
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/priceTip"
+                android:layout_below="@+id/goodsImg"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="商品价格:">
+
+            </TextView>
+            <TextView
+                android:id="@+id/price"
+                android:layout_below="@+id/goodsImg"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:textColor="@color/colorPrimary"
+                android:text="120.58">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/couponTip"
+                android:layout_below="@+id/priceTip"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="优惠券:">
+
+            </TextView>
+            <TextView
+                android:id="@+id/coupons"
+                android:layout_below="@+id/priceTip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="无可用">
+
+            </TextView>
+
+            <View style="@style/bg_line"
+                android:layout_below="@+id/couponTip"
+                android:layout_marginTop="60dp"/>
+
+            <TextView
+                android:id="@+id/paidAmount"
+                android:layout_below="@+id/couponTip"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="80dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:text="真正付款金额">
+
+            </TextView>
+            <TextView
+                android:id="@+id/commitOrderBtn"
+                android:layout_below="@+id/couponTip"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bg_tag"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:text="提交订单"
+                android:clickable="true"/>
+
+    </RelativeLayout>
+
+
+</android.widget.LinearLayout>

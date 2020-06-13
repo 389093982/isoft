@@ -124,13 +124,34 @@ public class ShoppingCartActivity extends BaseActivity {
                 }
                 String addTime = DateUtil.formatDate_StandardForm(shoppingCartList.get(position).getAdd_time());
                 viewHolder.addTime.setText(addTime.substring(0,10));
+                //前去支付按钮
+                viewHolder.toPayBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String goodsType = shoppingCartList.get(position).getGoods_type();
+                        if ("course_theme_type".equals(goodsType)){
+                            String goodsId = shoppingCartList.get(position).getGoods_id();
+                            String goodsImg = shoppingCartList.get(position).getSmall_image(); //因为是课程，这里直接从 course表里获取图片
+                            String courseName = shoppingCartList.get(position).getCourse_name();
+                            //1.去结算页面
+                            UIUtils.gotoActivity(mContext,PayOrderCommitActivity.class,intent -> {
+                                intent.putExtra("goodsType",goodsType);
+                                intent.putExtra("goodsId",goodsId);
+                                intent.putExtra("goodsImg",goodsImg);
+                                intent.putExtra("goodsDesc",courseName);
+                                intent.putExtra("price",""+price);
+                                return intent;
+                            });
+                        }
+                    }
+                });
                 //删除按钮
                 viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String goodsType = shoppingCartList.get(position).getGoods_type();
-                        String goods_id = shoppingCartList.get(position).getGoods_id();
-                        deleteFromShoppingCart(goodsType,goods_id);
+                        String goodsId = shoppingCartList.get(position).getGoods_id();
+                        deleteFromShoppingCart(goodsType,goodsId);
                     }
                 });
             }
