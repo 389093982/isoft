@@ -21,6 +21,7 @@ import com.linkknown.ilearning.model.PayShoppinpCartResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
+import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 
 import io.reactivex.Observable;
@@ -222,6 +223,17 @@ public interface LinkKnownApi {
     Observable<BaseResponse> DoAttention(@Query("attention_object_type") String attention_object_type,
                                          @Query("attention_object_id") String attention_object_id,
                                          @Query("state") String state);
+
+
+
+    // 查询可用优惠券
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/SearchCouponForPay")
+    Observable<SearchCouponForPayResponse> SearchCouponForPay(@Query("userName") String userName,
+                                                              @Query("target_type") String target_type,
+                                                              @Query("target_id") String target_id,
+                                                              @Query("paid_amount") String paid_amount,
+                                                              @Query("today") String today);
+
 
 
 }

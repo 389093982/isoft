@@ -29,7 +29,8 @@
                 android:layout_marginRight="60dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="在线支付">
+                android:textColor="@color/green"
+                android:text="微信支付">
 
             </TextView>
 
@@ -105,7 +106,7 @@
 
             </TextView>
             <TextView
-                android:id="@+id/coupons"
+                android:id="@+id/availableCoupons"
                 android:layout_below="@+id/priceTip"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="60dp"

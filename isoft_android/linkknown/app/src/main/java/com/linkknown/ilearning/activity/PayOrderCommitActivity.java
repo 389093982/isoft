@@ -2,6 +2,7 @@ package com.linkknown.ilearning.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +16,18 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.model.SearchCouponForPayResponse;
+import com.linkknown.ilearning.util.DateUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.base.ViewHolder;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +40,8 @@ public class PayOrderCommitActivity extends BaseActivity{
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
+    @BindView(R.id.availableCoupons)
+    public TextView availableCoupons;
 
     //付费商品基本信息
     private String goodsType;
@@ -39,6 +50,9 @@ public class PayOrderCommitActivity extends BaseActivity{
     private String goodsDesc;
     private String price;
 
+    //查询可用优惠券
+    private List<SearchCouponForPayResponse.Coupon> coupons;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +60,8 @@ public class PayOrderCommitActivity extends BaseActivity{
         setContentView(R.layout.activity_pay_order_commit);
         ButterKnife.bind(this);
         mContext = this;
-        initData();
         initView();
+        initData();
     }
 
 
@@ -65,6 +79,8 @@ public class PayOrderCommitActivity extends BaseActivity{
         ((TextView)findViewById(R.id.price)).setText(price);
         ((TextView)findViewById(R.id.paidAmount)).setText(price);
 
+        //查询可用优惠券
+        SearchCouponForPay();
     };
 
 
@@ -74,33 +90,67 @@ public class PayOrderCommitActivity extends BaseActivity{
     };
 
 
+    //调接口查可用优惠券
+    public void SearchCouponForPay(){
+        String userName = LoginUtil.getLoginUserName(mContext);
+        String target_type = "course";
+        String target_id = goodsId;
+        String paid_amount = price;
+        String today = DateUtil.Today_yyyyMMdd();
 
-    /**
-     * 前去支付结算
-     * @param goodsType
-     * @param goodsId
-     */
-    public void toPayFromShoppingCart(String goodsType, String goodsId){
-        LinkKnownApiFactory.getLinkKnownApi().deleteFromShoppingCart(goodsType, goodsId)
+        LinkKnownApiFactory.getLinkKnownApi().SearchCouponForPay(userName,target_type, target_id,paid_amount, today)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                .subscribe(new LinkKnownObserver<SearchCouponForPayResponse>() {
+
                     @Override
-                    public void onNext(BaseResponse baseResponse) {
-                        if ("SUCCESS".equals(baseResponse.getStatus())) {
-                            ToastUtil.showText(mContext,"删除成功！");
+                    public void onNext(SearchCouponForPayResponse o) {
+                        if (o.isSuccess()){
+                            coupons = o.getCoupons();
+                            if (CollectionUtils.isNotEmpty(coupons)){
+                                availableCoupons.setText("点击选取可用优惠券...");
+                                availableCoupons.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(mContext,AvailableCouponForPayActivity.class);
+                                        intent.putExtra("userName",userName);
+                                        intent.putExtra("target_type",target_type);
+                                        intent.putExtra("target_id",target_id);
+                                        intent.putExtra("paid_amount",paid_amount);
+                                        intent.putExtra("today",today);
+                                        startActivityForResult(intent,199);
+                                    }
+                                });
+                            }else{
+                                availableCoupons.setText("无可用");
+                            }
                         }
-                        initData();
-                    };
+                    }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("deleteShoppCart error", e.getMessage());
-                        ToastUtil.showText(mContext,"删除失败！");
+                        Log.e("查可用优惠券失败 error", e.getMessage());
+                        ToastUtil.showText(mContext,"查询失败！");
                     }
                 });
+
     };
 
+    // 为了从 “选择优惠券界面” 回来 “本页面” 获取结果
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 199 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            SearchCouponForPayResponse.Coupon coupon = (SearchCouponForPayResponse.Coupon) bundle.getSerializable("coupon");
 
+            //拿到优惠券后 ,金额计算
+            if ("reduce".equals(coupon.getYouhui_type())){
+                ((TextView)findViewById(R.id.availableCoupons)).setText("-" + coupon.getCoupon_amount());
+            }else if ("discount".equals(coupon.getYouhui_type())){
+                ((TextView)findViewById(R.id.availableCoupons)).setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+            }
+        }
+    }
 
 }

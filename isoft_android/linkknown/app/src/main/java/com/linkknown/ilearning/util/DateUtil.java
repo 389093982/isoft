@@ -76,5 +76,14 @@ public class DateUtil {
     }
 
 
+    /**
+     * 用工具类获取今日日期
+     * @return
+     */
+    public static String Today_yyyyMMdd(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String format = sdf.format(new Date());
+        return format;
+    };
 
 }
