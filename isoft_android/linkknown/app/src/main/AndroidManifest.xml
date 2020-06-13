@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CouponGoodActivity"></activity>
+        <activity android:name=".activity.KaoShiDetailActivity"></activity>
+        <activity android:name=".activity.KaoShiResultListActivity" />
+        <activity android:name=".activity.KaoShiActivity" />
+        <activity android:name=".activity.CouponGoodActivity" />
         <activity android:name=".activity.CourseCustomTagListActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.CouponReceiveCenterActivity" />

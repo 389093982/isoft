@@ -18,6 +18,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
+import com.linkknown.ilearning.activity.KaoShiActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
@@ -60,6 +61,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     //活动中心
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
+
+    //考试
+    @BindView(R.id.iv_kaoshi)
+    public ImageView iv_kaoshi;
 
     //用户信息  &&  去编辑
     @BindView(R.id.userInfoLayout)
@@ -187,6 +192,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
         iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
+        iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiActivity.class));
     }
 
     private void initLoginView () {
