@@ -3,9 +3,11 @@ package com.linkknown.ilearning.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +29,7 @@ import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +45,10 @@ public class PayOrderCommitActivity extends BaseActivity{
     public Toolbar toolbar;
     @BindView(R.id.availableCoupons)
     public TextView availableCoupons;
+    @BindView(R.id.selectPayType)
+    public ImageView selectPayType;
+    @BindView(R.id.selectAvailableCoupons)
+    public ImageView selectAvailableCoupons;
 
     //付费商品基本信息
     private String goodsType;
@@ -79,6 +86,14 @@ public class PayOrderCommitActivity extends BaseActivity{
         ((TextView)findViewById(R.id.price)).setText(price);
         ((TextView)findViewById(R.id.paidAmount)).setText(price);
 
+        //点击查看支付方式
+        selectPayType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showText(mContext,"仅支持微信支付");
+            }
+        });
+
         //查询可用优惠券
         SearchCouponForPay();
     };
@@ -108,8 +123,8 @@ public class PayOrderCommitActivity extends BaseActivity{
                         if (o.isSuccess()){
                             coupons = o.getCoupons();
                             if (CollectionUtils.isNotEmpty(coupons)){
-                                availableCoupons.setText("点击选取可用优惠券...");
-                                availableCoupons.setOnClickListener(new View.OnClickListener() {
+                                availableCoupons.setText("有优惠券可以使用");
+                                selectAvailableCoupons.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         Intent intent = new Intent(mContext,AvailableCouponForPayActivity.class);
@@ -146,10 +161,18 @@ public class PayOrderCommitActivity extends BaseActivity{
 
             //拿到优惠券后 ,金额计算
             if ("reduce".equals(coupon.getYouhui_type())){
-                ((TextView)findViewById(R.id.availableCoupons)).setText("-" + coupon.getCoupon_amount());
+                availableCoupons.setText("-" + coupon.getCoupon_amount());
+                BigDecimal amount = new BigDecimal(price).subtract(new BigDecimal(coupon.getCoupon_amount()));
+                ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }else if ("discount".equals(coupon.getYouhui_type())){
-                ((TextView)findViewById(R.id.availableCoupons)).setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+                availableCoupons.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+                BigDecimal amount = new BigDecimal(price).multiply(new BigDecimal(coupon.getDiscount_rate()));
+                ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }
+            //设置优惠为 红色
+            availableCoupons.setTextColor(Color.RED);
+
+
         }
     }
 

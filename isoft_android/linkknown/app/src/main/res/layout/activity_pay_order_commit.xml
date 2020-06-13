@@ -34,6 +34,17 @@
 
             </TextView>
 
+            <ImageView
+                android:id="@+id/selectPayType"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_3points">
+
+            </ImageView>
+
             <TextView
                 android:id="@+id/goodsDescTip"
                 android:layout_below="@+id/payTypeTip"
@@ -116,6 +127,16 @@
                 android:text="无可用">
 
             </TextView>
+
+            <ImageView
+                android:id="@+id/selectAvailableCoupons"
+                android:layout_below="@+id/priceTip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_3points"/>
 
             <View style="@style/bg_line"
                 android:layout_below="@+id/couponTip"

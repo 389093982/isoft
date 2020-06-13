@@ -33,6 +33,7 @@
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.NewChannelActivity" />
         <activity android:name=".activity.TeacherZhaoPingActivity" />
+        <activity android:name=".activity.AvailableCouponForPayActivity" />
         <activity
             android:name=".activity.CourseTagActivity"
             android:label="@string/title_activity_show_types"
