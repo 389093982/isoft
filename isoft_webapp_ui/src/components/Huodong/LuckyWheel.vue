@@ -49,6 +49,7 @@
 </template>
 <script>
   import { prizeList } from './config'
+  import {getLoginNickName, checkHasLogin} from "../../tools/bridge"
 
   const CIRCLE_ANGLE = 360;
   const config = {
@@ -89,9 +90,7 @@
       },
       toastTitle () {
         return this.prize && this.prize.isPrize === 1
-          ? "恭喜您，获得" +
-          this.prize.name
-          : "未中奖";
+          ? "恭喜您" + getLoginNickName() + "，获得" + this.prize.name : "未中奖";
       },
       toastIcon() {
         return this.prize && this.prize.isPrize === 1
@@ -127,6 +126,10 @@
         return list
       },
       beginRotate() {
+        if (!checkHasLogin()) {
+            alert("您还未登录，前去登录!");
+          return;
+        }
         // 添加次数校验
 
         if(this.count === 0) return;
