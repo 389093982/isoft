@@ -21,6 +21,7 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
+import com.linkknown.ilearning.model.queryCouponByIdResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -28,6 +29,7 @@ import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -66,6 +68,8 @@ public class PayOrderCommitActivity extends BaseActivity{
 
     //查询可用优惠券
     private List<SearchCouponForPayResponse.Coupon> coupons;
+    //选择使用的优惠券
+    private SearchCouponForPayResponse.Coupon coupon_onuse;
 
 
     @Override
@@ -121,6 +125,19 @@ public class PayOrderCommitActivity extends BaseActivity{
 
         //查询可用优惠券
         SearchCouponForPay();
+
+        //支付
+        findViewById(R.id.commitOrderBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //1.先查看课程是否已经买过
+                // 2.如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+                // 3.查看券是否可使用
+                // 4.支付
+                Validator_And_ToPay();
+            }
+        });
+
     };
 
 
@@ -196,16 +213,16 @@ public class PayOrderCommitActivity extends BaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 199 && resultCode == 200) {
             Bundle bundle = data.getBundleExtra("bundle");
-            SearchCouponForPayResponse.Coupon coupon = (SearchCouponForPayResponse.Coupon) bundle.getSerializable("coupon");
+            coupon_onuse = (SearchCouponForPayResponse.Coupon) bundle.getSerializable("coupon");
 
             //拿到优惠券后 ,金额计算
-            if ("reduce".equals(coupon.getYouhui_type())){
-                availableCoupons.setText("-" + coupon.getCoupon_amount());
-                BigDecimal amount = new BigDecimal(price).subtract(new BigDecimal(coupon.getCoupon_amount()));
+            if ("reduce".equals(coupon_onuse.getYouhui_type())){
+                availableCoupons.setText("-" + coupon_onuse.getCoupon_amount());
+                BigDecimal amount = new BigDecimal(price).subtract(new BigDecimal(coupon_onuse.getCoupon_amount()));
                 ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
-            }else if ("discount".equals(coupon.getYouhui_type())){
-                availableCoupons.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
-                BigDecimal amount = new BigDecimal(price).multiply(new BigDecimal(coupon.getDiscount_rate()));
+            }else if ("discount".equals(coupon_onuse.getYouhui_type())){
+                availableCoupons.setText(""+(new Float(coupon_onuse.getDiscount_rate())*10)+"折");
+                BigDecimal amount = new BigDecimal(price).multiply(new BigDecimal(coupon_onuse.getDiscount_rate()));
                 ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }
             //设置优惠为 红色
@@ -213,6 +230,173 @@ public class PayOrderCommitActivity extends BaseActivity{
 
 
         }
+    }
+
+
+    /**
+     * 1.先查看课程是否已经买过
+     * 2.如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+     * 3.查看券是否可使用
+     * 4.支付
+     */
+    public void Validator_And_ToPay(){
+        //1.先查看课程是否已经买过
+        String user_name = LoginUtil.getLoginUserName(mContext);
+        String goods_type = goodsType;
+        String goods_id = goodsId;
+        String pay_result = "SUCCESS";
+        Integer current_page = 1;
+        Integer pageSize = 10;
+        LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(current_page,pageSize,goods_type,goods_id,user_name,pay_result)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<PayOrderResponse>() {
+                    @Override
+                    public void onNext(PayOrderResponse o) {
+
+                        if (o.isSuccess()){
+                            if (o.getOrders().size()>0 && "SUCCESS".equals(o.getOrders().get(0).getPay_result())){
+                                ToastUtil.showText(mContext,"该课程您已购买过，无需再次购买^_^");
+                            }else{
+
+
+
+
+
+                                //2.如果存在未付款的订单，提示"您有一笔订单未付款，请前去付款，或取消订单"
+                                String user_name = LoginUtil.getLoginUserName(mContext);
+                                String scope = "WAIT_FOR_PAY";
+                                Integer current_page = 1;
+                                Integer pageSize = 10;
+                                LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(current_page,pageSize,user_name,scope)
+                                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                        .subscribe(new LinkKnownObserver<PayOrderResponse>() {
+                                            @Override
+                                            public void onNext(PayOrderResponse o) {
+
+                                                if (o.isSuccess()){
+                                                    if (o.getOrders().size()>0){
+                                                        ToastUtil.showText(mContext,"您有待付款的订单，请先去处理！");
+                                                    }else{
+
+
+
+
+                                                        //3.查看券是否可使用
+                                                        if (coupon_onuse!=null){
+                                                            String coupon_id = coupon_onuse.getCoupon_id();
+                                                            LinkKnownApiFactory.getLinkKnownApi().queryCouponById(coupon_id)
+                                                                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                                                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                                                    .subscribe(new LinkKnownObserver<queryCouponByIdResponse>() {
+
+                                                                        @Override
+                                                                        public void onNext(queryCouponByIdResponse o) {
+                                                                            if (o.isSuccess()){
+                                                                                if ("used".equals(o.getCoupon().getCoupon_state())){
+                                                                                    ToastUtil.showText(mContext,"当前券已被使用，请重新选择！");
+                                                                                }else{
+
+
+
+
+
+                                                                                    //微信支付
+                                                                                    weChatPay();
+
+
+
+
+
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onError(Throwable e) {
+                                                                            Log.e("查看券是否可使用失败 error", e.getMessage());
+                                                                            ToastUtil.showText(mContext,"查看券是否可使用失败！");
+                                                                        }
+                                                                    });
+                                                        }else{
+                                                            //微信支付
+                                                            weChatPay();
+                                                        }
+
+
+
+
+                                                    }
+                                                }
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) {
+                                                Log.e("查询是否存在未付款订单 error", e.getMessage());
+                                                ToastUtil.showText(mContext,"查询是否存在未付款订单失败！");
+                                            }
+                                        });
+
+
+
+
+
+                            };
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("查询课程是否已购买 error", e.getMessage());
+                        ToastUtil.showText(mContext,"查询课程是否已购买失败！");
+                    }
+                });
+    };
+
+
+
+
+
+    //微信支付
+    public void weChatPay(){
+        //1.调微信支付接口
+        ToastUtil.showText(mContext,"微信支付成功..");
+
+        //2.添加订单入pay_order
+        String order_id = "支付系统生成订单号" + DateUtil.Today_yyyyMMdd();
+        String user_name = LoginUtil.getLoginUserName(mContext);
+        String goods_type = goodsType;
+        String goods_id = goodsId;
+        String goods_desc = goodsDesc;
+        String paid_amount = ((TextView)findViewById(R.id.paidAmount)).getText().toString();
+        String goods_original_price = price;
+
+        String activity_type = "";
+        String activity_type_bind_id = "";
+        if (coupon_onuse!=null){
+            activity_type = "coupon";
+            activity_type_bind_id = coupon_onuse.getCoupon_id();
+        }
+
+        String goods_img = goodsImg;
+        String pay_result = "Test_SUCCESS";
+        String code_url = "no_code_url";
+        //添加订单
+        LinkKnownApiFactory.getLinkKnownApi().addPayOrder(order_id,user_name, goods_type,goods_id, goods_desc,paid_amount,goods_original_price,activity_type,activity_type_bind_id,goods_img,pay_result,code_url)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+
+                    @Override
+                    public void onNext(BaseResponse o) {
+                        ToastUtil.showText(mContext,"订单添加成功！");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("添加订单失败 error", e.getMessage());
+                        ToastUtil.showText(mContext,"添加订单失败！");
+                    }
+                });
     }
 
 }

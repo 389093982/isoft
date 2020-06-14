@@ -371,47 +371,58 @@
                   'offset':10,
                 };
                 const res = await queryPayOrderList(params);
-                if (res.status === 'SUCCESS' && res.orders.length > 0) {
-                  _this.$Message.error('您有待付款的订单，请先去处理！');
-                  return false;
-                }
+                if (res.status === 'SUCCESS') {
+                  if (res.orders.length > 0) {
+                    _this.$Message.error('您有待付款的订单，请先去处理！');
+                  }else{
 
-                //3. 如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
-                if (!checkEmpty(_this.currentSelectCoupon.coupon_id)) {
-                  let params = {
-                    'coupon_id':_this.currentSelectCoupon.coupon_id
-                  };
-                  const res = await queryCouponById(params);
-                  if (res.status === 'SUCCESS' && res.coupon.coupon_state === 'used') {
-                    _this.$Message.info('当前券已被使用，请重新选择！');
-                    _this.currentSelectCoupon = '';
-                    _this.refreshCourseDetail();
-                    return false;
+                    //3. 如果使用了优惠券，下单之前判断券是否被使用过，如果已经被使用那么刷新一下券
+                    if (!checkEmpty(_this.currentSelectCoupon.coupon_id)) {
+                      let params = {
+                        'coupon_id':_this.currentSelectCoupon.coupon_id
+                      };
+                      const res = await queryCouponById(params);
+                      if (res.status === 'SUCCESS') {
+                        if (res.coupon.coupon_state === 'used') {
+                          _this.$Message.info('当前券已被使用，请重新选择！');
+                          _this.currentSelectCoupon = '';
+                          _this.refreshCourseDetail();
+                        }else{
+                          _this.paySocket();
+                        }
+                      }
+                    }else {
+                      _this.paySocket();
+                    }
                   }
                 }
-                //清理上次付款结果
-                _this.showPayResult = false;
-                _this.payResultDesc = '';
-                _this.percent = 0;
-                //准备参数
-                let ProductId = _this.goods_id.toString();
-                let ProductDesc = _this.goods_desc;
-                //对接微信支付，要求是分为单位，这个地方用的是int才行
-                let TransAmount = parseInt((_this.paid_amount * 100).toFixed(0));
-                let TransCurrCode = 'CNY';
-                let OrderParams = {
-                  'user_name':_this.loginUserName,
-                  'product_id': ProductId,
-                  'product_desc': ProductDesc,
-                  'trans_amount': TransAmount,
-                  'trans_curr_code': TransCurrCode
-                };
-                _this.initWebSocket(OrderParams);
               }
             }
           }
         });
       },
+
+      paySocket:function(){
+        //清理上次付款结果
+        this.showPayResult = false;
+        this.payResultDesc = '';
+        this.percent = 0;
+        //准备参数
+        let ProductId = this.goods_id.toString();
+        let ProductDesc = this.goods_desc;
+        //对接微信支付，要求是分为单位，这个地方用的是int才行
+        let TransAmount = parseInt((this.paid_amount * 100).toFixed(0));
+        let TransCurrCode = 'CNY';
+        let OrderParams = {
+          'user_name':this.loginUserName,
+          'product_id': ProductId,
+          'product_desc': ProductDesc,
+          'trans_amount': TransAmount,
+          'trans_curr_code': TransCurrCode
+        };
+        this.initWebSocket(OrderParams);
+      },
+
       initWebSocket:function(OrderParams) {
         const wsuri = isoft_unifiedpay_order_api; //这里就是下单接口
         this.websocket = new WebSocket(wsuri);

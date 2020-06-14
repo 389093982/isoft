@@ -26,6 +26,7 @@ import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -183,6 +184,10 @@ public interface LinkKnownApi {
                                                    @Query("user_name") String user_name,
                                                    @Query("pay_result") String pay_result);
 
+    //根据 coupon_id 查券
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/queryCouponById")
+    Observable<queryCouponByIdResponse> queryCouponById(@Query("coupon_id") String coupon_id);
+
 
     // 添加购物车
     @GET("/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart")
@@ -244,6 +249,21 @@ public interface LinkKnownApi {
                                                               @Query("target_id") String target_id,
                                                               @Query("paid_amount") String paid_amount,
                                                               @Query("today") String today);
+
+    //下单入pay_order
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/addPayOrder")
+    Observable<SearchCouponForPayResponse> addPayOrder(@Query("order_id") String order_id,
+                                                       @Query("user_name") String user_name,
+                                                       @Query("goods_type") String goods_type,
+                                                       @Query("goods_id") String goods_id,
+                                                       @Query("goods_desc") String goods_desc,
+                                                       @Query("paid_amount") String paid_amount,
+                                                       @Query("goods_original_price") String goods_original_price,
+                                                       @Query("activity_type") String activity_type,
+                                                       @Query("activity_type_bind_id") String activity_type_bind_id,
+                                                       @Query("goods_img") String goods_img,
+                                                       @Query("pay_result") String pay_result,
+                                                       @Query("code_url") String code_url);
 
     // 查询所有考试分类
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify")
