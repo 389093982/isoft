@@ -108,6 +108,17 @@ public class PayOrderCommitActivity extends BaseActivity{
             }
         });
 
+        //设置课程图片点击事件，跳往课程详情界面
+        findViewById(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", Integer.valueOf(goodsId));
+                    return intent;
+                });
+            }
+        });
+
         //查询可用优惠券
         SearchCouponForPay();
     };

@@ -127,6 +127,18 @@ public class ShoppingCartActivity extends BaseActivity {
                         deleteFromShoppingCart(goodsType,goodsId);
                     }
                 });
+
+                //设置课程图片点击事件，跳往课程详情界面
+                viewHolder.findView(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIUtils.gotoActivity(getContext(), CourseDetailActivity.class, intent -> {
+                            intent.putExtra("course_id", Integer.valueOf(shoppingCart.getGoods_id()));
+                            return intent;
+                        });
+                    }
+                });
+
             }
 
             @Override

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
 import com.linkknown.ilearning.activity.PayOrderDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -154,6 +155,16 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                     viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_cancel);
                 }
 
+                //设置课程图片点击事件，跳往课程详情界面
+                viewHolder.findView(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIUtils.gotoActivity(getContext(), CourseDetailActivity.class, intent -> {
+                            intent.putExtra("course_id", Integer.valueOf(payOrder.getGoods_id()));
+                            return intent;
+                        });
+                    }
+                });
             }
 
             @Override
