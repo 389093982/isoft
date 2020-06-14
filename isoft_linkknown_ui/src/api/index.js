@@ -221,6 +221,7 @@ export const QueryAllKaoshiClassify = (params) => ajax(BASE_URL + '/iwork/httpse
 export const EditKaoshiClassify = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditKaoshiClassify', params, "POST");
 export const QueryPageKaoshiTimu = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiTimu', params, "POST");
 export const EditKaoshiTimu = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditKaoshiTimu', params, "POST");
+export const QueryKaoshiTimuById = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryKaoshiTimuById', params, "POST");
 
 
 //跨模块使用,模块化部署时需要使用 nginx 代理**************************************************************************
