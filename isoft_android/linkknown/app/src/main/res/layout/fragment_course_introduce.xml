@@ -33,8 +33,25 @@
                 android:layout_weight="2"/>
 
             <TextView
+                android:id="@+id/addShoppingCart"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/selector_bg_tag"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:text="加入购物车"
+                android:clickable="true"
+                android:layout_weight="1"/>
+
+            <TextView
                 android:id="@+id/buyView"
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"

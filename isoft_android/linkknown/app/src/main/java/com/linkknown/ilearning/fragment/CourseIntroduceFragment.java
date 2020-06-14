@@ -104,6 +104,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
+    //加入购物车按钮
+    @BindView(R.id.addShoppingCart)
+    public TextView addShoppingCart;
+
     // 购买按钮
     @BindView(R.id.buyView)
     public TextView buyView;
@@ -165,8 +169,8 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
         initCVideoView(courseDetailResponse, course, cVideos);
 
-        // 初始化购买按钮
-        initBuyView(courseDetailResponse);
+        // 初始化 加入购物车 按钮 && 初始化购买按钮
+        initAddShoppingCart_And_BuyView(courseDetailResponse);
 
         //关注按钮的展示与否
         attentionBtnShow();
@@ -271,28 +275,72 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     };
 
 
-    private void initBuyView(CourseDetailResponse courseDetailResponse) {
+    //初始化加入购物车 && 立即购买按钮
+    private void initAddShoppingCart_And_BuyView(CourseDetailResponse courseDetailResponse) {
         //展示按钮的各种情况
         if (StringUtils.equalsIgnoreCase(courseDetailResponse.getCourse().getIsCharge(), "charge")) {
             if (LoginUtil.checkHasLogin(mContext)) {
                 //已登录还要判断，是不是自己的课程，如果是则不展示按钮
                 if (!LoginUtil.getLoginUserName(mContext).equals(courseDetailResponse.getCourse().getCourse_author())){
-                    if (courseDetailResponse.getPayOrder() != null && "SUCCESS".equals(courseDetailResponse.getPayOrder().getPay_result())) {
-                        // 已购买
-                        buyView.setVisibility(View.GONE);
-                    } else {
-                        buyView.setVisibility(View.VISIBLE);
-                    }
+                    addShoppingCart.setVisibility(View.VISIBLE);
+                    buyView.setVisibility(View.VISIBLE);
                 }else{
+                    //是自己的课程
+                    addShoppingCart.setVisibility(View.GONE);
                     buyView.setVisibility(View.GONE);
                 }
             } else {
+                addShoppingCart.setVisibility(View.VISIBLE);
                 buyView.setVisibility(View.VISIBLE);
             }
         } else {
+            addShoppingCart.setVisibility(View.GONE);
             buyView.setVisibility(View.GONE);
         }
 
+        //添加购物车
+        addShoppingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //判断是否已登录，否则提示去登录
+                if (LoginUtil.checkHasLogin(mContext)){
+                    //加入购物车
+                    LinkKnownApiFactory.getLinkKnownApi().addToShoppingCart("course_theme_type",String.valueOf(courseDetailResponse.getCourse().getId()),courseDetailResponse.getCourse().getPrice())
+                            .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                            .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                            .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                @Override
+                                public void onNext(BaseResponse o) {
+                                    if (o.isSuccess()){
+                                        ToastUtil.showText(mContext,"添加成功！");
+                                    }else{
+                                        ToastUtil.showText(mContext,o.getErrorMsg());
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    ToastUtil.showText(mContext,e.getMessage());
+                                }
+                            });
+                }else{
+                    //提示去登录
+                    LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
+                        @Override
+                        public void onPositive() {
+                            UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            getActivity().finish();
+                        }
+
+                        @Override
+                        public void onNegative() {
+
+                        }
+                    });
+                }
+
+            }
+        });
 
         //付款界面
         buyView.setOnClickListener(new View.OnClickListener() {
@@ -300,15 +348,19 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             public void onClick(View v) {
                 //判断是否已登录，否则提示去登录
                 if (LoginUtil.checkHasLogin(mContext)){
-                    //1.去结算页面
-                    UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
-                        intent.putExtra("goodsType","course");
-                        intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
-                        intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
-                        intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
-                        intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
-                        return intent;
-                    });
+                    if (courseDetailResponse.getPayOrder() != null && "SUCCESS".equals(courseDetailResponse.getPayOrder().getPay_result())){
+                        ToastUtil.showText(mContext,"该课程您已购买过，无需再次购买^_^");
+                    }else{
+                        //1.去结算页面
+                        UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
+                            intent.putExtra("goodsType","course_theme_type");
+                            intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
+                            intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
+                            intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
+                            intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
+                            return intent;
+                        });
+                    }
                 }else{
                     //提示去登录
                     LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {

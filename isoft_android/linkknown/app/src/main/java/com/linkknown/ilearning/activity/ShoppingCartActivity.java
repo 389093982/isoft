@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -31,6 +33,7 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ public class ShoppingCartActivity extends BaseActivity {
     public Toolbar toolbar;
 
     private Context mContext;
-    private RecyclerView.Adapter adapter;
+    private BaseQuickAdapter baseQuickAdapter;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -73,66 +76,36 @@ public class ShoppingCartActivity extends BaseActivity {
     }
 
 
-    //声明ViewHolder
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView goodsImg;
-        TextView goodsDesc;
-        TextView price;
-        TextView youhuiTip;
-        TextView addTime;
-        TextView toPayBtn;
-        TextView deleteBtn;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            goodsImg = itemView.findViewById(R.id.goodsImg);
-            goodsDesc = itemView.findViewById(R.id.goodsDesc);
-            price = itemView.findViewById(R.id.price);
-            youhuiTip = itemView.findViewById(R.id.youhuiTip);
-            addTime = itemView.findViewById(R.id.addTime);
-            toPayBtn = itemView.findViewById(R.id.toPayBtn);
-            deleteBtn = itemView.findViewById(R.id.deleteBtn);
-        }
-    }
-
 
     //初始化视图
     private void initView(){
         initToolBar(toolbar, true, "购物车");
-        adapter = new RecyclerView.Adapter() {
-            @NonNull
+        baseQuickAdapter = new BaseQuickAdapter<PayShoppinpCartResponse.ShoppingCart,BaseViewHolder >(R.layout.item_pay_shopping_cart_list,shoppingCartList) {
             @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View item = LayoutInflater.from(mContext).inflate(R.layout.item_pay_shopping_cart_list, parent ,false);
-                return new ShoppingCartActivity.ViewHolder(item);
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                ViewHolder viewHolder = (ViewHolder) holder;
-                UIUtils.setImage(mContext,viewHolder.goodsImg,shoppingCartList.get(position).getSmall_image());
-                viewHolder.goodsDesc.setText(shoppingCartList.get(position).getCourse_name());
+            protected void convert(@NotNull BaseViewHolder viewHolder, PayShoppinpCartResponse.ShoppingCart shoppingCart) {
+                UIUtils.setImage(mContext,viewHolder.findView(R.id.goodsImg),shoppingCart.getSmall_image());
+                viewHolder.setText(R.id.goodsDesc,shoppingCart.getCourse_name());
                 //商品价格
-                BigDecimal price = shoppingCartList.get(position).getPrice();
-                viewHolder.price.setText("￥"+price);
+                BigDecimal price = shoppingCart.getPrice();
+                viewHolder.setText(R.id.price,"￥"+price);
                 //加入购物车时候的价格
-                BigDecimal goods_price_on_add = shoppingCartList.get(position).getGoods_price_on_add();
-                viewHolder.youhuiTip.setVisibility(View.GONE);
+                BigDecimal goods_price_on_add = shoppingCart.getGoods_price_on_add();
+                viewHolder.setGone(R.id.youhuiTip,true);
                 if (goods_price_on_add.compareTo(price)>0){
-                    viewHolder.youhuiTip.setText("比加入时降:"+(goods_price_on_add.subtract(price))+"元");
-                    viewHolder.youhuiTip.setVisibility(View.VISIBLE);
+                    viewHolder.setText(R.id.youhuiTip,"比加入时降:"+(goods_price_on_add.subtract(price))+"元");
+                    viewHolder.setVisible(R.id.youhuiTip,true);
                 }
-                String addTime = DateUtil.formatDate_StandardForm(shoppingCartList.get(position).getAdd_time());
-                viewHolder.addTime.setText(addTime.substring(0,10));
+                String addTime = DateUtil.formatDate_StandardForm(shoppingCart.getAdd_time());
+                viewHolder.setText(R.id.addTime,addTime.substring(0,10));
                 //前去支付按钮
-                viewHolder.toPayBtn.setOnClickListener(new View.OnClickListener() {
+                viewHolder.findView(R.id.toPayBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String goodsType = shoppingCartList.get(position).getGoods_type();
+                        String goodsType = shoppingCart.getGoods_type();
                         if ("course_theme_type".equals(goodsType)){
-                            String goodsId = shoppingCartList.get(position).getGoods_id();
-                            String goodsImg = shoppingCartList.get(position).getSmall_image(); //因为是课程，这里直接从 course表里获取图片
-                            String courseName = shoppingCartList.get(position).getCourse_name();
+                            String goodsId = shoppingCart.getGoods_id();
+                            String goodsImg = shoppingCart.getSmall_image(); //因为是课程，这里直接从 course表里获取图片
+                            String courseName = shoppingCart.getCourse_name();
                             //1.去结算页面
                             UIUtils.gotoActivity(mContext,PayOrderCommitActivity.class,intent -> {
                                 intent.putExtra("goodsType",goodsType);
@@ -146,11 +119,11 @@ public class ShoppingCartActivity extends BaseActivity {
                     }
                 });
                 //删除按钮
-                viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                viewHolder.findView(R.id.deleteBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String goodsType = shoppingCartList.get(position).getGoods_type();
-                        String goodsId = shoppingCartList.get(position).getGoods_id();
+                        String goodsType = shoppingCart.getGoods_type();
+                        String goodsId = shoppingCart.getGoods_id();
                         deleteFromShoppingCart(goodsType,goodsId);
                     }
                 });
@@ -163,7 +136,7 @@ public class ShoppingCartActivity extends BaseActivity {
         };
 
         recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(baseQuickAdapter);
     }
 
     //给视图加载接口数据
@@ -200,7 +173,7 @@ public class ShoppingCartActivity extends BaseActivity {
                             shoppingCartList.clear();
                             ToastUtil.showText(mContext,"查不到数据！");
                         }
-                        adapter.notifyDataSetChanged();
+                        baseQuickAdapter.notifyDataSetChanged();
                         swipeRefreshLayoutHelper.finishRefreshing();
                     };
 
