@@ -96,6 +96,7 @@
         loginUserNickName: '',
         small_icon:'',
         defaultImg: require('../../../static/images/common_img/default.png'),
+        showJobFlag:this.GLOBAL.showJobFlag,
       }
     },
     methods: {

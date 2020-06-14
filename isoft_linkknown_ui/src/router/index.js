@@ -81,6 +81,7 @@ const SearchCoupon = () => import("@/components/Background/Pay/SearchCoupon");
 const FileUploadMonitor = () => import("@/components/Background/FileUploadMonitor");
 const KaoshiClassify = () => import("@/components/Background/KaoshiClassify");
 const KaoshiTimu = () => import("@/components/Background/KaoshiTimu");
+const KaoshiTimuEdit = () => import("@/components/Background/KaoshiTimuEdit");
 
 Vue.use(Router);
 
@@ -165,6 +166,7 @@ const ICMSReouter = [{
       {path: 'fileUploadMonitor', component: FileUploadMonitor},
       {path: 'kaoshiClassify', component: KaoshiClassify},
       {path: 'kaoshiTimu', component: KaoshiTimu},
+      {path: 'kaoshiTimuEdit', component: KaoshiTimuEdit},
     ]
 }];
 
