@@ -180,6 +180,13 @@ public interface LinkKnownApi {
                                                    @Query("user_name") String user_name,
                                                    @Query("pay_result") String pay_result);
 
+
+    // 添加购物车
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart")
+    Observable<BaseResponse> addToShoppingCart(@Query("goods_type") String goods_type,
+                                               @Query("goods_id") String goods_id,
+                                               @Query("goods_price_on_add") String goods_price_on_add);
+
     // 根据优惠券ID查询优惠券
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPagePayCoupon")
     Observable<CouponDatasResponse> QueryPagePayCoupon(@Query("coupon_id") String coupon_id,

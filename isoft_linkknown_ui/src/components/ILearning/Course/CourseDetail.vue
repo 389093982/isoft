@@ -330,16 +330,20 @@
 
         let _this = this;
         CheckHasLoginConfirmDialog2(_this, async function () {
-          let params = {
-            'goods_type':type,
-            'goods_id':id,
-            'goods_price_on_add':price
-          };
-          const result = await addToShoppingCart(params);
-          if (result.status === 'SUCCESS') {
-            _this.$Message.success('加入成功！');
-          }else{
-            _this.$Message.error(result.errorMsg)
+          if (_this.course.course_author == getLoginUserName()) {
+            _this.$Message.info("请勿购买自己的课程")
+          }else {
+            let params = {
+              'goods_type':type,
+              'goods_id':id,
+              'goods_price_on_add':price
+            };
+            const result = await addToShoppingCart(params);
+            if (result.status === 'SUCCESS') {
+              _this.$Message.success('加入成功！');
+            }else{
+              _this.$Message.error(result.errorMsg)
+            }
           }
         });
 
