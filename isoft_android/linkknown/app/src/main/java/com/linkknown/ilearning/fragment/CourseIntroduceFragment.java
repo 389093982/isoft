@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.PayOrderCommitActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.activity.VideoPlayActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -163,6 +164,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         courseTagView.setList(CommonUtil.splitCommonTag(course_label));
 
         initCVideoView(courseDetailResponse, course, cVideos);
+
         // 初始化购买按钮
         initBuyView(courseDetailResponse);
 
@@ -268,20 +270,21 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         });
     };
 
+
     private void initBuyView(CourseDetailResponse courseDetailResponse) {
-        buyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showText(mContext, "去购买");
-            }
-        });
+        //展示按钮的各种情况
         if (StringUtils.equalsIgnoreCase(courseDetailResponse.getCourse().getIsCharge(), "charge")) {
             if (LoginUtil.checkHasLogin(mContext)) {
-                if (courseDetailResponse.getPayOrder() != null) {
-                    // 已购买
+                //已登录还要判断，是不是自己的课程，如果是则不展示按钮
+                if (!LoginUtil.getLoginUserName(mContext).equals(courseDetailResponse.getCourse().getCourse_author())){
+                    if (courseDetailResponse.getPayOrder() != null && "SUCCESS".equals(courseDetailResponse.getPayOrder().getPay_result())) {
+                        // 已购买
+                        buyView.setVisibility(View.GONE);
+                    } else {
+                        buyView.setVisibility(View.VISIBLE);
+                    }
+                }else{
                     buyView.setVisibility(View.GONE);
-                } else {
-                    buyView.setVisibility(View.VISIBLE);
                 }
             } else {
                 buyView.setVisibility(View.VISIBLE);
@@ -289,6 +292,42 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         } else {
             buyView.setVisibility(View.GONE);
         }
+
+
+        //付款界面
+        buyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //判断是否已登录，否则提示去登录
+                if (LoginUtil.checkHasLogin(mContext)){
+                    //1.去结算页面
+                    UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
+                        intent.putExtra("goodsType","course");
+                        intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
+                        intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
+                        intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
+                        intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
+                        return intent;
+                    });
+                }else{
+                    //提示去登录
+                    LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
+                        @Override
+                        public void onPositive() {
+                            UIUtils.gotoActivity(mContext, LoginActivity.class);
+                            getActivity().finish();
+                        }
+
+                        @Override
+                        public void onNegative() {
+
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
 
     private void initCVideoView(CourseDetailResponse courseDetailResponse, CourseDetailResponse.Course course, List<CourseDetailResponse.CVideo> cVideos) {

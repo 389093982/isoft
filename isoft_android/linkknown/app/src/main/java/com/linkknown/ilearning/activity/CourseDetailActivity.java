@@ -130,14 +130,14 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取支付订单信息
+     * 获取支付订单信息- 判断某课程是否已付款
      * @return
      */
-    private Observable<PayOrderResponse> getPayOrderResponseObservable () {
+    private Observable<PayOrderResponse> getPayOrderResponseObservable (int course_id) {
         Observable<PayOrderResponse> payOrderResponseObservable;
         if (LoginUtil.checkHasLogin(mContext)) {
             payOrderResponseObservable =
-                    LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(1, 1, "course_theme_type", 10, LoginUtil.getLoginUserName(mContext));
+                    LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(1, 10, "course_theme_type", String.valueOf(course_id), LoginUtil.getLoginUserName(mContext),"SUCCESS");
         } else {
             // 没登录则返回空订单
             payOrderResponseObservable = Observable.just(new PayOrderResponse());
@@ -154,7 +154,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                     // 返回合并的三个网络请求: 课程信息，课程作者信息，当前登录用户购买订单信息
                     return Observable.zip(Observable.just(courseDetailResponse),
                             LinkKnownApiFactory.getLinkKnownApi().getUserDetail(courseDetailResponse.getCourse().getCourse_author()),
-                            getPayOrderResponseObservable(),
+                            getPayOrderResponseObservable(courseDetailResponse.getCourse().getId()),
                             new Function3<CourseDetailResponse, UserDetailResponse, PayOrderResponse, CourseDetailResponse>() {
                                 // 合并逻辑实现
                                 @Override

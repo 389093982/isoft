@@ -49,7 +49,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
 
     private Context mContext;
 
-    // 存储所有 fragment
+    // 存储4个 fragment
     private List<Fragment> mFragments = new ArrayList<>();
 
     // 存储 fragment 的标题

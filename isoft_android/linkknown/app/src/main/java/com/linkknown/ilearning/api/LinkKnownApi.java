@@ -176,8 +176,9 @@ public interface LinkKnownApi {
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
                                                    @Query("goods_type") String goods_type,
-                                                   @Query("goods_id") int goods_id,
-                                                   @Query("user_name") String user_name);
+                                                   @Query("goods_id") String goods_id,
+                                                   @Query("user_name") String user_name,
+                                                   @Query("pay_result") String pay_result);
 
     // 根据优惠券ID查询优惠券
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPagePayCoupon")

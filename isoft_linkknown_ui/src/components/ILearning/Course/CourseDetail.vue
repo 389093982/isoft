@@ -18,13 +18,16 @@
               <div class="showPriceAndBuy" style="margin: 10px 0 0 0">
                 <div v-if="course.isCharge==='charge'" style="color: #ff6900">
                   <Row>
-                    <Col span="24">
+                    <Col span="8">
                       <span class="showPrice">
                         <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
                       </span>
                     </Col>
+                    <Col span="12" v-if="isMyCourse(course.course_author)">
+                      <div class="myCourse" @click="$router.push({path:'/ilearning/courseSpace/editCourse',query:{course_id:course.id}})">我的课程</div>
+                    </Col>
                   </Row>
-                  <Row>
+                  <Row v-if="!isMyCourse(course.course_author)">
                     <Col span="9">
                       <span @click="addToShoppingCart('course_theme_type',course.id,course.price)">
                         <div class="addToShoppingCart">加入购物车</div>
@@ -314,6 +317,10 @@
       changeShowMore:function (showMore) {
         showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
       },
+      //判断是不是我的课程
+      isMyCourse:function(course_author){
+        return course_author==getLoginUserName();
+      },
       //加入购物车
       addToShoppingCart:async function(type,id,price){
         if (checkFastClick()) {
@@ -468,6 +475,21 @@
 
   .showPrice{
     cursor: pointer;
+  }
+
+  .myCourse{
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 0 2px 10px ;
+    height: 25px;
+    width: 75px;
+    background-color: rgba(220, 220, 220, 0.39);
+    border-radius: 20px;
+    border: 2px orange solid;
+  }
+  .myCourse:hover{
+    color: rgba(255, 105, 0, 0.65);
+    background-color: rgba(214, 214, 214, 0.99);
   }
 
   .addToShoppingCart{

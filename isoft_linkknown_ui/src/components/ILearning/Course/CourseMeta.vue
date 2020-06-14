@@ -36,12 +36,13 @@
       <TagRender :tags="clabels"/>
     </p>
 
-    <div style="width: 200px;float: right;margin-top: -30px;">
-      <div style="position: relative;">
-        <div v-if="showCourseSpace" class="isoft_button_blue isoft_glint"
-             @click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</div>
-      </div>
-    </div>
+    <!--进入我的课程空间 从个人中心进入，这里就隐藏了。-->
+    <!--<div style="width: 200px;float: right;margin-top: -30px;">-->
+      <!--<div style="position: relative;">-->
+        <!--<div v-if="showCourseSpace" class="isoft_button_blue isoft_glint"-->
+             <!--@click="$router.push($router.push({ path: '/ilearning/courseSpace'}))">进入我的课程空间</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </span>
 </template>
 

@@ -43,10 +43,17 @@ public class PayOrderCommitActivity extends BaseActivity{
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
-    @BindView(R.id.availableCoupons)
-    public TextView availableCoupons;
+
+    //支付方式
+    @BindView(R.id.payType)
+    public TextView payType;
+    //选择支付方式 图标
     @BindView(R.id.selectPayType)
     public ImageView selectPayType;
+    //可用优惠券
+    @BindView(R.id.availableCoupons)
+    public TextView availableCoupons;
+    //选择可用优惠券 图标
     @BindView(R.id.selectAvailableCoupons)
     public ImageView selectAvailableCoupons;
 
@@ -86,6 +93,12 @@ public class PayOrderCommitActivity extends BaseActivity{
         ((TextView)findViewById(R.id.price)).setText(price);
         ((TextView)findViewById(R.id.paidAmount)).setText(price);
 
+        payType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showText(mContext,"仅支持微信支付");
+            }
+        });
         //点击查看支付方式
         selectPayType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +137,20 @@ public class PayOrderCommitActivity extends BaseActivity{
                             coupons = o.getCoupons();
                             if (CollectionUtils.isNotEmpty(coupons)){
                                 availableCoupons.setText("有优惠券可以使用");
+                                //文字和图标都设置点击事件
+                                availableCoupons.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(mContext,AvailableCouponForPayActivity.class);
+                                        intent.putExtra("userName",userName);
+                                        intent.putExtra("target_type",target_type);
+                                        intent.putExtra("target_id",target_id);
+                                        intent.putExtra("paid_amount",paid_amount);
+                                        intent.putExtra("today",today);
+                                        startActivityForResult(intent,199);
+                                    }
+                                });
+                                //同上
                                 selectAvailableCoupons.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {

@@ -356,6 +356,7 @@
               'user_name':_this.loginUserName,
               'goods_type':'course_theme_type',
               'goods_id':_this.goods_id,
+              'pay_result':"SUCCESS",
               'currentPage':1,
               'offset':10,
             });

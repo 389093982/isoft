@@ -104,7 +104,7 @@ public class UserDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNegative() {
-                        finish();
+
                     }
                 });
             }else{
