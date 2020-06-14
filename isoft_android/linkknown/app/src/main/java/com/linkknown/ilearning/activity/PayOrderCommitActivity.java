@@ -92,6 +92,7 @@ public class PayOrderCommitActivity extends BaseActivity{
         ((TextView)findViewById(R.id.goodsDesc)).setText(goodsDesc);
         ((TextView)findViewById(R.id.price)).setText(price);
         ((TextView)findViewById(R.id.paidAmount)).setText(price);
+        ((TextView)findViewById(R.id.commitOrderBtn)).setText("微信支付");
 
         payType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +105,17 @@ public class PayOrderCommitActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
                 ToastUtil.showText(mContext,"仅支持微信支付");
+            }
+        });
+
+        //设置课程图片点击事件，跳往课程详情界面
+        findViewById(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id", Integer.valueOf(goodsId));
+                    return intent;
+                });
             }
         });
 

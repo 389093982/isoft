@@ -2,13 +2,8 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,6 +13,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
 import com.linkknown.ilearning.activity.PayOrderDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -79,12 +75,12 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                 //成功和失败展示交易时间， 待支付和被取消展示下单时间
                 if ("SUCCESS".equals(payResult) || "FAIL".equals(payResult)) {
                     String transTime = payOrder.getTrans_time();
-                    viewHolder.setText(R.id.transTime,DateUtil.formatDate_StandardForm(transTime));
+                    viewHolder.setText(R.id.transTime,DateUtil.formatDate_StandardForm(transTime).substring(0,10));
                     viewHolder.setGone(R.id.orderTime,true);
                     viewHolder.setVisible(R.id.transTime,true);
                 }else if ("CANCELLED".equals(payResult) || "".equals(payResult.trim())){
                     String orderTime = payOrder.getOrder_time();
-                    viewHolder.setText(R.id.orderTime,DateUtil.formatDate_StandardForm(orderTime));
+                    viewHolder.setText(R.id.orderTime,DateUtil.formatDate_StandardForm(orderTime).substring(0,10));
                     viewHolder.setGone(R.id.transTime,true);
                     viewHolder.setVisible(R.id.orderTime,true);
                 }
@@ -147,6 +143,28 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                         }
                     });
                 }
+
+                //设置支付结果图标
+                if("SUCCESS".equals(payResult)){
+                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_success);
+                }else if ("FAIL".equals(payResult)){
+                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_fail);
+                }else if ("".equals(payResult)){
+                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_wait_for_pay);
+                }else if ("CANCELLED".equals(payResult)){
+                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_cancel);
+                }
+
+                //设置课程图片点击事件，跳往课程详情界面
+                viewHolder.findView(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIUtils.gotoActivity(getContext(), CourseDetailActivity.class, intent -> {
+                            intent.putExtra("course_id", Integer.valueOf(payOrder.getGoods_id()));
+                            return intent;
+                        });
+                    }
+                });
             }
 
             @Override
