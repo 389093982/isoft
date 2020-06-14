@@ -14,6 +14,7 @@ import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
+import com.linkknown.ilearning.model.KaoshiClassifyResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -235,6 +236,7 @@ public interface LinkKnownApi {
                                                               @Query("paid_amount") String paid_amount,
                                                               @Query("today") String today);
 
-
-
+    // 查询所有考试分类
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify")
+    Observable<KaoshiClassifyResponse> queryAllKaoshiClassify();
 }

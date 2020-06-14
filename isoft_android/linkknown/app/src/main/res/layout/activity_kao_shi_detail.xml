@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.KaoShiDetailActivity">
 
+    <include layout="@layout/layout_recycleview"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
