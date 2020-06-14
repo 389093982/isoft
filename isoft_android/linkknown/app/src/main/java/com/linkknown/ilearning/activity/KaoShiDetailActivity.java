@@ -76,23 +76,6 @@ public class KaoShiDetailActivity extends AppCompatActivity {
                                     if (o.isSuccess()) {
                                         ToastUtil.showText(mContext, "试卷生成成功!");
 
-                                        LinkKnownApiFactory.getLinkKnownApi().queryPageKaoshiShijuan(1, 10)
-                                                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                                                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                                                .subscribe(new LinkKnownObserver<KaoshiShijuanListResponse>() {
-                                                    @Override
-                                                    public void onNext(KaoshiShijuanListResponse o) {
-                                                        if (o.isSuccess()){
-                                                            ToastUtil.showText(mContext, new Gson().toJson(o.getKaoshi_shijuans()));
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-
-                                                    }
-                                                });
-
                                     } else {
                                         ToastUtil.showText(mContext, "试卷生成失败!");
                                     }
