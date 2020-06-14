@@ -1,5 +1,7 @@
 package com.linkknown.ilearning.model;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -7,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class KaoshiShijuanDetailResponse extends BaseResponse {
 
-    private KaoshiShijuanDetail kaoshi_shijuandetail;
+    private List<KaoshiShijuanDetail> kaoshi_shijuandetail;
 
     @Data
     public class KaoshiShijuanDetail {
