@@ -14,6 +14,9 @@ import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
+import com.linkknown.ilearning.model.KaoshiClassifyResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -242,6 +245,20 @@ public interface LinkKnownApi {
                                                               @Query("paid_amount") String paid_amount,
                                                               @Query("today") String today);
 
+    // 查询所有考试分类
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify")
+    Observable<KaoshiClassifyResponse> queryAllKaoshiClassify();
 
+    // 根据分类名称生成试卷
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/CreateKaoshiShijuan")
+    Observable<BaseResponse> createKaoshiShijuan(@Query("classify_name") String classify_name);
 
+    // 分页查询考试试卷
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiShijuan")
+    Observable<KaoshiShijuanListResponse> queryPageKaoshiShijuan(@Query("current_page") int current_page,
+                                                                 @Query("offset") int pageSize);
+
+    // 根据试卷 id 查询试卷详情
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryKaoshiShijuanDetailById")
+    Observable<KaoshiShijuanDetailResponse> queryKaoshiShijuanDetailById(@Query("id") int id);
 }

@@ -47,7 +47,8 @@ func (this *ParamVauleParser) removeUnsupportChars() {
 
 // 获取静态字段值,即无需运行流程(Runtime 运行时)的数据
 func (this *ParamVauleParser) GetStaticParamValue(app_id int64) interface{} {
-	this.removeUnsupportChars()
+	// sql 语句中含有 \n 不需要替换成空
+	//this.removeUnsupportChars()
 	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
 		resource_name := strings.TrimSpace(this.ParamValue)
 		resource_name = strings.Replace(resource_name, "$RESOURCE.", "", -1)

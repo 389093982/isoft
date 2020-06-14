@@ -106,10 +106,22 @@ func (t *IWorkFuncProxy) getFuncCallers() []map[string]string {
 		{"group": "default", "funcDemo": "int64($str)", "funcDesc": "将支持转为 int64"},
 		{"group": "default", "funcDemo": "getByteSizeForMB($int64)", "funcDesc": "产生指定大小 MB 的字节数"},
 		{"group": "default", "funcDemo": "batchSqlBinding($varOrSlice1,$varOrSlice2,$varOrSlice3)", "funcDesc": "批量插入参数准备"},
+		{"group": "default", "funcDemo": "transformSqlQueryRowsToSliceByKey($rowDatas,$key)", "funcDesc": "将 sql 查询的多条记录根据字段名转换成切片"},
 
 		{"group": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
 		{"group": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
 	}
+}
+
+// 将 sql 查询的多条记录根据字段名转换成切片
+func (t *IWorkFuncProxy) TransformSqlQueryRowsToSliceByKey(args []interface{}) interface{} {
+	result := make([]interface{}, 0)
+	key := args[1].(string)
+	rowDatas := args[0].([]map[string]interface{}) // 查询出来的数据
+	for _, rowData := range rowDatas {
+		result = append(result, rowData[key])
+	}
+	return result
 }
 
 func (t *IWorkFuncProxy) GetFileNameFromUrl(args []interface{}) interface{} {
@@ -378,28 +390,24 @@ func (t *IWorkFuncProxy) StringsJoinWithSep(args []interface{}) interface{} {
 	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }
 
+// 判断多个值是否有一个为 true
 func (t *IWorkFuncProxy) Or(args []interface{}) interface{} {
-	sargs := make([]bool, 0)
 	for _, arg := range args {
-		if arg == nil {
-			sargs = append(sargs, false)
-		} else {
-			sargs = append(sargs, arg.(bool))
+		if arg != nil && arg.(bool) {
+			return true
 		}
 	}
-	return sargs[0] || sargs[1]
+	return false
 }
 
+// 判断多个值是否都为 true
 func (t *IWorkFuncProxy) And(args []interface{}) interface{} {
-	sargs := make([]bool, 0)
 	for _, arg := range args {
-		if arg == nil {
-			sargs = append(sargs, false)
-		} else {
-			sargs = append(sargs, arg.(bool))
+		if arg == nil || !arg.(bool) {
+			return false
 		}
 	}
-	return sargs[0] && sargs[1]
+	return true
 }
 
 func (t *IWorkFuncProxy) Not(args []interface{}) interface{} {
