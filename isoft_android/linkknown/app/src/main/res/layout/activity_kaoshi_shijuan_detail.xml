@@ -1,9 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.KaoshiShijuanDetailActivity">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/timuIndexLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/timu_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="问题"/>
+        <TextView
+            android:id="@+id/timu_answer_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 a"/>
+        <TextView
+            android:id="@+id/timu_answer_b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 b"/>
+        <TextView
+            android:id="@+id/timu_answer_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 c"/>
+        <TextView
+            android:id="@+id/timu_answer_d"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 d"/>
+        <TextView
+            android:id="@+id/timu_answer_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 e"/>
+        <TextView
+            android:id="@+id/timu_answer_f"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选项 f"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/prefixView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="上一题"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/nextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="下一题"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+</RelativeLayout>
