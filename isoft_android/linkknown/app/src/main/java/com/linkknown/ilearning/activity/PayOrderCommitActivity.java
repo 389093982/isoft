@@ -92,6 +92,7 @@ public class PayOrderCommitActivity extends BaseActivity{
         ((TextView)findViewById(R.id.goodsDesc)).setText(goodsDesc);
         ((TextView)findViewById(R.id.price)).setText(price);
         ((TextView)findViewById(R.id.paidAmount)).setText(price);
+        ((TextView)findViewById(R.id.commitOrderBtn)).setText("微信支付");
 
         payType.setOnClickListener(new View.OnClickListener() {
             @Override

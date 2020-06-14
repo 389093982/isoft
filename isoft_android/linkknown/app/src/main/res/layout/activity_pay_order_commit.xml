@@ -169,7 +169,7 @@
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:text="提交订单"
+                android:text="付款"
                 android:clickable="true"/>
 
     </RelativeLayout>

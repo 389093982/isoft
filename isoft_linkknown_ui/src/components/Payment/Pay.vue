@@ -163,6 +163,7 @@
     components: {Coupon, vueQr},
     data() {
       return {
+        loginUserName:'',
         //是否展示页面
         showPage:false,
         //从订单中心过来--继续支付
@@ -190,9 +191,6 @@
       }
     },
     computed: {
-      loginUserName: function () {
-        return getLoginUserName();
-      },
       color () {
         let color = 'grey';
         if (this.percent === 100) {
@@ -206,7 +204,7 @@
         let course_id = this.goods_id;
         let user_name;
         if (this.checkHasLogin) {
-          user_name = getLoginUserName();
+          user_name = this.loginUserName;
         }else {
           user_name = null;
         }
@@ -503,6 +501,7 @@
       },
   },
   mounted:function () {
+      this.loginUserName = getLoginUserName();
       //从订单中心过来继续支付
       this.pre_order_id = this.$route.params.order_id;
       //直接来购买的
