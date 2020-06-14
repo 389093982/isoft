@@ -15,6 +15,7 @@ import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -246,4 +247,13 @@ public interface LinkKnownApi {
     // 查询所有考试分类
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify")
     Observable<KaoshiClassifyResponse> queryAllKaoshiClassify();
+
+    // 根据分类名称生成试卷
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/CreateKaoshiShijuan")
+    Observable<BaseResponse> createKaoshiShijuan(@Query("classify_name") String classify_name);
+
+    // 分页查询考试试卷
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiShijuan")
+    Observable<KaoshiShijuanListResponse> queryPageKaoshiShijuan(@Query("current_page") int current_page,
+                                                                 @Query("offset") int pageSize);
 }

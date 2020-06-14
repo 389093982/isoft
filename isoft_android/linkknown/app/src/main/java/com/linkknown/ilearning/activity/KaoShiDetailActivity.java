@@ -1,22 +1,23 @@
 package com.linkknown.ilearning.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.google.gson.Gson;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -60,16 +60,49 @@ public class KaoShiDetailActivity extends AppCompatActivity {
             @Override
             protected void convert(@NotNull BaseViewHolder viewHolder, KaoshiClassifyResponse.KaoshiClassify kaoshiClassify) {
                 viewHolder.setText(R.id.kaoshiClassify, kaoshiClassify.getClassify_name());
-                viewHolder.findView(R.id.kaoshiClassify).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 查询题库生成试卷
-                        // 1 分题 x 10
-                        // 2 分题 x 10
-                        // 3 分题 x 10
-                        // 5 分题 x 4
-                        // 10 分题 x 2
-                    }
+                viewHolder.findView(R.id.kaoshiClassify).setOnClickListener(v -> {
+                    // 查询题库生成试卷
+                    // 1 分题 x 10
+                    // 2 分题 x 10
+                    // 3 分题 x 10
+                    // 5 分题 x 4
+                    // 10 分题 x 26
+                    LinkKnownApiFactory.getLinkKnownApi().createKaoshiShijuan(kaoshiClassify.getClassify_name())
+                            .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                            .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                            .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                @Override
+                                public void onNext(BaseResponse o) {
+                                    if (o.isSuccess()) {
+                                        ToastUtil.showText(mContext, "试卷生成成功!");
+
+                                        LinkKnownApiFactory.getLinkKnownApi().queryPageKaoshiShijuan(1, 10)
+                                                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                                .subscribe(new LinkKnownObserver<KaoshiShijuanListResponse>() {
+                                                    @Override
+                                                    public void onNext(KaoshiShijuanListResponse o) {
+                                                        if (o.isSuccess()){
+                                                            ToastUtil.showText(mContext, new Gson().toJson(o.getKaoshi_shijuans()));
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onError(Throwable e) {
+
+                                                    }
+                                                });
+
+                                    } else {
+                                        ToastUtil.showText(mContext, "试卷生成失败!");
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+                            });
                 });
             }
         };
