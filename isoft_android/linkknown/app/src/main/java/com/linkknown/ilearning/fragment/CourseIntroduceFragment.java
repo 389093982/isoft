@@ -353,7 +353,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                     }else{
                         //1.去结算页面
                         UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
-                            intent.putExtra("goodsType","course");
+                            intent.putExtra("goodsType","course_theme_type");
                             intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
                             intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
                             intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
