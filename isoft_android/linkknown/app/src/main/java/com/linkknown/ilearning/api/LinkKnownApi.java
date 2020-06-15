@@ -2,7 +2,7 @@ package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
-import com.linkknown.ilearning.model.CommentResponse;
+import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.CouponDatasResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
@@ -25,6 +25,7 @@ import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
+import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
@@ -93,17 +94,17 @@ public interface LinkKnownApi {
 
     // 评论查询接口,查询一级评论
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel")
-    Observable<CommentResponse> filterCommentFirstLevel(@Query("theme_pk") int theme_pk,
-                                                          @Query("theme_type") String theme_type,
-                                                          @Query("comment_type") String comment_type,
-                                                          @Query("current_page") int current_page,
-                                                          @Query("offset") int offset);
+    Observable<FirstLevelCommentResponse> filterCommentFirstLevel(@Query("theme_pk") int theme_pk,
+                                                                  @Query("theme_type") String theme_type,
+                                                                  @Query("comment_type") String comment_type,
+                                                                  @Query("current_page") int current_page,
+                                                                  @Query("offset") int offset);
 
     // 评论查询接口,查询二级评论
     @GET("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel")
-    Observable<CommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
-                                                         @Query("theme_type") String theme_type,
-                                                         @Query("org_parent_id") int org_parent_id);
+    Observable<SecondLevelCommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
+                                                                    @Query("theme_type") String theme_type,
+                                                                    @Query("org_parent_id") int org_parent_id);
 
     // 新增评论接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/AddComment")

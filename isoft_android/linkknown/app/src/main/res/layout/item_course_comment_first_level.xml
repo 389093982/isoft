@@ -43,9 +43,10 @@
             android:id="@+id/nickNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black_alpha_60"
+            android:textColor="@color/blue2"
             android:text="链知小白"
-            android:textSize="14sp" />
+
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/genderView"
@@ -53,26 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_toEndOf="@+id/nickNameText" />
-
-        <TextView
-            android:id="@+id/item_comment_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nickNameText"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/black_alpha_30"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/item_comment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nickNameText"
-            android:layout_marginStart="@dimen/default_tiny_padding"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/item_comment_floor"
-            android:textColor="@color/black_alpha_30"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/deleteIcon"
@@ -91,14 +72,50 @@
             android:id="@+id/commentContentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_comment_floor"
+            android:layout_below="@+id/nickNameText"
             android:ellipsize="end"
             android:maxLines="3"
             android:paddingTop="@dimen/default_tiny_padding"
-            android:layout_marginTop="-20dp"
             android:textColor="@color/font_normal"
             android:text="测试评论11111111111"
+
             android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentContentText"
+            android:layout_alignLeft="@+id/nickNameText"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/font_normal"
+            android:text="评论时间"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentContentText"
+            android:layout_toRightOf="@+id/comment_time"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/font_normal"
+            android:text="·"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/comment_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentContentText"
+            android:layout_toRightOf="@+id/point"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/font_normal"
+            android:text="回复"
+            android:textSize="12sp" />
+
     </RelativeLayout>
 
     <View

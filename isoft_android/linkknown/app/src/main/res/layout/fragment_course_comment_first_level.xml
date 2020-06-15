@@ -27,7 +27,7 @@
                     android:text="发表评论"/>
             </LinearLayout>
 
-            <include android:id="@+id/comment_recycleview"
+            <include android:id="@+id/first_level_comment_recycleview"
                 layout="@layout/layout_recycleview"/>
 
             <include layout="@layout/layout_footerview"/>

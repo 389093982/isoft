@@ -10,7 +10,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper=true)
 @ToString
-public class CommentResponse extends BaseResponse {
+public class FirstLevelCommentResponse extends BaseResponse {
     private List<Comment> comments;
     private Paginator paginator;
 
@@ -20,12 +20,12 @@ public class CommentResponse extends BaseResponse {
         private String comment_type;
         private String content;
         private String created_by;
-        private Date created_time;
+        private String created_time;
         private int depth;
         private String hat_in_use;
         private int id;
         private String last_updated_by;
-        private Date last_updated_time;
+        private String last_updated_time;
         private String nick_name;
         private int org_parent_id;
         private int parent_id;
