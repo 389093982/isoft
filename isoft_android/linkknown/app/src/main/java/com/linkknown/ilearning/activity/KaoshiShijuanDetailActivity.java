@@ -2,6 +2,8 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,15 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     private int shijuan_id;
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList = new ArrayList<>();
 
+    // 加载弹框
+    private BasePopupView loadingPopupView;
+
+    // 题目和底部布局,一开始隐藏,内容加载成功后显示
+    @BindView(R.id.timuLayout)
+    LinearLayout timuLayout;
+    @BindView(R.id.footerLayout)
+    LinearLayout footerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +74,18 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
         mContext = this;
         ButterKnife.bind(this);
+        // 一开始隐藏页面所有内容，只显示加载对话框
+        timuLayout.setVisibility(View.GONE);
+        footerLayout.setVisibility(View.GONE);
+        // 初始化加载弹框
+        loadingPopupView = new XPopup.Builder(mContext).asLoading("试卷加载中...").show();
 
         shijuan_id = getIntent().getIntExtra("shijuan_id", -1);
 
         initView();
 
-        initData();
+        // 加载对话框显示 2 s 后再发送网络请求
+        new Handler().postDelayed(() -> initData(), 2000);
     }
 
     private void initData() {
@@ -77,15 +96,19 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(KaoshiShijuanDetailResponse o) {
                         if (o.isSuccess()) {
+                            timuLayout.setVisibility(View.VISIBLE);
+                            footerLayout.setVisibility(View.VISIBLE);
+
                             kaoshiShijuanDetailList.addAll(o.getKaoshi_shijuandetail());
                             initTimuIndexView();
                             initTimuInfo();
                         }
+                        loadingPopupView.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        loadingPopupView.dismiss();
                     }
                 });
     }
@@ -96,13 +119,14 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
     private void initTimuIndexView() {
         for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
-            AppCompatButton button = new AppCompatButton(mContext);
-            button.setText(i + "");
-            button.setOnClickListener(v -> {
-               currentTimuIndex = Integer.parseInt(button.getText().toString()) - 1;
+            TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, timuIndexLayout, false);
+
+            textView.setText(i + "");
+            textView.setOnClickListener(v -> {
+               currentTimuIndex = Integer.parseInt(textView.getText().toString()) - 1;
                initTimuInfo();
             });
-            timuIndexLayout.addView(button);
+            timuIndexLayout.addView(textView);
         }
     }
 
