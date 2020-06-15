@@ -13,20 +13,25 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
@@ -71,6 +76,12 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     LinearLayout timuLayout;
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
+
+    @BindView(R.id.submitAll)
+    TextView submitAll;
+
+    // 考试倒计时
+    private Disposable kaoshiTimeCostDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +130,18 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     }
 
     private void initView() {
+        // 计算考试时长
+        initKaoshiTimeCostView();
+    }
 
+    private void initKaoshiTimeCostView() {
+        // 定时任务定时修改 TextView 中的提示文字
+        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(aLong -> {
+                    submitAll.setText("交卷（" + DateUtil.secToMinuteAndSec((int)(3600 - aLong)) + "）");
+                });
     }
 
     private void initTimuIndexView() {
@@ -190,6 +212,14 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             nextView.setClickable(false);
             nextView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.gray));
             nextView.setTextColor(UIUtils.getResourceColor(mContext, R.color.black));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (kaoshiTimeCostDisposable != null) {
+            kaoshiTimeCostDisposable.dispose();
         }
     }
 }

@@ -84,6 +84,19 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String format = sdf.format(new Date());
         return format;
-    };
+    }
+
+    /**
+     * 秒转分秒
+     * 28800 ->  08:00
+     * @param time
+     * @return
+     */
+    public static String secToMinuteAndSec(int time) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Integer minute = time / 60;
+        Integer sec = time % 60;
+        return String.format("%2d:%2d", minute, sec);
+    }
 
 }
