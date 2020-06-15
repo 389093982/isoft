@@ -1,20 +1,22 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatButton;
-
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
@@ -133,7 +135,14 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     private void initTimuInfo () {
         if (currentTimuIndex < kaoshiShijuanDetailList.size()) {
             KaoshiShijuanDetailResponse.KaoshiShijuanDetail detail = kaoshiShijuanDetailList.get(currentTimuIndex);
-            timu_question.setText(detail.getTimu_question());
+
+            String timuIndex = "(共 36 题，第 " + (currentTimuIndex + 1) + " 题，" + detail.getTimu_score() + " 分题) ";
+            String timuQuestion = detail.getTimu_question();
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+            spannableStringBuilder.append(timuIndex).append(timuQuestion);
+            spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, timuIndex.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            timu_question.setText(spannableStringBuilder);
             timu_answer_a.setText(detail.getTimu_answer_a());
             timu_answer_b.setText(detail.getTimu_answer_b());
             timu_answer_c.setText(detail.getTimu_answer_c());
