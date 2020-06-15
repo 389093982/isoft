@@ -32,37 +32,88 @@ android:layout_height="match_parent">
                 android:id="@+id/timu_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="问题"/>
-            <TextView
-                android:id="@+id/timu_answer_a"
+                android:text="问题"
+                android:padding="5dp"/>
+
+            <!-- 选项 -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 a"/>
-            <TextView
-                android:id="@+id/timu_answer_b"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 a"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 b"/>
-            <TextView
-                android:id="@+id/timu_answer_c"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 b"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 c"/>
-            <TextView
-                android:id="@+id/timu_answer_d"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 c"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 d"/>
-            <TextView
-                android:id="@+id/timu_answer_e"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 d"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 e"/>
-            <TextView
-                android:id="@+id/timu_answer_f"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_e"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 e"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="选项 f"/>
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:id="@+id/choiceF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/timu_answer_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="选项 f"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

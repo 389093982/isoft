@@ -146,12 +146,12 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, timuIndex.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             timu_question.setText(spannableStringBuilder);
-            timu_answer_a.setText(detail.getTimu_answer_a());
-            timu_answer_b.setText(detail.getTimu_answer_b());
-            timu_answer_c.setText(detail.getTimu_answer_c());
-            timu_answer_d.setText(detail.getTimu_answer_d());
-            timu_answer_e.setText(detail.getTimu_answer_e());
-            timu_answer_f.setText(detail.getTimu_answer_f());
+            timu_answer_a.setText("A：" + detail.getTimu_answer_a());
+            timu_answer_b.setText("B：" + detail.getTimu_answer_b());
+            timu_answer_c.setText("C：" + detail.getTimu_answer_c());
+            timu_answer_d.setText("D：" + detail.getTimu_answer_d());
+            timu_answer_e.setText("E：" + detail.getTimu_answer_e());
+            timu_answer_f.setText("F：" + detail.getTimu_answer_f());
 
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
