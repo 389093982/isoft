@@ -63,6 +63,9 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     // 加载弹框
     private BasePopupView loadingPopupView;
 
+    @BindView(R.id.answerProgress)
+    TextView answerProgress;
+
     // 题目和底部布局,一开始隐藏,内容加载成功后显示
     @BindView(R.id.timuLayout)
     LinearLayout timuLayout;
@@ -150,6 +153,9 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             timu_answer_e.setText(detail.getTimu_answer_e());
             timu_answer_f.setText(detail.getTimu_answer_f());
 
+            // 设置答题进度
+            answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
+
             initPrefixOrNextView();
         }
     }
@@ -164,9 +170,10 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             initTimuInfo();
         });
 
+        // 设置上一题的样式
         if (currentTimuIndex > 0) {
             prefixView.setClickable(true);
-            prefixView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.red));
+            prefixView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.light_orange));
             prefixView.setTextColor(UIUtils.getResourceColor(mContext, R.color.white));
         } else {
             prefixView.setClickable(false);
@@ -174,9 +181,10 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             prefixView.setTextColor(UIUtils.getResourceColor(mContext, R.color.black));
         }
 
+        // 设置下一题的样式
         if (currentTimuIndex < kaoshiShijuanDetailList.size() - 1) {
             nextView.setClickable(true);
-            nextView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.red));
+            nextView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.light_red));
             nextView.setTextColor(UIUtils.getResourceColor(mContext, R.color.white));
         } else {
             nextView.setClickable(false);

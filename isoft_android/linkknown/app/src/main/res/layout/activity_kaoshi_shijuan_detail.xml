@@ -68,26 +68,41 @@ android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/footerLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="45dp"
+        android:background="@drawable/horizontal_bar_bg"
+        android:orientation="horizontal"
+        android:paddingTop="1px"
+        android:layout_alignParentBottom="true">
+
         <TextView
+            android:id="@+id/answerProgress"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="答题进度"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <Button
             android:id="@+id/prefixView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/white"
             android:text="上一题"
-            android:textAlignment="center"/>
-        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <Button
             android:id="@+id/nextView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:text="下一题"
-            android:textAlignment="center"/>
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
     </LinearLayout>
 
 </RelativeLayout>
