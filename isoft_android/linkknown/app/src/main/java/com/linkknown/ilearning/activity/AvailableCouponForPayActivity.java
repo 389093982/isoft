@@ -97,6 +97,8 @@ public class AvailableCouponForPayActivity extends BaseActivity{
 
                                 recyclerView.setAdapter(quickAdapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            }else{
+                                ToastUtil.showText(mContext,"没有可用优惠券");
                             }
                         }
                     }

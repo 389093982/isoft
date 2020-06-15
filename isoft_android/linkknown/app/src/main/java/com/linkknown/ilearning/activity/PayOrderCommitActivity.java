@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import lombok.ToString;
 
 public class PayOrderCommitActivity extends BaseActivity{
 
@@ -296,18 +297,11 @@ public class PayOrderCommitActivity extends BaseActivity{
                                                                             if (o.isSuccess()){
                                                                                 if ("used".equals(o.getCoupon().getCoupon_state())){
                                                                                     ToastUtil.showText(mContext,"当前券已被使用，请重新选择！");
+                                                                                    initView();
                                                                                 }else{
 
-
-
-
-
-                                                                                    //微信支付
+                                                                                    //4.微信支付
                                                                                     weChatPay();
-
-
-
-
 
                                                                                 }
                                                                             }
@@ -353,15 +347,15 @@ public class PayOrderCommitActivity extends BaseActivity{
     };
 
 
-
-
-
-    //微信支付
+    /**
+     * 微信支付
+     * 1.订单入库
+     * 2.更新优惠券状态为已使用
+     * 3.支付成功后更新订单状态
+     * 4.再次更新优惠券状态为已使用
+     */
     public void weChatPay(){
-        //1.调微信支付接口
-        ToastUtil.showText(mContext,"微信支付成功..");
-
-        //2.添加订单入pay_order
+        //1.添加订单入pay_order
         String order_id = "支付系统生成订单号" + DateUtil.Today_yyyyMMdd();
         String user_name = LoginUtil.getLoginUserName(mContext);
         String goods_type = goodsType;
@@ -380,7 +374,7 @@ public class PayOrderCommitActivity extends BaseActivity{
         String goods_img = goodsImg;
         String pay_result = "Test_SUCCESS";
         String code_url = "no_code_url";
-        //添加订单
+        //1.添加订单
         LinkKnownApiFactory.getLinkKnownApi().addPayOrder(order_id,user_name, goods_type,goods_id, goods_desc,paid_amount,goods_original_price,activity_type,activity_type_bind_id,goods_img,pay_result,code_url)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -388,7 +382,56 @@ public class PayOrderCommitActivity extends BaseActivity{
 
                     @Override
                     public void onNext(BaseResponse o) {
-                        ToastUtil.showText(mContext,"订单添加成功！");
+
+                        if (o.isSuccess()){
+                            ToastUtil.showText(mContext,"订单添加成功！");
+
+                            // 2.更新优惠券,这里是下单的时候需要更新一次。
+                            if (coupon_onuse!=null) {
+                                LinkKnownApiFactory.getLinkKnownApi().UpdateCouponIsUsed(LoginUtil.getLoginUserName(mContext),coupon_onuse.getCoupon_id())
+                                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                            @Override
+                                            public void onNext(BaseResponse o) {
+                                                if (o.isSuccess()){
+                                                    ToastUtil.showText(mContext,"下单更新券为已使用！");
+                                                }
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) {
+
+                                            }
+                                        });
+                            }
+
+                            //3.调微信支付接口
+                            ToastUtil.showText(mContext,"微信支付成功..");
+
+                            //4.再次更新优惠券状态为已使用
+                            // 2.更新优惠券,这里是下单的时候需要更新一次。
+                            if (coupon_onuse!=null) {
+                                LinkKnownApiFactory.getLinkKnownApi().UpdateCouponIsUsed(LoginUtil.getLoginUserName(mContext),coupon_onuse.getCoupon_id())
+                                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                            @Override
+                                            public void onNext(BaseResponse o) {
+                                                if (o.isSuccess()){
+                                                    ToastUtil.showText(mContext,"下单更新券为已使用！");
+                                                }
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) {
+
+                                            }
+                                        });
+                            }
+
+
+                        }else{
+                            ToastUtil.showText(mContext,"添加订单失败..");
+                        }
                     }
 
                     @Override
@@ -397,6 +440,7 @@ public class PayOrderCommitActivity extends BaseActivity{
                         ToastUtil.showText(mContext,"添加订单失败！");
                     }
                 });
+
     }
 
 }

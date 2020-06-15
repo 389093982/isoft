@@ -189,6 +189,12 @@ public interface LinkKnownApi {
     Observable<queryCouponByIdResponse> queryCouponById(@Query("coupon_id") String coupon_id);
 
 
+    //更新券状态为 used
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/UpdateCouponIsUsed")
+    Observable<BaseResponse> UpdateCouponIsUsed(@Query("userName") String userName,
+                                                @Query("coupon_id") String coupon_id);
+
+
     // 添加购物车
     @GET("/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart")
     Observable<BaseResponse> addToShoppingCart(@Query("goods_type") String goods_type,
