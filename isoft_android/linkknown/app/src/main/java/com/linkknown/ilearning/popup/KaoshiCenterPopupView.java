@@ -40,8 +40,17 @@ public class KaoshiCenterPopupView extends CenterPopupView {
     @Override
     protected void onCreate() {
         super.onCreate();
-        submitAll = findViewById(R.id.submitAll);
 
+        initView();
+    }
+
+    private void initView() {
+        initSubmitView();
+
+        initTimuIndexView();
+    }
+
+    private void initTimuIndexView() {
         flowLayout = findViewById(R.id.flowLayout);
         for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
             TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, flowLayout, false);
@@ -55,6 +64,11 @@ public class KaoshiCenterPopupView extends CenterPopupView {
         }
 
         this.updateKaoshiTimuStatus();
+    }
+
+    private void initSubmitView() {
+        submitAll = findViewById(R.id.submitAll);
+        submitAll.setOnClickListener(v -> listener.submitAll());
     }
 
     public void updateKaoshiTimeCost (long time) {
@@ -88,5 +102,6 @@ public class KaoshiCenterPopupView extends CenterPopupView {
 
     public interface CallBackListener {
         void updateKaoshiTimuWithIndex(int index);
+        void submitAll();
     }
 }
