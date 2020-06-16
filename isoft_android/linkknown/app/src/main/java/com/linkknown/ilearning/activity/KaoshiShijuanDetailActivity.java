@@ -4,24 +4,25 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.popup.KaoshiCenterPopupView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,22 @@ import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
 
-    @BindView(R.id.timuIndexLayout)
-    LinearLayout timuIndexLayout;
-
     @BindView(R.id.timu_question)
     TextView timu_question;
+
+    @BindView(R.id.choiceA)
+    CheckBox choiceA;
+    @BindView(R.id.choiceB)
+    CheckBox choiceB;
+    @BindView(R.id.choiceC)
+    CheckBox choiceC;
+    @BindView(R.id.choiceD)
+    CheckBox choiceD;
+    @BindView(R.id.choiceE)
+    CheckBox choiceE;
+    @BindView(R.id.choiceF)
+    CheckBox choiceF;
+
     @BindView(R.id.timu_answer_a)
     TextView timu_answer_a;
     @BindView(R.id.timu_answer_b)
@@ -70,6 +82,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
     @BindView(R.id.answerProgress)
     TextView answerProgress;
+    @BindView(R.id.answerProgressLayout)
+    LinearLayout answerProgressLayout;
 
     // 题目和底部布局,一开始隐藏,内容加载成功后显示
     @BindView(R.id.timuLayout)
@@ -77,8 +91,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
 
-    @BindView(R.id.submitAll)
-    TextView submitAll;
+    @BindView(R.id.daojishi)
+    TextView daojishi;
 
     // 考试倒计时
     private Disposable kaoshiTimeCostDisposable;
@@ -116,8 +130,9 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                             footerLayout.setVisibility(View.VISIBLE);
 
                             kaoshiShijuanDetailList.addAll(o.getKaoshi_shijuandetail());
-                            initTimuIndexView();
                             initTimuInfo();
+
+                            initKaoshiProgress();
                         }
                         loadingPopupView.dismiss();
                     }
@@ -130,31 +145,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        // 计算考试时长
-        initKaoshiTimeCostView();
-    }
 
-    private void initKaoshiTimeCostView() {
-        // 定时任务定时修改 TextView 中的提示文字
-        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(aLong -> {
-                    submitAll.setText("交卷（" + DateUtil.secToMinuteAndSec((int)(3600 - aLong)) + "）");
-                });
-    }
-
-    private void initTimuIndexView() {
-        for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
-            TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, timuIndexLayout, false);
-
-            textView.setText(i + "");
-            textView.setOnClickListener(v -> {
-               currentTimuIndex = Integer.parseInt(textView.getText().toString()) - 1;
-               initTimuInfo();
-            });
-            timuIndexLayout.addView(textView);
-        }
     }
 
     private void initTimuInfo () {
@@ -168,18 +159,58 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, timuIndex.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             timu_question.setText(spannableStringBuilder);
-            timu_answer_a.setText("A：" + detail.getTimu_answer_a());
-            timu_answer_b.setText("B：" + detail.getTimu_answer_b());
-            timu_answer_c.setText("C：" + detail.getTimu_answer_c());
-            timu_answer_d.setText("D：" + detail.getTimu_answer_d());
-            timu_answer_e.setText("E：" + detail.getTimu_answer_e());
-            timu_answer_f.setText("F：" + detail.getTimu_answer_f());
+            renderChoiceAndAnswer(detail.getTimu_answer_a(), choiceA, timu_answer_a, "A：");
+            renderChoiceAndAnswer(detail.getTimu_answer_b(), choiceB, timu_answer_b, "B：");
+            renderChoiceAndAnswer(detail.getTimu_answer_c(), choiceC, timu_answer_c, "C：");
+            renderChoiceAndAnswer(detail.getTimu_answer_d(), choiceD, timu_answer_d, "D：");
+            renderChoiceAndAnswer(detail.getTimu_answer_e(), choiceE, timu_answer_e, "E：");
+            renderChoiceAndAnswer(detail.getTimu_answer_f(), choiceF, timu_answer_f, "F：");
 
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
 
             initPrefixOrNextView();
         }
+    }
+
+    private void renderChoiceAndAnswer(String answer, CheckBox checkBox, TextView textView, String prefix) {
+        if (StringUtils.isNotEmpty(StringUtils.trim(answer))) {
+            textView.setText(prefix + answer);
+            checkBox.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            checkBox.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+        }
+    }
+
+    private void initKaoshiProgress() {
+        KaoshiCenterPopupView kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext,
+                kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
+            @Override
+            public void updateKaoshiTimuWithIndex(int index) {
+                currentTimuIndex = index;
+                initTimuInfo();
+            }
+        });
+        BasePopupView progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
+
+        answerProgressLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressPopupView.show();
+            }
+        });
+
+        // 计算考试时长
+        // 定时任务定时修改 TextView 中的提示文字
+        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(aLong -> {
+                    kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
+                    daojishi.setText(DateUtil.secToMinuteAndSec((int)(3600 - aLong)));
+                });
     }
 
     private void initPrefixOrNextView() {

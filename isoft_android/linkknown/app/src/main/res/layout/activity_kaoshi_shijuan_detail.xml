@@ -3,31 +3,16 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-        <LinearLayout
-            android:id="@+id/timuIndexLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
     <ScrollView
-        android:layout_below="@id/horizontalScrollView"
         android:layout_above="@id/footerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/timuLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:padding="10dp">
             <TextView
                 android:id="@+id/timu_question"
                 android:layout_width="match_parent"
@@ -35,8 +20,16 @@ android:layout_height="match_parent">
                 android:text="问题"
                 android:padding="5dp"/>
 
+            <include layout="@layout/item_line"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="以下答案正确的是："/>
             <!-- 选项 -->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -45,11 +38,12 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_a"
+                    android:layout_toRightOf="@id/choiceA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 a"/>
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -58,11 +52,12 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_b"
+                    android:layout_toRightOf="@id/choiceB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 b"/>
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -71,11 +66,12 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_c"
+                    android:layout_toRightOf="@id/choiceC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 c"/>
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -84,11 +80,12 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_d"
+                    android:layout_toRightOf="@id/choiceD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 d"/>
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -97,11 +94,12 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_e"
+                    android:layout_toRightOf="@id/choiceE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 e"/>
-            </LinearLayout>
-            <LinearLayout
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
@@ -110,10 +108,11 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/timu_answer_f"
+                    android:layout_toRightOf="@id/choiceF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="选项 f"/>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -126,13 +125,27 @@ android:layout_height="match_parent">
         android:paddingTop="1px"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/answerProgress"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:text="答题进度"
-            android:gravity="center"
-            android:textAlignment="center"/>
+        <LinearLayout
+            android:id="@+id/answerProgressLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/answerProgress"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:text="答题进度"
+                android:gravity="center"
+                android:textAlignment="center"/>
+            <TextView
+                android:id="@+id/daojishi"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:text="倒计时"
+                android:gravity="top"
+                android:textAlignment="center"
+                android:textSize="10sp"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/prefixView"
@@ -155,18 +168,4 @@ android:layout_height="match_parent">
             android:textSize="16sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/submitAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_more_bg"
-        android:clickable="true"
-        android:text="交卷"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:visibility="visible"/>
 </RelativeLayout>
