@@ -1,24 +1,29 @@
 package com.linkknown.ilearning.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.google.gson.Gson;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
-import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -89,19 +94,40 @@ public class KaoShiResultListActivity extends BaseActivity {
 
             @Override
             protected void convert(@NotNull BaseViewHolder viewHolder, KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan) {
-                viewHolder.setText(R.id.shijuanName, kaoshiShijuan.getClassify_name() + kaoshiShijuan.getCreated_time().toString());
-                viewHolder.findView(R.id.shijuanName).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UIUtils.gotoActivity(mContext, KaoshiShijuanDetailActivity.class, new UIUtils.IntentParamWrapper() {
-                            @Override
-                            public Intent wrapper(Intent intent) {
-                                intent.putExtra("shijuan_id", kaoshiShijuan.getId());
-                                return intent;
-                            }
-                        });
-                    }
-                });
+                viewHolder.setText(R.id.shijuanName, kaoshiShijuan.getClassify_name() + "-" + DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4));
+                if (kaoshiShijuan.getIs_completed() == 1) {
+                    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+                    String part1 = kaoshiShijuan.getSum_score() + "";
+                    String part2 = " 分";
+                    spannableStringBuilder.append(part1).append(part2);
+
+                    // 设置红色
+                    spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    // 字体大小设置
+                     spannableStringBuilder.setSpan(new RelativeSizeSpan(3f), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    // 加粗倾斜
+                    spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    // 设置红色
+                    spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    TextView textView = viewHolder.findView(R.id.shijuanStatus);
+                    textView.setTranslationY(-35);
+                    textView.setText(spannableStringBuilder);
+                } else {
+                    SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+                    String part1 = "待考试";
+                    spannableStringBuilder.append(part1);
+                    // 设置绿色
+                    spannableStringBuilder.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.green_300)), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    TextView textView = viewHolder.findView(R.id.shijuanStatus);
+                    textView.setTranslationY(0);
+                    textView.setText(spannableStringBuilder);
+                }
+
+                viewHolder.findView(R.id.shijuanName).setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoshiShijuanDetailActivity.class, intent -> {
+                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+                    intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
+                    return intent;
+                }));
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

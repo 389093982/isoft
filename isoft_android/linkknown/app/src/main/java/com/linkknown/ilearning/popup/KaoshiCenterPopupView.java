@@ -25,14 +25,16 @@ public class KaoshiCenterPopupView extends CenterPopupView {
     private Context mContext;
     private CallBackListener listener;
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList;
+    private boolean kaoshiCompleted;
 
     private FlowLayout flowLayout;
     AppCompatButton submitAll;
 
-    public KaoshiCenterPopupView(@NonNull Context context,
+    public KaoshiCenterPopupView(@NonNull Context context, boolean kaoshiCompleted,
                                  List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList, CallBackListener listener) {
         super(context);
         this.mContext = context;
+        this.kaoshiCompleted = kaoshiCompleted;
         this.kaoshiShijuanDetailList = kaoshiShijuanDetailList;
         this.listener = listener;
     }
@@ -68,7 +70,15 @@ public class KaoshiCenterPopupView extends CenterPopupView {
 
     private void initSubmitView() {
         submitAll = findViewById(R.id.submitAll);
-        submitAll.setOnClickListener(v -> listener.submitAll());
+
+        if (kaoshiCompleted) {
+            // 考试结束不显示提交按钮
+            submitAll.setVisibility(GONE);
+        } else {
+            submitAll.setVisibility(VISIBLE);
+            submitAll.setOnClickListener(v -> listener.submitAll());
+        }
+
     }
 
     public void updateKaoshiTimeCost (long time) {
@@ -91,10 +101,21 @@ public class KaoshiCenterPopupView extends CenterPopupView {
         if (flowLayout != null) {
             for (int i=0; i<kaoshiShijuanDetailList.size(); i++) {
                 TextView textView = (TextView) flowLayout.getChildAt(i);
-                if (StringUtils.isNotEmpty(kaoshiShijuanDetailList.get(i).getGiven_answer())) {
-                    textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.green));
+
+                if (kaoshiCompleted) {
+                    // 查看试卷,正确显示绿色,错误显示红色
+                    if (kaoshiShijuanDetailList.get(i).getIs_correct() == 1) {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.green));
+                    } else {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.red));
+                    }
                 } else {
-                    textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.gray));
+                    // 正在考试,已选择显示绿色，未选择显示灰色
+                    if (StringUtils.isNotEmpty(kaoshiShijuanDetailList.get(i).getGiven_answer())) {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.green));
+                    } else {
+                        textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.gray));
+                    }
                 }
             }
         }
