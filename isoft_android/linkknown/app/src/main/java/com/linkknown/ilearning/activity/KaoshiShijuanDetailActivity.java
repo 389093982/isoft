@@ -4,17 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.internal.FlowLayout;
-import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -24,8 +21,8 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
-import com.lxj.xpopup.core.CenterPopupView;
-import com.lxj.xpopup.util.XPopupUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +37,22 @@ import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
 
-    @BindView(R.id.timuIndexLayout)
-    LinearLayout timuIndexLayout;
-
     @BindView(R.id.timu_question)
     TextView timu_question;
+
+    @BindView(R.id.choiceA)
+    CheckBox choiceA;
+    @BindView(R.id.choiceB)
+    CheckBox choiceB;
+    @BindView(R.id.choiceC)
+    CheckBox choiceC;
+    @BindView(R.id.choiceD)
+    CheckBox choiceD;
+    @BindView(R.id.choiceE)
+    CheckBox choiceE;
+    @BindView(R.id.choiceF)
+    CheckBox choiceF;
+
     @BindView(R.id.timu_answer_a)
     TextView timu_answer_a;
     @BindView(R.id.timu_answer_b)
@@ -151,17 +159,28 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, timuIndex.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             timu_question.setText(spannableStringBuilder);
-            timu_answer_a.setText("A：" + detail.getTimu_answer_a());
-            timu_answer_b.setText("B：" + detail.getTimu_answer_b());
-            timu_answer_c.setText("C：" + detail.getTimu_answer_c());
-            timu_answer_d.setText("D：" + detail.getTimu_answer_d());
-            timu_answer_e.setText("E：" + detail.getTimu_answer_e());
-            timu_answer_f.setText("F：" + detail.getTimu_answer_f());
+            renderChoiceAndAnswer(detail.getTimu_answer_a(), choiceA, timu_answer_a, "A：");
+            renderChoiceAndAnswer(detail.getTimu_answer_b(), choiceB, timu_answer_b, "B：");
+            renderChoiceAndAnswer(detail.getTimu_answer_c(), choiceC, timu_answer_c, "C：");
+            renderChoiceAndAnswer(detail.getTimu_answer_d(), choiceD, timu_answer_d, "D：");
+            renderChoiceAndAnswer(detail.getTimu_answer_e(), choiceE, timu_answer_e, "E：");
+            renderChoiceAndAnswer(detail.getTimu_answer_f(), choiceF, timu_answer_f, "F：");
 
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
 
             initPrefixOrNextView();
+        }
+    }
+
+    private void renderChoiceAndAnswer(String answer, CheckBox checkBox, TextView textView, String prefix) {
+        if (StringUtils.isNotEmpty(StringUtils.trim(answer))) {
+            textView.setText(prefix + answer);
+            checkBox.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            checkBox.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         }
     }
 
