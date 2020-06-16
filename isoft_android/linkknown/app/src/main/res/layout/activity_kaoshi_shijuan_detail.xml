@@ -13,6 +13,14 @@ android:layout_height="match_parent">
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tipInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="共 36 题，xxxxx"
+                android:padding="5dp"/>
+
             <TextView
                 android:id="@+id/timu_question"
                 android:layout_width="match_parent"
