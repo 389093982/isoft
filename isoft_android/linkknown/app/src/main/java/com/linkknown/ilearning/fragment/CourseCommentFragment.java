@@ -111,6 +111,60 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         }
     }
 
+
+    //左上角添加一级评论按钮
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.addComment:
+                int theme_pk = course_id;
+                String theme_type = "course_theme_type";
+                String comment_type = "comment";
+                int parent_id = 0;                          // 一级评论
+                int org_parent_id = 0;
+                String refer_user_name = course_author;     // 被评论人
+                showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showEditCommentDialog (int theme_pk, String theme_type, String comment_type, int org_parent_id, int parent_id, String refer_user_name) {
+        editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
+            handleSubmitComment(theme_pk,theme_type,comment_type,text,org_parent_id,parent_id,refer_user_name);
+        });
+    }
+
+    private void handleSubmitComment (int theme_pk, String theme_type, String comment_type, String content, int org_parent_id, int parent_id, String refer_user_name) {
+        LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<EditCommentResponse>() {
+
+                    @Override
+                    public void onNext(EditCommentResponse editCommentResponse) {
+                        if (editCommentResponse.isSuccess()) {
+                            // 对话框隐藏
+                            editCommentDialog.dismiss();
+                            // 重新加载数据
+                            initData();
+                        } else {
+                            Log.e("onNext =>", "添加评论失败~");
+                            ToastUtil.showText(mContext, "添加评论失败~");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                    }
+                });
+
+    }
+
+
     @Override
     protected void initData() {
         // 加载数据
@@ -211,57 +265,6 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         commentRecyclerView.setAdapter(baseQuickAdapter);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.addComment:
-                int theme_pk = course_id;
-                String theme_type = "course_theme_type";
-                String comment_type = "comment";
-                int parent_id = 0;                          // 一级评论
-                int org_parent_id = 0;
-                String refer_user_name = course_author;     // 被评论人
-                showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void showEditCommentDialog (int theme_pk, String theme_type, String comment_type, int org_parent_id, int parent_id, String refer_user_name) {
-        editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
-            handleSubmitComment(theme_pk,theme_type,comment_type,text,org_parent_id,parent_id,refer_user_name);
-        });
-    }
-
-    private void handleSubmitComment (int theme_pk, String theme_type, String comment_type, String content, int org_parent_id, int parent_id, String refer_user_name) {
-        LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownObserver<EditCommentResponse>() {
-
-                    @Override
-                    public void onNext(EditCommentResponse editCommentResponse) {
-                        if (editCommentResponse.isSuccess()) {
-                            // 对话框隐藏
-                            editCommentDialog.dismiss();
-                            // 重新加载数据
-                            initData();
-                        } else {
-                            Log.e("onNext =>", "添加评论失败~");
-                            ToastUtil.showText(mContext, "添加评论失败~");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onError =>", e.getMessage());
-                        ToastUtil.showText(mContext, "系统异常,请联系管理员~");
-                    }
-                });
-
     }
 
 
