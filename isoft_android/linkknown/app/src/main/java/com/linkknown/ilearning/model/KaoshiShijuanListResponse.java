@@ -19,6 +19,7 @@ public class KaoshiShijuanListResponse extends BaseResponse {
         private Date created_time;
         private int id;
         private int sum_score;
+        private int is_completed;
         private String user_name;
     }
 

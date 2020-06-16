@@ -292,5 +292,6 @@ public interface LinkKnownApi {
     @GET("/api/iwork/httpservice/isoft_linkknown_api/UpdateKaoshiShijuanTimuAnswer")
     Observable<BaseResponse> updateKaoshiShijuanTimuAnswer(@Query("id") int id,
                                                            @Query("shijuan_id") int shijuan_id,
+                                                           @Query("is_completed") int is_completed,
                                                            @Query("given_answer") String given_answer);
 }

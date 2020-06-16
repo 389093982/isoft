@@ -4,6 +4,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/timuScorllView"
         android:layout_above="@id/footerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,15 +1,13 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
@@ -23,6 +21,7 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,6 +38,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
 
+    @BindView(R.id.timuScorllView)
+    ScrollView timuScorllView;
     @BindView(R.id.tipInfo)
     TextView tipInfo;
 
@@ -155,6 +156,9 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
     private void initTimuInfo () {
         if (currentTimuIndex < kaoshiShijuanDetailList.size()) {
+            // 滚动组件滚动到顶部
+            timuScorllView.fullScroll(ScrollView.FOCUS_UP);
+
             KaoshiShijuanDetailResponse.KaoshiShijuanDetail detail = kaoshiShijuanDetailList.get(currentTimuIndex);
 
             String timuIndex = "共 36 题，第 " + (currentTimuIndex + 1) + " 题，" + detail.getTimu_score() + " 分题";
@@ -188,8 +192,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         }
     }
 
-    // 记住当前选中的答案
-    private void memoryCurrentAnswer () {
+    // 记住当前选中的答案,并提交到远程服务器
+    private void memoryCurrentAnswer (int is_completed) {
         KaoshiShijuanDetailResponse.KaoshiShijuanDetail kaoshiShijuanDetail = kaoshiShijuanDetailList.get(currentTimuIndex);
         StringBuilder sb = new StringBuilder();
         StringBuilder result = sb.append(choiceA.isChecked() ? "A" : "")
@@ -205,7 +209,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         }
 
         LinkKnownApiFactory.getLinkKnownApi().updateKaoshiShijuanTimuAnswer(kaoshiShijuanDetail.getId(),
-                kaoshiShijuanDetail.getShijuan_id(), kaoshiShijuanDetail.getGiven_answer())
+                kaoshiShijuanDetail.getShijuan_id(), is_completed, kaoshiShijuanDetail.getGiven_answer())
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownOnNextObserver<BaseResponse>() {
@@ -225,10 +229,18 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             @Override
             public void updateKaoshiTimuWithIndex(int index) {
                 // 先记住答案
-                memoryCurrentAnswer();
+                memoryCurrentAnswer(0);
                 // 再切换其它题目
                 currentTimuIndex = index;
                 initTimuInfo();
+            }
+
+            @Override
+            public void submitAll() {
+                // 记住答案并提交到远程服务器
+                memoryCurrentAnswer(1);
+
+                finish();
             }
         });
         progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
@@ -236,7 +248,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         answerProgressLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                memoryCurrentAnswer();
+                memoryCurrentAnswer(0);
                 progressPopupView.show();
             }
         });
@@ -247,19 +259,22 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())                   // 在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(aLong -> {
-                    kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
-                    daojishi.setText(DateUtil.secToMinuteAndSec((int)(3600 - aLong)));
+                    long totalTime = 3600;
+                    if (totalTime - aLong >= 0) {
+                        kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
+                        daojishi.setText(DateUtil.secToMinuteAndSec((int)(totalTime - aLong)));
+                    }
                 });
     }
 
     private void initPrefixOrNextView() {
         prefixView.setOnClickListener(v -> {
-            memoryCurrentAnswer();
+            memoryCurrentAnswer(0);
             currentTimuIndex --;
             initTimuInfo();
         });
         nextView.setOnClickListener(v -> {
-            memoryCurrentAnswer();
+            memoryCurrentAnswer(0);
             currentTimuIndex ++;
             initTimuInfo();
         });
@@ -293,5 +308,16 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         if (kaoshiTimeCostDisposable != null) {
             kaoshiTimeCostDisposable.dispose();
         }
+    }
+
+
+    //安卓重写返回键事件
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode== KeyEvent.KEYCODE_BACK){
+            progressPopupView.show();
+            return false;
+        }
+        return true;
     }
 }
