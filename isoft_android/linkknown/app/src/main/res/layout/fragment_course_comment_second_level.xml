@@ -85,6 +85,32 @@ android:background="@color/white">
                     android:text="评论时间"
                     android:textSize="12sp" />
 
+        </RelativeLayout>
+
+<!--        添加回复   全部回复-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/addReply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="14dp"
+                    android:text="添加回复">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/allReply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:textSize="14dp"
+                    android:text="全部回复()">
+                </TextView>
 
         </RelativeLayout>
 
@@ -93,15 +119,6 @@ android:background="@color/white">
             android:layout_below="@+id/couponTip"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
-
-        <TextView
-            android:id="@+id/allReply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:textSize="14dp"
-            android:text="全部回复">
-        </TextView>
 
 <!--        二级评论-->
         <include android:id="@+id/second_level_comment_recycleview"

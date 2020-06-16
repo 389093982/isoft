@@ -61,7 +61,7 @@ public class SecondLevelCommentPopView extends BottomPopupView {
         //评论时间
         ((TextView)findViewById(R.id.comment_time)).setText(DateUtil.formatDate_StandardForm(first_level_comment.getCreated_time()));
         //全部回复
-        ((TextView)findViewById(R.id.allReply)).setText(first_level_comment.getSub_amount()>0?"全部回复"+first_level_comment.getSub_amount():"暂无回复");
+        ((TextView)findViewById(R.id.allReply)).setText(first_level_comment.getSub_amount()==0?"暂无回复":"全部回复("+first_level_comment.getSub_amount()+")");
 
         //2.查询一级评论对应的二级评论
         Integer theme_pk = first_level_comment.getTheme_pk();
@@ -95,7 +95,7 @@ public class SecondLevelCommentPopView extends BottomPopupView {
 
     @Override
     protected int getMaxHeight() {
-        return (int) (XPopupUtils.getWindowHeight(getContext())*.65f);
+        return (int) (XPopupUtils.getWindowHeight(getContext())*.75f);
     }
 
 }

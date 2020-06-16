@@ -48,6 +48,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     private int course_id;
     private String course_author;
+    private String comments;
     // 当前评论页面评论的分页信息
     private Paginator paginator;
     // 当前评论页面显示的评论数据
@@ -59,6 +60,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @BindView(R.id.addComment)
     public TextView addComment;
+
+    @BindView(R.id.allComments)
+    public TextView allComments;
 
     // 评论列表适配器
     BaseQuickAdapter baseQuickAdapter;
@@ -93,6 +97,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         if (bundle != null) {
             course_id = bundle.getInt("course_id");
             course_author = bundle.getString("course_author");
+            comments = bundle.getString("comments");
+            allComments.setText(Integer.valueOf(comments)==0?"全部评论":"全部评论("+comments+")");
         }
     }
 
