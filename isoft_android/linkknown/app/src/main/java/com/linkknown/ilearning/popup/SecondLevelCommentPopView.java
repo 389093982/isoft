@@ -1,6 +1,8 @@
 package com.linkknown.ilearning.popup;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.SecondLevelCommentAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -32,9 +36,10 @@ public class SecondLevelCommentPopView extends BottomPopupView {
 
     private Context mContext;
     private FirstLevelCommentResponse.Comment first_level_comment;
-    private BaseQuickAdapter baseQuickAdapter;
+    private SecondLevelCommentAdapter baseQuickAdapter;
     private List<SecondLevelCommentResponse.Comment> secondLevelComments;
     private RecyclerView commentRecyclerView;
+    private BottomQuickEidtDialog editCommentDialog;
 
     public SecondLevelCommentPopView(@NonNull Context context, FirstLevelCommentResponse.Comment first_level_comment) {
         super(context);
@@ -60,6 +65,13 @@ public class SecondLevelCommentPopView extends BottomPopupView {
         ((TextView)findViewById(R.id.commentContentText)).setText(first_level_comment.getContent());
         //评论时间
         ((TextView)findViewById(R.id.comment_time)).setText(DateUtil.formatDate_StandardForm(first_level_comment.getCreated_time()));
+        //添加回复
+        ((TextView)findViewById(R.id.addReply)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditCommentDialog();
+            }
+        });
         //全部回复
         ((TextView)findViewById(R.id.allReply)).setText(first_level_comment.getSub_amount()==0?"暂无回复":"全部回复("+first_level_comment.getSub_amount()+")");
 
@@ -77,6 +89,10 @@ public class SecondLevelCommentPopView extends BottomPopupView {
                             secondLevelComments = commentResponse.getComments();
                             //2.设置二级评论的展示
                             baseQuickAdapter = new SecondLevelCommentAdapter(mContext,secondLevelComments);
+                            baseQuickAdapter.setClickListener(second_level_comment -> {
+                                //删除评论
+                                deleteComment(second_level_comment);
+                            });
                             commentRecyclerView = findViewById(R.id.second_level_comment_recycleview).findViewById(R.id.recyclerView);
                             commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                             commentRecyclerView.setAdapter(baseQuickAdapter);
@@ -91,11 +107,90 @@ public class SecondLevelCommentPopView extends BottomPopupView {
                         baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
+
+        //给删除按钮绑定点击事件
+
+
     }
 
     @Override
     protected int getMaxHeight() {
         return (int) (XPopupUtils.getWindowHeight(getContext())*.75f);
     }
+
+    //弹框
+    private void showEditCommentDialog () {
+        editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
+            handleSubmitComment(text);
+        });
+    }
+
+    //提交回复
+    private void handleSubmitComment (String content) {
+        int theme_pk = first_level_comment.getTheme_pk();
+        String theme_type = "course_theme_type";
+        String comment_type = "comment";
+        int parent_id = first_level_comment.getId();                          // 一级评论
+        int org_parent_id = first_level_comment.getId();
+        String refer_user_name = first_level_comment.getCreated_by();     // 被评论人
+        LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<EditCommentResponse>() {
+
+                    @Override
+                    public void onNext(EditCommentResponse editCommentResponse) {
+                        if (editCommentResponse.isSuccess()) {
+                            // 对话框隐藏
+                            editCommentDialog.dismiss();
+                            // 重新加载数据
+                            onCreate();
+                        } else {
+                            Log.e("onNext =>", "添加回复失败~");
+                            ToastUtil.showText(mContext, "添加回复失败~");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                    }
+                });
+
+    }
+
+
+
+    //删除评论
+    public void deleteComment(SecondLevelCommentResponse.Comment second_level_comment) {
+        int level = second_level_comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
+        int id = second_level_comment.getId();                           // 评论 id
+        int org_parent_id = second_level_comment.getOrg_parent_id();     // 父评论 id
+        int theme_pk = second_level_comment.getTheme_pk();                           // 课程 id
+        String theme_type = "course_theme_type";
+        LinkKnownApiFactory.getLinkKnownApi().deleteComment(level, id, theme_pk, theme_type, org_parent_id)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            ToastUtil.showText(mContext, "删除成功！");
+                            // 重新加载数据
+                            onCreate();
+                        } else {
+                            ToastUtil.showText(mContext, "删除失败！");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onError =>", e.getMessage());
+                        ToastUtil.showText(mContext, "删除失败！");
+                    }
+                });
+    }
+
 
 }
