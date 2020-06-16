@@ -16,6 +16,7 @@ import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.popup.KaoshiCenterPopupView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -44,6 +45,10 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     // 提示区域,用于辅助提示
     @BindView(R.id.tipInfo)
     TextView tipInfo;
+
+    // 正确答案
+    @BindView(R.id.timuAnswerView)
+    TextView timuAnswerView;
 
     // 问题
     @BindView(R.id.timu_question)
@@ -88,6 +93,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     private int shijuan_id;
     // 考试是否完成,分为已考完（true）和考试中（false）两种状态
     private boolean kaoshiCompleted;
+    // 考试试卷xinxi
+    KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
 
     // 存储考试试卷中的题目列表,每一道题目就是一个 KaoshiShijuanDetail
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList = new ArrayList<>();
@@ -131,7 +138,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
         shijuan_id = getIntent().getIntExtra("shijuan_id", -1);
         kaoshiCompleted = getIntent().getBooleanExtra("kaoshiCompleted", false);
-
+        kaoshiShijuan = (KaoshiShijuanListResponse.KaoshiShijuan) getIntent().getBundleExtra("bundle").getSerializable("kaoshiShijuan");
         initView();
 
         // 加载对话框显示 2 s 后再发送网络请求
@@ -191,6 +198,19 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
 
             initPrefixOrNextView();
+
+            initTimuAnswer(detail);
+        }
+    }
+
+    // 显示题目正确答案
+    private void initTimuAnswer(KaoshiShijuanDetailResponse.KaoshiShijuanDetail detail) {
+        if (kaoshiCompleted) {
+            timuAnswerView.setText(detail.getTimu_answer() + (detail.getIs_correct() == 1 ? " 恭喜你答对啦" : " 很遗憾你答错了，分数就这么溜走啦"));
+            timuAnswerView.setTextColor(UIUtils.getResourceColor(mContext, detail.getIs_correct() == 1 ? R.color.green : R.color.red));
+            timuAnswerView.setVisibility(View.VISIBLE);
+        } else {
+            timuAnswerView.setVisibility(View.GONE);
         }
     }
 
@@ -245,7 +265,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     private KaoshiCenterPopupView kaoshiCenterPopupView;
 
     private void initKaoshiProgress() {
-        kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext, kaoshiCompleted,
+        kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext, kaoshiShijuan,
                 kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
             @Override
             public void updateKaoshiTimuWithIndex(int index) {

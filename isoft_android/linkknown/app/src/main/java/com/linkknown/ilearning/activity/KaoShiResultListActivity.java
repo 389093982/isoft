@@ -104,7 +104,7 @@ public class KaoShiResultListActivity extends BaseActivity {
                     // 设置红色
                     spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     // 字体大小设置
-                     spannableStringBuilder.setSpan(new RelativeSizeSpan(3f), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                     spannableStringBuilder.setSpan(new RelativeSizeSpan(2.5f), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     // 加粗倾斜
                     spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, part1.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     // 设置红色
@@ -125,6 +125,9 @@ public class KaoShiResultListActivity extends BaseActivity {
 
                 viewHolder.findView(R.id.shijuanName).setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoshiShijuanDetailActivity.class, intent -> {
                     intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
+                    intent.putExtra("bundle", bundle);
                     intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
                     return intent;
                 }));

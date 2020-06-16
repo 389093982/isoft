@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.google.android.material.internal.FlowLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.core.CenterPopupView;
@@ -25,16 +26,16 @@ public class KaoshiCenterPopupView extends CenterPopupView {
     private Context mContext;
     private CallBackListener listener;
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList;
-    private boolean kaoshiCompleted;
+    KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
 
     private FlowLayout flowLayout;
     AppCompatButton submitAll;
 
-    public KaoshiCenterPopupView(@NonNull Context context, boolean kaoshiCompleted,
+    public KaoshiCenterPopupView(@NonNull Context context, KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan,
                                  List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList, CallBackListener listener) {
         super(context);
         this.mContext = context;
-        this.kaoshiCompleted = kaoshiCompleted;
+        this.kaoshiShijuan = kaoshiShijuan;
         this.kaoshiShijuanDetailList = kaoshiShijuanDetailList;
         this.listener = listener;
     }
@@ -50,6 +51,28 @@ public class KaoshiCenterPopupView extends CenterPopupView {
         initSubmitView();
 
         initTimuIndexView();
+
+        initRateView();
+    }
+
+    private void initRateView() {
+        View rateLayout = findViewById(R.id.rateLayout);
+        if (kaoshiShijuan.getIs_completed() == 1) {
+            rateLayout.setVisibility(VISIBLE);
+
+            TextView rateTextView = findViewById(R.id.rateTextView);
+            if (kaoshiShijuan.getSum_score() >= 90) {
+                rateTextView.setText("你太棒啦，考的这么好");
+            } else if (kaoshiShijuan.getSum_score() >= 70) {
+                rateTextView.setText("考的不错吆，不要骄傲");
+            } else if (kaoshiShijuan.getSum_score() >= 60) {
+                rateTextView.setText("刚刚及格奥，继续努力");
+            } else {
+                rateTextView.setText("没有认真考吧，下次争取考及格");
+            }
+        } else {
+            rateLayout.setVisibility(GONE);
+        }
     }
 
     private void initTimuIndexView() {
@@ -71,7 +94,7 @@ public class KaoshiCenterPopupView extends CenterPopupView {
     private void initSubmitView() {
         submitAll = findViewById(R.id.submitAll);
 
-        if (kaoshiCompleted) {
+        if (kaoshiShijuan.getIs_completed() == 1) {
             // 考试结束不显示提交按钮
             submitAll.setVisibility(GONE);
         } else {
@@ -94,7 +117,7 @@ public class KaoshiCenterPopupView extends CenterPopupView {
 
     @Override
     protected int getMaxHeight() {
-        return (int) (XPopupUtils.getWindowHeight(getContext())*.5f);
+        return (int) (XPopupUtils.getWindowHeight(getContext())*.6f);
     }
 
     public void updateKaoshiTimuStatus() {
@@ -102,7 +125,7 @@ public class KaoshiCenterPopupView extends CenterPopupView {
             for (int i=0; i<kaoshiShijuanDetailList.size(); i++) {
                 TextView textView = (TextView) flowLayout.getChildAt(i);
 
-                if (kaoshiCompleted) {
+                if (kaoshiShijuan.getIs_completed() == 1) {
                     // 查看试卷,正确显示绿色,错误显示红色
                     if (kaoshiShijuanDetailList.get(i).getIs_correct() == 1) {
                         textView.setBackgroundColor(UIUtils.getResourceColor(mContext, R.color.green));
