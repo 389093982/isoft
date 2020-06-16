@@ -237,8 +237,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                             // 重新加载数据
                             initData();
                         } else {
-                            Log.e("onNext =>", "系统异常,请联系管理员~");
-                            ToastUtil.showText(mContext, "系统异常,请联系管理员~");
+                            Log.e("onNext =>", "添加评论失败~");
+                            ToastUtil.showText(mContext, "添加评论失败~");
                         }
                     }
 
