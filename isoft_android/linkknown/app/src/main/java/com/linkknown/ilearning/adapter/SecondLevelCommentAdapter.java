@@ -85,7 +85,7 @@ public class SecondLevelCommentAdapter extends BaseQuickAdapter<SecondLevelComme
         void delete(SecondLevelCommentResponse.Comment second_level_comment);
     }
 
-    public void setClickListener(DeleteListener deleteListener) {
+    public void setDeleteListener(DeleteListener deleteListener) {
         this.deleteListener = deleteListener;
     }
 

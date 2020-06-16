@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CourseSearchActivity;
 import com.linkknown.ilearning.adapter.FirstLevelCommentAdapter;
 import com.linkknown.ilearning.common.CommonDiffCallback;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -24,9 +25,15 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
+import com.linkknown.ilearning.popup.SearchHistoryPopView;
+import com.linkknown.ilearning.popup.SecondLevelCommentPopView;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -49,8 +56,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private int course_id;
     private String course_author;
     private String comments;
+
     // 当前评论页面评论的分页信息
     private Paginator paginator;
+
     // 当前评论页面显示的评论数据
     private List<FirstLevelCommentResponse.Comment> firstLevelComments = new ArrayList<>();
 
@@ -65,7 +74,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     public TextView allComments;
 
     // 评论列表适配器
-    BaseQuickAdapter baseQuickAdapter;
+    FirstLevelCommentAdapter baseQuickAdapter;
 
     @Override
     protected boolean setIsRealTimeRefresh() {
@@ -189,11 +198,15 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         });
         // 先注册需要点击的子控件id（注意，请不要写在convert方法里）
         baseQuickAdapter.addChildClickViewIds(R.id.deleteIcon);
-        baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.deleteIcon) {
-                FirstLevelCommentResponse.Comment comment = firstLevelComments.get(position);
-                deleteComment(comment, position);
-            }
+
+        baseQuickAdapter.setReplyCommentListener(first_level_comment -> {
+            //一级评论的回复--弹框
+            showPop(first_level_comment);
+        });
+
+        baseQuickAdapter.setDeleteListener(first_level_comment -> {
+            //删除评论
+            deleteComment(first_level_comment);
         });
 
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -204,26 +217,26 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addComment:
-                showEditCommentDialog();
+                int theme_pk = course_id;
+                String theme_type = "course_theme_type";
+                String comment_type = "comment";
+                int parent_id = 0;                          // 一级评论
+                int org_parent_id = 0;
+                String refer_user_name = course_author;     // 被评论人
+                showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
                 break;
             default:
                 break;
         }
     }
 
-    private void showEditCommentDialog () {
+    private void showEditCommentDialog (int theme_pk, String theme_type, String comment_type, int org_parent_id, int parent_id, String refer_user_name) {
         editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
-            handleSubmitComment(text);
+            handleSubmitComment(theme_pk,theme_type,comment_type,text,org_parent_id,parent_id,refer_user_name);
         });
     }
 
-    private void handleSubmitComment (String content) {
-        int theme_pk = course_id;
-        String theme_type = "course_theme_type";
-        String comment_type = "comment";
-        int parent_id = 0;                          // 一级评论
-        int org_parent_id = 0;
-        String refer_user_name = course_author;     // 被评论人
+    private void handleSubmitComment (int theme_pk, String theme_type, String comment_type, String content, int org_parent_id, int parent_id, String refer_user_name) {
         LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -251,7 +264,17 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     }
 
-    public void deleteComment(FirstLevelCommentResponse.Comment comment, int position) {
+
+    //弹框显示
+    public void showPop(FirstLevelCommentResponse.Comment first_level_comment){
+        new XPopup.Builder(getContext())
+                .hasShadowBg(true)
+                .asCustom(new SecondLevelCommentPopView(mContext, first_level_comment)).show();
+    };
+
+
+    //删除评论
+    public void deleteComment(FirstLevelCommentResponse.Comment comment) {
         int level = comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
         int id = comment.getId();                           // 评论 id
         int org_parent_id = comment.getOrg_parent_id();     // 父评论 id
@@ -265,11 +288,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
                             // 局部刷新
-                            List<FirstLevelCommentResponse.Comment> oldList = new ArrayList(firstLevelComments);
-                            firstLevelComments.remove(position);
-                            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, firstLevelComments), true);
-                            diffResult.dispatchUpdatesTo(baseQuickAdapter);
                             ToastUtil.showText(mContext, "删除成功！");
+                            initData();
                         } else {
                             ToastUtil.showText(mContext, "删除失败！");
                         }

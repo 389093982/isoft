@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
+import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.popup.SecondLevelCommentPopView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
@@ -30,6 +31,10 @@ public class FirstLevelCommentAdapter extends BaseQuickAdapter<FirstLevelComment
         this.mContext = mContext;
     }
 
+    public DeleteListener deleteListener;
+    public ReplyCommentListener replyCommentListener;
+
+
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, FirstLevelCommentResponse.Comment first_level_comment) {
         //头像
@@ -42,17 +47,49 @@ public class FirstLevelCommentAdapter extends BaseQuickAdapter<FirstLevelComment
         viewHolder.setText(R.id.comment_time, DateUtil.formatDate_StandardForm(first_level_comment.getCreated_time()));
         //回复    eg: 188回复
         viewHolder.setText(R.id.comment_reply, first_level_comment.getSub_amount()==0?"回复":first_level_comment.getSub_amount()+"回复");
+
         //设置回复点击事件
         viewHolder.findView(R.id.comment_reply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new XPopup.Builder(getContext())
-                        .hasShadowBg(true)
-                        .asCustom(new SecondLevelCommentPopView(mContext,first_level_comment)).show();
+                replyCommentListener.showPop(first_level_comment);
             }
         });
 
 
-        viewHolder.setVisible(R.id.deleteIcon,LoginUtil.isLoginUserName(mContext, first_level_comment.getUser_name()));
+        //设置一级评论删除按钮是否显示
+        Boolean isShow = LoginUtil.isLoginUserName(mContext, first_level_comment.getUser_name());
+        viewHolder.setVisible(R.id.deleteIcon,isShow);
+
+        //设置删除按钮点击事件
+        if (isShow){
+            viewHolder.findView(R.id.deleteIcon).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteListener.delete(first_level_comment);
+                }
+            });
+        }
     }
+
+
+    //添加一个删除事件接口
+    public interface DeleteListener{
+        void delete(FirstLevelCommentResponse.Comment first_level_comment);
+    }
+
+    public void setDeleteListener(DeleteListener deleteListener) {
+        this.deleteListener = deleteListener;
+    }
+
+    //添加一个回复事件接口
+    public interface ReplyCommentListener{
+        void showPop(FirstLevelCommentResponse.Comment first_level_comment);
+    }
+
+    public void setReplyCommentListener(FirstLevelCommentAdapter.ReplyCommentListener replyCommentListener) {
+        this.replyCommentListener = replyCommentListener;
+    }
+
+
 }
