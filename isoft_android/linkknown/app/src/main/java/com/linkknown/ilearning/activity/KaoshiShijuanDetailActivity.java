@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.popup.KaoshiCenterPopupView;
 import com.linkknown.ilearning.util.DateUtil;
@@ -36,6 +38,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
+
+    @BindView(R.id.tipInfo)
+    TextView tipInfo;
 
     @BindView(R.id.timu_question)
     TextView timu_question;
@@ -152,19 +157,17 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         if (currentTimuIndex < kaoshiShijuanDetailList.size()) {
             KaoshiShijuanDetailResponse.KaoshiShijuanDetail detail = kaoshiShijuanDetailList.get(currentTimuIndex);
 
-            String timuIndex = "(共 36 题，第 " + (currentTimuIndex + 1) + " 题，" + detail.getTimu_score() + " 分题) ";
-            String timuQuestion = detail.getTimu_question();
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-            spannableStringBuilder.append(timuIndex).append(timuQuestion);
-            spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), 0, timuIndex.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            String timuIndex = "共 36 题，第 " + (currentTimuIndex + 1) + " 题，" + detail.getTimu_score() + " 分题";
+            tipInfo.setText(timuIndex);
+            tipInfo.setTextColor(UIUtils.getResourceColor(mContext, R.color.red));
 
-            timu_question.setText(spannableStringBuilder);
-            renderChoiceAndAnswer(detail.getTimu_answer_a(), choiceA, timu_answer_a, "A：");
-            renderChoiceAndAnswer(detail.getTimu_answer_b(), choiceB, timu_answer_b, "B：");
-            renderChoiceAndAnswer(detail.getTimu_answer_c(), choiceC, timu_answer_c, "C：");
-            renderChoiceAndAnswer(detail.getTimu_answer_d(), choiceD, timu_answer_d, "D：");
-            renderChoiceAndAnswer(detail.getTimu_answer_e(), choiceE, timu_answer_e, "E：");
-            renderChoiceAndAnswer(detail.getTimu_answer_f(), choiceF, timu_answer_f, "F：");
+            timu_question.setText(detail.getTimu_question());
+            renderChoiceAndAnswer(detail.getTimu_answer_a(), StringUtils.contains(detail.getGiven_answer(), "A"), choiceA, timu_answer_a, "A：");
+            renderChoiceAndAnswer(detail.getTimu_answer_b(), StringUtils.contains(detail.getGiven_answer(), "B"), choiceB, timu_answer_b, "B：");
+            renderChoiceAndAnswer(detail.getTimu_answer_c(), StringUtils.contains(detail.getGiven_answer(), "C"), choiceC, timu_answer_c, "C：");
+            renderChoiceAndAnswer(detail.getTimu_answer_d(), StringUtils.contains(detail.getGiven_answer(), "D"), choiceD, timu_answer_d, "D：");
+            renderChoiceAndAnswer(detail.getTimu_answer_e(), StringUtils.contains(detail.getGiven_answer(), "E"), choiceE, timu_answer_e, "E：");
+            renderChoiceAndAnswer(detail.getTimu_answer_f(), StringUtils.contains(detail.getGiven_answer(), "F"), choiceF, timu_answer_f, "F：");
 
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
@@ -173,7 +176,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         }
     }
 
-    private void renderChoiceAndAnswer(String answer, CheckBox checkBox, TextView textView, String prefix) {
+    private void renderChoiceAndAnswer(String answer, boolean checked, CheckBox checkBox, TextView textView, String prefix) {
+        checkBox.setChecked(checked);
         if (StringUtils.isNotEmpty(StringUtils.trim(answer))) {
             textView.setText(prefix + answer);
             checkBox.setVisibility(View.VISIBLE);
@@ -184,20 +188,55 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         }
     }
 
+    // 记住当前选中的答案
+    private void memoryCurrentAnswer () {
+        KaoshiShijuanDetailResponse.KaoshiShijuanDetail kaoshiShijuanDetail = kaoshiShijuanDetailList.get(currentTimuIndex);
+        StringBuilder sb = new StringBuilder();
+        StringBuilder result = sb.append(choiceA.isChecked() ? "A" : "")
+                .append(choiceB.isChecked() ? "B" : "")
+                .append(choiceC.isChecked() ? "C" : "")
+                .append(choiceD.isChecked() ? "D" : "")
+                .append(choiceE.isChecked() ? "E" : "")
+                .append(choiceF.isChecked() ? "F" : "");
+
+        kaoshiShijuanDetail.setGiven_answer(result.toString());
+        if (kaoshiCenterPopupView != null) {
+            kaoshiCenterPopupView.updateKaoshiTimuStatus();
+        }
+
+        LinkKnownApiFactory.getLinkKnownApi().updateKaoshiShijuanTimuAnswer(kaoshiShijuanDetail.getId(),
+                kaoshiShijuanDetail.getShijuan_id(), kaoshiShijuanDetail.getGiven_answer())
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownOnNextObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse o) {
+
+                    }
+                });
+    }
+
+    private BasePopupView progressPopupView;
+    private KaoshiCenterPopupView kaoshiCenterPopupView;
+
     private void initKaoshiProgress() {
-        KaoshiCenterPopupView kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext,
+        kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext,
                 kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
             @Override
             public void updateKaoshiTimuWithIndex(int index) {
+                // 先记住答案
+                memoryCurrentAnswer();
+                // 再切换其它题目
                 currentTimuIndex = index;
                 initTimuInfo();
             }
         });
-        BasePopupView progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
+        progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
 
         answerProgressLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                memoryCurrentAnswer();
                 progressPopupView.show();
             }
         });
@@ -215,10 +254,12 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
     private void initPrefixOrNextView() {
         prefixView.setOnClickListener(v -> {
+            memoryCurrentAnswer();
             currentTimuIndex --;
             initTimuInfo();
         });
         nextView.setOnClickListener(v -> {
+            memoryCurrentAnswer();
             currentTimuIndex ++;
             initTimuInfo();
         });

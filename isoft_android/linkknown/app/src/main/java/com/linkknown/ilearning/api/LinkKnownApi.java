@@ -288,4 +288,9 @@ public interface LinkKnownApi {
     // 根据试卷 id 查询试卷详情
     @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryKaoshiShijuanDetailById")
     Observable<KaoshiShijuanDetailResponse> queryKaoshiShijuanDetailById(@Query("id") int id);
+
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/UpdateKaoshiShijuanTimuAnswer")
+    Observable<BaseResponse> updateKaoshiShijuanTimuAnswer(@Query("id") int id,
+                                                           @Query("shijuan_id") int shijuan_id,
+                                                           @Query("given_answer") String given_answer);
 }
