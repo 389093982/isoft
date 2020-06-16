@@ -19,6 +19,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
+import com.linkknown.ilearning.popup.KaoshiCenterPopupView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
@@ -73,6 +74,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
     @BindView(R.id.answerProgress)
     TextView answerProgress;
+    @BindView(R.id.answerProgressLayout)
+    LinearLayout answerProgressLayout;
 
     // 题目和底部布局,一开始隐藏,内容加载成功后显示
     @BindView(R.id.timuLayout)
@@ -80,8 +83,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
 
-    @BindView(R.id.submitAll)
-    TextView submitAll;
+    @BindView(R.id.daojishi)
+    TextView daojishi;
 
     // 考试倒计时
     private Disposable kaoshiTimeCostDisposable;
@@ -120,6 +123,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
 
                             kaoshiShijuanDetailList.addAll(o.getKaoshi_shijuandetail());
                             initTimuInfo();
+
+                            initKaoshiProgress();
                         }
                         loadingPopupView.dismiss();
                     }
@@ -132,18 +137,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        // 计算考试时长
-        initKaoshiTimeCostView();
-    }
 
-    private void initKaoshiTimeCostView() {
-        // 定时任务定时修改 TextView 中的提示文字
-        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(aLong -> {
-                    submitAll.setText("交卷（" + DateUtil.secToMinuteAndSec((int)(3600 - aLong)) + "）");
-                });
     }
 
     private void initTimuInfo () {
@@ -167,44 +161,37 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
 
-            BasePopupView progressPopupView = new XPopup.Builder(mContext).asCustom(new CenterPopupView(mContext) {
-
-                @Override
-                protected void onCreate() {
-                    super.onCreate();
-                    FlowLayout flowLayout = findViewById(R.id.flowLayout);
-                    for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
-                        TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, flowLayout, false);
-
-                        textView.setText(i + "");
-                        textView.setOnClickListener(v -> {
-                            currentTimuIndex = Integer.parseInt(textView.getText().toString()) - 1;
-                            initTimuInfo();
-                            dismiss();
-                    });
-                        flowLayout.addView(textView);
-                    }
-                }
-
-                @Override
-                protected int getImplLayoutId() {
-                    return R.layout.layout_kaoshi_progress;
-                }
-
-                @Override
-                protected int getMaxHeight() {
-                    return (int) (XPopupUtils.getWindowHeight(getContext())*.5f);
-                }
-            });
-
-            answerProgress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    progressPopupView.show();
-                }
-            });
             initPrefixOrNextView();
         }
+    }
+
+    private void initKaoshiProgress() {
+        KaoshiCenterPopupView kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext,
+                kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
+            @Override
+            public void updateKaoshiTimuWithIndex(int index) {
+                currentTimuIndex = index;
+                initTimuInfo();
+            }
+        });
+        BasePopupView progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
+
+        answerProgressLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressPopupView.show();
+            }
+        });
+
+        // 计算考试时长
+        // 定时任务定时修改 TextView 中的提示文字
+        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(aLong -> {
+                    kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
+                    daojishi.setText(DateUtil.secToMinuteAndSec((int)(3600 - aLong)));
+                });
     }
 
     private void initPrefixOrNextView() {

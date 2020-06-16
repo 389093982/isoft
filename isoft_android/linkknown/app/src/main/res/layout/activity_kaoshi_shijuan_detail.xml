@@ -126,13 +126,27 @@ android:layout_height="match_parent">
         android:paddingTop="1px"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/answerProgress"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:text="答题进度"
-            android:gravity="center"
-            android:textAlignment="center"/>
+        <LinearLayout
+            android:id="@+id/answerProgressLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/answerProgress"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:text="答题进度"
+                android:gravity="center"
+                android:textAlignment="center"/>
+            <TextView
+                android:id="@+id/daojishi"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:text="倒计时"
+                android:gravity="top"
+                android:textAlignment="center"
+                android:textSize="10sp"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/prefixView"
@@ -155,18 +169,4 @@ android:layout_height="match_parent">
             android:textSize="16sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/submitAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_more_bg"
-        android:clickable="true"
-        android:text="交卷"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:visibility="visible"/>
 </RelativeLayout>
