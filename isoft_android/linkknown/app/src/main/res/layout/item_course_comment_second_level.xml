@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/blue2"
             android:text="链知小白"
-
             android:textSize="12sp" />
 
         <ImageView
@@ -79,7 +78,7 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/commentContentText"
+            android:id="@+id/reply_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_comment_floor"
@@ -88,8 +87,37 @@
             android:paddingTop="@dimen/default_tiny_padding"
             android:layout_marginTop="-20dp"
             android:textColor="@color/font_normal"
-            android:text="测试评论11111111111"
+            android:text="回复 "
+            android:visibility="gone"
+            android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/secondReplyNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_comment_floor"
+            android:layout_toRightOf="@+id/reply_show"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingTop="@dimen/default_tiny_padding"
+            android:layout_marginTop="-20dp"
+            android:text="eryue :"
+            android:textColor="@color/blue2"
+            android:visibility="gone"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/commentContentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_comment_floor"
+            android:layout_toRightOf="@+id/secondReplyNickName"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingTop="@dimen/default_tiny_padding"
+            android:layout_marginTop="-20dp"
+            android:textColor="@color/font_normal"
+            android:text="测试评论11111111111"
             android:textSize="14sp" />
 
         <TextView

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.SecondLevelCommentAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -18,14 +17,11 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.SecondLevelCommentResponse;
-import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.core.BottomPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
-
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
@@ -69,7 +65,13 @@ public class SecondLevelCommentPopView extends BottomPopupView {
         ((TextView)findViewById(R.id.addReply)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditCommentDialog();
+                int theme_pk = first_level_comment.getTheme_pk();
+                String theme_type = "course_theme_type";
+                String comment_type = "comment";
+                Integer org_parent_id = first_level_comment.getId();
+                Integer parent_id = first_level_comment.getId();                          // 一级评论
+                String refer_user_name = first_level_comment.getCreated_by();     // 被评论人
+                showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
             }
         });
         //全部回复
@@ -89,7 +91,11 @@ public class SecondLevelCommentPopView extends BottomPopupView {
                             secondLevelComments = commentResponse.getComments();
                             //2.设置二级评论的展示
                             baseQuickAdapter = new SecondLevelCommentAdapter(mContext,secondLevelComments);
-                            baseQuickAdapter.setClickListener(second_level_comment -> {
+                            baseQuickAdapter.setReplyListener(second_level_comment -> {
+                                //一级评论弹框里回复的回复
+                                replyComment(second_level_comment);
+                            });
+                            baseQuickAdapter.setDeleteListener(second_level_comment -> {
                                 //删除评论
                                 deleteComment(second_level_comment);
                             });
@@ -108,9 +114,6 @@ public class SecondLevelCommentPopView extends BottomPopupView {
                     }
                 });
 
-        //给删除按钮绑定点击事件
-
-
     }
 
     @Override
@@ -119,20 +122,14 @@ public class SecondLevelCommentPopView extends BottomPopupView {
     }
 
     //弹框
-    private void showEditCommentDialog () {
+    private void showEditCommentDialog (int theme_pk, String theme_type, String comment_type, int org_parent_id, int parent_id, String refer_user_name) {
         editCommentDialog = new BottomQuickEidtDialog(mContext, text -> {
-            handleSubmitComment(text);
+            handleSubmitComment(theme_pk,theme_type,comment_type,text,org_parent_id,parent_id,refer_user_name);
         });
     }
 
     //提交回复
-    private void handleSubmitComment (String content) {
-        int theme_pk = first_level_comment.getTheme_pk();
-        String theme_type = "course_theme_type";
-        String comment_type = "comment";
-        int parent_id = first_level_comment.getId();                          // 一级评论
-        int org_parent_id = first_level_comment.getId();
-        String refer_user_name = first_level_comment.getCreated_by();     // 被评论人
+    private void handleSubmitComment(int theme_pk, String theme_type, String comment_type, String content, int org_parent_id, int parent_id, String refer_user_name) {
         LinkKnownApiFactory.getLinkKnownApi().addComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -159,6 +156,18 @@ public class SecondLevelCommentPopView extends BottomPopupView {
                 });
 
     }
+
+
+    //一级评论弹框里回复的回复
+    public void replyComment(SecondLevelCommentResponse.Comment second_level_comment){
+        int theme_pk = second_level_comment.getTheme_pk();
+        String theme_type = "course_theme_type";
+        String comment_type = "comment";
+        int org_parent_id = second_level_comment.getOrg_parent_id();
+        int parent_id = second_level_comment.getId();                          // 一级评论
+        String refer_user_name = second_level_comment.getCreated_by();     // 被评论人
+        showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
+    };
 
 
 
