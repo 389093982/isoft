@@ -27,6 +27,19 @@
             <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign"/>
           </i>
          </div>
+        <!--关注&粉丝-->
+        <div>
+          <Row>
+            <Col span="4">
+              <span style="font-size: 10px">关注:&nbsp;</span>
+              <span style="cursor: pointer" @click="QueryAttentionOrFensi('Attention')">{{user.attention_counts}}</span>
+            </Col>
+            <Col span="4" offset="1">
+              <span style="font-size: 10px">粉丝:&nbsp;</span>
+              <span style="cursor: pointer" @click="QueryAttentionOrFensi('Fensi')">{{user.fensi_counts}}</span>
+            </Col>
+          </Row>
+        </div>
       </div>
       <!--设置、消息-->
       <div v-if="isLoginUserName(user.user_name)" style="position: absolute;top: 20px;left: 600px;color: white;display: flex">
@@ -125,7 +138,7 @@
 </template>
 
 <script>
-  import {EditUserSignature, GetUserDetail} from "../../api"
+  import {EditUserSignature, GetUserDetail,QueryAttentionOrFensi} from "../../api"
   import HotUser from "./HotUser"
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -202,6 +215,18 @@
           this.$nextTick(() => {
             this.refreshUserFavorite()
           });
+        }
+      },
+      QueryAttentionOrFensi:async function(AttentionOrFensi){
+        let params = {
+          'attention_object_type':'user',
+          'AttentionOrFensi':AttentionOrFensi,
+          'current_page':1,
+          'offset':10
+        };
+        const result = await QueryAttentionOrFensi(params);
+        if (result.status === 'SUCCESS') {
+          alert(result.queryDatas);
         }
       },
       //修改主题背景颜色图片
