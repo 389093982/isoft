@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.internal.FlowLayout;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -22,6 +23,8 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.core.CenterPopupView;
+import com.lxj.xpopup.util.XPopupUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +119,6 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                             footerLayout.setVisibility(View.VISIBLE);
 
                             kaoshiShijuanDetailList.addAll(o.getKaoshi_shijuandetail());
-                            initTimuIndexView();
                             initTimuInfo();
                         }
                         loadingPopupView.dismiss();
@@ -144,19 +146,6 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                 });
     }
 
-    private void initTimuIndexView() {
-        for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
-            TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, timuIndexLayout, false);
-
-            textView.setText(i + "");
-            textView.setOnClickListener(v -> {
-               currentTimuIndex = Integer.parseInt(textView.getText().toString()) - 1;
-               initTimuInfo();
-            });
-            timuIndexLayout.addView(textView);
-        }
-    }
-
     private void initTimuInfo () {
         if (currentTimuIndex < kaoshiShijuanDetailList.size()) {
             KaoshiShijuanDetailResponse.KaoshiShijuanDetail detail = kaoshiShijuanDetailList.get(currentTimuIndex);
@@ -178,6 +167,42 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             // 设置答题进度
             answerProgress.setText((currentTimuIndex + 1) + "/" + kaoshiShijuanDetailList.size());
 
+            BasePopupView progressPopupView = new XPopup.Builder(mContext).asCustom(new CenterPopupView(mContext) {
+
+                @Override
+                protected void onCreate() {
+                    super.onCreate();
+                    FlowLayout flowLayout = findViewById(R.id.flowLayout);
+                    for (int i=1; i<= kaoshiShijuanDetailList.size(); i++) {
+                        TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.textview_common, flowLayout, false);
+
+                        textView.setText(i + "");
+                        textView.setOnClickListener(v -> {
+                            currentTimuIndex = Integer.parseInt(textView.getText().toString()) - 1;
+                            initTimuInfo();
+                            dismiss();
+                    });
+                        flowLayout.addView(textView);
+                    }
+                }
+
+                @Override
+                protected int getImplLayoutId() {
+                    return R.layout.layout_kaoshi_progress;
+                }
+
+                @Override
+                protected int getMaxHeight() {
+                    return (int) (XPopupUtils.getWindowHeight(getContext())*.5f);
+                }
+            });
+
+            answerProgress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressPopupView.show();
+                }
+            });
             initPrefixOrNextView();
         }
     }
