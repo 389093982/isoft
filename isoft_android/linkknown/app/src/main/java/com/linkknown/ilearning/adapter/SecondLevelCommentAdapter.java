@@ -49,7 +49,19 @@ public class SecondLevelCommentAdapter extends BaseQuickAdapter<SecondLevelComme
         //昵称
         viewHolder.setText(R.id.nickNameText, second_level_comment.getCreated_user_nick_name());
         // 设置评论内容
-        viewHolder.setText(R.id.commentContentText, second_level_comment.getContent());
+        if (second_level_comment.getDepth()==1){
+            //显示内容
+            viewHolder.setText(R.id.commentContentText, second_level_comment.getContent());
+        }else if (second_level_comment.getDepth()==2){
+            //1.显示“回复” 这两个汉字
+            viewHolder.setVisible(R.id.reply_show,true);
+            //2.显示被回复人的昵称 追加一个冒号
+            viewHolder.setText(R.id.secondReplyNickName,second_level_comment.getRefer_nick_name()+": ");
+            viewHolder.setVisible(R.id.secondReplyNickName,true);
+            //3.显示内容
+            viewHolder.setText(R.id.commentContentText, second_level_comment.getContent());
+        }
+
         //评论时间
         viewHolder.setText(R.id.comment_time, DateUtil.formatDate_StandardForm(second_level_comment.getCreated_time()));
         //回复    eg: 188回复
