@@ -13,6 +13,7 @@ public class DateUtil {
     public static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String PATTERN2 = "yyyyMMdd";
     public static final String PATTERN3 = "yyyy年MM月dd HH:mm:ss";
+    public static final String PATTERN4 = "MMddHHmmss";
 
     public static boolean isNowTimeBetween (String startTime, String endTime) {
         return isNowTimeBetween(startTime, endTime, PATTERN);

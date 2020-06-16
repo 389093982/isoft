@@ -38,14 +38,17 @@ import io.reactivex.schedulers.Schedulers;
 
 public class KaoshiShijuanDetailActivity extends BaseActivity {
 
+    // 题目所在区域的滚动视图
     @BindView(R.id.timuScorllView)
     ScrollView timuScorllView;
+    // 提示区域,用于辅助提示
     @BindView(R.id.tipInfo)
     TextView tipInfo;
 
+    // 问题
     @BindView(R.id.timu_question)
     TextView timu_question;
-
+    // 选项选择框
     @BindView(R.id.choiceA)
     CheckBox choiceA;
     @BindView(R.id.choiceB)
@@ -58,7 +61,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     CheckBox choiceE;
     @BindView(R.id.choiceF)
     CheckBox choiceF;
-
+    // 选项值
     @BindView(R.id.timu_answer_a)
     TextView timu_answer_a;
     @BindView(R.id.timu_answer_b)
@@ -77,19 +80,31 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @BindView(R.id.nextView)
     TextView nextView;
 
+    // 当前正在查看的题目索引
     private int currentTimuIndex = 0;
 
     private Context mContext;
+    // 试卷 id
     private int shijuan_id;
+    // 考试是否完成,分为已考完（true）和考试中（false）两种状态
+    private boolean kaoshiCompleted;
+
+    // 存储考试试卷中的题目列表,每一道题目就是一个 KaoshiShijuanDetail
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList = new ArrayList<>();
 
-    // 加载弹框
+    // 加载弹框,用于进入界面渲染初始的加载效果
     private BasePopupView loadingPopupView;
 
-    @BindView(R.id.answerProgress)
-    TextView answerProgress;
+    // 底部答题进度 layout，包含底部答题进度 和 倒计时
     @BindView(R.id.answerProgressLayout)
     LinearLayout answerProgressLayout;
+    // 底部答题进度
+    @BindView(R.id.answerProgress)
+    TextView answerProgress;
+    // 倒计时
+    @BindView(R.id.daojishi)
+    TextView daojishi;
+
 
     // 题目和底部布局,一开始隐藏,内容加载成功后显示
     @BindView(R.id.timuLayout)
@@ -97,8 +112,6 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
 
-    @BindView(R.id.daojishi)
-    TextView daojishi;
 
     // 考试倒计时
     private Disposable kaoshiTimeCostDisposable;
@@ -117,6 +130,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         loadingPopupView = new XPopup.Builder(mContext).asLoading("试卷加载中...").show();
 
         shijuan_id = getIntent().getIntExtra("shijuan_id", -1);
+        kaoshiCompleted = getIntent().getBooleanExtra("kaoshiCompleted", false);
 
         initView();
 
@@ -180,6 +194,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         }
     }
 
+    // 渲染每一项答案
     private void renderChoiceAndAnswer(String answer, boolean checked, CheckBox checkBox, TextView textView, String prefix) {
         checkBox.setChecked(checked);
         if (StringUtils.isNotEmpty(StringUtils.trim(answer))) {
@@ -190,41 +205,47 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             checkBox.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
         }
+
+        // 考试考完查看试卷场景则不能点击
+        checkBox.setClickable(!kaoshiCompleted);
     }
 
     // 记住当前选中的答案,并提交到远程服务器
     private void memoryCurrentAnswer (int is_completed) {
-        KaoshiShijuanDetailResponse.KaoshiShijuanDetail kaoshiShijuanDetail = kaoshiShijuanDetailList.get(currentTimuIndex);
-        StringBuilder sb = new StringBuilder();
-        StringBuilder result = sb.append(choiceA.isChecked() ? "A" : "")
-                .append(choiceB.isChecked() ? "B" : "")
-                .append(choiceC.isChecked() ? "C" : "")
-                .append(choiceD.isChecked() ? "D" : "")
-                .append(choiceE.isChecked() ? "E" : "")
-                .append(choiceF.isChecked() ? "F" : "");
+        // 考试中（考试未结束）
+        if (!kaoshiCompleted) {
+            KaoshiShijuanDetailResponse.KaoshiShijuanDetail kaoshiShijuanDetail = kaoshiShijuanDetailList.get(currentTimuIndex);
+            StringBuilder sb = new StringBuilder();
+            StringBuilder result = sb.append(choiceA.isChecked() ? "A" : "")
+                    .append(choiceB.isChecked() ? "B" : "")
+                    .append(choiceC.isChecked() ? "C" : "")
+                    .append(choiceD.isChecked() ? "D" : "")
+                    .append(choiceE.isChecked() ? "E" : "")
+                    .append(choiceF.isChecked() ? "F" : "");
 
-        kaoshiShijuanDetail.setGiven_answer(result.toString());
-        if (kaoshiCenterPopupView != null) {
-            kaoshiCenterPopupView.updateKaoshiTimuStatus();
+            kaoshiShijuanDetail.setGiven_answer(result.toString());
+            if (kaoshiCenterPopupView != null) {
+                kaoshiCenterPopupView.updateKaoshiTimuStatus();
+            }
+
+            LinkKnownApiFactory.getLinkKnownApi().updateKaoshiShijuanTimuAnswer(kaoshiShijuanDetail.getId(),
+                    kaoshiShijuanDetail.getShijuan_id(), is_completed, kaoshiShijuanDetail.getGiven_answer())
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownOnNextObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse o) {
+
+                        }
+                    });
         }
-
-        LinkKnownApiFactory.getLinkKnownApi().updateKaoshiShijuanTimuAnswer(kaoshiShijuanDetail.getId(),
-                kaoshiShijuanDetail.getShijuan_id(), is_completed, kaoshiShijuanDetail.getGiven_answer())
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownOnNextObserver<BaseResponse>() {
-                    @Override
-                    public void onNext(BaseResponse o) {
-
-                    }
-                });
     }
 
     private BasePopupView progressPopupView;
     private KaoshiCenterPopupView kaoshiCenterPopupView;
 
     private void initKaoshiProgress() {
-        kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext,
+        kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext, kaoshiCompleted,
                 kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
             @Override
             public void updateKaoshiTimuWithIndex(int index) {
@@ -253,18 +274,24 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
             }
         });
 
-        // 计算考试时长
-        // 定时任务定时修改 TextView 中的提示文字
-        kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())                   // 在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(aLong -> {
-                    long totalTime = 3600;
-                    if (totalTime - aLong >= 0) {
-                        kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
-                        daojishi.setText(DateUtil.secToMinuteAndSec((int)(totalTime - aLong)));
-                    }
-                });
+        // 考试中才显示倒计时,查看试卷不显示
+        if (!kaoshiCompleted) {
+            daojishi.setVisibility(View.VISIBLE);
+            // 计算考试时长
+            // 定时任务定时修改 TextView 中的提示文字
+            kaoshiTimeCostDisposable = Observable.interval(1, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())                   // 在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(aLong -> {
+                        long totalTime = 3600;
+                        if (totalTime - aLong >= 0) {
+                            kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
+                            daojishi.setText(DateUtil.secToMinuteAndSec((int)(totalTime - aLong)));
+                        }
+                    });
+        } else {
+            daojishi.setVisibility(View.GONE);
+        }
     }
 
     private void initPrefixOrNextView() {
@@ -315,8 +342,13 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode== KeyEvent.KEYCODE_BACK){
-            progressPopupView.show();
-            return false;
+            // 考试未结束返回则弹框提示提交
+            if (!kaoshiCompleted) {
+                progressPopupView.show();
+                return false;
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
         }
         return true;
     }
