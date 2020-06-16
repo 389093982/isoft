@@ -31,12 +31,26 @@ android:layout_height="match_parent">
 
             <include layout="@layout/item_line"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="以下答案正确的是："/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="以下答案正确的是："/>
+
+                <TextView
+                    android:id="@+id/timuAnswerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="A"
+                    android:textColor="@color/green"/>
+            </LinearLayout>
             <!-- 选项 -->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -137,21 +151,23 @@ android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/answerProgressLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/answerProgress"
                 android:layout_width="60dp"
-                android:layout_height="25dp"
+                android:layout_height="0dp"
                 android:text="答题进度"
                 android:gravity="center"
+                android:layout_weight="3"
                 android:textAlignment="center"/>
             <TextView
                 android:id="@+id/daojishi"
                 android:layout_width="60dp"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:text="倒计时"
                 android:gravity="top"
+                android:layout_weight="2"
                 android:textAlignment="center"
                 android:textSize="10sp"/>
         </LinearLayout>
