@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="10dp"
+android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="回复详情">
+        </TextView>
+
+<!--        一级评论-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/item_user_avatar_layout"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/headerIcon"
+                    android:src="@drawable/cutecat"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"/>
+
+                <TextView
+                    android:id="@+id/nickNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/headerIcon"
+                    android:textColor="@color/blue2"
+                    android:layout_marginLeft="10dp"
+                    android:text="链知小白"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/genderView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_toEndOf="@+id/nickNameText" />
+
+                <TextView
+                    android:id="@+id/deleteIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:drawablePadding="@dimen/default_tiny_padding"
+                    android:drawableLeft="@drawable/ic_delete"
+                    android:textColor="@color/black_alpha_45"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/commentContentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nickNameText"
+                    android:layout_toRightOf="@+id/headerIcon"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:paddingTop="@dimen/default_tiny_padding"
+                    android:textColor="@color/font_normal"
+                    android:text="测试评论11111111111"
+
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/comment_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/commentContentText"
+                    android:layout_alignLeft="@+id/nickNameText"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/font_normal"
+                    android:text="评论时间"
+                    android:textSize="12sp" />
+
+        </RelativeLayout>
+
+<!--        添加回复   全部回复-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/addReply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="14dp"
+                    android:text="添加回复">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/allReply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:textSize="14dp"
+                    android:text="全部回复()">
+                </TextView>
+
+        </RelativeLayout>
+
+<!--        分割线-->
+        <View style="@style/bg_line"
+            android:layout_below="@+id/couponTip"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+<!--        二级评论-->
+        <include android:id="@+id/second_level_comment_recycleview"
+            layout="@layout/layout_recycleview"/>
+
+        <include layout="@layout/layout_footerview"/>
+
+</LinearLayout>

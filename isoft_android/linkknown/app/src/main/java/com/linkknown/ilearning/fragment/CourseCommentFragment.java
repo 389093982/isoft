@@ -15,13 +15,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CourseCommentAdapter;
+import com.linkknown.ilearning.adapter.FirstLevelCommentAdapter;
 import com.linkknown.ilearning.common.CommonDiffCallback;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
-import com.linkknown.ilearning.model.CommentResponse;
+import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
@@ -48,10 +48,11 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     private int course_id;
     private String course_author;
+    private String comments;
     // 当前评论页面评论的分页信息
     private Paginator paginator;
     // 当前评论页面显示的评论数据
-    private List<CommentResponse.Comment> displayComments = new ArrayList<>();
+    private List<FirstLevelCommentResponse.Comment> firstLevelComments = new ArrayList<>();
 
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
@@ -59,6 +60,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @BindView(R.id.addComment)
     public TextView addComment;
+
+    @BindView(R.id.allComments)
+    public TextView allComments;
 
     // 评论列表适配器
     BaseQuickAdapter baseQuickAdapter;
@@ -70,7 +74,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @Override
     protected int providelayoutId() {
-        return R.layout.fragment_course_comment;
+        return R.layout.fragment_course_comment_first_level;
     }
 
     @Override
@@ -81,7 +85,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
-        commentRecyclerView = mRootView.findViewById(R.id.comment_recycleview).findViewById(R.id.recyclerView);
+        commentRecyclerView = mRootView.findViewById(R.id.first_level_comment_recycleview).findViewById(R.id.recyclerView);
 
         initBundleParam();
         // 初始化组件
@@ -93,6 +97,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         if (bundle != null) {
             course_id = bundle.getInt("course_id");
             course_author = bundle.getString("course_author");
+            comments = bundle.getString("comments");
+            allComments.setText(Integer.valueOf(comments)==0?"全部评论":"全部评论("+comments+")");
         }
     }
 
@@ -122,24 +128,24 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         LinkKnownApiFactory.getLinkKnownApi().filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownObserver<CommentResponse>() {
+                .subscribe(new LinkKnownObserver<FirstLevelCommentResponse>() {
                     @Override
-                    public void onNext(CommentResponse commentResponse) {
+                    public void onNext(FirstLevelCommentResponse commentResponse) {
                         if (commentResponse.isSuccess()) {
                             if (CollectionUtils.isNotEmpty(commentResponse.getComments())) {
                                 if (current_page == 1) {
                                     // 先清空再添加
-                                    displayComments.clear();
+                                    firstLevelComments.clear();
                                 }
-                                displayComments.addAll(commentResponse.getComments());
-                                baseQuickAdapter.setList(displayComments);
+                                firstLevelComments.addAll(commentResponse.getComments());
+                                baseQuickAdapter.setList(firstLevelComments);
 
                                 // 当前这次数据加载完毕，调用此方法
                                 baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
                             } else {
                                 if (current_page == 1) {
-                                    displayComments.clear();
-                                    baseQuickAdapter.setList(displayComments);
+                                    firstLevelComments.clear();
+                                    baseQuickAdapter.setList(firstLevelComments);
                                     baseQuickAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
                                     TextView emptyTipText = baseQuickAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
                                     emptyTipText.setText("暂无评论");
@@ -172,7 +178,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     private void initCommentView () {
         addComment.setOnClickListener(this);
 
-        baseQuickAdapter = new CourseCommentAdapter(mContext, displayComments);
+        baseQuickAdapter = new FirstLevelCommentAdapter(mContext, firstLevelComments);
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
         // 设置加载更多监听事件
@@ -185,7 +191,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         baseQuickAdapter.addChildClickViewIds(R.id.deleteIcon);
         baseQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.deleteIcon) {
-                CommentResponse.Comment comment = displayComments.get(position);
+                FirstLevelCommentResponse.Comment comment = firstLevelComments.get(position);
                 deleteComment(comment, position);
             }
         });
@@ -245,7 +251,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     }
 
-    public void deleteComment(CommentResponse.Comment comment, int position) {
+    public void deleteComment(FirstLevelCommentResponse.Comment comment, int position) {
         int level = comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
         int id = comment.getId();                           // 评论 id
         int org_parent_id = comment.getOrg_parent_id();     // 父评论 id
@@ -259,9 +265,9 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
                             // 局部刷新
-                            List<CommentResponse.Comment> oldList = new ArrayList(displayComments);
-                            displayComments.remove(position);
-                            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, displayComments), true);
+                            List<FirstLevelCommentResponse.Comment> oldList = new ArrayList(firstLevelComments);
+                            firstLevelComments.remove(position);
+                            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CommonDiffCallback(oldList, firstLevelComments), true);
                             diffResult.dispatchUpdatesTo(baseQuickAdapter);
                             ToastUtil.showText(mContext, "删除成功！");
                         } else {

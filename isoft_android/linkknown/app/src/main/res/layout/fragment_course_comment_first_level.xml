@@ -14,20 +14,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                android:gravity="right">
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/addComment"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="发表评论"/>
-            </LinearLayout>
 
-            <include android:id="@+id/comment_recycleview"
+                <TextView
+                    android:id="@+id/allComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="全部评论()"/>
+            </RelativeLayout>
+
+            <include android:id="@+id/first_level_comment_recycleview"
                 layout="@layout/layout_recycleview"/>
 
             <include layout="@layout/layout_footerview"/>
