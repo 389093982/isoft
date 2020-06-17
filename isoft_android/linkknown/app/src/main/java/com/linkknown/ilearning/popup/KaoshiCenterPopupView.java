@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.popup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -10,11 +11,11 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.material.internal.FlowLayout;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.KaoShiShijuanScoreActivity;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.linkknown.ilearning.widget.RadarChartView;
 import com.lxj.xpopup.core.CenterPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
 
@@ -54,15 +55,6 @@ public class KaoshiCenterPopupView extends CenterPopupView {
         initTimuIndexView();
 
         initRateView();
-
-        initRadarChartView();
-    }
-
-    private void initRadarChartView() {
-        RadarChartView radarChartView = findViewById(R.id.radarChartView);
-        String[] labels = new String[]{"勤奋", "天赋", "兴趣", "智力", "效果"};
-        float[] values = new float[] {10, 20, 30, 40, 50};
-        radarChartView.show(labels, values);
     }
 
     private void initRateView() {
@@ -72,17 +64,27 @@ public class KaoshiCenterPopupView extends CenterPopupView {
 
             TextView rateTextView = findViewById(R.id.rateTextView);
             if (kaoshiShijuan.getSum_score() >= 90) {
-                rateTextView.setText("你太棒啦，考的这么好");
+                rateTextView.setText(kaoshiShijuan.getSum_score() + "分，你太棒啦，考的这么好");
             } else if (kaoshiShijuan.getSum_score() >= 70) {
-                rateTextView.setText("考的不错吆，不要骄傲");
+                rateTextView.setText(kaoshiShijuan.getSum_score() + "分，考的不错吆，不要骄傲");
             } else if (kaoshiShijuan.getSum_score() >= 60) {
-                rateTextView.setText("刚刚及格奥，继续努力");
+                rateTextView.setText(kaoshiShijuan.getSum_score() + "分，刚刚及格奥，继续努力");
             } else {
-                rateTextView.setText("没有认真考吧，下次争取考及格");
+                rateTextView.setText(kaoshiShijuan.getSum_score() + "分，没有认真考吧，下次争取考及格");
             }
         } else {
             rateLayout.setVisibility(GONE);
         }
+
+        rateLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
+                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
+                    return intent;
+                });
+            }
+        });
     }
 
     private void initTimuIndexView() {
