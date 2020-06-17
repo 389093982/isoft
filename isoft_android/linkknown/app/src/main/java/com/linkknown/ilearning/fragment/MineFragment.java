@@ -30,8 +30,6 @@ import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,9 +40,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
-
-    @BindView(R.id.banner)
-    public Banner banner;
 
     //优惠券
     @BindView(R.id.iv_coupon)
@@ -133,18 +128,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
-        //        if (DEV_MODE) {
-//            // 严格模式的开启可以放在Application或者Activity以及其他组件的onCreate方法
-//            // 可以用来帮助开发者发现代码中的一些不规范的问题，以达到提升应用响应能力的目的
-//            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-//            StrictMode.setVmPolicy(builder.build());
-//            builder.detectFileUriExposure();
-//        }
-
         // 初始化登录相关信息
         initLoginView();
-
-        initBanner();
 
         bindMenuDrawnStart();
 
@@ -162,29 +147,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         toEditLayout.setOnClickListener(this);
     }
 
-    // 初始化顶部轮播图组件
-    private void initBanner() {
-        banner.clearAnimation();
-        //设置 banner 样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        //设置图片加载器
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setDelayTime(3000);
-
-        // 存放轮播图所有图片
-        ArrayList<Integer> bannerImageList = new ArrayList<>();
-        ArrayList<String> bannerTitleList = new ArrayList<>();
-        //清空旧数据
-        bannerImageList.clear();
-        bannerTitleList.clear();
-        bannerImageList.add(R.drawable.banner_biancheng);
-        bannerImageList.add(R.drawable.banner_shaoer);
-        bannerTitleList.add("编程思维");
-        bannerTitleList.add("少儿编程");
-        banner.setImages(bannerImageList);
-        banner.setBannerTitles(bannerTitleList);
-        banner.start();
-    }
 
     private void initMenuImageView () {
         // 点击调往对应页面

@@ -3,155 +3,152 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/background_dark"
               android:orientation="vertical"
               tools:showIn="@layout/fragment_mine">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal">
+    <LinearLayout style="@style/wrap_layout">
+        <LinearLayout style="@style/single_layout">
 
-        <LinearLayout
-            android:id="@+id/couponLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/iv_coupon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_coupon"
-                android:tint="@color/white"/>
-            <TextView
-                android:id="@+id/tv_coupon"
-                android:layout_width="wrap_content"
+<!--优惠券-->
+            <LinearLayout
+                android:id="@+id/couponLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="优惠券"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/orderLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/iv_order"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_order"
-                android:tint="@color/white"/>
-            <TextView
-                android:id="@+id/tv_order"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_coupon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_item_spec"
+                    android:src="@drawable/ic_coupon"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_coupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="优惠券"
+                    android:textSize="11sp" />
+            </LinearLayout>
+<!--订单-->
+            <LinearLayout
+                android:id="@+id/orderLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="订单"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/messageLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/iv_message"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_message"
-                android:tint="@color/white"/>
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_order"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_item_spec"
+                    android:src="@drawable/ic_order"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="订单"
+                    android:textSize="11sp" />
+            </LinearLayout>
+<!--消息-->
+            <LinearLayout
+                android:id="@+id/messageLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="消息"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/huodongLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/iv_huodong"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_huodong"
-                android:tint="@color/white"/>
-            <TextView
-                android:id="@+id/tv_huodong"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_item_spec"
+                    android:src="@drawable/ic_message"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="消息"
+                    android:textSize="11sp" />
+            </LinearLayout>
+<!--活动中心-->
+            <LinearLayout
+                android:id="@+id/huodongLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="活动中心"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/kaoshiLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/iv_kaoshi"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_item_spec"
-                android:src="@drawable/ic_kaoshi"
-                android:tint="@color/white"/>
-            <TextView
-                android:id="@+id/tv_order4"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_huodong"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_item_spec"
+                    android:src="@drawable/ic_huodong"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_huodong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="活动中心"
+                    android:textSize="11sp" />
+            </LinearLayout>
+<!--考试-->
+            <LinearLayout
+                android:id="@+id/kaoshiLayout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:text="考试"
-                android:textSize="11sp" />
-        </LinearLayout>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_kaoshi"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/bg_item_spec"
+                    android:src="@drawable/ic_kaoshi"
+                    android:tint="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_order4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="考试"
+                    android:textSize="11sp" />
+            </LinearLayout>
 
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <include layout="@layout/content_mine_list"/>
 </LinearLayout>
