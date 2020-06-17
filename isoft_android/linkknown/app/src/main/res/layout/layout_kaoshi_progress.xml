@@ -40,6 +40,10 @@
         android:enabled="true"
         android:textColor="@color/white"/>
 
-
+        <com.linkknown.ilearning.widget.RadarChartView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/radarChartView"
+            android:layout_width="300dp"
+            android:layout_height="300dp"/>
 
 </LinearLayout>

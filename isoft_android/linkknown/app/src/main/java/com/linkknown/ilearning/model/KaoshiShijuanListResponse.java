@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 public class KaoshiShijuanListResponse extends BaseResponse {
 
     private List<KaoshiShijuan> kaoshi_shijuans;
+    private Paginator paginator;
 
     @Data
     public class KaoshiShijuan implements Serializable {
