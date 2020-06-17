@@ -28,5 +28,7 @@ public class UserDetailResponse extends BaseResponse implements Serializable {
         private String user_signature;
         private String vip_expired_time;
         private int vip_level;
+        private int attention_counts;
+        private int fensi_counts;
     }
 }
