@@ -9,6 +9,7 @@ const WECHAT_PAY = '/wechatPayApi';
 //【User模块】***************************************************************************************************
 export const GetHotUsers = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotUsers", {}, 'POST');
 export const GetUserDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetUserDetail', params, 'POST');
+export const QueryAttentionOrFensi = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryAttentionOrFensi', params, 'POST');
 export const UpdateUserIcon = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon', params, 'POST');
 export const Login = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/PostLogin", params, 'POST');// 登录接口
 export const CreateVerifyCode = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/createVerifyCode", params, 'POST');
