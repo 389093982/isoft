@@ -25,6 +25,7 @@ import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
@@ -41,72 +42,78 @@ import butterknife.ButterKnife;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
 
+    //设置
+    @BindView(R.id.setup)
+    ImageView setup;
+    // 铃铛(消息)
+    @BindView(R.id.lingdang)
+    ImageView lingdang;
+
+    //头像
+    @BindView(R.id.headerIcon)
+    public ImageView headerIcon;
+    //昵称
+    @BindView(R.id.nickName)
+    public TextView nickName;
+    //积分
+    @BindView(R.id.userPoint)
+    public TextView userPoint;
+    //个性签名
+    @BindView(R.id.userSignature)
+    public TextView userSignature;
+    //关注
+    @BindView(R.id.attention_counts)
+    public TextView attention_counts;
+    //粉丝
+    @BindView(R.id.fensi_counts)
+    public TextView fensi_counts;
+
+
     //优惠券
     @BindView(R.id.iv_coupon)
     public ImageView iv_coupon;
-
     //订单
     @BindView(R.id.iv_order)
     public ImageView iv_order;
-
     //消息
     @BindView(R.id.iv_message)
     public ImageView iv_message;
-
     //活动中心
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
-
     //考试
     @BindView(R.id.iv_kaoshi)
     public ImageView iv_kaoshi;
 
-    //用户信息  &&  去编辑
+
+    //用户信息
     @BindView(R.id.userInfoLayout)
     public RelativeLayout userInfoLayout;
-    @BindView(R.id.toEditLayout)
-    public LinearLayout toEditLayout;
-
-    // 登录用户头像和用户名
-    @BindView(R.id.headerIcon)
-    public ImageView headerIcon;
-    @BindView(R.id.userName)
-    public TextView userName;
-    @BindView(R.id.userPoint)
-    public TextView userPoint;
-    @BindView(R.id.userSignature)
-    public TextView userSignature;
-
     //购物车
     @BindView(R.id.menuShoppingCart)
     public LinearLayout menuShoppingCart;
     @BindView(R.id.menuShoppingCartTextView)
     public TextView menuShoppingCartTextView;
-
     //我的订单
     @BindView(R.id.menuOrderLayout)
     public LinearLayout menuOrderLayout;
     @BindView(R.id.menuOrderTextView)
     public TextView menuOrderTextView;
-
     //我要吐槽(提出意见)
     @BindView(R.id.menuAdviseLayout)
     public LinearLayout menuAdviseLayout;
     @BindView(R.id.menuAdviseTextView)
     public TextView menuAdviseTextView;
-
     //个人中心
     @BindView(R.id.menuPersonalCenter)
     public LinearLayout menuPersonalCenter;
     @BindView(R.id.menuPersonalCenterTextView)
     public TextView menuPersonalCenterTextView;
-
     //关于
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;
     @BindView(R.id.menuAboutLayoutTextView)
     public TextView menuAboutLayoutTextView;
-
     //设置
     @BindView(R.id.menuSettingLayout)
     public LinearLayout menuSettingLayout;
@@ -123,7 +130,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         ButterKnife.bind(this, rootView);
 
         initView();
-
+        initLingDang();
         return rootView;
     }
 
@@ -143,8 +150,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         menuShoppingCart.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
         menuSettingLayout.setOnClickListener(this);
-        // 去编辑用户信息
-        toEditLayout.setOnClickListener(this);
+        setup.setOnClickListener(this);
+    }
+
+
+    //铃铛
+    private void initLingDang () {
+        lingdang.setAnimation(AnimationUtil.getShakeAnimation(3));
+        lingdang.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
     }
 
 
@@ -165,9 +178,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 UserDetailResponse.User user = loginUserInfo.getUserDetailResponse().getUser();
                 // 展示用户头像、用户名、积分和个性签名
                 UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
-                userName.setText(LoginUtil.getLoginNickName(mContext));
+                nickName.setText(LoginUtil.getLoginNickName(mContext));
                 userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
                 userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+                attention_counts.setText(user.getAttention_counts()==0?"关注:0":"关注:"+user.getAttention_counts());
+                fensi_counts.setText(user.getFensi_counts()==0?"粉丝:0":"粉丝:"+user.getFensi_counts());
             }
         } else {
             userInfoLayout.setVisibility(View.GONE);
@@ -181,6 +196,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
+            case R.id.setup:
+                UIUtils.gotoActivity(mContext, SettingActivity.class);
+                break;
             // 菜单项点击事件
             case R.id.menuAboutLayout:
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
@@ -191,7 +209,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.menuOrderLayout:
                 UIUtils.gotoActivity(mContext, PayOrderActivity.class);
                 break;
-            case R.id.toEditLayout:     // 用户布局去编辑点击事件
             case R.id.menuPersonalCenter:
                 UIUtils.gotoActivity(mContext, UserDetailActivity.class);
                 break;

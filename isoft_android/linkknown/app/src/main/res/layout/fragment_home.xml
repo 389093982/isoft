@@ -39,12 +39,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:visibility="gone">
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/person_head"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="3dp"
-                        android:src="@drawable/cutecat"/>
+                        android:src="@drawable/cutecat"
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="@color/white"/>
 
                     <TextView
                         android:id="@+id/userNameText"
