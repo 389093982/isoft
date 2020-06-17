@@ -14,6 +14,7 @@ import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.linkknown.ilearning.widget.RadarChartView;
 import com.lxj.xpopup.core.CenterPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
 
@@ -53,6 +54,15 @@ public class KaoshiCenterPopupView extends CenterPopupView {
         initTimuIndexView();
 
         initRateView();
+
+        initRadarChartView();
+    }
+
+    private void initRadarChartView() {
+        RadarChartView radarChartView = findViewById(R.id.radarChartView);
+        String[] labels = new String[]{"勤奋", "天赋", "兴趣", "智力", "效果"};
+        float[] values = new float[] {10, 20, 30, 40, 50};
+        radarChartView.show(labels, values);
     }
 
     private void initRateView() {
