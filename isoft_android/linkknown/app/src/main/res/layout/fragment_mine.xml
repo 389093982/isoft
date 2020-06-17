@@ -41,12 +41,12 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:src="@drawable/ic_edit"
-                    android:tint="@color/colorGray"/>
+                    android:tint="@color/white"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
-                    android:textColor="@color/colorGray"
+                    android:textColor="@color/white"
                     android:text="去编辑"/>
             </LinearLayout>
 
@@ -57,7 +57,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:text="用户名"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/headerIcon"/>
 
@@ -72,6 +72,7 @@
                     android:id="@+id/userPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:text="积分"/>
 
                 <TextView
@@ -79,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:textColor="@color/white"
                     android:text="用户标签语"/>
             </LinearLayout>
 
@@ -94,23 +96,6 @@
                 android:background="@drawable/common_tag_border"/>
 
         </RelativeLayout>
-
-        <!-- 卡片嵌套轮播图 -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="5dp">
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="160dp" />
-
-        </androidx.cardview.widget.CardView>
 
         <!-- 下面内容区域 -->
         <include layout="@layout/content_mine"/>

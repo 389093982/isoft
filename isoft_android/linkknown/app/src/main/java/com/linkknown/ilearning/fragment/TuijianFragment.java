@@ -69,6 +69,8 @@ public class TuijianFragment extends BaseLazyLoadFragment {
         bannerImageList = new ArrayList<>();
         bannerImageList.add(R.drawable.banner_coupon);
         bannerImageList.add(R.drawable.banner_huodong);
+        bannerImageList.add(R.drawable.banner_shaoer);
+        bannerImageList.add(R.drawable.banner_biancheng);
 
         //设置 banner 样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
