@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -119,6 +122,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
 
+    @BindView(R.id.ic_click)
+    ImageView ic_click;
 
     // 考试倒计时
     private Disposable kaoshiTimeCostDisposable;
@@ -133,6 +138,7 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         // 一开始隐藏页面所有内容，只显示加载对话框
         timuLayout.setVisibility(View.GONE);
         footerLayout.setVisibility(View.GONE);
+        ic_click.setVisibility(View.GONE);
         // 初始化加载弹框
         loadingPopupView = new XPopup.Builder(mContext).asLoading("试卷加载中...").show();
 
@@ -159,6 +165,8 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                             kaoshiShijuanDetailList.addAll(o.getKaoshi_shijuandetail());
                             initTimuInfo();
 
+                            // 显示点击手势图标提示
+                            initClickTipView();
                             initKaoshiProgress();
                         }
                         loadingPopupView.dismiss();
@@ -264,6 +272,15 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
     private BasePopupView progressPopupView;
     private KaoshiCenterPopupView kaoshiCenterPopupView;
 
+    private void initClickTipView() {
+        ic_click.setVisibility(View.VISIBLE);
+        TranslateAnimation translateAnimation1 = new TranslateAnimation(0,0,0,15);
+        translateAnimation1.setDuration(1000);
+        translateAnimation1.setInterpolator(new DecelerateInterpolator());
+        translateAnimation1.setRepeatCount(-1);
+        ic_click.startAnimation(translateAnimation1);
+    }
+
     private void initKaoshiProgress() {
         kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext, kaoshiShijuan,
                 kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
@@ -289,6 +306,10 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
         answerProgressLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 先清除动画再隐藏
+                ic_click.clearAnimation();
+                ic_click.setVisibility(View.GONE);
+
                 memoryCurrentAnswer(0);
                 progressPopupView.show();
             }
