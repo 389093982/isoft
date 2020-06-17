@@ -32,11 +32,13 @@
           <Row>
             <Col span="4">
               <span style="font-size: 10px">关注:&nbsp;</span>
-              <span style="cursor: pointer" @click="QueryAttentionOrFensi('Attention')">{{user.attention_counts}}</span>
+              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Attention'}})">{{user.attention_counts}}</span>
+              <span v-else>{{user.attention_counts}}</span>
             </Col>
             <Col span="4" offset="1">
               <span style="font-size: 10px">粉丝:&nbsp;</span>
-              <span style="cursor: pointer" @click="QueryAttentionOrFensi('Fensi')">{{user.fensi_counts}}</span>
+              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Fensi'}})">{{user.fensi_counts}}</span>
+              <span v-else>{{user.fensi_counts}}</span>
             </Col>
           </Row>
         </div>
@@ -138,7 +140,7 @@
 </template>
 
 <script>
-  import {EditUserSignature, GetUserDetail,QueryAttentionOrFensi} from "../../api"
+  import {EditUserSignature, GetUserDetail} from "../../api"
   import HotUser from "./HotUser"
   import {checkEmpty, GetLoginUserName} from "../../tools"
   import IFileUpload from "../Common/file/IFileUpload"
@@ -215,18 +217,6 @@
           this.$nextTick(() => {
             this.refreshUserFavorite()
           });
-        }
-      },
-      QueryAttentionOrFensi:async function(AttentionOrFensi){
-        let params = {
-          'attention_object_type':'user',
-          'AttentionOrFensi':AttentionOrFensi,
-          'current_page':1,
-          'offset':10
-        };
-        const result = await QueryAttentionOrFensi(params);
-        if (result.status === 'SUCCESS') {
-          alert(result.queryDatas);
         }
       },
       //修改主题背景颜色图片

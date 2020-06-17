@@ -20,6 +20,7 @@ const UserDetail = () => import("@/components/User/UserDetail");
 const UserInfoSet = () => import("@/components/User/Set/UserInfoSet");
 const UserInfo = () => import("@/components/User/Set/UserInfo");
 const UserGuide = () => import("@/components/User/UserGuide");
+const UserAttentionOrFensi = () => import("@/components/User/UserAttentionOrFensi");
 const ILearningIndex = () => import("@/components/ILearning/Index");
 const DomainName = () => import("@/components/ILearning/DomainName");
 const JingpinCourse = () => import("@/components/ILearning/JingpinCourse");
@@ -180,7 +181,8 @@ const IUserReouter = [{
         redirect: '/user/set/userInfo',
         children: [
           {path: 'userInfo', component: UserInfo,},
-        ]}
+        ]},
+      {path: 'userAttentionOrFensi', component: UserAttentionOrFensi},
     ]
 }];
 
