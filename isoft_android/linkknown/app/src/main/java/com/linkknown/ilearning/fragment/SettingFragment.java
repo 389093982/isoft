@@ -16,6 +16,7 @@ import androidx.preference.PreferenceViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AvailableCouponForPayActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.SetUserInfoActivity;
 import com.linkknown.ilearning.activity.SetUserSignatureActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -24,6 +25,7 @@ import com.linkknown.ilearning.model.PayShoppinpCartResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.CacheDataUtil;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -42,8 +44,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
 
     //个性签名
     private static final String userSignature = "userSignature";
-    private String signature_text_old = "";
-    private String signature_text_new = "";
 
     //清除缓存
     private static final String clearCache = "clearCache";
@@ -73,14 +73,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
 
         //设置用户信息
         findPreference(userInfo).setOnPreferenceClickListener(preference -> {
-            ToastUtil.showText(mContext,"设置用户信息");
-
-            return true;
-        });
-
-        //设置个性签名
-        findPreference(userSignature).setOnPreferenceClickListener(preference -> {
-
             LinkKnownApiFactory.getLinkKnownApi().getUserDetail(LoginUtil.getLoginUserName(mContext))
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -88,7 +80,40 @@ public class SettingFragment extends PreferenceFragmentCompat {
                         @Override
                         public void onNext(UserDetailResponse userDetailResponse) {
                             if (userDetailResponse.isSuccess()){
-                                signature_text_old = userDetailResponse.getUser().getUser_signature();
+                                UserDetailResponse.User user = userDetailResponse.getUser();
+                                Intent intent = new Intent(mContext, SetUserInfoActivity.class);
+                                intent.putExtra("nick_name",user.getNick_name());
+                                intent.putExtra("gender",user.getGender());
+                                intent.putExtra("birthday", DateUtil.formateDate_2_yyyyMMdd(user.getBirthday()));
+                                intent.putExtra("current_residence",user.getCurrent_residence());
+                                intent.putExtra("hometown",user.getHometown());
+                                intent.putExtra("hat",user.getHat());
+                                intent.putExtra("hat_in_use",user.getHat_in_use());
+                                startActivityForResult(intent,198);
+                            }
+                        };
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("getUserDetail error", e.getMessage());
+                            ToastUtil.showText(mContext,"查询失败！");
+                        }
+                    });
+
+
+            return true;
+        });
+
+        //设置个性签名
+        findPreference(userSignature).setOnPreferenceClickListener(preference -> {
+            LinkKnownApiFactory.getLinkKnownApi().getUserDetail(LoginUtil.getLoginUserName(mContext))
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<UserDetailResponse>() {
+                        @Override
+                        public void onNext(UserDetailResponse userDetailResponse) {
+                            if (userDetailResponse.isSuccess()){
+                                String signature_text_old = userDetailResponse.getUser().getUser_signature();
                                 Intent intent = new Intent(mContext, SetUserSignatureActivity.class);
                                 intent.putExtra("signature_text_old",signature_text_old);
                                 startActivityForResult(intent,199);
@@ -144,10 +169,41 @@ public class SettingFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //更新用户信息
+        if (requestCode == 198 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String user_name = LoginUtil.getLoginUserName(mContext);
+            String nick_name = (String) bundle.getSerializable("nick_name");
+            String gender = (String) bundle.getSerializable("gender");
+            String birthday = (String) bundle.getSerializable("birthday");
+            String current_residence = (String) bundle.getSerializable("current_residence");
+            String hometown = (String) bundle.getSerializable("hometown");
+            String hat = (String) bundle.getSerializable("hat");
+            String hat_in_use = (String) bundle.getSerializable("hat_in_use");
+            LinkKnownApiFactory.getLinkKnownApi().UpdateUserDetail(user_name,nick_name,gender,birthday,current_residence,hometown,hat,hat_in_use)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse o) {
+                            if (o.isSuccess()){
+                                ToastUtil.showText(mContext,"更新成功");
+                            }
+                        };
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("EditUserSignature error", e.getMessage());
+                            ToastUtil.showText(mContext,"更新个性签名失败！");
+                        }
+                    });
+
+        }
+
+        //设置个性签名
         if (requestCode == 199 && resultCode == 200) {
             Bundle bundle = data.getBundleExtra("bundle");
-            signature_text_new = (String) bundle.getSerializable("signature_text");
-
+            String signature_text_new = (String) bundle.getSerializable("signature_text");
             LinkKnownApiFactory.getLinkKnownApi().EditUserSignature(signature_text_new)
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -158,7 +214,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
                                 ToastUtil.showText(mContext,"更新成功");
                             }
                         };
-
                         @Override
                         public void onError(Throwable e) {
                             Log.e("EditUserSignature error", e.getMessage());
@@ -167,6 +222,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                     });
 
         }
+
     }
 
 

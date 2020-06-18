@@ -60,6 +60,17 @@ public interface LinkKnownApi {
     Observable<UserDetailResponse> getUserDetail(@Query("userName") String userName);
 
 
+    // 更新用户信息
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/UpdateUserDetail")
+    Observable<BaseResponse> UpdateUserDetail(@Query("user_name") String user_name,
+                                              @Query("nick_name") String nick_name,
+                                              @Query("gender") String gender,
+                                              @Query("birthday") String birthday,
+                                              @Query("current_residence") String current_residence,
+                                              @Query("hometown") String hometown,
+                                              @Query("hat") String hat,
+                                              @Query("hat_in_use") String hat_in_use);
+
     // 编辑个性签名
     @GET("/api/iwork/httpservice/isoft_linkknown_api/EditUserSignature")
     Observable<BaseResponse> EditUserSignature(@Query("user_signature") String user_signature);
