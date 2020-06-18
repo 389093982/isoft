@@ -101,6 +101,23 @@ public class DateUtil {
         return format;
     }
 
+
+    /**
+     * 将date转为 yyyyMMdd
+     * @param date
+     * @return
+     */
+    public static String formateDate_2_yyyyMMdd (Date date) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            String dateTime = dateFormat.format(date);
+            return dateTime;
+        } catch (Exception e) {
+            Log.e("DateUtil", "DateUtil dateFormat.parse error!");
+            return "";
+        }
+    }
+
     /**
      * 秒转分秒
      * 28800 ->  08:00
