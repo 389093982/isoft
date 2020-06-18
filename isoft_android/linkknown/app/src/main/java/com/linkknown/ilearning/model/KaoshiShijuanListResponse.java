@@ -18,6 +18,7 @@ public class KaoshiShijuanListResponse extends BaseResponse {
     public class KaoshiShijuan implements Serializable {
         private String classify_name;
         private String classify_desc;
+        private String classify_image;
         private String created_by;
         private Date created_time;
         private Date kaoshi_start_time;
