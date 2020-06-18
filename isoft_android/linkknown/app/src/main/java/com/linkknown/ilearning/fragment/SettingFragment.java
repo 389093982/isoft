@@ -176,7 +176,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
             String user_name = LoginUtil.getLoginUserName(mContext);
             String nick_name = (String) bundle.getSerializable("nick_name");
             String gender = (String) bundle.getSerializable("gender");
-            String birthday = (String) bundle.getSerializable("birthday");
+            String birthday = (Long) bundle.getSerializable("birthday") + "";
             String current_residence = (String) bundle.getSerializable("current_residence");
             String hometown = (String) bundle.getSerializable("hometown");
             String hat = (String) bundle.getSerializable("hat");

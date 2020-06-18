@@ -12,11 +12,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -205,7 +210,11 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
 
             bundle.putSerializable("nick_name",_nick_name);
             bundle.putSerializable("gender",_gender);
-            bundle.putSerializable("birthday",_birthday);
+            try {
+                bundle.putSerializable("birthday", new SimpleDateFormat("yyyyMMdd").parse(_birthday).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             bundle.putSerializable("current_residence",_current_residence);
             bundle.putSerializable("hometown",_hometown);
             bundle.putSerializable("hat",hat_param);
