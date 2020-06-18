@@ -2,6 +2,7 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,16 @@ import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +44,8 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
 
@@ -113,16 +120,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_mine, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, rootView);
-
         initView();
         initLingDang();
         return rootView;
     }
 
     private void initView() {
-        // 初始化登录相关信息
+        // 查询用户信息
         initLoginView();
 
+        //菜单前面添加图标
         bindMenuDrawnStart();
 
         // 中间图标入口
@@ -152,20 +159,36 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiActivity.class));
     }
 
+    //查询用户信息
     private void initLoginView () {
         if (LoginUtil.checkHasLogin(mContext)) {
             userInfoLayout.setVisibility(View.VISIBLE);
-            LoginUserResponse loginUserInfo = LoginUtil.getLoginUserInfo(mContext);
-            if (loginUserInfo!=null){
-                UserDetailResponse.User user = loginUserInfo.getUserDetailResponse().getUser();
-                // 展示用户头像、用户名、积分和个性签名
-                UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
-                nickName.setText(LoginUtil.getLoginNickName(mContext));
-                userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
-                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
-                attention_counts.setText(user.getAttention_counts()==0?"关注:0":"关注:"+user.getAttention_counts());
-                fensi_counts.setText(user.getFensi_counts()==0?"粉丝:0":"粉丝:"+user.getFensi_counts());
-            }
+
+            LinkKnownApiFactory.getLinkKnownApi().getUserDetail(LoginUtil.getLoginUserName(mContext))
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<UserDetailResponse>() {
+                        @Override
+                        public void onNext(UserDetailResponse userDetailResponse) {
+                            if (userDetailResponse.isSuccess()){
+                                UserDetailResponse.User user = userDetailResponse.getUser();
+                                // 展示用户头像、用户名、积分和个性签名
+                                UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
+                                nickName.setText(LoginUtil.getLoginNickName(mContext));
+                                userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
+                                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+                                attention_counts.setText(user.getAttention_counts()==0?"关注:0":"关注:"+user.getAttention_counts());
+                                fensi_counts.setText(user.getFensi_counts()==0?"粉丝:0":"粉丝:"+user.getFensi_counts());
+                            }
+                        };
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("getUserDetail error", e.getMessage());
+                            ToastUtil.showText(mContext,"查询用户信息失败！");
+                        }
+                    });
+
         } else {
             userInfoLayout.setVisibility(View.GONE);
         }

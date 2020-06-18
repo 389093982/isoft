@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 个性签名 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userSignature_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/userSignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="个性签名"
+                android:textColor="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 提交按钮 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/setSignatureBtn"
+            style="@style/userInfoButton"
+            android:layout_below="@+id/userSignature_input"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:stateListAnimator="@null"
+            android:text="提交"
+            android:enabled="false"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
