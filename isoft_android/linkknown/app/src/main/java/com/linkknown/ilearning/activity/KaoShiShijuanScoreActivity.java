@@ -9,7 +9,10 @@ import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
@@ -38,12 +41,18 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
     private KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     // 试卷名称
     @BindView(R.id.shijuanName)
     TextView shijuanName;
     // 分类描述
     @BindView(R.id.classifyDesc)
     TextView classifyDesc;
+    @BindView(R.id.classifyImage)
+    ImageView classifyImage;
+
     // 试卷考试开始和结束时间
     @BindView(R.id.kaoshiStartEndTime)
     TextView kaoshiStartEndTime;
@@ -90,8 +99,10 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     }
 
     private void initView() {
-        // 设置试卷名称
-        initShijuanName();
+        initToolBar(toolbar, true, "试卷详情");
+
+        // 设置试卷名称和分类信息
+        initShijuanInfo();
         // 设置试卷描述
         classifyDesc.setText(kaoshiShijuan.getClassify_desc());
 
@@ -104,7 +115,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         initViewShijuanView();
     }
 
-    private void initShijuanName() {
+    private void initShijuanInfo() {
         // 设置试卷名称（即分类名称 - 试卷创建试卷）
         SpannableStringBuilder sb = new SpannableStringBuilder();
         String part1 = kaoshiShijuan.getClassify_name() + " - ";
@@ -115,6 +126,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.gray1)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         shijuanName.setText(sb);
+        UIUtils.setImage(mContext, classifyImage, kaoshiShijuan.getClassify_image());
     }
 
     private void initViewShijuanView() {
