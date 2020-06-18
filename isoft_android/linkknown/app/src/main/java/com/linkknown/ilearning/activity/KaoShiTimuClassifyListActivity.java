@@ -2,7 +2,6 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.google.gson.Gson;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
-import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +26,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class KaoShiDetailActivity extends AppCompatActivity {
+public class KaoShiTimuClassifyListActivity extends AppCompatActivity {
 
     private Context mContext;
 
@@ -42,7 +39,7 @@ public class KaoShiDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kao_shi_detail);
+        setContentView(R.layout.activity_kaoshi_timu_classify_list);
 
         mContext = this;
         ButterKnife.bind(this);

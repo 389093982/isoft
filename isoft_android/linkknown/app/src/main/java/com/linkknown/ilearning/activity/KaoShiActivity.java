@@ -2,7 +2,6 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -54,7 +53,7 @@ public class KaoShiActivity extends BaseActivity {
     }
 
     private void initMenuButton() {
-        toKaoshiView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiDetailActivity.class));
+        toKaoshiView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiTimuClassifyListActivity.class));
 
         kaoshiResultView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiResultListActivity.class));
     }

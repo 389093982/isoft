@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,8 +16,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.KaoshiShijuanDetailActivity;
-import com.linkknown.ilearning.model.FirstLevelCommentResponse;
+import com.linkknown.ilearning.activity.KaoShiShijuanDetailActivity;
+import com.linkknown.ilearning.activity.KaoShiShijuanScoreActivity;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -68,13 +69,26 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
             textView.setText(spannableStringBuilder);
         }
 
-        viewHolder.findView(R.id.shijuanName).setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoshiShijuanDetailActivity.class, intent -> {
-            intent.putExtra("shijuan_id", kaoshiShijuan.getId());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
-            intent.putExtra("bundle", bundle);
-            intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
-            return intent;
-        }));
+        viewHolder.findView(R.id.shijuanName).setOnClickListener(v -> {
+
+            if (kaoshiShijuan.getIs_completed() == 1) {
+                // 查看考试成果
+                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
+                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
+                    return intent;
+                });
+            } else {
+                // 去考试
+                UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
+                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
+                    intent.putExtra("bundle", bundle);
+                    intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
+                    return intent;
+                });
+            }
+
+        });
     }
 }

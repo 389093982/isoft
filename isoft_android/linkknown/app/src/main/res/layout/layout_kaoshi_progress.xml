@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="正确率有点尴尬呀"
             android:textColor="@color/green"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <com.google.android.material.internal.FlowLayout
@@ -39,11 +39,5 @@
         android:text="交卷"
         android:enabled="true"
         android:textColor="@color/white"/>
-
-        <com.linkknown.ilearning.widget.RadarChartView
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/radarChartView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"/>
 
 </LinearLayout>

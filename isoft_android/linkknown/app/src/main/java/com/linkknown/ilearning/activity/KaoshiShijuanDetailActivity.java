@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -40,7 +41,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class KaoshiShijuanDetailActivity extends BaseActivity {
+public class KaoShiShijuanDetailActivity extends BaseActivity {
 
     // 题目所在区域的滚动视图
     @BindView(R.id.timuScorllView)
@@ -298,6 +299,10 @@ public class KaoshiShijuanDetailActivity extends BaseActivity {
                 // 记住答案并提交到远程服务器
                 memoryCurrentAnswer(1);
 
+                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
+                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
+                    return intent;
+                });
                 finish();
             }
         });

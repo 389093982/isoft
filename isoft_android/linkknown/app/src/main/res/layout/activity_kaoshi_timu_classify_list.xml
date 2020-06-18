@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.KaoShiDetailActivity">
+    tools:context=".activity.KaoShiTimuClassifyListActivity">
 
     <include layout="@layout/layout_recycleview"/>
 

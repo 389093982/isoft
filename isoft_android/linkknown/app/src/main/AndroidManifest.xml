@@ -15,8 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.KaoshiShijuanDetailActivity"></activity>
-        <activity android:name=".activity.KaoShiDetailActivity" />
+        <activity android:name=".activity.KaoShiShijuanScoreActivity"></activity>
+        <activity android:name=".activity.KaoShiShijuanDetailActivity" />
+        <activity android:name=".activity.KaoShiTimuClassifyListActivity" />
         <activity android:name=".activity.KaoShiResultListActivity" />
         <activity android:name=".activity.KaoShiActivity" />
         <activity android:name=".activity.CouponGoodActivity" />
