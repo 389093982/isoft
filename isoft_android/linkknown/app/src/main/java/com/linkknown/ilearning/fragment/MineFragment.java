@@ -19,27 +19,23 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
-import com.linkknown.ilearning.activity.KaoShiActivity;
-import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
+import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
+import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
-import com.linkknown.ilearning.adapter.GlideImageLoader;
+import com.linkknown.ilearning.activity.ShoppingCartActivity;
+import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.LoginUtil;
-import com.linkknown.ilearning.activity.ShoppingCartActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
-import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -156,7 +152,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
         iv_shoppingCart.setOnClickListener(v -> UIUtils.gotoActivity(mContext, ShoppingCartActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
-        iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiActivity.class));
+        iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiShijuanListActivity.class));
     }
 
     //查询用户信息

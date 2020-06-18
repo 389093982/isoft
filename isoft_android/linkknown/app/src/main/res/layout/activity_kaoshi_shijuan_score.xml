@@ -99,6 +99,16 @@
         android:id="@+id/viewShijuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查看试卷"/>
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:text="查看试卷题目"/>
+
+    <TextView
+        android:id="@+id/viewShijuanList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:text="返回试卷列表"/>
 
 </LinearLayout>
