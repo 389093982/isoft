@@ -1,7 +1,6 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -26,7 +25,6 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
-import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,7 +39,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class KaoShiShijuanDetailActivity extends BaseActivity {
+public class KaoShiShijuanDetailActivity extends BaseActivity{
 
     // 题目所在区域的滚动视图
     @BindView(R.id.timuScorllView)
@@ -398,4 +396,5 @@ public class KaoShiShijuanDetailActivity extends BaseActivity {
         }
         return true;
     }
+
 }

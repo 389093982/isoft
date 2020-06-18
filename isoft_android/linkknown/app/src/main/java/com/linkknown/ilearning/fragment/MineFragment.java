@@ -75,9 +75,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     //订单
     @BindView(R.id.iv_order)
     public ImageView iv_order;
-    //消息
-    @BindView(R.id.iv_message)
-    public ImageView iv_message;
+    //购物车
+    @BindView(R.id.iv_shoppingCart)
+    public ImageView iv_shoppingCart;
     //活动中心
     @BindView(R.id.iv_huodong)
     public ImageView iv_huodong;
@@ -89,16 +89,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     //用户信息
     @BindView(R.id.userInfoLayout)
     public RelativeLayout userInfoLayout;
-    //购物车
-    @BindView(R.id.menuShoppingCart)
-    public LinearLayout menuShoppingCart;
-    @BindView(R.id.menuShoppingCartTextView)
-    public TextView menuShoppingCartTextView;
-    //我的订单
-    @BindView(R.id.menuOrderLayout)
-    public LinearLayout menuOrderLayout;
-    @BindView(R.id.menuOrderTextView)
-    public TextView menuOrderTextView;
     //我要吐槽(提出意见)
     @BindView(R.id.menuAdviseLayout)
     public LinearLayout menuAdviseLayout;
@@ -114,11 +104,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public LinearLayout menuAboutLayout;
     @BindView(R.id.menuAboutLayoutTextView)
     public TextView menuAboutLayoutTextView;
-    //设置
-    @BindView(R.id.menuSettingLayout)
-    public LinearLayout menuSettingLayout;
-    @BindView(R.id.menuSettingLayoutTextView)
-    public TextView menuSettingLayoutTextView;
 
     private Context mContext;
 
@@ -145,11 +130,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         //设置点击事件
         menuAboutLayout.setOnClickListener(this);
-        menuOrderLayout.setOnClickListener(this);
         menuPersonalCenter.setOnClickListener(this);
-        menuShoppingCart.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
-        menuSettingLayout.setOnClickListener(this);
         setup.setOnClickListener(this);
     }
 
@@ -165,7 +147,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // 点击调往对应页面
         iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
-        iv_message.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MessageInfoActivity.class));
+        iv_shoppingCart.setOnClickListener(v -> UIUtils.gotoActivity(mContext, ShoppingCartActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
         iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiActivity.class));
     }
@@ -203,17 +185,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.menuAboutLayout:
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
                 break;
-            case R.id.menuSettingLayout:
-                UIUtils.gotoActivity(mContext, SettingActivity.class);
-                break;
-            case R.id.menuOrderLayout:
-                UIUtils.gotoActivity(mContext, PayOrderActivity.class);
-                break;
             case R.id.menuPersonalCenter:
                 UIUtils.gotoActivity(mContext, UserDetailActivity.class);
-                break;
-            case R.id.menuShoppingCart:
-                UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
                 break;
             case R.id.menuAdviseLayout:
                 UIUtils.gotoActivity(mContext, AdviseActivity.class);
@@ -227,11 +200,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 菜单前面添加图标
      */
     public void bindMenuDrawnStart() {
-        UIUtils.setTextViewDrawbleImg(mContext, menuShoppingCartTextView, R.drawable.ic_shopping_cart, 0, 2, 40, 42);
-        UIUtils.setTextViewDrawbleImg(mContext, menuOrderTextView, R.drawable.ic_order2, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAdviseTextView, R.drawable.ic_advise, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenterTextView, R.drawable.ic_personal_center, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAboutLayoutTextView, R.drawable.ic_about, 0, 2, 40, 42);
-        UIUtils.setTextViewDrawbleImg(mContext, menuSettingLayoutTextView, R.drawable.ic_setup, 0, 2, 40, 42);
     }
 }

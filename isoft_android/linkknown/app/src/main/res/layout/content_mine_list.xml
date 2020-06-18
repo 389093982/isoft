@@ -7,36 +7,8 @@
     <LinearLayout style="@style/wrap_layout">
         <!-- 上圆角-->
         <LinearLayout
-            android:id="@+id/menuShoppingCart"
-            style="@style/top_layout">
-            <TextView
-                android:id="@+id/menuShoppingCartTextView"
-                style="@style/usertext"
-                android:text="  购物车"/>
-
-            <ImageView style="@style/img_arrow"/>
-        </LinearLayout>
-
-        <!-- 分割线 -->
-        <View style="@style/bg_line"/>
-
-        <!-- 无圆角-->
-        <LinearLayout
-            android:id="@+id/menuOrderLayout"
-            style="@style/mid_layout">
-            <TextView
-                android:id="@+id/menuOrderTextView"
-                style="@style/usertext"
-                android:text="  我的订单" />
-            <ImageView style="@style/img_arrow"/>
-        </LinearLayout>
-
-        <View style="@style/bg_line"/>
-
-        <!-- 无圆角-->
-        <LinearLayout
             android:id="@+id/menuAdviseLayout"
-            style="@style/mid_layout">
+            style="@style/top_layout">
             <TextView
                 android:id="@+id/menuAdviseTextView"
                 style="@style/usertext"
@@ -68,7 +40,7 @@
 
         <LinearLayout
             android:id="@+id/menuAboutLayout"
-            style="@style/top_layout">
+            style="@style/single_layout">
 
             <TextView
                 android:id="@+id/menuAboutLayoutTextView"
@@ -78,19 +50,6 @@
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
-        <View style="@style/bg_line"/>
-        <!-- 下圆角-->
-        <LinearLayout
-            android:id="@+id/menuSettingLayout"
-            style="@style/bottom_layout">
-
-            <TextView
-                android:id="@+id/menuSettingLayoutTextView"
-                style="@style/usertext"
-                android:text="  设置"/>
-
-            <ImageView style="@style/img_arrow"/>
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
