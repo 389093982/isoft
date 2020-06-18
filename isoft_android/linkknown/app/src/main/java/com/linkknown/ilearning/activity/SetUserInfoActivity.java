@@ -199,7 +199,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
     //更新用户信息
     public void updateUserInfo(){
         String _nick_name = StringUtils.trim(nick_name.getText().toString());
-        String _birthday = StringUtils.trim(birthday.getText().toString().substring(0,10).replaceAll("-",""));
+        String _birthday = StringUtils.trim(birthday.getText().toString().substring(0,10));
         String _current_residence = StringUtils.trim(current_residence.getText().toString());
         String _hometown = StringUtils.trim(hometown.getText().toString());
         String _gender = "";
@@ -216,7 +216,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
             bundle.putSerializable("nick_name",_nick_name);
             bundle.putSerializable("gender",_gender);
             try {
-                bundle.putSerializable("birthday", new SimpleDateFormat("yyyyMMdd").parse(_birthday).getTime());
+                bundle.putSerializable("birthday", new SimpleDateFormat("yyyy-MM-dd").parse(_birthday).getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -238,7 +238,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
             return false;
         }
 
-        if (_birthday.length()!=8){
+        if (_birthday.length()!=10){
             ToastUtil.showText(mContext,"生日格式不对");
             return false;
         }
