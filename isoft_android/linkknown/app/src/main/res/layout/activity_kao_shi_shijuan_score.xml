@@ -27,13 +27,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:textColor="@color/gray1"
-            tools:text="考试时限：1h"/>
+            android:textSize="10sp"
+            android:text="考试时限：1h"/>
 
         <TextView
+            android:id="@+id/kaoshiStartEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:textColor="@color/gray1"
+            android:textSize="10sp"
             tools:text="考试时间：1：00-1:01"/>
     </RelativeLayout>
 

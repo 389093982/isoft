@@ -23,10 +23,15 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
     private KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
 
+    // 试卷名称
     @BindView(R.id.shijuanName)
     TextView shijuanName;
+    // 分类描述
     @BindView(R.id.classifyDesc)
     TextView classifyDesc;
+    // 试卷考试开始和结束时间
+    @BindView(R.id.kaoshiStartEndTime)
+    TextView kaoshiStartEndTime;
 
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
@@ -52,6 +57,8 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         initShijuanName();
         // 设置试卷描述
         classifyDesc.setText(kaoshiShijuan.getClassify_desc());
+
+        kaoshiStartEndTime.setText("实际提交时间：" + DateUtil.formateDate(kaoshiShijuan.getKaoshi_start_time(), DateUtil.PATTERN5) + " - " + DateUtil.formateDate(kaoshiShijuan.getKaoshi_end_time(), DateUtil.PATTERN5));
 
         // 点击按钮查看试卷
         initViewShijuanView();
