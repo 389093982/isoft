@@ -66,10 +66,10 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         String part2 = DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4);
         sb.append(part1).append(part2);
         // 字体大小设置
-        sb.setSpan(new RelativeSizeSpan(0.5f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.black_alpha_30)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new RelativeSizeSpan(0.8f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.gray1)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-        shijuanName.setText(sb.toString());
+        shijuanName.setText(sb);
     }
 
     private void initViewShijuanView() {
