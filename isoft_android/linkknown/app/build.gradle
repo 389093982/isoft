@@ -26,7 +26,7 @@ android {
     buildTypes {
         // 本地调试版本
         debug {
-            buildConfigField "String", "BASE_URL", '"http://192.168.1.4:6001"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.1.5:6001"'
         }
         // 测试环境
         // ProductFlavor names cannot start with 'test' 命名不能叫 test

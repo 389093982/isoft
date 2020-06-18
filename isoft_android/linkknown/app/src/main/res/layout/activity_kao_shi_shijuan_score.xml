@@ -4,8 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.KaoShiShijuanScoreActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
+    <TextView
+        android:id="@+id/shijuanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="试卷名称"/>
+
+    <TextView
+        android:id="@+id/classifyDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="分类描述"/>
 
     <com.linkknown.ilearning.widget.RadarChartView
         android:layout_gravity="center_horizontal"

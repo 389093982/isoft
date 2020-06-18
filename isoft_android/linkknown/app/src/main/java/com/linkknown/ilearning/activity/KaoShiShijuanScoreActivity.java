@@ -1,12 +1,18 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.RadarChartView;
 
@@ -16,6 +22,11 @@ import butterknife.ButterKnife;
 public class KaoShiShijuanScoreActivity extends BaseActivity {
 
     private KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
+
+    @BindView(R.id.shijuanName)
+    TextView shijuanName;
+    @BindView(R.id.classifyDesc)
+    TextView classifyDesc;
 
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
@@ -37,10 +48,28 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     }
 
     private void initView() {
+        // 设置试卷名称
+        initShijuanName();
+        // 设置试卷描述
+        classifyDesc.setText(kaoshiShijuan.getClassify_desc());
+
         // 点击按钮查看试卷
         initViewShijuanView();
         // 初始化雷达图
         initRadarChartView();
+    }
+
+    private void initShijuanName() {
+        // 设置试卷名称（即分类名称 - 试卷创建试卷）
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        String part1 = kaoshiShijuan.getClassify_name() + " - ";
+        String part2 = DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4);
+        sb.append(part1).append(part2);
+        // 字体大小设置
+        sb.setSpan(new RelativeSizeSpan(0.5f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.black_alpha_30)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        shijuanName.setText(sb.toString());
     }
 
     private void initViewShijuanView() {

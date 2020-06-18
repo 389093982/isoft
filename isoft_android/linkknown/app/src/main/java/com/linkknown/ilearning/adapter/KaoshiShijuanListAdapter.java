@@ -37,10 +37,12 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
         super(R.layout.item_kaoshi_shijuan_list, kaoshiShijuans);
         this.mContext = mContext;
     }
-
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan) {
-        viewHolder.setText(R.id.shijuanName, kaoshiShijuan.getClassify_name() + "-" + DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4));
+        // 设置试卷名称
+        initShijuanName(viewHolder, kaoshiShijuan);
+
+        // 设置分数或者试卷状态
         if (kaoshiShijuan.getIs_completed() == 1) {
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
             String part1 = kaoshiShijuan.getSum_score() + "";
@@ -56,7 +58,7 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
             // 设置红色
             spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.RED), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             TextView textView = viewHolder.findView(R.id.shijuanStatus);
-            textView.setTranslationY(-30);
+            textView.setTranslationY(-25);
             textView.setText(spannableStringBuilder);
         } else {
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
@@ -90,5 +92,19 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
             }
 
         });
+    }
+
+    // 设置试卷名称
+    void initShijuanName(@NotNull BaseViewHolder viewHolder, KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan) {
+        // 设置试卷名称（即分类名称 - 试卷创建试卷）
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        String part1 = kaoshiShijuan.getClassify_name() + " - ";
+        String part2 = DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4);
+        sb.append(part1).append(part2);
+        // 字体大小设置
+        sb.setSpan(new RelativeSizeSpan(0.5f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.black_alpha_30)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        viewHolder.setText(R.id.shijuanName,sb.toString());
     }
 }
