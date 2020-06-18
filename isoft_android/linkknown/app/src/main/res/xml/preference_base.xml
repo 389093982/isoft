@@ -6,6 +6,17 @@
      -->
     <PreferenceCategory
         android:title="基本设置">
+
+        <Preference
+            app:key="userInfo"
+            app:title="用户信息"
+            app:summary="用户基本信息"/>
+
+        <Preference
+            app:key="userSignature"
+            app:title="个性签名"
+            app:summary="编辑个性签名"/>
+
         <Preference
             app:key="clearCache"
             app:title="清除缓存"
@@ -25,5 +36,6 @@
             app:key="logout"
             app:title="退出登录"
             app:summary="退出链知 App 账号"/>
+
     </PreferenceCategory>
 </PreferenceScreen>

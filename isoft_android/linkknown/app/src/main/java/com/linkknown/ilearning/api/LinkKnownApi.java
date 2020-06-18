@@ -55,9 +55,14 @@ public interface LinkKnownApi {
     Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id);
 
 
-    // 登录接口
+    // 获取用户详情
     @GET("/api/iwork/httpservice/isoft_linkknown_api/GetUserDetail")
     Observable<UserDetailResponse> getUserDetail(@Query("userName") String userName);
+
+
+    // 编辑个性签名
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/EditUserSignature")
+    Observable<BaseResponse> EditUserSignature(@Query("user_signature") String user_signature);
 
     // 登录接口
     @GET("/api/iwork/httpservice/isoft_linkknown_api/PostLogin")
