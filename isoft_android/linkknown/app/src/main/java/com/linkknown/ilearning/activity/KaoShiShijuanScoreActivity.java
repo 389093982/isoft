@@ -1,14 +1,11 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,18 +20,13 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.RadarChartView;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -60,6 +52,9 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
+    @BindView(R.id.viewShijuanList)
+    TextView viewShijuanList;
+
     @BindView(R.id.radarChartView)
     RadarChartView radarChartView;
 
@@ -68,7 +63,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kao_shi_shijuan_score);
+        setContentView(R.layout.activity_kaoshi_shijuan_score);
 
         mContext = this;
         ButterKnife.bind(this);
@@ -113,7 +108,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
             kaoshiStartEndTime.setText("实际考试时间：" + startTime + " - " + endTime);
         }
                 // 点击按钮查看试卷
-        initViewShijuanView();
+        initLinkTextView();
     }
 
     private void initShijuanInfo() {
@@ -130,7 +125,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         UIUtils.setImage(mContext, classifyImage, kaoshiShijuan.getClassify_image());
     }
 
-    private void initViewShijuanView() {
+    private void initLinkTextView() {
         viewShijuan.setOnClickListener(v -> {
             // 去考试
             UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
@@ -143,6 +138,8 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
                 return intent;
             });
         });
+        
+        viewShijuanList.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiShijuanListActivity.class));
     }
 
     private void initRadarChartView(List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> details) {

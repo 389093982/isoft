@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class KaoShiResultListActivity extends BaseActivity {
+public class KaoShiShijuanListActivity extends BaseActivity {
 
     private Context mContext;
 
@@ -60,7 +60,7 @@ public class KaoShiResultListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kao_shi_result_list);
+        setContentView(R.layout.activity_kaoshi_shijuan_list);
 
         mContext = this;
         ButterKnife.bind(this);

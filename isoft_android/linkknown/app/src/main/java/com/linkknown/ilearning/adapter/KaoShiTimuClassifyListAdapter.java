@@ -6,12 +6,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.KaoShiResultListActivity;
+import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
-import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
@@ -60,7 +59,7 @@ public class KaoShiTimuClassifyListAdapter extends BaseQuickAdapter<KaoshiClassi
                     public void onNext(BaseResponse o) {
                         if (o.isSuccess()) {
                             ToastUtil.showText(mContext, "试卷生成成功!");
-                            UIUtils.gotoActivity(mContext, KaoShiResultListActivity.class);
+                            UIUtils.gotoActivity(mContext, KaoShiShijuanListActivity.class);
                         } else {
                             ToastUtil.showText(mContext, o.getErrorMsg());
                         }

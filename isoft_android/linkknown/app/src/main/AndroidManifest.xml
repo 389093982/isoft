@@ -20,7 +20,7 @@
         <activity android:name=".activity.KaoShiShijuanScoreActivity" />
         <activity android:name=".activity.KaoShiShijuanDetailActivity" />
         <activity android:name=".activity.KaoShiTimuClassifyListActivity" />
-        <activity android:name=".activity.KaoShiResultListActivity" />
+        <activity android:name=".activity.KaoShiShijuanListActivity" />
         <activity android:name=".activity.CouponGoodActivity" />
         <activity android:name=".activity.CourseCustomTagListActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />

@@ -20,7 +20,7 @@ import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CouponCenterActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
-import com.linkknown.ilearning.activity.KaoShiResultListActivity;
+import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
@@ -152,7 +152,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
         iv_shoppingCart.setOnClickListener(v -> UIUtils.gotoActivity(mContext, ShoppingCartActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
-        iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiResultListActivity.class));
+        iv_kaoshi.setOnClickListener(v -> UIUtils.gotoActivity(mContext, KaoShiShijuanListActivity.class));
     }
 
     //查询用户信息
