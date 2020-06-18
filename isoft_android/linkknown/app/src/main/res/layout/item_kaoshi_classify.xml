@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -49,7 +50,6 @@
                 android:scaleType="fitXY"
                 android:layout_weight="1"
                 android:src="@drawable/linkknown"/>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

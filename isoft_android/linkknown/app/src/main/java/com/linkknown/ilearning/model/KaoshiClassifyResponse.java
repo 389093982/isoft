@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 public class KaoshiClassifyResponse extends BaseResponse {
 
     private List<KaoshiClassify> kaoshi_classifys;
+    private Paginator paginator;
 
     @Data
     public class KaoshiClassify {
