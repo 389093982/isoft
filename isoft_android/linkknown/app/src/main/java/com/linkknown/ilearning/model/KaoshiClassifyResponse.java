@@ -14,8 +14,9 @@ public class KaoshiClassifyResponse extends BaseResponse {
 
     @Data
     public class KaoshiClassify {
-        private String classify_desc;
         private String classify_name;
+        private String classify_desc;
+        private String classify_image;
         private String created_by;
         private Date created_time;
         private int id;

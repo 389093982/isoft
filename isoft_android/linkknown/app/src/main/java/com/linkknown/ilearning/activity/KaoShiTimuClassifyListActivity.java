@@ -2,6 +2,7 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,8 +58,9 @@ public class KaoShiTimuClassifyListActivity extends AppCompatActivity {
 
             @Override
             protected void convert(@NotNull BaseViewHolder viewHolder, KaoshiClassifyResponse.KaoshiClassify kaoshiClassify) {
-                viewHolder.setText(R.id.kaoshiClassify, kaoshiClassify.getClassify_name());
-                viewHolder.findView(R.id.kaoshiClassify).setOnClickListener(v -> {
+                viewHolder.setText(R.id.classifyName, kaoshiClassify.getClassify_name());
+                UIUtils.setImage(mContext, viewHolder.findView(R.id.classifyImage), kaoshiClassify.getClassify_image());
+                viewHolder.findView(R.id.classifyName).setOnClickListener(v -> {
                     // 查询题库生成试卷
                     // 1 分题 x 10
                     // 2 分题 x 10
@@ -74,7 +77,7 @@ public class KaoShiTimuClassifyListActivity extends AppCompatActivity {
                                         ToastUtil.showText(mContext, "试卷生成成功!");
 
                                     } else {
-                                        ToastUtil.showText(mContext, "试卷生成失败!");
+                                        ToastUtil.showText(mContext, o.getErrorMsg());
                                     }
                                 }
 
@@ -86,7 +89,6 @@ public class KaoShiTimuClassifyListActivity extends AppCompatActivity {
                 });
             }
         };
-        baseQuickAdapter.addChildClickViewIds(R.id.kaoshiClassify);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
 

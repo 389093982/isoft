@@ -23,10 +23,15 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
     private KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
 
+    // 试卷名称
     @BindView(R.id.shijuanName)
     TextView shijuanName;
+    // 分类描述
     @BindView(R.id.classifyDesc)
     TextView classifyDesc;
+    // 试卷考试开始和结束时间
+    @BindView(R.id.kaoshiStartEndTime)
+    TextView kaoshiStartEndTime;
 
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
@@ -53,6 +58,8 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         // 设置试卷描述
         classifyDesc.setText(kaoshiShijuan.getClassify_desc());
 
+        kaoshiStartEndTime.setText("实际提交时间：" + DateUtil.formateDate(kaoshiShijuan.getKaoshi_start_time(), DateUtil.PATTERN5) + " - " + DateUtil.formateDate(kaoshiShijuan.getKaoshi_end_time(), DateUtil.PATTERN5));
+
         // 点击按钮查看试卷
         initViewShijuanView();
         // 初始化雷达图
@@ -66,10 +73,10 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         String part2 = DateUtil.formateDate(kaoshiShijuan.getCreated_time(), DateUtil.PATTERN4);
         sb.append(part1).append(part2);
         // 字体大小设置
-        sb.setSpan(new RelativeSizeSpan(0.5f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.black_alpha_30)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new RelativeSizeSpan(0.8f), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.gray1)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-        shijuanName.setText(sb.toString());
+        shijuanName.setText(sb);
     }
 
     private void initViewShijuanView() {

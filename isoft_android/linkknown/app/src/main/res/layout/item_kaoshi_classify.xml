@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp">
+
+    <ImageView
+        android:id="@+id/classifyImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/linkknown"/>
 
     <TextView
-        android:id="@+id/kaoshiClassify"
+        android:id="@+id/classifyName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/classifyImage"
         android:text="考试分类"
-        android:textAlignment="center"
-        android:background="@drawable/selector_bg_tag2"
-        android:clickable="true"
+        android:background="@color/pink"
+        android:textColor="@color/white"
+        android:padding="5dp"
         android:layout_margin="20dp"/>
 
-</LinearLayout>
+</RelativeLayout>
