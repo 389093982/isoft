@@ -1,17 +1,22 @@
 package com.linkknown.ilearning.activity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.fragment.DatePickerFragment;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
@@ -21,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -112,6 +118,8 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
 
         //给提交按钮设置点击事件
         submitBtn.setOnClickListener(this);
+        //生日弹框事件
+        birthday.setOnClickListener(this);
 
         //设置输入框的触碰监听
         nick_name.setOnFocusChangeListener((v, hasFocus) -> {
@@ -134,11 +142,8 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
         });
 
         birthday.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                TextView textView = (TextView)v;
-                if (StringUtils.isEmpty(StringUtils.trim(textView.getText().toString()))){
-                    ToastUtil.showText(mContext, "请填写生日！");
-                }
+            if (hasFocus) {
+                selectBirthDay();
             }
         });
 
@@ -174,6 +179,9 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
             case R.id.submitBtn:
                 updateUserInfo();
                 break;
+            case R.id.birthday:
+                selectBirthDay();
+                break;
             default:
                 break;
         }
@@ -198,36 +206,40 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
 
     //更新用户信息
     public void updateUserInfo(){
-        String _nick_name = StringUtils.trim(nick_name.getText().toString());
-        String _birthday = StringUtils.trim(birthday.getText().toString().substring(0,10));
-        String _current_residence = StringUtils.trim(current_residence.getText().toString());
-        String _hometown = StringUtils.trim(hometown.getText().toString());
-        String _gender = "";
-        if ("男".equals(gender_text.trim())){
-            _gender = "male";
-        }else{
-            _gender = "female";
-        }
-
-        if (validator(_nick_name,_birthday)){
-            Intent intent = new Intent();
-            Bundle bundle = new Bundle();
-
-            bundle.putSerializable("nick_name",_nick_name);
-            bundle.putSerializable("gender",_gender);
-            try {
-                bundle.putSerializable("birthday", new SimpleDateFormat("yyyy-MM-dd").parse(_birthday).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
+        try {
+            String _nick_name = StringUtils.trim(nick_name.getText().toString());
+            String _birthday = StringUtils.trim(birthday.getText().toString());
+            String _current_residence = StringUtils.trim(current_residence.getText().toString());
+            String _hometown = StringUtils.trim(hometown.getText().toString());
+            String _gender = "";
+            if ("男".equals(gender_text.trim())){
+                _gender = "male";
+            }else{
+                _gender = "female";
             }
-            bundle.putSerializable("current_residence",_current_residence);
-            bundle.putSerializable("hometown",_hometown);
-            bundle.putSerializable("hat",hat_param);
-            bundle.putSerializable("hat_in_use",hat_in_use_param);
 
-            intent.putExtra("bundle", bundle);
-            setResult(200,intent);
-            finish();
+            if (validator(_nick_name,_birthday)){
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable("nick_name",_nick_name);
+                bundle.putSerializable("gender",_gender);
+                try {
+                    bundle.putSerializable("birthday", new SimpleDateFormat("yyyy-MM-dd").parse(_birthday).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                bundle.putSerializable("current_residence",_current_residence);
+                bundle.putSerializable("hometown",_hometown);
+                bundle.putSerializable("hat",hat_param);
+                bundle.putSerializable("hat_in_use",hat_in_use_param);
+
+                intent.putExtra("bundle", bundle);
+                setResult(200,intent);
+                finish();
+            }
+        }catch (Exception e){
+            ToastUtil.showText(mContext,"设置有误,请重新设置！");
         }
     };
 
@@ -238,12 +250,22 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
             return false;
         }
 
-        if (_birthday.length()!=10){
+        if (_birthday.length()!=10 || _birthday.indexOf("-")!=4 || _birthday.lastIndexOf("-")!=7){
             ToastUtil.showText(mContext,"生日格式不对");
             return false;
         }
 
         return true;
+    };
+
+
+    //设置生日
+    public void selectBirthDay(){
+        DatePickerFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(), "DatePicker");
+        datePicker.setSelectDateListener((date) -> {
+            birthday.setText(date);
+        });
     };
 
 
