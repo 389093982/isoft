@@ -14,7 +14,7 @@ public class UserDetailResponse extends BaseResponse implements Serializable {
 
     @Data
     public static class User implements Serializable {
-        private Date birthday;
+        private String birthday;
         private String created_time;
         private String current_residence;
         private String gender;

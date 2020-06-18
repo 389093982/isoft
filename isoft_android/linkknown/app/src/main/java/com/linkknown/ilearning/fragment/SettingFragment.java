@@ -84,7 +84,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                                 Intent intent = new Intent(mContext, SetUserInfoActivity.class);
                                 intent.putExtra("nick_name",user.getNick_name());
                                 intent.putExtra("gender",user.getGender());
-                                intent.putExtra("birthday", DateUtil.formateDate_2_yyyyMMdd(user.getBirthday()));
+                                intent.putExtra("birthday", user.getBirthday());
                                 intent.putExtra("current_residence",user.getCurrent_residence());
                                 intent.putExtra("hometown",user.getHometown());
                                 intent.putExtra("hat",user.getHat());
