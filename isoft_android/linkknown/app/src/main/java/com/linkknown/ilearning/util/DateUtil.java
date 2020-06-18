@@ -15,6 +15,7 @@ public class DateUtil {
     public static final String PATTERN3 = "yyyy年MM月dd HH:mm:ss";
     public static final String PATTERN4 = "MMddHHmmss";
     public static final String PATTERN5 = "MM-dd HH:mm:ss";
+    public static final String PATTERN6 = "yyyy-MM-dd'T'HH:mm:ss";
 
     public static boolean isNowTimeBetween (String startTime, String endTime) {
         return isNowTimeBetween(startTime, endTime, PATTERN);
@@ -31,6 +32,18 @@ public class DateUtil {
             Log.e("DateUtil", "DateUtil dateFormat.parse error!");
             return false;
         }
+    }
+
+    public static Date getDate (String date) {
+        String[] patterns = new String[]{PATTERN, PATTERN6};
+        for (String pattern : patterns) {
+            try {
+                DateFormat dateFormat = new SimpleDateFormat(pattern);
+                Date dateTime = dateFormat.parse(date);
+                return dateTime;
+            }  catch (ParseException e) {}
+        }
+        return null;
     }
 
     public static String formateDate (Date date) {

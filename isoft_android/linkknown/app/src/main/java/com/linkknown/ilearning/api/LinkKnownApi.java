@@ -289,8 +289,9 @@ public interface LinkKnownApi {
                                                        @Query("code_url") String code_url);
 
     // 查询所有考试分类
-    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryAllKaoshiClassify")
-    Observable<KaoshiClassifyResponse> queryAllKaoshiClassify();
+    @GET("/api/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiClassify")
+    Observable<KaoshiClassifyResponse> queryPageKaoshiClassify(@Query("current_page") int current_page,
+                                                              @Query("offset") int pageSize);
 
     // 根据分类名称生成试卷
     @GET("/api/iwork/httpservice/isoft_linkknown_api/CreateKaoshiShijuan")

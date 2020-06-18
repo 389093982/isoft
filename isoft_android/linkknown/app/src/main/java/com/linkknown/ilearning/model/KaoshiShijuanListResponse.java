@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -21,8 +22,8 @@ public class KaoshiShijuanListResponse extends BaseResponse {
         private String classify_image;
         private String created_by;
         private Date created_time;
-        private Date kaoshi_start_time;
-        private Date kaoshi_end_time;
+        private String kaoshi_start_time;
+        private String kaoshi_end_time;
         private int id;
         private int sum_score;
         private int is_completed;
