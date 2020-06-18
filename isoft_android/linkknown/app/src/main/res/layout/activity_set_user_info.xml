@@ -64,6 +64,7 @@
                 android:id="@+id/birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="生日"
                 android:textColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -81,6 +82,7 @@
                 android:id="@+id/current_residence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="现居住地址"
                 android:textColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -98,6 +100,7 @@
                 android:id="@+id/hometown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint="家乡"
                 android:textColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>

@@ -12,11 +12,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +92,12 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
 
         //给用户基本信息界面设置这些参数值
         nick_name.setText(nick_name_param);
-        birthday.setText(birthday_param);
+        if (birthday_param==null || "".equals(birthday_param.trim())){
+            birthday.setText("");
+        }else{
+            birthday.setText(birthday_param.substring(0,10));
+        }
+
         current_residence.setText(current_residence_param);
         hometown.setText(hometown_param);
         if ("male".equals(gender_param.trim())){
@@ -189,7 +199,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
     //更新用户信息
     public void updateUserInfo(){
         String _nick_name = StringUtils.trim(nick_name.getText().toString());
-        String _birthday = StringUtils.trim(birthday.getText().toString());
+        String _birthday = StringUtils.trim(birthday.getText().toString().substring(0,10));
         String _current_residence = StringUtils.trim(current_residence.getText().toString());
         String _hometown = StringUtils.trim(hometown.getText().toString());
         String _gender = "";
@@ -205,7 +215,11 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
 
             bundle.putSerializable("nick_name",_nick_name);
             bundle.putSerializable("gender",_gender);
-            bundle.putSerializable("birthday",_birthday);
+            try {
+                bundle.putSerializable("birthday", new SimpleDateFormat("yyyy-MM-dd").parse(_birthday).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             bundle.putSerializable("current_residence",_current_residence);
             bundle.putSerializable("hometown",_hometown);
             bundle.putSerializable("hat",hat_param);
@@ -224,7 +238,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
             return false;
         }
 
-        if (_birthday.length()!=8){
+        if (_birthday.length()!=10){
             ToastUtil.showText(mContext,"生日格式不对");
             return false;
         }
