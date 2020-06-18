@@ -3,6 +3,8 @@ package com.linkknown.ilearning.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +22,7 @@ import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -154,5 +157,24 @@ public class KaoShiResultListActivity extends BaseActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
+    }
+
+    //添加右上角 领券中心 图标
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
+        return true;
+    }
+
+    //跳转到领券中心
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if (id == R.id.menu_add) {
+            UIUtils.gotoActivity(mContext, KaoShiTimuClassifyListActivity.class);
+        }
+        return true;
     }
 }

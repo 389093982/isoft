@@ -34,6 +34,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -79,7 +80,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     }
 
     private void initData() {
-        LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(kaoshiShijuan.getId())
+                LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(kaoshiShijuan.getId())
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<KaoshiShijuanDetailResponse>() {
@@ -133,11 +134,12 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
         viewShijuan.setOnClickListener(v -> {
             // 去考试
             UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
+                kaoshiShijuan.setIs_completed(1);
                 intent.putExtra("shijuan_id", kaoshiShijuan.getId());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
                 intent.putExtra("bundle", bundle);
-                intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
+                intent.putExtra("kaoshiCompleted", true);
                 return intent;
             });
         });
