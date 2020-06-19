@@ -50,6 +50,10 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     @BindView(R.id.kaoshiStartEndTime)
     TextView kaoshiStartEndTime;
 
+    // 分数信息
+    @BindView(R.id.scoreView)
+    TextView scoreView;
+
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
     @BindView(R.id.viewShijuanList)
@@ -123,6 +127,8 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
         shijuanName.setText(sb);
         UIUtils.setImage(mContext, classifyImage, kaoshiShijuan.getClassify_image());
+
+        scoreView.setText(kaoshiShijuan.getSum_score() + "分");
     }
 
     private void initLinkTextView() {
