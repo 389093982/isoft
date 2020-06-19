@@ -8,6 +8,11 @@
         android:title="基本设置">
 
         <Preference
+            app:key="smallIcon"
+            app:title="头像"
+            app:summary="设置我的头像"/>
+
+        <Preference
             app:key="userInfo"
             app:title="用户信息"
             app:summary="用户基本信息"/>
