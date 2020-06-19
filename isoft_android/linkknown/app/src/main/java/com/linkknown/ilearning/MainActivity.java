@@ -1,6 +1,5 @@
 package com.linkknown.ilearning;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,15 +24,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
-import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
+import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
 import com.linkknown.ilearning.fragment.MineFragment;
-import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.popup.BottomQuickWindow;
 import com.linkknown.ilearning.service.UserService;
@@ -52,10 +51,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-
-    String[] perms = {Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private Context mContext;
 
@@ -102,10 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        if (!EasyPermissions.hasPermissions(this, perms)) {
-//            EasyPermissions.requestPermissions(this, "请打开相关权限", 1, perms);
-//        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getApplication();
