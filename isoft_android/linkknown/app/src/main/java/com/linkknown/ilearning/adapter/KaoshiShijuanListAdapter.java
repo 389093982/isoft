@@ -3,7 +3,6 @@ package com.linkknown.ilearning.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -15,8 +14,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.KaoShiShijuanDetailActivity;
-import com.linkknown.ilearning.activity.KaoShiShijuanScoreActivity;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -28,6 +25,7 @@ import java.util.List;
 public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanListResponse.KaoshiShijuan, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
+    private CallbackListener callbackListener;
     /**
      * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
      * 如果后期设置数据，不需要传入初始List，直接调用 super(layoutResId); 即可
@@ -71,25 +69,9 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
         }
 
         viewHolder.findView(R.id.shijuanName).setOnClickListener(v -> {
-
-            if (kaoshiShijuan.getIs_completed() == 1) {
-                // 查看考试成果
-                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
-                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
-                    return intent;
-                });
-            } else {
-                // 去考试
-                UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
-                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
-                    intent.putExtra("bundle", bundle);
-                    intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
-                    return intent;
-                });
+            if (callbackListener != null){
+                callbackListener.onConfirm(kaoshiShijuan);
             }
-
         });
     }
 
@@ -105,5 +87,13 @@ public class KaoshiShijuanListAdapter extends BaseQuickAdapter<KaoshiShijuanList
         sb.setSpan(new ForegroundColorSpan(UIUtils.getResourceColor(mContext, R.color.gray1)), part1.length(), (part1 + part2).length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         viewHolder.setText(R.id.shijuanName,sb);
+    }
+
+    public void setCallbackListener(CallbackListener callbackListener) {
+        this.callbackListener = callbackListener;
+    }
+
+    public interface CallbackListener {
+        void onConfirm (KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan);
     }
 }

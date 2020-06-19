@@ -56,4 +56,7 @@ public class Constants {
     public static final List<String> COURSE_SEARCH_HINT_LIST = Arrays.asList("搜索课程名称或者视频关键词进行搜索", "学习如逆水行舟不进则退", "书读百遍其义自见", "每日坚持学习做最好的自己");
 
     public static final String SHARE_APK_INFO = "链知晓课堂【专注，只为成为链接知识的桥梁】: http://www.linkknown.com/download/apk";
+
+    // 考试试卷总时长,默认一小时
+    public static final int KAOSHI_TOTAL_TIME = 3600;
 }
