@@ -35,7 +35,7 @@
             android:padding="12dp"
             android:stateListAnimator="@null"
             android:text="提交"
-            android:enabled="false"
+
             android:textColor="@color/white"/>
 
     </RelativeLayout>

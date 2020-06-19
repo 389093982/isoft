@@ -2,6 +2,7 @@ package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import com.linkknown.ilearning.activity.SetUserSignatureActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.FileUploadResponse;
 import com.linkknown.ilearning.model.PayShoppinpCartResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -33,10 +35,15 @@ import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.io.File;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class SettingFragment extends PreferenceFragmentCompat {
 
@@ -117,67 +124,6 @@ public class SettingFragment extends PreferenceFragmentCompat {
         });
 
 
-
-    }
-
-
-    // 为了从 “编辑个性签名” 回来 “本页面” 获取结果
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //更新用户信息
-        if (requestCode == 198 && resultCode == 200) {
-            Bundle bundle = data.getBundleExtra("bundle");
-            String user_name = LoginUtil.getLoginUserName(mContext);
-            String nick_name = (String) bundle.getSerializable("nick_name");
-            String gender = (String) bundle.getSerializable("gender");
-            String birthday = (Long) bundle.getSerializable("birthday") + "";
-            String current_residence = (String) bundle.getSerializable("current_residence");
-            String hometown = (String) bundle.getSerializable("hometown");
-            String hat = (String) bundle.getSerializable("hat");
-            String hat_in_use = (String) bundle.getSerializable("hat_in_use");
-            LinkKnownApiFactory.getLinkKnownApi().UpdateUserDetail(user_name,nick_name,gender,birthday,current_residence,hometown,hat,hat_in_use)
-                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<BaseResponse>() {
-                        @Override
-                        public void onNext(BaseResponse o) {
-                            if (o.isSuccess()){
-                                ToastUtil.showText(mContext,"更新成功");
-                            }
-                        };
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("EditUserSignature error", e.getMessage());
-                            ToastUtil.showText(mContext,"更新个性签名失败！");
-                        }
-                    });
-
-        }
-
-        //设置个性签名
-        if (requestCode == 199 && resultCode == 200) {
-            Bundle bundle = data.getBundleExtra("bundle");
-            String signature_text_new = (String) bundle.getSerializable("signature_text");
-            LinkKnownApiFactory.getLinkKnownApi().EditUserSignature(signature_text_new)
-                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<BaseResponse>() {
-                        @Override
-                        public void onNext(BaseResponse o) {
-                            if (o.isSuccess()){
-                                ToastUtil.showText(mContext,"更新成功");
-                            }
-                        };
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("EditUserSignature error", e.getMessage());
-                            ToastUtil.showText(mContext,"更新个性签名失败！");
-                        }
-                    });
-
-        }
 
     }
 
@@ -290,6 +236,120 @@ public class SettingFragment extends PreferenceFragmentCompat {
         }
     }
 
+
+    /**
+     * 为了从 “编辑个性签名” 回来 “本页面” 获取结果
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //更新头像
+        if (requestCode == 197 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String user_name = LoginUtil.getLoginUserName(mContext);
+            String headFileUri =  (String) bundle.getSerializable("headFileUri");
+            //根据路径生成Part
+            File file = new File(headFileUri);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            //调用接口，传入part参数
+            LinkKnownApiFactory.getLinkKnownApi().fileUpload("user","small_icon",filePart)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<FileUploadResponse>() {
+                        @Override
+                        public void onNext(FileUploadResponse o) {
+                            if (o.isSuccess()){
+                                String fileServerPath = o.getFileServerPath();
+
+                                //获取了文件上传的地址， 这里开始真正更新user表， 更换头像
+                                LinkKnownApiFactory.getLinkKnownApi().UpdateUserIcon(LoginUtil.getLoginUserName(mContext),fileServerPath)
+                                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                            @Override
+                                            public void onNext(BaseResponse o) {
+                                                if (o.isSuccess()){
+                                                    ToastUtil.showText(mContext,"头像更新成功！");
+                                                }
+                                            };
+                                            @Override
+                                            public void onError(Throwable e) {
+                                                Log.e("UpdateUserIcon error", e.getMessage());
+                                                ToastUtil.showText(mContext,"头像更新失败！");
+                                            }
+                                        });
+                            }else{
+                                ToastUtil.showText(mContext,"上传失败");
+                            }
+                        };
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("fileUpload error", e.getMessage());
+                            ToastUtil.showText(mContext,"上传文件失败！");
+                        }
+                    });
+
+        }
+
+        //更新用户信息
+        if (requestCode == 198 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String user_name = LoginUtil.getLoginUserName(mContext);
+            String nick_name = (String) bundle.getSerializable("nick_name");
+            String gender = (String) bundle.getSerializable("gender");
+            String birthday = (Long) bundle.getSerializable("birthday") + "";
+            String current_residence = (String) bundle.getSerializable("current_residence");
+            String hometown = (String) bundle.getSerializable("hometown");
+            String hat = (String) bundle.getSerializable("hat");
+            String hat_in_use = (String) bundle.getSerializable("hat_in_use");
+            LinkKnownApiFactory.getLinkKnownApi().UpdateUserDetail(user_name,nick_name,gender,birthday,current_residence,hometown,hat,hat_in_use)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse o) {
+                            if (o.isSuccess()){
+                                ToastUtil.showText(mContext,"更新成功");
+                            }
+                        };
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("EditUserSignature error", e.getMessage());
+                            ToastUtil.showText(mContext,"更新个性签名失败！");
+                        }
+                    });
+
+        }
+
+        //设置个性签名
+        if (requestCode == 199 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String signature_text_new = (String) bundle.getSerializable("signature_text");
+            LinkKnownApiFactory.getLinkKnownApi().EditUserSignature(signature_text_new)
+                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                    .subscribe(new LinkKnownObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse o) {
+                            if (o.isSuccess()){
+                                ToastUtil.showText(mContext,"更新成功");
+                            }
+                        };
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("EditUserSignature error", e.getMessage());
+                            ToastUtil.showText(mContext,"更新个性签名失败！");
+                        }
+                    });
+
+        }
+
+    }
 
 
 }

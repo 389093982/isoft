@@ -2,6 +2,7 @@ package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.FileUploadResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.CouponDatasResponse;
@@ -30,8 +31,11 @@ import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface LinkKnownApi {
@@ -75,6 +79,21 @@ public interface LinkKnownApi {
     // 编辑个性签名
     @POST("/api/iwork/httpservice/isoft_linkknown_api/EditUserSignature")
     Observable<BaseResponse> EditUserSignature(@Query("user_signature") String user_signature);
+
+
+    //文件上传
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/fileUpload")
+    @Multipart
+    Observable<FileUploadResponse> fileUpload(@Query("table_name") String table_name,
+                                              @Query("table_field") String table_field,
+                                              @Part MultipartBody.Part parts);
+
+
+    // 更新用户头像
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/UpdateUserIcon")
+    Observable<BaseResponse> UpdateUserIcon(@Query("userName") String userName,
+                                            @Query("small_icon") String small_icon);
+
 
     // 登录接口
     @POST("/api/iwork/httpservice/isoft_linkknown_api/PostLogin")
