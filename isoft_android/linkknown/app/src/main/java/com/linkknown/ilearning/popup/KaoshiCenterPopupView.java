@@ -80,7 +80,7 @@ public class KaoshiCenterPopupView extends CenterPopupView {
             @Override
             public void onClick(View v) {
                 UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
-                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
+                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
                     return intent;
                 });
             }
@@ -118,7 +118,7 @@ public class KaoshiCenterPopupView extends CenterPopupView {
 
     public void updateKaoshiTimeCost (long time) {
         if (submitAll != null) {
-            submitAll.setText("交卷（" + DateUtil.secToMinuteAndSec((int)(3600 - time)) + "）");
+            submitAll.setText("交卷（" + DateUtil.secToMinuteAndSec((int)time) + "）");
         }
     }
 

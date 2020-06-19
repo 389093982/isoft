@@ -16,6 +16,7 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.RadarChartView;
@@ -32,7 +33,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class KaoShiShijuanScoreActivity extends BaseActivity {
 
-    private KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
+    private int shijuan_id;
+    private KaoshiShijuanResponse.KaoshiShijuan kaoshiShijuan;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -49,6 +51,10 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     // 试卷考试开始和结束时间
     @BindView(R.id.kaoshiStartEndTime)
     TextView kaoshiStartEndTime;
+
+    // 分数信息
+    @BindView(R.id.scoreView)
+    TextView scoreView;
 
     @BindView(R.id.viewShijuan)
     TextView viewShijuan;
@@ -67,7 +73,7 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
         mContext = this;
         ButterKnife.bind(this);
-        kaoshiShijuan = (KaoshiShijuanListResponse.KaoshiShijuan) getIntent().getSerializableExtra("kaoshiShijuan");
+        shijuan_id = getIntent().getIntExtra("shijuan_id", -1);
 
         initView();
 
@@ -75,15 +81,28 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
     }
 
     private void initData() {
-                LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(kaoshiShijuan.getId())
+
+        LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanById(shijuan_id)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownObserver<KaoshiShijuanDetailResponse>() {
+                .subscribe(new LinkKnownObserver<KaoshiShijuanResponse>() {
                     @Override
-                    public void onNext(KaoshiShijuanDetailResponse o) {
+                    public void onNext(KaoshiShijuanResponse o) {
                         if (o.isSuccess()) {
-                            // 显示雷达图
-                            initRadarChartView(o.getKaoshi_shijuandetail());
+                            kaoshiShijuan = o.getKaoshi_shijuan();
+
+                            // 设置试卷名称和分类信息
+                            initShijuanInfo();
+                            // 设置试卷描述
+                            classifyDesc.setText(kaoshiShijuan.getClassify_desc());
+
+                            if (StringUtils.isNotEmpty(kaoshiShijuan.getKaoshi_start_time()) && StringUtils.isNotEmpty(kaoshiShijuan.getKaoshi_end_time())) {
+                                String startTime = DateUtil.formateDate(DateUtil.getDate(kaoshiShijuan.getKaoshi_start_time()), DateUtil.PATTERN5);
+                                String endTime = DateUtil.formateDate(DateUtil.getDate(kaoshiShijuan.getKaoshi_end_time()), DateUtil.PATTERN5);
+                                kaoshiStartEndTime.setText("实际考试时间：" + startTime + " - " + endTime);
+                            }
+                            // 点击按钮查看试卷
+                            initLinkTextView();
                         }
                     }
 
@@ -92,23 +111,29 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
                     }
                 });
+
+
+        LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(shijuan_id)
+        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+        .subscribe(new LinkKnownObserver<KaoshiShijuanDetailResponse>() {
+            @Override
+            public void onNext(KaoshiShijuanDetailResponse o) {
+                if (o.isSuccess()) {
+                    // 显示雷达图
+                    initRadarChartView(o.getKaoshi_shijuandetail());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     private void initView() {
         initToolBar(toolbar, true, "试卷详情");
-
-        // 设置试卷名称和分类信息
-        initShijuanInfo();
-        // 设置试卷描述
-        classifyDesc.setText(kaoshiShijuan.getClassify_desc());
-
-        if (StringUtils.isNotEmpty(kaoshiShijuan.getKaoshi_start_time()) && StringUtils.isNotEmpty(kaoshiShijuan.getKaoshi_end_time())) {
-            String startTime = DateUtil.formateDate(DateUtil.getDate(kaoshiShijuan.getKaoshi_start_time()), DateUtil.PATTERN5);
-            String endTime = DateUtil.formateDate(DateUtil.getDate(kaoshiShijuan.getKaoshi_end_time()), DateUtil.PATTERN5);
-            kaoshiStartEndTime.setText("实际考试时间：" + startTime + " - " + endTime);
-        }
-                // 点击按钮查看试卷
-        initLinkTextView();
     }
 
     private void initShijuanInfo() {
@@ -123,6 +148,8 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
 
         shijuanName.setText(sb);
         UIUtils.setImage(mContext, classifyImage, kaoshiShijuan.getClassify_image());
+
+        scoreView.setText(kaoshiShijuan.getSum_score() + "分");
     }
 
     private void initLinkTextView() {

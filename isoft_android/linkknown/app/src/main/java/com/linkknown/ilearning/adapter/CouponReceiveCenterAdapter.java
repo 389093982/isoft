@@ -40,7 +40,7 @@ public class CouponReceiveCenterAdapter extends BaseQuickAdapter<CouponListRespo
             jianmianTextView.setVisibility(View.VISIBLE);
             jianmianTextView.setText(String.format("满 %s 元减 %s 元", coupon.getGoods_min_amount(), coupon.getCoupon_amount()));
         } else {
-            youhuiTextView.setText(String.format("%s折", coupon.getDiscount_rate()));
+            youhuiTextView.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
             jianmianTextView.setVisibility(View.GONE);
         }
 

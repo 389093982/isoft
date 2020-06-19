@@ -55,7 +55,7 @@ public class KaoShiShijuanListActivity extends BaseActivity {
     private Paginator paginator;
 
     private List<KaoshiShijuanListResponse.KaoshiShijuan> kaoshiShijuans = new ArrayList<>();
-    private BaseQuickAdapter baseQuickAdapter;
+    private KaoshiShijuanListAdapter baseQuickAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +146,27 @@ public class KaoShiShijuanListActivity extends BaseActivity {
 
     private void initShijuanList() {
         baseQuickAdapter = new KaoshiShijuanListAdapter(mContext, kaoshiShijuans);
+        baseQuickAdapter.setCallbackListener(kaoshiShijuan -> {
+            if (kaoshiShijuan.getIs_completed() == 1) {
+                // 查看考试成果
+                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
+                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+                    return intent;
+                });
+            } else {
+                // 去考试
+                UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
+                    intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
+                    intent.putExtra("bundle", bundle);
+                    intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
+                    return intent;
+                });
+            }
+            // 直接结束页面,不用再返回这个页面（此处就不做返回刷新页面）
+            finish();
+        });
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
         // 设置加载更多监听事件

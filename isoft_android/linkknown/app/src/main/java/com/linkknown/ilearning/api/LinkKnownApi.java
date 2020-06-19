@@ -18,6 +18,7 @@ import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanResponse;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -321,6 +322,10 @@ public interface LinkKnownApi {
     @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPageKaoshiShijuan")
     Observable<KaoshiShijuanListResponse> queryPageKaoshiShijuan(@Query("current_page") int current_page,
                                                                  @Query("offset") int pageSize);
+
+    // 根据试卷 id 查询试卷详情
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryKaoshiShijuanById")
+    Observable<KaoshiShijuanResponse> queryKaoshiShijuanById(@Query("id") int id);
 
     // 根据试卷 id 查询试卷详情
     @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryKaoshiShijuanDetailById")

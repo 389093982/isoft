@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
@@ -25,6 +26,8 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.interfaces.OnCancelListener;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -294,14 +297,8 @@ public class KaoShiShijuanDetailActivity extends BaseActivity{
 
             @Override
             public void submitAll() {
-                // 记住答案并提交到远程服务器
-                memoryCurrentAnswer(1);
-
-                UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
-                    intent.putExtra("kaoshiShijuan", kaoshiShijuan);
-                    return intent;
-                });
-                finish();
+                // 提交试卷
+                handleSubmitKaoshiShijuan();
             }
         });
         progressPopupView = new XPopup.Builder(mContext).asCustom(kaoshiCenterPopupView);
@@ -327,15 +324,32 @@ public class KaoShiShijuanDetailActivity extends BaseActivity{
                     .subscribeOn(Schedulers.io())                   // 在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                     .subscribe(aLong -> {
-                        long totalTime = 3600;
+                        long totalTime = Constants.KAOSHI_TOTAL_TIME;
                         if (totalTime - aLong >= 0) {
-                            kaoshiCenterPopupView.updateKaoshiTimeCost(aLong);
+                            kaoshiCenterPopupView.updateKaoshiTimeCost(totalTime - aLong);
                             daojishi.setText(DateUtil.secToMinuteAndSec((int)(totalTime - aLong)));
+
+                            if (totalTime - aLong == 0){
+                                // 倒计时结束则提交试卷
+                                new XPopup.Builder(mContext).asConfirm("温馨提示", "考试试卷已结束,确认提交试卷？",
+                                        () -> this.handleSubmitKaoshiShijuan(), () -> this.handleSubmitKaoshiShijuan()).show();
+                            }
                         }
                     });
         } else {
             daojishi.setVisibility(View.GONE);
         }
+    }
+
+    // 记住答案并提交到远程服务器
+    private void handleSubmitKaoshiShijuan() {
+        memoryCurrentAnswer(1);
+
+        UIUtils.gotoActivity(mContext, KaoShiShijuanScoreActivity.class, intent -> {
+            intent.putExtra("shijuan_id", kaoshiShijuan.getId());
+            return intent;
+        });
+        finish();
     }
 
     private void initPrefixOrNextView() {
