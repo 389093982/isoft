@@ -16,11 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.MainActivity;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.util.PermissionUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
-import java.security.Permission;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,10 +66,6 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         ButterKnife.bind(this);
 
         initView();
-
-        if (!PermissionUtil.canDrawOverlayViews(mContext)){
-            PermissionUtil.requestOverlayDrawPermission(this, Constants.SYSTEM_ALERT_WINDOW_REQUEST_CODE);
-        }
 
         if (EasyPermissions.hasPermissions(this, perms)) {
             // 延迟一段时间前往主页
