@@ -26,6 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="一批优惠券溜出来啦"/>
+            android:text=" 领券中心"/>
     </LinearLayout>
 </RelativeLayout>
