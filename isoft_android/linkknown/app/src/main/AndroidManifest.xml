@@ -31,7 +31,7 @@
         <activity android:name=".activity.CouponGoodActivity" />
         <activity android:name=".activity.CourseCustomTagListActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
-        <activity android:name=".activity.CouponReceiveCenterActivity" />
+        <activity android:name=".activity.ReceiveCouponCenterActivity" />
         <activity android:name=".activity.AdviseActivity" />
         <activity android:name=".activity.HuodongActivity" />
         <activity android:name=".activity.MessageInfoActivity" />
@@ -39,7 +39,7 @@
         <activity android:name=".activity.PayOrderActivity" />
         <activity android:name=".activity.CourseSearchActivity" /> <!-- activity 页面配置汇总 -->
         <activity android:name=".activity.UserDetailActivity" />
-        <activity android:name=".activity.CouponCenterActivity" />
+        <activity android:name=".activity.MyCouponActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.NewChannelActivity" />
         <activity android:name=".activity.TeacherZhaoPingActivity" />

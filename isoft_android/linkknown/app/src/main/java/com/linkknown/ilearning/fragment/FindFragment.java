@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
+import com.linkknown.ilearning.activity.ReceiveCouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseTagActivity;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
@@ -67,7 +67,7 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         mData.add(new Item("名师招募令", R.drawable.ic_hire, TeacherZhaoPingActivity.class));
         mData.add(new Item("畅享图书", R.drawable.ic_books, TeacherZhaoPingActivity.class));
         mData.add(new Item("锦鲤活动", R.drawable.ic_huodong, TeacherZhaoPingActivity.class));
-        mData.add(new Item("领券中心", R.drawable.ic_coupon, CouponReceiveCenterActivity.class));
+        mData.add(new Item("领券中心", R.drawable.ic_coupon, ReceiveCouponCenterActivity.class));
         mData.add(new Item("个人中心", R.drawable.ic_personal_center, UserDetailActivity.class));
 
 

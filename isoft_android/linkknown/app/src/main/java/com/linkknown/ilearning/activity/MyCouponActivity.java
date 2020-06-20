@@ -1,15 +1,12 @@
 package com.linkknown.ilearning.activity;
 
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,8 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.fragment.CouponCenterFragment;
-import com.linkknown.ilearning.util.AnimationUtil;
+import com.linkknown.ilearning.fragment.MyCouponFragment;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -32,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CouponCenterActivity extends BaseActivity {
+public class MyCouponActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
@@ -76,7 +72,7 @@ public class CouponCenterActivity extends BaseActivity {
 
     private void initReceiveCouponView() {
         new Handler().postDelayed(() -> {
-            receiveCouponLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class));
+            receiveCouponLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext, ReceiveCouponCenterActivity.class));
             int width = receiveCouponText.getWidth();
             // 平移 translation
             ObjectAnimator animator = ObjectAnimator.ofFloat(receiveCouponLayout, "translationX", 10, width + 10, 10).setDuration(5000);
@@ -87,21 +83,21 @@ public class CouponCenterActivity extends BaseActivity {
 
     private void initFragment() {
         // 创建 fragment
-        CouponCenterFragment couponCenterFragment1 = new CouponCenterFragment();
-        CouponCenterFragment couponCenterFragment2 = new CouponCenterFragment();
-        CouponCenterFragment couponCenterFragment3 = new CouponCenterFragment();
+        MyCouponFragment myCouponFragment1 = new MyCouponFragment();
+        MyCouponFragment myCouponFragment2 = new MyCouponFragment();
+        MyCouponFragment myCouponFragment3 = new MyCouponFragment();
 
         // activity 向 fragment 传参
         // 已领取
-        couponCenterFragment1.setArguments(CommonUtil.createBundle2("isExpired", "false", "isUsed", "false"));
+        myCouponFragment1.setArguments(CommonUtil.createBundle2("isExpired", "false", "isUsed", "false"));
         // 已使用
-        couponCenterFragment2.setArguments(CommonUtil.createBundle2("isExpired", "", "isUsed", "true"));
+        myCouponFragment2.setArguments(CommonUtil.createBundle2("isExpired", "", "isUsed", "true"));
         // 已过期
-        couponCenterFragment3.setArguments(CommonUtil.createBundle2("isExpired", "true", "isUsed", "false"));
+        myCouponFragment3.setArguments(CommonUtil.createBundle2("isExpired", "true", "isUsed", "false"));
 
-        mFragments.add(couponCenterFragment1);
-        mFragments.add(couponCenterFragment2);
-        mFragments.add(couponCenterFragment3);
+        mFragments.add(myCouponFragment1);
+        mFragments.add(myCouponFragment2);
+        mFragments.add(myCouponFragment3);
 
         titles.add("已领取");
         titles.add("已使用");
@@ -147,7 +143,7 @@ public class CouponCenterActivity extends BaseActivity {
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if (id == R.id.coupon_center) {
-            UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class);
+            UIUtils.gotoActivity(mContext, ReceiveCouponCenterActivity.class);
         }
         return true;
     }
