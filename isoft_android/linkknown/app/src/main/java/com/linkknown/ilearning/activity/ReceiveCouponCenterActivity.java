@@ -21,6 +21,7 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -113,7 +114,9 @@ public class ReceiveCouponCenterActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtil.showText(mContext, "领取失败！");
+                        if (LoginUtil.isNotUnauthorized(e)) {
+                            ToastUtil.showText(mContext, "领取失败！");
+                        }
                         waitingDialog.dismissDialog();
                     }
                 });

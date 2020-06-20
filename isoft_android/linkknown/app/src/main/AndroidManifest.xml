@@ -21,7 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SetSmallIconActivity"></activity>
+        <activity android:name=".activity.dialog.DialogAutoRefreshTokenActivity"
+            android:theme="@style/LinkKnownDialog"/>
+        <activity
+            android:name=".activity.dialog.DialogUserLoginConfirmActivity"
+            android:theme="@style/LinkKnownDialog" />
+        <activity android:name=".activity.SetSmallIconActivity" />
         <activity android:name=".activity.SetUserInfoActivity" />
         <activity android:name=".activity.SetUserSignatureActivity" />
         <activity android:name=".activity.KaoShiShijuanScoreActivity" />
@@ -95,8 +100,8 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="linkknown.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
