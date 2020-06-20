@@ -41,7 +41,7 @@
                         指定券:
                         <span v-if="coupon.target_type==='course'">
                           <span @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}})">
-                            <span class="isoft_tag2" style="cursor: pointer">课程:{{coupon.target_id}}</span>
+                            <span class="isoft_tag2" style="cursor: pointer">课程:{{getCourseNameById(coupon.target_id) }}</span>
                           </span>
                         </span>
                       </span>
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-  import {QueryPersonalCouponList} from "../../api/index"
+  import {QueryPersonalCouponList,GetCourseListByIds} from "../../api/index"
   import SepLine from "../Common/SepLine";
   import Coupon from "../Common/coupon/Coupon";
   import {GetLoginUserName,CheckHasLoginConfirmDialog,checkFastClick,GetToday_yyyyMMdd} from "../../tools/index";
@@ -124,6 +124,7 @@
     data () {
       return {
         couponDatas: [],
+        courses:[],
         page:{totalCount:0,currentPage:1,offset:10},
         pattern: 0,     // 搜索模式
       }
@@ -162,12 +163,38 @@
           };
           const result = await QueryPersonalCouponList(params);
           if (result.status === 'SUCCESS') {
-              this.couponDatas = result.coupons;
-              this.page.totalCount = result.paginator.totalcount;
+            this.couponDatas = result.coupons;
+            this.page.totalCount = result.paginator.totalcount;
+
+            //这里再发一次请求，根据课程id 集合查询 课程
+            let ids = "";
+            for (let i = 0;i<result.coupons.length;i++){
+              if (result.coupons[i].target_id != null && result.coupons[i].target_id != "") {
+                ids += result.coupons[i].target_id + ","
+              }
+            }
+            //去掉最后一个逗号
+            ids = ids.substring(0,ids.length-1);
+            params = {
+              'ids':ids
+            };
+            const res = await GetCourseListByIds(params);
+            if (res.status === 'SUCCESS') {
+              this.courses = res.courses;
+            }
+
           }
         }else {
           CheckHasLoginConfirmDialog(this, {path: "/payment/myCouponList"});
         }
+      },
+      getCourseNameById:function(course_id){
+        for (let i = 0; i < this.courses.length; i++) {
+          if (this.courses[i].id == course_id) {
+            return this.courses[i].course_name;
+          }
+        }
+
       },
       pageChange:function (page) {
         this.page.currentPage = page;

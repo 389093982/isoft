@@ -46,6 +46,7 @@ export const GetMyCatalogs = () => ajax(BASE_URL + '/iwork/httpservice/isoft_lin
 
 //【Course模块】***************************************************************************************************
 export const SearchCourseList = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/SearchCourseList', params, 'GET');// 课程搜索
+export const GetCourseListByIds = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetCourseListByIds', params, 'GET');// 课程搜索
 export const ShowCourseHistory = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory", params, 'GET');
 export const UpdateCourseIcon = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseIcon", params, 'GET');// 完结视频更新
 export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/DeleteVideo", params, 'GET');

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -24,17 +25,21 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
+import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.model.PayShoppinpCartResponse;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,6 +55,7 @@ public class CouponGoodActivity extends BaseActivity {
     private Context mContext;
     private BaseQuickAdapter baseQuickAdapter;
     private Handler handler = new Handler();
+    private Paginator paginator;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -86,11 +92,26 @@ public class CouponGoodActivity extends BaseActivity {
         //获取传过来的参数
         Bundle bundle = getIntent().getBundleExtra("bundle");
         coupon = (CouponListResponse.Coupon)bundle.getSerializable("coupon");
+
+        //创建 CouponGoodAdapter
+        baseQuickAdapter = new CouponGoodAdapter(mContext,courseList);
+
+        // 是否自动加载下一页（默认为true）
+        baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        // 设置加载更多监听事件
+        baseQuickAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
+            }
+        });
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
+        recyclerView.setAdapter(baseQuickAdapter);
+
     }
 
 
     private void initData() {
-        loadPageData(1, Constants.DEFAULT_PAGE_SIZE2);
+        loadPageData(1, Constants.DEFAULT_PAGE_SIZE);
     }
 
     private void loadPageData(int current_page, int pageSize) {
@@ -105,47 +126,7 @@ public class CouponGoodActivity extends BaseActivity {
 
 
     public void executeLoadPageData(int current_page,int pageSize){
-        if ("designated".equals(coupon.getCoupon_type())){
-            if ("course".equals(coupon.getTarget_type())){
-                Integer courseId = Integer.valueOf(coupon.getTarget_id());
-                LinkKnownApiFactory.getLinkKnownApi().ShowCourseDetail(courseId,LoginUtil.getLoginUserName(mContext))
-                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                        .subscribe(new LinkKnownObserver<CourseDetailResponse>() {
-                            @Override
-                            public void onNext(CourseDetailResponse o) {
-                                if (o.isSuccess()){
-                                    courseList.clear();
-                                    CourseDetailResponse.Course course_detail = o.getCourse();
-                                    CouponCourseResponse.Course course = new CouponCourseResponse.Course();
-                                    //将 CourseDetailResponse.Course 5个展示字段 赋值进入 CouponCourseResponse.Course
-                                    course.setSmall_image(course_detail.getSmall_image());
-                                    course.setCourse_name(course_detail.getCourse_name());
-                                    course.setCourse_short_desc(course_detail.getCourse_short_desc());
-                                    course.setCourse_number(course_detail.getCourse_number());
-                                    course.setWatch_number(course_detail.getWatch_number());
-                                    course.setPrice(course_detail.getPrice());
-                                    course.setId(course_detail.getId());
-                                    courseList.add(course);
-
-                                    //创建 CouponGoodAdapter
-                                    baseQuickAdapter = new CouponGoodAdapter(mContext,courseList);
-                                    recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
-                                    recyclerView.setAdapter(baseQuickAdapter);
-
-                                }else{
-                                    ToastUtil.showText(mContext,o.getErrorMsg());
-                                }
-                            };
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("ShowCourseDetail error", e.getMessage());
-                                ToastUtil.showText(mContext,"查询失败！");
-                            }
-                        });
-            }
-
-        }else if ("general".equals(coupon.getCoupon_type())){
+        if ("general".equals(coupon.getCoupon_type())){
             String youhui_type = coupon.getYouhui_type();
             String goods_min_amount = coupon.getGoods_min_amount();
             LinkKnownApiFactory.getLinkKnownApi().QueryGeneralCouponTargets(youhui_type,goods_min_amount,current_page,pageSize)
@@ -155,21 +136,45 @@ public class CouponGoodActivity extends BaseActivity {
                         @Override
                         public void onNext(CouponCourseResponse o) {
                             if (o.isSuccess()){
-                                courseList = o.getCourseList();
+                                if (CollectionUtils.isNotEmpty(o.getCourseList())){
+                                    if (current_page == 1) {
+                                        // 先清空再添加
+                                        courseList.clear();
+                                    }
+                                    courseList.addAll(o.getCourseList());
+                                    baseQuickAdapter.setList(courseList);
 
-                                //创建 CouponGoodAdapter
-                                baseQuickAdapter = new CouponGoodAdapter(mContext,courseList);
-                                recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
-                                recyclerView.setAdapter(baseQuickAdapter);
+                                    // 当前这次数据加载完毕，调用此方法
+                                    baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                                }else{
+                                    if (current_page == 1) {
+                                        courseList.clear();
+                                        baseQuickAdapter.setList(courseList);
+                                        baseQuickAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
+                                        TextView emptyTipText = baseQuickAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
+                                        emptyTipText.setText("暂无商品");
+                                    }
+                                    baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                                    baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                                }
 
+                                paginator = o.getPaginator();
+                                // 最后一页
+                                if (CommonUtil.isLastPage(paginator)) {
+                                    baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                                }
                             }else{
-                                ToastUtil.showText(mContext,o.getErrorMsg());
+                                baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                             }
+                            swipeRefreshLayoutHelper.finishRefreshing();
                         };
                         @Override
                         public void onError(Throwable e) {
                             Log.e("ShowCourseDetail error", e.getMessage());
                             ToastUtil.showText(mContext,"查询失败！");
+                            swipeRefreshLayoutHelper.finishRefreshing();
+                            // 当前这次数据加载错误，调用此方法
+                            baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                         }
                     });
         }

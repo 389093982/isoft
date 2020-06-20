@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponGoodActivity;
+import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -80,12 +81,21 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
         } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("去使用");
             matrix.setSaturation(1);
-            viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class,intent -> {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("coupon",coupon);
-                intent.putExtra("bundle",bundle);
-                return intent;
-            }));
+            if ("general".equals(coupon.getCoupon_type())){
+                //指定券跳往课程列表
+                viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class,intent -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("coupon",coupon);
+                    intent.putExtra("bundle",bundle);
+                    return intent;
+                }));
+            }else if ("designated".equals(coupon.getCoupon_type()) && "course".equals(coupon.getTarget_type())){
+                viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CourseDetailActivity.class, intent -> {
+                    intent.putExtra("course_id",Integer.valueOf(coupon.getTarget_id()));
+                    return intent;
+                }));
+            }
+
         } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);
