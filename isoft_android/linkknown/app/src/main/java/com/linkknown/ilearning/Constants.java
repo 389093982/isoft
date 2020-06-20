@@ -65,4 +65,7 @@ public class Constants {
     public static final int SYSTEM_ALERT_WINDOW_REQUEST_CODE = 10011;
     // 其它权限不知道什么码
     public static final int PERMISSION_ALL_CODE = 10012;
+
+    // 默认用户签名
+    public static final String DEFAULT_USER_SIGNATURE = "这家伙很懒，什么个性签名都没有留下";
 }

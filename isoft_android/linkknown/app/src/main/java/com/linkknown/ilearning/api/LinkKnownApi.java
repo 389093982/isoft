@@ -29,6 +29,7 @@ import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.SecondLevelCommentResponse;
+import com.linkknown.ilearning.model.UserAttentionListResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
@@ -296,7 +297,7 @@ public interface LinkKnownApi {
 
     // 关注 和 取消关注
     @POST("/api/iwork/httpservice/isoft_linkknown_api/DoAttention")
-    Observable<BaseResponse> DoAttention(@Query("attention_object_type") String attention_object_type,
+    Observable<BaseResponse> doAttention(@Query("attention_object_type") String attention_object_type,
                                          @Query("attention_object_id") String attention_object_id,
                                          @Query("state") String state);
 
@@ -347,9 +348,17 @@ public interface LinkKnownApi {
     @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryKaoshiShijuanDetailById")
     Observable<KaoshiShijuanDetailResponse> queryKaoshiShijuanDetailById(@Query("id") int id);
 
+    // 更新考试题目答案
     @POST("/api/iwork/httpservice/isoft_linkknown_api/UpdateKaoshiShijuanTimuAnswer")
     Observable<BaseResponse> updateKaoshiShijuanTimuAnswer(@Query("id") int id,
                                                            @Query("shijuan_id") int shijuan_id,
                                                            @Query("is_completed") int is_completed,
                                                            @Query("given_answer") String given_answer);
+
+    // 查询关注或者粉丝数量
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryAttentionOrFensi")
+    Observable<UserAttentionListResponse> queryAttentionOrFensi(@Query("attention_object_type") String attention_object_type,
+                                                                @Query("AttentionOrFensi") String attentionOrFensi,
+                                                                @Query("current_page") int current_page,
+                                                                @Query("offset") int pageSize);
 }

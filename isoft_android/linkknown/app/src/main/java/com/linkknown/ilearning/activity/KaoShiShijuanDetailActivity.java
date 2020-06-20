@@ -21,6 +21,7 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanResponse;
 import com.linkknown.ilearning.popup.KaoshiCenterPopupView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -40,6 +41,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
 public class KaoShiShijuanDetailActivity extends BaseActivity{
@@ -99,7 +101,7 @@ public class KaoShiShijuanDetailActivity extends BaseActivity{
     // 考试是否完成,分为已考完（true）和考试中（false）两种状态
     private boolean kaoshiCompleted;
     // 考试试卷xinxi
-    KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
+    KaoshiShijuanResponse.KaoshiShijuan kaoshiShijuan;
 
     // 存储考试试卷中的题目列表,每一道题目就是一个 KaoshiShijuanDetail
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList = new ArrayList<>();
@@ -146,16 +148,21 @@ public class KaoShiShijuanDetailActivity extends BaseActivity{
 
         shijuan_id = getIntent().getIntExtra("shijuan_id", -1);
         kaoshiCompleted = getIntent().getBooleanExtra("kaoshiCompleted", false);
-        kaoshiShijuan = (KaoshiShijuanListResponse.KaoshiShijuan) getIntent().getBundleExtra("bundle").getSerializable("kaoshiShijuan");
         initView();
 
-        // 加载对话框显示 2 s 后再发送网络请求
-        new Handler().postDelayed(() -> initData(), 2000);
+        // 加载对话框显示 1 s 后再发送网络请求
+        new Handler().postDelayed(() -> initData(), 1000);
     }
 
     private void initData() {
-        LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(shijuan_id)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+        Observable.zip(LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanById(shijuan_id),
+                LinkKnownApiFactory.getLinkKnownApi().queryKaoshiShijuanDetailById(shijuan_id),
+                (kaoshiShijuanResponse, kaoshiShijuanDetailResponse) -> {
+                    if (kaoshiShijuanResponse.isSuccess()) {
+                        kaoshiShijuan = kaoshiShijuanResponse.getKaoshi_shijuan();
+                    }
+                    return kaoshiShijuanDetailResponse;
+                }).subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<KaoshiShijuanDetailResponse>() {
                     @Override
@@ -284,6 +291,9 @@ public class KaoShiShijuanDetailActivity extends BaseActivity{
     }
 
     private void initKaoshiProgress() {
+        if (kaoshiShijuan == null){
+            return;
+        }
         kaoshiCenterPopupView = new KaoshiCenterPopupView(mContext, kaoshiShijuan,
                 kaoshiShijuanDetailList, new KaoshiCenterPopupView.CallBackListener() {
             @Override

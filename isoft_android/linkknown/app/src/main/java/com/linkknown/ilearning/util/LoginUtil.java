@@ -1,8 +1,10 @@
 package com.linkknown.ilearning.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,13 @@ import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.LoginActivity;
+import com.linkknown.ilearning.activity.dialog.DialogAutoRefreshTokenActivity;
+import com.linkknown.ilearning.activity.dialog.DialogUserLoginConfirmActivity;
+import com.linkknown.ilearning.common.LinkKnownObserver;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.LoginUserResponse;
+import com.linkknown.ilearning.model.RefreshTokenResponse;
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
 
@@ -23,6 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.HttpException;
 
 public class LoginUtil {
@@ -141,74 +151,51 @@ public class LoginUtil {
                 && !checkHasExpired(mContext);
     }
 
-    public static void showLoginOrAutoLoginDialog(Context context, ConfirmDialogCallback callback) {
-        // 弹出对话框前去登录
-        showLoginConfirmDialog2(context, callback);
-        // 自动登录
-
+    public static void showLoginOrAutoLoginDialog(Context context) {
+        if (LoginUtil.checkCanRefreshToken(context)) {
+            // 弹出对话框前去登录
+            showRefreshTokenDialog(context);
+        } else {
+            // 自动刷新 tokenString，成功后显示弹框动画，不成功提示
+            showRedirectLoginConfirmDialog(context);
+        }
     }
 
-    public static void showLoginConfirmDialog2(final Context context, final ConfirmDialogCallback callback) {
-        new XPopup.Builder(context)
-                .hasShadowBg(true)
-                .asConfirm("温馨提示", "未登录,前去登录？", () -> {
-                    callback.onPositive();
-                }, () -> {
-                    callback.onNegative();
-                }).show();
+    public static void showRedirectLoginConfirmDialog(Context context) {
+        Intent intent = new Intent(context, DialogUserLoginConfirmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    /**
-     * 显示弹出框
-     */
-    public static void showLoginConfirmDialog(final Context context, final ConfirmDialogCallback callback) {
-        // 获取WindowManager
-        final WindowManager mWindowManager = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+    public static void showRefreshTokenDialog(Context context) {
+        LinkKnownApiFactory.getLinkKnownApi().refreshToken(LoginUtil.getTokenString(context))
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<RefreshTokenResponse>() {
+                    @Override
+                    public void onNext(RefreshTokenResponse refreshTokenResponse) {
+                        if (refreshTokenResponse.isSuccess()) {
+                            String tokenString = refreshTokenResponse.getTokenString();
+                            long expireSecond = refreshTokenResponse.getExpireSecond();
+                            LoginUtil.memoryRefreshToken(context, tokenString, expireSecond);
 
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        // 类型
-        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        // 设置flag
-        params.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        // 如果设置了WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE，弹出的View收不到Back键的事件
-        // 不设置这个弹出框的透明遮罩显示为黑色
-        params.format = PixelFormat.TRANSPARENT;
-        // FLAG_NOT_TOUCH_MODAL不阻塞事件传递到后面的窗口
-        // 设置 FLAG_NOT_FOCUSABLE 悬浮窗口较小时，后面的应用图标由不可长按变为可长按
-        // 不设置这个flag的话，home页的划屏会有问题
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.gravity = Gravity.CENTER;
 
-        final View mView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.dialog_user_loginconfirm, null);
-        TextView dialog_tip = (TextView) mView.findViewById(R.id.dialog_tip);
-        TextView btn_submit = (TextView) mView.findViewById(R.id.btn_submit);
-        TextView btn_cancel = (TextView) mView.findViewById(R.id.btn_cancel);
+                            // 登录成功，且登录信息存储成功后，弹出自动刷新过场动画
+                            Intent intent = new Intent(context, DialogAutoRefreshTokenActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        } else {
+                            ToastUtil.showText(context, "登录失败，请稍后重试~");
+                        }
+                    }
 
-        btn_submit.setText("重新登录");
-        btn_cancel.setText("退出登录");
-        dialog_tip.setText("该账户在其他设备登录,若不是您在操作,请及时修改密码以防泄露信息");
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 隐藏弹窗
-                mWindowManager.removeView(mView);
-                callback.onPositive();
-            }
-        });
-
-        btn_cancel.setOnClickListener(v -> {
-            mWindowManager.removeView(mView);
-            callback.onNegative();
-        });
-
-        mWindowManager.addView(mView, params);
-
+                    // 接口调用失败就不弹框了，直接提示就行
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("refreshToken =>", "refreshToken error");
+                        ToastUtil.showText(context, "登录失败，请稍后重试~");
+                    }
+                });
     }
 
-    public static interface ConfirmDialogCallback {
-        void onPositive();
-
-        void onNegative();
-    }
 }

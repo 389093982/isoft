@@ -158,9 +158,6 @@ public class KaoShiShijuanScoreActivity extends BaseActivity {
             UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
                 kaoshiShijuan.setIs_completed(1);
                 intent.putExtra("shijuan_id", kaoshiShijuan.getId());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
-                intent.putExtra("bundle", bundle);
                 intent.putExtra("kaoshiCompleted", true);
                 return intent;
             });

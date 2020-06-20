@@ -95,18 +95,7 @@ public class UserDetailActivity extends BaseActivity {
             //查看自己
             if (!LoginUtil.checkHasLogin(mContext)){
                 // 全局对话框登录拦截
-                LoginUtil.showLoginOrAutoLoginDialog(mContext, new LoginUtil.ConfirmDialogCallback() {
-                    @Override
-                    public void onPositive() {
-                        UIUtils.gotoActivity(mContext, LoginActivity.class);
-                        finish();
-                    }
-
-                    @Override
-                    public void onNegative() {
-
-                    }
-                });
+                LoginUtil.showLoginOrAutoLoginDialog(mContext);
             }else{
                 userName = LoginUtil.getLoginUserName(mContext);
                 //查看自己
@@ -182,14 +171,10 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!LoginUtil.checkHasLogin(mContext)){
-                    new XPopup.Builder(mContext)
-                            .hasShadowBg(true)
-                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
-                                UIUtils.gotoActivity(mContext, LoginActivity.class);
-                            }).show();
+                    LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"on")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"on")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {
@@ -213,14 +198,10 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!LoginUtil.checkHasLogin(mContext)){
-                    new XPopup.Builder(mContext)
-                            .hasShadowBg(true)
-                            .asConfirm("温馨提示", "未登录,前去登录？", () -> {
-                                UIUtils.gotoActivity(mContext, LoginActivity.class);
-                            }).show();
+                    LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"off")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"off")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {
