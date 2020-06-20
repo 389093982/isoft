@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.view.View;
@@ -44,16 +45,28 @@ public class CouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Cou
             jianmianTextView.setVisibility(View.GONE);
         }
 
-        // 设置优惠券适用场景
-        TextView couponSceneView = viewHolder.findView(R.id.couponSceneView);
+
+        // 券类型
+        TextView couponType = viewHolder.findView(R.id.couponType);
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_type(), "general")) {
-            couponSceneView.setText("适用场景：链知 app 和 web 多端通用，全部课程");
+            couponType.setText("通用券");
         } else {
-            couponSceneView.setText("适用场景：只适用于部分场景奥~~");
+            couponType.setText("指定券");
         }
+
+        // 适用于： 描述
+        TextView targetName = viewHolder.findView(R.id.targetName);
+        if (StringUtils.equalsIgnoreCase(coupon.getCoupon_type(), "general")) {
+            targetName.setText("所有付费课程");
+            targetName.setTextColor(Color.RED);
+        } else {
+            targetName.setText("牛人视频");
+            targetName.setTextColor(Color.BLUE);
+        }
+
         // 设置有效期
         TextView endTimeView = viewHolder.findView(R.id.endTimeView);
-        endTimeView.setText(String.format("有效期：至%s", DateUtil.formateYYYYMMDDToDate(coupon.getEnd_date())));
+        endTimeView.setText("活动日期："+coupon.getStart_date() + " - " +coupon.getEnd_date());
 
         // 设置右边按钮
         ColorMatrix matrix = new ColorMatrix();
@@ -64,9 +77,9 @@ public class CouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Cou
             submitBtnView.setText("已使用");
             matrix.setSaturation(0);
         } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
-            submitBtnView.setText("已领取");
+            submitBtnView.setText("去使用");
             matrix.setSaturation(1);
-            viewHolder.findView(R.id.couponLayout).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class));
+            viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class));
         } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);

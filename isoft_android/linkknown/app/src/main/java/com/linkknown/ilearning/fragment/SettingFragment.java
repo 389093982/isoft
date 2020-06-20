@@ -275,6 +275,8 @@ public class SettingFragment extends PreferenceFragmentCompat {
                                             public void onNext(BaseResponse o) {
                                                 if (o.isSuccess()){
                                                     ToastUtil.showText(mContext,"头像更新成功！");
+                                                }else{
+                                                    ToastUtil.showText(mContext,o.getErrorMsg());
                                                 }
                                             };
                                             @Override
@@ -284,7 +286,7 @@ public class SettingFragment extends PreferenceFragmentCompat {
                                             }
                                         });
                             }else{
-                                ToastUtil.showText(mContext,"上传失败");
+                                ToastUtil.showText(mContext,o.getErrorMsg());
                             }
                         };
                         @Override

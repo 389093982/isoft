@@ -2,6 +2,7 @@ package com.linkknown.ilearning.activity;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
@@ -131,13 +132,24 @@ public class PayOrderDetailActivity extends BaseActivity {
             jianmianTextView.setVisibility(View.GONE);
         }
 
-        // 设置优惠券适用场景
-        TextView couponSceneView = findViewById(R.id.couponSceneView);
+        // 券类型
+        TextView couponType = findViewById(R.id.couponType);
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_type(), "general")) {
-            couponSceneView.setText("适用场景：链知 app 和 web 多端通用，全部课程");
+            couponType.setText("通用券");
         } else {
-            couponSceneView.setText("适用场景：专用券，只适用指定课程");
+            couponType.setText("指定券");
         }
+
+        // 适用于： 描述
+        TextView targetName = findViewById(R.id.targetName);
+        if (StringUtils.equalsIgnoreCase(coupon.getCoupon_type(), "general")) {
+            targetName.setText("所有付费课程");
+            targetName.setTextColor(Color.RED);
+        } else {
+            targetName.setText("牛人视频");
+            targetName.setTextColor(Color.BLUE);
+        }
+
         // 设置有效期
         TextView endTimeView = findViewById(R.id.endTimeView);
         endTimeView.setText(String.format("有效期：至%s", DateUtil.formateYYYYMMDDToDate(coupon.getEnd_date())));
