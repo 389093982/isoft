@@ -22,11 +22,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class CouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
+public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
 
-    public CouponCenterAdapter(Context mContext, List<CouponListResponse.Coupon> couponList) {
+    public MyCouponAdapter(Context mContext, List<CouponListResponse.Coupon> couponList) {
         super(R.layout.item_coupon, couponList);
         this.mContext = mContext;
     }

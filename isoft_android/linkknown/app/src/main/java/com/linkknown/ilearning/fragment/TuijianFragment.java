@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.CouponReceiveCenterActivity;
+import com.linkknown.ilearning.activity.ReceiveCouponCenterActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -15,7 +15,6 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 
@@ -87,7 +86,7 @@ public class TuijianFragment extends BaseLazyLoadFragment {
         banner.setOnBannerListener(position -> {
             switch (position) {
                 case 0:
-                    UIUtils.gotoActivity(mContext, CouponReceiveCenterActivity.class);
+                    UIUtils.gotoActivity(mContext, ReceiveCouponCenterActivity.class);
                     break;
                 case 1:
                     UIUtils.gotoActivity(mContext, HuodongActivity.class);

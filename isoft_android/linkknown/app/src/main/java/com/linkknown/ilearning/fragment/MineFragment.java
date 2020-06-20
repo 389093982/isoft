@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
-import com.linkknown.ilearning.activity.CouponCenterActivity;
+import com.linkknown.ilearning.activity.MyCouponActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
@@ -148,7 +148,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void initMenuImageView () {
         // 点击调往对应页面
-        iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponCenterActivity.class));
+        iv_coupon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, MyCouponActivity.class));
         iv_order.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PayOrderActivity.class));
         iv_shoppingCart.setOnClickListener(v -> UIUtils.gotoActivity(mContext, ShoppingCartActivity.class));
         iv_huodong.setOnClickListener(v -> UIUtils.gotoActivity(mContext, HuodongActivity.class));
