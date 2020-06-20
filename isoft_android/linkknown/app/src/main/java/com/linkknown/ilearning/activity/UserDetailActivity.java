@@ -174,7 +174,7 @@ public class UserDetailActivity extends BaseActivity {
                     LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"on")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"on")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {
@@ -201,7 +201,7 @@ public class UserDetailActivity extends BaseActivity {
                     LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName,"off")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"off")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {

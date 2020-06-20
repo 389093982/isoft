@@ -217,7 +217,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                     LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",courseDetailResponse.getCourse().getCourse_author(),"on")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",courseDetailResponse.getCourse().getCourse_author(),"on")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {
@@ -244,7 +244,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                     LoginUtil.showLoginOrAutoLoginDialog(mContext);
                     return;
                 }
-                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",courseDetailResponse.getCourse().getCourse_author(),"off")
+                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",courseDetailResponse.getCourse().getCourse_author(),"off")
                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                         .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                         .subscribe(new LinkKnownObserver<BaseResponse>() {

@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
@@ -25,12 +27,14 @@ import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
+import com.linkknown.ilearning.activity.UserAttentionListActivity;
 import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.LoginUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -172,9 +176,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                 UIUtils.setImage(mContext, headerIcon, LoginUtil.getHeaderIcon(mContext));
                                 nickName.setText(LoginUtil.getLoginNickName(mContext));
                                 userPoint.setText(String.format(Locale.getDefault(), "积分 %d", user.getUser_points()));
-                                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
+                                userSignature.setText(StringUtilEx.getFirstNotEmptyStr(user.getUser_signature(), Constants.DEFAULT_USER_SIGNATURE));
                                 attention_counts.setText(user.getAttention_counts()==0?"关注:0":"关注:"+user.getAttention_counts());
                                 fensi_counts.setText(user.getFensi_counts()==0?"粉丝:0":"粉丝:"+user.getFensi_counts());
+
+                                attention_counts.setOnClickListener(v -> UIUtils.gotoActivity(mContext, UserAttentionListActivity.class, intent -> {
+                                    intent.putExtra(UserAttentionListActivity.ATTENTION_TYPE, UserAttentionListActivity.ATTENTION);
+                                    return intent;
+                                }));
+                                fensi_counts.setOnClickListener(v -> UIUtils.gotoActivity(mContext, UserAttentionListActivity.class, intent -> {
+                                    intent.putExtra(UserAttentionListActivity.ATTENTION_TYPE, UserAttentionListActivity.FEN_SI);
+                                    return intent;
+                                }));
                             }
                         };
 

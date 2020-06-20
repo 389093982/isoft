@@ -131,6 +131,10 @@ public class CourseCustomTagListActivity extends BaseActivity {
     }
 
     private void executeLoadPageData(int current_page, int pageSize) {
+        // 状态手动置为"加载中"，并且会调用加载更多监听
+        // 一般情况下，不需要自己设置'加载中'状态
+        baseQuickAdapter.getLoadMoreModule().loadMoreToLoading();
+
         LinkKnownApiFactory.getLinkKnownApi().queryCustomTagCourse(custom_tag, current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
