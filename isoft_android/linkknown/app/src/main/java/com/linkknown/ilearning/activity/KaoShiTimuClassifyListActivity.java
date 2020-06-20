@@ -1,5 +1,7 @@
 package com.linkknown.ilearning.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,7 +91,6 @@ public class KaoShiTimuClassifyListActivity extends BaseActivity {
             // 后续页面，延迟执行，让加载效果更好
             handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
         }
-        executeLoadPageData(current_page, pageSize);
     }
 
     private void executeLoadPageData(int current_page, int pageSize) {
@@ -158,6 +159,12 @@ public class KaoShiTimuClassifyListActivity extends BaseActivity {
                 loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
         });
+        // 给 adapter 添加动画
+        baseQuickAdapter.setAdapterAnimation(view -> new Animator[]{
+                ObjectAnimator.ofFloat(view, "scaleY", 0.95f, 1),
+                ObjectAnimator.ofFloat(view, "scaleX", 0.95f, 1)
+        });
+        baseQuickAdapter.setAnimationFirstOnly(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
     }
