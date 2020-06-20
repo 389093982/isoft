@@ -157,9 +157,6 @@ public class KaoShiShijuanListActivity extends BaseActivity {
                 // 去考试
                 UIUtils.gotoActivity(mContext, KaoShiShijuanDetailActivity.class, intent -> {
                     intent.putExtra("shijuan_id", kaoshiShijuan.getId());
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("kaoshiShijuan", kaoshiShijuan);
-                    intent.putExtra("bundle", bundle);
                     intent.putExtra("kaoshiCompleted", kaoshiShijuan.getIs_completed() == 1);
                     return intent;
                 });

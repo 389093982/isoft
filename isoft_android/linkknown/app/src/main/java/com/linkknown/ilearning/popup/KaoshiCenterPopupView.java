@@ -14,6 +14,7 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.KaoShiShijuanScoreActivity;
 import com.linkknown.ilearning.model.KaoshiShijuanDetailResponse;
 import com.linkknown.ilearning.model.KaoshiShijuanListResponse;
+import com.linkknown.ilearning.model.KaoshiShijuanResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.core.CenterPopupView;
@@ -28,12 +29,12 @@ public class KaoshiCenterPopupView extends CenterPopupView {
     private Context mContext;
     private CallBackListener listener;
     private List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList;
-    KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan;
+    KaoshiShijuanResponse.KaoshiShijuan kaoshiShijuan;
 
     private FlowLayout flowLayout;
     AppCompatButton submitAll;
 
-    public KaoshiCenterPopupView(@NonNull Context context, KaoshiShijuanListResponse.KaoshiShijuan kaoshiShijuan,
+    public KaoshiCenterPopupView(@NonNull Context context, KaoshiShijuanResponse.KaoshiShijuan kaoshiShijuan,
                                  List<KaoshiShijuanDetailResponse.KaoshiShijuanDetail> kaoshiShijuanDetailList, CallBackListener listener) {
         super(context);
         this.mContext = context;
