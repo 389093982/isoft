@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_goods_card_tag"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/bg_card"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/goodsImg"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:src="@drawable/linkknown"/>
+
+    <TextView
+        android:id="@+id/goodsName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/goodsImg"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:textSize="14sp"
+        android:text="商品名称"/>
+
+    <TextView
+        android:id="@+id/goodsDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goodsName"
+        android:layout_alignLeft="@+id/goodsName"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/gray1"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        android:text="商品描述"/>
+
+    <ImageView
+        android:id="@+id/watchNumber_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/goodsDesc"
+        android:layout_alignLeft="@+id/goodsDesc"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_play_circle_outline_black_24dp" />
+
+    <TextView
+        android:id="@+id/watchNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/watchNumber_icon"
+        android:layout_alignBottom="@+id/watchNumber_icon"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/black_alpha_45"
+        android:textSize="12sp"
+        android:text="120"/>
+
+    <ImageView
+        android:id="@+id/courseNumber_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_toRightOf="@+id/watchNumberText"
+        android:layout_alignBottom="@+id/watchNumber_icon"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_subtitles_black_24dp" />
+
+    <TextView
+        android:id="@+id/courseNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_toRightOf="@+id/courseNumber_icon"
+        android:layout_alignBottom="@+id/watchNumber_icon"
+        android:textColor="@color/black_alpha_45"
+        android:textSize="12sp"
+        android:text="28"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goodsDesc"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14dp"
+        android:text="￥188.00"/>
+
+</RelativeLayout>

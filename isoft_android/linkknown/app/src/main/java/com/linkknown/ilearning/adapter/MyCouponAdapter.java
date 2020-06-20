@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,7 +80,12 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
         } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("去使用");
             matrix.setSaturation(1);
-            viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class));
+            viewHolder.findView(R.id.submitBgView).setOnClickListener(v -> UIUtils.gotoActivity(mContext, CouponGoodActivity.class,intent -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("coupon",coupon);
+                intent.putExtra("bundle",bundle);
+                return intent;
+            }));
         } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);

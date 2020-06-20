@@ -142,6 +142,6 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
 
     @Override
     protected int providelayoutId() {
-        return R.layout.fragment_coupon_center;
+        return R.layout.fragment_my_coupon;
     }
 }

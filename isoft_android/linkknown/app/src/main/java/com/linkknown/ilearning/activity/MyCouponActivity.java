@@ -56,7 +56,7 @@ public class MyCouponActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_coupon_center);
+        setContentView(R.layout.layout_my_coupon);
         ButterKnife.bind(this);
         mContext = this;
         initView();

@@ -20,12 +20,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class CouponReceiveCenterAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
+public class ReceiveCouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
     private ListenerCallback listener;
 
-    public CouponReceiveCenterAdapter(Context mContext, List<CouponListResponse.Coupon> couponList, ListenerCallback listener) {
+    public ReceiveCouponCenterAdapter(Context mContext, List<CouponListResponse.Coupon> couponList, ListenerCallback listener) {
         super(R.layout.item_coupon, couponList);
         this.mContext = mContext;
         this.listener = listener;

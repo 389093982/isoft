@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
@@ -13,7 +14,7 @@ public class CouponListResponse extends BaseResponse {
     private Paginator paginator;
 
     @Data
-    public static class Coupon {
+    public static class Coupon implements Serializable {
         private String activity_desc;
         private String activity_id;
         private String coupon_amount;
