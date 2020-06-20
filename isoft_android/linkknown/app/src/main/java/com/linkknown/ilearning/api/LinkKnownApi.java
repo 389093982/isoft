@@ -2,6 +2,7 @@ package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.FileUploadResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.CouponListResponse;
@@ -59,6 +60,21 @@ public interface LinkKnownApi {
     // 查询课程详情
     @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp")
     Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id);
+
+
+
+    // 根据ID查询课程详情
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetail")
+    Observable<CourseDetailResponse> ShowCourseDetail(@Query("course_id") int course_id,
+                                                      @Query("user_name") String user_name);
+
+
+    // 根据券来查可以购买的课程
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryGeneralCouponTargets")
+    Observable<CouponCourseResponse> QueryGeneralCouponTargets(@Query("youhui_type") String youhui_type,
+                                                               @Query("goods_min_amount") String goods_min_amount,
+                                                               @Query("current_page") int current_page,
+                                                               @Query("offset") int offset);
 
 
     // 获取用户详情

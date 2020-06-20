@@ -12,7 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.adapter.CouponReceiveCenterAdapter;
+import com.linkknown.ilearning.adapter.ReceiveCouponCenterAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.fragment.dialog.WaitingDialog;
@@ -58,7 +58,7 @@ public class ReceiveCouponCenterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coupon_receive_center);
+        setContentView(R.layout.activity_receive_coupon_center);
 
         mContext = this;
         ButterKnife.bind(this);
@@ -80,7 +80,7 @@ public class ReceiveCouponCenterActivity extends BaseActivity {
     private void initView() {
         initToolBar(toolbar, true, "领券中心");
 
-        baseQuickAdapter =  new CouponReceiveCenterAdapter(mContext, couponList, activity_id -> receiveCoupon(activity_id));
+        baseQuickAdapter =  new ReceiveCouponCenterAdapter(mContext, couponList, activity_id -> receiveCoupon(activity_id));
 
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
