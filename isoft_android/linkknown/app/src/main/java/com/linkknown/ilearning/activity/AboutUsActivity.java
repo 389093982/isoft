@@ -29,6 +29,6 @@ public class AboutUsActivity extends BaseActivity {
     }
 
     private void initView () {
-        initToolBar(toolbar, true, "关于");
+        initToolBar(toolbar, true, "关于链知");
     }
 }
