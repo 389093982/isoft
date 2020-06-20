@@ -2,53 +2,63 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/layout_toolbar"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_marginTop="30dp"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:id="@+id/iv_icon"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/linkknown"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/linkknown" />
+            android:textSize="13sp"
+            android:text="@string/currentVersion"
+            android:layout_below="@id/iv_icon"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_gravity="center"
+            android:layout_marginTop="25dp"
             android:text="@string/app_name"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_below="@id/version"
+            android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/currentVersion" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="15dp">
 
-    <LinearLayout
-        android:id="@+id/foot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:paddingBottom="15dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="@string/copyright"
+                android:textSize="10sp"
+                android:textColor="@color/gray1"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/copyright" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
