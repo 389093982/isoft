@@ -82,26 +82,20 @@ public class MyCouponActivity extends BaseActivity {
     }
 
     private void initFragment() {
-        // 创建 fragment
-        MyCouponFragment myCouponFragment1 = new MyCouponFragment();
-        MyCouponFragment myCouponFragment2 = new MyCouponFragment();
-        MyCouponFragment myCouponFragment3 = new MyCouponFragment();
-
-        // activity 向 fragment 传参
-        // 已领取
-        myCouponFragment1.setArguments(CommonUtil.createBundle2("isExpired", "false", "isUsed", "false"));
-        // 已使用
-        myCouponFragment2.setArguments(CommonUtil.createBundle2("isExpired", "", "isUsed", "true"));
-        // 已过期
-        myCouponFragment3.setArguments(CommonUtil.createBundle2("isExpired", "true", "isUsed", "false"));
-
-        mFragments.add(myCouponFragment1);
-        mFragments.add(myCouponFragment2);
-        mFragments.add(myCouponFragment3);
-
         titles.add("已领取");
+        MyCouponFragment myCouponFragment = new MyCouponFragment();
+        myCouponFragment.setArguments(CommonUtil.createBundle2("isExpired", "false", "isUsed", "false"));
+        mFragments.add(myCouponFragment);
+
         titles.add("已使用");
+        myCouponFragment = new MyCouponFragment();
+        myCouponFragment.setArguments(CommonUtil.createBundle2("isExpired", "", "isUsed", "true"));
+        mFragments.add(myCouponFragment);
+
         titles.add("已过期");
+        myCouponFragment = new MyCouponFragment();
+        myCouponFragment.setArguments(CommonUtil.createBundle2("isExpired", "true", "isUsed", "false"));
+        mFragments.add(myCouponFragment);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @NonNull

@@ -21,6 +21,8 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -128,7 +130,8 @@ public class PayOrderDetailActivity extends BaseActivity {
             jianmianTextView.setVisibility(View.VISIBLE);
             jianmianTextView.setText(String.format("满 %s 元减 %s 元", coupon.getGoods_min_amount(), coupon.getCoupon_amount()));
         } else {
-            youhuiTextView.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+            BigDecimal res = new BigDecimal(coupon.getDiscount_rate()).multiply(new BigDecimal("10")).setScale(1,BigDecimal.ROUND_HALF_UP);
+            youhuiTextView.setText(""+res+"折");
             jianmianTextView.setVisibility(View.GONE);
         }
 
