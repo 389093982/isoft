@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -28,6 +29,8 @@ import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,6 +47,11 @@ public class UserDetailActivity extends BaseActivity {
 
     private Context mContext;
     private String userName;
+    // 轮播图部分
+    @BindView(R.id.banner)
+    public Banner banner;
+    // 存放轮播图所有图片
+    private ArrayList<Integer> bannerImageList;
 
     //用户头像
     @BindView(R.id.headerIcon)
@@ -93,6 +101,10 @@ public class UserDetailActivity extends BaseActivity {
         mContext = this;
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "");
+
+        //设置banner
+        initBannerView();
+
         //绑定关注事件
         initAttentionBtn();
 
@@ -114,6 +126,26 @@ public class UserDetailActivity extends BaseActivity {
         }
     }
 
+    public void initBannerView(){
+        bannerImageList = new ArrayList<>();
+        bannerImageList.add(R.drawable.personal_center_img01);
+        bannerImageList.add(R.drawable.personal_center_img02);
+        bannerImageList.add(R.drawable.personal_center_img03);
+        bannerImageList.add(R.drawable.personal_center_img04);
+
+        //设置 banner 样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //设置轮播间隔时间
+        banner.setDelayTime(3000);
+        //设置是否为自动轮播，默认是true
+        banner.isAutoPlay(true);
+        //设置指示器的位置，小点点，居中显示
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+
+        banner.setImages(bannerImageList).start();
+    };
 
     private void initView () {
         //关注按钮的显示与隐藏
