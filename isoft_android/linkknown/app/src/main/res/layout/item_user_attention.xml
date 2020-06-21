@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -25,8 +25,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/headerIcon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
                 android:src="@drawable/linkknown"/>
 
             <TextView
@@ -34,15 +35,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/headerIcon"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:layout_marginStart="10dp"
                 tools:text="用户名"/>
+
+            <ImageView
+                android:id="@+id/genderIcon_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/userNameText"
+                android:src="@drawable/ic_male"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/genderIcon_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/userNameText"
+                android:src="@drawable/ic_female"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/attention_counts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/userNameText"
+                android:layout_below="@+id/userNameText"
+                android:layout_toRightOf="@+id/headerIcon"
+                android:layout_marginTop="3dp"
                 android:textSize="12sp"
                 android:textColor="@color/gray1"
                 android:layout_marginStart="10dp"
@@ -52,7 +71,9 @@
                 android:id="@+id/fensi_counts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/attention_counts"
+                android:layout_below="@+id/userNameText"
+                android:layout_toRightOf="@+id/attention_counts"
+                android:layout_marginTop="3dp"
                 android:textSize="12sp"
                 android:textColor="@color/gray1"
                 android:layout_marginStart="10dp"
@@ -63,6 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:background="@drawable/btn_pin_bg"
                 android:gravity="center"
                 android:paddingStart="5dp"
@@ -76,12 +98,13 @@
                 android:id="@+id/userSignature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/userNameText"
-                android:layout_alignLeft="@+id/userNameText"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
+                android:layout_below="@id/attention_counts"
+                android:layout_alignLeft="@+id/attention_counts"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginTop="3dp"
+                android:textSize="10sp"
                 android:textColor="@color/gray1"
-                android:layout_marginStart="10dp"
                 tools:text="用户标签语"/>
         </RelativeLayout>
 

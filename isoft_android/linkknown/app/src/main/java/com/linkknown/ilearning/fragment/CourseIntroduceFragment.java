@@ -104,6 +104,22 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.userNameText)
     public TextView userNameText;
 
+    //性别icon
+    @BindView(R.id.genderIcon_male)
+    public ImageView genderIcon_male;
+    @BindView(R.id.genderIcon_female)
+    public ImageView genderIcon_female;
+
+    //关注 & 粉丝数量
+    @BindView(R.id.attention_counts)
+    public TextView attention_counts;
+    @BindView(R.id.fensi_counts)
+    public TextView fensi_counts;
+
+    //用户个性签名
+    @BindView(R.id.userSignature)
+    public TextView userSignature;
+
     //加入购物车按钮
     @BindView(R.id.addShoppingCart)
     public TextView addShoppingCart;
@@ -161,8 +177,22 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
 
+        //设置用户名称
         userNameText.setText(courseDetailResponse.getUser().getNick_name());
         UIUtils.setImage(mContext, headerIcon, courseDetailResponse.getUser().getSmall_icon());
+        //设置性别
+        if ("male".equals(courseDetailResponse.getUser().getGender())){
+            genderIcon_male.setVisibility(View.VISIBLE);
+            genderIcon_female.setVisibility(View.GONE);
+        }else{
+            genderIcon_male.setVisibility(View.GONE);
+            genderIcon_female.setVisibility(View.VISIBLE);
+        }
+        //设置关注和粉丝数量
+        attention_counts.setText(courseDetailResponse.getUser().getAttention_counts()==0?"关注:0":"关注:"+courseDetailResponse.getUser().getAttention_counts());
+        fensi_counts.setText(courseDetailResponse.getUser().getFensi_counts()==0?"粉丝:0":"粉丝:"+courseDetailResponse.getUser().getFensi_counts());
+        //个性签名
+        userSignature.setText(courseDetailResponse.getUser().getUser_signature());
 
         // 初始化自定义标签语
         courseTagView.setList(CommonUtil.splitCommonTag(course_label));
@@ -510,7 +540,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         courseOperateRecyclerView.setAdapter(courseOperateAdapter);
     }
 
-    @OnClick(R.id.userInfoLayout)
+    @OnClick(R.id.headerIcon)
     public void showUserDetail () {
         UIUtils.gotoActivity(mContext, UserDetailActivity.class, intent -> {
             intent.putExtra(Constants.USER_NAME, courseDetailResponse.getCourse().getCourse_author());
