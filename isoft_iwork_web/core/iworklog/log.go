@@ -30,15 +30,11 @@ func (this *CacheLoggerWriter) cleanCaches() {
 func (this *CacheLoggerWriter) Write(trackingId, workStepName, logLevel, detail string) {
 	this.logOrder = this.logOrder + 1
 	log := &models.RunlogDetail{
-		TrackingId:      trackingId,
-		WorkStepName:    workStepName,
-		LogLevel:        logLevel,
-		Detail:          detail,
-		LogOrder:        this.logOrder,
-		CreatedBy:       "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedBy:   "SYSTEM",
-		LastUpdatedTime: time.Now(),
+		TrackingId:   trackingId,
+		WorkStepName: workStepName,
+		LogLevel:     logLevel,
+		Detail:       detail,
+		LogOrder:     this.logOrder,
 	}
 	this.caches = append(this.caches, log)
 	if len(this.caches) >= cacheLen {

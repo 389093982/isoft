@@ -19,16 +19,12 @@ type RunlogRecord struct {
 }
 
 type RunlogDetail struct {
-	Id              int64     `json:"id"`
-	TrackingId      string    `json:"tracking_id" orm:"null"`
-	WorkStepName    string    `json:"work_step_name" orm:"null"`
-	LogLevel        string    `json:"log_level" orm:"null"` // INFO、SUCCESS、ERROR
-	Detail          string    `json:"detail" orm:"type(text);null"`
-	LogOrder        int64     `json:"log_order" orm:"null"`
-	CreatedBy       string    `json:"created_by" orm:"null"`
-	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime);null"`
-	LastUpdatedBy   string    `json:"last_updated_by" orm:"null"`
-	LastUpdatedTime time.Time `json:"last_updated_time" orm:"null"`
+	Id           int64  `json:"id"`
+	TrackingId   string `json:"tracking_id" orm:"null"`
+	WorkStepName string `json:"work_step_name" orm:"null"`
+	LogLevel     string `json:"log_level" orm:"null"` // INFO、SUCCESS、ERROR
+	Detail       string `json:"detail" orm:"type(text);null"`
+	LogOrder     int64  `json:"log_order" orm:"null"`
 }
 
 // 多字段索引

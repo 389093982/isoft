@@ -20,6 +20,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
@@ -286,6 +288,11 @@ public class MainActivity extends AppCompatActivity {
             // 显示 popupwindow
             bottomQuickWindow.show();
         });
+
+        YoYo.with(Techniques.BounceInRight)
+                .duration(2000)
+                .repeat(-1)
+                .playOn(xiaoxiongmao);
     }
 
     //4个fragment 的对应跳转
