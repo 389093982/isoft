@@ -190,8 +190,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/headerIcon"
-                        android:layout_width="84dp"
-                        android:layout_height="84dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="110dp"
                         android:src="@drawable/cutecat"/>

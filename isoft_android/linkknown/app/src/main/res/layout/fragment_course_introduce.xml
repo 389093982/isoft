@@ -167,8 +167,8 @@
                 android:clickable="true">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/headerIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:src="@drawable/cutecat"/>
 
