@@ -16,13 +16,18 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponGoodActivity;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CouponListResponse;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
+import lombok.Data;
 
 public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
 
@@ -43,7 +48,8 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
             jianmianTextView.setVisibility(View.VISIBLE);
             jianmianTextView.setText(String.format("满 %s 元减 %s 元", coupon.getGoods_min_amount(), coupon.getCoupon_amount()));
         } else {
-            youhuiTextView.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+            BigDecimal res = new BigDecimal(coupon.getDiscount_rate()).multiply(new BigDecimal("10")).setScale(1,BigDecimal.ROUND_HALF_UP);
+            youhuiTextView.setText(""+res+"折");
             jianmianTextView.setVisibility(View.GONE);
         }
 
@@ -62,7 +68,8 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
             targetName.setText("所有付费课程");
             targetName.setTextColor(Color.RED);
         } else {
-            targetName.setText("牛人视频");
+            CourseMetaResponse.CourseMeta courseMeta = (CourseMetaResponse.CourseMeta) coupon.getGood();
+            targetName.setText(courseMeta.getCourse_name());
             targetName.setTextColor(Color.BLUE);
         }
 

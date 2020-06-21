@@ -34,5 +34,7 @@ public class CouponListResponse extends BaseResponse {
         private String target_id;
         private String target_type;
         private String youhui_type;
+
+        private Object good;
     }
 }

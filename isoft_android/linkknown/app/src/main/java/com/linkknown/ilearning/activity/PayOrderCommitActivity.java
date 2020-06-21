@@ -222,7 +222,8 @@ public class PayOrderCommitActivity extends BaseActivity{
                 BigDecimal amount = new BigDecimal(price).subtract(new BigDecimal(coupon_onuse.getCoupon_amount()));
                 ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }else if ("discount".equals(coupon_onuse.getYouhui_type())){
-                availableCoupons.setText(""+(new Float(coupon_onuse.getDiscount_rate())*10)+"折");
+                BigDecimal res = new BigDecimal(coupon_onuse.getDiscount_rate()).multiply(new BigDecimal("10")).setScale(1,BigDecimal.ROUND_HALF_UP);
+                availableCoupons.setText(""+res+"折");
                 BigDecimal amount = new BigDecimal(price).multiply(new BigDecimal(coupon_onuse.getDiscount_rate()));
                 ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }

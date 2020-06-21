@@ -18,6 +18,7 @@ import com.linkknown.ilearning.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ReceiveCouponCenterAdapter extends BaseQuickAdapter<CouponListResponse.Coupon, BaseViewHolder> implements LoadMoreModule {
@@ -41,7 +42,8 @@ public class ReceiveCouponCenterAdapter extends BaseQuickAdapter<CouponListRespo
             jianmianTextView.setVisibility(View.VISIBLE);
             jianmianTextView.setText(String.format("满 %s 元减 %s 元", coupon.getGoods_min_amount(), coupon.getCoupon_amount()));
         } else {
-            youhuiTextView.setText(""+(new Float(coupon.getDiscount_rate())*10)+"折");
+            BigDecimal res = new BigDecimal(coupon.getDiscount_rate()).multiply(new BigDecimal("10")).setScale(1,BigDecimal.ROUND_HALF_UP);
+            youhuiTextView.setText(""+res+"折");
             jianmianTextView.setVisibility(View.GONE);
         }
 

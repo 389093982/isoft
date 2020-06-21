@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.MyCouponAdapter;
@@ -16,17 +15,24 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CouponListResponse;
+import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
-
+import com.linkknown.ilearning.util.ui.ToastUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class MyCouponFragment extends BaseLazyLoadFragment {
@@ -41,10 +47,11 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
     private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
     private List<CouponListResponse.Coupon> couponList = new ArrayList<>();
-    private BaseQuickAdapter baseQuickAdapter;
+    private MyCouponAdapter myCouponAdapter;
 
     // 分页信息
     private Paginator paginator;
+    private Map<Integer,String> courseNameMap;
 
     private String isExpired;
     private String isUsed;
@@ -62,26 +69,52 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
         isExpired = getArguments().getString("isExpired", "");
         isUsed = getArguments().getString("isUsed", "");
 
-        baseQuickAdapter =  new MyCouponAdapter(mContext, couponList);
+        myCouponAdapter =  new MyCouponAdapter(mContext, couponList);
 
         // 是否自动加载下一页（默认为true）
-        baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        myCouponAdapter.getLoadMoreModule().setAutoLoadMore(true);
         // 设置加载更多监听事件
-        baseQuickAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+        myCouponAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
             if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
                 loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(baseQuickAdapter);
+        recyclerView.setAdapter(myCouponAdapter);
     }
 
     private void loadPageData(int current_page, int pageSize) {
         // 状态手动置为"加载中"，并且会调用加载更多监听
         // 一般情况下，不需要自己设置'加载中'状态
-        baseQuickAdapter.getLoadMoreModule().loadMoreToLoading();
+        myCouponAdapter.getLoadMoreModule().loadMoreToLoading();
 
         LinkKnownApiFactory.getLinkKnownApi().queryPersonalCouponList(isExpired,isUsed,current_page, pageSize)
+                .flatMap(new Function<CouponListResponse, ObservableSource<CouponListResponse>>() {
+                    @Override
+                    public ObservableSource<CouponListResponse> apply(CouponListResponse couponListResponse) throws Exception {
+                        String ids = "";
+                        for (CouponListResponse.Coupon coupon: couponListResponse.getCoupons()){
+                            if (coupon.getTarget_id() != null && !"".equals(coupon.getTarget_id())) {
+                                ids += coupon.getTarget_id()+",";
+                            }
+                        }
+                        return Observable.zip(Observable.just(couponListResponse),
+                                LinkKnownApiFactory.getLinkKnownApi().getCourseListByIds(ids),
+                                new BiFunction<CouponListResponse, CourseMetaResponse, CouponListResponse>() {
+                                    @Override
+                                    public CouponListResponse apply(CouponListResponse couponListResponse, CourseMetaResponse courseMetaResponse) throws Exception {
+                                        for (CouponListResponse.Coupon coupon : couponListResponse.getCoupons()){
+                                            for (CourseMetaResponse.CourseMeta courseMeta : courseMetaResponse.getCourses()){
+                                                if (StringUtils.equals(coupon.getTarget_id(), courseMeta.getId() + "")){
+                                                    coupon.setGood(courseMeta);
+                                                }
+                                            }
+                                        }
+                                        return couponListResponse;
+                                    }
+                                });
+                    }
+                })
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CouponListResponse>() {
@@ -94,29 +127,26 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
                                     couponList.clear();
                                 }
                                 couponList.addAll(couponListResponse.getCoupons());
-                                baseQuickAdapter.setList(couponList);
-
-                                // 当前这次数据加载完毕，调用此方法
-                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                                myCouponAdapter.setList(couponList);
                             } else {
                                 if (current_page == 1) {
                                     couponList.clear();
-                                    baseQuickAdapter.setList(couponList);
-                                    baseQuickAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
-                                    TextView emptyTipText = baseQuickAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
+                                    myCouponAdapter.setList(couponList);
+                                    myCouponAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
+                                    TextView emptyTipText = myCouponAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
                                     emptyTipText.setText("没有匹配的优惠券");
                                 }
-                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
-                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                                myCouponAdapter.getLoadMoreModule().loadMoreComplete();
+                                myCouponAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                             paginator = couponListResponse.getPaginator();
 
                             // 最后一页
                             if (CommonUtil.isLastPage(paginator)) {
-                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                                myCouponAdapter.getLoadMoreModule().loadMoreEnd();
                             }
                         } else {
-                            baseQuickAdapter.getLoadMoreModule().loadMoreFail();
+                            myCouponAdapter.getLoadMoreModule().loadMoreFail();
                         }
                         swipeRefreshLayoutHelper.finishRefreshing();
                     }
@@ -125,10 +155,11 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
                     public void onError(Throwable e) {
                         swipeRefreshLayoutHelper.finishRefreshing();
                         // 当前这次数据加载错误，调用此方法
-                        baseQuickAdapter.getLoadMoreModule().loadMoreFail();
+                        myCouponAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
     }
+
 
     @Override
     protected void initData() {
