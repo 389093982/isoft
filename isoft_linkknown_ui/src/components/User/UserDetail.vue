@@ -11,37 +11,36 @@
         </div>
       </div>
       <!--基本信息-->
-      <div style="position: absolute;top: 40px;left: 300px;color: white">
+      <div style="position: absolute;top: 30px;left: 300px;color: white">
         <div>
           <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
         </div>
+        <!--关注&粉丝-->
         <div>
-          入驻时间:<Time :time="user.created_time" :interval="1"/>
-          <i><span style="font-size: 12px;margin-left: 10px">积分:{{user.user_points}}</span></i>
+          <Row>
+            <span>
+              <span style="font-size: 10px">关注:&nbsp;</span>
+              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Attention'}})">{{user.attention_counts}}</span>
+              <span v-else>{{user.attention_counts}}</span>
+            </span>
+            <span style="margin-left: 10px">
+              <span style="font-size: 10px">粉丝:&nbsp;</span>
+              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Fensi'}})">{{user.fensi_counts}}</span>
+              <span v-else>{{user.fensi_counts}}</span>
+            </span>
+          </Row>
+        </div>
+        <div>
+          <i><span style="font-size: 12px">积分:{{user.user_points}}</span></i>
           <i v-if="user.vip_level>0"><span style="font-size: 12px;margin-left: 10px">VIP</span></i>
         </div>
         <div>
-          <i>个性签名:
+          <i>
             <textarea rows="1" cols="80" v-if="editSignFlag" v-model.trim="user_signature" maxlength="30" style="padding: 5px;" class="focus" @blur="handleEditSignFlag"></textarea>
             <span v-else class="hoverFlash isoft_text_rows">{{user_signature | filterLimitFunc}}</span>
             <Icon v-if="isLoginUserName(user.user_name) && !editSignFlag" class="isoft_hover_red isoft_point_cursor" type="ios-create-outline" :size="20" @click="editSign"/>
           </i>
          </div>
-        <!--关注&粉丝-->
-        <div>
-          <Row>
-            <Col span="4">
-              <span style="font-size: 10px">关注:&nbsp;</span>
-              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Attention'}})">{{user.attention_counts}}</span>
-              <span v-else>{{user.attention_counts}}</span>
-            </Col>
-            <Col span="4" offset="1">
-              <span style="font-size: 10px">粉丝:&nbsp;</span>
-              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Fensi'}})">{{user.fensi_counts}}</span>
-              <span v-else>{{user.fensi_counts}}</span>
-            </Col>
-          </Row>
-        </div>
       </div>
       <!--设置、消息-->
       <div v-if="isLoginUserName(user.user_name)" style="position: absolute;top: 20px;left: 600px;color: white;display: flex">
