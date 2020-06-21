@@ -33,15 +33,15 @@
               <Col span="13">
                 <div>
                   <Row>
-                    <Col span="18">
+                    <Col span="14">
                       <span v-if="coupon.coupon_type==='general'">
-                        通用券:可以使用于任何商品
+                        通用券: 适用于 <span style="color: #cc0000">所有付费课程</span>
                       </span>
                       <span v-else-if="coupon.coupon_type==='designated'">
-                        指定券:
+                        指定券: 适用于
                         <span v-if="coupon.target_type==='course'">
                           <span @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}})">
-                            <span class="isoft_tag2" style="cursor: pointer">课程:{{getCourseNameById(coupon.target_id) }}</span>
+                            <span style="cursor: pointer;color: blue">{{getCourseNameById(coupon.target_id)}}</span>
                           </span>
                         </span>
                       </span>
@@ -54,7 +54,7 @@
                         活动描述:<span>{{coupon.activity_desc}}</span>
                       </div>
                     </Col>
-                    <Col span="4">
+                    <Col span="10">
                       <div v-if="coupon.coupon_state==='used'">
                         <!--已使用-->
                         <img style="border-radius:50%;position: relative;left: -40px;" width=80 height=80 src="../../../static/images/order/used.jpg">
@@ -68,17 +68,19 @@
                         <span v-else>
                           <!--未使用 未过期-->
                           <span v-if="coupon.coupon_type==='general'">
-                            通用券
+                            通用券:这个地方可以跳到新界面，展示所有付费商品
                           </span>
-                          <span v-else="coupon.coupon_type==='designated'">
+                          <div v-else="coupon.coupon_type==='designated'">
                             <!--指定券-->
-                            <span v-if="coupon.target_type==='course'">
-                              <span @click="$router.push({path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}})">
-                                <span class="isoft_tag2" style="cursor: pointer">前去使用</span>
-                              </span>
-                            </span>
-                          </span>
-
+                            <div v-if="coupon.target_type==='course'">
+                                <router-link :to="{path:'/ilearning/courseDetail',query:{course_id:coupon.target_id}}" style="position: relative">
+                                  <img v-if="getCourseImgById(coupon.target_id)" :src="getCourseImgById(coupon.target_id)" height="100" width="155"/>
+                                  <img v-else src="../../../static/images/common_img/default.png" height="100" width="155"/>
+                                  <!-- 播放图标 -->
+                                  <div v-if="true" class="ico_play" style="position: absolute;top: -65px;left: 50px;"></div>
+                                </router-link>
+                            </div>
+                          </div>
                         </span>
                       </div>
                     </Col>
@@ -197,7 +199,13 @@
             return this.courses[i].course_name;
           }
         }
-
+      },
+      getCourseImgById:function(course_id){
+        for (let i = 0; i < this.courses.length; i++) {
+          if (this.courses[i].id == course_id) {
+            return this.courses[i].small_image;
+          }
+        }
       },
       pageChange:function (page) {
         this.page.currentPage = page;
@@ -234,5 +242,12 @@
 </script>
 
 <style scoped>
-
+  .ico_play {
+    background: url(../../../static/images/common_img/ico_play.png) no-repeat;
+    position: absolute;
+    top: 35px;
+    left: 55px;
+    width: 60px;
+    height: 60px;
+  }
 </style>
