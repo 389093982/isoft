@@ -47,8 +47,8 @@ public class UserAttentionListAdapter extends BaseQuickAdapter<UserAttentionList
             viewHolder.setVisible(R.id.genderIcon_female,true);
             viewHolder.setGone(R.id.genderIcon_male,true);
         }
-        viewHolder.setText(R.id.attention_counts, "关注：" + queryData.getAttention_counts());
-        viewHolder.setText(R.id.fensi_counts, "粉丝：" + queryData.getFensi_counts());
+        viewHolder.setText(R.id.attention_counts, "关注:" + queryData.getAttention_counts());
+        viewHolder.setText(R.id.fensi_counts, "粉丝:" + queryData.getFensi_counts());
         viewHolder.setText(R.id.userSignature, StringUtilEx.getFirstNotEmptyStr(queryData.getUser_signature(), Constants.DEFAULT_USER_SIGNATURE));
 
         if (StringUtils.equals(attentionType, UserAttentionListActivity.ATTENTION)) {

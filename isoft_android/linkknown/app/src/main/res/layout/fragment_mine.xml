@@ -64,7 +64,7 @@
                     android:layout_marginTop="30dp"
                     android:text="用户昵称"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/userPoint"
@@ -73,43 +73,43 @@
                     android:layout_below="@+id/nickName"
                     android:layout_alignLeft="@+id/nickName"
                     android:textColor="@color/white"
-                    android:text="积分"/>
+                    android:text="积分"
+                    android:textSize="14dp"/>
 
-                <TextView
-                    android:id="@+id/userSignature"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/userPoint"
-                    android:layout_alignLeft="@+id/userPoint"
-                    android:textSize="12sp"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:text="个性签名"/>
 
                 <TextView
                     android:id="@+id/attention_counts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/userSignature"
-                    android:layout_alignLeft="@+id/userSignature"
-                    android:layout_marginTop="6dp"
-                    android:textSize="12sp"
+                    android:layout_below="@+id/userPoint"
+                    android:layout_alignLeft="@+id/userPoint"
                     android:textColor="@color/white"
-                    android:text="关注"/>
+                    android:text="关注"
+                    android:textSize="14dp"/>
 
                 <TextView
                     android:id="@+id/fensi_counts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/userSignature"
                     android:layout_toRightOf="@+id/attention_counts"
+                    android:layout_alignBottom="@+id/attention_counts"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="6dp"
-                    android:textSize="12sp"
                     android:textColor="@color/white"
-                    android:text="粉丝"/>
+                    android:text="粉丝"
+                    android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/userSignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/attention_counts"
+                android:layout_alignLeft="@+id/attention_counts"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:text="个性签名"
+                android:textSize="14dp"/>
 
 
 <!--            每日签到暂时隐藏-->

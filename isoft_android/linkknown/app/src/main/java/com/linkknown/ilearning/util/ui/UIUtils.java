@@ -162,10 +162,10 @@ public class UIUtils {
         switch (gender) {
             case "男":
             case "male":
-                return R.drawable.ic_user_male;
+                return R.drawable.ic_male;
             case "女":
             case "female":
-                return R.drawable.ic_user_female;
+                return R.drawable.ic_female;
             default:
                 return R.drawable.ic_user_gay_border;
         }

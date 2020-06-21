@@ -12,15 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
             android:layout_width="88dp"
             android:layout_height="88dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/linkknown"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/linkknown"/>
 
         <TextView
             android:id="@+id/version"
