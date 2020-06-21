@@ -15,24 +15,26 @@
         <div>
           <b style="font-size: 18px">{{user.nick_name}}</b> / <code>{{user.user_name}}</code>
         </div>
-        <!--关注&粉丝-->
-        <div>
-          <Row>
-            <span>
-              <span style="font-size: 10px">关注:&nbsp;</span>
-              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Attention'}})">{{user.attention_counts}}</span>
-              <span v-else>{{user.attention_counts}}</span>
-            </span>
-            <span style="margin-left: 10px">
-              <span style="font-size: 10px">粉丝:&nbsp;</span>
-              <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Fensi'}})">{{user.fensi_counts}}</span>
-              <span v-else>{{user.fensi_counts}}</span>
-            </span>
-          </Row>
-        </div>
         <div>
           <i><span style="font-size: 12px">积分:{{user.user_points}}</span></i>
           <i v-if="user.vip_level>0"><span style="font-size: 12px;margin-left: 10px">VIP</span></i>
+        </div>
+        <!--关注&粉丝-->
+        <div>
+          <Row>
+            <i>
+              <span>
+                <span style="font-size: 12px">关注:&nbsp;</span>
+                <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Attention'}})">{{user.attention_counts}}</span>
+                <span v-else>{{user.attention_counts}}</span>
+              </span>
+              <span style="margin-left: 10px">
+                <span style="font-size: 12px">粉丝:&nbsp;</span>
+                <span v-if="isLoginUserName(user.user_name)" style="cursor: pointer" @click="$router.push({path:'/user/userAttentionOrFensi',query:{AttentionOrFensi:'Fensi'}})">{{user.fensi_counts}}</span>
+                <span v-else>{{user.fensi_counts}}</span>
+              </span>
+            </i>
+          </Row>
         </div>
         <div>
           <i>
