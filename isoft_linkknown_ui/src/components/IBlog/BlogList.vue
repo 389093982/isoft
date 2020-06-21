@@ -275,13 +275,6 @@
         </Col>
       </Row>
 
-      <!--加载圈圈-->
-      <div>
-        <Spin fix size="large" v-if="isLoading">
-          <div class="isoft_loading"></div>
-        </Spin>
-      </div>
-
     </div>
 
     <div class="isoft_bg_white isoft_pd10" style="margin-top: 8px;">
@@ -325,7 +318,6 @@
       HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
-        isLoading: true,
         // 当前页
         current_page: 1,
         // 总数
@@ -402,26 +394,20 @@
         this.refreshBlogList();
       },
       refreshBlogList: async function () {
-        this.isLoading = true;
-        try {
-          var search_type = this.search_type;
-          const result = await queryPageBlog({
-            offset: this.offset,
-            current_page: this.current_page,
-            search_type: search_type,
-            search_user_name: this.search_user_name,
-            search_data:this.search_data,
-            today:this.formatDate(new Date()),
-          });
-          if (result.status === "SUCCESS") {
-
-            this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
-            this.searchblogs = result.blogs;
-            this.blogGoldenList = result.blogGoldenList;
-            this.total = result.paginator.totalcount;
-          }
-        } finally {
-          this.isLoading = false;
+        var search_type = this.search_type;
+        const result = await queryPageBlog({
+          offset: this.offset,
+          current_page: this.current_page,
+          search_type: search_type,
+          search_user_name: this.search_user_name,
+          search_data:this.search_data,
+          today:this.formatDate(new Date()),
+        });
+        if (result.status === "SUCCESS") {
+          this.userInfos = await RenderUserInfoByNames(result.blogs, 'author');
+          this.searchblogs = result.blogs;
+          this.blogGoldenList = result.blogGoldenList;
+          this.total = result.paginator.totalcount;
         }
       },
       renderNickName: function (user_name) {
