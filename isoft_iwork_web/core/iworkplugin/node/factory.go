@@ -67,6 +67,10 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 
 // 将捕获到的 err 继续抛出,但是做了一层脱敏处理
 func (this *WorkStepFactory) handleAndPanicInsensitiveError(err interface{}) {
+	if _err, ok := err.(interfaces.WorkStepError); ok {
+		// 子块抛出 WorkStepError 异常,父块此处则不用存储异常,直接继续抛出即可
+		panic(_err)
+	}
 	insensitiveErrorFlag := false
 	if _err, ok := err.(*interfaces.InsensitiveError); ok {
 		insensitiveErrorFlag = true
