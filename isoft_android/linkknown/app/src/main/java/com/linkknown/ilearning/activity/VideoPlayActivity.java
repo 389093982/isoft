@@ -1,5 +1,6 @@
 package com.linkknown.ilearning.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,8 +28,9 @@ import butterknife.ButterKnife;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class VideoPlayActivity extends AppCompatActivity {
+public class VideoPlayActivity extends BaseActivity {
 
+    private Context mContext;
     @BindView(R.id.video_player)
     public JzvdStd player;
 
@@ -42,7 +44,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_play);
-
+        mContext = this;
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
@@ -83,7 +85,15 @@ public class VideoPlayActivity extends AppCompatActivity {
                         new XPopup.Builder(this)
                                 .hasShadowBg(true)
                                 .asConfirm("温馨提示", "该视频为付费视频,请确认是否需要购买？", () -> {
-                                    ToastUtil.showText(this, "跳往购买页面！");
+                                    //1.去结算页面
+                                    UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
+                                        intent.putExtra("goodsType","course_theme_type");
+                                        intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
+                                        intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
+                                        intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
+                                        intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
+                                        return intent;
+                                    });
                                 }).show();
                         return false;
                     }

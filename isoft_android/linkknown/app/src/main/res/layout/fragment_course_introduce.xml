@@ -155,32 +155,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
-            <LinearLayout
-                android:id="@+id/userInfoLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
-                android:clickable="true">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/headerIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/cutecat"/>
 
-                <TextView
-                    android:id="@+id/userNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/headerIcon"
-                    android:layout_marginStart="5dp"
-                    android:layout_gravity="center"
-                    android:text="用户名" />
-            </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/headerIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/cutecat"/>
+
+            <TextView
+                android:id="@+id/userNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/headerIcon"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="用户名" />
+
+            <ImageView
+                android:id="@+id/genderIcon_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/userNameText"
+                android:src="@drawable/ic_male"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/genderIcon_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/userNameText"
+                android:src="@drawable/ic_female"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/attention_counts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userNameText"
+                android:layout_toRightOf="@+id/headerIcon"
+                android:layout_marginTop="3dp"
+                android:textSize="12sp"
+                android:textColor="@color/gray1"
+                android:layout_marginStart="10dp"
+                tools:text="关注数量"/>
+
+            <TextView
+                android:id="@+id/fensi_counts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userNameText"
+                android:layout_toRightOf="@+id/attention_counts"
+                android:layout_marginTop="3dp"
+                android:textSize="12sp"
+                android:textColor="@color/gray1"
+                android:layout_marginStart="10dp"
+                tools:text="粉丝数量"/>
+
+            <TextView
+                android:id="@+id/userSignature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/attention_counts"
+                android:layout_alignLeft="@+id/attention_counts"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginTop="3dp"
+                android:textSize="10sp"
+                android:textColor="@color/gray1"
+                tools:text="用户标签语"/>
 
             <TextView
                 android:id="@+id/attention_off"
