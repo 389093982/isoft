@@ -3,6 +3,7 @@
   <Button v-if="showButton" :size="size" type="success" @click="fileUploadModal = true">{{ uploadLabel }}</Button>
   <Modal
     v-model="fileUploadModal"
+    scrollable="true"
     width="500"
     :title="uploadLabel"
     :mask-closable="false">
