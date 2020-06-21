@@ -173,6 +173,9 @@
                 ids += result.coupons[i].target_id + ","
               }
             }
+            if (ids.trim() === "") {
+              return false;
+            }
             //去掉最后一个逗号
             ids = ids.substring(0,ids.length-1);
             params = {
