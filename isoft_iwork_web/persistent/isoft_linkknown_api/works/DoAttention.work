@@ -121,9 +121,511 @@
 		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
 	</steps>
 	<steps>
-		<Id>2329</Id>
+		<Id>2438</Id>
 		<WorkId>474</WorkId>
 		<WorkStepId>3</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>if_state_is_on</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>if</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;if条件表达式,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;stringsEq($start.state,`on`);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_expression</paramName>
+		<paramDesc>if条件表达式,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>stringsEq($start.state,`on`);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>bool_expression</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2440</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>4</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>sql_query_confirmIsAlreadyAttention_on</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>sql_query</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询sql语句,带分页条件的sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;select * from user_attention \nwhere user_name = ? and attention_object_type = ? and attention_object_id = ? and state = &#39;on&#39; &#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_columnNames?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询结果集列名列表,以逗号分隔,动态sql需要提供&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_metadata_sql?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询 metadata 所需 sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数和sql中的?数量相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$work_sub_getUserInfoFromRequest.userName;\n$start.attention_object_type;\n$start.attention_object_id;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_current_page?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;当前页数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_page_size?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;每页数据量&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_datacounts?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_sql</paramName>
+		<paramDesc>查询sql语句,带分页条件的sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>select * from user_attention &#xA;where user_name = ? and attention_object_type = ? and attention_object_id = ? and state = &#39;on&#39; </paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_columnNames?</paramName>
+		<paramDesc>查询结果集列名列表,以逗号分隔,动态sql需要提供</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_metadata_sql?</paramName>
+		<paramDesc>查询 metadata 所需 sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>multi_sql_binding?</paramName>
+		<paramDesc>sql绑定数据,个数和sql中的?数量相同</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$work_sub_getUserInfoFromRequest.userName;&#xA;$start.attention_object_type;&#xA;$start.attention_object_id;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_current_page?</paramName>
+		<paramDesc>当前页数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_page_size?</paramName>
+		<paramDesc>每页数据量</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_no_datacounts?</paramName>
+		<paramDesc>查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_db_conn</paramName>
+		<paramDesc>数据库连接信息,需要使用 $RESOURCE 全局参数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$RESOURCE.isoft_linkknown;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;state&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;state&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>number_datacounts</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>rows</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>firstrow</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_object_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_object_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_object_id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_object_id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_time</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_time</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>state</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>state</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2443</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>5</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>panic_error_AlReadyAttenton_on</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;int64Gt($sql_query_confirmIsAlreadyAttention_on.number_datacounts,0);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;已关注！&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>int64Gt($sql_query_confirmIsAlreadyAttention_on.number_datacounts,0);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>已关注！</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2439</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>6</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>else_is_off</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>else</WorkStepType>
+		<WorkStepIndent>0</WorkStepIndent>
+		<WorkStepInput></WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema></paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput></WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping></WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2442</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>7</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>sql_query_confirmIsAlreadyAttention_off</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>sql_query</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询sql语句,带分页条件的sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;select * from user_attention \nwhere user_name = ? and attention_object_type = ? and attention_object_id = ? and state = &#39;off&#39; &#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_columnNames?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询结果集列名列表,以逗号分隔,动态sql需要提供&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_metadata_sql?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询 metadata 所需 sql&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;multi_sql_binding?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;sql绑定数据,个数和sql中的?数量相同&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$work_sub_getUserInfoFromRequest.userName;\n$start.attention_object_type;\n$start.attention_object_id;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_current_page?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;当前页数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_page_size?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;每页数据量&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_no_datacounts?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_db_conn&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;数据库连接信息,需要使用 $RESOURCE 全局参数&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;$RESOURCE.isoft_linkknown;\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>str_sql</paramName>
+		<paramDesc>查询sql语句,带分页条件的sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>select * from user_attention &#xA;where user_name = ? and attention_object_type = ? and attention_object_id = ? and state = &#39;off&#39; </paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_columnNames?</paramName>
+		<paramDesc>查询结果集列名列表,以逗号分隔,动态sql需要提供</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_metadata_sql?</paramName>
+		<paramDesc>查询 metadata 所需 sql</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>multi_sql_binding?</paramName>
+		<paramDesc>sql绑定数据,个数和sql中的?数量相同</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$work_sub_getUserInfoFromRequest.userName;&#xA;$start.attention_object_type;&#xA;$start.attention_object_id;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_current_page?</paramName>
+		<paramDesc>当前页数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>number_page_size?</paramName>
+		<paramDesc>每页数据量</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_no_datacounts?</paramName>
+		<paramDesc>查询数据量为 0 时,抛出的异常信息,为空时不抛出异常!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue></paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_db_conn</paramName>
+		<paramDesc>数据库连接信息,需要使用 $RESOURCE 全局参数</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>$RESOURCE.isoft_linkknown;&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;number_datacounts&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;user_name&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_type&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_object_id&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;attention_time&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;rows&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;state&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParentPath&#34;: &#34;firstrow&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;state&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>number_datacounts</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>rows</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath></parentPath>
+		<paramName>firstrow</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>user_name</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_object_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_object_type</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_object_id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_object_id</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>attention_time</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>attention_time</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>rows</parentPath>
+		<paramName>state</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+	<paramOutputSchemaItem>
+		<parentPath>firstrow</parentPath>
+		<paramName>state</paramName>
+		<paramValue></paramValue>
+	</paramOutputSchemaItem>
+</paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2441</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>8</WorkStepId>
+		<WorkSubId>0</WorkSubId>
+		<WorkStepName>panic_error_AlReadyAttenton_off</WorkStepName>
+		<WorkStepDesc></WorkStepDesc>
+		<WorkStepType>panic_error</WorkStepType>
+		<WorkStepIndent>1</WorkStepIndent>
+		<WorkStepInput>{&#xA;&#x9;&#34;ParamInputSchemaItems&#34;: [&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;bool_panic_expression&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的条件,值为 bool 类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;int64Gt($sql_query_confirmIsAlreadyAttention_off.number_datacounts,0);\n&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;},&#xA;&#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#34;ParamName&#34;: &#34;str_panic_errorMsg?&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamDesc&#34;: &#34;抛出异常的信息,值为字符串类型!&#34;,&#xA;&#x9;&#x9;&#x9;&#34;Repeatable&#34;: false,&#xA;&#x9;&#x9;&#x9;&#34;ForeachRefer&#34;: &#34;&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamChoices&#34;: null,&#xA;&#x9;&#x9;&#x9;&#34;PureText&#34;: true,&#xA;&#x9;&#x9;&#x9;&#34;ParamValue&#34;: &#34;已取消！&#34;,&#xA;&#x9;&#x9;&#x9;&#34;ParamNamings&#34;: &#34;&#34;&#xA;&#x9;&#x9;}&#xA;&#x9;]&#xA;}</WorkStepInput>
+		<work_step_input_xml><![CDATA[<paramInputSchema>
+	<paramInputSchemaItem>
+		<paramName>bool_panic_expression</paramName>
+		<paramDesc>抛出异常的条件,值为 bool 类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>false</pureText>
+		<paramValue>int64Gt($sql_query_confirmIsAlreadyAttention_off.number_datacounts,0);&#xA;</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+	<paramInputSchemaItem>
+		<paramName>str_panic_errorMsg?</paramName>
+		<paramDesc>抛出异常的信息,值为字符串类型!</paramDesc>
+		<repeatable>false</repeatable>
+		<foreachRefer></foreachRefer>
+		<pureText>true</pureText>
+		<paramValue>已取消！</paramValue>
+		<paramNamings></paramNamings>
+	</paramInputSchemaItem>
+</paramInputSchema>]]></work_step_input_xml>
+		<WorkStepOutput>{&#xA;&#x9;&#34;ParamOutputSchemaItems&#34;: null&#xA;}</WorkStepOutput>
+		<work_step_output_xml><![CDATA[<paramOutputSchema></paramOutputSchema>]]></work_step_output_xml>
+		<IsDefer>false</IsDefer>
+		<WorkStepParamMapping>[]</WorkStepParamMapping>
+		<work_step_param_mapping_xml><![CDATA[<ParamMapping>
+	<ParamMappingName></ParamMappingName>
+	<ParamMappingDefault></ParamMappingDefault>
+	<ParamMappingCleanXss>false</ParamMappingCleanXss>
+	<ParamMappingSafePageNo>false</ParamMappingSafePageNo>
+	<ParamMappingSafePageSize>false</ParamMappingSafePageSize>
+</ParamMapping>]]></work_step_param_mapping_xml>
+		<CreatedBy>SYSTEM</CreatedBy>
+		<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	</steps>
+	<steps>
+		<Id>2329</Id>
+		<WorkId>474</WorkId>
+		<WorkStepId>9</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_query_attention_record</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -297,7 +799,7 @@
 	<steps>
 		<Id>2331</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>4</WorkStepId>
+		<WorkStepId>10</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>if_has_record</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -338,7 +840,7 @@
 	<steps>
 		<Id>2335</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>5</WorkStepId>
+		<WorkStepId>11</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_updateAttention</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -420,7 +922,7 @@
 	<steps>
 		<Id>2332</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>6</WorkStepId>
+		<WorkStepId>12</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>else_no_record</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -445,7 +947,7 @@
 	<steps>
 		<Id>2330</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>7</WorkStepId>
+		<WorkStepId>13</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_addAttention</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -527,7 +1029,7 @@
 	<steps>
 		<Id>2336</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>8</WorkStepId>
+		<WorkStepId>14</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>if_attention_object_type_user</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -568,7 +1070,7 @@
 	<steps>
 		<Id>2337</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>9</WorkStepId>
+		<WorkStepId>15</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>if_state_on</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -609,7 +1111,7 @@
 	<steps>
 		<Id>2339</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>10</WorkStepId>
+		<WorkStepId>16</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_updateUserFensiCounts_add</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -691,7 +1193,7 @@
 	<steps>
 		<Id>2395</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>11</WorkStepId>
+		<WorkStepId>17</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_updateUserAttentionCounts_add</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -773,7 +1275,7 @@
 	<steps>
 		<Id>2338</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>12</WorkStepId>
+		<WorkStepId>18</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>else_state_off</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -798,7 +1300,7 @@
 	<steps>
 		<Id>2341</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>13</WorkStepId>
+		<WorkStepId>19</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_updateUserFensiCounts_reduce</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -880,7 +1382,7 @@
 	<steps>
 		<Id>2396</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>14</WorkStepId>
+		<WorkStepId>20</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>sql_execute_updateUserAttentionCounts_reduce</WorkStepName>
 		<WorkStepDesc></WorkStepDesc>
@@ -962,7 +1464,7 @@
 	<steps>
 		<Id>2327</Id>
 		<WorkId>474</WorkId>
-		<WorkStepId>15</WorkStepId>
+		<WorkStepId>21</WorkStepId>
 		<WorkSubId>0</WorkSubId>
 		<WorkStepName>end</WorkStepName>
 		<WorkStepDesc>end节点</WorkStepDesc>
