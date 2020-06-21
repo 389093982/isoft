@@ -1,10 +1,14 @@
 package com.linkknown.ilearning.activity;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterViewAnimator;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.BaseAnimation;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.KaoshiShijuanListAdapter;
@@ -25,6 +30,7 @@ import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +77,7 @@ public class KaoShiShijuanListActivity extends BaseActivity {
     }
 
     private void initData() {
-        loadPageData(1, 10);
+        loadPageData(1, Constants.DEFAULT_PAGE_SIZE2);
     }
 
     private void loadPageData(int current_page, int pageSize) {
@@ -82,7 +88,6 @@ public class KaoShiShijuanListActivity extends BaseActivity {
             // 后续页面，延迟执行，让加载效果更好
             handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
         }
-        executeLoadPageData(current_page, pageSize);
     }
 
     private void executeLoadPageData(int current_page, int pageSize) {
@@ -172,7 +177,12 @@ public class KaoShiShijuanListActivity extends BaseActivity {
                 loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
         });
-
+        // 给 adapter 添加动画
+        baseQuickAdapter.setAdapterAnimation(view -> new Animator[]{
+                ObjectAnimator.ofFloat(view, "scaleY", 0.95f, 1),
+                ObjectAnimator.ofFloat(view, "scaleX", 0.95f, 1)
+        });
+        baseQuickAdapter.setAnimationFirstOnly(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(baseQuickAdapter);
     }
