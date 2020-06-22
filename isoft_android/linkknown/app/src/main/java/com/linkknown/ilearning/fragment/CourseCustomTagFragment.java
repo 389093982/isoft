@@ -83,6 +83,9 @@ public class CourseCustomTagFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.layout_custom_tag_course, container, false);
         mContext = getContext();
         ButterKnife.bind(this, rootView);
+        // 一开始隐藏,数据加载成功后才显示
+        customTagLayout.setVisibility(View.GONE);
+        refreshNextLayout.setVisibility(View.GONE);
 
         custom_tag = getArguments().getString("custom_tag", "");
 
@@ -160,12 +163,14 @@ public class CourseCustomTagFragment extends Fragment {
                     public void onNext(CourseMetaResponse courseMetaResponse) {
                         if (courseMetaResponse.isSuccess() && CollectionUtils.isNotEmpty(courseMetaResponse.getCourses())) {
                             customTagLayout.setVisibility(View.VISIBLE);
+                            refreshNextLayout.setVisibility(View.VISIBLE);
                             courseMetaList.clear();
                             courseMetaList.addAll(courseMetaResponse.getCourses());
                             baseQuickAdapter.setList(courseMetaList);
                             paginator = courseMetaResponse.getPaginator();
                         } else {
                             customTagLayout.setVisibility(View.GONE);
+                            refreshNextLayout.setVisibility(View.GONE);
                         }
                         waitingDialog.dismissDialog();
                     }
@@ -173,6 +178,7 @@ public class CourseCustomTagFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         customTagLayout.setVisibility(View.GONE);
+                        refreshNextLayout.setVisibility(View.GONE);
                         waitingDialog.dismissDialog();
                     }
                 });
