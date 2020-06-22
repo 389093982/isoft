@@ -28,9 +28,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.activity.RegistActivity;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.fragment.ClassifyFragment;
 import com.linkknown.ilearning.fragment.FindFragment;
 import com.linkknown.ilearning.fragment.HomeFragment;
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             // navigation view 点击事件
             int id = item.getItemId();
             if (id == R.id.course) {
-                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+                UIUtils.gotoActivity(mContext, PersonalCenterActivity.class);
             }else if (id == R.id.orders) {
                 UIUtils.gotoActivity(mContext, PayOrderActivity.class);
             }else if (id == R.id.shoppingCart) {

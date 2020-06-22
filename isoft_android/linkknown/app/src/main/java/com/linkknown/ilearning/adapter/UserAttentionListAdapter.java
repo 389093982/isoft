@@ -1,8 +1,6 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
@@ -10,7 +8,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.UserAttentionListActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.model.UserAttentionListResponse;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.UIUtils;
@@ -57,7 +55,7 @@ public class UserAttentionListAdapter extends BaseQuickAdapter<UserAttentionList
             viewHolder.setGone(R.id.cancel_attention, true);
         }
 
-        viewHolder.findView(R.id.headerIcon).setOnClickListener(v -> UIUtils.gotoActivity(mContext, UserDetailActivity.class, intent -> {
+        viewHolder.findView(R.id.headerIcon).setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class, intent -> {
             intent.putExtra(Constants.USER_NAME, queryData.getUser_name());
             return intent;
         }));

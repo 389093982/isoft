@@ -1,6 +1,5 @@
 package com.linkknown.ilearning.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -24,17 +23,14 @@ import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
-import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.lxj.xpopup.XPopup;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +39,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class UserDetailActivity extends BaseActivity {
+public class PersonalCenterActivity extends BaseActivity {
 
     private Context mContext;
     private String userName;
@@ -97,7 +93,7 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail);
+        setContentView(R.layout.activity_personal_center);
         mContext = this;
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "");
@@ -284,17 +280,15 @@ public class UserDetailActivity extends BaseActivity {
         fragment1.setArguments(bundle);
         titles.add("发布的课程");
 
-        if (LoginUtil.isLoginUserName(getApplicationContext(), userName)) {
-            UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
-            fragments.add(fragment2);
-            fragment2.setArguments(bundle);
-            titles.add("收藏的课程");
+        UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
+        fragments.add(fragment2);
+        fragment2.setArguments(bundle);
+        titles.add("收藏的课程");
 
-            UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
-            fragments.add(fragment3);
-            fragment3.setArguments(bundle);
-            titles.add("观看的课程");
-        }
+        UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
+        fragments.add(fragment3);
+        fragment3.setArguments(bundle);
+        titles.add("观看的课程");
 
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);

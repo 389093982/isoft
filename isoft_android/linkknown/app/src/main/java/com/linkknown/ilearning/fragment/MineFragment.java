@@ -1,7 +1,6 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,10 +24,10 @@ import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.activity.SettingActivity;
 import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserAttentionListActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.UserDetailResponse;
@@ -37,8 +36,6 @@ import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
@@ -218,7 +215,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
                 break;
             case R.id.menuPersonalCenter:
-                UIUtils.gotoActivity(mContext, UserDetailActivity.class);
+                UIUtils.gotoActivity(mContext, PersonalCenterActivity.class);
                 break;
             case R.id.menuAdviseLayout:
                 UIUtils.gotoActivity(mContext, AdviseActivity.class);
