@@ -275,6 +275,11 @@ public interface LinkKnownApi {
                                                     @Query("goods_id") String goodsId);
 
 
+    // 取消订单
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/OrderCancelledById")
+    Observable<BaseResponse> OrderCancelledById(@Query("order_id") String order_id);
+
+
     // 查询消息
     @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList")
     Observable<MessageListResponse> queryPageMessageList(@Query("current_page") int current_page,

@@ -19,6 +19,7 @@ import com.linkknown.ilearning.activity.PayOrderDetailActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.util.DateUtil;
@@ -142,7 +143,42 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
 
                         }
                     });
+                }else{
+                    viewHolder.setGone(R.id.toPayBtn,true);
                 }
+
+
+                //只有待付款状态的订单才能看到 "取消订单" 按钮
+                if ("".equals(payResult)){
+                    viewHolder.setVisible(R.id.cancelOrder,true);
+                    viewHolder.findView(R.id.cancelOrder).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LinkKnownApiFactory.getLinkKnownApi().OrderCancelledById(payOrder.getOrder_id())
+                                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                                    .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                        @Override
+                                        public void onNext(BaseResponse o) {
+                                            if (o.isSuccess()){
+                                                ToastUtil.showText(getContext(),"订单取消成功！");
+                                                //刷新页面
+                                                initData();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            ToastUtil.showText(getContext(),"取消失败！");
+                                        }
+                                    });
+                        }
+                    });
+
+                }else{
+                    viewHolder.setGone(R.id.cancelOrder,true);
+                }
+
 
                 //设置支付结果图标
                 if("SUCCESS".equals(payResult)){

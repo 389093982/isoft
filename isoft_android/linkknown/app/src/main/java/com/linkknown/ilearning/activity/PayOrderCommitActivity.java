@@ -410,7 +410,7 @@ public class PayOrderCommitActivity extends BaseActivity{
                             ToastUtil.showText(mContext,"微信支付成功..");
 
                             //4.再次更新优惠券状态为已使用
-                            // 2.更新优惠券,这里是下单的时候需要更新一次。
+                            //更新优惠券,这里是下单的时候需要更新一次。
                             if (coupon_onuse!=null) {
                                 LinkKnownApiFactory.getLinkKnownApi().UpdateCouponIsUsed(LoginUtil.getLoginUserName(mContext),coupon_onuse.getCoupon_id())
                                         .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行

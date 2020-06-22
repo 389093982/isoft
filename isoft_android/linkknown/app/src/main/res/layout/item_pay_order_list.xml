@@ -32,7 +32,6 @@
                 android:id="@+id/goodsDesc"
                 android:layout_toRightOf="@+id/goodsImg"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="商品描述">
@@ -40,7 +39,6 @@
 
             <TextView
                 android:id="@+id/paidAmount"
-                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="50dp"
                 android:layout_width="wrap_content"
@@ -50,9 +48,8 @@
 
             <TextView
                 android:id="@+id/queryDeatilBtn"
-                android:layout_toRightOf="@+id/goodsImg"
-                android:layout_below="@+id/goodsDesc"
-                android:layout_marginLeft="10dp"
+                android:layout_alignLeft="@+id/goodsDesc"
+                android:layout_alignBottom="@+id/goodsImg"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,9 +65,8 @@
 
             <TextView
                 android:id="@+id/toPayBtn"
-                android:layout_toRightOf="@+id/goodsImg"
-                android:layout_below="@+id/goodsDesc"
-                android:layout_marginLeft="10dp"
+                android:layout_alignLeft="@+id/goodsDesc"
+                android:layout_alignBottom="@+id/goodsImg"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,14 +81,29 @@
             </TextView>
 
             <TextView
-                android:id="@+id/transTime"
-                android:layout_below="@+id/paidAmount"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="50dp"
+                android:id="@+id/cancelOrder"
+                android:layout_toRightOf="@+id/toPayBtn"
+                android:layout_alignBottom="@+id/toPayBtn"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:background="@drawable/common_tag_border"
+                android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:visibility="gone"
+                android:text="取消订单"
+                android:textSize="12dp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/transTime"
+                android:layout_below="@+id/paidAmount"
+                android:layout_alignRight="@+id/paidAmount"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:text="交易时间">
             </TextView>
@@ -100,12 +111,10 @@
             <TextView
                 android:id="@+id/orderTime"
                 android:layout_below="@+id/paidAmount"
+                android:layout_alignRight="@+id/paidAmount"
                 android:layout_marginTop="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:visibility="gone"
                 android:text="下单时间">
             </TextView>
