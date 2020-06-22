@@ -61,8 +61,6 @@ public class Constants {
     public static final int KAOSHI_TOTAL_TIME = 3600;
 
     // ------------- 权限申请相关 -------------
-    // 悬浮框权限申请跳转请求码
-    public static final int SYSTEM_ALERT_WINDOW_REQUEST_CODE = 10011;
     // 其它权限不知道什么码
     public static final int PERMISSION_ALL_CODE = 10012;
 

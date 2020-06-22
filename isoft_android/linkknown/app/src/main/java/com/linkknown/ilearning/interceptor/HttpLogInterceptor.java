@@ -1,14 +1,13 @@
 package com.linkknown.ilearning.interceptor;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.linkknown.ilearning.common.BaseApplication;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -42,9 +41,10 @@ public class HttpLogInterceptor implements Interceptor {
         if (contentType != null) {
             Charset charset = Charset.forName("UTF8");
             String rBody = buffer.clone().readString(charset);
-            Log.i("http_response ==>", rBody);
+            Logger.d("HttpResponse = %s", rBody);
         }
 
+        Logger.d("HttpResponseCode = %d", response.code());
         if (response.code() == 401) {
             // 触发自动登录
             Intent intent = new Intent();
@@ -55,11 +55,10 @@ public class HttpLogInterceptor implements Interceptor {
 
     // 打印请求信息日志
     private void logRequest(Request request) {
-        Log.i("http_url ==>", request.url().toString());
-        Log.i("http_method ==>", request.method());
-        Headers headers = request.headers();
+        Logger.d("httpUrl = %s", request.url().toString());
+        Logger.d("httpMethod = %s", request.method());
         for (String headerName : request.headers().names()){
-            Log.i("http_header ==>", request.header(headerName));
+            Logger.d("httpHeader = %s=%s", headerName, request.header(headerName));
         }
     }
 }
