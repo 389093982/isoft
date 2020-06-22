@@ -3,19 +3,16 @@ package com.linkknown.ilearning.popup;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.material.internal.FlowLayout;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.core.BottomPopupView;
 import com.lxj.xpopup.util.XPopupUtils;
-
-import org.w3c.dom.Text;
 
 import java.util.LinkedList;
 import java.util.Set;
@@ -41,14 +38,14 @@ public class SearchHistoryPopView extends BottomPopupView {
     protected void onCreate() {
         super.onCreate();
 
-        FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
+        FlowLayout flowLayout = findViewById(R.id.flowLayout);
         // TODO 显示排序有点问题
         Set<String> searchTexts = CommonUtil.getSearchHistory(mContext);
         LinkedList<String> searchTextList = new LinkedList<>(searchTexts);
-        flexboxLayout.removeAllViews();
+        flowLayout.removeAllViews();
         for (int i = 0; i < searchTextList.size(); i++) {
             // 根据布局动 id 态创建 TextView
-            final TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag, flexboxLayout, false);
+            final TextView textView = (TextView) LayoutInflater.from(mContext).inflate(R.layout.item_tag, flowLayout, false);
             textView.setText(searchTextList.get(i));
             // 设置随机背景色，文字使用白色
             textView.setBackgroundColor(UIUtils.getRandomResourceColor(i));
@@ -61,7 +58,7 @@ public class SearchHistoryPopView extends BottomPopupView {
                 onDismiss();
                 dismiss();
             });
-            flexboxLayout.addView(textView);
+            flowLayout.addView(textView);
         }
 
         TextView clearHisoty = findViewById(R.id.clearHisoty);
@@ -69,7 +66,7 @@ public class SearchHistoryPopView extends BottomPopupView {
             // 清空搜索历史
             CommonUtil.clearSearchHistory(mContext);
             // 同时清空 UI
-            flexboxLayout.removeAllViews();
+            flowLayout.removeAllViews();
         });
     }
 
