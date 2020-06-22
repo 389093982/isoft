@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CouponCourseResponse;
@@ -40,7 +41,7 @@ public class CouponGoodAdapter extends BaseQuickAdapter<CouponCourseResponse.Cou
 //        集数
         viewHolder.setText(R.id.courseNumberText, course.getCourse_number()+"");
 //        价格
-        viewHolder.setText(R.id.price, "￥"+course.getPrice()+"");
+        viewHolder.setText(R.id.price, Constants.RMB + course.getPrice()+"");
 //        点击卡片去课程详情界面
         viewHolder.findView(R.id.item_goods_card_tag).setOnClickListener(new View.OnClickListener() {
             @Override

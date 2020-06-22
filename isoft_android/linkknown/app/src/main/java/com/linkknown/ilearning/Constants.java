@@ -66,4 +66,6 @@ public class Constants {
 
     // 默认用户签名
     public static final String DEFAULT_USER_SIGNATURE = "这家伙很懒，什么个性签名都没有留下";
+
+    public static final String RMB = "¥";
 }

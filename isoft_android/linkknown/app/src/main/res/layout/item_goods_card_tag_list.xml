@@ -90,6 +90,6 @@
         android:layout_marginRight="30dp"
         android:textColor="@color/colorPrimary"
         android:textSize="14dp"
-        android:text="￥188.00"/>
+        android:text="¥188.00"/>
 
 </RelativeLayout>

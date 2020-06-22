@@ -3,6 +3,7 @@ package com.linkknown.ilearning.model;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class CourseMetaResponse extends BaseResponse {
 
     @Data
     @ToString
-    public static class CourseMeta {
+    public static class CourseMeta implements Serializable {
 
         private int id;
         private String course_name;

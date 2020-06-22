@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CouponGoodActivity;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
@@ -44,7 +45,7 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
         // 减免券
         TextView jianmianTextView = viewHolder.findView(R.id.jianmianTextView);
         if (StringUtils.equalsIgnoreCase(coupon.getYouhui_type(), "reduce")) {
-            youhuiTextView.setText(String.format("￥%s", coupon.getCoupon_amount()));
+            youhuiTextView.setText(String.format(Constants.RMB + "%s", coupon.getCoupon_amount()));
             jianmianTextView.setVisibility(View.VISIBLE);
             jianmianTextView.setText(String.format("满 %s 元减 %s 元", coupon.getGoods_min_amount(), coupon.getCoupon_amount()));
         } else {
@@ -69,8 +70,11 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
             targetName.setTextColor(Color.RED);
         } else {
             CourseMetaResponse.CourseMeta courseMeta = (CourseMetaResponse.CourseMeta) coupon.getGood();
-            targetName.setText(courseMeta.getCourse_name());
-            targetName.setTextColor(Color.BLUE);
+            // 防止课程无效为空
+            if (courseMeta != null) {
+                targetName.setText(courseMeta.getCourse_name());
+                targetName.setTextColor(Color.BLUE);
+            }
         }
 
         // 设置有效期

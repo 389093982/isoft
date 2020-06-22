@@ -70,7 +70,7 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
             protected void convert(@NotNull BaseViewHolder viewHolder, PayOrderResponse.PayOrder payOrder) {
                 UIUtils.setImage(getContext(),viewHolder.findView(R.id.goodsImg),payOrder.getGoods_img());
                 viewHolder.setText(R.id.goodsDesc,payOrder.getGoods_desc());
-                viewHolder.setText(R.id.paidAmount,"￥"+payOrder.getPaid_amount()+"");
+                viewHolder.setText(R.id.paidAmount,Constants.RMB + payOrder.getPaid_amount()+"");
                 String payResult = payOrder.getPay_result();
 
                 //成功和失败展示交易时间， 待支付和被取消展示下单时间

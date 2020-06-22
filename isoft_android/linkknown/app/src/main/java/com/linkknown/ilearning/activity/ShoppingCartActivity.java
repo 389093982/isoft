@@ -87,7 +87,7 @@ public class ShoppingCartActivity extends BaseActivity {
                 viewHolder.setText(R.id.goodsDesc,shoppingCart.getCourse_name());
                 //商品价格
                 BigDecimal price = shoppingCart.getPrice();
-                viewHolder.setText(R.id.price,"￥"+price);
+                viewHolder.setText(R.id.price,Constants.RMB + price);
                 //加入购物车时候的价格
                 BigDecimal goods_price_on_add = shoppingCart.getGoods_price_on_add();
                 viewHolder.setGone(R.id.youhuiTip,true);

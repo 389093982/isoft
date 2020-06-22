@@ -36,6 +36,7 @@ func (this *WorkSubNode) Execute(trackingId string) {
 
 func (this *WorkSubNode) RunOnceSubWork(work_id int64, trackingId string,
 	tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
+	// 代理子流程的返回 receiver 和异常信息 error
 	defer func() {
 		if err := recover(); err != nil {
 			// 将错误写入 Error 中去
