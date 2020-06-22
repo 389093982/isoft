@@ -110,7 +110,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
      */
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        ToastUtil.showText(this, "用户授权成功1");
+//        ToastUtil.showText(this, "用户授权成功1");
     }
 
     /**
@@ -120,7 +120,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
      */
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        ToastUtil.showText(this, "用户授权失败2");
+//        ToastUtil.showText(this, "用户授权失败2");
 
         /**
          　　* 若是在权限弹窗中，用户勾选了'NEVER ASK AGAIN.'或者'不在提示'，且拒绝权限。
@@ -138,20 +138,21 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //从设置页面返回，判断权限是否申请。
             if (EasyPermissions.hasPermissions(this, perms)) {
-                ToastUtil.showText(mContext, "权限申请成功3");
+//                ToastUtil.showText(mContext, "权限申请成功3");
             } else {
-                ToastUtil.showText(mContext, "权限申请失败4");
+//                ToastUtil.showText(mContext, "权限申请失败4");
             }
         }
 
-        if (requestCode == Constants.SYSTEM_ALERT_WINDOW_REQUEST_CODE) {
+        if (requestCode == Constants.PERMISSION_ALL_CODE) {
             gotoMainActivityDelay();
         }
     }
 
     @AfterPermissionGranted(Constants.PERMISSION_ALL_CODE)
     public void onPermissionSuccess(){
-        ToastUtil.showText(mContext, "权限申请成功,执行后续方法5");
+//        ToastUtil.showText(mContext, "权限申请成功,执行后续方法5");
+        gotoMainActivityDelay();
     }
 
 }
