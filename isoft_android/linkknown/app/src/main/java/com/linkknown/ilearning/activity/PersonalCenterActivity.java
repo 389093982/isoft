@@ -1,6 +1,5 @@
 package com.linkknown.ilearning.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -16,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -23,15 +23,14 @@ import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
-import com.linkknown.ilearning.service.CourseService;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.lxj.xpopup.XPopup;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,15 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class UserDetailActivity extends BaseActivity {
+public class PersonalCenterActivity extends BaseActivity {
 
     private Context mContext;
     private String userName;
+    // 轮播图部分
+    @BindView(R.id.banner)
+    public Banner banner;
+    // 存放轮播图所有图片
+    private ArrayList<Integer> bannerImageList;
 
     //用户头像
     @BindView(R.id.headerIcon)
@@ -53,22 +57,29 @@ public class UserDetailActivity extends BaseActivity {
     @BindView(R.id.nickNameText)
     public TextView nickNameText;
 
-    //vip等级
-    @BindView(R.id.vipLevel)
-    public ImageView vipLevel;
-
-    //个性签名
-    @BindView(R.id.userSignature)
-    public TextView userSignature;
-
     //性别
     @BindView(R.id.genderView)
     public ImageView genderView;
 
+    //积分
+    @BindView(R.id.userPoint)
+    public TextView userPoint;
+
+    //关注&粉丝
+    @BindView(R.id.attention_counts)
+    public TextView attention_counts;
+    @BindView(R.id.fensi_counts)
+    public TextView fensi_counts;
+
+    //关注按钮
     @BindView(R.id.attention_off)
     public TextView attention_off;
     @BindView(R.id.attention_on)
     public TextView attention_on;
+
+    //个性签名
+    @BindView(R.id.userSignature)
+    public TextView userSignature;
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
@@ -82,10 +93,14 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_detail);
+        setContentView(R.layout.activity_personal_center);
         mContext = this;
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "");
+
+        //设置banner
+        initBannerView();
+
         //绑定关注事件
         initAttentionBtn();
 
@@ -107,6 +122,26 @@ public class UserDetailActivity extends BaseActivity {
         }
     }
 
+    public void initBannerView(){
+        bannerImageList = new ArrayList<>();
+        bannerImageList.add(R.drawable.personal_center_img01);
+        bannerImageList.add(R.drawable.personal_center_img02);
+        bannerImageList.add(R.drawable.personal_center_img03);
+        bannerImageList.add(R.drawable.personal_center_img04);
+
+        //设置 banner 样式
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //设置轮播间隔时间
+        banner.setDelayTime(3000);
+        //设置是否为自动轮播，默认是true
+        banner.isAutoPlay(true);
+        //设置指示器的位置，小点点，居中显示
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+
+        banner.setImages(bannerImageList).start();
+    };
 
     private void initView () {
         //关注按钮的显示与隐藏
@@ -120,13 +155,18 @@ public class UserDetailActivity extends BaseActivity {
                     .subscribe(new LinkKnownObserver<QueryIsAttentionResponse>() {
                         @Override
                         public void onNext(QueryIsAttentionResponse o) {
-                            if (o.isSuccess() && o.getAttention_records() > 0){
-                                //大于0 则表示已关注
-                                attention_off.setVisibility(View.GONE);
-                                attention_on.setVisibility(View.VISIBLE);
+                            if (o.isSuccess()){
+                                if (o.getAttention_records() > 0){
+                                    //已关注， 显示已关注按钮
+                                    attention_on.setVisibility(View.VISIBLE);
+                                    attention_off.setVisibility(View.GONE);
+                                }else{
+                                    //未关注， 显示 +关注 按钮
+                                    attention_off.setVisibility(View.VISIBLE);
+                                    attention_on.setVisibility(View.GONE);
+                                }
                             }else{
-                                attention_off.setVisibility(View.VISIBLE);
-                                attention_on.setVisibility(View.GONE);
+                                ToastUtil.showText(mContext,"查询是否关注失败");
                             }
                         }
 
@@ -148,9 +188,11 @@ public class UserDetailActivity extends BaseActivity {
                                 // 设置用户头像、用户昵称、用户会员等级、用户标签语
                                 UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
                                 nickNameText.setText(user.getNick_name());
-                                vipLevel.setImageResource(UIUtils.getVipLevelImageResource(user.getVip_level()));
-                                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
                                 genderView.setImageResource(UIUtils.getGenderImageResource(user.getGender()));
+                                userPoint.setText(user.getUser_points()==0?"积分:0":"积分:"+user.getUser_points());
+                                attention_counts.setText(user.getAttention_counts()==0?"关注:0":"关注:"+user.getAttention_counts());
+                                fensi_counts.setText(user.getFensi_counts()==0?"粉丝:0":"粉丝:"+user.getFensi_counts());
+                                userSignature.setText(StringUtils.isNotEmpty(user.getUser_signature()) ? user.getUser_signature() : "这家伙很懒，什么个性签名都没有留下");
                                 initFragments(user.getUser_name());
                             }
                         }
@@ -238,17 +280,15 @@ public class UserDetailActivity extends BaseActivity {
         fragment1.setArguments(bundle);
         titles.add("发布的课程");
 
-        if (LoginUtil.isLoginUserName(getApplicationContext(), userName)) {
-            UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
-            fragments.add(fragment2);
-            fragment2.setArguments(bundle);
-            titles.add("收藏的课程");
+        UserCourseFragment fragment2 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_FAVORITE);
+        fragments.add(fragment2);
+        fragment2.setArguments(bundle);
+        titles.add("收藏的课程");
 
-            UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
-            fragments.add(fragment3);
-            fragment3.setArguments(bundle);
-            titles.add("观看的课程");
-        }
+        UserCourseFragment fragment3 = new UserCourseFragment(UserCourseFragment.DISPLAY_TYPE_VIEWED);
+        fragments.add(fragment3);
+        fragment3.setArguments(bundle);
+        titles.add("观看的课程");
 
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);

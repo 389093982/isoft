@@ -1,7 +1,6 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,19 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.google.gson.Gson;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.activity.VideoPlayActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
@@ -31,7 +24,6 @@ import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
-import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.ui.CourseOperate;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -41,14 +33,12 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.CommonTagView;
 import com.linkknown.ilearning.widget.CourseVideoView;
-import com.lxj.xpopup.XPopup;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
 import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -365,7 +355,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                         //1.去结算页面
                         UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
                             intent.putExtra("goodsType","course_theme_type");
-                            intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
+                            intent.putExtra("goodsId",String.valueOf(courseDetailResponse.getCourse().getId()));
                             intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
                             intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
                             intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
@@ -542,7 +532,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
     @OnClick(R.id.headerIcon)
     public void showUserDetail () {
-        UIUtils.gotoActivity(mContext, UserDetailActivity.class, intent -> {
+        UIUtils.gotoActivity(mContext, PersonalCenterActivity.class, intent -> {
             intent.putExtra(Constants.USER_NAME, courseDetailResponse.getCourse().getCourse_author());
             return intent;
         });

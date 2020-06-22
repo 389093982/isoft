@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.KaoShiShijuanDetailActivity;
 import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.ReceiveCouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseTagActivity;
 import com.linkknown.ilearning.activity.CourseListActivity;
 import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
-import com.linkknown.ilearning.activity.UserDetailActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.wenld.multitypeadapter.MultiTypeAdapter;
 import com.wenld.multitypeadapter.base.MultiItemView;
@@ -70,7 +69,7 @@ public class FindFragment extends Fragment implements View.OnClickListener {
         mData.add(new Item("畅享图书", R.drawable.ic_books, TeacherZhaoPingActivity.class));
         mData.add(new Item("锦鲤活动", R.drawable.ic_huodong, TeacherZhaoPingActivity.class));
         mData.add(new Item("领券中心", R.drawable.ic_coupon, ReceiveCouponCenterActivity.class));
-        mData.add(new Item("个人中心", R.drawable.ic_personal_center, UserDetailActivity.class));
+        mData.add(new Item("个人中心", R.drawable.ic_personal_center, PersonalCenterActivity.class));
 
 
         MultiTypeAdapter adapter = new MultiTypeAdapter();

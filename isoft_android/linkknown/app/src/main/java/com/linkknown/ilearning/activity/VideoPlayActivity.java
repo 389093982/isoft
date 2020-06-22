@@ -88,7 +88,7 @@ public class VideoPlayActivity extends BaseActivity {
                                     //1.去结算页面
                                     UIUtils.gotoActivity(mContext, PayOrderCommitActivity.class, intent -> {
                                         intent.putExtra("goodsType","course_theme_type");
-                                        intent.putExtra("goodsId",courseDetailResponse.getCourse().getId());
+                                        intent.putExtra("goodsId",String.valueOf(courseDetailResponse.getCourse().getId()));
                                         intent.putExtra("goodsImg",courseDetailResponse.getCourse().getSmall_image());
                                         intent.putExtra("goodsDesc",courseDetailResponse.getCourse().getCourse_name());
                                         intent.putExtra("price",""+courseDetailResponse.getCourse().getPrice());
