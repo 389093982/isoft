@@ -76,8 +76,12 @@ public class VideoPlayActivity extends BaseActivity {
                 // 收费课程后续集需要购买
                 // 登录判断
                 if (LoginUtil.checkHasLogin(this)) {
-                    // 已登录
-                    if (courseDetailResponse.getPayOrder() != null) {
+                    // 自己
+                    if (courseDetailResponse.getCourse().getCourse_author().equals(LoginUtil.getLoginUserName(mContext))){
+                        return true;
+                    }
+                    //别人
+                    if (courseDetailResponse.getPayOrder() != null && "SUCCESS".equals(courseDetailResponse.getPayOrder().getPay_result())) {
                         // 已购买
                         return true;
                     } else {

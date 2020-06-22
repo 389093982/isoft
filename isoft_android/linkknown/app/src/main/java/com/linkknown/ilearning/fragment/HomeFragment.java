@@ -226,6 +226,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
 
         toolBarUnLoginLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext, LoginActivity.class));
         showLeftNavView.setOnClickListener(v -> listener.showLeftNav());
+        toolBarLoginLayout.setOnClickListener(v -> listener.showLeftNav());
     }
 
     private void initLoginView(String headerIcon, String userName) {
