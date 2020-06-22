@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkmodels"
 	"isoft/isoft_iwork_web/core/iworkplugin/node"
 	"isoft/isoft_iwork_web/core/iworkutil"
+	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iwork_web/models"
 	"strings"
@@ -35,6 +36,18 @@ func (this *WorkSubNode) Execute(trackingId string) {
 
 func (this *WorkSubNode) RunOnceSubWork(work_id int64, trackingId string,
 	tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
+	defer func() {
+		if err := recover(); err != nil {
+			// 将错误写入 Error 中去
+			this.DataStore.CacheDatas("Error", map[string]interface{}{
+				"isError":             true,
+				"isNoError":           false,
+				"errorMsg":            errorutil.ToError(err),
+				"insensitiveErrorMsg": errorutil.ToError(err),
+			})
+			panic(err)
+		}
+	}()
 	// 继续传递 request 对象
 	tmpDataMap[iworkconst.HTTP_REQUEST_OBJECT] = this.Dispatcher.TmpDataMap[iworkconst.HTTP_REQUEST_OBJECT]
 	tmpDataMap["logwriter"] = this.LogWriter // 共享 LoggerWriter
