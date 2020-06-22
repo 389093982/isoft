@@ -41,7 +41,14 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
 
         if (StringUtils.isNotEmpty(courseMeta.getIsCharge())) {
             viewHolder.setVisible(R.id.isCharge, true);
-            viewHolder.setText(R.id.isCharge, StringUtils.equals(courseMeta.getIsCharge(), "charge") ? "付费课程" : "免费");
+            if ("charge".equals(courseMeta.getIsCharge())){
+                viewHolder.setText(R.id.isCharge, "付费课程");
+                viewHolder.setVisible(R.id.price,true);
+                viewHolder.setText(R.id.price,"￥"+courseMeta.getPrice());
+            }else if ("free".equals(courseMeta.getIsCharge())){
+                viewHolder.setText(R.id.isCharge, "免费");
+                viewHolder.setGone(R.id.price,true);
+            }
         } else {
             viewHolder.setVisible(R.id.isCharge, false);
         }
