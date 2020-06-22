@@ -86,6 +86,13 @@ public class CommonUtil {
         return preferences.getStringSet(Constants.SEARCH_HISTORY_SHARED_PREFERENCES_KEYWORDS, new LinkedHashSet<>());
     }
 
+    public static void clearSearchHistory (Context mContext) {
+        SharedPreferences preferences = mContext.getSharedPreferences(Constants.SEARCH_HISTORY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+
     public static void send(Context context, String shareText) {
         Intent shareIntent = new Intent()
                 .setAction(Intent.ACTION_SEND)

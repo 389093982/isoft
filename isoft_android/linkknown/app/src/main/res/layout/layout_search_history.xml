@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/left_tip"
@@ -21,7 +22,7 @@
             android:textSize="14sp"/>
 
         <TextView
-            android:id="@+id/right_tip"
+            android:id="@+id/clearHisoty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
