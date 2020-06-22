@@ -59,6 +59,9 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         this.courseDetailResponse = courseDetailResponse;
     }
 
+    @BindView(R.id.courseOperateRecyclerView)
+    public RecyclerView courseOperateRecyclerView;
+
     //课程名称
     @BindView(R.id.courseNameText)
     public TextView courseNameText;
@@ -71,20 +74,25 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.courseNumberText)
     public TextView courseNumberText;
 
+    //价格
+    @BindView(R.id.price)
+    public TextView price;
+
     //课程描述
     @BindView(R.id.courseShortDescText)
     public TextView courseShortDescText;
 
-    @BindView(R.id.courseOperateRecyclerView)
-    public RecyclerView courseOperateRecyclerView;
+    //加入购物车按钮
+    @BindView(R.id.addShoppingCart)
+    public TextView addShoppingCart;
 
-    // 课程自定义标签语
-    @BindView(R.id.courseTagView)
-    public CommonTagView courseTagView;
+    // 购买按钮
+    @BindView(R.id.buyView)
+    public TextView buyView;
 
-    //分集视频
-    @BindView(R.id.courseVideoView)
-    public CourseVideoView courseVideoView;
+    // 课程操作菜单和适配器
+    private List<CourseOperate> courseOperates;
+    private MultiTypeAdapter courseOperateAdapter;
 
     //用户头像
     @BindView(R.id.headerIcon)
@@ -110,23 +118,19 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     @BindView(R.id.userSignature)
     public TextView userSignature;
 
-    //加入购物车按钮
-    @BindView(R.id.addShoppingCart)
-    public TextView addShoppingCart;
-
-    // 购买按钮
-    @BindView(R.id.buyView)
-    public TextView buyView;
-
-    // 课程操作菜单和适配器
-    private List<CourseOperate> courseOperates;
-    private MultiTypeAdapter courseOperateAdapter;
-
     //关注按钮
     @BindView(R.id.attention_off)
     public TextView attention_off;
     @BindView(R.id.attention_on)
     public TextView attention_on;
+
+    // 课程自定义标签语
+    @BindView(R.id.courseTagView)
+    public CommonTagView courseTagView;
+
+    //分集视频
+    @BindView(R.id.courseVideoView)
+    public CourseVideoView courseVideoView;
 
     @Override
     protected void initView(View mRootView) {
@@ -164,6 +168,14 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         playNumberText.setText(course.getWatch_number() + "");
         // 课程集数
         courseNumberText.setText(course.getCourse_number() + "");
+        //课程价格
+        if ("charge".equals(course.getIsCharge())){
+            price.setText("￥"+course.getPrice());
+            price.setVisibility(View.VISIBLE);
+        }else{
+            price.setVisibility(View.GONE);
+        }
+
         // 课程描述
         courseShortDescText.setText(course.getCourse_short_desc());
 

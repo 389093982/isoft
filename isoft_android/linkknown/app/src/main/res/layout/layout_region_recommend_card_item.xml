@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp">
+        android:layout_height="200dp">
 
         <ImageView
             android:id="@+id/courseImage"
@@ -46,65 +46,73 @@
             android:scaleType="fitXY"
             android:src="@drawable/video_play" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/courseName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/courseImage"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/font_normal"
+            android:textSize="14sp"
+            android:text="课程名称"/>
 
-            <TextView
-                android:id="@+id/courseName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="@color/font_normal"
-                android:textSize="14sp" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/watchNumberText_icon"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_below="@+id/courseName"
+            android:layout_alignLeft="@+id/courseName"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_play_circle_outline_black_24dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/watchNumberText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp">
+            android:layout_toRightOf="@+id/watchNumberText_icon"
+            android:layout_alignBottom="@+id/watchNumberText_icon"
+            android:layout_marginLeft="3dp"
+            android:textColor="@color/black_alpha_45"
+            android:textSize="12sp"
+            android:text="观看次数"/>
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_play_circle_outline_black_24dp" />
 
-            <TextView
-                android:id="@+id/watchNumberText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:gravity="center"
-                android:textColor="@color/black_alpha_45"
-                android:textSize="12sp" />
+        <ImageView
+            android:id="@+id/courseNumberText_icon"
+            android:layout_toRightOf="@+id/watchNumberText"
+            android:layout_alignBottom="@+id/watchNumberText"
+            android:layout_marginLeft="20dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_subtitles_black_24dp" />
 
-            <Space
-                android:layout_width="@dimen/activity_vertical_margin"
-                android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/courseNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/courseNumberText_icon"
+            android:layout_alignBottom="@+id/courseNumberText_icon"
+            android:layout_marginLeft="3dp"
+            android:gravity="center"
+            android:textColor="@color/black_alpha_45"
+            android:textSize="12sp"
+            android:text="28集"/>
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_subtitles_black_24dp" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/watchNumberText_icon"
+            android:layout_alignLeft="@+id/watchNumberText_icon"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:text="￥888.00"/>
 
-            <TextView
-                android:id="@+id/courseNumberText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:gravity="center"
-                android:textColor="@color/black_alpha_45"
-                android:textSize="12sp" />
-        </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 
