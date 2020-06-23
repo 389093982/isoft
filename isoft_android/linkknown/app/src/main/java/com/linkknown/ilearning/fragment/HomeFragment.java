@@ -20,7 +20,6 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MessageInfoActivity;
-import com.linkknown.ilearning.activity.NewChannelActivity;
 import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -61,10 +60,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
-    // 添加更多频道的图标
-    @BindView(R.id.add_channel)
-    ImageView addChannel;
 
     // 名人名言
     @BindView(R.id.mingyanTextbanner)
@@ -126,8 +121,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
     }
 
     private void initFragment () {
-        addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
-        addChannel.setVisibility(View.GONE);
 
         titles.add("全部");
         CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();

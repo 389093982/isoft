@@ -48,7 +48,6 @@
         <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.MyCouponActivity" />
         <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.NewChannelActivity" />
         <activity android:name=".activity.TeacherZhaoPingActivity" />
         <activity android:name=".activity.AvailableCouponForPayActivity" />
         <activity

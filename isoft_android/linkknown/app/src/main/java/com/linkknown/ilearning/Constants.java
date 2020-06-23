@@ -36,8 +36,6 @@ public class Constants {
 
     public static final String USER_NAME = "USER_NAME";
 
-    public static final int NEWS_CHANNEL_ENABLE = 1;
-    public static final int NEWS_CHANNEL_DISABLE = 0;
 
     public static final String TIP_SYSTEM_ERROR = "系统繁忙，请稍后重试~";
 
