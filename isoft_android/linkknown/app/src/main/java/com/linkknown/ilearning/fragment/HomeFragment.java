@@ -129,11 +129,6 @@ public class HomeFragment extends BaseLazyLoadFragment {
         addChannel.setOnClickListener(v -> UIUtils.gotoActivity(getContext(), NewChannelActivity.class));
         addChannel.setVisibility(View.GONE);
 
-        titles.add("全部");
-        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
-        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
-        mFragments.add(courseFilterFragment1);
-
         titles.add("免费");
         CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
         courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
@@ -143,6 +138,12 @@ public class HomeFragment extends BaseLazyLoadFragment {
         CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
         courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
         mFragments.add(courseFilterFragment3);
+
+        titles.add("全部");
+        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
+        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
+        mFragments.add(courseFilterFragment1);
+
 
         titles.add("推荐");
         TuijianFragment tuijianFragment = new TuijianFragment();

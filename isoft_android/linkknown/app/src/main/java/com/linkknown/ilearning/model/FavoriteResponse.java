@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 public class FavoriteResponse extends BaseResponse {
 
     private List<Favorite> favorites;
+    private Paginator paginator;
 
     @Data
     public class Favorite {

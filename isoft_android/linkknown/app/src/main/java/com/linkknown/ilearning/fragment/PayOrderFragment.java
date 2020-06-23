@@ -99,11 +99,18 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
     }
 
     private void loadPageData(int current_page, int pageSize) {
-        executeLoadPageData(current_page, pageSize, LoginUtil.getLoginUserName(getContext()));
+        // 第一页不延时执行
+        if (current_page == 1) {
+            executeLoadPageData(current_page, pageSize);
+        } else {
+            // 后续页面，延迟执行，让加载效果更好
+            handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
+        }
     };
 
     //加载数据
-    private void executeLoadPageData(int current_page, int pageSize,String user_name) {
+    private void executeLoadPageData(int current_page, int pageSize) {
+        String user_name = LoginUtil.getLoginUserName(getContext());
         LinkKnownApiFactory.getLinkKnownApi().queryPayOrderList(current_page, pageSize,user_name,scope)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行

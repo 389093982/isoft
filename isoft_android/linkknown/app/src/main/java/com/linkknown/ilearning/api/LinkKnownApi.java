@@ -56,7 +56,8 @@ public interface LinkKnownApi {
 
     // 查询课程详情
     @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp")
-    Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id);
+    Observable<CourseDetailResponse> showCourseDetailForApp(@Query("course_id") int course_id,
+                                                            @Query("user_name") String user_name);
 
 
 
@@ -179,7 +180,9 @@ public interface LinkKnownApi {
     // 查询用户收藏列表
     @POST("/api/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList")
     Observable<FavoriteResponse> getUserFavoriteList(@Query("user_name") String user_name,
-                                                     @Query("favorite_type") String favorite_type);
+                                                     @Query("favorite_type") String favorite_type,
+                                                     @Query("current_page") int current_page,
+                                                     @Query("offset") int offset);
 
     // 生成验证码接口
     @POST("/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode")
@@ -187,7 +190,8 @@ public interface LinkKnownApi {
 
     // 课程观看记录
     @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory")
-    Observable<HistoryResponse> showCourseHistory();
+    Observable<HistoryResponse> showCourseHistory( @Query("current_page") int current_page,
+                                                   @Query("offset") int offset);
 
 
     // 是否收藏
