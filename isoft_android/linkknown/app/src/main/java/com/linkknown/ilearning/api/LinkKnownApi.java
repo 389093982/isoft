@@ -43,10 +43,6 @@ import retrofit2.http.Query;
 
 public interface LinkKnownApi {
 
-    // 查看热门推荐的课程
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend")
-    Observable<CourseMetaResponse> getHotCourseRecommend();
-
     @POST("/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName")
     Observable<CourseMetaResponse> getCourseListByUserName(@Query("userName") String userName,
                                                            @Query("current_page") int current_page,

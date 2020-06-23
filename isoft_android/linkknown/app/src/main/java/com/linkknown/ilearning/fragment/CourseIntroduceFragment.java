@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
@@ -33,12 +34,10 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.linkknown.ilearning.widget.CommonTagView;
 import com.linkknown.ilearning.widget.CourseVideoView;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -92,7 +91,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
 
     // 课程操作菜单和适配器
     private List<CourseOperate> courseOperates;
-    private MultiTypeAdapter courseOperateAdapter;
+    private BaseQuickAdapter courseOperateAdapter;
 
     //用户头像
     @BindView(R.id.headerIcon)
@@ -511,17 +510,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     private void initCourseOperateArea() {
         // 获取初始操作信息
         courseOperates = CourseOperate.getInitialCourseOperates();
-        courseOperateAdapter = new MultiTypeAdapter();
-
-        courseOperateAdapter.register(CourseOperate.class, new MultiItemView<CourseOperate>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_course_operate;
-            }
+        courseOperateAdapter = new BaseQuickAdapter<CourseOperate, BaseViewHolder> (R.layout.item_course_operate, courseOperates) {
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseOperate operate, int position) {
+            protected void convert(@NotNull BaseViewHolder viewHolder, CourseOperate operate) {
                 // 设置操作名称
                 viewHolder.setText(R.id.operateNameText, operate.getOperateName());
                 // 主要是 tint 属性
@@ -534,10 +526,11 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
                 // 使用工具类解决着色共享状态的 bug
                 viewHolder.setImageDrawable(R.id.operateIcon, DrawableUtil.tintDrawable(vectorDrawableCompat, color));
                 viewHolder.setText(R.id.operateNum, operate.getOperateNum() + "");
-                viewHolder.setOnClickListener(R.id.operateIcon, v -> handleCourseOperateClick(operate.getOperateName()));
+                viewHolder.findView(R.id.operateIcon).setOnClickListener(v -> handleCourseOperateClick(operate.getOperateName()));
             }
-        });
-        courseOperateAdapter.setItems(courseOperates);
+        };
+
+
         courseOperateRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         courseOperateRecyclerView.setAdapter(courseOperateAdapter);
     }

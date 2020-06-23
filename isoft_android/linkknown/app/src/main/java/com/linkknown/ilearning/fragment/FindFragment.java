@@ -12,18 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
-import com.linkknown.ilearning.activity.ReceiveCouponCenterActivity;
 import com.linkknown.ilearning.activity.CourseTagActivity;
-import com.linkknown.ilearning.activity.CourseListActivity;
-import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
+import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
 import com.linkknown.ilearning.activity.PersonalCenterActivity;
+import com.linkknown.ilearning.activity.ReceiveCouponCenterActivity;
+import com.linkknown.ilearning.activity.TeacherZhaoPingActivity;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.OnItemClickListener;
-import com.wenld.multitypeadapter.base.ViewHolder;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// MultiTypeAdapter
-public class FindFragment extends Fragment implements View.OnClickListener {
+public class FindFragment extends Fragment {
 
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
@@ -46,64 +44,45 @@ public class FindFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_space, container, false);
         mContext = getActivity();
+
         ButterKnife.bind(this, rootView);
 
-        init();
+        initView();
 
         return rootView;
     }
 
-    private void init() {
+    private void initView() {
         initRecyclerView();
     }
 
     private void initRecyclerView() {
-        recycleView.setHasFixedSize(true);
-        recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        List<Item> mData = new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
 
-        mData.add(new Item("分类", R.drawable.ic_fenlei, CourseTagActivity.class));
-        mData.add(new Item("考试", R.drawable.ic_test, KaoShiShijuanListActivity.class));
-        mData.add(new Item("推荐视频", R.drawable.ic_video, CourseListActivity.class));
-        mData.add(new Item("名师招募令", R.drawable.ic_hire, TeacherZhaoPingActivity.class));
-        mData.add(new Item("畅享图书", R.drawable.ic_books, TeacherZhaoPingActivity.class));
-        mData.add(new Item("锦鲤活动", R.drawable.ic_huodong, TeacherZhaoPingActivity.class));
-        mData.add(new Item("领券中心", R.drawable.ic_coupon, ReceiveCouponCenterActivity.class));
-        mData.add(new Item("个人中心", R.drawable.ic_personal_center, PersonalCenterActivity.class));
+        itemList.add(new Item("分类", R.drawable.ic_fenlei, CourseTagActivity.class));
+        itemList.add(new Item("考试", R.drawable.ic_test, KaoShiShijuanListActivity.class));
+        itemList.add(new Item("推荐视频", R.drawable.ic_video, CourseTagActivity.class));
+        itemList.add(new Item("名师招募令", R.drawable.ic_hire, TeacherZhaoPingActivity.class));
+        itemList.add(new Item("畅享图书", R.drawable.ic_books, TeacherZhaoPingActivity.class));
+        itemList.add(new Item("锦鲤活动", R.drawable.ic_huodong, TeacherZhaoPingActivity.class));
+        itemList.add(new Item("领券中心", R.drawable.ic_coupon, ReceiveCouponCenterActivity.class));
+        itemList.add(new Item("个人中心", R.drawable.ic_personal_center, PersonalCenterActivity.class));
 
-
-        MultiTypeAdapter adapter = new MultiTypeAdapter();
-        adapter.register(Item.class, new MultiItemView<Item>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_space;
-            }
+        BaseQuickAdapter baseQuickAdapter = new BaseQuickAdapter<Item, BaseViewHolder> (R.layout.item_space, itemList) {
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull Item item, int i) {
+            protected void convert(@NotNull BaseViewHolder viewHolder, Item item) {
                 viewHolder.setImageResource(R.id.item_icon, item.getDrawableImage());
                 viewHolder.setText(R.id.item_title, item.getItemName());
-            }
-        });
-        adapter.setItems(mData);
-        adapter.setOnItemClickListener(new OnItemClickListener<Item>() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder viewHolder, Item item, int position) {
-                // 跳转 Activity
-                UIUtils.gotoActivity(getActivity(), item.getRedirectClazz());
-            }
 
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder viewHolder, Item item, int position) {
-                return false;
+                viewHolder.itemView.setOnClickListener(v -> {
+                    // 跳转 Activity
+                    UIUtils.gotoActivity(getActivity(), item.getRedirectClazz());
+                });
             }
-        });
-        recycleView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onClick(View v) {
+        };
+        recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        recycleView.setAdapter(baseQuickAdapter);
     }
 
     @Data
