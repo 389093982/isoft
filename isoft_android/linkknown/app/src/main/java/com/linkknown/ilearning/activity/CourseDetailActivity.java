@@ -311,7 +311,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         fragments.add(courseIntroduceFragment);
         fragments.add(courseCommentFragment);
         titles.add("简介");
-        titles.add("评论(" + comments + ")");
+        titles.add("评论");
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()

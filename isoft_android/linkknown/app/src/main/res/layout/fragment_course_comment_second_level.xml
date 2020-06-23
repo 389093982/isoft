@@ -121,8 +121,7 @@ android:background="@color/white">
             android:layout_marginBottom="10dp"/>
 
 <!--        二级评论-->
-        <include android:id="@+id/second_level_comment_recycleview"
-            layout="@layout/layout_recycleview"/>
+            <include layout="@layout/layout_recycleview"></include>
 
         <include layout="@layout/layout_footerview"/>
 

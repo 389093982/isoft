@@ -12,6 +12,7 @@ import lombok.ToString;
 public class SecondLevelCommentResponse extends BaseResponse{
 
     private List<SecondLevelCommentResponse.Comment> comments;
+    private Paginator paginator;
 
     @Data
     public class Comment{
