@@ -39,6 +39,11 @@
                       </span>
                     </Col>
                   </Row>
+                  <Row>
+                    <div style="margin-top: 15px">
+                      <Icon class="move_shopping_cart" type="ios-cart-outline" :size="40" @click="viewShoppingCart()" style="cursor: pointer"/>
+                    </div>
+                  </Row>
                 </div>
                 <div v-else style="color: #cc0000;font-size: 15px;margin-left: 50px">免费视频</div>
               </div>
@@ -366,6 +371,10 @@
           _this.$router.push({path:'/payment/pay',name:'pay',params:{type:type,id:id}});
         });
       },
+      //查看购物车
+      viewShoppingCart:function () {
+        CheckHasLoginConfirmDialog(this, {path: "/payment/shoppingCart"});
+      },
       //刷新优惠券
       refreshCoupon:async function () {
         // 查指定券
@@ -477,6 +486,17 @@
   .move_course_name{
     position:relative;
     animation: move 3s linear infinite;
+  }
+
+  .move_shopping_cart{
+    position:relative;
+    animation: shopping_cart_move 8s linear infinite;
+  }
+
+
+  @keyframes shopping_cart_move {
+    0%   {left:-100px;}
+    100% {left:150px;}
   }
 
   @keyframes move {
