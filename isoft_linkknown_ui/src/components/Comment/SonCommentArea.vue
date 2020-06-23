@@ -122,11 +122,14 @@
         this.offset = pageSize;
         this.refreshComment();
       },
+      //网页版二级评论暂定只查询前20条，为了app的用户体验
       refreshComment: async function (comment_type) {
         let params = {
           'theme_pk':this.theme_pk,
           'theme_type':this.theme_type,
           'org_parent_id':this.org_parent_id,
+          'current_page':1,
+          'offset':20
         };
         const result = await FilterCommentSecondLevel(params);
         if (result.status === "SUCCESS") {
