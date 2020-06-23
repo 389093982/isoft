@@ -9,6 +9,7 @@ import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -104,9 +105,14 @@ public class CourseVideoAdapter extends BaseMultiItemQuickAdapter<CourseDetailRe
 
     private boolean checkBuy() {
         PayOrderResponse.PayOrder payOrder = courseDetailResponse.getPayOrder();
-        if (payOrder != null && StringUtils.equalsIgnoreCase(payOrder.getPay_result(), "SUCCESS")) {
+        if (payOrder != null && StringUtils.equalsIgnoreCase(payOrder.getPay_result(), "SUCCESS") ) {
             return true;
         }
+
+        if (LoginUtil.checkHasLogin(mContext) && courseDetailResponse.getCourse().getCourse_author().equals(LoginUtil.getLoginUserName(mContext))){
+            return  true;
+        }
+
         return false;
     }
 }

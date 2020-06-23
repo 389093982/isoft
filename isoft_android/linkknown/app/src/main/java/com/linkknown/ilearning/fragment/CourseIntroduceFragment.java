@@ -169,7 +169,7 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         courseNumberText.setText(course.getCourse_number() + "");
         //课程价格
         if ("charge".equals(course.getIsCharge())){
-            price.setText("￥"+course.getPrice());
+            price.setText(Constants.RMB+course.getPrice());
             price.setVisibility(View.VISIBLE);
         }else{
             price.setVisibility(View.GONE);

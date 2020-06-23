@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.CourseMetaResponse;
@@ -44,7 +45,7 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
             if ("charge".equals(courseMeta.getIsCharge())){
                 viewHolder.setText(R.id.isCharge, "付费课程");
                 viewHolder.setVisible(R.id.price,true);
-                viewHolder.setText(R.id.price,"￥"+courseMeta.getPrice());
+                viewHolder.setText(R.id.price, Constants.RMB+courseMeta.getPrice());
             }else if ("free".equals(courseMeta.getIsCharge())){
                 viewHolder.setText(R.id.isCharge, "免费");
                 viewHolder.setGone(R.id.price,true);

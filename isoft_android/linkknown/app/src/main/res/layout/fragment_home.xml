@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:text="前去登录"
                         android:textColor="#ffffff"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <RelativeLayout
