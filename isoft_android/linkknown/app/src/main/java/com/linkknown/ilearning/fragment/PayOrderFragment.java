@@ -1,8 +1,11 @@
 package com.linkknown.ilearning.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +19,16 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
 import com.linkknown.ilearning.activity.PayOrderDetailActivity;
+import com.linkknown.ilearning.adapter.PayOrderAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
+import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.model.PayOrderResponse;
+import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -41,7 +48,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PayOrderFragment extends BaseLazyLoadFragment{
 
-    private BaseQuickAdapter baseQuickAdapter;
+    private Context mContext;
+    private PayOrderAdapter baseQuickAdapter;
+
+    private Handler handler = new Handler();
+    private Paginator paginator;
 
     @BindView(R.id.recyclerView)
     public RecyclerView recyclerView;
@@ -65,149 +76,17 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
-        baseQuickAdapter = new BaseQuickAdapter<PayOrderResponse.PayOrder, BaseViewHolder>(R.layout.item_pay_order_list,orderList) {
-            @Override
-            protected void convert(@NotNull BaseViewHolder viewHolder, PayOrderResponse.PayOrder payOrder) {
-                UIUtils.setImage(getContext(),viewHolder.findView(R.id.goodsImg),payOrder.getGoods_img());
-                viewHolder.setText(R.id.goodsDesc,payOrder.getGoods_desc());
-                viewHolder.setText(R.id.paidAmount,Constants.RMB + payOrder.getPaid_amount()+"");
-                String payResult = payOrder.getPay_result();
+        baseQuickAdapter = new PayOrderAdapter(mContext,orderList);
+        baseQuickAdapter.setOnClickCancle(order_id -> OrderCancelledById(order_id));
 
-                //成功和失败展示交易时间， 待支付和被取消展示下单时间
-                if ("SUCCESS".equals(payResult) || "FAIL".equals(payResult)) {
-                    String transTime = payOrder.getTrans_time();
-                    viewHolder.setText(R.id.transTime,DateUtil.formatDate_StandardForm(transTime).substring(0,10));
-                    viewHolder.setGone(R.id.orderTime,true);
-                    viewHolder.setVisible(R.id.transTime,true);
-                }else if ("CANCELLED".equals(payResult) || "".equals(payResult.trim())){
-                    String orderTime = payOrder.getOrder_time();
-                    viewHolder.setText(R.id.orderTime,DateUtil.formatDate_StandardForm(orderTime).substring(0,10));
-                    viewHolder.setGone(R.id.transTime,true);
-                    viewHolder.setVisible(R.id.orderTime,true);
-                }
-
-                //只有交易成功和失败可以看到 "订单详情" 按钮
-                if ("SUCCESS".equals(payResult) || "FAIL".equals(payResult)){
-                    viewHolder.setVisible(R.id.queryDeatilBtn,true);
-                    viewHolder.findView(R.id.queryDeatilBtn).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UIUtils.gotoActivity(getContext(), PayOrderDetailActivity.class, new UIUtils.IntentParamWrapper() {
-                                @Override
-                                public Intent wrapper(Intent intent) {
-                                    Gson gson = new Gson();
-                                    intent.putExtra("payOrderDetail",payOrder);
-                                    return intent;
-                                }
-                            });
-                        }
-                    });
-                }else{
-                    viewHolder.setGone(R.id.queryDeatilBtn,true);
-                }
-
-                //只有待支付状态，才能看到 "前去支付" 按钮
-                if ("".equals(payResult)){
-                    viewHolder.setVisible(R.id.toPayBtn,true);
-                    viewHolder.findView(R.id.toPayBtn).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            //这里就查询一个课程。
-                            List<String> ids = new ArrayList<>();
-                            ids.add(payOrder.getGoods_id());
-                            LinkKnownApiFactory.getLinkKnownApi().getCourseListByIds(StringUtils.join(ids.toArray(new String[]{}), ","))
-                                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                                    .subscribe(new LinkKnownObserver<CourseMetaResponse>() {
-                                        @Override
-                                        public void onNext(CourseMetaResponse courseMetaResponse) {
-                                            if (courseMetaResponse.isSuccess()){
-                                                //1.去结算页面
-                                                UIUtils.gotoActivity(getContext(), PayOrderCommitActivity.class, intent -> {
-                                                    intent.putExtra("goodsType",payOrder.getGoods_type());
-                                                    intent.putExtra("goodsId",payOrder.getGoods_id());
-                                                    intent.putExtra("goodsImg",courseMetaResponse.getCourses().get(0).getSmall_image());
-                                                    intent.putExtra("goodsDesc",courseMetaResponse.getCourses().get(0).getCourse_name());
-                                                    intent.putExtra("price",""+courseMetaResponse.getCourses().get(0).getPrice());
-                                                    return intent;
-                                                });
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            ToastUtil.showText(getContext(),"查询失败！");
-                                        }
-                                    });
-
-                        }
-                    });
-                }else{
-                    viewHolder.setGone(R.id.toPayBtn,true);
-                }
-
-
-                //只有待付款状态的订单才能看到 "取消订单" 按钮
-                if ("".equals(payResult)){
-                    viewHolder.setVisible(R.id.cancelOrder,true);
-                    viewHolder.findView(R.id.cancelOrder).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LinkKnownApiFactory.getLinkKnownApi().OrderCancelledById(payOrder.getOrder_id())
-                                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                                    .subscribe(new LinkKnownObserver<BaseResponse>() {
-                                        @Override
-                                        public void onNext(BaseResponse o) {
-                                            if (o.isSuccess()){
-                                                ToastUtil.showText(getContext(),"订单取消成功！");
-                                                //刷新页面
-                                                initData();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            ToastUtil.showText(getContext(),"取消失败！");
-                                        }
-                                    });
-                        }
-                    });
-
-                }else{
-                    viewHolder.setGone(R.id.cancelOrder,true);
-                }
-
-
-                //设置支付结果图标
-                if("SUCCESS".equals(payResult)){
-                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_success);
-                }else if ("FAIL".equals(payResult)){
-                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_fail);
-                }else if ("".equals(payResult)){
-                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_wait_for_pay);
-                }else if ("CANCELLED".equals(payResult)){
-                    viewHolder.setImageResource(R.id.payResultIcon,R.drawable.ic_pay_result_cancel);
-                }
-
-                //设置课程图片点击事件，跳往课程详情界面
-                viewHolder.findView(R.id.goodsImg).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UIUtils.gotoActivity(getContext(), CourseDetailActivity.class, intent -> {
-                            intent.putExtra("course_id", Integer.valueOf(payOrder.getGoods_id()));
-                            return intent;
-                        });
-                    }
-                });
+        // 是否自动加载下一页（默认为true）
+        baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
+        // 设置加载更多监听事件
+        baseQuickAdapter.getLoadMoreModule().setOnLoadMoreListener(() -> {
+            if (paginator != null && paginator.getCurrpage() < paginator.getTotalpages()) {
+                loadPageData(paginator.getCurrpage() + 1, Constants.DEFAULT_PAGE_SIZE);
             }
-
-            @Override
-            public int getItemCount() {
-                return orderList.size();
-            }
-        };
+        });
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
         recyclerView.setAdapter(baseQuickAdapter);
@@ -230,37 +109,74 @@ public class PayOrderFragment extends BaseLazyLoadFragment{
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<PayOrderResponse>() {
                     @Override
-                    public void onNext(PayOrderResponse payOrderResponse) {
-                        if (payOrderResponse.isSuccess()) {
-                            // 有数据
-                            if (CollectionUtils.isNotEmpty(payOrderResponse.getOrders())) {
+                    public void onNext(PayOrderResponse o) {
+                        if (o.isSuccess()){
+                            if (CollectionUtils.isNotEmpty(o.getOrders())){
                                 if (current_page == 1) {
                                     // 先清空再添加
                                     orderList.clear();
                                 }
-                                orderList.addAll(payOrderResponse.getOrders());
+                                orderList.addAll(o.getOrders());
+                                baseQuickAdapter.setList(orderList);
+
+                                // 当前这次数据加载完毕，调用此方法
+                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
                             }else{
-                                orderList.clear();
-                                ToastUtil.showText(getContext(),"未查到数据！");
+                                if (current_page == 1) {
+                                    orderList.clear();
+                                    baseQuickAdapter.setList(orderList);
+                                    baseQuickAdapter.setEmptyView(R.layout.layout_region_recommend_empty);
+                                    TextView emptyTipText = baseQuickAdapter.getEmptyLayout().findViewById(R.id.emptyTipText);
+                                    emptyTipText.setText("暂无商品");
+                                }
+                                baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
+                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
                             }
 
-                        } else {
-                            orderList.clear();
-                            ToastUtil.showText(getContext(),"未查到数据！");
+                            paginator = o.getPaginator();
+                            // 最后一页
+                            if (CommonUtil.isLastPage(paginator)) {
+                                baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
+                            }
+                        }else{
+                            baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                         }
-                        baseQuickAdapter.notifyDataSetChanged();
                         swipeRefreshLayoutHelper.finishRefreshing();
+                    };
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("queryPayOrderList error", e.getMessage());
+                        ToastUtil.showText(mContext,"查询失败！");
+                        swipeRefreshLayoutHelper.finishRefreshing();
+                        // 当前这次数据加载错误，调用此方法
+                        baseQuickAdapter.getLoadMoreModule().loadMoreFail();
+                    }
+                });
+    }
+
+
+    //根据订单号取消订单
+    public void OrderCancelledById(String order_id){
+        LinkKnownApiFactory.getLinkKnownApi().OrderCancelledById(order_id)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse o) {
+                        if (o.isSuccess()){
+                            ToastUtil.showText(getContext(),"订单取消成功！");
+                            //刷新页面
+                            initData();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("searchPayOrders error", e.getMessage());
-                        swipeRefreshLayoutHelper.finishRefreshing();
-
-                        ToastUtil.showText(getContext(),"查询失败！");
+                        ToastUtil.showText(getContext(),"取消失败！");
                     }
                 });
     }
+
 
     @Override
     protected boolean setIsRealTimeRefresh() {
