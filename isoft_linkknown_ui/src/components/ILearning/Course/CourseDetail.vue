@@ -328,22 +328,23 @@
           return;
         }
 
+        if (this.course.course_author == getLoginUserName()) {
+          this.$Message.info("请勿购买自己的课程");
+          return false;
+        }
+
         let _this = this;
         CheckHasLoginConfirmDialog2(_this, async function () {
-          if (_this.course.course_author == getLoginUserName()) {
-            _this.$Message.info("请勿购买自己的课程")
-          }else {
-            let params = {
-              'goods_type':type,
-              'goods_id':id,
-              'goods_price_on_add':price
-            };
-            const result = await addToShoppingCart(params);
-            if (result.status === 'SUCCESS') {
-              _this.$Message.success('加入成功！');
-            }else{
-              _this.$Message.error(result.errorMsg)
-            }
+          let params = {
+            'goods_type':type,
+            'goods_id':id,
+            'goods_price_on_add':price
+          };
+          const result = await addToShoppingCart(params);
+          if (result.status === 'SUCCESS') {
+            _this.$Message.success('加入成功！');
+          }else{
+            _this.$Message.error(result.errorMsg)
           }
         });
 
@@ -354,6 +355,12 @@
           this.$Message.error("点击过快,请稍后重试!");
           return;
         }
+
+        if (this.course.course_author == getLoginUserName()) {
+          this.$Message.info("请勿购买自己的课程");
+          return false;
+        }
+
         let _this = this;
         CheckHasLoginConfirmDialog2(_this, async function () {
           _this.$router.push({path:'/payment/pay',name:'pay',params:{type:type,id:id}});
