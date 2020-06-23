@@ -1,7 +1,9 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
@@ -17,9 +19,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import butterknife.BindView;
+
 public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.CourseMeta, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
+
     /**
      * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
      * 如果后期设置数据，不需要传入初始List，直接调用 super(layoutResId); 即可
@@ -39,6 +44,15 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
         viewHolder.setText(R.id.courseNumberText, courseMeta.getCourse_number() + "");
 
         UIUtils.setImage(mContext,  viewHolder.findView(R.id.courseImage), courseMeta.getSmall_image());
+        viewHolder.findView(R.id.courseImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext,CourseDetailActivity.class,intent -> {
+                    intent.putExtra("course_id",courseMeta.getId());
+                    return intent;
+                });
+            }
+        });
 
         if (StringUtils.isNotEmpty(courseMeta.getIsCharge())) {
             viewHolder.setVisible(R.id.isCharge, true);

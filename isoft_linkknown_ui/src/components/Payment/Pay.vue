@@ -209,8 +209,7 @@
           user_name = null;
         }
         let params = {
-          'course_id':course_id,
-          'user_name':user_name,
+          'course_id':course_id
         };
         const result = await ShowCourseDetail(params);
         if (result.status === "SUCCESS") {

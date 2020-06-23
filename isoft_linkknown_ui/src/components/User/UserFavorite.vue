@@ -62,8 +62,15 @@
       refreshUserFavoriteList: async function (userName) {
         if (userName) {
           this.userName = userName;
-          // 获取图书收藏列表
-          const result = await GetUserFavoriteList({favorite_type: 'book_collect', user_name: userName});
+
+          let params = {
+            'favorite_type':"book_collect",
+            'user_name':userName,
+            'current_page':1,
+            'offset':20
+          };
+          // 获取图书收藏列表-- 这里只展示20条数据，为了app体验，做了分页
+          const result = await GetUserFavoriteList(params);
           if (result.status === "SUCCESS") {
             this.book_collects = result.favorites;
             this.refreshBookList();

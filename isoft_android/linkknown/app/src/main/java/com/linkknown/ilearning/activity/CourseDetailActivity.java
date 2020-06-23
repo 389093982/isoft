@@ -149,7 +149,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 1、调用 showCourseDetailForApp 接口返回课程信息
         // 2、通过 flatMap 方法将 CourseDetailResponse 转换成 CourseDetailResponse
         // 转换的逻辑是通过 Observable.zip 方法合并三个网络请求
-        Observable<CourseDetailResponse> courseDetailResponseObservable = LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id)
+        Observable<CourseDetailResponse> courseDetailResponseObservable = LinkKnownApiFactory.getLinkKnownApi().showCourseDetailForApp(course_id,LoginUtil.getLoginUserName(mContext))
                 .flatMap((Function<CourseDetailResponse, ObservableSource<CourseDetailResponse>>) (CourseDetailResponse courseDetailResponse) -> {
                     // 返回合并的三个网络请求: 课程信息，课程作者信息，当前登录用户购买订单信息
                     return Observable.zip(Observable.just(courseDetailResponse),

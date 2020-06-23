@@ -3,6 +3,8 @@ package com.linkknown.ilearning.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -62,17 +64,15 @@ public class AdviseActivity extends BaseActivity {
     private List<AdviseListResponse.Advise> advises = new ArrayList<>();
     private BaseQuickAdapter baseQuickAdapter;
 
-    // 分页信息
+    private Handler handler = new Handler();
     private Paginator paginator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advise);
-
         mContext = this;
         ButterKnife.bind(this);
-
         swipeRefreshLayoutHelper.bind(mContext, refreshLayout);
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
@@ -99,30 +99,37 @@ public class AdviseActivity extends BaseActivity {
         return true;
     }
 
-    private void loadPageData(int current_page, int pageSize) {
-        // 状态手动置为"加载中"，并且会调用加载更多监听
-        // 一般情况下，不需要自己设置'加载中'状态
-        baseQuickAdapter.getLoadMoreModule().loadMoreToLoading();
 
+    private void loadPageData(int current_page, int pageSize) {
+        // 第一页不延时执行
+        if (current_page == 1) {
+            executeLoadPageData(current_page, pageSize);
+        } else {
+            // 后续页面，延迟执行，让加载效果更好
+            handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
+        }
+    }
+
+
+    private void executeLoadPageData(int current_page, int pageSize) {
         LinkKnownApiFactory.getLinkKnownApi().queryPageAdvise(current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<AdviseListResponse>() {
-
                     @Override
-                    public void onNext(AdviseListResponse adviseListResponse) {
-                        if (adviseListResponse.isSuccess()) {
-                            if (CollectionUtils.isNotEmpty(adviseListResponse.getAdvises())) {
+                    public void onNext(AdviseListResponse o) {
+                        if (o.isSuccess()){
+                            if (CollectionUtils.isNotEmpty(o.getAdvises())){
                                 if (current_page == 1) {
                                     // 先清空再添加
                                     advises.clear();
                                 }
-                                advises.addAll(adviseListResponse.getAdvises());
+                                advises.addAll(o.getAdvises());
                                 baseQuickAdapter.setList(advises);
 
                                 // 当前这次数据加载完毕，调用此方法
                                 baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
-                            } else {
+                            }else{
                                 if (current_page == 1) {
                                     advises.clear();
                                     baseQuickAdapter.setList(advises);
@@ -133,20 +140,21 @@ public class AdviseActivity extends BaseActivity {
                                 baseQuickAdapter.getLoadMoreModule().loadMoreComplete();
                                 baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
                             }
-                            paginator = adviseListResponse.getPaginator();
 
+                            paginator = o.getPaginator();
                             // 最后一页
                             if (CommonUtil.isLastPage(paginator)) {
                                 baseQuickAdapter.getLoadMoreModule().loadMoreEnd();
                             }
-                        } else {
+                        }else{
                             baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                         }
                         swipeRefreshLayoutHelper.finishRefreshing();
-                    }
-
+                    };
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("queryPageAdvise error", e.getMessage());
+                        ToastUtil.showText(mContext,"查询失败！");
                         swipeRefreshLayoutHelper.finishRefreshing();
                         // 当前这次数据加载错误，调用此方法
                         baseQuickAdapter.getLoadMoreModule().loadMoreFail();

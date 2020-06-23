@@ -216,11 +216,16 @@
         this.refreshCouponList()
       },
       remainDays:function (end_date) {
-        let remainDays = Number(end_date.toString()) - Number(GetToday_yyyyMMdd().toString());
-        if (remainDays <= 0) {
-          remainDays = 0;
+        var endDate = new Date(end_date.substring(0,4)+"/"+end_date.substring(4,6)+"/"+end_date.substring(6,8)); // 通过日期字符串，初始化第一个日期对象
+        let today = GetToday_yyyyMMdd();
+        var startDate = new Date(today.substring(0,4)+"/"+today.substring(4,6)+"/"+today.substring(6,8)); // 同上，初始化第二个日期对象
+        var oneDay = 24 * 60 * 60 * 1000; // 完整一天有24小时，将小时换算成毫秒时间戳
+        var diffDay = (endDate - startDate) / oneDay; // 计算间隔天数（注意日期隐式转换）
+        if (diffDay >= 0) {
+          return diffDay;
+        }else{
+          return "活动已结束";
         }
-        return remainDays;
       },
       isOverdue:function (start_date,end_date) {
         if (Number(start_date.toString()) > Number(GetToday_yyyyMMdd().toString()) || Number(end_date.toString()) < Number(GetToday_yyyyMMdd().toString())) {
