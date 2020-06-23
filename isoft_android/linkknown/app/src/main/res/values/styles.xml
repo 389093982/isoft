@@ -178,4 +178,13 @@
         <item name="android:windowEnterAnimation">@anim/popwindow_in</item>
         <item name="android:windowExitAnimation">@anim/popwindow_gone</item>
     </style>
+
+    <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+    <style name="ToolBar.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 </resources>

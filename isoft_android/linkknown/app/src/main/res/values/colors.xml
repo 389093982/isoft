@@ -73,4 +73,6 @@
 
     <color name="translucent">#CC737373</color>
     <color name="colorContent">#ff333333</color>
+
+    <color name="colorTitle">#666</color>
 </resources>

@@ -7,33 +7,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
-import com.linkknown.ilearning.activity.CourseSearchActivity;
 import com.linkknown.ilearning.adapter.FirstLevelCommentAdapter;
-import com.linkknown.ilearning.common.CommonDiffCallback;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
-import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
+import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
-import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
-import com.linkknown.ilearning.popup.SearchHistoryPopView;
 import com.linkknown.ilearning.popup.SecondLevelCommentPopView;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
-import com.linkknown.ilearning.util.ui.UIUtils;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.core.BasePopupView;
 
 import org.apache.commons.collections4.CollectionUtils;
 

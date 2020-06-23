@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +55,11 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
     private String PERMISSION_ALL_MSG = "请授予权限，否则影响部分使用功能";
     private String[] perms = {Manifest.permission.CAMERA};
 
+    @BindView(R.id.businessView)
+    public TextView businessView;
+    @BindView(R.id.userAgreementView)
+    public TextView userAgreementView;
+
     @BindView(R.id.imageView)
     public ImageView imageView;
     private Context mContext;
@@ -73,11 +80,18 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         } else {
             EasyPermissions.requestPermissions(this, PERMISSION_ALL_MSG, Constants.PERMISSION_ALL_CODE, perms);
         }
-
-
     }
 
     private void initView() {
+        businessView.setOnClickListener(v -> {
+            UIUtils.gotoActivity(mContext, BusinessActivity.class);
+            finish();
+        });
+        userAgreementView.setOnClickListener(v -> {
+            UIUtils.gotoActivity(mContext, UserAgreementActivity.class);
+            finish();
+        });
+
         //动画
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.text_splash_position);
 

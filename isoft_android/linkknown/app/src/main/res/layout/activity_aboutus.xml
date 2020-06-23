@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/layout_toolbar"/>
@@ -32,6 +31,7 @@
             android:layout_centerHorizontal="true"/>
 
         <TextView
+            android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -40,6 +40,25 @@
             android:textSize="20sp"
             android:layout_below="@id/version"
             android:layout_centerHorizontal="true"/>
+
+        <LinearLayout
+            android:layout_below="@id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/userAgreementView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户协议"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/businessView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商业合作"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/footer"
