@@ -3,16 +3,16 @@ package com.linkknown.ilearning.section;
 import android.content.Context;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.service.CourseClassifyService;
 import com.linkknown.ilearning.util.ui.ToastUtil;
-import com.wenld.multitypeadapter.MultiTypeAdapter;
-import com.wenld.multitypeadapter.base.MultiItemView;
-import com.wenld.multitypeadapter.base.ViewHolder;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -52,24 +52,19 @@ public class CourseClassifyQuickSection extends Section {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
-        MultiTypeAdapter multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(CourseClassifyService.HotClassify.class, new MultiItemView<CourseClassifyService.HotClassify>() {
-            @NonNull
-            @Override
-            public int getLayoutId() {
-                return R.layout.item_types_icon;
-            }
+        BaseQuickAdapter baseQuickAdapter = new BaseQuickAdapter<CourseClassifyService.HotClassify, BaseViewHolder> (R.layout.item_types_icon, this.itemList) {
 
             @Override
-            public void onBindViewHolder(@NonNull ViewHolder viewHolder, @NonNull CourseClassifyService.HotClassify hotClassify, int i) {
+            protected void convert(@NotNull BaseViewHolder viewHolder, CourseClassifyService.HotClassify hotClassify) {
                 viewHolder.setImageResource(R.id.item_icon, hotClassify.getClassifyImage());
                 viewHolder.setText(R.id.item_title, hotClassify.getClassifyName());
-                viewHolder.getConvertView().setOnClickListener(v -> ToastUtil.showText(mContext, "您点击的过快奥~~"));
+                viewHolder.itemView.setOnClickListener(v -> ToastUtil.showText(mContext, "您点击的过快奥~~"));
             }
-        });
-        multiTypeAdapter.setItems(this.itemList);
+        };
+
+
         itemHolder.recyclerView.setLayoutManager(new GridLayoutManager(mContext,4));
-        itemHolder.recyclerView.setAdapter(multiTypeAdapter);
+        itemHolder.recyclerView.setAdapter(baseQuickAdapter);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
