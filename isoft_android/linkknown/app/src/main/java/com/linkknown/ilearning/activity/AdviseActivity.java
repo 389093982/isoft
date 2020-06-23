@@ -1,18 +1,15 @@
 package com.linkknown.ilearning.activity;
 
 
-import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,7 +30,6 @@ import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;

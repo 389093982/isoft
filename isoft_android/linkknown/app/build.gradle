@@ -107,14 +107,12 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:7.4.1'
 
     implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'org.apache.commons:commons-collections4:4.3'
 
     // LiveEventBus是一款Android消息总线,基于LiveData,具有生命周期感知能力,支持Sticky,支持AndroidX,支持跨进程,支持跨APP
     implementation 'com.jeremyliao:live-event-bus-x:1.6.1'
 
-    // sectionedrecyclerviewadapter
-    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:3.1.0'
-
-    // 万能 RecyclerViewAdapter，后面替换 sectionedrecyclerviewadapter
+    // 万能 RecyclerViewAdapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
