@@ -84,15 +84,10 @@ public class SecondLevelCommentPopView extends BottomPopupView {
     public void initView(){
         //创建adapter
         baseQuickAdapter = new SecondLevelCommentAdapter(mContext,secondLevelComments);
-        //2.设置二级评论的展示
-        baseQuickAdapter.setReplyListener(second_level_comment -> {
-            //一级评论弹框里回复的回复
-            replyComment(second_level_comment);
-        });
-        baseQuickAdapter.setDeleteListener(second_level_comment -> {
-            //删除评论
-            deleteComment(second_level_comment);
-        });
+        //一级评论弹框里回复的回复
+        baseQuickAdapter.setReplyListener(second_level_comment -> { replyComment(second_level_comment); });
+        //删除评论
+        baseQuickAdapter.setDeleteListener(second_level_comment -> { deleteComment(second_level_comment); });
 
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
