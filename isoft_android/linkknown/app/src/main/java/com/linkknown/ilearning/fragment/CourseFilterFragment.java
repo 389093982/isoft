@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +16,7 @@ import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.adapter.CourseCardAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -51,7 +51,7 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
     public RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     public SwipeRefreshLayout refreshLayout;
-    private boolean mIsRefreshing = false;
+    private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
     CourseCardAdapter courseCardAdapter;
@@ -64,9 +64,9 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
         mContext = getActivity();
         ButterKnife.bind(this, mRootView);
 
-        refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
-        refreshLayout.setProgressViewOffset(false, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayoutHelper.bind(mContext, refreshLayout);
+        swipeRefreshLayoutHelper.initStyle();
+        swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         // 从 activity 中接受参数
         Bundle bundle = this.getArguments();
@@ -74,29 +74,6 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
             search = bundle.getString("search");
             isCharge = bundle.getString("isCharge");
         }
-
-        // 注册事件监听
-        registerListener();
-    }
-
-    private void registerListener () {
-        // refreshLayout 设置刷新监听
-        refreshLayout.setOnRefreshListener(() -> {
-            if (canRefresh()) {
-                refreshLayout.setRefreshing(true);
-                mIsRefreshing = true;
-                initData();
-            }
-        });
-    }
-
-    private boolean canRefresh () {
-        return mIsRefreshing == false;
-    }
-
-    protected void finishRefreshing() {
-        mIsRefreshing = false;
-        refreshLayout.setRefreshing(false);
     }
 
     // 初始化并绑定 adapter
@@ -194,13 +171,13 @@ public class CourseFilterFragment extends BaseLazyLoadFragment {
                         } else {
                             courseCardAdapter.getLoadMoreModule().loadMoreFail();
                         }
-                        finishRefreshing();
+                        swipeRefreshLayoutHelper.finishRefreshing();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("searchCourseList error", e.getMessage());
-                        finishRefreshing();
+                        swipeRefreshLayoutHelper.finishRefreshing();
                         // 当前这次数据加载错误，调用此方法
                         courseCardAdapter.getLoadMoreModule().loadMoreFail();
                     }

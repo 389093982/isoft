@@ -10,15 +10,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.adapter.CourseCardAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
-import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.common.OnLoadMoreListener;
+import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.Paginator;
-import com.linkknown.ilearning.section.CourseHotRecommendSection;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
@@ -29,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -52,7 +51,8 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
     private SwipeRefreshLayoutHelper swipeRefreshLayoutHelper = new SwipeRefreshLayoutHelper();
 
     private List<CourseMetaResponse.CourseMeta> courseMetaList = new ArrayList<>();
-    private SectionedRecyclerViewAdapter sectionedRecyclerViewAdapter;
+    CourseCardAdapter courseCardAdapter;
+
     private String userName;
     // 分页信息
     private Paginator paginator;
@@ -69,22 +69,10 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
 
         userName = this.getArguments().getString(Constants.USER_NAME);
 
-        sectionedRecyclerViewAdapter = new SectionedRecyclerViewAdapter();
-        CourseHotRecommendSection courseHotRecommendSection = new CourseHotRecommendSection(mContext, courseMetaList);
-        sectionedRecyclerViewAdapter.addSection(courseHotRecommendSection);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                // header 显示 2 行
-                if (sectionedRecyclerViewAdapter.getSectionItemViewType(position) == SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER) {
-                    return 2;
-                }
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(sectionedRecyclerViewAdapter);
+        courseCardAdapter = new CourseCardAdapter(mContext, courseMetaList);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        recyclerView.setAdapter(courseCardAdapter);
 
         recyclerView.addOnScrollListener(new OnLoadMoreListener() {
             @Override
@@ -117,8 +105,14 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
                                 if (current_page == 1) {
                                     courseMetaList.clear();     // 加载第一页数据时需要先进行清空
                                 }
+                                // 加载成功后才设置头部
+                                if (!courseCardAdapter.hasHeaderLayout()) {
+                                    View headerView = getLayoutInflater().inflate(R.layout.layout_region_recommend_hot_head, recyclerView, false);
+                                    // 指定添加位置
+                                    courseCardAdapter.addHeaderView(headerView, 1);
+                                }
                                 courseMetaList.addAll(courseMetaResponse.getCourses());
-                                sectionedRecyclerViewAdapter.notifyDataSetChanged();
+                                courseCardAdapter.setList(courseMetaList);
                                 paginator = courseMetaResponse.getPaginator();
                             }
                             // 取消刷新效果
