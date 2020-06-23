@@ -158,7 +158,9 @@ public interface LinkKnownApi {
     @POST("/api/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel")
     Observable<SecondLevelCommentResponse> filterCommentSecondLevel(@Query("theme_pk") int theme_pk,
                                                                     @Query("theme_type") String theme_type,
-                                                                    @Query("org_parent_id") int org_parent_id);
+                                                                    @Query("org_parent_id") int org_parent_id,
+                                                                    @Query("current_page") int current_page,
+                                                                    @Query("offset") int offset);
 
     // 新增评论接口
     @POST("/api/iwork/httpservice/isoft_linkknown_api/AddComment")
