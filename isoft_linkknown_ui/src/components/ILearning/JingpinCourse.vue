@@ -16,9 +16,8 @@
     <CourseType></CourseType>
 
     <!--优惠券信息-->
-    <div style="position: absolute;top: 200px;left: 740px;">
-      这里做个活动中心的图标
-
+    <div style="position: absolute;top: 190px;left: 1040px;cursor: pointer">
+      <img class="animated zoomIn slower infinite" src="../../../static/images/common_img/coupon_center.png" height="120" width="120" @click="$router.push('/payment/couponCenter')"/>
     </div>
 
     <!--热门课程推荐-->
