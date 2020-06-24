@@ -32,6 +32,7 @@ public class CouponListResponse extends BaseResponse {
         private String last_updated_time;
         private String start_date;
         private String target_id;
+        private String target_name;
         private String target_type;
         private String youhui_type;
 
