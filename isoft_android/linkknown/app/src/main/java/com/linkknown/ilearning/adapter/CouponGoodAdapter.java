@@ -1,7 +1,9 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
@@ -42,6 +44,15 @@ public class CouponGoodAdapter extends BaseQuickAdapter<CouponCourseResponse.Cou
         viewHolder.setText(R.id.courseNumberText, course.getCourse_number()+"");
 //        价格
         viewHolder.setText(R.id.price, Constants.RMB + course.getPrice()+"");
+
+//        划线价
+        if ("Y".equals(course.getIs_show_old_price())){
+            viewHolder.findView(R.id.old_price).setVisibility(View.VISIBLE);
+            viewHolder.setText(R.id.old_price,Constants.RMB+course.getOld_price());
+            ((TextView)viewHolder.findView(R.id.old_price)).getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
+        }else{
+            viewHolder.findView(R.id.old_price).setVisibility(View.GONE);
+        }
 //        点击卡片去课程详情界面
         viewHolder.findView(R.id.item_goods_card_tag).setOnClickListener(new View.OnClickListener() {
             @Override

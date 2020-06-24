@@ -62,21 +62,21 @@ public class CourseCardAdapter extends BaseQuickAdapter<CourseMetaResponse.Cours
                 viewHolder.setText(R.id.isCharge, "付费课程");
                 viewHolder.setVisible(R.id.price,true);
                 viewHolder.setText(R.id.price, Constants.RMB+courseMeta.getPrice());
-
-                //展示划线价
-                if ("Y".equals(courseMeta.getIs_show_old_price())){
-                    viewHolder.setVisible(R.id.old_price,true);
-                    viewHolder.setText(R.id.old_price,Constants.RMB+courseMeta.getOld_price());
-                    ((TextView)(viewHolder.findView(R.id.old_price))).getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
-                }else{
-                    viewHolder.setGone(R.id.old_price,true);
-                }
             }else if ("free".equals(courseMeta.getIsCharge())){
                 viewHolder.setText(R.id.isCharge, "免费");
                 viewHolder.setGone(R.id.price,true);
             }
         } else {
             viewHolder.setVisible(R.id.isCharge, false);
+        }
+
+        //展示划线价
+        if ("Y".equals(courseMeta.getIs_show_old_price())){
+            viewHolder.setVisible(R.id.old_price,true);
+            viewHolder.setText(R.id.old_price,Constants.RMB+courseMeta.getOld_price());
+            ((TextView)(viewHolder.findView(R.id.old_price))).getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
+        }else{
+            viewHolder.setGone(R.id.old_price,true);
         }
 
     }
