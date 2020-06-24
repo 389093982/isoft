@@ -18,6 +18,7 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.PayOrderCommitActivity;
 import com.linkknown.ilearning.activity.PersonalCenterActivity;
+import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.VideoPlayActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.common.LinkKnownOnNextObserver;
@@ -85,6 +86,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     //课程描述
     @BindView(R.id.courseShortDescText)
     public TextView courseShortDescText;
+
+    //购物车
+    @BindView(R.id.shoppingCart)
+    public ImageView shoppingCart;
 
     //加入购物车按钮
     @BindView(R.id.addShoppingCart)
@@ -334,6 +339,14 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             addShoppingCart.setVisibility(View.GONE);
             buyView.setVisibility(View.GONE);
         }
+
+        //点击购物车，查看购物车
+        shoppingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, ShoppingCartActivity.class);
+            }
+        });
 
         //添加购物车
         addShoppingCart.setOnClickListener(new View.OnClickListener() {

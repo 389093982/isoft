@@ -106,6 +106,16 @@
                 android:text="课程描述"
                 android:textColor="@color/black_alpha_45" />
 
+            <ImageView
+                android:id="@+id/shoppingCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/addShoppingCart"
+                android:layout_toLeftOf="@+id/addShoppingCart"
+                android:src="@drawable/ic_shopping_cart"
+                android:layout_marginRight="30dp">
+            </ImageView>
+
             <TextView
                 android:id="@+id/addShoppingCart"
                 android:layout_width="120dp"
