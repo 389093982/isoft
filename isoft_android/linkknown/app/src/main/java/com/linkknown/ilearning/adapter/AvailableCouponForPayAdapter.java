@@ -69,7 +69,7 @@ public class AvailableCouponForPayAdapter extends BaseQuickAdapter<SearchCouponF
             targetName.setText("所有付费课程");
             targetName.setTextColor(Color.RED);
         } else {
-            targetName.setText("牛人视频");
+            targetName.setText(coupon.getTarget_name());
             targetName.setTextColor(Color.BLUE);
         }
 

@@ -74,6 +74,25 @@ public class AvailableCouponForPayActivity extends BaseActivity{
         paid_amount = getIntent().getStringExtra("paid_amount");
         today = getIntent().getStringExtra("today");
 
+        //查询到可用优惠券之后，这里使用quickAdapter
+        quickAdapter = new AvailableCouponForPayAdapter(mContext,coupons);
+        quickAdapter.setListener(coupon -> {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("coupon",coupon);
+            intent.putExtra("bundle", bundle);
+            setResult(200,intent);
+            finish();
+        });
+
+        recyclerView.setAdapter(quickAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+
+    };
+
+    public void initData(){
         LinkKnownApiFactory.getLinkKnownApi().SearchCouponForPay(userName,target_type, target_id,paid_amount, today)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
@@ -84,19 +103,7 @@ public class AvailableCouponForPayActivity extends BaseActivity{
                         if (o.isSuccess()){
                             coupons = o.getCoupons();
                             if (CollectionUtils.isNotEmpty(coupons)){
-                                //查询到可用优惠券之后，这里使用quickAdapter
-                                quickAdapter = new AvailableCouponForPayAdapter(mContext,coupons);
-                                quickAdapter.setListener(coupon -> {
-                                    Intent intent = new Intent();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("coupon",coupon);
-                                    intent.putExtra("bundle", bundle);
-                                    setResult(200,intent);
-                                    finish();
-                                });
-
-                                recyclerView.setAdapter(quickAdapter);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                quickAdapter.setList(coupons);
                             }else{
                                 ToastUtil.showText(mContext,"没有可用优惠券");
                             }
@@ -109,11 +116,6 @@ public class AvailableCouponForPayActivity extends BaseActivity{
                         ToastUtil.showText(mContext,"查可用优惠券失败！");
                     }
                 });
-
-    };
-
-    public void initData(){
-
     };
 
 }
