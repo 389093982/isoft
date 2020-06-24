@@ -166,10 +166,11 @@ public class PayOrderDetailActivity extends BaseActivity {
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_state(), "used")) {
             submitBtnView.setText("已使用");
             matrix.setSaturation(0);
-        } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>=Integer.valueOf(coupon.getStart_date())
+                && Integer.valueOf(DateUtil.Today_yyyyMMdd())<=Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已领取");
             matrix.setSaturation(1);
-        } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);
         }

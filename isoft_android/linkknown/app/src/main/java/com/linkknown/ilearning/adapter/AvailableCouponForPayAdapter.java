@@ -85,14 +85,15 @@ public class AvailableCouponForPayAdapter extends BaseQuickAdapter<SearchCouponF
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_state(), "used")) {
             submitBtnView.setText("已使用");
             matrix.setSaturation(0);
-        } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>=Integer.valueOf(coupon.getStart_date())
+                && Integer.valueOf(DateUtil.Today_yyyyMMdd())<=Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已领取");
             matrix.setSaturation(1);
 
             //因为是下单界面过来的， 所有这里选择优惠券后，还是要回到下单界面，去做金额上的计算
             viewHolder.findView(R.id.couponLayout).setOnClickListener(v -> listener.onClick(coupon));
 
-        } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);
         }

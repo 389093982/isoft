@@ -22,6 +22,7 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -89,7 +90,8 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_state(), "used")) {
             submitBtnView.setText("已使用");
             matrix.setSaturation(0);
-        } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>=Integer.valueOf(coupon.getStart_date())
+                && Integer.valueOf(DateUtil.Today_yyyyMMdd())<=Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("去使用");
             matrix.setSaturation(1);
             if ("general".equals(coupon.getCoupon_type())){
@@ -107,7 +109,7 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
                 }));
             }
 
-        } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);
         }

@@ -351,12 +351,14 @@ public class PayOrderCommitActivity extends BaseActivity{
      */
     public void weChatPay(){
         //1.添加订单入pay_order
-        String order_id = "支付系统生成订单号" + DateUtil.Today_yyyyMMdd();
+        String order_id = "支付系统生成订单号" + DateUtil.Today_yyyyMMddHHmmss();
         String user_name = LoginUtil.getLoginUserName(mContext);
         String goods_type = goodsType;
         String goods_id = goodsId;
         String goods_desc = goodsDesc;
         String paid_amount = ((TextView)findViewById(R.id.paidAmount)).getText().toString();
+        //去掉羊角符
+        paid_amount = paid_amount.substring(1,paid_amount.length());
         String goods_original_price = price;
 
         String activity_type = "";
