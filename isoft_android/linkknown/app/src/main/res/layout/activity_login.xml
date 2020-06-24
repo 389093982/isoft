@@ -60,7 +60,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/cutecat"/>
+            android:src="@drawable/ic_unlogin"/>
 
         <!-- 账号 标签 -->
         <com.google.android.material.textfield.TextInputLayout

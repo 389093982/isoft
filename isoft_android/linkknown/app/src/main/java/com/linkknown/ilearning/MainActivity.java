@@ -242,24 +242,24 @@ public class MainActivity extends BaseActivity {
      * 初始化登录信息
      */
     private void observeLogin () {
+        // 先从缓存中获取
         if (LoginUtil.checkHasLogin(this)) {
             initLoginView(LoginUtil.getHeaderIcon(this), LoginUtil.getLoginNickName(this));
-        } else {
-            LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
-                if (loginUserResponse != null){
-                    if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
-                        // 1、--------- 左侧 navigationView 显示登录信息
-                        initLoginView(loginUserResponse.getHeaderIcon(),
-                                StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
-                    } else {
-                        // 1、--------- 左侧 navigationView 显示登录信息
-                        // 登录失败
-                        navigationUnLoginLayout.setVisibility(View.VISIBLE);
-                        navigationLoginLayout.setVisibility(View.GONE);
-                    }
-                }
-            });
         }
+        // 再从登录成功的订阅信息中获取
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
+            if (loginUserResponse != null){
+                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+                    // 登录操作
+                    initLoginView(loginUserResponse.getHeaderIcon(),
+                            StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
+                } else {
+                    // 登录失败或者登出操作
+                    navigationUnLoginLayout.setVisibility(View.VISIBLE);
+                    navigationLoginLayout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
 

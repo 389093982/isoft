@@ -20,6 +20,7 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
+import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MyCouponActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
 import com.linkknown.ilearning.activity.KaoShiShijuanListActivity;
@@ -94,9 +95,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public ImageView iv_kaoshi;
 
 
-    //用户信息
+    //已登录用户布局
     @BindView(R.id.userInfoLayout)
     public RelativeLayout userInfoLayout;
+
+    //未登录用户布局
+    @BindView(R.id.unLoginLayout)
+    public RelativeLayout unLoginLayout;
+    //前去登录按钮
+    @BindView(R.id.toLoginView)
+    public TextView toLoginView;
+
     //我要吐槽(提出意见)
     @BindView(R.id.menuAdviseLayout)
     public LinearLayout menuAdviseLayout;
@@ -170,15 +179,23 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
             if (loginUserResponse != null){
                 if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+                    // 登录操作
                     initLoginData();
+                } else {
+                    // 登出操作
+                    userInfoLayout.setVisibility(View.GONE);
+                    unLoginLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
+        // 点击登录/注册按钮调往登录页面
+        toLoginView.setOnClickListener(v -> UIUtils.gotoActivity(mContext, LoginActivity.class));
     }
 
     private void initLoginData() {
         if (LoginUtil.checkHasLogin(mContext)) {
             userInfoLayout.setVisibility(View.VISIBLE);
+            unLoginLayout.setVisibility(View.GONE);
 
             LinkKnownApiFactory.getLinkKnownApi().getUserDetail(LoginUtil.getLoginUserName(mContext))
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
@@ -211,11 +228,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                         public void onError(Throwable e) {
                             Log.e("getUserDetail error", e.getMessage());
                             ToastUtil.showText(mContext,"查询用户信息失败！");
+
+                            // 接口查询失败也展示未登录
+                            userInfoLayout.setVisibility(View.GONE);
+                            unLoginLayout.setVisibility(View.VISIBLE);
                         }
                     });
 
         } else {
             userInfoLayout.setVisibility(View.GONE);
+            unLoginLayout.setVisibility(View.VISIBLE);
         }
     }
 

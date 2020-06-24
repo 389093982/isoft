@@ -209,8 +209,10 @@ public class HomeFragment extends BaseLazyLoadFragment {
         LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
             if (loginUserResponse != null){
                 if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+                    // 登录操作
                     initLoginView(loginUserResponse.getHeaderIcon(), StringUtilEx.getFirstNotEmptyStr(loginUserResponse.getNickName(), loginUserResponse.getUserName()));
                 } else {
+                    // 登出操作
                     // 顶部 toolbar 显示登录信息
                     toolBarLoginLayout.setVisibility(View.GONE);
                     toolBarUnLoginLayout.setVisibility(View.VISIBLE);
