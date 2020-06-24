@@ -26,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.linkknown.ilearning.activity.BaseActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.PayOrderActivity;
 import com.linkknown.ilearning.activity.PersonalCenterActivity;
@@ -52,7 +53,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private Context mContext;
 
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = getApplication();
+        mContext = this;
         ButterKnife.bind(this);
 
         // 绑定控件

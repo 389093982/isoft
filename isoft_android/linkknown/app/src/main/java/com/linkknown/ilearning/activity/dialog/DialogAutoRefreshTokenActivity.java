@@ -39,9 +39,9 @@ public class DialogAutoRefreshTokenActivity extends AppCompatActivity {
 
         // 去除 title
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 去掉 Activity上面的状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //顶部设置为透明
+        UIUtils.setTopTransparent(this);
 
         setContentView(R.layout.dialog_auto_refreshtoken);
 
