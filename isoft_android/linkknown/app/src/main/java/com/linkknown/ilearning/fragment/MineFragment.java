@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
@@ -30,12 +31,15 @@ import com.linkknown.ilearning.activity.ShoppingCartActivity;
 import com.linkknown.ilearning.activity.UserAttentionListActivity;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.LoginUserResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
 import com.linkknown.ilearning.util.AnimationUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 
@@ -117,8 +121,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_mine, container, false);
         mContext = getActivity();
         ButterKnife.bind(this, rootView);
+
         initView();
         initLingDang();
+
         return rootView;
     }
 
@@ -158,6 +164,19 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     //查询用户信息
     private void initLoginView () {
+        initLoginData();
+
+        // 从自动登录响应结果中订阅登录信息
+        LiveEventBus.get("loginUserResponse", LoginUserResponse.class).observeSticky(this, loginUserResponse -> {
+            if (loginUserResponse != null){
+                if (StringUtils.isEmpty(loginUserResponse.getErrorMsg()) && StringUtils.isNotEmpty(loginUserResponse.getUserName())) {
+                    initLoginData();
+                }
+            }
+        });
+    }
+
+    private void initLoginData() {
         if (LoginUtil.checkHasLogin(mContext)) {
             userInfoLayout.setVisibility(View.VISIBLE);
 
