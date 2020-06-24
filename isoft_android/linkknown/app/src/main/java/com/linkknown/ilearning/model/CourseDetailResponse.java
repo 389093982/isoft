@@ -41,6 +41,8 @@ public class CourseDetailResponse extends BaseResponse implements Serializable {
         private String media_type;
         private int preListFree;
         private String price;
+        private String old_price;
+        private String is_show_old_price;
         private int score;
         private String small_image;
         private int watch_number;

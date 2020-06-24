@@ -204,11 +204,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             // 给左上角图标的左边加上一个返回的图标
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
-        // 图片也占用了状态栏,故需要使用沉浸式状态栏
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+
+        UIUtils.setTopTransparent(this);
     }
 
     // 希望点击图标左侧箭头返回上一页，需要加载选项菜单后，对于菜单项的点击事件调用如下方法

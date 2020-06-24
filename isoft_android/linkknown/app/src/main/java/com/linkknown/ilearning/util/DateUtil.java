@@ -101,6 +101,16 @@ public class DateUtil {
         return format;
     }
 
+    /**
+     * 用工具类获取今日时间戳
+     * @return
+     */
+    public static String Today_yyyyMMddHHmmss(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String format = sdf.format(new Date());
+        return format;
+    }
+
 
     /**
      * 将date转为 yyyyMMdd

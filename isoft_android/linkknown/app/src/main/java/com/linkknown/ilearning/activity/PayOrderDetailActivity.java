@@ -156,7 +156,7 @@ public class PayOrderDetailActivity extends BaseActivity {
 
         // 设置有效期
         TextView endTimeView = findViewById(R.id.endTimeView);
-        endTimeView.setText(String.format("有效期：至%s", DateUtil.formateYYYYMMDDToDate(coupon.getEnd_date())));
+        endTimeView.setText("活动日期："+coupon.getStart_date() + " - " +coupon.getEnd_date());
 
         // 设置右边按钮
         ColorMatrix matrix = new ColorMatrix();
@@ -166,10 +166,11 @@ public class PayOrderDetailActivity extends BaseActivity {
         if (StringUtils.equalsIgnoreCase(coupon.getCoupon_state(), "used")) {
             submitBtnView.setText("已使用");
             matrix.setSaturation(0);
-        } else if (DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>=Integer.valueOf(coupon.getStart_date())
+                && Integer.valueOf(DateUtil.Today_yyyyMMdd())<=Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已领取");
             matrix.setSaturation(1);
-        } else if (!DateUtil.isNowTimeBetween(coupon.getStart_date(), coupon.getEnd_date(), DateUtil.PATTERN2)) {
+        } else if (Integer.valueOf(DateUtil.Today_yyyyMMdd())>Integer.valueOf(coupon.getEnd_date())) {
             submitBtnView.setText("已过期");
             matrix.setSaturation(0);
         }

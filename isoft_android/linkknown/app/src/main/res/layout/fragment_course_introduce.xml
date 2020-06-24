@@ -75,12 +75,24 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/courseNumberText"
                 android:layout_alignBottom="@+id/courseNumberText"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="80dp"
                 android:textColor="@color/red"
                 android:text="价格"
                 android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/old_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/price"
+                android:layout_alignBottom="@+id/price"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/button_normal"
+                android:textSize="14sp"
+                android:text="老价格"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/courseShortDescText"

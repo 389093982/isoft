@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -76,6 +77,10 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
     //价格
     @BindView(R.id.price)
     public TextView price;
+
+    //老价格
+    @BindView(R.id.old_price)
+    public TextView old_price;
 
     //课程描述
     @BindView(R.id.courseShortDescText)
@@ -171,6 +176,15 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         if ("charge".equals(course.getIsCharge())){
             price.setText(Constants.RMB+course.getPrice());
             price.setVisibility(View.VISIBLE);
+
+            //设置划线价
+            if ("Y".equals(course.getIs_show_old_price())){
+                old_price.setVisibility(View.VISIBLE);
+                old_price.setText(Constants.RMB+course.getOld_price());
+                old_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
+            }else{
+                old_price.setVisibility(View.GONE);
+            }
         }else{
             price.setVisibility(View.GONE);
         }

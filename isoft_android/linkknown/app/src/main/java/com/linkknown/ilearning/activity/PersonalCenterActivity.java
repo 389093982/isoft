@@ -98,6 +98,9 @@ public class PersonalCenterActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "");
 
+        //顶部设置为透明
+        UIUtils.setTopTransparent(this);
+
         //设置banner
         initBannerView();
 

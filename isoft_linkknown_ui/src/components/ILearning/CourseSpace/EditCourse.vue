@@ -55,11 +55,30 @@
           </FormItem>
           <div v-if="formValidate.isCharge==='charge'">
             <FormItem label="前" prop="preListFree">
-              <Input v-model="formValidate.preListFree" clearable style="width: 50px" />集免费
+              <Input v-model="formValidate.preListFree" clearable style="width: 50px" />&nbsp;集免费
             </FormItem>
-            <FormItem label="价格" prop="price">
-              <Icon type="logo-yen" /><Input v-model="formValidate.price" placeholder="000.00" clearable style="width: 100px" />
-            </FormItem>
+            <Row>
+              <Col span="10">
+                <FormItem label="价格" prop="price">
+                  <Icon type="logo-yen" /><Input v-model="formValidate.price" placeholder="000.00" clearable style="width: 100px" />
+                </FormItem>
+              </Col>
+              <Col span="10" v-if="this.$route.query.course_id != null">
+                <FormItem label="老价格" prop="old_price">
+                  <Icon type="logo-yen" />{{formValidate.old_price}}
+                </FormItem>
+              </Col>
+            </Row>
+            <Row v-if="this.$route.query.course_id != null">
+              <Col span="24">
+                <FormItem label="展示老价格" prop="is_show_old_price">
+                  <RadioGroup v-model="formValidate.is_show_old_price">
+                    <Radio label='Y'>展示</Radio>
+                    <Radio label='N'>不展示</Radio>
+                  </RadioGroup>
+                </FormItem>
+              </Col>
+            </Row>
           </div>
           <FormItem label="自定义标签语" prop="course_label">
             <Input v-model.trim="formValidate.course_label" placeholder="多个标签语用 / 分割"></Input>
@@ -155,6 +174,8 @@
           isCharge:'free',
           preListFree:'',
           price:'',
+          old_price:'0.00',
+          is_show_old_price:'N'
         },
         ruleValidate: {
           small_image: [
@@ -204,6 +225,9 @@
             }
             // 在真正修改前做个处理
             this.formValidate.small_image = handleSpecial(this.formValidate.small_image);
+            //将价格保留2位小数
+            this.formValidate.price = (this.formValidate.price*1).toFixed(2);
+            this.formValidate.old_price = (this.formValidate.old_price*1).toFixed(2);
             const result = await EditCourse(this.formValidate);
             if (result.status === "SUCCESS") {
               this.$Message.success('提交成功!');
