@@ -181,17 +181,16 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
         if ("charge".equals(course.getIsCharge())){
             price.setText(Constants.RMB+course.getPrice());
             price.setVisibility(View.VISIBLE);
-
-            //设置划线价
-            if ("Y".equals(course.getIs_show_old_price())){
-                old_price.setVisibility(View.VISIBLE);
-                old_price.setText(Constants.RMB+course.getOld_price());
-                old_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
-            }else{
-                old_price.setVisibility(View.GONE);
-            }
         }else{
             price.setVisibility(View.GONE);
+        }
+        //设置划线价
+        if ("Y".equals(course.getIs_show_old_price())){
+            old_price.setVisibility(View.VISIBLE);
+            old_price.setText(Constants.RMB+course.getOld_price());
+            old_price.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); //中间横线
+        }else{
+            old_price.setVisibility(View.GONE);
         }
 
         // 课程描述
@@ -324,18 +323,22 @@ public class CourseIntroduceFragment extends BaseLazyLoadFragment {
             if (LoginUtil.checkHasLogin(mContext)) {
                 //已登录还要判断，是不是自己的课程，如果是则不展示按钮
                 if (!LoginUtil.getLoginUserName(mContext).equals(courseDetailResponse.getCourse().getCourse_author())){
+                    shoppingCart.setVisibility(View.VISIBLE);
                     addShoppingCart.setVisibility(View.VISIBLE);
                     buyView.setVisibility(View.VISIBLE);
                 }else{
                     //是自己的课程
+                    shoppingCart.setVisibility(View.GONE);
                     addShoppingCart.setVisibility(View.GONE);
                     buyView.setVisibility(View.GONE);
                 }
             } else {
+                shoppingCart.setVisibility(View.VISIBLE);
                 addShoppingCart.setVisibility(View.VISIBLE);
                 buyView.setVisibility(View.VISIBLE);
             }
         } else {
+            shoppingCart.setVisibility(View.GONE);
             addShoppingCart.setVisibility(View.GONE);
             buyView.setVisibility(View.GONE);
         }

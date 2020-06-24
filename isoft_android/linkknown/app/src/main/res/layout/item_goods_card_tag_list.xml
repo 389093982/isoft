@@ -89,7 +89,18 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:textColor="@color/colorPrimary"
-        android:textSize="14dp"
+        android:textSize="16dp"
         android:text="¥188.00"/>
+
+    <TextView
+        android:id="@+id/old_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/price"
+        android:layout_alignLeft="@+id/price"
+        android:textColor="@color/button_normal"
+        android:textSize="14sp"
+        android:text="老价格"
+        android:visibility="gone"/>
 
 </RelativeLayout>
