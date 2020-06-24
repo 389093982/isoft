@@ -16,33 +16,9 @@
     <CourseType></CourseType>
 
     <!--优惠券信息-->
-    <div style="position: absolute;top: 100px;left: 740px;">
-      <!--通用券-减免-->
-      <Coupon v-if="general_reduce_coupon"
-              :activity_id="general_reduce_coupon.activity_id"
-              :coupon_type="general_reduce_coupon.coupon_type"
-              :youhui_type="general_reduce_coupon.youhui_type"
-              :start_date="general_reduce_coupon.start_date"
-              :end_date="general_reduce_coupon.end_date"
-              :coupon_amount="general_reduce_coupon.coupon_amount"
-              :goods_min_amount="general_reduce_coupon.goods_min_amount"
-              :discount_rate="general_reduce_coupon.discount_rate"
-              @receiveCoupon="receiveCoupon">
-      </Coupon>
-      <!--分割线-->
-      <div v-if="general_reduce_coupon && general_discount_coupon" style="height: 5px;"></div>
-      <!--通用券-打折-->
-      <Coupon v-if="general_discount_coupon"
-              :activity_id="general_discount_coupon.activity_id"
-              :coupon_type="general_discount_coupon.coupon_type"
-              :youhui_type="general_discount_coupon.youhui_type"
-              :start_date="general_discount_coupon.start_date"
-              :end_date="general_discount_coupon.end_date"
-              :coupon_amount="general_discount_coupon.coupon_amount"
-              :goods_min_amount="general_discount_coupon.goods_min_amount"
-              :discount_rate="general_discount_coupon.discount_rate"
-              @receiveCoupon="receiveCoupon">
-      </Coupon>
+    <div style="position: absolute;top: 200px;left: 740px;">
+      这里做个活动中心的图标
+
     </div>
 
     <!--热门课程推荐-->
