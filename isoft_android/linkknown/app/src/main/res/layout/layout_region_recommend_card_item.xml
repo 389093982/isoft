@@ -110,8 +110,20 @@
             android:layout_alignLeft="@+id/watchNumberText_icon"
             android:layout_marginTop="10dp"
             android:textColor="@color/red"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:text="888.00"/>
+
+        <TextView
+            android:id="@+id/old_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/price"
+            android:layout_alignBottom="@+id/price"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/button_normal"
+            android:textSize="14sp"
+            android:text="777.00"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

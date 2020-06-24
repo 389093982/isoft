@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
@@ -88,8 +89,8 @@ public class PayOrderCommitActivity extends BaseActivity{
         initToolBar(toolbar,true,"提交订单");
         UIUtils.setImage(mContext,findViewById(R.id.goodsImg),goodsImg);
         ((TextView)findViewById(R.id.goodsDesc)).setText(goodsDesc);
-        ((TextView)findViewById(R.id.price)).setText(price);
-        ((TextView)findViewById(R.id.paidAmount)).setText(price);
+        ((TextView)findViewById(R.id.price)).setText(Constants.RMB + price);
+        ((TextView)findViewById(R.id.paidAmount)).setText(Constants.RMB + price);
         ((TextView)findViewById(R.id.commitOrderBtn)).setText("微信支付");
 
         payType.setOnClickListener(new View.OnClickListener() {
@@ -213,12 +214,12 @@ public class PayOrderCommitActivity extends BaseActivity{
             if ("reduce".equals(coupon_onuse.getYouhui_type())){
                 availableCoupons.setText("-" + coupon_onuse.getCoupon_amount());
                 BigDecimal amount = new BigDecimal(price).subtract(new BigDecimal(coupon_onuse.getCoupon_amount()));
-                ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
+                ((TextView)findViewById(R.id.paidAmount)).setText(Constants.RMB + amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }else if ("discount".equals(coupon_onuse.getYouhui_type())){
                 BigDecimal res = new BigDecimal(coupon_onuse.getDiscount_rate()).multiply(new BigDecimal("10")).setScale(1,BigDecimal.ROUND_HALF_UP);
                 availableCoupons.setText(""+res+"折");
                 BigDecimal amount = new BigDecimal(price).multiply(new BigDecimal(coupon_onuse.getDiscount_rate()));
-                ((TextView)findViewById(R.id.paidAmount)).setText(amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
+                ((TextView)findViewById(R.id.paidAmount)).setText(Constants.RMB + amount.setScale(2, BigDecimal.ROUND_HALF_UP)+"");//保留两位小数
             }
             //设置优惠为 红色
             availableCoupons.setTextColor(Color.RED);

@@ -37,6 +37,8 @@ public class CourseMetaResponse extends BaseResponse {
         private String custom_tag;
         private String custom_tag_name;
         private String price;
+        private String old_price;
+        private String is_show_old_price;
     }
 
     @Data
