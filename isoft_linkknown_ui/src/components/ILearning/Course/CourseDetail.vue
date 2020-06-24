@@ -18,13 +18,13 @@
               <div class="showPriceAndBuy" style="margin: 10px 0 0 0">
                 <div v-if="course.isCharge==='charge'" style="color: #ff6900">
                   <Row>
-                    <Col span="8">
-                      <span class="showPrice">
-                        <Icon type="logo-yen" /><span style="font-size: 20px">{{course.price}}</span>
-                      </span>
-                    </Col>
-                    <Col span="12" v-if="isMyCourse(course.course_author)">
-                      <div class="myCourse" @click="$router.push({path:'/ilearning/courseSpace/editCourse',query:{course_id:course.id}})">我的课程</div>
+                    <Col span="14">
+                        <span class="showPrice">
+                          ¥<span style="font-size: 20px">{{course.price}}</span>
+                        </span>
+                        <span v-if="course.is_show_old_price==='Y'" style="font-size: 14px;color: grey;text-decoration:line-through;">
+                          ¥{{course.old_price}}
+                        </span>
                     </Col>
                   </Row>
                   <Row v-if="!isMyCourse(course.course_author)">
@@ -37,6 +37,11 @@
                       <span @click="toPay('course_theme_type',course.id)">
                         <div class="toBuy">立即购买</div>
                       </span>
+                    </Col>
+                  </Row>
+                  <Row v-else>
+                    <Col span="10" v-if="isMyCourse(course.course_author)">
+                      <div class="myCourse" @click="$router.push({path:'/ilearning/courseSpace/editCourse',query:{course_id:course.id}})">我的课程</div>
                     </Col>
                   </Row>
                   <Row>
