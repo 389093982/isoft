@@ -142,7 +142,7 @@ public class HomeFragment extends BaseLazyLoadFragment {
         TuijianFragment tuijianFragment = new TuijianFragment();
         mFragments.add(tuijianFragment);
 
-        titles.add("会员专享");
+        titles.add("会员");
         CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
         courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
         mFragments.add(courseFilterFragment4);

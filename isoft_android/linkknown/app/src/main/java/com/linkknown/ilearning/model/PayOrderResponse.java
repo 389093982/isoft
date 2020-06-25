@@ -18,7 +18,7 @@ public class PayOrderResponse extends BaseResponse{
 
     @Data
     @ToString
-    public class PayOrder implements Serializable {
+    public static class PayOrder implements Serializable {
         private String order_id;
         private String trans_time;
         private String user_name;

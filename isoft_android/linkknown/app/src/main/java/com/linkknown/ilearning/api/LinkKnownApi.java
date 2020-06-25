@@ -232,6 +232,14 @@ public interface LinkKnownApi {
                                                    @Query("user_name") String user_name,
                                                    @Query("scope") String scope);
 
+    // 查询我的订单 -- 已购课程
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
+                                                   @Query("offset") int pageSize,
+                                                   @Query("user_name") String user_name,
+                                                   @Query("goods_type") String goods_type,
+                                                   @Query("scope") String scope);
+
     // 查询商品（课程）是否被购买
     @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
