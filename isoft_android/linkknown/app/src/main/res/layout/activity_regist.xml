@@ -65,7 +65,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_unlogin"/>
+                android:src="@drawable/unlogin_head_with_circle"/>
 
             <!-- 昵称标签 -->
             <com.google.android.material.textfield.TextInputLayout
