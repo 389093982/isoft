@@ -5,14 +5,41 @@
               android:orientation="vertical">
 
     <LinearLayout style="@style/wrap_layout">
+
         <!-- 上圆角-->
         <LinearLayout
-            android:id="@+id/menuAdviseLayout"
+            android:id="@+id/menuBlog"
             style="@style/top_layout">
             <TextView
-                android:id="@+id/menuAdviseTextView"
+                android:id="@+id/blog"
                 style="@style/usertext"
-                android:text="  我要吐槽" />
+                android:text="  我的博客" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+
+        <View style="@style/bg_line"/>
+
+        <!-- 上圆角-->
+        <LinearLayout
+            android:id="@+id/menuPersonalCenter"
+            style="@style/mid_layout">
+            <TextView
+                android:id="@+id/menuPersonalCenterTextView"
+                style="@style/usertext"
+                android:text="  个人中心" />
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+
+        <View style="@style/bg_line"/>
+
+        <!-- 无圆角-->
+        <LinearLayout
+            android:id="@+id/menuBoughtCourse"
+            style="@style/mid_layout">
+            <TextView
+                android:id="@+id/boughtCourse"
+                style="@style/usertext"
+                android:text="  已购课程" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
@@ -20,16 +47,15 @@
 
         <!-- 下圆角-->
         <LinearLayout
-            android:id="@+id/menuPersonalCenter"
+            android:id="@+id/menuAdviseLayout"
             style="@style/bottom_layout">
-
             <TextView
-                android:id="@+id/menuPersonalCenterTextView"
+                android:id="@+id/menuAdviseTextView"
                 style="@style/usertext"
-                android:text="  个人中心" />
-
+                android:text="  我要吐槽" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -41,12 +67,10 @@
         <LinearLayout
             android:id="@+id/menuAboutLayout"
             style="@style/single_layout">
-
             <TextView
                 android:id="@+id/menuAboutLayoutTextView"
                 style="@style/usertext"
                 android:text="  关于链知"/>
-
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 

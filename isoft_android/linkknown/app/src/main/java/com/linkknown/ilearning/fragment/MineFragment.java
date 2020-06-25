@@ -106,16 +106,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.toLoginView)
     public TextView toLoginView;
 
-    //我要吐槽(提出意见)
-    @BindView(R.id.menuAdviseLayout)
-    public LinearLayout menuAdviseLayout;
-    @BindView(R.id.menuAdviseTextView)
-    public TextView menuAdviseTextView;
+
     //个人中心
     @BindView(R.id.menuPersonalCenter)
     public LinearLayout menuPersonalCenter;
     @BindView(R.id.menuPersonalCenterTextView)
     public TextView menuPersonalCenterTextView;
+    //我要吐槽(提出意见)
+    @BindView(R.id.menuAdviseLayout)
+    public LinearLayout menuAdviseLayout;
+    @BindView(R.id.menuAdviseTextView)
+    public TextView menuAdviseTextView;
     //关于
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;

@@ -1,8 +1,23 @@
 <template>
   <div style="overflow-x: hidden;">
     <div class="blog_title_bg" style="height: 80px;padding: 0 30px;display: flex">
-      <span style="color: white;font-size: 28px;margin-left: 128px;width: 50%;position: relative">
-        <span class="animated faster bounceInRight" style="cursor: pointer;position: absolute;top: 27px;" @click="toGitHub('https://github.com/search?q=&type=')">精选文章推荐，热门项目参考 github</span>
+      <span style="color: white;font-size: 15px;margin-left: 128px;width: 50%;position: relative">
+        <Card class="blog_title_card_bg" style="width:380px;height: 40px;position: absolute;top: 20px">
+            <div class="title_search" style="text-align:center;position: relative;top: -8px;">
+              <span @click="chooseItem(1)" :style="{color: pattern === 1 ? 'orange':''}">
+                全部分类
+              </span>
+              <span @click="chooseItem(2)" style="margin-left: 10px" :style="{color: pattern === 2 ? 'orange':''}">
+                <Icon type="md-flame" />热门博客
+              </span>
+              <span @click="chooseItem(3)" style="margin-left: 10px" :style="{color: pattern === 3 ? 'orange':''}">
+                <Icon type="ios-list-box-outline" />我的博客
+              </span>
+              <span @click="blogEdit" style="margin-left: 10px">
+                <Icon type="ios-create-outline" size="16" />发布博客
+              </span>
+            </div>
+        </Card>
       </span>
       <!--搜索框-->
       <span style="width: 50%;position: relative;">
@@ -478,6 +493,11 @@
     background: url(../../../static/images/common_img/blog_menu_bg.png) no-repeat;
     background-size: 100%;
   }
+  .blog_title_card_bg{
+    height: 140px;
+    background: url(../../../static/images/blog/blog_title_card_bg.jpg) no-repeat;
+    background-size: 100%;
+  }
   .type_hover{
     font-size: 12px;color: #777;
   }
@@ -499,6 +519,15 @@
 
   ._search a:hover {
     color: #6cb0ca;
+  }
+
+  .title_search {
+    color: white;
+    cursor: pointer;
+  }
+
+  .title_search :hover {
+    color: orange;
   }
 
   .blogHangHover:hover{

@@ -123,24 +123,29 @@ public class HomeFragment extends BaseLazyLoadFragment {
     private void initFragment () {
 
         titles.add("免费");
-        CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
-        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
-        mFragments.add(courseFilterFragment2);
+        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
+        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", "free"));
+        mFragments.add(courseFilterFragment1);
 
         titles.add("付费");
-        CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
-        courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
-        mFragments.add(courseFilterFragment3);
+        CourseFilterFragment courseFilterFragment2 = new CourseFilterFragment();
+        courseFilterFragment2.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        mFragments.add(courseFilterFragment2);
 
         titles.add("全部");
-        CourseFilterFragment courseFilterFragment1 = new CourseFilterFragment();
-        courseFilterFragment1.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
-        mFragments.add(courseFilterFragment1);
+        CourseFilterFragment courseFilterFragment3 = new CourseFilterFragment();
+        courseFilterFragment3.setArguments(CommonUtil.createBundle2("search","","isCharge", ""));
+        mFragments.add(courseFilterFragment3);
 
 
         titles.add("推荐");
         TuijianFragment tuijianFragment = new TuijianFragment();
         mFragments.add(tuijianFragment);
+
+        titles.add("会员专享");
+        CourseFilterFragment courseFilterFragment4 = new CourseFilterFragment();
+        courseFilterFragment4.setArguments(CommonUtil.createBundle2("search","","isCharge", "charge"));
+        mFragments.add(courseFilterFragment4);
 
         viewPager.setAdapter(new FragmentStatePagerAdapter(this.getChildFragmentManager()) {
             @NonNull
