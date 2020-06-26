@@ -15,7 +15,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="260dp"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:collapsedTitleTextAppearance="@style/ToolBar.TitleText"
@@ -67,95 +67,14 @@
                         android:id="@+id/nickNameText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/headerIcon"
-                        android:layout_alignLeft="@+id/headerIcon"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/headerIcon"
+                        android:layout_alignBottom="@+id/headerIcon"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
                         android:maxLines="1"
                         android:text="用户名"
                         android:textColor="@color/font_normal"
                         android:textSize="18sp" />
-
-                    <ImageView
-                        android:id="@+id/genderView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/nickNameText"
-                        android:layout_alignBottom="@+id/nickNameText"
-                        android:src="@drawable/ic_female"/>
-
-                    <TextView
-                        android:id="@+id/userPoint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/nickNameText"
-                        android:layout_alignLeft="@+id/nickNameText"
-                        android:textColor="@color/black_alpha_45"
-                        android:text="积分"
-                        android:textSize="14dp"/>
-
-                    <TextView
-                        android:id="@+id/attention_counts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/userPoint"
-                        android:layout_alignLeft="@+id/userPoint"
-                        android:text="关注"
-                        android:textColor="@color/black_alpha_45"
-                        android:textSize="14sp" />
-
-
-                    <TextView
-                        android:id="@+id/fensi_counts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/attention_counts"
-                        android:layout_alignBottom="@+id/attention_counts"
-                        android:layout_marginLeft="20dp"
-                        android:text="粉丝"
-                        android:textColor="@color/black_alpha_45"
-                        android:textSize="14sp" />
-
-
-                    <TextView
-                        android:id="@+id/userSignature"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/attention_counts"
-                        android:layout_alignLeft="@+id/attention_counts"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:textColor="@color/black_alpha_45"
-                        android:textSize="14sp"
-                        android:text="个性签名"/>
-
-                    <TextView
-                        android:id="@+id/attention_off"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@+id/nickNameText"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/btn_pin_bg"
-                        android:gravity="center"
-                        android:text="+关注"
-                        android:visibility="gone"
-                        android:textColor="@color/focus_text_color"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/attention_on"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@+id/nickNameText"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/btn_pin_solid_bg"
-                        android:gravity="center"
-                        android:text="已关注"
-                        android:visibility="gone"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -176,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="@color/white_80"
+            android:background="@color/white"
             app:tl_indicator_color="@color/bili_logo_pink_color"
             app:tl_indicator_corner_radius="1.5dp"
             app:tl_indicator_height="3dp"

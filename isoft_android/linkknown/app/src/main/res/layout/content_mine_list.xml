@@ -8,12 +8,12 @@
 
         <!-- 上圆角-->
         <LinearLayout
-            android:id="@+id/menuBlogParkLayout"
+            android:id="@+id/menuCloudBlogLayout"
             style="@style/top_layout">
             <TextView
-                android:id="@+id/menuBlogPark"
+                android:id="@+id/menuCloudBlog"
                 style="@style/usertext"
-                android:text="  博客园" />
+                android:text="  云博客" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 

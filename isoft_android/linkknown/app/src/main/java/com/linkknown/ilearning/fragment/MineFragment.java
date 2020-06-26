@@ -20,7 +20,7 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
-import com.linkknown.ilearning.activity.BlogParkActivity;
+import com.linkknown.ilearning.activity.CloudBlogActivity;
 import com.linkknown.ilearning.activity.BoughtCourseActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MyCouponActivity;
@@ -108,11 +108,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.toLoginView)
     public TextView toLoginView;
 
-    //博客园
-    @BindView(R.id.menuBlogParkLayout)
-    public LinearLayout menuBlogParkLayout;
-    @BindView(R.id.menuBlogPark)
-    public TextView menuBlogPark;
+    //云博客
+    @BindView(R.id.menuCloudBlogLayout)
+    public LinearLayout menuCloudBlogLayout;
+    @BindView(R.id.menuCloudBlog)
+    public TextView menuCloudBlog;
     //个人中心
     @BindView(R.id.menuPersonalCenterLayout)
     public LinearLayout menuPersonalCenterLayout;
@@ -161,7 +161,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         //设置点击事件
 
-        menuBlogParkLayout.setOnClickListener(this);
+        menuCloudBlogLayout.setOnClickListener(this);
         menuPersonalCenterLayout.setOnClickListener(this);
         menuBoughtCourseLayout.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
@@ -266,8 +266,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 UIUtils.gotoActivity(mContext, SettingActivity.class);
                 break;
             // 菜单项点击事件
-            case R.id.menuBlogParkLayout:
-                UIUtils.gotoActivity(mContext, BlogParkActivity.class);
+            case R.id.menuCloudBlogLayout:
+                UIUtils.gotoActivity(mContext, CloudBlogActivity.class);
                 break;
             case R.id.menuPersonalCenterLayout:
                 UIUtils.gotoActivity(mContext, PersonalCenterActivity.class);
@@ -290,7 +290,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 菜单前面添加图标
      */
     public void bindMenuDrawnStart() {
-        UIUtils.setTextViewDrawbleImg(mContext, menuBlogPark, R.drawable.ic_blog, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuCloudBlog, R.drawable.ic_blog_park, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenter, R.drawable.ic_personal_center, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuBoughtCourse, R.drawable.ic_course, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAdvise, R.drawable.ic_advise, 0, 2, 40, 42);

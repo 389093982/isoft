@@ -2,6 +2,7 @@ package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.FileUploadResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
@@ -239,6 +240,16 @@ public interface LinkKnownApi {
                                                    @Query("user_name") String user_name,
                                                    @Query("goods_type") String goods_type,
                                                    @Query("scope") String scope);
+
+
+    // 查询博客
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPageBlog")
+    Observable<BlogListResponse> queryPageBlog(@Query("search_type") String search_type,
+                                               @Query("search_data") String search_data,
+                                               @Query("search_user_name") String search_user_name,
+                                               @Query("current_page") int current_page,
+                                               @Query("offset") int pageSize);
+
 
     // 查询商品（课程）是否被购买
     @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")

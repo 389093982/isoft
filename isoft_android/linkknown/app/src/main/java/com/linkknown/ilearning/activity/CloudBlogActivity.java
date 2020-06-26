@@ -20,6 +20,7 @@ import com.linkknown.ilearning.adapter.GlideImageLoader;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.fragment.CloudBlogFragment;
 import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class BlogParkActivity extends BaseActivity {
+public class CloudBlogActivity extends BaseActivity {
 
     private Context mContext;
     private String userName;
@@ -58,12 +59,6 @@ public class BlogParkActivity extends BaseActivity {
     @BindView(R.id.nickNameText)
     public TextView nickNameText;
 
-    //关注按钮
-    @BindView(R.id.attention_off)
-    public TextView attention_off;
-    @BindView(R.id.attention_on)
-    public TextView attention_on;
-
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.tab_layout)
@@ -71,24 +66,21 @@ public class BlogParkActivity extends BaseActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     private List<String> titles = new ArrayList<>();
-
+    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blog_park);
+        setContentView(R.layout.activity_cloud_blog);
         mContext = this;
         ButterKnife.bind(this);
-        initToolBar(toolbar, true, "博客园");
+        initToolBar(toolbar, true, "");
 
         //顶部设置为透明
         UIUtils.setTopTransparent(this);
 
         //设置banner
         initBannerView();
-
-        //绑定关注事件
-        initAttentionBtn();
 
         // 查看别人 userName会传值， 如果userName为空，那就是查看自己的。 （查看自己不传这个参数）
         userName = getIntent().getStringExtra(Constants.USER_NAME);
@@ -130,37 +122,6 @@ public class BlogParkActivity extends BaseActivity {
     };
 
     private void initView () {
-        //关注按钮的显示与隐藏
-        if (LoginUtil.isLoginUserName(getApplicationContext(), userName)){
-            attention_off.setVisibility(View.GONE);
-            attention_on.setVisibility(View.GONE);
-        }else{
-            LinkKnownApiFactory.getLinkKnownApi().QueryIsAttention("user",userName)
-                    .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                    .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                    .subscribe(new LinkKnownObserver<QueryIsAttentionResponse>() {
-                        @Override
-                        public void onNext(QueryIsAttentionResponse o) {
-                            if (o.isSuccess()){
-                                if (o.getAttention_records() > 0){
-                                    //已关注， 显示已关注按钮
-                                    attention_on.setVisibility(View.VISIBLE);
-                                    attention_off.setVisibility(View.GONE);
-                                }else{
-                                    //未关注， 显示 +关注 按钮
-                                    attention_off.setVisibility(View.VISIBLE);
-                                    attention_on.setVisibility(View.GONE);
-                                }
-                            }else{
-                                ToastUtil.showText(mContext,"查询是否关注失败");
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {}
-                    });
-        }
-
         //查看基本信息
         LinkKnownApiFactory.getLinkKnownApi().getUserDetail(userName)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
@@ -171,9 +132,10 @@ public class BlogParkActivity extends BaseActivity {
                         if (userDetailResponse.isSuccess()){
                             UserDetailResponse.User user = userDetailResponse.getUser();
                             if (user!=null){
-                                // 设置用户头像、用户昵称
+                                // 设置用户头像、用户昵称、用户会员等级、用户标签语
                                 UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
                                 nickNameText.setText(user.getNick_name());
+                                initFragments(user.getUser_name());
                             }
                         }
                     }
@@ -187,64 +149,54 @@ public class BlogParkActivity extends BaseActivity {
     }
 
 
-    //关注点击事件
-    public void initAttentionBtn(){
-        attention_off.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!LoginUtil.checkHasLogin(mContext)){
-                    LoginUtil.showLoginOrAutoLoginDialog(mContext);
-                    return;
-                }
-                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"on")
-                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                        .subscribe(new LinkKnownObserver<BaseResponse>() {
-                            @Override
-                            public void onNext(BaseResponse o) {
-                                if (o.isSuccess()){
-                                    ToastUtil.showText(mContext,"关注成功");
-                                    attention_off.setVisibility(View.GONE);
-                                    attention_on.setVisibility(View.VISIBLE);
-                                }
-                            }
+    private void initFragments(String userName){
+        // 多次订阅数据会导致重复,需要先进行清理
+        fragments.clear();
+        titles.clear();
 
-                            @Override
-                            public void onError(Throwable e) {
-                                ToastUtil.showText(mContext,"系统异常");
-                            }
-                        });
+        // activity 向 fragment 传参
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.USER_NAME, userName);
+
+        titles.add("云博客");
+        CloudBlogFragment fragment1 = new CloudBlogFragment(CloudBlogFragment.SCOP_ALL);
+        fragments.add(fragment1);
+        fragment1.setArguments(bundle);
+
+        titles.add("我的博客");
+        CloudBlogFragment fragment2 = new CloudBlogFragment(CloudBlogFragment.SCOP_MYSELF);
+        fragments.add(fragment2);
+        fragment2.setArguments(bundle);
+
+        CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
+        mViewPager.setAdapter(mAdapter);
+        // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()
+        mViewPager.setOffscreenPageLimit(2);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        measureTabLayoutTextWidth(0);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                measureTabLayoutTextWidth(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
             }
         });
-        attention_on.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!LoginUtil.checkHasLogin(mContext)){
-                    LoginUtil.showLoginOrAutoLoginDialog(mContext);
-                    return;
-                }
-                LinkKnownApiFactory.getLinkKnownApi().doAttention("user",userName,"off")
-                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                        .subscribe(new LinkKnownObserver<BaseResponse>() {
-                            @Override
-                            public void onNext(BaseResponse o) {
-                                if (o.isSuccess()){
-                                    ToastUtil.showText(mContext,"取消成功");
-                                    attention_off.setVisibility(View.VISIBLE);
-                                    attention_on.setVisibility(View.GONE);
-                                }
-                            }
+    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                ToastUtil.showText(mContext,"系统异常");
-                            }
-                        });
-            }
-        });
-    };
-
+    private void measureTabLayoutTextWidth(int position) {
+        String title = titles.get(position);
+        TextView titleView = mSlidingTabLayout.getTitleView(position);
+        TextPaint paint = titleView.getPaint();
+        float textWidth = paint.measureText(title);
+        mSlidingTabLayout.setIndicatorWidth(textWidth / 3);
+    }
 
 
 }
