@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -249,7 +250,12 @@ public class EditCloudBlogActivity extends BaseActivity implements View.OnClickL
                     public void onNext(BaseResponse o) {
                         if (o.isSuccess()){
                             ToastUtil.showText(mContext,"发表成功");
-                            UIUtils.gotoActivity(mContext,CloudBlogActivity.class);
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("status",o.getStatus());
+                            intent.putExtra("bundle", bundle);
+                            setResult(200,intent);
+                            finish();
                         }else{
                             ToastUtil.showText(mContext,o.getErrorMsg());
                         }

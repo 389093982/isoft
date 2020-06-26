@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
@@ -118,7 +119,9 @@ public class CloudBlogActivity extends BaseActivity {
         add_blog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.gotoActivity(mContext,EditCloudBlogActivity.class);
+                Intent intent = new Intent(mContext,EditCloudBlogActivity.class);
+                //这里 intent 无需传参数
+                startActivityForResult(intent,199);
             }
         });
     }
@@ -196,5 +199,21 @@ public class CloudBlogActivity extends BaseActivity {
                 });
     };
 
+
+
+
+    // 为了从 “发表博客” 回来 “本页面” 做个刷新
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 199 && resultCode == 200) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String status = (String) bundle.getSerializable("status");
+            if ("SUCCESS".equals(status)){
+                //就为了做个刷新
+                initFragments();
+            }
+        }
+    }
 
 }
