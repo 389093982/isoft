@@ -2,7 +2,7 @@
 	<div style="display: flex;">
 
     <div style="width: 60%">
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
         <FormItem label="活动ID" prop="activity_id">
           <Input v-model.trim="formValidate.activity_id" readonly/>
         </FormItem>
@@ -34,14 +34,21 @@
             </RadioGroup>
           </FormItem>
           <div v-if="formValidate.coupon_type==='designated'">
-            <FormItem label="被使用对象" prop="target_type">
+            <FormItem label="被使用对象类型" prop="target_type">
               <RadioGroup v-model="formValidate.target_type">
                 <Radio label='course'>课程</Radio>
               </RadioGroup>
             </FormItem>
             <FormItem label="被使用对象ID" prop="target_id">
               <Input type="number" v-model="formValidate.target_id" style="width: 100px" />
+              <Button type="primary" shape="circle" icon="ios-search" @click="queryComfirm()">查询确认</Button>
             </FormItem>
+            <FormItem label="被使用对象名称" prop="target_name">
+              <RadioGroup v-model="formValidate.target_name">
+                <Input v-model="formValidate.target_name" readonly style="width: 200px" />
+              </RadioGroup>
+            </FormItem>
+
           </div>
 
           <div style="width: 100%;height: 2px;background-color: rgba(255,105,0,0.34)"></div>
@@ -99,6 +106,15 @@
                  :discount_rate="formValidate.discount_rate">
         </Coupon>
       </div>
+
+      <div v-if="formValidate.target_name!=''">
+        <div style="margin-top: 30px;margin-left: 30px">
+          <!--图片-->
+          <img v-if="formValidate.target_name" :src="course_img" width="180" height="120"/>
+          <img v-else src="../../../../static/images/common_img/default.png" width="180" height="120"/>
+          <div>{{formValidate.target_name}}</div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -106,7 +122,7 @@
 
 <script>
   import {validatePatternForString,copyObj,GetTodayTime_yyyyMMddhhmmss,formatDate_yyyyMMdd,MakeCouponIdArrayStr} from "../../../tools/index"
-  import {AddPayActivity} from "../../../api/index"
+  import {AddPayActivity,ShowCourseDetail} from "../../../api/index"
   import Coupon from "../../Common/coupon/Coupon";
 
 	export default {
@@ -187,11 +203,13 @@
           coupon_type:'general',
           target_type:'course',
           target_id:'',
+          target_name:'',
           youhui_type:'reduce',
           discount_rate:'',
           coupon_amount:'',
           goods_min_amount:'',
         },
+        course_img:'',
         ruleValidate: {
           //活动校验
           activity_id: [
@@ -225,6 +243,9 @@
           target_id: [
             {required: true,message:'对象ID必填', trigger: 'change blur'}
           ],
+          target_name:[
+            {required: true,message:'对象名称必填', trigger: 'change blur'}
+          ],
           youhui_type: [
             {required: true,message:'优惠方式必填', trigger: 'change blur'}
           ],
@@ -241,6 +262,26 @@
       }
     },
     methods:{
+      queryComfirm:async function(){
+        if (this.formValidate.target_id === "") {
+          this.$Message.error("请填写目标ID");
+          return false;
+        }
+        if (this.formValidate.target_type === 'course') {
+          //查课程
+          let params = {
+            'course_id':this.formValidate.target_id
+          };
+          const result = await ShowCourseDetail(params);
+          if (result.status === 'SUCCESS') {
+            this.formValidate.target_name = result.course.course_name;
+            this.course_img = result.course.small_image;
+          }else{
+            this.$Message.error(result.errorMsg);
+          }
+        }
+
+      },
 		  randomActivityId:function(){
         //随机生成活动ID
         let random = Math.random().toString().slice(-6);

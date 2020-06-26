@@ -137,34 +137,6 @@
       </div>
 
       <div style="width: 34%;background-color: white;margin: 0 0 0 5px">
-        <div class="isoft_bg_white" style="padding: 5px 0 0 5px ">
-          <!--指定券:减免-->
-          <Coupon v-if="designated_reduce_coupon"
-                  :activity_id="designated_reduce_coupon.activity_id"
-                  :coupon_type="designated_reduce_coupon.coupon_type"
-                  :youhui_type="designated_reduce_coupon.youhui_type"
-                  :start_date="designated_reduce_coupon.start_date"
-                  :end_date="designated_reduce_coupon.end_date"
-                  :coupon_amount="designated_reduce_coupon.coupon_amount"
-                  :goods_min_amount="designated_reduce_coupon.goods_min_amount"
-                  :discount_rate="designated_reduce_coupon.discount_rate"
-                  @receiveCoupon="receiveCoupon">
-          </Coupon>
-          <!--分割线-->
-          <div v-if="designated_reduce_coupon && designated_discount_coupon" style="height: 5px;"></div>
-          <!--指定券:打折-->
-          <Coupon v-if="designated_discount_coupon"
-                  :activity_id="designated_discount_coupon.activity_id"
-                  :coupon_type="designated_discount_coupon.coupon_type"
-                  :youhui_type="designated_discount_coupon.youhui_type"
-                  :start_date="designated_discount_coupon.start_date"
-                  :end_date="designated_discount_coupon.end_date"
-                  :coupon_amount="designated_discount_coupon.coupon_amount"
-                  :goods_min_amount="designated_discount_coupon.goods_min_amount"
-                  :discount_rate="designated_discount_coupon.discount_rate"
-                  @receiveCoupon="receiveCoupon">
-          </Coupon>
-        </div>
         <div class="isoft_bg_white">
           <img src="../../../../static/images/order/banner_coupon.png" style="width: 300px;height: 130px;"
                class="isoft_point_cursor" @click="$router.push('/payment/couponCenter')"/>

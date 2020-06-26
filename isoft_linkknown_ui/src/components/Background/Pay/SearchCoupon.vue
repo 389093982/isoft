@@ -61,6 +61,11 @@
             width: 150,
           },
           {
+            title: '被使用对象名称',
+            key: 'target_name',
+            width: 280,
+          },
+          {
             title: '优惠方式',
             key: 'youhui_type',
             width: 150,

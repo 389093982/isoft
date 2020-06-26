@@ -29,6 +29,7 @@ public class queryCouponByIdResponse extends BaseResponse{
         private String last_updated_by;
         private String last_updated_time;
         private String target_id;
+        private String target_name;
         private String target_type;
         private String youhui_type;
     }

@@ -108,7 +108,13 @@ public class ShoppingCartActivity extends BaseActivity {
     };
 
     private void loadPageData(int current_page, int pageSize) {
-        executeLoadPageData(current_page, pageSize);
+        // 第一页不延时执行
+        if (current_page == 1) {
+            executeLoadPageData(current_page, pageSize);
+        } else {
+            // 后续页面，延迟执行，让加载效果更好
+            handler.postDelayed(() -> executeLoadPageData(current_page, pageSize), 1000);
+        }
     };
 
     //加载数据

@@ -21,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.BusinessActivity"></activity>
+        <activity android:name=".activity.CloudBlogActivity"></activity>
+        <activity android:name=".activity.BoughtCourseActivity" />
+        <activity android:name=".activity.BusinessActivity" />
         <activity android:name=".activity.UserAgreementActivity" />
         <activity android:name=".activity.UserAttentionListActivity" />
         <activity

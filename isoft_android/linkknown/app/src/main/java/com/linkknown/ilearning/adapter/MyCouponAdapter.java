@@ -70,12 +70,8 @@ public class MyCouponAdapter extends BaseQuickAdapter<CouponListResponse.Coupon,
             targetName.setText("所有付费课程");
             targetName.setTextColor(Color.RED);
         } else {
-            CourseMetaResponse.CourseMeta courseMeta = (CourseMetaResponse.CourseMeta) coupon.getGood();
-            // 防止课程无效为空
-            if (courseMeta != null) {
-                targetName.setText(courseMeta.getCourse_name());
-                targetName.setTextColor(Color.BLUE);
-            }
+            targetName.setText(coupon.getTarget_name());
+            targetName.setTextColor(Color.BLUE);
         }
 
         // 设置有效期

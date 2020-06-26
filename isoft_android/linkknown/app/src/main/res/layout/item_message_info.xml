@@ -33,7 +33,7 @@
                     android:id="@+id/linkknown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="链知晓课堂:"
+                    android:text="链知课堂:"
                     android:textColor="@color/blue"
                     android:layout_alignParentStart="true"/>
                 <TextView

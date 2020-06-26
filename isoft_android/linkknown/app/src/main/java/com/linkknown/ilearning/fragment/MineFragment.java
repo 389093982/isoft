@@ -20,6 +20,8 @@ import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
+import com.linkknown.ilearning.activity.CloudBlogActivity;
+import com.linkknown.ilearning.activity.BoughtCourseActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MyCouponActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
@@ -106,21 +108,31 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.toLoginView)
     public TextView toLoginView;
 
+    //云博客
+    @BindView(R.id.menuCloudBlogLayout)
+    public LinearLayout menuCloudBlogLayout;
+    @BindView(R.id.menuCloudBlog)
+    public TextView menuCloudBlog;
+    //个人中心
+    @BindView(R.id.menuPersonalCenterLayout)
+    public LinearLayout menuPersonalCenterLayout;
+    @BindView(R.id.menuPersonalCenter)
+    public TextView menuPersonalCenter;
+    //已购课程
+    @BindView(R.id.menuBoughtCourseLayout)
+    public LinearLayout menuBoughtCourseLayout;
+    @BindView(R.id.menuBoughtCourse)
+    public TextView menuBoughtCourse;
     //我要吐槽(提出意见)
     @BindView(R.id.menuAdviseLayout)
     public LinearLayout menuAdviseLayout;
-    @BindView(R.id.menuAdviseTextView)
-    public TextView menuAdviseTextView;
-    //个人中心
-    @BindView(R.id.menuPersonalCenter)
-    public LinearLayout menuPersonalCenter;
-    @BindView(R.id.menuPersonalCenterTextView)
-    public TextView menuPersonalCenterTextView;
+    @BindView(R.id.menuAdvise)
+    public TextView menuAdvise;
     //关于
     @BindView(R.id.menuAboutLayout)
     public LinearLayout menuAboutLayout;
-    @BindView(R.id.menuAboutLayoutTextView)
-    public TextView menuAboutLayoutTextView;
+    @BindView(R.id.menuAbout)
+    public TextView menuAbout;
 
     private Context mContext;
 
@@ -148,9 +160,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         initMenuImageView();
 
         //设置点击事件
-        menuAboutLayout.setOnClickListener(this);
-        menuPersonalCenter.setOnClickListener(this);
+
+        menuCloudBlogLayout.setOnClickListener(this);
+        menuPersonalCenterLayout.setOnClickListener(this);
+        menuBoughtCourseLayout.setOnClickListener(this);
         menuAdviseLayout.setOnClickListener(this);
+        menuAboutLayout.setOnClickListener(this);
         setup.setOnClickListener(this);
     }
 
@@ -247,19 +262,24 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.setup:
                 UIUtils.gotoActivity(mContext, SettingActivity.class);
                 break;
             // 菜单项点击事件
-            case R.id.menuAboutLayout:
-                UIUtils.gotoActivity(mContext, AboutUsActivity.class);
+            case R.id.menuCloudBlogLayout:
+                UIUtils.gotoActivity(mContext, CloudBlogActivity.class);
                 break;
-            case R.id.menuPersonalCenter:
+            case R.id.menuPersonalCenterLayout:
                 UIUtils.gotoActivity(mContext, PersonalCenterActivity.class);
+                break;
+            case R.id.menuBoughtCourseLayout:
+                UIUtils.gotoActivity(mContext, BoughtCourseActivity.class);
                 break;
             case R.id.menuAdviseLayout:
                 UIUtils.gotoActivity(mContext, AdviseActivity.class);
+                break;
+            case R.id.menuAboutLayout:
+                UIUtils.gotoActivity(mContext, AboutUsActivity.class);
                 break;
             default:
                 break;
@@ -270,8 +290,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
      * 菜单前面添加图标
      */
     public void bindMenuDrawnStart() {
-        UIUtils.setTextViewDrawbleImg(mContext, menuAdviseTextView, R.drawable.ic_advise, 0, 2, 40, 42);
-        UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenterTextView, R.drawable.ic_personal_center, 0, 2, 40, 42);
-        UIUtils.setTextViewDrawbleImg(mContext, menuAboutLayoutTextView, R.drawable.ic_about, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuCloudBlog, R.drawable.ic_blog_park, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuPersonalCenter, R.drawable.ic_personal_center, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuBoughtCourse, R.drawable.ic_course, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuAdvise, R.drawable.ic_advise, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuAbout, R.drawable.ic_about, 0, 2, 40, 42);
     }
 }

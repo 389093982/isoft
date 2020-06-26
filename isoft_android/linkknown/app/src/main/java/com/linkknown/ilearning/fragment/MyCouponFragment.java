@@ -17,6 +17,7 @@ import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.CouponListResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
+import com.linkknown.ilearning.model.queryCouponByIdResponse;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -89,32 +90,6 @@ public class MyCouponFragment extends BaseLazyLoadFragment {
         myCouponAdapter.getLoadMoreModule().loadMoreToLoading();
 
         LinkKnownApiFactory.getLinkKnownApi().queryPersonalCouponList(isExpired,isUsed,current_page, pageSize)
-                .flatMap(new Function<CouponListResponse, ObservableSource<CouponListResponse>>() {
-                    @Override
-                    public ObservableSource<CouponListResponse> apply(CouponListResponse couponListResponse) throws Exception {
-                        String ids = "";
-                        for (CouponListResponse.Coupon coupon: couponListResponse.getCoupons()){
-                            if (coupon.getTarget_id() != null && !"".equals(coupon.getTarget_id())) {
-                                ids += coupon.getTarget_id()+",";
-                            }
-                        }
-                        return Observable.zip(Observable.just(couponListResponse),
-                                LinkKnownApiFactory.getLinkKnownApi().getCourseListByIds(ids),
-                                new BiFunction<CouponListResponse, CourseMetaResponse, CouponListResponse>() {
-                                    @Override
-                                    public CouponListResponse apply(CouponListResponse couponListResponse, CourseMetaResponse courseMetaResponse) throws Exception {
-                                        for (CouponListResponse.Coupon coupon : couponListResponse.getCoupons()){
-                                            for (CourseMetaResponse.CourseMeta courseMeta : courseMetaResponse.getCourses()){
-                                                if (StringUtils.equals(coupon.getTarget_id(), courseMeta.getId() + "")){
-                                                    coupon.setGood(courseMeta);
-                                                }
-                                            }
-                                        }
-                                        return couponListResponse;
-                                    }
-                                });
-                    }
-                })
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<CouponListResponse>() {

@@ -62,12 +62,14 @@ public class PayOrderDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_order_detail);
         ButterKnife.bind(this);
-        PayOrderResponse.PayOrder payOrder = (PayOrderResponse.PayOrder) getIntent().getSerializableExtra("payOrderDetail");
-        initView(payOrder);
+
+        initView();
     }
 
-    private void initView(PayOrderResponse.PayOrder payOrder){
+    private void initView(){
         initToolBar(toolbar, true, "订单详情");
+        PayOrderResponse.PayOrder payOrder = (PayOrderResponse.PayOrder) getIntent().getSerializableExtra("payOrderDetail");
+
         orderId_TextView.setText(payOrder.getOrder_id());
         transTime_textView.setText(DateUtil.formatDate_StandardForm(payOrder.getTrans_time()));
         goodsDesc_textView.setText(payOrder.getGoods_desc());
@@ -150,7 +152,7 @@ public class PayOrderDetailActivity extends BaseActivity {
             targetName.setText("所有付费课程");
             targetName.setTextColor(Color.RED);
         } else {
-            targetName.setText("牛人视频");
+            targetName.setText(coupon.getTarget_name());
             targetName.setTextColor(Color.BLUE);
         }
 

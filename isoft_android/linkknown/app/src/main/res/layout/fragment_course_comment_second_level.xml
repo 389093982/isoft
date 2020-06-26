@@ -25,7 +25,7 @@ android:background="@color/white">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/headerIcon"
-                    android:src="@drawable/ic_unlogin"
+                    android:src="@drawable/unlogin_head_with_circle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"/>
 

@@ -2,7 +2,7 @@
   <div class="isoft_bg_white" style="min-height: 600px;">
     <div v-if="coupons.length>0">
       <Row>
-        <Col span="8" v-for="(coupon, index) in coupons" style="margin-bottom: 20px;">
+        <Col span="8" v-for="(coupon, index) in coupons" style="margin:20px 20px 20px 20px ">
           <!--通用券-减免-->
           <Coupon v-if="coupon.coupon_type === 'general'"
                   :activity_id="coupon.activity_id"
