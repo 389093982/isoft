@@ -256,6 +256,18 @@ public interface LinkKnownApi {
     Observable<GetMyCatalogsResponse> GetMyCatalogs();
 
 
+    // 发表&编辑 博客
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit")
+    Observable<BaseResponse> BlogArticleEdit(@Query("article_id") String article_id,
+                                             @Query("blog_title") String blog_title,
+                                             @Query("key_words") String key_words,
+                                             @Query("catalog_name") String catalog_name,
+                                             @Query("blog_status") Integer blog_status,
+                                             @Query("content") String content,
+                                             @Query("link_href") String link_href,
+                                             @Query("first_img") String first_img);
+
+
     // 查询商品（课程）是否被购买
     @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,

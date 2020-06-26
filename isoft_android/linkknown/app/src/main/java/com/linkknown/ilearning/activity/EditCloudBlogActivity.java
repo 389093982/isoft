@@ -16,10 +16,12 @@ import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CatalogNameAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.GetMyCatalogsResponse;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -199,10 +201,66 @@ public class EditCloudBlogActivity extends BaseActivity implements View.OnClickL
     public void BlogArticleEdit(){
 
         //再次校验参数
+        String _blog_title = StringUtils.trim(blog_title.getText().toString());
+        String _catalog_name = StringUtils.trim(catalog_name.getText().toString());
+        String _content = StringUtils.trim(content.getText().toString());
+        if (StringUtils.isEmpty(StringUtils.trim(_blog_title))){
+            ToastUtil.showText(mContext, "文章标题不能为空！");
+            return;
+        }
+        if (_blog_title.length()>40){
+            ToastUtil.showText(mContext, "文章标题不能超过40个字符！");
+            return;
+        }
 
+
+        if (StringUtils.isEmpty(StringUtils.trim(_catalog_name))){
+            ToastUtil.showText(mContext, "文章分类不能为空！");
+            return;
+        }
+        if (!catalogNameList.contains(_catalog_name)){
+            ToastUtil.showText(mContext, "文章分类有误！");
+            return;
+        }
+
+        if (StringUtils.isEmpty(StringUtils.trim(_content))){
+            ToastUtil.showText(mContext, "文章内容不能为空！");
+            return;
+        }
+        if (_content.length()>20000){
+            ToastUtil.showText(mContext, "文章内容不能超过20000个字符！");
+            return;
+        }
+
+        String article_id = "";
+        String blog_title = _blog_title;
+        String key_words = "";
+        String catalog_name = _catalog_name;
+        Integer blog_status = 1;
+        String content = _content;
+        String link_href = "";
+        String first_img = "";
         //发送请求
-        ToastUtil.showText(mContext,"提交博客...");
+        LinkKnownApiFactory.getLinkKnownApi().BlogArticleEdit(article_id,blog_title,key_words,catalog_name,blog_status,content,link_href,first_img)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse o) {
+                        if (o.isSuccess()){
+                            ToastUtil.showText(mContext,"发表成功");
+                            UIUtils.gotoActivity(mContext,CloudBlogActivity.class);
+                        }else{
+                            ToastUtil.showText(mContext,o.getErrorMsg());
+                        }
 
+                    };
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("BlogArticleEdit error", e.getMessage());
+                        ToastUtil.showText(mContext,"发表博客失败！");
+                    }
+                });
 
     };
 
