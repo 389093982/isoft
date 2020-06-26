@@ -44,7 +44,6 @@ import io.reactivex.schedulers.Schedulers;
 public class CloudBlogActivity extends BaseActivity {
 
     private Context mContext;
-    private String userName;
     // 轮播图部分
     @BindView(R.id.banner)
     public Banner banner;
@@ -58,6 +57,10 @@ public class CloudBlogActivity extends BaseActivity {
     //昵称
     @BindView(R.id.nickNameText)
     public TextView nickNameText;
+
+    //添加博客
+    @BindView(R.id.add_blog)
+    public ImageView add_blog;
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
@@ -82,22 +85,8 @@ public class CloudBlogActivity extends BaseActivity {
         //设置banner
         initBannerView();
 
-        // 查看别人 userName会传值， 如果userName为空，那就是查看自己的。 （查看自己不传这个参数）
-        userName = getIntent().getStringExtra(Constants.USER_NAME);
-        if (StringUtils.isEmpty(userName)) {
-            //查看自己
-            if (!LoginUtil.checkHasLogin(mContext)){
-                // 全局对话框登录拦截
-                LoginUtil.showLoginOrAutoLoginDialog(mContext);
-            }else{
-                userName = LoginUtil.getLoginUserName(mContext);
-                //查看自己
-                initView();
-            }
-        }else {
-            //查看别人
-            initView();
-        }
+        initView();
+
     }
 
     public void initBannerView(){
@@ -122,51 +111,31 @@ public class CloudBlogActivity extends BaseActivity {
     };
 
     private void initView () {
-        //查看基本信息
-        LinkKnownApiFactory.getLinkKnownApi().getUserDetail(userName)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
-                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
-                .subscribe(new LinkKnownObserver<UserDetailResponse>() {
-                    @Override
-                    public void onNext(UserDetailResponse userDetailResponse) {
-                        if (userDetailResponse.isSuccess()){
-                            UserDetailResponse.User user = userDetailResponse.getUser();
-                            if (user!=null){
-                                // 设置用户头像、用户昵称、用户会员等级、用户标签语
-                                UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
-                                nickNameText.setText(user.getNick_name());
-                                initFragments(user.getUser_name());
-                            }
-                        }
-                    }
+        //查看用户信息，设置昵称
+        getUserDetail();
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onNext =>", "系统异常,请联系管理员~");
-                        ToastUtil.showText(getApplication(), "系统异常,请联系管理员~");
-                    }
-                });
+        //添加博客
+        add_blog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext,EditCloudBlogActivity.class);
+            }
+        });
     }
 
 
-    private void initFragments(String userName){
+    private void initFragments(){
         // 多次订阅数据会导致重复,需要先进行清理
         fragments.clear();
         titles.clear();
 
-        // activity 向 fragment 传参
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.USER_NAME, userName);
-
         titles.add("云博客");
         CloudBlogFragment fragment1 = new CloudBlogFragment(CloudBlogFragment.SCOP_ALL);
         fragments.add(fragment1);
-        fragment1.setArguments(bundle);
 
         titles.add("我的博客");
         CloudBlogFragment fragment2 = new CloudBlogFragment(CloudBlogFragment.SCOP_MYSELF);
         fragments.add(fragment2);
-        fragment2.setArguments(bundle);
 
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
@@ -195,8 +164,37 @@ public class CloudBlogActivity extends BaseActivity {
         TextView titleView = mSlidingTabLayout.getTitleView(position);
         TextPaint paint = titleView.getPaint();
         float textWidth = paint.measureText(title);
-        mSlidingTabLayout.setIndicatorWidth(textWidth / 3);
+        mSlidingTabLayout.setIndicatorWidth(textWidth / 2);
     }
+
+
+    //查看用户信息
+    public void getUserDetail(){
+        //查看基本信息
+        LinkKnownApiFactory.getLinkKnownApi().getUserDetail(LoginUtil.getLoginUserName(mContext))
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<UserDetailResponse>() {
+                    @Override
+                    public void onNext(UserDetailResponse userDetailResponse) {
+                        if (userDetailResponse.isSuccess()){
+                            UserDetailResponse.User user = userDetailResponse.getUser();
+                            if (user!=null){
+                                // 设置用户头像、用户昵称、用户会员等级、用户标签语
+                                UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
+                                nickNameText.setText(user.getNick_name());
+                                initFragments();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onNext =>", "系统异常,请联系管理员~");
+                        ToastUtil.showText(getApplication(), "系统异常,请联系管理员~");
+                    }
+                });
+    };
 
 
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".activity.EditCloudBlogActivity"
+android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <!-- 文章标题 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/blog_title_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/blog_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="文章标题"
+                android:textColor="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 文章分类 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/catalog_name_tip"
+            android:layout_below="@+id/blog_title_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/catalog_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="文章分类"
+                android:textColor="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- 文章内容 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/content_tip"
+            android:layout_below="@+id/catalog_name_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="文章内容"
+                android:lines="8"
+                android:textColor="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- 提交按钮 -->
+        <!-- 禁用阴影 android:stateListAnimator="@null" -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submitBlog"
+            style="@style/userInfoButton"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_below="@+id/content_tip"
+            android:padding="12dp"
+            android:stateListAnimator="@null"
+            android:text="发 表"
+            android:enabled="false"
+            android:textColor="@color/white"/>
+
+
+    </RelativeLayout>
+
+
+</android.widget.LinearLayout>

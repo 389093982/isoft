@@ -15,6 +15,7 @@ import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.ElementResponse;
 import com.linkknown.ilearning.model.FavoriteCountResponse;
 import com.linkknown.ilearning.model.FavoriteResponse;
+import com.linkknown.ilearning.model.GetMyCatalogsResponse;
 import com.linkknown.ilearning.model.HistoryResponse;
 import com.linkknown.ilearning.model.IsFavoriteResponse;
 import com.linkknown.ilearning.model.KaoshiClassifyResponse;
@@ -249,6 +250,10 @@ public interface LinkKnownApi {
                                                @Query("search_user_name") String search_user_name,
                                                @Query("current_page") int current_page,
                                                @Query("offset") int pageSize);
+
+    // 查询博客分类
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs")
+    Observable<GetMyCatalogsResponse> GetMyCatalogs();
 
 
     // 查询商品（课程）是否被购买
