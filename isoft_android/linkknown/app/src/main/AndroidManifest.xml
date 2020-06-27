@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.EditCloudBlogActivity"></activity>
+        <activity android:name=".activity.CloudBlogDetailActivity"></activity>
+        <activity android:name=".activity.EditCloudBlogActivity" />
         <activity android:name=".activity.CloudBlogActivity" />
         <activity android:name=".activity.BoughtCourseActivity" />
         <activity android:name=".activity.BusinessActivity" />

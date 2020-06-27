@@ -96,7 +96,7 @@ public class PersonalCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_personal_center);
         mContext = this;
         ButterKnife.bind(this);
-        initToolBar(toolbar, true, "");
+        initToolBar(toolbar, true, "个人中心");
 
         //顶部设置为透明
         UIUtils.setTopTransparent(this);

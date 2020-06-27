@@ -3,6 +3,7 @@ package com.linkknown.ilearning.api;
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.AttentionUserListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
+import com.linkknown.ilearning.model.BlogDetailResponse;
 import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.FileUploadResponse;
@@ -252,6 +253,12 @@ public interface LinkKnownApi {
                                                @Query("search_user_name") String search_user_name,
                                                @Query("current_page") int current_page,
                                                @Query("offset") int pageSize);
+
+
+    // 查询博客详情
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail")
+    Observable<BlogDetailResponse> ShowBlogArticleDetail(@Query("id") String id);
+
 
 
     // 根据userNames查询用户信息

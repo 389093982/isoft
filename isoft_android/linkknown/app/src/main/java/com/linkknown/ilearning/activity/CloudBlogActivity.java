@@ -101,7 +101,7 @@ public class CloudBlogActivity extends BaseActivity {
         setContentView(R.layout.activity_cloud_blog);
         mContext = this;
         ButterKnife.bind(this);
-        initToolBar(toolbar, true, "");
+        initToolBar(toolbar, true, "云博客");
 
         //顶部设置为透明
         UIUtils.setTopTransparent(this);
@@ -299,6 +299,7 @@ public class CloudBlogActivity extends BaseActivity {
             if ("SUCCESS".equals(status)){
                 //就为了做个刷新
                 fragment_cloud_blog.doSearch("");
+                fragment_my_blog.doSearch("");
             }
         }
     }

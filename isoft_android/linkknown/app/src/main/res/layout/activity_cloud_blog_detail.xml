@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/layout_toolbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/headerIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@drawable/unlogin_head_with_circle"/>
+
+        <TextView
+            android:id="@+id/blog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/headerIcon"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:text="博客标题" />
+
+        <TextView
+            android:id="@+id/userNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/blog_title"
+            android:layout_alignLeft="@+id/blog_title"
+            android:layout_marginTop="5dp"
+            android:textSize="13dp"
+            android:text="用户名" />
+
+        <TextView
+            android:id="@+id/point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/userNameText"
+            android:layout_alignBottom="@+id/userNameText"
+            android:layout_marginStart="2dp"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="·" />
+
+        <TextView
+            android:id="@+id/catalog_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/point"
+            android:layout_alignBottom="@+id/point"
+            android:layout_marginStart="2dp"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:maxEms="8"
+            android:ellipsize="end"
+            android:textColor="@color/base"
+            android:textSize="13dp"
+            android:text="博客类型" />
+
+        <TextView
+            android:id="@+id/attention_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/headerIcon"
+            android:background="@drawable/btn_pin_bg"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="+关注"
+            android:visibility="visible"
+            android:textColor="@color/focus_text_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/attention_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/headerIcon"
+            android:background="@drawable/btn_pin_solid_bg"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="已关注"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/first_img"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitXY"
+            android:layout_below="@+id/headerIcon"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:src="@drawable/linkknown">
+        </ImageView>
+
+
+        <TextView
+            android:id="@+id/createdTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first_img"
+            android:layout_alignLeft="@+id/blog_title"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp"
+            android:text="发布时间" />
+
+
+        <TextView
+            android:id="@+id/lastUpdatedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/createdTime"
+            android:layout_alignLeft="@+id/createdTime"
+            android:textSize="12dp"
+            android:text="更新时间" />
+
+
+
+        <ImageView
+            android:id="@+id/views_icon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_below="@+id/lastUpdatedTime"
+            android:layout_alignLeft="@+id/lastUpdatedTime"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_views" />
+
+        <TextView
+            android:id="@+id/views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/views_icon"
+            android:layout_alignBottom="@+id/views_icon"
+            android:textColor="@color/black_alpha_45"
+            android:textSize="12sp"
+            android:layout_marginLeft="3dp"
+            android:text="阅读量"/>
+
+
+        <ImageView
+            android:id="@+id/comments_icon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_toRightOf="@+id/views"
+            android:layout_alignBottom="@+id/views"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_comment" />
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/comments_icon"
+            android:layout_alignBottom="@+id/comments_icon"
+            android:textColor="@color/black_alpha_45"
+            android:textSize="12sp"
+            android:layout_marginLeft="3dp"
+            android:text="评论数"/>
+
+        <View style="@style/bg_line"
+            android:layout_below="@+id/comments"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="博客内容">
+        </TextView>
+    </ScrollView>
+
+</LinearLayout>
