@@ -61,9 +61,9 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
         //博客标题
         viewHolder.setText(R.id.blog_title,blog.getBlog_title());
         //创建时间
-        viewHolder.setText(R.id.createdTime, "发布于:" + DateUtil.formatDate_StandardForm(blog.getCreated_time()));
+        viewHolder.setText(R.id.createdTime, "发布于:"+DateUtil.formatPublishTime(blog.getCreated_time()));
         //更新时间
-//        viewHolder.setText(R.id.lastUpdatedTime, DateUtil.formatDate_StandardForm(blog.getLast_updated_time()));
+//        viewHolder.setText(R.id.lastUpdatedTime, DateUtil.formatBlogPublishTime(blog.getLast_updated_time()));
         //first_img图片
         if (StringUtils.isNotEmpty(blog.getFirst_img())){
             UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blog.getFirst_img());

@@ -141,4 +141,41 @@ public class DateUtil {
         return String.format("%2d:%2d", minute, sec);
     }
 
+
+    //格式化发布时间
+    public static String formatPublishTime(String timeStamp) {
+        String dateTime = formatDate_StandardForm(timeStamp);
+        Date timeStampDate = null;
+        try {
+            timeStampDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        //1.判断是不是今年
+        if (dateTime.substring(0,4).equals(today.substring(0,4))){
+            int days = (int)((new Date().getTime() - timeStampDate.getTime())/(3600*1000*24));
+            //2.判断是不是3天以内
+            if (days<=2){
+                if (days==0){
+                    return "今天"+dateTime.substring(dateTime.length()-8,dateTime.length());
+                }else if (days==1){
+                    return "昨天"+dateTime.substring(dateTime.length()-8,dateTime.length());
+                }else if (days==2){
+                    return "前天"+dateTime.substring(dateTime.length()-8,dateTime.length());
+                }else{
+                    return dateTime;
+                }
+            }else{
+                return dateTime.substring(5,dateTime.length());
+            }
+        }else{
+            //非今年
+            return dateTime;
+        }
+    }
+
+
+
 }
