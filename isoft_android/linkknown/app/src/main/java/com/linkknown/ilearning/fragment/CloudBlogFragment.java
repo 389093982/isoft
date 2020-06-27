@@ -120,8 +120,6 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
             search_user_name = LoginUtil.getLoginUserName(mContext);
         }else if (scop == SCOP_ALL){
             search_type = "_all";
-            search_data = "";
-            search_user_name = "";
         }
 
         LinkKnownApiFactory.getLinkKnownApi().queryPageBlog(search_type,search_data,search_user_name,current_page,pageSize)
@@ -184,4 +182,11 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
     protected int providelayoutId() {
         return R.layout.fragment_cloud_blog;
     }
+
+    //查询博客
+    public void doSearch(String search_data){
+        this.search_data = search_data;
+        initData();
+    }
+
 }
