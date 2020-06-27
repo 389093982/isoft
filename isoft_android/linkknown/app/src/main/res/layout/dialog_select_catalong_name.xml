@@ -5,6 +5,39 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <include layout="@layout/layout_recycleview"></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/scrollSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="滑动选择">
+        </TextView>
+
+        <TextView
+            android:id="@+id/addMyCatalogName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/scrollSelect"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="+添加分类">
+        </TextView>
+
+        <View style="@style/bg_line"
+            android:layout_below="@+id/scrollSelect"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="10dp">
+        <include layout="@layout/layout_recycleview"></include>
+    </ScrollView>
 
 </LinearLayout>

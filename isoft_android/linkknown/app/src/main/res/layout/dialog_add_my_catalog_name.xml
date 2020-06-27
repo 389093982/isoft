@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <!-- 分类名称 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/catalog_name_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp">
+
+        <EditText
+            android:id="@+id/catalog_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="分类名称"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 分类描述 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/catalog_desc_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp">
+
+        <EditText
+            android:id="@+id/catalog_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="分类描述"
+            android:textColor="@color/black"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 禁用阴影 android:stateListAnimator="@null" -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submitBtn"
+        style="@style/userInfoButton"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="12dp"
+        android:stateListAnimator="@null"
+        android:text="确定"
+        android:enabled="false"
+        android:textColor="@color/white"/>
+</LinearLayout>

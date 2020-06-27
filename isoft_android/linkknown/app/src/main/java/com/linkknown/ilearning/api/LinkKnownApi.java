@@ -256,6 +256,12 @@ public interface LinkKnownApi {
     Observable<GetMyCatalogsResponse> GetMyCatalogs();
 
 
+    // 添加博客分类
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit")
+    Observable<BaseResponse> BlogCatalogEdit(@Query("catalog_name") String catalog_name,
+                                             @Query("catalog_desc") String catalog_desc);
+
+
     // 发表&编辑 博客
     @POST("/api/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit")
     Observable<BaseResponse> BlogArticleEdit(@Query("article_id") String article_id,
