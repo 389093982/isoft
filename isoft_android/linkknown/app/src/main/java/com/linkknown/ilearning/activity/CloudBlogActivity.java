@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -297,7 +298,7 @@ public class CloudBlogActivity extends BaseActivity {
             String status = (String) bundle.getSerializable("status");
             if ("SUCCESS".equals(status)){
                 //就为了做个刷新
-                initFragments();
+                fragment_cloud_blog.doSearch("");
             }
         }
     }

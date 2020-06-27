@@ -23,6 +23,7 @@
         android:background="@color/TableLinecolor"
         android:gravity="center_vertical"
         android:hint="@string/blogSearchContent"
+        android:textColorHint="@color/gray1"
         android:imeOptions="actionSearch"
         android:maxLines="1"
         android:inputType="text"
