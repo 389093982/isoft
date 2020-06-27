@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.DateUtil;
@@ -44,8 +45,16 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
     protected void convert(@NotNull BaseViewHolder viewHolder, @NotNull BlogListResponse.BlogArticle blog) {
         //用户头像
         UIUtils.setImage(mContext,  viewHolder.findView(R.id.headerIcon), blog.getUser().getSmall_icon());
+        viewHolder.findView(R.id.headerIcon).setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
+            intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+            return intent;
+        }));
         //用户名
         viewHolder.setText(R.id.userNameText,blog.getUser().getNick_name());
+        viewHolder.findView(R.id.userNameText).setOnClickListener(v -> UIUtils.gotoActivity(mContext,PersonalCenterActivity.class,intent -> {
+            intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+            return intent;
+        }));
         ((TextView)viewHolder.findView(R.id.userNameText)).getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
         //博客类型
         viewHolder.setText(R.id.catalog_name,blog.getCatalog_name());
