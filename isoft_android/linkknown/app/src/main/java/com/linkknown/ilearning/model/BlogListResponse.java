@@ -31,6 +31,8 @@ public class BlogListResponse extends BaseResponse{
         private int to_top;
         private int views;
 
+        private UserListResponse.User user;
+
     }
 
 }

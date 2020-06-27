@@ -25,6 +25,7 @@ import java.util.List;
 public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArticle, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
+    public OnClickAttention onClickAttention;
 
     /**
      * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
@@ -41,26 +42,49 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, @NotNull BlogListResponse.BlogArticle blog) {
         //用户头像
-//        UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blogArticle.getFirst_img());
+        UIUtils.setImage(mContext,  viewHolder.findView(R.id.headerIcon), blog.getUser().getSmall_icon());
         //用户名
-        viewHolder.setText(R.id.userNameText,blog.getAuthor());
+        viewHolder.setText(R.id.userNameText,blog.getUser().getNick_name());
         ((TextView)viewHolder.findView(R.id.userNameText)).getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
         //博客类型
         viewHolder.setText(R.id.catalog_name,blog.getCatalog_name());
         //博客标题
         viewHolder.setText(R.id.blog_title,blog.getBlog_title());
         //创建时间
-        viewHolder.setText(R.id.createdTime, DateUtil.formatDate_StandardForm(blog.getCreated_time()));
+        viewHolder.setText(R.id.createdTime, "发布于:" + DateUtil.formatDate_StandardForm(blog.getCreated_time()));
         //更新时间
-        viewHolder.setText(R.id.lastUpdatedTime, DateUtil.formatDate_StandardForm(blog.getLast_updated_time()));
+//        viewHolder.setText(R.id.lastUpdatedTime, DateUtil.formatDate_StandardForm(blog.getLast_updated_time()));
         //first_img图片
-        UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blog.getFirst_img());
+        if (StringUtils.isNotEmpty(blog.getFirst_img())){
+            UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blog.getFirst_img());
+            viewHolder.setVisible(R.id.first_img,true);
+        }else{
+            viewHolder.setGone(R.id.first_img,true);
+        }
+
         //阅读量
         viewHolder.setText(R.id.views,blog.getViews()+"次阅读");
         //评论数
         viewHolder.setText(R.id.comments,blog.getComments()+"条评论");
 
 
+        //关注
+        viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAttention.doAttention();
+            }
+        });
 
+
+    }
+
+
+    public interface OnClickAttention{
+        public void doAttention();
+    }
+
+    public void setOnClickAttention(OnClickAttention onClickAttention) {
+        this.onClickAttention = onClickAttention;
     }
 }

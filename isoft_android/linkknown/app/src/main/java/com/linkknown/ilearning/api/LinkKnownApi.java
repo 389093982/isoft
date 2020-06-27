@@ -33,6 +33,7 @@ import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.model.UserAttentionListResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.model.UserListResponse;
 import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
 import io.reactivex.Observable;
@@ -250,6 +251,12 @@ public interface LinkKnownApi {
                                                @Query("search_user_name") String search_user_name,
                                                @Query("current_page") int current_page,
                                                @Query("offset") int pageSize);
+
+
+    // 根据userNames查询用户信息
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/GetUserInfoByNames")
+    Observable<UserListResponse> GetUserInfoByNames(@Query("usernames") String usernames);
+
 
     // 查询博客分类
     @POST("/api/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs")

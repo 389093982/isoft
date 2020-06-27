@@ -26,12 +26,14 @@ import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
+import com.linkknown.ilearning.model.UserListResponse;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,7 +43,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class CloudBlogFragment extends BaseLazyLoadFragment{
@@ -122,8 +127,8 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
             search_type = "_all";
         }
 
-        LinkKnownApiFactory.getLinkKnownApi().queryPageBlog(search_type,search_data,search_user_name,current_page,pageSize)
-                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+        Observable<BlogListResponse> observable = getBlogs(search_type,search_data,search_user_name,current_page, pageSize);
+        observable.subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<BlogListResponse>() {
                     @Override
@@ -170,6 +175,42 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
                         baseQuickAdapter.getLoadMoreModule().loadMoreFail();
                     }
                 });
+    }
+
+
+    //两次请求合并结果
+    private Observable<BlogListResponse> getBlogs(String search_type,String search_data,String search_user_name,int current_page, int pageSize) {
+        return LinkKnownApiFactory.getLinkKnownApi().queryPageBlog(search_type,search_data,search_user_name,current_page,pageSize)
+                .flatMap(new Function<BlogListResponse, ObservableSource<BlogListResponse>>() {
+                    @Override
+                    public ObservableSource<BlogListResponse> apply(BlogListResponse blogListResponse) throws Exception {
+                        List<String> usernameList = new ArrayList<>();
+                        for (BlogListResponse.BlogArticle blog:blogListResponse.getBlogs()){
+                            usernameList.add(blog.getAuthor());
+                        }
+                        String usernames = StringUtils.join(usernameList.toArray(new String[]{}), ",");
+                        return Observable.zip(Observable.just(blogListResponse),
+                                LinkKnownApiFactory.getLinkKnownApi().GetUserInfoByNames(usernames),
+                                new BiFunction<BlogListResponse, UserListResponse, BlogListResponse>() {
+                                    @Override
+                                    public BlogListResponse apply(BlogListResponse blogListResponse, UserListResponse userListResponse) throws Exception {
+                                        for (BlogListResponse.BlogArticle blog : blogListResponse.getBlogs()){
+
+                                            for (UserListResponse.User user:userListResponse.getUsers()){
+                                                if (blog.getAuthor().equals(user.getUser_name())){
+                                                    blog.setUser(user);
+                                                }
+                                            }
+
+                                        }
+
+                                        return blogListResponse;
+                                    }
+                                });
+
+                    };
+                });
+
     }
 
 
