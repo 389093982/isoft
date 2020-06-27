@@ -139,7 +139,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
                   String userName = _userNameController.text;
                   String passwd = _passwdController.text;
                   if (userName.isEmpty || passwd.isEmpty) {
-                    Utils.showToast('请输入账号或者密码');
+                    UIUtils.showToast('请输入账号或者密码');
                     return;
                   }
                   value.postLogin(
@@ -148,7 +148,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
                     passwd,
                     'http://www.linkknown.com'
                   ).catchError((e) {
-                    Utils.showToast((e as LinkKnownError).errorMsg);
+                    UIUtils.showToast((e as LinkKnownError).errorMsg);
                   }).then((value){
                     if(value != null){
                       NavigatorUtil.goMainPage(context);
