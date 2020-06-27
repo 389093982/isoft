@@ -14,6 +14,7 @@ import com.linkknown.ilearning.activity.CourseDetailActivity;
 import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.DateUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -67,21 +68,26 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
         //评论数
         viewHolder.setText(R.id.comments,blog.getComments()+"条评论");
 
-
-        //关注
-        viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickAttention.doAttention();
-            }
-        });
+        //没有登录 或者 没有关注，显示 +关注 按钮
+        if (!LoginUtil.checkHasLogin(mContext) || !blog.isAttention()){
+            viewHolder.setVisible(R.id.attention_off,true);
+            //关注
+            viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickAttention.doAttention(blog.getAuthor(), viewHolder.getAdapterPosition());
+                }
+            });
+        }else{
+            viewHolder.setGone(R.id.attention_off,true);
+        }
 
 
     }
 
 
     public interface OnClickAttention{
-        public void doAttention();
+        public void doAttention(String userName,int position);
     }
 
     public void setOnClickAttention(OnClickAttention onClickAttention) {

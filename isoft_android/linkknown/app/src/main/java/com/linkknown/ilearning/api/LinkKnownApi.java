@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.api;
 
 import com.linkknown.ilearning.model.AdviseListResponse;
+import com.linkknown.ilearning.model.AttentionUserListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CouponCourseResponse;
@@ -256,6 +257,11 @@ public interface LinkKnownApi {
     // 根据userNames查询用户信息
     @POST("/api/iwork/httpservice/isoft_linkknown_api/GetUserInfoByNames")
     Observable<UserListResponse> GetUserInfoByNames(@Query("usernames") String usernames);
+
+
+    // 查询所有关注的username
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryAttentionUserList")
+    Observable<AttentionUserListResponse> QueryAttentionUserList();
 
 
     // 查询博客分类

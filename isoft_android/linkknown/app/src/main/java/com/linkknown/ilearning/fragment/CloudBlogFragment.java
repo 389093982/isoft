@@ -1,12 +1,10 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,28 +14,22 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.CloudBlogAdapter;
-import com.linkknown.ilearning.adapter.CourseCardAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
+import com.linkknown.ilearning.model.AttentionUserListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.BlogListResponse;
-import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
-import com.linkknown.ilearning.model.PayOrderResponse;
-import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.UserListResponse;
 import com.linkknown.ilearning.util.CommonUtil;
-import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,8 +37,8 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 
 public class CloudBlogFragment extends BaseLazyLoadFragment{
@@ -86,6 +78,7 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
         baseQuickAdapter = new CloudBlogAdapter(mContext, blogs);
+        baseQuickAdapter.setOnClickAttention((userName,position) -> DoAttention(userName,position));
 
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
@@ -191,11 +184,24 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
                         String usernames = StringUtils.join(usernameList.toArray(new String[]{}), ",");
                         return Observable.zip(Observable.just(blogListResponse),
                                 LinkKnownApiFactory.getLinkKnownApi().GetUserInfoByNames(usernames),
-                                new BiFunction<BlogListResponse, UserListResponse, BlogListResponse>() {
+                                LinkKnownApiFactory.getLinkKnownApi().QueryAttentionUserList(),
+                                new Function3<BlogListResponse, UserListResponse, AttentionUserListResponse, BlogListResponse>() {
                                     @Override
-                                    public BlogListResponse apply(BlogListResponse blogListResponse, UserListResponse userListResponse) throws Exception {
+                                    public BlogListResponse apply(BlogListResponse blogListResponse, UserListResponse userListResponse, AttentionUserListResponse userNameListResponse) throws Exception {
                                         for (BlogListResponse.BlogArticle blog : blogListResponse.getBlogs()){
+                                            //绑定粉丝判断
+                                            List<AttentionUserListResponse.User> attentionUserList = userNameListResponse.getAttentionUserList();
+                                            List<String> attentionUserNameList = new ArrayList<>();
+                                            for (AttentionUserListResponse.User user:attentionUserList){
+                                                attentionUserNameList.add(user.getAttention_object_id());
+                                            }
 
+                                            if (attentionUserNameList.contains(blog.getAuthor())){
+                                                blog.setAttention(true);
+                                            }else{
+                                                blog.setAttention(false);
+                                            }
+                                            //设置用户信息
                                             for (UserListResponse.User user:userListResponse.getUsers()){
                                                 if (blog.getAuthor().equals(user.getUser_name())){
                                                     blog.setUser(user);
@@ -228,6 +234,28 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
     public void doSearch(String search_data){
         this.search_data = search_data;
         initData();
+    }
+
+    //关注博客作者
+    public void DoAttention(String userName,int position){
+        LinkKnownApiFactory.getLinkKnownApi().doAttention("user", userName,"on")
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse o) {
+                        if (o.isSuccess()) {
+                            ToastUtil.showText(mContext,"关注成功");
+                            blogs.get(position).setAttention(true);
+                            baseQuickAdapter.notifyItemChanged(position);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.showText(mContext,"系统异常");
+                    }
+                });
     }
 
 }
