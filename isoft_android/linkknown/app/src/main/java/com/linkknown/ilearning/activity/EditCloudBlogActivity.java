@@ -19,6 +19,8 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.GetMyCatalogsResponse;
+import com.linkknown.ilearning.popup.BottomAddMyCatalogNameDialog;
+import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.SecurityUtil;
 import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
@@ -47,6 +49,9 @@ public class EditCloudBlogActivity extends BaseActivity implements View.OnClickL
     public List<String> catalogNameList = new ArrayList<>();
     public AlertDialog.Builder builder;
     public AlertDialog dialog;
+
+    //添加分类的弹框
+    BottomAddMyCatalogNameDialog addMyCatalogName;
 
     //文章标题
     @BindView(R.id.blog_title)
@@ -165,24 +170,29 @@ public class EditCloudBlogActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onNext(GetMyCatalogsResponse o) {
                         if (o.isSuccess()){
-                            if (CollectionUtils.isNotEmpty(o.getCatalogs())){
-                                catalogNameList.clear();
-                                for (GetMyCatalogsResponse.Catalogs catalog:o.getCatalogs()){
-                                    catalogNameList.add(catalog.getCatalog_name());
-                                }
-                                catalogNameAdapter.setList(catalogNameList);
-
-                                //设置弹框
-                                View view = View.inflate(mContext, R.layout.dialog_select_catalong_name, null);
-                                RecyclerView recycleView = view.findViewById(R.id.recyclerView);
-                                recycleView.setAdapter(catalogNameAdapter);
-                                recycleView.setLayoutManager(new LinearLayoutManager(mContext));
-                                dialog.setView(view);
-                                dialog.show();
-
-                            }else{
-                                ToastUtil.showText(mContext,"目前没有分类，需要新建！");
+                            catalogNameList.clear();
+                            for (GetMyCatalogsResponse.Catalogs catalog:o.getCatalogs()){
+                                catalogNameList.add(catalog.getCatalog_name());
                             }
+                            catalogNameAdapter.setList(catalogNameList);
+
+                            //设置弹框
+                            View view = View.inflate(mContext, R.layout.dialog_select_catalong_name, null);
+                            RecyclerView recycleView = view.findViewById(R.id.recyclerView);
+                            recycleView.setAdapter(catalogNameAdapter);
+                            recycleView.setLayoutManager(new LinearLayoutManager(mContext));
+                            dialog.setView(view);
+                            dialog.show();
+                            //设置"+文章分类" 点击事件
+                            view.findViewById(R.id.addMyCatalogName).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //选择框先隐藏
+                                    dialog.dismiss();
+                                    //添加博客分类--准备底部弹框
+                                    BlogCatalogEdit();
+                                }
+                            });
 
                         }else{
                             ToastUtil.showText(mContext,"查询文章分类失败！");
@@ -195,6 +205,33 @@ public class EditCloudBlogActivity extends BaseActivity implements View.OnClickL
                         ToastUtil.showText(mContext,"查询失败！");
                     }
                 });
+    };
+
+
+    //添加博客分类
+    public void BlogCatalogEdit(){
+        addMyCatalogName = new BottomAddMyCatalogNameDialog(mContext, (_catalog_name, _catalog_desc) ->
+                LinkKnownApiFactory.getLinkKnownApi().BlogCatalogEdit(_catalog_name, _catalog_desc)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            addMyCatalogName.dismiss();
+                            // 分类框弹出--分类重新查
+                            selectCatalogName();
+                        } else {
+                            ToastUtil.showText(mContext, baseResponse.getErrorMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        addMyCatalogName.dismiss();
+                    }
+                }));
     };
 
 
