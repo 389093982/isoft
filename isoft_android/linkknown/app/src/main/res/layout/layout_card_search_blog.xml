@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/search_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="38dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="5dp"
+    android:fitsSystemWindows="true"
+    android:layout_marginTop="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="0dp">
+
+    <EditText
+        android:id="@+id/searchTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="40dp"
+        android:background="@color/TableLinecolor"
+        android:gravity="center_vertical"
+        android:hint="@string/blogSearchContent"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:inputType="text"
+        android:lines="1"
+        android:paddingLeft="10dp"
+        android:textColor="@color/text_color"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/searchEditTextClear"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:layout_marginEnd="50dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/searchBtn"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:clickable="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_search" />
+
+</androidx.cardview.widget.CardView>
+

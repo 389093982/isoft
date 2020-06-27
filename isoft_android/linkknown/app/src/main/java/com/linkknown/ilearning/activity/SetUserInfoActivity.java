@@ -188,7 +188,7 @@ public class SetUserInfoActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    //如果个性签名内容发生变化，自动调用
+    //如果内容发生变化，自动调用
     @OnTextChanged({R.id.nick_name,R.id.birthday,R.id.current_residence,R.id.hometown})
     public void onTextChanged() {
         String _nick_name = StringUtils.trim(nick_name.getText().toString());
