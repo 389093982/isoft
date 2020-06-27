@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/home_page.dart';
 import 'package:linkknown/page/login_page.dart';
+import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 
 
@@ -12,13 +13,14 @@ var splashHandler = new Handler(
     });
 
 // 登录页
+var mainHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
+      return MainPage();
+    });
+
+// 登录页
 var loginHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
       return LoginPage();
     });
 
-// 跳转到主页
-var homeHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
-      return HomePage();
-    });
