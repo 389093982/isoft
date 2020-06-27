@@ -68,8 +68,8 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
         //评论数
         viewHolder.setText(R.id.comments,blog.getComments()+"条评论");
 
-        //没有登录 或者 没有关注，显示 +关注 按钮
-        if (!LoginUtil.checkHasLogin(mContext) || !blog.isAttention()){
+        //没有登录 、没有关注、 不是自己，显示 +关注 按钮
+        if ((!LoginUtil.checkHasLogin(mContext) || !blog.isAttention()) && !LoginUtil.isLoginUserName(mContext,blog.getAuthor())){
             viewHolder.setVisible(R.id.attention_off,true);
             //关注
             viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {

@@ -248,6 +248,8 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
                             ToastUtil.showText(mContext,"关注成功");
                             blogs.get(position).setAttention(true);
                             baseQuickAdapter.notifyItemChanged(position);
+                        }else{
+                            ToastUtil.showText(mContext,o.getErrorMsg());
                         }
                     }
 
