@@ -7,6 +7,7 @@ import 'package:linkknown/route/route_handles.dart';
 
 class Routes {
   static String root = "/";
+  static String main = "/main";
   static String home = "/home";
   static String login = "/login";
 
@@ -17,7 +18,7 @@ class Routes {
       return LoginPage();
     });
     router.define(root, handler: splashHandler);
+    router.define(main, handler: mainHandler);
     router.define(login, handler: loginHandler);
-    router.define(home, handler: homeHandler);
   }
 }

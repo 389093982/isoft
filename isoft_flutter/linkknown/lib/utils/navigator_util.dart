@@ -33,4 +33,8 @@ class NavigatorUtil {
     _navigateTo(context, Routes.home, clearStack: true);
   }
 
+  /// 主页
+  static void goMainPage(BuildContext context) {
+    _navigateTo(context, Routes.main, clearStack: true);
+  }
 }

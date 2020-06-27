@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               onPressed: () {
                 // 返回首页
                 NavigatorUtil.goHomePage(context);
-//                Navigator.pop(context); // 关闭当前页面
+//                Navigator.pop(context); // 关闭当前页面--
               },
             )
         ),
@@ -151,7 +151,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
                     Utils.showToast((e as LinkKnownError).errorMsg);
                   }).then((value){
                     if(value != null){
-                      NavigatorUtil.goHomePage(context);
+                      NavigatorUtil.goMainPage(context);
                     }
                   });
                 },
