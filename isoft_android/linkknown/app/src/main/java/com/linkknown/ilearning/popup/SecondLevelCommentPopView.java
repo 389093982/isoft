@@ -7,19 +7,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.SecondLevelCommentAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.BaseResponse;
-import com.linkknown.ilearning.model.CouponCourseResponse;
 import com.linkknown.ilearning.model.EditCommentResponse;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
 import com.linkknown.ilearning.model.Paginator;
@@ -43,6 +39,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SecondLevelCommentPopView extends BottomPopupView {
 
+    private FirstLevelCommentResponse.Comment first_level_comment;
+    private List<SecondLevelCommentResponse.Comment> secondLevelComments = new ArrayList<>();
+
     private BottomQuickEidtDialog editCommentDialog;
     private Context mContext;
     private Handler handler = new Handler();
@@ -50,10 +49,7 @@ public class SecondLevelCommentPopView extends BottomPopupView {
 
     @BindView(R.id.recyclerView)
     public RecyclerView second_level_comment_recycleview;
-
     private SecondLevelCommentAdapter baseQuickAdapter;
-    private FirstLevelCommentResponse.Comment first_level_comment;
-    private List<SecondLevelCommentResponse.Comment> secondLevelComments = new ArrayList<>();
 
 
     public SecondLevelCommentPopView(@NonNull Context context, FirstLevelCommentResponse.Comment first_level_comment) {
@@ -65,7 +61,7 @@ public class SecondLevelCommentPopView extends BottomPopupView {
     // 返回自定义弹窗的布局
     @Override
     protected int getImplLayoutId() {
-        return R.layout.fragment_course_comment_second_level;
+        return R.layout.fragment_second_level_comment;
     }
 
     @Override
@@ -114,8 +110,8 @@ public class SecondLevelCommentPopView extends BottomPopupView {
             @Override
             public void onClick(View v) {
                 int theme_pk = first_level_comment.getTheme_pk();
-                String theme_type = "course_theme_type";
-                String comment_type = "comment";
+                String theme_type = first_level_comment.getTheme_type();
+                String comment_type = first_level_comment.getComment_type();
                 Integer org_parent_id = first_level_comment.getId();
                 Integer parent_id = first_level_comment.getId();                          // 一级评论
                 String refer_user_name = first_level_comment.getCreated_by();     // 被评论人
@@ -245,8 +241,8 @@ public class SecondLevelCommentPopView extends BottomPopupView {
     //一级评论弹框里回复的回复
     public void replyComment(SecondLevelCommentResponse.Comment second_level_comment){
         int theme_pk = second_level_comment.getTheme_pk();
-        String theme_type = "course_theme_type";
-        String comment_type = "comment";
+        String theme_type = second_level_comment.getTheme_type();
+        String comment_type = second_level_comment.getComment_type();
         int org_parent_id = second_level_comment.getOrg_parent_id();
         int parent_id = second_level_comment.getId();                          // 一级评论
         String refer_user_name = second_level_comment.getCreated_by();     // 被评论人
@@ -261,7 +257,7 @@ public class SecondLevelCommentPopView extends BottomPopupView {
         int id = second_level_comment.getId();                           // 评论 id
         int org_parent_id = second_level_comment.getOrg_parent_id();     // 父评论 id
         int theme_pk = second_level_comment.getTheme_pk();                           // 课程 id
-        String theme_type = "course_theme_type";
+        String theme_type = second_level_comment.getTheme_type();
         LinkKnownApiFactory.getLinkKnownApi().deleteComment(level, id, theme_pk, theme_type, org_parent_id)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行

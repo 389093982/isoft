@@ -1,14 +1,12 @@
 package com.linkknown.ilearning.activity;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
@@ -30,7 +28,7 @@ import com.linkknown.ilearning.common.AppBarStateChangeEvent;
 import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
-import com.linkknown.ilearning.fragment.CourseCommentFragment;
+import com.linkknown.ilearning.fragment.FirstLevelCommentFragment;
 import com.linkknown.ilearning.fragment.CourseIntroduceFragment;
 import com.linkknown.ilearning.model.CourseDetailResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
@@ -112,7 +110,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         // 设置课程图片
         UIUtils.setImage(getApplicationContext(), courseImage, course.getSmall_image());
         // 此处绑定 viewPager 是因为评论 tab 页标题中的评论数需要在请求后修改
-        initViewPager(courseDetailResponse, course.getComments());
+        initViewPager(courseDetailResponse);
         // 点击播放图标进行播放
         mFAB.setOnClickListener(v -> {
             if (CollectionUtils.isNotEmpty(courseDetailResponse.getCVideos())) {
@@ -289,26 +287,26 @@ public class CourseDetailActivity extends AppCompatActivity {
         mFAB.setClickable(false);
     }
 
-    private void initViewPager(CourseDetailResponse courseDetailResponse, int comments) {
+    private void initViewPager(CourseDetailResponse courseDetailResponse) {
         // 多次订阅数据会导致重复,需要先进行清理
         fragments.clear();
         titles.clear();
 
         // 课程简介片段
-        CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
-        // 课程评论片段
-        CourseCommentFragment courseCommentFragment = new CourseCommentFragment();
-        // activity 向 fragment 传参
-        Bundle bundle = new Bundle();
-        bundle.putInt("course_id", courseDetailResponse.getCourse().getId());
-        bundle.putString("course_author", courseDetailResponse.getCourse().getCourse_author());
-        bundle.putString("comments", courseDetailResponse.getCourse().getComments()+"");
-        courseCommentFragment.setArguments(bundle);
-
-        fragments.add(courseIntroduceFragment);
-        fragments.add(courseCommentFragment);
         titles.add("简介");
+        CourseIntroduceFragment courseIntroduceFragment = new CourseIntroduceFragment(courseDetailResponse);
+        fragments.add(courseIntroduceFragment);
+
+        // 课程评论片段
         titles.add("评论");
+        int theme_pk = courseDetailResponse.getCourse().getId();
+        String theme_type = "course_theme_type";
+        String comment_type = "comment";
+        String refer_user_name = courseDetailResponse.getCourse().getCourse_author();
+        String comments = courseDetailResponse.getCourse().getComments()+"";
+        FirstLevelCommentFragment firstLevelCommentFragment = new FirstLevelCommentFragment(theme_pk,theme_type,comment_type,refer_user_name,comments);
+        fragments.add(firstLevelCommentFragment);
+
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()

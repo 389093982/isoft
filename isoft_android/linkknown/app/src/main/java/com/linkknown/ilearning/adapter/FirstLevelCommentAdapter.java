@@ -8,12 +8,9 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.model.FirstLevelCommentResponse;
-import com.linkknown.ilearning.model.SecondLevelCommentResponse;
-import com.linkknown.ilearning.popup.SecondLevelCommentPopView;
 import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
-import com.lxj.xpopup.XPopup;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +24,7 @@ public class FirstLevelCommentAdapter extends BaseQuickAdapter<FirstLevelComment
      * 如果后期设置数据，不需要传入初始List，直接调用 super(layoutResId); 即可
      */
     public FirstLevelCommentAdapter(Context mContext, List<FirstLevelCommentResponse.Comment> comments) {
-        super(R.layout.item_course_comment_first_level, comments);
+        super(R.layout.item_first_level_comment, comments);
         this.mContext = mContext;
     }
 
