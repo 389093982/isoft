@@ -1,6 +1,7 @@
 package com.linkknown.ilearning.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.TextView;
@@ -10,10 +11,13 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.activity.CloudBlogDetailActivity;
 import com.linkknown.ilearning.activity.CourseDetailActivity;
+import com.linkknown.ilearning.activity.PersonalCenterActivity;
 import com.linkknown.ilearning.model.BlogListResponse;
 import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.util.DateUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +29,7 @@ import java.util.List;
 public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArticle, BaseViewHolder> implements LoadMoreModule {
 
     private Context mContext;
+    public OnClickAttention onClickAttention;
 
     /**
      * 构造方法，此示例中，在实例化Adapter时就传入了一个List。
@@ -41,26 +46,103 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
     @Override
     protected void convert(@NotNull BaseViewHolder viewHolder, @NotNull BlogListResponse.BlogArticle blog) {
         //用户头像
-//        UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blogArticle.getFirst_img());
-        //用户名
-        viewHolder.setText(R.id.userNameText,blog.getAuthor());
-        ((TextView)viewHolder.findView(R.id.userNameText)).getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
-        //博客类型
-        viewHolder.setText(R.id.catalog_name,blog.getCatalog_name());
+        UIUtils.setImage(mContext,  viewHolder.findView(R.id.headerIcon), blog.getUser().getSmall_icon());
+        viewHolder.findView(R.id.headerIcon).setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
+            intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+            return intent;
+        }));
+
         //博客标题
         viewHolder.setText(R.id.blog_title,blog.getBlog_title());
+        viewHolder.findView(R.id.blog_title).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
+                    intent.putExtra("id",blog.getId()+"");
+                    return intent;
+                });
+            }
+        });
+
+        //用户名
+        viewHolder.setText(R.id.userNameText,blog.getUser().getNick_name());
+        viewHolder.findView(R.id.userNameText).setOnClickListener(v -> UIUtils.gotoActivity(mContext,PersonalCenterActivity.class,intent -> {
+            intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+            return intent;
+        }));
+        ((TextView)viewHolder.findView(R.id.userNameText)).getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+
+        //博客类型
+        viewHolder.setText(R.id.catalog_name,blog.getCatalog_name());
+
         //创建时间
-        viewHolder.setText(R.id.createdTime, DateUtil.formatDate_StandardForm(blog.getCreated_time()));
+        viewHolder.setText(R.id.createdTime, "发布于:"+DateUtil.formatPublishTime(blog.getCreated_time()));
         //更新时间
-        viewHolder.setText(R.id.lastUpdatedTime, DateUtil.formatDate_StandardForm(blog.getLast_updated_time()));
+        viewHolder.setText(R.id.lastUpdatedTime, "更新于:"+DateUtil.formatPublishTime(blog.getLast_updated_time()));
+        viewHolder.findView(R.id.createdTime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
+                    intent.putExtra("id",blog.getId()+"");
+                    return intent;
+                });
+            }
+        });
+        viewHolder.findView(R.id.lastUpdatedTime).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
+                    intent.putExtra("id",blog.getId()+"");
+                    return intent;
+                });
+            }
+        });
+
         //first_img图片
-        UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blog.getFirst_img());
+        if (StringUtils.isNotEmpty(blog.getFirst_img())){
+            viewHolder.setVisible(R.id.first_img,true);
+            UIUtils.setImage(mContext,  viewHolder.findView(R.id.first_img), blog.getFirst_img());
+            viewHolder.findView(R.id.first_img).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
+                        intent.putExtra("id",blog.getId()+"");
+                        return intent;
+                    });
+                }
+            });
+        }else{
+            viewHolder.setGone(R.id.first_img,true);
+        }
+
         //阅读量
         viewHolder.setText(R.id.views,blog.getViews()+"次阅读");
         //评论数
         viewHolder.setText(R.id.comments,blog.getComments()+"条评论");
 
+        //没有登录 、没有关注、 不是自己，显示 +关注 按钮
+        if ((!LoginUtil.checkHasLogin(mContext) || !blog.isAttention()) && !LoginUtil.isLoginUserName(mContext,blog.getAuthor())){
+            viewHolder.setVisible(R.id.attention_off,true);
+            //关注
+            viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickAttention.doAttention(blog.getAuthor(), viewHolder.getAdapterPosition());
+                }
+            });
+        }else{
+            viewHolder.setGone(R.id.attention_off,true);
+        }
 
 
+    }
+
+
+    public interface OnClickAttention{
+        public void doAttention(String userName,int position);
+    }
+
+    public void setOnClickAttention(OnClickAttention onClickAttention) {
+        this.onClickAttention = onClickAttention;
     }
 }

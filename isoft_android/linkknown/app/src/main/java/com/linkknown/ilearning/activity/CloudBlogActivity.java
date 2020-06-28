@@ -7,14 +7,21 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.jakewharton.rxbinding4.view.RxView;
+import com.jakewharton.rxbinding4.widget.RxTextView;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
 import com.linkknown.ilearning.adapter.GlideImageLoader;
@@ -26,7 +33,10 @@ import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.util.CommonUtil;
+import com.linkknown.ilearning.util.KeyBoardUtil;
 import com.linkknown.ilearning.util.LoginUtil;
+import com.linkknown.ilearning.util.StringUtilEx;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 import com.youth.banner.Banner;
@@ -36,6 +46,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +74,18 @@ public class CloudBlogActivity extends BaseActivity {
     @BindView(R.id.add_blog)
     public ImageView add_blog;
 
+    //搜索博客
+    @BindView(R.id.searchBlogTextView)
+    public EditText searchBlogTextView;
+    @BindView(R.id.searchBlogEditTextClear)
+    public ImageView searchBlogEditTextClear;
+    @BindView(R.id.searchBtn)
+    public ImageView searchBtn;
+
+    //两个fragment
+    public CloudBlogFragment fragment_cloud_blog;
+    public CloudBlogFragment fragment_my_blog;
+
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
     @BindView(R.id.tab_layout)
@@ -78,7 +101,7 @@ public class CloudBlogActivity extends BaseActivity {
         setContentView(R.layout.activity_cloud_blog);
         mContext = this;
         ButterKnife.bind(this);
-        initToolBar(toolbar, true, "");
+        initToolBar(toolbar, true, "云博客");
 
         //顶部设置为透明
         UIUtils.setTopTransparent(this);
@@ -124,6 +147,69 @@ public class CloudBlogActivity extends BaseActivity {
                 startActivityForResult(intent,199);
             }
         });
+
+
+        // 有内容显示 clear 图标,没有则隐藏
+        RxTextView.textChanges(searchBlogTextView).map(CharSequence::toString).subscribe(s -> {
+            if (!TextUtils.isEmpty(s)) {
+                searchBlogEditTextClear.setVisibility(View.VISIBLE);
+            } else {
+                searchBlogEditTextClear.setVisibility(View.GONE);
+                //为了用户体验
+                if (fragment_cloud_blog!=null){
+                    fragment_cloud_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                }
+                if (fragment_my_blog!=null){
+                    fragment_my_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                }
+                //关闭软键盘
+                KeyBoardUtil.closeKeybord(searchBlogTextView, mContext);
+            }
+        });
+
+        // 清空输入框
+        RxView.clicks(searchBlogEditTextClear).subscribe(aVoid -> {
+            searchBlogTextView.setText("");
+            fragment_cloud_blog.doSearch(searchBlogTextView.getText().toString().trim());
+            fragment_my_blog.doSearch(searchBlogTextView.getText().toString().trim());
+            //关闭软键盘
+            KeyBoardUtil.closeKeybord(searchBlogTextView, mContext);
+        });
+
+        // 软键盘搜索
+        searchBlogTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (StringUtilEx.isAllNotEmpty(searchBlogTextView.getText().toString())){
+                        //查询
+                        fragment_cloud_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                        fragment_my_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                        //关闭软键盘
+                        KeyBoardUtil.closeKeybord(searchBlogTextView, mContext);
+                    }else{
+                        ToastUtil.showText(mContext,"请输入查询内容");
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //查询博客
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StringUtilEx.isAllNotEmpty(searchBlogTextView.getText().toString())){
+                    fragment_cloud_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                    fragment_my_blog.doSearch(searchBlogTextView.getText().toString().trim());
+                    //关闭软键盘
+                    KeyBoardUtil.closeKeybord(searchBlogTextView, mContext);
+                }else{
+                    ToastUtil.showText(mContext,"请输入查询内容");
+                }
+            }
+        });
     }
 
 
@@ -133,12 +219,12 @@ public class CloudBlogActivity extends BaseActivity {
         titles.clear();
 
         titles.add("云博客");
-        CloudBlogFragment fragment1 = new CloudBlogFragment(CloudBlogFragment.SCOP_ALL);
-        fragments.add(fragment1);
+        fragment_cloud_blog = new CloudBlogFragment(CloudBlogFragment.SCOP_ALL);
+        fragments.add(fragment_cloud_blog);
 
         titles.add("我的博客");
-        CloudBlogFragment fragment2 = new CloudBlogFragment(CloudBlogFragment.SCOP_MYSELF);
-        fragments.add(fragment2);
+        fragment_my_blog = new CloudBlogFragment(CloudBlogFragment.SCOP_MYSELF);
+        fragments.add(fragment_my_blog);
 
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
         mViewPager.setAdapter(mAdapter);
@@ -183,9 +269,10 @@ public class CloudBlogActivity extends BaseActivity {
                         if (userDetailResponse.isSuccess()){
                             UserDetailResponse.User user = userDetailResponse.getUser();
                             if (user!=null){
-                                // 设置用户头像、用户昵称、用户会员等级、用户标签语
+                                // 设置用户头像、用户昵称
                                 UIUtils.setImage(getApplication(), headerIcon, user.getSmall_icon());
                                 nickNameText.setText(user.getNick_name());
+                                //初始化两个fragment
                                 initFragments();
                             }
                         }
@@ -211,7 +298,8 @@ public class CloudBlogActivity extends BaseActivity {
             String status = (String) bundle.getSerializable("status");
             if ("SUCCESS".equals(status)){
                 //就为了做个刷新
-                initFragments();
+                fragment_cloud_blog.doSearch("");
+                fragment_my_blog.doSearch("");
             }
         }
     }

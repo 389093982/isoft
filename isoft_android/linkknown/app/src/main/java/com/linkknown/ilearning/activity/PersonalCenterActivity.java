@@ -96,7 +96,7 @@ public class PersonalCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_personal_center);
         mContext = this;
         ButterKnife.bind(this);
-        initToolBar(toolbar, true, "");
+        initToolBar(toolbar, true, "个人中心");
 
         //顶部设置为透明
         UIUtils.setTopTransparent(this);
@@ -107,8 +107,8 @@ public class PersonalCenterActivity extends BaseActivity {
         //绑定关注事件
         initAttentionBtn();
 
-        // 查看别人 userName会传值， 如果userName为空，那就是查看自己的。 （查看自己不传这个参数）
-        userName = getIntent().getStringExtra(Constants.USER_NAME);
+        // 查看别人 userName会传值， 如果userName为空，那就是查看自己的。 （查看自己不传这个参数,如果查看自己也传自己的userName,那么就是查自己）
+       userName = getIntent().getStringExtra(Constants.USER_NAME);
         if (StringUtils.isEmpty(userName)) {
             //查看自己
             if (!LoginUtil.checkHasLogin(mContext)){

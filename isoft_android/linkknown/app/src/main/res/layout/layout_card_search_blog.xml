@@ -15,7 +15,7 @@
     app:cardElevation="0dp">
 
     <EditText
-        android:id="@+id/searchTextView"
+        android:id="@+id/searchBlogTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center|end"
@@ -23,6 +23,7 @@
         android:background="@color/TableLinecolor"
         android:gravity="center_vertical"
         android:hint="@string/blogSearchContent"
+        android:textColorHint="@color/gray1"
         android:imeOptions="actionSearch"
         android:maxLines="1"
         android:inputType="text"
@@ -32,7 +33,7 @@
         android:textSize="14sp" />
 
     <ImageView
-        android:id="@+id/searchEditTextClear"
+        android:id="@+id/searchBlogEditTextClear"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|end"
