@@ -32,10 +32,7 @@ class HomePage extends StatefulWidget {
     TabViewModel(title: '会员', widget: Text("宠物卡片")),
   ].map((item) => TabViewModel(
     title: item.title,
-    widget: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[item.widget],
-    ),
+    widget: item.widget,
   )).toList();
 
   TabController tabController;
