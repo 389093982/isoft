@@ -109,9 +109,6 @@ public class CloudBlogDetailActivity extends BaseActivity {
         userName_param = getIntent().getStringExtra("userName");
         headerIcon_param = getIntent().getStringExtra("headerIcon");
         userNameText_param = getIntent().getStringExtra("userNameText");
-
-        //初始化博客详情
-        initData();
     }
 
 
