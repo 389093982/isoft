@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:linkknown/widgets/common_tab.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class CommonTabViewModel {
+  final String title;
+  final Widget widget;
+
+  const CommonTabViewModel({
+    this.title,
+    this.widget,
+  });
+}
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+// Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
+// 怎么为了让tab一直保存在内存中,不被销毁?
+// 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
+  @override
+  bool get wantKeepAlive => true;
 
   List<CommonTabViewModel> viewModels = [
     CommonTabViewModel(title: '免费', widget: Text("宠物卡片")),
@@ -33,12 +48,44 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return CommonTabs(
-      title: '基础组件',
-      viewModels: viewModels,
-      tabScrollable: false,
-      tabController: this.tabController,
+    return Scaffold(
+      appBar: PreferredSize(
+        child: AppBar(
+          bottom: TabBar(
+            controller: this.tabController,
+            isScrollable: true,
+            indicatorColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.label,
+            tabs: this.viewModels.map((item) => Tab(text: item.title)).toList(),
+          ),
+        ),
+        preferredSize: Size.fromHeight(50),
+      ),
+      body: TabBarView(
+        controller: this.tabController,
+        children: this.viewModels.map((item) => item.widget).toList(),
+      ),
     );
   }
 
+}
+
+
+
+class _HomeHeaderWidget extends StatefulWidget {
+  @override
+  _HomeHeaderWidgetState createState() => _HomeHeaderWidgetState();
+}
+
+class _HomeHeaderWidgetState extends State<HomePage> with TickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("11111111");
+  }
 }

@@ -6,7 +6,14 @@ class FindPage extends StatefulWidget {
   _FindPageState createState() => _FindPageState();
 }
 
-class _FindPageState extends State<FindPage> with TickerProviderStateMixin {
+// Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
+// 怎么为了让tab一直保存在内存中,不被销毁?
+// 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
+class _FindPageState extends State<FindPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   List<String> getDataList() {
     List<String> list = [];
     for (int i = 0; i < 15; i++) {
