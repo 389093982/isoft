@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Welcome to Flutter',
+      title: '链知晓课堂',
+      theme: ThemeData(          // Add the 3 lines from here...
+        primaryColor: Colors.red,
+      ),
       // home 指定为开屏页
       home: new SplashPage(),
       onGenerateRoute: Application.router.generator,
