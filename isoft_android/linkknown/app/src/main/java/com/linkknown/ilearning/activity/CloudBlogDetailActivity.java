@@ -2,19 +2,26 @@ package com.linkknown.ilearning.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.linkknown.ilearning.Constants;
 import com.linkknown.ilearning.R;
+import com.linkknown.ilearning.common.CommonFragmentStatePagerAdapter;
 import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
+import com.linkknown.ilearning.fragment.FirstLevelCommentFragment;
+import com.linkknown.ilearning.fragment.UserCourseFragment;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.BlogDetailResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
@@ -24,6 +31,9 @@ import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +52,9 @@ public class CloudBlogDetailActivity extends BaseActivity {
     private String userName_param;
     private String headerIcon_param;
     private String userNameText_param;
+
+    //查询出来的博客
+    public BlogDetailResponse.Blog blog;
 
     //头像
     @BindView(R.id.headerIcon)
@@ -89,6 +102,14 @@ public class CloudBlogDetailActivity extends BaseActivity {
     @BindView(R.id.content)
     public TextView content;
 
+    private List<String> titles = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
+
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.tab_layout)
+    SlidingTabLayout mSlidingTabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +119,10 @@ public class CloudBlogDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "博客详情");
 
+        UIUtils.setTopTransparent(this);
+
         initView();
         initData();
-
     }
 
 
@@ -157,7 +179,7 @@ public class CloudBlogDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(BlogDetailResponse o) {
                         if ("SUCCESS".equals(o.getStatus())) {
-                            BlogDetailResponse.Blog blog = o.getBlog();
+                            blog = o.getBlog();
                             //头像
                             UIUtils.setImage(mContext,  headerIcon, headerIcon_param);
                             headerIcon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
@@ -195,6 +217,8 @@ public class CloudBlogDetailActivity extends BaseActivity {
                             comments.setText(blog.getComments()+"条评论");
                             content.setText(blog.getContent());
 
+                            //这里初始化评论的fragment
+                            initFragments();
                         }else{
                             ToastUtil.showText(mContext,o.getErrorMsg());
                         }
@@ -268,6 +292,51 @@ public class CloudBlogDetailActivity extends BaseActivity {
 
     }
 
+
+    public void initFragments(){
+        // 多次订阅数据会导致重复,需要先进行清理
+        fragments.clear();
+        titles.clear();
+
+        titles.add("评论");
+        int theme_pk = blog.getId();
+        String theme_type = "blog_theme_type";
+        String comment_type = "comment";
+        String refer_user_name = this.userName_param;
+        String comments = blog.getComments()+"";
+        FirstLevelCommentFragment firstLevelCommentFragment = new FirstLevelCommentFragment(theme_pk,theme_type,comment_type,refer_user_name,comments);
+        fragments.add(firstLevelCommentFragment);
+
+        CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
+        mViewPager.setAdapter(mAdapter);
+        // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()
+        mViewPager.setOffscreenPageLimit(2);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        measureTabLayoutTextWidth(0);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                measureTabLayoutTextWidth(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    };
+
+
+    private void measureTabLayoutTextWidth(int position) {
+        String title = titles.get(position);
+        TextView titleView = mSlidingTabLayout.getTitleView(position);
+        TextPaint paint = titleView.getPaint();
+        float textWidth = paint.measureText(title);
+        mSlidingTabLayout.setIndicatorWidth(textWidth / 3);
+    }
 
 
 }
