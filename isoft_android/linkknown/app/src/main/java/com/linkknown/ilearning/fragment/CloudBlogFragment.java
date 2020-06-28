@@ -1,12 +1,14 @@
 package com.linkknown.ilearning.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -25,6 +27,7 @@ import com.linkknown.ilearning.model.UserListResponse;
 import com.linkknown.ilearning.util.CommonUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
+import com.lxj.xpopup.XPopup;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -77,8 +80,9 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
 
-        baseQuickAdapter = new CloudBlogAdapter(mContext, blogs);
+        baseQuickAdapter = new CloudBlogAdapter(mContext, blogs, this);
         baseQuickAdapter.setOnClickAttention((userName,position) -> DoAttention(userName,position));
+        baseQuickAdapter.setOnClickDeleteBlog(id -> DeleteBlog(id));
 
         // 是否自动加载下一页（默认为true）
         baseQuickAdapter.getLoadMoreModule().setAutoLoadMore(true);
@@ -259,5 +263,36 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
                     }
                 });
     }
+
+
+    //删除博客
+    public void DeleteBlog(String id){
+        // 没登录,提示登录
+        new XPopup.Builder(mContext)
+                .hasShadowBg(true)
+                .asConfirm("温馨提示", "您确认删除这篇博客？", () -> {
+                    LinkKnownApiFactory.getLinkKnownApi().ArticleDelete(id)
+                            .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                            .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                            .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                @Override
+                                public void onNext(BaseResponse o) {
+                                    if ("SUCCESS".equals(o.getStatus())){
+                                        ToastUtil.showText(mContext,"删除成功");
+                                        //这里暂时做个刷新
+                                        initData();
+                                    }else{
+                                        ToastUtil.showText(mContext,o.getErrorMsg());
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    ToastUtil.showText(mContext,"系统异常");
+                                }
+                            });
+
+                }).show();
+    };
 
 }

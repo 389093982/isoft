@@ -108,7 +108,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="+关注"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:textColor="@color/focus_text_color"
                         android:textSize="14sp" />
 
@@ -203,6 +203,18 @@
                         android:textSize="12sp"
                         android:layout_marginLeft="3dp"
                         android:text="评论数"/>
+
+                    <ImageView
+                        android:id="@+id/delete_blog_icon"
+                        android:padding="2dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_toRightOf="@+id/comments"
+                        android:layout_alignBottom="@+id/comments"
+                        android:layout_marginLeft="15dp"
+                        android:visibility="gone"
+                        android:translationY="1dp"
+                        android:src="@drawable/ic_delete" />
 
                     <View style="@style/bg_line"
                         android:id="@+id/bg_line"

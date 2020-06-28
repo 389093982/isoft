@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
@@ -29,6 +31,7 @@ import com.linkknown.ilearning.util.DateUtil;
 import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
+import com.lxj.xpopup.XPopup;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -97,6 +100,9 @@ public class CloudBlogDetailActivity extends BaseActivity {
     //评论数
     @BindView(R.id.comments)
     public TextView comments;
+
+    @BindView(R.id.delete_blog_icon)
+    public ImageView delete_blog_icon;
 
     //博客内容
     @BindView(R.id.content)
@@ -191,6 +197,7 @@ public class CloudBlogDetailActivity extends BaseActivity {
                             blog_title.setText(blog.getBlog_title());
                             //昵称
                             userNameText.setText(userNameText_param);
+                            userNameText.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
                             userNameText.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
                                 intent.putExtra(Constants.USER_NAME,blog.getAuthor());
                                 return intent;
@@ -214,9 +221,17 @@ public class CloudBlogDetailActivity extends BaseActivity {
                                 lastUpdatedTime.setVisibility(View.VISIBLE);
                             }
                             //浏览量、评论数、内容
-                            views.setText(blog.getViews()+"次阅读");
-                            comments.setText(blog.getComments()+"条评论");
+                            views.setText(blog.getViews()+"");
+                            comments.setText(blog.getComments()+"");
                             content.setText(blog.getContent());
+
+                            //删除博客
+                            if (LoginUtil.isLoginUserName(mContext,blog.getAuthor())){
+                                delete_blog_icon.setVisibility(View.VISIBLE);
+                                delete_blog_icon.setOnClickListener(v -> DeleteBlog(blog.getId()+""));
+                            }else{
+                                delete_blog_icon.setVisibility(View.GONE);
+                            }
 
                             //这里初始化评论的fragment
                             initFragments();
@@ -292,6 +307,38 @@ public class CloudBlogDetailActivity extends BaseActivity {
 
 
     }
+
+
+    //删除博客
+    public void DeleteBlog(String id){
+        // 没登录,提示登录
+        new XPopup.Builder(mContext)
+                .hasShadowBg(true)
+                .asConfirm("温馨提示", "您确认删除这篇博客？", () -> {
+                    LinkKnownApiFactory.getLinkKnownApi().ArticleDelete(id)
+                            .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                            .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                            .subscribe(new LinkKnownObserver<BaseResponse>() {
+                                @Override
+                                public void onNext(BaseResponse o) {
+                                    if ("SUCCESS".equals(o.getStatus())){
+                                        ToastUtil.showText(mContext,"删除成功");
+                                        //返回上一页
+                                        setResult(201,new Intent());
+                                        finish();
+                                    }else{
+                                        ToastUtil.showText(mContext,o.getErrorMsg());
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    ToastUtil.showText(mContext,"系统异常");
+                                }
+                            });
+
+                }).show();
+    };
 
 
     public void initFragments(){
