@@ -51,15 +51,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Text("111111111111111111"),
-//        title: _HomeHeaderWidget(),
           bottom: TabBar(
             controller: this.tabController,
             isScrollable: true,
+            indicatorColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.label,
             tabs: this.viewModels.map((item) => Tab(text: item.title)).toList(),
           ),
         ),
-        preferredSize: Size.fromHeight(100.0),
+        preferredSize: Size.fromHeight(50),
       ),
       body: TabBarView(
         controller: this.tabController,
