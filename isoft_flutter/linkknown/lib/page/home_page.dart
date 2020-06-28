@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommonTabViewModel {
   final String title;
@@ -51,6 +50,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
+          title: Container(
+            child: _HomeHeaderWidget(),
+          ),
           bottom: TabBar(
             controller: this.tabController,
             isScrollable: true,
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
             tabs: this.viewModels.map((item) => Tab(text: item.title)).toList(),
           ),
         ),
-        preferredSize: Size.fromHeight(50),
+            preferredSize: Size.fromHeight(80.0),
       ),
       body: TabBarView(
         controller: this.tabController,
@@ -77,7 +79,7 @@ class _HomeHeaderWidget extends StatefulWidget {
   _HomeHeaderWidgetState createState() => _HomeHeaderWidgetState();
 }
 
-class _HomeHeaderWidgetState extends State<HomePage> with TickerProviderStateMixin {
+class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProviderStateMixin {
 
   @override
   void initState() {
@@ -86,6 +88,29 @@ class _HomeHeaderWidgetState extends State<HomePage> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return Text("11111111");
+    return Row(
+      children: <Widget>[
+        Container(
+          child: Text(
+              "1111111111",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Container(
+          child: Text(
+            "222222222",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Container(
+          child: Text(
+            "3333",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,),
+        ),
+      ],
+    );
   }
 }
