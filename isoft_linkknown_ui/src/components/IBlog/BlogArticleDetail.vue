@@ -31,7 +31,7 @@
             </Row>
             <!--第三行-->
             <Row>
-              <span style="margin-left: 500px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
+              <span style="margin-left: 400px"><span style="color: rgba(255,0,0,0.65)">{{blog.views}}</span> 次阅读 </span>
               <span style="margin-left: 20px"><span style="color: rgba(255,0,0,0.65)">{{blog.edits}}</span> 次编辑</span>
               <span>
                   <Button type="success" size="small" v-if="editable" @click="$router.push({ path: '/iblog/blogArticleEdit', query: { id: blog.id }})">继续编辑</Button>
