@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       title: '链知晓课堂',
       theme: ThemeData(          // Add the 3 lines from here...
         primaryColor: Colors.red,
