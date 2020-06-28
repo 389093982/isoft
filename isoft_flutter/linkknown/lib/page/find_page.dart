@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class FindPage extends StatefulWidget {
@@ -14,11 +16,16 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
   @override
   bool get wantKeepAlive => true;
 
-  List<String> getDataList() {
-    List<String> list = [];
-    for (int i = 0; i < 15; i++) {
-      list.add(i.toString());
-    }
+  List<ClassifyItem> getDataList() {
+    List<ClassifyItem> list = [];
+    list..add(ClassifyItem("分类", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("考试", "images/home53.png", Routes.login))
+      ..add(ClassifyItem("推荐视频", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("名师招募令", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("畅享图书", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("锦鲤活动", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("领券中心", "images/linkknown.jpg", Routes.login))
+      ..add(ClassifyItem("个人中心", "images/linkknown.jpg", Routes.login));
     return list;
   }
 
@@ -26,19 +33,26 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
     return getDataList().map((item) => getItemContainer(item)).toList();
   }
 
-  Widget getItemContainer(String item) {
+  Widget getItemContainer(ClassifyItem item) {
     return new InkWell(
       //点击事件回调
       onTap: () {
         UIUtils.showToast("点击了文字");
       },
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          item,
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        color: Colors.blue,
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: ScreenUtil().setWidth(95),
+            height: ScreenUtil().setWidth(100),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: new ExactAssetImage(item.classifyIcon),
+              ),
+            ),
+          ),
+          Expanded(child: Text(item.classifyName),),
+        ],
       ),
     );
   }
@@ -58,14 +72,15 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       ),
       backgroundColor: Colors.white,
       body: Container(
+        padding: EdgeInsets.all(10),
         // infinity 无穷大
         height: double.infinity,
         width: double.infinity,
         child: GridView.count(
           //水平子 Widget 之间间距
-          crossAxisSpacing: 20.0,
+          crossAxisSpacing: 10.0,
           //垂直子 Widget 之间间距
-          mainAxisSpacing: 20.0,
+          mainAxisSpacing: 10.0,
           //GridView内边距
           padding: EdgeInsets.all(10.0),
           //一行的Widget数量
@@ -79,4 +94,14 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
     );
     // GridView.count 创建网格布局
   }
+}
+
+class ClassifyItem {
+
+  String classifyName;
+  String classifyIcon;
+  String redirectUrl;
+
+  ClassifyItem(this.classifyName, this.classifyIcon, this.redirectUrl);
+
 }

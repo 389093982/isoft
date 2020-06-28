@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/home_tab_recommend.dart';
 
-class CommonTabViewModel {
+class TabViewModel {
   final String title;
   final Widget widget;
 
-  const CommonTabViewModel({
+  const TabViewModel({
     this.title,
     this.widget,
   });
@@ -18,18 +19,18 @@ class HomePage extends StatefulWidget {
 // Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
 // 怎么为了让tab一直保存在内存中,不被销毁?
 // 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  class _HomePageState extends State<HomePage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
 
-  List<CommonTabViewModel> viewModels = [
-    CommonTabViewModel(title: '免费', widget: Text("宠物卡片")),
-    CommonTabViewModel(title: '付费', widget: Text("宠物卡片")),
-    CommonTabViewModel(title: '全部', widget: Text("宠物卡片")),
-    CommonTabViewModel(title: '推荐', widget: Text("宠物卡片")),
-    CommonTabViewModel(title: '会员', widget: Text("宠物卡片")),
-  ].map((item) => CommonTabViewModel(
+  List<TabViewModel> viewModels = [
+    TabViewModel(title: '免费', widget: Text("宠物卡片")),
+    TabViewModel(title: '付费', widget: Text("宠物卡片")),
+    TabViewModel(title: '全部', widget: Text("宠物卡片")),
+    TabViewModel(title: '推荐', widget: TabRecommendWidget()),
+    TabViewModel(title: '会员', widget: Text("宠物卡片")),
+  ].map((item) => TabViewModel(
     title: item.title,
     widget: Column(
       mainAxisSize: MainAxisSize.min,
