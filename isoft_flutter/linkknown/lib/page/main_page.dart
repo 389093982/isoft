@@ -40,7 +40,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       ..add(FindPage())
       ..add(MinePage());
 
-    _controller = PageController(initialPage: 0);
+    _controller = PageController(initialPage: 0, viewportFraction: 1, keepPage: true,);
   }
 
   @override
@@ -111,7 +111,8 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return PageView.builder(
         controller: _controller,
         itemCount: pages.length,
-        physics: NeverScrollableScrollPhysics(),
+        physics:BouncingScrollPhysics(),
+        pageSnapping: true,
         onPageChanged: (index){
           setState(() {
             _currentIndex=index;
