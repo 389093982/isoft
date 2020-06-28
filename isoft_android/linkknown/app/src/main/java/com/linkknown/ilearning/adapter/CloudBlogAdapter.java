@@ -59,6 +59,9 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
             public void onClick(View v) {
                 UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
                     intent.putExtra("id",blog.getId()+"");
+                    intent.putExtra("userName",blog.getAuthor());
+                    intent.putExtra("headerIcon",blog.getUser().getSmall_icon());
+                    intent.putExtra("userNameText",blog.getUser().getNick_name());
                     return intent;
                 });
             }
@@ -79,24 +82,11 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
         viewHolder.setText(R.id.createdTime, "发布于:"+DateUtil.formatPublishTime(blog.getCreated_time()));
         //更新时间
         viewHolder.setText(R.id.lastUpdatedTime, "更新于:"+DateUtil.formatPublishTime(blog.getLast_updated_time()));
-        viewHolder.findView(R.id.createdTime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
-                    intent.putExtra("id",blog.getId()+"");
-                    return intent;
-                });
-            }
-        });
-        viewHolder.findView(R.id.lastUpdatedTime).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
-                    intent.putExtra("id",blog.getId()+"");
-                    return intent;
-                });
-            }
-        });
+        if (blog.getCreated_time().equals(blog.getLast_updated_time())){
+            viewHolder.findView(R.id.lastUpdatedTime).setVisibility(View.GONE);
+        }else{
+            viewHolder.findView(R.id.lastUpdatedTime).setVisibility(View.VISIBLE);
+        }
 
         //first_img图片
         if (StringUtils.isNotEmpty(blog.getFirst_img())){
@@ -107,6 +97,9 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
                 public void onClick(View v) {
                     UIUtils.gotoActivity(mContext, CloudBlogDetailActivity.class, intent -> {
                         intent.putExtra("id",blog.getId()+"");
+                        intent.putExtra("userName",blog.getAuthor());
+                        intent.putExtra("headerIcon",blog.getUser().getSmall_icon());
+                        intent.putExtra("userNameText",blog.getUser().getNick_name());
                         return intent;
                     });
                 }
@@ -120,20 +113,22 @@ public class CloudBlogAdapter extends BaseQuickAdapter<BlogListResponse.BlogArti
         //评论数
         viewHolder.setText(R.id.comments,blog.getComments()+"条评论");
 
-        //没有登录 、没有关注、 不是自己，显示 +关注 按钮
-        if ((!LoginUtil.checkHasLogin(mContext) || !blog.isAttention()) && !LoginUtil.isLoginUserName(mContext,blog.getAuthor())){
-            viewHolder.setVisible(R.id.attention_off,true);
-            //关注
-            viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickAttention.doAttention(blog.getAuthor(), viewHolder.getAdapterPosition());
-                }
-            });
-        }else{
+        if (blog.isAttention()){
             viewHolder.setGone(R.id.attention_off,true);
+        }else{
+            if (LoginUtil.isLoginUserName(mContext,blog.getAuthor())){
+                viewHolder.setGone(R.id.attention_off,true);
+            }else{
+                viewHolder.setVisible(R.id.attention_off,true);
+                //关注
+                viewHolder.findView(R.id.attention_off).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickAttention.doAttention(blog.getAuthor(), viewHolder.getAdapterPosition());
+                    }
+                });
+            }
         }
-
 
     }
 

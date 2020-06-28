@@ -17,7 +17,9 @@ import com.linkknown.ilearning.common.LinkKnownObserver;
 import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.model.BaseResponse;
 import com.linkknown.ilearning.model.BlogDetailResponse;
+import com.linkknown.ilearning.model.QueryIsAttentionResponse;
 import com.linkknown.ilearning.util.DateUtil;
+import com.linkknown.ilearning.util.LoginUtil;
 import com.linkknown.ilearning.util.ui.ToastUtil;
 import com.linkknown.ilearning.util.ui.UIUtils;
 
@@ -36,7 +38,10 @@ public class CloudBlogDetailActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
-    private String id;
+    private String id_param;
+    private String userName_param;
+    private String headerIcon_param;
+    private String userNameText_param;
 
     //头像
     @BindView(R.id.headerIcon)
@@ -100,13 +105,52 @@ public class CloudBlogDetailActivity extends BaseActivity {
 
 
     private void initView() {
-        id = getIntent().getStringExtra("id");
-        initData();
+        id_param = getIntent().getStringExtra("id");
+        userName_param = getIntent().getStringExtra("userName");
+        headerIcon_param = getIntent().getStringExtra("headerIcon");
+        userNameText_param = getIntent().getStringExtra("userNameText");
     }
 
+
     private void initData() {
+
+        //查看是否已关注
+        LinkKnownApiFactory.getLinkKnownApi().QueryIsAttention("user",userName_param)
+                .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                .subscribe(new LinkKnownObserver<QueryIsAttentionResponse>() {
+                    @Override
+                    public void onNext(QueryIsAttentionResponse o) {
+                        if ("SUCCESS".equals(o.getStatus())) {
+                            if (o.getAttention_records()>0){
+                                //已关注
+                                attention_on.setVisibility(View.VISIBLE);
+                                attention_off.setVisibility(View.GONE);
+                            }else{
+                                //未关注
+                                attention_on.setVisibility(View.GONE);
+                                if (LoginUtil.isLoginUserName(mContext,userName_param)){
+                                    attention_off.setVisibility(View.GONE);
+                                }else{
+                                    attention_off.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+                        }else{
+                            ToastUtil.showText(mContext,o.getErrorMsg());
+                        }
+                    };
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("QueryIsAttention error", e.getMessage());
+                        ToastUtil.showText(mContext,"查询是否关注失败！");
+                    }
+                });
+
+
         //查询博客详情
-        LinkKnownApiFactory.getLinkKnownApi().ShowBlogArticleDetail(id)
+        LinkKnownApiFactory.getLinkKnownApi().ShowBlogArticleDetail(id_param)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<BlogDetailResponse>() {
@@ -114,19 +158,39 @@ public class CloudBlogDetailActivity extends BaseActivity {
                     public void onNext(BlogDetailResponse o) {
                         if ("SUCCESS".equals(o.getStatus())) {
                             BlogDetailResponse.Blog blog = o.getBlog();
-                            //headerIcon
+                            //头像
+                            UIUtils.setImage(mContext,  headerIcon, headerIcon_param);
+                            headerIcon.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
+                                intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+                                return intent;
+                            }));
+                            //博客名称
                             blog_title.setText(blog.getBlog_title());
-                            userNameText.setText(blog.getAuthor());
+                            //昵称
+                            userNameText.setText(userNameText_param);
+                            userNameText.setOnClickListener(v -> UIUtils.gotoActivity(mContext, PersonalCenterActivity.class,intent -> {
+                                intent.putExtra(Constants.USER_NAME,blog.getAuthor());
+                                return intent;
+                            }));
+                            //分类名称
                             catalog_name.setText(blog.getCatalog_name());
-                            //关注
+                            //第一张图片
                             if (StringUtils.isNotEmpty(blog.getFirst_img())){
                                 first_img.setVisibility(View.VISIBLE);
                                 UIUtils.setImage(mContext,  first_img, blog.getFirst_img());
                             }else{
                                 first_img.setVisibility(View.GONE);
                             }
+                            //创建时间
                             createdTime.setText("发布于:"+DateUtil.formatPublishTime(blog.getCreated_time()));
+                            //更新时间
                             lastUpdatedTime.setText("更新于:"+DateUtil.formatPublishTime(blog.getLast_updated_time()));
+                            if (blog.getCreated_time().equals(blog.getLast_updated_time())){
+                                lastUpdatedTime.setVisibility(View.GONE);
+                            }else{
+                                lastUpdatedTime.setVisibility(View.VISIBLE);
+                            }
+                            //浏览量、评论数、内容
                             views.setText(blog.getViews()+"次阅读");
                             comments.setText(blog.getComments()+"条评论");
                             content.setText(blog.getContent());
@@ -142,6 +206,65 @@ public class CloudBlogDetailActivity extends BaseActivity {
                         ToastUtil.showText(mContext,"ShowBlogArticleDetail 失败！");
                     }
                 });
+
+
+        // +关注
+        attention_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName_param,"on")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if ("SUCCESS".equals(o.getStatus())) {
+                                    ToastUtil.showText(mContext,"关注成功！");
+                                    attention_off.setVisibility(View.GONE);
+                                    attention_on.setVisibility(View.VISIBLE);
+                                }else{
+                                    ToastUtil.showText(mContext,o.getErrorMsg());
+                                }
+                            };
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e("doAttention error", e.getMessage());
+                                ToastUtil.showText(mContext,"关注失败！");
+                            }
+                        });
+            }
+        });
+
+        // 取消关注
+        attention_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinkKnownApiFactory.getLinkKnownApi().DoAttention("user",userName_param,"off")
+                        .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
+                        .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
+                        .subscribe(new LinkKnownObserver<BaseResponse>() {
+                            @Override
+                            public void onNext(BaseResponse o) {
+                                if ("SUCCESS".equals(o.getStatus())) {
+                                    ToastUtil.showText(mContext,"取消关注成功！");
+                                    attention_off.setVisibility(View.VISIBLE);
+                                    attention_on.setVisibility(View.GONE);
+                                }else{
+                                    ToastUtil.showText(mContext,o.getErrorMsg());
+                                }
+                            };
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e("doAttention error", e.getMessage());
+                                ToastUtil.showText(mContext,"取消关注失败！");
+                            }
+                        });
+            }
+        });
+
+
 
     }
 

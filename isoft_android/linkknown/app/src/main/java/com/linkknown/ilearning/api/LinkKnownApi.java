@@ -366,7 +366,7 @@ public interface LinkKnownApi {
 
     // 关注 和 取消关注
     @POST("/api/iwork/httpservice/isoft_linkknown_api/DoAttention")
-    Observable<BaseResponse> doAttention(@Query("attention_object_type") String attention_object_type,
+    Observable<BaseResponse> DoAttention(@Query("attention_object_type") String attention_object_type,
                                          @Query("attention_object_id") String attention_object_id,
                                          @Query("state") String state);
 

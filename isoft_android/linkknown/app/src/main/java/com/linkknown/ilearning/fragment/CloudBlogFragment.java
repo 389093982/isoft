@@ -238,7 +238,7 @@ public class CloudBlogFragment extends BaseLazyLoadFragment{
 
     //关注博客作者
     public void DoAttention(String userName,int position){
-        LinkKnownApiFactory.getLinkKnownApi().doAttention("user", userName,"on")
+        LinkKnownApiFactory.getLinkKnownApi().DoAttention("user", userName,"on")
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<BaseResponse>() {
