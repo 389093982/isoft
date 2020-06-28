@@ -37,17 +37,20 @@ import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class CourseCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
+public class FirstLevelCommentFragment extends BaseLazyLoadFragment implements View.OnClickListener {
 
+    //构造器需要的参数
+    private int theme_pk;
+    private String theme_type;
+    private String comment_type;
+    private String refer_user_name;
+    private String comments;
+
+    //fragment参数
     private Context mContext;
     private Handler handler = new Handler();
     private BottomQuickEidtDialog editCommentDialog;
-
     private RecyclerView commentRecyclerView;
-
-    private int course_id;
-    private String course_author;
-    private String comments;
 
     // 当前评论页面评论的分页信息
     private Paginator paginator;
@@ -75,8 +78,18 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
 
     @Override
     protected int providelayoutId() {
-        return R.layout.fragment_course_comment_first_level;
+        return R.layout.fragment_first_level_comment;
     }
+
+    //构造器
+    public FirstLevelCommentFragment(int theme_pk,String theme_type,String comment_type,String refer_user_name,String comments){
+        this.theme_pk = theme_pk;
+        this.theme_type = theme_type;
+        this.comment_type = comment_type;
+        this.refer_user_name = refer_user_name;
+        this.comments = comments;
+    };
+
 
     @Override
     protected void initView(View mRootView) {
@@ -85,22 +98,10 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         swipeRefreshLayoutHelper.bind(mContext, refreshLayout);
         swipeRefreshLayoutHelper.initStyle();
         swipeRefreshLayoutHelper.registerListener(() -> initData());
-
         commentRecyclerView = mRootView.findViewById(R.id.first_level_comment_recycleview).findViewById(R.id.recyclerView);
-
-        initBundleParam();
+        allComments.setText(Integer.valueOf(comments)==0?"全部评论":"全部评论("+comments+")");
         // 初始化组件
         initCommentView();
-    }
-
-    private void initBundleParam() {
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            course_id = bundle.getInt("course_id");
-            course_author = bundle.getString("course_author");
-            comments = bundle.getString("comments");
-            allComments.setText(Integer.valueOf(comments)==0?"全部评论":"全部评论("+comments+")");
-        }
     }
 
 
@@ -109,12 +110,12 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addComment:
-                int theme_pk = course_id;
-                String theme_type = "course_theme_type";
-                String comment_type = "comment";
+                int theme_pk = this.theme_pk;
+                String theme_type = this.theme_type;
+                String comment_type = this.comment_type;
                 int parent_id = 0;                          // 一级评论
                 int org_parent_id = 0;
-                String refer_user_name = course_author;     // 被评论人
+                String refer_user_name = this.refer_user_name;     // 被评论人
                 showEditCommentDialog(theme_pk,theme_type,comment_type,org_parent_id,parent_id,refer_user_name);
                 break;
             default:
@@ -179,7 +180,7 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         // 一般情况下，不需要自己设置'加载中'状态
         baseQuickAdapter.getLoadMoreModule().loadMoreToLoading();
 
-        LinkKnownApiFactory.getLinkKnownApi().filterCommentFirstLevel(course_id, "course_theme_type", "comment", current_page, pageSize)
+        LinkKnownApiFactory.getLinkKnownApi().filterCommentFirstLevel(this.theme_pk, this.theme_type, this.comment_type, current_page, pageSize)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                 .subscribe(new LinkKnownObserver<FirstLevelCommentResponse>() {
@@ -272,8 +273,8 @@ public class CourseCommentFragment extends BaseLazyLoadFragment implements View.
         int level = comment.getParent_id() > 0 ? 2 : 1;     // 有父评论就是二级评论，否则就是一级评论
         int id = comment.getId();                           // 评论 id
         int org_parent_id = comment.getOrg_parent_id();     // 父评论 id
-        int theme_pk = course_id;                           // 课程 id
-        String theme_type = "course_theme_type";
+        int theme_pk = this.theme_pk;                           // 课程 id
+        String theme_type = this.theme_type;
         LinkKnownApiFactory.getLinkKnownApi().deleteComment(level, id, theme_pk, theme_type, org_parent_id)
                 .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                 .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行

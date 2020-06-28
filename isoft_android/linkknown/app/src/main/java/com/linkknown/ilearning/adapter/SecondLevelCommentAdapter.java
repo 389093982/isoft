@@ -21,7 +21,7 @@ public class SecondLevelCommentAdapter extends BaseQuickAdapter<SecondLevelComme
     private Context mContext;
 
     public SecondLevelCommentAdapter(Context mContext, List<SecondLevelCommentResponse.Comment> comments) {
-        super(R.layout.item_course_comment_second_level, comments);
+        super(R.layout.item_second_level_comment, comments);
         this.mContext = mContext;
     }
 
@@ -37,6 +37,8 @@ public class SecondLevelCommentAdapter extends BaseQuickAdapter<SecondLevelComme
         viewHolder.setText(R.id.nickNameText, second_level_comment.getCreated_user_nick_name());
         // 设置评论内容
         if (second_level_comment.getDepth()==1){
+            viewHolder.setGone(R.id.reply_show,true);
+            viewHolder.setGone(R.id.secondReplyNickName,true);
             //显示内容
             viewHolder.setText(R.id.commentContentText, second_level_comment.getContent());
         }else if (second_level_comment.getDepth()==2){

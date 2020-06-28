@@ -11,13 +11,10 @@
     <color name="orange2">#66F16755</color>
     <color name="pink">#F06CA7</color>
     <color name="brown">#847534</color>
-
     <color name="touming">#00000000</color>
-
     <color name="colorGray">#657180</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="theme_red">#FF0000</color>
-
     <color name="color_FCFDECEC">#FCFDECEC</color>
 
     <!-- 按钮样式 -->
@@ -71,9 +68,22 @@
     <color name="gray_light">#dcdcdc</color>
     <color name="colorRecyclerBg">#070FFF00</color>
     <color name="gray_80">#BEBBB4</color>
-
     <color name="translucent">#CC737373</color>
     <color name="colorContent">#ff333333</color>
-
     <color name="colorTitle">#666</color>
+
+    <!--字体灰色 10个梯度-->
+    <color name="FontGray00">#00000000</color>
+    <color name="FontGray10">#1A000000</color>
+    <color name="FontGray20">#33000000</color>
+    <color name="FontGray30">#4D000000</color>
+    <color name="FontGray40">#66000000</color>
+    <color name="FontGray50">#80000000</color>
+    <color name="FontGray60">#99000000</color>
+    <color name="FontGray70">#B3000000</color>
+    <color name="FontGray80">#CC000000</color>
+    <color name="FontGray90">#E6000000</color>
+    <color name="FontGray100">#000000</color>
+
+
 </resources>
