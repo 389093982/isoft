@@ -23,18 +23,20 @@
             app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle.About"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
+                android:id="@+id/user_appbar_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/white"
+                android:fitsSystemWindows="true"
                 android:orientation="vertical"
-                android:background="@color/white">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:layout_marginTop="50dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/headerIcon"
@@ -203,26 +205,21 @@
                         android:text="评论数"/>
 
                     <View style="@style/bg_line"
+                        android:id="@+id/bg_line"
                         android:layout_below="@+id/comments"
                         android:layout_marginTop="20dp"/>
-                </RelativeLayout>
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp">
 
                     <TextView
                         android:id="@+id/content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/bg_line"
                         android:padding="8dp"
                         android:textColor="@color/FontGray60"
                         android:text="博客内容">
                     </TextView>
-                </ScrollView>
 
+                </RelativeLayout>
 
             </LinearLayout>
 

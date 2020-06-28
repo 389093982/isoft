@@ -105,10 +105,10 @@ public class CloudBlogDetailActivity extends BaseActivity {
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
 
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
     @BindView(R.id.tab_layout)
-    SlidingTabLayout mSlidingTabLayout;
+    SlidingTabLayout tab_layout;
+    @BindView(R.id.view_pager)
+    ViewPager view_pager;
 
 
     @Override
@@ -119,6 +119,7 @@ public class CloudBlogDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initToolBar(toolbar, true, "博客详情");
 
+        //设置顶部透明
         UIUtils.setTopTransparent(this);
 
         initView();
@@ -308,12 +309,12 @@ public class CloudBlogDetailActivity extends BaseActivity {
         fragments.add(firstLevelCommentFragment);
 
         CommonFragmentStatePagerAdapter mAdapter = new CommonFragmentStatePagerAdapter(getSupportFragmentManager(), fragments, titles);
-        mViewPager.setAdapter(mAdapter);
+        view_pager.setAdapter(mAdapter);
         // 设置预加载页面数量的方法，那就是setOffscreenPageLimit()
-        mViewPager.setOffscreenPageLimit(2);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        view_pager.setOffscreenPageLimit(1);
+        tab_layout.setViewPager(view_pager);
         measureTabLayoutTextWidth(0);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -327,15 +328,14 @@ public class CloudBlogDetailActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-    };
-
+    }
 
     private void measureTabLayoutTextWidth(int position) {
         String title = titles.get(position);
-        TextView titleView = mSlidingTabLayout.getTitleView(position);
+        TextView titleView = tab_layout.getTitleView(position);
         TextPaint paint = titleView.getPaint();
         float textWidth = paint.measureText(title);
-        mSlidingTabLayout.setIndicatorWidth(textWidth / 3);
+        tab_layout.setIndicatorWidth(textWidth / 3);
     }
 
 
