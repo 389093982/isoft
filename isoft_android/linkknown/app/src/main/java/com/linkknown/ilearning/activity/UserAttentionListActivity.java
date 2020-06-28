@@ -160,7 +160,7 @@ public class UserAttentionListActivity extends BaseActivity {
 
         baseQuickAdapter = new UserAttentionListAdapter(mContext, queryDatas, attentionType);
         baseQuickAdapter.setListener(queryData -> {
-            LinkKnownApiFactory.getLinkKnownApi().doAttention("user", queryData.getUser_name(),"off")
+            LinkKnownApiFactory.getLinkKnownApi().DoAttention("user", queryData.getUser_name(),"off")
                     .subscribeOn(Schedulers.io())                   // 请求在新的线程中执行
                     .observeOn(AndroidSchedulers.mainThread())      // 切换到主线程运行
                     .subscribe(new LinkKnownObserver<BaseResponse>() {
