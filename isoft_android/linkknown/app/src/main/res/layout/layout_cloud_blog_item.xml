@@ -159,6 +159,18 @@
             android:textColor="@color/FontGray40"
             android:text="评论数"/>
 
+        <ImageView
+            android:id="@+id/delete_blog_icon"
+            android:padding="2dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_toRightOf="@+id/comments"
+            android:layout_alignBottom="@+id/comments"
+            android:layout_marginLeft="15dp"
+            android:visibility="gone"
+            android:translationY="1dp"
+            android:src="@drawable/ic_delete" />
+
 
     </RelativeLayout>
 

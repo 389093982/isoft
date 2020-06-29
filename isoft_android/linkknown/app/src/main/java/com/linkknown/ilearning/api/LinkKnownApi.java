@@ -254,6 +254,10 @@ public interface LinkKnownApi {
                                                @Query("current_page") int current_page,
                                                @Query("offset") int pageSize);
 
+    // 删除博客
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/ArticleDelete")
+    Observable<BaseResponse> ArticleDelete(@Query("article_id") String article_id);
+
 
     // 查询博客详情
     @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail")

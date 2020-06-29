@@ -301,6 +301,10 @@ public class CloudBlogActivity extends BaseActivity {
                 fragment_cloud_blog.doSearch("");
                 fragment_my_blog.doSearch("");
             }
+        }else if(resultCode == 201){
+            //就为了做个刷新
+            fragment_cloud_blog.doSearch("");
+            fragment_my_blog.doSearch("");
         }
     }
 
