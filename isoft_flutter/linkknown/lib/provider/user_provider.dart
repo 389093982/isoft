@@ -10,8 +10,8 @@ class UserModel with ChangeNotifier {
   LoginUserResponse get user => _user;
 
   /// 登录
-  Future<LoginUserResponse> postLogin(BuildContext context, String username, String passwd, String redirectUrl) async {
-    return LinkKnownApi.postLogin(context, username, passwd, redirectUrl);
+  Future<LoginUserResponse> postLogin(String username, String passwd, String redirectUrl) async {
+    return LinkKnownApi.postLogin(username, passwd, redirectUrl);
   }
 
 }

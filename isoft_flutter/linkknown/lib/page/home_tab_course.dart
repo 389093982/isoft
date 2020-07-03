@@ -1,6 +1,10 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class TabCourseFilterWidget extends StatefulWidget {
 
@@ -25,6 +29,11 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
   }
 
   void initData() {
+    LinkKnownApi.searchCourseList("", "", 1, 10).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value) {
+      UIUtils.showToast(value.toString());
+    });
 
   }
 
