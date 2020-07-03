@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/home_tab_course.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
+import 'package:linkknown/widgets/home_drawer.dart';
 
 class TabViewModel {
   final String title;
@@ -47,6 +48,7 @@ class HomePage extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(child: HomeDrawerWidget()),
       appBar: PreferredSize(
         child: AppBar(
           title: Container(
