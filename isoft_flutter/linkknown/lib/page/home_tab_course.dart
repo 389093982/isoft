@@ -86,12 +86,6 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
 
   @override
   Widget build(BuildContext context) {
-//    return ListView.builder(
-//        itemBuilder: (BuildContext context, int position) {
-//          return Text(courseList[position].courseName);
-//        },
-//        itemCount: courseList.length);
-
     return Stack(
       children: <Widget>[
         RefreshIndicator(
@@ -99,15 +93,42 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
           color: Theme.of(context).primaryColor,
           //指示器显示时距顶部位置
           displacement: 40,
-          child: ListView.builder(
-            controller: scrollController,
-            itemCount: courseList.length,//列表长度+底部加载中提示
-            itemBuilder: (BuildContext context, int position) {
-              return Text(courseList[position].courseName);
-            },
-            // 解决 item 太少不能下拉刷新的问题
-            physics: AlwaysScrollableScrollPhysics(),
-          ),
+//          child: ListView.builder(
+//            controller: scrollController,
+//            itemCount: courseList.length,//列表长度+底部加载中提示
+//            itemBuilder: (BuildContext context, int position) {
+//              return Text(courseList[position].courseName);
+//            },
+//            // 解决 item 太少不能下拉刷新的问题
+//            physics: AlwaysScrollableScrollPhysics(),
+//          ),
+          child: GridView.builder(
+              itemCount: courseList.length,
+              controller: scrollController,
+              // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //横轴元素个数
+                  crossAxisCount: 2,
+                  //纵轴间距
+                  mainAxisSpacing: 10.0,
+                  //横轴间距
+                  crossAxisSpacing: 10.0,
+                  //子组件宽高长度比例
+                  childAspectRatio: 1.0),
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  color: Colors.white,
+                  //z轴的高度，设置card的阴影
+                  elevation: 10.0,
+                  //设置shape，这里设置成了R角
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+                  // 对Widget截取的行为，比如这里 Clip.antiAlias 指抗锯齿
+                  clipBehavior: Clip.antiAlias,
+                  semanticContainer: false,
+                  child: Text(courseList[index].courseName),
+                );
+              }),
           onRefresh: _onRefresh,
         ),
       ],
