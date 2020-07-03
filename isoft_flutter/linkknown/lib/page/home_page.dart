@@ -26,9 +26,9 @@ class HomePage extends StatefulWidget {
   bool get wantKeepAlive => true;
 
   List<TabViewModel> viewModels = [
-    TabViewModel(title: '免费', widget: TabCourseFilterWidget("", "false")),
-    TabViewModel(title: '付费', widget: TabCourseFilterWidget("", "true")),
-    TabViewModel(title: '全部', widget: TabCourseFilterWidget("", "false")),
+    TabViewModel(title: '免费', widget: TabCourseFilterWidget("", "free")),
+    TabViewModel(title: '付费', widget: TabCourseFilterWidget("", "charge")),
+    TabViewModel(title: '全部', widget: TabCourseFilterWidget("", "")),
     TabViewModel(title: '推荐', widget: TabRecommendWidget()),
     TabViewModel(title: '会员', widget: Text("宠物卡片")),
   ].map((item) => TabViewModel(

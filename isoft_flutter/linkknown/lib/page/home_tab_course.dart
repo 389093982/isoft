@@ -16,11 +16,15 @@ class TabCourseFilterWidget extends StatefulWidget {
   TabCourseFilterWidget(this.search, this.isCharge);
 
   @override
-  _TabCourseFilterState createState() => _TabCourseFilterState();
+  _TabCourseFilterState createState() => _TabCourseFilterState(isCharge);
 
 }
 
 class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProviderStateMixin {
+
+  String isCharge;
+
+  _TabCourseFilterState(this.isCharge);
 
   List<Course> courseList = new List();
   ScrollController scrollController = ScrollController();
@@ -56,7 +60,7 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
       isLoading = true;
       page = current_page;
     });
-    LinkKnownApi.searchCourseList("", "", current_page, offset).catchError((e) {
+    LinkKnownApi.searchCourseList("", isCharge, current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
