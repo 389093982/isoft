@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_label.dart';
@@ -27,7 +28,7 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
     return Card(
       color: Colors.white,
       //z轴的高度，设置card的阴影
-      elevation: 10.0,
+      elevation: 3.0,
       //设置shape，这里设置成了R角
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),),
@@ -55,14 +56,43 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(course.courseName),
-                Row(
-                  children: <Widget>[
-                    // 课程集数和播放次数
-                    Image.asset("images/linkknown.jpg", width: 15, height: 15,),
-                    Text(course.courseNumber.toString()),
-                    Image.asset("images/linkknown.jpg", width: 15, height: 15,),
-                    Text(course.watchNumber.toString()),
-                  ],
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  child: Row(
+                    children: <Widget>[
+                      // 课程集数和播放次数
+                      Image.asset("images/linkknown.jpg", width: 15, height: 15,),
+                      Text(course.courseNumber.toString()),
+                      Image.asset("images/linkknown.jpg", width: 15, height: 15,),
+                      Text(course.watchNumber.toString()),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  child: Row(
+                    children: <Widget>[
+                      // offstage 组件控制组件是否隐藏
+                      // 通过offsatge字段控制child是否显示,比较常用的控件
+                      Offstage(
+                        offstage: !UIUtils.isValidPrice(course.price),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Text(
+                            Constants.RMB + course.price,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ),
+                      Offstage(
+                        offstage: !UIUtils.isValidPrice(course.oldPrice),
+                        child: Text(
+                          Constants.RMB + course.oldPrice,
+                          style: TextStyle(color: Colors.grey, decoration: TextDecoration.lineThrough),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

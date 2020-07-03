@@ -103,22 +103,25 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
 //            // 解决 item 太少不能下拉刷新的问题
 //            physics: AlwaysScrollableScrollPhysics(),
 //          ),
-          child: GridView.builder(
-              itemCount: courseList.length,
-              controller: scrollController,
-              // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
-                  crossAxisCount: 2,
-                  //纵轴间距
-                  mainAxisSpacing: 10.0,
-                  //横轴间距
-                  crossAxisSpacing: 10.0,
-                  //子组件宽高长度比例
-                  childAspectRatio: 1.0),
-              itemBuilder: (BuildContext context, int index) {
-                return CourseCardWidget(courseList[index]);
-              }),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            child: GridView.builder(
+                itemCount: courseList.length,
+                controller: scrollController,
+                // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //横轴元素个数
+                    crossAxisCount: 2,
+                    //纵轴间距
+                    mainAxisSpacing: 10.0,
+                    //横轴间距
+                    crossAxisSpacing: 10.0,
+                    //子组件宽高长度比例
+                    childAspectRatio: 1.0),
+                itemBuilder: (BuildContext context, int index) {
+                  return CourseCardWidget(courseList[index]);
+                }),
+          ),
           onRefresh: _onRefresh,
         ),
       ],

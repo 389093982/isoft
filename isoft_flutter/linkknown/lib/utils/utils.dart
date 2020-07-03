@@ -10,4 +10,8 @@ class UIUtils {
   static String replaceMediaUrl (String url) {
     return url.replaceFirst("http://localhost:6001", "http://192.168.1.11:6001");
   }
+
+  static bool isValidPrice (String price) {
+    return double.parse(price) > 0;
+  }
 }
