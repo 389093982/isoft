@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               ),
               onPressed: () {
                 // 返回首页
-                NavigatorUtil.goHomePage(context);
+                NavigatorUtil.goMainPage(context);
 //                Navigator.pop(context); // 关闭当前页面--
               },
             )
@@ -64,14 +64,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Hero(
-                tag: 'logo',
-                child: Image.asset(
-                  'images/linkknown.jpg',
-                  width: ScreenUtil().setWidth(90),
-                  height: ScreenUtil().setWidth(90),
-                ),
-              ),
               _LoginAnimatedWidget(
                 animation: _animation,
               ),
@@ -162,7 +154,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
           VEmptyView(10),
           Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
+            margin: EdgeInsets.only(top: 10),
             child: GestureDetector(
               onTap: (){
                 NavigatorUtil.goRegistPage(context);

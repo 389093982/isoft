@@ -8,7 +8,6 @@ import 'package:linkknown/route/route_handles.dart';
 class Routes {
   static String root = "/";
   static String main = "/main";
-  static String home = "/home";
   static String login = "/login";
   static String regist = "/regist";
 
