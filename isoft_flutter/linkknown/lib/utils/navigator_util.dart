@@ -28,6 +28,11 @@ class NavigatorUtil {
     _navigateTo(context, Routes.login, clearStack: true);
   }
 
+  /// 注册页
+  static void goRegistPage(BuildContext context) {
+    _navigateTo(context, Routes.regist, clearStack: true);
+  }
+
   /// 首页
   static void goHomePage(BuildContext context) {
     _navigateTo(context, Routes.home, clearStack: true);

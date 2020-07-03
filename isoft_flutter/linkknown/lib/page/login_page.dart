@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               Hero(
                 tag: 'logo',
                 child: Image.asset(
-                  'images/icon_logo.png',
+                  'images/linkknown.jpg',
                   width: ScreenUtil().setWidth(90),
                   height: ScreenUtil().setWidth(90),
                 ),
@@ -163,11 +163,16 @@ class __LoginWidgetState extends State<_LoginWidget> {
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
-            child: Text(
-              '没有账号？注册',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 18,
+            child: GestureDetector(
+              onTap: (){
+                NavigatorUtil.goRegistPage(context);
+              },
+              child: Text(
+                '没有账号？注册',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                ),
               ),
             ),
           ),

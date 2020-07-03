@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/page/home_page.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 
 
@@ -24,3 +25,8 @@ var loginHandler = new Handler(
       return LoginPage();
     });
 
+// 注册页
+var registHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
+      return RegistPage();
+    });
