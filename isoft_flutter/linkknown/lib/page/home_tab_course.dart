@@ -6,6 +6,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/course_card.dart';
 
 class TabCourseFilterWidget extends StatefulWidget {
 
@@ -116,18 +117,7 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
                   //子组件宽高长度比例
                   childAspectRatio: 1.0),
               itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  color: Colors.white,
-                  //z轴的高度，设置card的阴影
-                  elevation: 10.0,
-                  //设置shape，这里设置成了R角
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),),
-                  // 对Widget截取的行为，比如这里 Clip.antiAlias 指抗锯齿
-                  clipBehavior: Clip.antiAlias,
-                  semanticContainer: false,
-                  child: Text(courseList[index].courseName),
-                );
+                return CourseCardWidget(courseList[index]);
               }),
           onRefresh: _onRefresh,
         ),

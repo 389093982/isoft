@@ -1,0 +1,62 @@
+
+
+import 'package:flutter/material.dart';
+import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/utils/utils.dart';
+
+class CourseCardWidget extends StatefulWidget {
+
+  Course course;
+
+  CourseCardWidget(this.course);
+
+  @override
+  _CourseCardState createState() => _CourseCardState(course);
+
+}
+
+class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateMixin {
+
+  Course course;
+
+  _CourseCardState(this.course);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      //z轴的高度，设置card的阴影
+      elevation: 10.0,
+      //设置shape，这里设置成了R角
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+      // 对Widget截取的行为，比如这里 Clip.antiAlias 指抗锯齿
+      clipBehavior: Clip.antiAlias,
+      semanticContainer: false,
+      child: Column(
+        children: <Widget>[
+          Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(course.courseName),
+                Row(
+                  children: <Widget>[
+                    // 课程集数和播放次数
+                    Image.asset("images/linkknown.jpg", width: 15, height: 15,),
+                    Text(course.courseNumber.toString()),
+                    Image.asset("images/linkknown.jpg", width: 15, height: 15,),
+                    Text(course.watchNumber.toString()),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+}
