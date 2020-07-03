@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/user.dart';
 
 class LinkKnownApi {
@@ -38,5 +39,17 @@ class LinkKnownApi {
       'redirectUrl': redirectUrl,
     });
     return LoginUserResponse.fromJson(response.data);
+  }
+
+
+  // 课程搜索接口
+  Future<CourseMetaResponse> searchCourseList(BuildContext context, String search, String isCharge, int current_page, int offset) async {
+    var response = await doPost(context, '/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList', params: {
+      'search': search,
+      'isCharge': isCharge,
+      'current_page': current_page,
+      'offset': offset,
+    });
+    return CourseMetaResponse.fromJson(response.data);
   }
 }

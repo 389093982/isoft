@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/home_tab_course.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
 
 class TabViewModel {
@@ -25,9 +26,9 @@ class HomePage extends StatefulWidget {
   bool get wantKeepAlive => true;
 
   List<TabViewModel> viewModels = [
-    TabViewModel(title: '免费', widget: Text("宠物卡片")),
-    TabViewModel(title: '付费', widget: Text("宠物卡片")),
-    TabViewModel(title: '全部', widget: Text("宠物卡片")),
+    TabViewModel(title: '免费', widget: TabCourseFilterWidget("", "false")),
+    TabViewModel(title: '付费', widget: TabCourseFilterWidget("", "true")),
+    TabViewModel(title: '全部', widget: TabCourseFilterWidget("", "false")),
     TabViewModel(title: '推荐', widget: TabRecommendWidget()),
     TabViewModel(title: '会员', widget: Text("宠物卡片")),
   ].map((item) => TabViewModel(
