@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_label.dart';
 
 class CourseCardWidget extends StatefulWidget {
 
@@ -35,7 +36,19 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
       semanticContainer: false,
       child: Column(
         children: <Widget>[
-          Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+          // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
+          Stack(
+            children: <Widget>[
+              Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: CommonLabel(course.isCharge == "charge" ? "付费课程" : "免费"),
+                ),
+              ),
+            ],
+          ),
           Container(
             padding: EdgeInsets.all(8.0),
             child: Column(
