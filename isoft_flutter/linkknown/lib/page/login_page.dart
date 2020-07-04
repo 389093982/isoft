@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/provider/user_provider.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -138,6 +139,8 @@ class __LoginWidgetState extends State<_LoginWidget> {
         if(value != null) {
           if (value.status == "SUCCESS") {
             LoginUtil.memoryAccount(_userName, _password, value);
+            // 调用事件广播，不用发送(因为发送的不是粘性消息)
+//            eventBus.fire(new LoginSuccessEvent(value));
             UIUtils.showToast("登录成功！");
             NavigatorUtil.goMainPage(context);
           } else {

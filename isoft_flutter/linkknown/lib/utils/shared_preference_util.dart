@@ -16,4 +16,10 @@ class SharedPreferenceUtil {
     return sp.getString(key);
   }
 
+  // 异步读取
+  static Future<bool> remove(String key) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.remove(key);
+  }
+
 }
