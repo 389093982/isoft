@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/provider/user_provider.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
@@ -83,8 +85,67 @@ class _LoginWidget extends StatefulWidget {
 }
 
 class __LoginWidgetState extends State<_LoginWidget> {
+
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
+  var _userName = "";
+  var _password = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fillAccountFromMemory();
+  }
+
+  // 异步填充表单(自动填充登录信息)
+  void fillAccountFromMemory () async {
+    _userName = await LoginUtil.getUserName();
+    _password = await LoginUtil.getPasswd();
+    // 表单填充新值
+    _userNameController.value = new TextEditingValue(text: _userName ?? "");
+    _passwdController.value = new TextEditingValue(text: _password ?? "");
+  }
+
+  _usernameChange() {
+    _userName = _userNameController.text;
+  }
+
+  _passwordChange() {
+    _password = _passwdController.text;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userNameController.removeListener(_usernameChange);
+    _passwdController.removeListener(_passwordChange);
+  }
+
+  postLogin () {
+    if (_userName == null || _userName.isEmpty) {
+      UIUtils.showToast('请输入账号');
+      return;
+    }
+    if (_password.isEmpty || _password.isEmpty) {
+      UIUtils.showToast('请输入密码');
+      return;
+    }
+
+    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com')
+      .catchError((e) {
+        UIUtils.showToast((e as LinkKnownError).errorMsg);
+      }).then((value){
+        if(value != null) {
+          if (value.status == "SUCCESS") {
+            LoginUtil.memoryAccount(_userName, _password, value);
+            UIUtils.showToast("登录成功！");
+            NavigatorUtil.goMainPage(context);
+          } else {
+            UIUtils.showToast("登录失败！" + value.errorMsg);
+          }
+        }
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +172,9 @@ class __LoginWidgetState extends State<_LoginWidget> {
                   Icons.account_circle,
                   color: Colors.grey,
                 )),
+            onChanged: (String value) {
+              _userName = value;
+            },
           ),
           VEmptyView(40),
           TextField(
@@ -122,30 +186,15 @@ class __LoginWidgetState extends State<_LoginWidget> {
                   Icons.lock,
                   color: Colors.grey,
                 )),
+            onChanged: (String value) {
+              _password = value;
+            },
           ),
           VEmptyView(120),
           Consumer<UserModel>(
             builder: (BuildContext context, UserModel value, Widget child) {
               return CommonButton(
-                callback: () {
-                  String userName = _userNameController.text;
-                  String passwd = _passwdController.text;
-                  if (userName.isEmpty || passwd.isEmpty) {
-                    UIUtils.showToast('请输入账号或者密码');
-                    return;
-                  }
-                  value.postLogin(
-                    userName,
-                    passwd,
-                    'http://www.linkknown.com'
-                  ).catchError((e) {
-                    UIUtils.showToast((e as LinkKnownError).errorMsg);
-                  }).then((value){
-                    if(value != null){
-                      NavigatorUtil.goMainPage(context);
-                    }
-                  });
-                },
+                callback: postLogin,
                 content: '登录',
                 width: double.infinity,
               );
