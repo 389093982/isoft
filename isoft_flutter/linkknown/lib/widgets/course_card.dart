@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -40,7 +42,12 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
           // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
           Stack(
             children: <Widget>[
-              Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+              InkWell(
+                onTap: () {
+                  NavigatorUtil.goRouterPage(context, Routes.courseDetail);
+                },
+                child: Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+              ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(

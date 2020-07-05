@@ -37,4 +37,10 @@ class NavigatorUtil {
   static void goMainPage(BuildContext context) {
     _navigateTo(context, Routes.main, clearStack: true);
   }
+
+  // 动态跳往页面
+  static void goRouterPage(BuildContext context, String router) {
+    _navigateTo(context, router, clearStack: true);
+  }
+
 }

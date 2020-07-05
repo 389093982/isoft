@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -230,9 +231,52 @@ class MineCenterWidget extends StatelessWidget {
     );
   }
 }
-class MineFooterWidget extends StatelessWidget {
+
+class FooterItem {
+  String icon;
+  String text;
+  String router;      // 跳往的路由
+
+  FooterItem(this.icon, this.text, this.router);
+
+}
+
+class MineFooterWidget extends StatelessWidget{
+
+  Widget getOperateWidget(BuildContext context, FooterItem item) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+              bottom: BorderSide(width: 1, color: Colors.black12)
+          )
+      ),
+      child: InkWell(
+        onTap: (){
+          NavigatorUtil.goRouterPage(context, item.router);
+        },
+        child: ListTile(
+          leading: Icon(Icons.blur_circular),
+          title: Text(item.text),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        ),
+      ),
+   );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text("111111");
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: <Widget>[
+          getOperateWidget(context, FooterItem('', '云博客', Routes.cloudBlog)),
+          getOperateWidget(context, FooterItem('', '个人中心', Routes.personalCenter)),
+          getOperateWidget(context, FooterItem('', '已购课程', Routes.buyCourse)),
+          getOperateWidget(context, FooterItem('', '我要吐槽', Routes.advise)),
+          getOperateWidget(context, FooterItem('', '关于链知', Routes.about)),
+        ],
+      ),
+    );
   }
 }
