@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
 
@@ -45,10 +47,109 @@ class _MinePageState extends State<MinePage> with TickerProviderStateMixin, Auto
   }
 }
 
-class MineHeaderWidget extends StatelessWidget {
+class MineHeaderWidget extends StatefulWidget {
+
+  @override
+  _MineHeaderState createState() => _MineHeaderState();
+}
+
+class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateMixin {
+
+  bool hasLogin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    refreshLoginStatus();
+  }
+
+  refreshLoginStatus () async {
+    bool hasLogin = await LoginUtil.checkHasLogin();
+      this.setState(() {
+        this.hasLogin = hasLogin;
+      });
+    }
+
   @override
   Widget build(BuildContext context) {
-    return Text("111111");
+//    return hasLogin ? getLoginWidget() : getUnLoginWidget();
+    return Stack(
+      children: <Widget>[
+        Container(
+          height: 180,
+          color: Colors.red,
+          child: hasLogin ? getLoginWidget() : getUnLoginWidget(),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: getSettingMessageWidget(),
+        ),
+      ],
+    );
+  }
+
+  Widget getSettingMessageWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(5),
+          child: Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+        ),
+        Container(
+          margin: EdgeInsets.all(5),
+          child: Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+        ),
+      ],
+    );
+  }
+
+  Widget getLoginWidget() {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 30),
+          child: ClipOval(
+            child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("用户名", style: TextStyle(color: Colors.white, fontSize: 20),),
+              Text("积分 10", style: TextStyle(color: Colors.white),),
+              Text("关注 99 粉丝 99", style: TextStyle(color: Colors.white),),
+              Text("这个家伙很懒，什么个性签名都没有留下", style: TextStyle(color: Colors.white),),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getUnLoginWidget() {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 40),
+          child: ClipOval(
+            child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 10),
+          child: InkWell(
+            onTap: () {
+              NavigatorUtil.goLoginPage(context);
+            },
+            child: Text("登录/注册", style: TextStyle(color: Colors.white, fontSize: 30),),
+          ),
+        ),
+      ],
+    );
   }
 }
 
