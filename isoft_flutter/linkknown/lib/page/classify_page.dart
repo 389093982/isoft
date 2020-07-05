@@ -30,7 +30,7 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -39,6 +39,19 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
                   UIUtils.showToast(data);
                 },
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Text("热门搜索", style: TextStyle(color: Colors.grey),),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Text("搜索历史", style: TextStyle(color: Colors.grey),),
+                ),
+              ],
             ),
           ],
         ),

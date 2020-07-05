@@ -30,71 +30,48 @@ class _MinePageState extends State<MinePage> with TickerProviderStateMixin, Auto
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
-          Text("11111111111111"),
+          Column(
+            children: <Widget>[
+              MineHeaderWidget(),
+              MineCenterWidget(),
+              MineFooterWidget(),
+            ],
+          ),
         ],
       ),
     );
+  }
+}
+
+class MineHeaderWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text("111111");
+  }
+}
+
+class MineCenterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        //背景
+        color: Colors.white,
+        //设置四周圆角 角度
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        //设置四周边框
+        border: new Border.all(width: 1, color: Colors.grey),
+      ),
+      child: Text("测试1111"),
+    );
+  }
+}
+class MineFooterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text("111111");
   }
 }
