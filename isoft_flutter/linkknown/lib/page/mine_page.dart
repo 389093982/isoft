@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/clickable_textimage.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -65,7 +67,65 @@ class MineCenterWidget extends StatelessWidget {
         //设置四周边框
         border: new Border.all(width: 1, color: Colors.grey),
       ),
-      child: Text("测试1111"),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: ClickableTextImage(
+                imgpath: "images/linkknown.jpg",
+                text: "优惠券",
+                onTap: (){
+                  UIUtils.showToast("优惠券");
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ClickableTextImage(
+                imgpath: "images/linkknown.jpg",
+                text: "购物车",
+                onTap: (){
+                  UIUtils.showToast("购物车");
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ClickableTextImage(
+                imgpath: "images/linkknown.jpg",
+                text: "订单",
+                onTap: (){
+                  UIUtils.showToast("订单");
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ClickableTextImage(
+                imgpath: "images/linkknown.jpg",
+                text: "活动中心",
+                onTap: (){
+                  UIUtils.showToast("活动中心");
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ClickableTextImage(
+                imgpath: "images/linkknown.jpg",
+                text: "考试",
+                onTap: (){
+                  UIUtils.showToast("考试");
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
