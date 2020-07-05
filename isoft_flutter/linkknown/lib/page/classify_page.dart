@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_search.dart';
 
 class ClassifyPage extends StatefulWidget {
   @override
@@ -27,7 +29,20 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
         ),
       ),
       backgroundColor: Colors.white,
-      body: Text("分类页面"),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              child: SearchInputWidget(
+                handleSearch: (data){
+                  UIUtils.showToast(data);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
