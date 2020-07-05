@@ -6,7 +6,9 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/v_empty_view.dart';
 
 class HomeDrawerWidget extends StatelessWidget {
   @override
@@ -31,6 +33,8 @@ class HomeDrawerHeaderWidget extends StatefulWidget {
 class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
 
   bool hasLogin = false;
+  String headerIcon = "";
+  String nickName = "";
   StreamSubscription _subscription;
 
   @override
@@ -38,18 +42,23 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
     super.initState();
     //订阅 eventbus
     _subscription = eventBus.on<LoginSuccessEvent>().listen((event) {
-      setState(() {
-        this.hasLogin = true;
-      });
+      refreshLoginStatus();
     });
 
-    LoginUtil.checkHasLogin().then((value) => {
-      if (value) {
-        this.setState(() {
-          this.hasLogin = true;
-        })
-      }
-    });
+    refreshLoginStatus();
+  }
+
+  refreshLoginStatus () async {
+  bool hasLogin = await LoginUtil.checkHasLogin();
+    if (hasLogin) {
+      String nickName = await LoginUtil.getNickName();
+      String headerIcon = await LoginUtil.getUserHeaderIcon();
+      this.setState(() {
+        this.hasLogin = true;
+        this.nickName = nickName;
+        this.headerIcon = headerIcon;
+      });
+    }
   }
 
   @override
@@ -87,8 +96,28 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
         children: <Widget>[
           // 已登录布局
           Align(
-            alignment: Alignment.centerLeft,
-            child: Text("1111111222222222fffffffff"),
+            alignment: Alignment.center,
+            child: Container(
+              margin: EdgeInsets.only(top: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  ClipOval(
+                    child: StringUtil.checkNotEmpty(headerIcon) ?
+                    Image.network(UIUtils.replaceMediaUrl(headerIcon),
+                      width: 100.0,
+                      height: 100.0,
+                      fit: BoxFit.cover,) :
+                    Image.asset("images/linkknown.jpg",
+                      width: 100.0,
+                      height: 100.0,
+                      fit: BoxFit.cover,),
+                  ),
+                  VEmptyView(10),
+                  Text(nickName, style: TextStyle(color: Colors.white),),
+                ],
+              ),
+            )
           ),
           Align(
             alignment: Alignment.bottomCenter,

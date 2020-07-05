@@ -10,9 +10,11 @@ class LoginUtil {
   static final String USER_PASSWD = "USER_PASSWD";
   static final String USER_EXPIRE_SECOND = "USER_EXPIRE_SECOND";
   static final String USER_TOKEN_STRING = "USER_TOKEN_STRING";
+  static final String USER_HEADER_ICON = "USER_HEADER_ICON";
 
   static void memoryAccount (String userName, String passwd, LoginUserResponse user) {
     SharedPreferenceUtil.save(USER_NICK_NAME, user.nickName);
+    SharedPreferenceUtil.save(USER_HEADER_ICON, user.headerIcon);
     SharedPreferenceUtil.save(USER_USER_NAME, userName);
     SharedPreferenceUtil.save(USER_PASSWD, passwd);
     int expireSecond = new DateTime.now().millisecondsSinceEpoch + int.parse(user.expireSecond) * 1000;
@@ -32,8 +34,16 @@ class LoginUtil {
     return int.parse(expireSecond);
   }
 
+  static Future<String> getNickName () async {
+    return await SharedPreferenceUtil.get(USER_NICK_NAME);
+  }
+
   static Future<String> getUserName () async {
     return await SharedPreferenceUtil.get(USER_USER_NAME);
+  }
+
+  static Future<String> getUserHeaderIcon () async {
+    return await SharedPreferenceUtil.get(USER_HEADER_ICON);
   }
 
   static Future<String> getPasswd () async {
