@@ -44,7 +44,7 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.courseDetail);
+                  NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=${course.id}");
                 },
                 child: Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
               ),

@@ -2,13 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class CourseDetailPage extends StatefulWidget {
+
+  int course_id;
+  CourseDetailPage(this.course_id);
+
   @override
-  _CourseDetailPageState createState() => _CourseDetailPageState();
+  _CourseDetailPageState createState() => _CourseDetailPageState(course_id);
 }
 
 class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProviderStateMixin {
+
+  int course_id;
+  _CourseDetailPageState(this.course_id);
 
   @override
   void initState() {
@@ -41,7 +49,7 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
         ),
       ),
       body: SingleChildScrollView(
-        child: Text("课程详情页面"),
+        child: Text("课程详情页面${course_id}"),
       ),
     );
   }

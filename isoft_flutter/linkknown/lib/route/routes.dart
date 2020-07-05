@@ -7,6 +7,8 @@ import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/route/reoutes_handler.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class Routes {
   static String root = "/";
@@ -34,36 +36,23 @@ class Routes {
       return LoginPage();
     });
 
-    // splash 页
-    bindRouterAndRouter(router, root, SplashPage());
-    // 主页
-    bindRouterAndRouter(router, main, MainPage());
-    // 登录页
-    bindRouterAndRouter(router, login, LoginPage());
-    // 注册页
-    bindRouterAndRouter(router, regist, RegistPage());
+    router.define(root, handler: splashHandler);
+    router.define(main, handler: mainHandler);
+    router.define(login, handler: loginHandler);
+    router.define(regist, handler: registHandler);
     // 云博客页
-    bindRouterAndRouter(router, cloudBlog, RegistPage());
+    router.define(cloudBlog, handler: cloudBlogHandler);
     // 个人中心页
-    bindRouterAndRouter(router, personalCenter, RegistPage());
-    // 已购课程页面页
-    bindRouterAndRouter(router, buyCourse, RegistPage());
+    router.define(personalCenter, handler: personalCenterHandler);
+    // 已购课程页
+    router.define(buyCourse, handler: buyCourseHandler);
     // 我要吐槽页
-    bindRouterAndRouter(router, advise, RegistPage());
+    router.define(advise, handler: adviseHandler);
     // 关于链知页
-    bindRouterAndRouter(router, about, RegistPage());
+    router.define(about, handler: aboutHandler);
 
     // 课程详情页
-    bindRouterAndRouter(router, courseDetail, CourseDetailPage());
-  }
-
-  // 绑定路由和页面
-  static bindRouterAndRouter (Router router, String path, Widget pageWidget) {
-    var handler = new Handler(
-        handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
-          return pageWidget;
-        });
-    router.define(path, handler: handler);
+    router.define(courseDetail, handler: courseDetailHandler);
   }
 
 }
