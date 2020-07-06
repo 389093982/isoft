@@ -11,6 +11,12 @@ class StringUtil {
 
   static List<String> splitLabel (String str) {
     str = str ?? "";
-    return str.replaceAll("|", "/").split("/");
+    List<String> result = [];
+    str.replaceAll("|", "/").split("/").forEach((str) {
+      if (checkNotEmpty(str)) {
+        result.add(str);
+      }
+    });
+    return result;
   }
 }
