@@ -46,7 +46,8 @@ class _CourseCardState extends State<CourseCardWidget> with TickerProviderStateM
                 onTap: () {
                   NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=${course.id}");
                 },
-                child: Image.network(UIUtils.replaceMediaUrl(course.smallImage)),
+                // AspectRatio的作用是调整 child 到设置的宽高比
+                child: AspectRatio(child: Image.network(UIUtils.replaceMediaUrl(course.smallImage), fit: BoxFit.fill, width: double.infinity,), aspectRatio: 1/0.6,),
               ),
               Align(
                 alignment: Alignment.topRight,
