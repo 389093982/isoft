@@ -1,10 +1,9 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/user.dart';
 
 class LinkKnownApi {
@@ -68,5 +67,13 @@ class LinkKnownApi {
       'user_name': user_name,
     });
     return CourseDetailResponse.fromJson(response.data);
+  }
+
+  // 占位符查询
+  static Future<ElementResponse> filterElementByPlacement(String placement) async {
+    var response = await doPost('/api/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement', params: {
+      'placement': placement,
+    });
+    return ElementResponse.fromJson(response.data);
   }
 }

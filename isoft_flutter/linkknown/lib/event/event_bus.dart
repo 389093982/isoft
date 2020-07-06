@@ -13,7 +13,8 @@ class LoginSuccessEvent {
 }
 
 class ClassifyEvent {
-  String text;
+  int levelOneId;
 
-  ClassifyEvent(this.text);
+  ClassifyEvent(this.levelOneId);
 }
+
