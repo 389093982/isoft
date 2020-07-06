@@ -146,11 +146,11 @@
                           _this.$Message.error("点击过快！");
                           return;
                         }
-                        let params = {
+                        let _params = {
                           'id':_this.elements[params.index].id,
                           'status':bindData,
                         };
-                        const result = await UpdateElementStatus(params);
+                        const result = await UpdateElementStatus(_params);
                         if (result.status === "SUCCESS") {
                           _this.$Message.success("操作成功!");
                           _this.refreshElementList();
