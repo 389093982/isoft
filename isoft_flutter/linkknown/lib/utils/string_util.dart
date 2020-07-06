@@ -8,4 +8,9 @@ class StringUtil {
   static bool checkEmpty (String str) {
     return str == null || str == "";
   }
+
+  static List<String> splitLabel (String str) {
+    str = str ?? "";
+    return str.replaceAll("|", "/").split("/");
+  }
 }

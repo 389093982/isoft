@@ -1,9 +1,13 @@
 
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/v_empty_view.dart';
 
 class CourseDetailPage extends StatefulWidget {
 
@@ -56,9 +60,8 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
                     size: 20,
                   ),
                   onPressed: () {
-                    // 返回首页
-//                    NavigatorUtil.goMainPage(context);
-//                Navigator.pop(context); // 关闭当前页面--
+                    // 返回上一页
+                    Navigator.pop(context);
                   },
                 )
             ),
@@ -94,7 +97,7 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
             child: TabBarView(
               controller: this.tabController,
               children: <Widget>[
-                Center(child: Text('简介')),
+                Center(child: CourseIntroduceWidget(course)),
                 Center(child: Text('评论')),
               ],
             ),
@@ -131,4 +134,99 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
+}
+
+
+// 课程简介组件
+class CourseIntroduceWidget extends StatefulWidget {
+
+  Course course;
+
+  CourseIntroduceWidget(this.course);
+
+  @override
+  _CourseIntroduceState createState() => _CourseIntroduceState(course);
+
+}
+
+class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
+
+  Course course;
+
+  _CourseIntroduceState(this.course);
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(course != null ? course.courseName : ''),
+          VEmptyView(5),
+          Row(
+            children: <Widget>[
+              Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+              Text('0'),
+              Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+              Text('0'),
+            ],
+          ),
+          VEmptyView(5),
+          Text(course != null ? course.courseShortDesc : ''),
+          // 分享点赞收藏播放
+          // 作者信息
+          VEmptyView(5),
+          // 课程标签语
+          CourseLabelWidget(course != null ? course.courseLabel: ''),
+          // 分集视频
+        ],
+      ),
+    );
+  }
+}
+
+class CourseLabelWidget extends StatefulWidget {
+
+  String label;
+
+  CourseLabelWidget(this.label);
+
+  @override
+  _CourseLabelState createState() => _CourseLabelState(label);
+
+}
+
+class _CourseLabelState  extends State<CourseLabelWidget> {
+
+  String label;
+
+  _CourseLabelState(this.label);
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> labels = StringUtil.splitLabel(label);
+
+    // Wrap是一个可以使子控件自动换行的控件，默认的方向是水平的
+    return Wrap(
+      spacing: 2, //主轴上子控件的间距
+      runSpacing: 5, //交叉轴上子控件之间的间距
+      children: List.generate(labels.length, (index) {
+        return CommonLabel(labels[index]);
+      }),
+    );
+  }
+
 }
