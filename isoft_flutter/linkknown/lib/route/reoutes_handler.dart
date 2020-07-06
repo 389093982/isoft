@@ -1,11 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/advise_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
-import 'package:linkknown/utils/utils.dart';
 
 
 // splash 页面
@@ -53,7 +53,7 @@ var buyCourseHandler = new Handler(
 // 我要吐槽页
 var adviseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
+      return AdvisePage();
     });
 
 // 关于链知页

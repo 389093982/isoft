@@ -1,28 +1,27 @@
-
 // 路由类
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/login_page.dart';
-import 'package:linkknown/page/main_page.dart';
-import 'package:linkknown/page/regist_page.dart';
-import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
-import 'package:linkknown/utils/utils.dart';
 
 class Routes {
   static String root = "/";
   static String main = "/main";
   static String login = "/login";
   static String regist = "/regist";
+
   // 云博客
   static String cloudBlog = "/cloudBlog";
+
   // 个人中心
   static String personalCenter = "/personalCenter";
+
   // 已购课程页面
   static String buyCourse = "/buyCourse";
+
   // 我要吐槽（意见、建议）
   static String advise = "/advise";
+
   // 关于链知
   static String about = "/about";
 
@@ -54,6 +53,4 @@ class Routes {
     // 课程详情页
     router.define(courseDetail, handler: courseDetailHandler);
   }
-
 }
-

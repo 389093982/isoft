@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_label.dart';
@@ -61,7 +62,7 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
                   ),
                   onPressed: () {
                     // 返回上一页
-                    Navigator.pop(context);
+                    NavigatorUtil.goBack(context);
                   },
                 )
             ),
