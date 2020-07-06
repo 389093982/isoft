@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/user.dart';
 
@@ -11,7 +12,15 @@ class LinkKnownApi {
   static final String baseUrl = 'http://192.168.1.11:6001';
 
   static void init() async {
-    _dio = Dio(BaseOptions(baseUrl: baseUrl, followRedirects: false))
+    _dio = Dio(BaseOptions(
+        baseUrl: baseUrl,
+        followRedirects: false,
+      //连接服务器超时时间，单位是毫秒.
+      connectTimeout: 10000,
+      headers: {
+        "client_type": "app",
+      },
+    ))
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   }
 
@@ -50,5 +59,14 @@ class LinkKnownApi {
       'offset': offset,
     });
     return CourseMetaResponse.fromJson(response.data);
+  }
+
+  // 查询课程详情
+  static Future<CourseDetailResponse> showCourseDetailForApp(int course_id, String user_name) async {
+    var response = await doPost('/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp', params: {
+      'course_id': course_id,
+      'user_name': user_name,
+    });
+    return CourseDetailResponse.fromJson(response.data);
   }
 }

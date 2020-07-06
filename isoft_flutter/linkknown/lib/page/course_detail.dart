@@ -1,6 +1,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class CourseDetailPage extends StatefulWidget {
 
@@ -16,6 +19,8 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
   int course_id;
   _CourseDetailPageState(this.course_id);
 
+  Course course;
+
   TabController tabController;
 
   @override
@@ -23,6 +28,15 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
     super.initState();
     // 用来控制controller对应widget的各种各样交互行为以及状态变化的控制（类似于widget本身只是一个静态的物品，而通过对controller的操作控制让这个widget活了起来）
     this.tabController = TabController(length: 2, vsync: this);
+
+    initData();
+  }
+
+  void initData () async {
+    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(course_id, null);
+    setState(() {
+      course = courseDetailResponse.course;
+    });
   }
 
   @override
@@ -54,9 +68,9 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
             expandedHeight: 250,
             // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
             flexibleSpace: FlexibleSpaceBar(
-              title: Text("课程详情页"),
+              title: Text(course != null ? course.courseName : ""),
               background: Image.network(
-                'http://img1.mukewang.com/5c18cf540001ac8206000338.jpg',
+                UIUtils.replaceMediaUrl(course != null ? course.smallImage : ""),
                 fit: BoxFit.cover,
               ),
             ),
@@ -80,8 +94,8 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
             child: TabBarView(
               controller: this.tabController,
               children: <Widget>[
-                Center(child: Text('Content of Home1111111111111111')),
-                Center(child: Text('Content of Profil1111111111111111111e')),
+                Center(child: Text('简介')),
+                Center(child: Text('评论')),
               ],
             ),
           ),
