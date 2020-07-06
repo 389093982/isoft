@@ -183,6 +183,16 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
 
 }
 
+// 父widget用到子widget，第一次使用时，会执行子widget中声明的构造函数，然后执行其 State 构造函数
+// 再次使用时，会执行子 widget中声明的构造函数，不会再执行 State 的构造函数
+//  if (active) {
+//    return ActiveGameTabs(title);
+//  }
+//  修改为可以解决子组件不刷新的问题
+//  if (widget.active) {
+//    return ActiveGameTabs(title);
+//  }
+// 目的是使得build子组件的时候，我们使用的是widget的active(每次重构的时候Widget构造方法会被调用)，而不是State 的构造函数(不会重复执行)
 class RightClassifyWidget extends StatefulWidget {
 
   List<ElementItem> allClassifys;
@@ -190,17 +200,12 @@ class RightClassifyWidget extends StatefulWidget {
   RightClassifyWidget(this.allClassifys);
 
   @override
-  _RightClassifyState createState() => _RightClassifyState(allClassifys);
+  _RightClassifyState createState() => _RightClassifyState();
 }
 
 class _RightClassifyState extends State<RightClassifyWidget> {
-  // 全部分类
-  List<ElementItem> allClassifys;
   // 二级分类
   List<ElementItem> levelTwoClassifys = [];
-
-  _RightClassifyState(this.allClassifys);
-
 
   @override
   void initState() {
@@ -214,7 +219,7 @@ class _RightClassifyState extends State<RightClassifyWidget> {
   _updateView(int levelOneId) {
     setState(() {
       levelTwoClassifys.clear();
-      allClassifys.forEach((element) {
+      widget.allClassifys.forEach((element) {
         if (element.navigationParentId == levelOneId) {
           levelTwoClassifys.add(element);
         }
@@ -224,9 +229,6 @@ class _RightClassifyState extends State<RightClassifyWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    UIUtils.showToast(this.allClassifys.length.toString());
-
     return ListView.builder(
         shrinkWrap: true,
         itemCount: levelTwoClassifys.length,

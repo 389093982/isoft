@@ -4,6 +4,7 @@ import 'package:linkknown/page/advise_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 
@@ -41,7 +42,7 @@ var cloudBlogHandler = new Handler(
 // 个人中心页
 var personalCenterHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
+      return PersonalCenterPage();
     });
 
 // 已购课程页
