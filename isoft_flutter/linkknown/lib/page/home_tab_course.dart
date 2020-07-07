@@ -114,7 +114,7 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
                 controller: scrollController,
                 // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
+                    //横轴元素个数
                     crossAxisCount: 2,
                     //纵轴间距
                     mainAxisSpacing: 10.0,

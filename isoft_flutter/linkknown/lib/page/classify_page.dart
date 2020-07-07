@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/model/element.dart';
@@ -108,6 +109,7 @@ class _ClassifyState extends State<ClassifyWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(right: 10),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -217,24 +219,54 @@ class _RightClassifyState extends State<RightClassifyWidget> {
   }
 
   _updateView(int levelOneId) {
-    setState(() {
-      levelTwoClassifys.clear();
-      widget.allClassifys.forEach((element) {
-        if (element.navigationParentId == levelOneId) {
-          levelTwoClassifys.add(element);
-        }
+    // 在使用 setState() 方法之前, 先判断一下 mounted 是否为真, 可解决异步函数 setState() 导致内存泄漏的错误
+    if (mounted) {
+      setState(() {
+        levelTwoClassifys.clear();
+        widget.allClassifys.forEach((element) {
+          if (element.navigationParentId == levelOneId) {
+            levelTwoClassifys.add(element);
+          }
+        });
       });
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: levelTwoClassifys.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Text(levelTwoClassifys[index].elementLabel);
-        });
+//    return ListView.builder(
+//        shrinkWrap: true,
+//        itemCount: levelTwoClassifys.length,
+//        itemBuilder: (BuildContext context, int index) {
+//          return Text(levelTwoClassifys[index].elementLabel);
+//        });
+    return SizedBox(
+      height: ScreenUtil().setHeight(900.0),
+      child: GridView.builder(
+          itemCount: levelTwoClassifys.length,
+          // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //横轴元素个数
+              crossAxisCount: 3,
+              //纵轴间距
+              mainAxisSpacing: 10.0,
+              //横轴间距
+              crossAxisSpacing: 10.0,
+              //子组件宽高长度比例
+              childAspectRatio: 1.0),
+          itemBuilder: (BuildContext context, int index) {
+            return getWidget(levelTwoClassifys[index]);
+          }),
+    );
+  }
+
+  Widget getWidget(ElementItem item) {
+    return Column(
+      children: <Widget>[
+        Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
+        Text(item.elementLabel),
+      ],
+    );
   }
 
 }
