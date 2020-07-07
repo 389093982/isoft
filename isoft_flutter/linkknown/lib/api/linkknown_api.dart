@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/advise_list.dart';
 import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_meta.dart';
@@ -15,7 +16,7 @@ class LinkKnownApi {
   static String tokenString = "";
 
   // 登录成功后调用此方法更新全局的 tokenString
-  static void updateTokenString () async {
+  static void updateTokenString() async {
     tokenString = await LoginUtil.getTokenString();
   }
 
@@ -32,14 +33,14 @@ class LinkKnownApi {
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   }
 
-  static Future<Response> doPost(
-    String url, {
+  static Future<Response> doPost(String url, {
     Map<String, dynamic> params,
   }) async {
     try {
-      _dio.options.headers.addAll(new Map<String,String>.from({"tokenString": tokenString}));
+      _dio.options.headers.addAll(
+          new Map<String, String>.from({"tokenString": tokenString}));
       return await _dio.post(url,
-          queryParameters: params,);
+        queryParameters: params,);
     } on DioError catch (e) {
       if (e != null && e.response != null && e.response.statusCode == 401) {
         throw LinkKnownError.unAuthorizedLogin();
@@ -50,8 +51,8 @@ class LinkKnownApi {
   }
 
   // 登录
-  static Future<LoginUserResponse> postLogin(
-      String username, String passwd, String redirectUrl) async {
+  static Future<LoginUserResponse> postLogin(String username, String passwd,
+      String redirectUrl) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/PostLogin',
         params: {
@@ -63,8 +64,8 @@ class LinkKnownApi {
   }
 
   // 课程搜索接口
-  static Future<CourseMetaResponse> searchCourseList(
-      String search, String isCharge, int current_page, int offset) async {
+  static Future<CourseMetaResponse> searchCourseList(String search,
+      String isCharge, int current_page, int offset) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/SearchCourseList',
         params: {
@@ -77,8 +78,8 @@ class LinkKnownApi {
   }
 
   // 查询课程详情
-  static Future<CourseDetailResponse> showCourseDetailForApp(
-      int course_id, String user_name) async {
+  static Future<CourseDetailResponse> showCourseDetailForApp(int course_id,
+      String user_name) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/ShowCourseDetailForApp',
         params: {
@@ -100,8 +101,8 @@ class LinkKnownApi {
   }
 
   // 添加意见
-  static Future<BaseResponse> insertAdvise(
-      String advise, String advise_type) async {
+  static Future<BaseResponse> insertAdvise(String advise,
+      String advise_type) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/InsertAdvise',
         params: {
@@ -110,4 +111,17 @@ class LinkKnownApi {
         });
     return BaseResponse.fromJson(response.data);
   }
+
+  // 分页查询意见
+  static Future<AdviseListResponse> queryPageAdvise(int current_page,
+      int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPageAdvise',
+        params: {
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return AdviseListResponse.fromJson(response.data);
+  }
+
 }
