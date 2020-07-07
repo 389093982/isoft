@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/model/element.dart';
+import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_search.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -261,11 +264,18 @@ class _RightClassifyState extends State<RightClassifyWidget> {
   }
 
   Widget getWidget(ElementItem item) {
-    return Column(
-      children: <Widget>[
-        Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
-        Text(item.elementLabel),
-      ],
+    return GestureDetector(
+      onTap: () {
+        // 中文需要进行编码,使用时解码
+        String searchText = FluroConvertUtil.fluroCnParamsEncode(item.elementLabel);
+        NavigatorUtil.goRouterPage(context, '${Routes.courseSearch}?search=${searchText}&isCharge=');
+      },
+      child: Column(
+        children: <Widget>[
+          Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
+          Text(item.elementLabel),
+        ],
+      ),
     );
   }
 

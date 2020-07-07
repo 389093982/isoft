@@ -14,4 +14,5 @@ class UIUtils {
   static bool isValidPrice (String price) {
     return double.parse(price) > 0;
   }
+
 }
