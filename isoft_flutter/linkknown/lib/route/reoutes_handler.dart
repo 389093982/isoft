@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/advise_edit_page.dart';
 import 'package:linkknown/page/advise_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
@@ -9,7 +10,6 @@ import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
-import 'package:linkknown/utils/utils.dart';
 
 
 // splash 页面
@@ -58,6 +58,11 @@ var buyCourseHandler = new Handler(
 var adviseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return AdvisePage();
+    });
+
+var adviseEditHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return AdviseEditPage();
     });
 
 // 关于链知页

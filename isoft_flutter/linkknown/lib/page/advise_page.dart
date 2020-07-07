@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class AdvisePage extends StatelessWidget {
   @override
@@ -13,6 +16,14 @@ class AdvisePage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             }),
+        actions: <Widget>[
+          IconButton(
+            icon: SvgPicture.asset("images/add.svg", color: Colors.white, width: 20, height: 20,),
+            onPressed: () {
+              NavigatorUtil.goRouterPage(context, Routes.adviseEdit);
+            },
+          ),
+        ],
       ),
       body: Text("1111111111"),
     );

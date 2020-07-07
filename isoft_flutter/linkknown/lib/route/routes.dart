@@ -19,6 +19,8 @@ class Routes {
   static String buyCourse = "/buyCourse";
   // 我要吐槽（意见、建议）
   static String advise = "/advise";
+  // 意见编辑页
+  static String adviseEdit = "/adviseEdit";
   // 关于链知
   static String about = "/about";
 
@@ -46,6 +48,7 @@ class Routes {
     router.define(buyCourse, handler: buyCourseHandler);
     // 我要吐槽页
     router.define(advise, handler: adviseHandler);
+    router.define(adviseEdit, handler: adviseEditHandler);
     // 关于链知页
     router.define(about, handler: aboutHandler);
 
