@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
@@ -71,7 +73,6 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
 
 }
 
-
 class ClassifyWidget extends StatefulWidget {
 
   @override
@@ -79,6 +80,9 @@ class ClassifyWidget extends StatefulWidget {
 }
 
 class _ClassifyState extends State<ClassifyWidget> {
+
+  // GlobalKey 可用于跨组件通信,此处用于父组件通知子组件
+  final GlobalKey<_LeftClassifyState> leftClassifyStateKey = GlobalKey();
 
   ElementResponse elementResponse;
   // 全部分类
@@ -106,6 +110,26 @@ class _ClassifyState extends State<ClassifyWidget> {
           levelOneClassifys.add(element);
         }
       });
+
+      List<ElementItem> getLevelTwoClassifys (int levelOneId) {
+        List<ElementItem> levelTwoClassifys = [];
+        allClassifys.forEach((element) {
+          if (element.navigationParentId == levelOneId) {
+            levelTwoClassifys.add(element);
+          }
+        });
+        return levelTwoClassifys;
+      }
+
+      levelOneClassifys.sort((e1, e2) {
+        return getLevelTwoClassifys(e2.id).length - getLevelTwoClassifys(e1.id).length;
+      });
+    });
+
+    // 延迟设置选中第一项,主要是为了等待右侧组件绘制完成
+    Future.delayed(Duration(milliseconds: 500)).then((value) {
+      // 网络请求成功后，调用子组件方法，设置默认选中第一项
+      leftClassifyStateKey.currentState.setSelectIndex(0);
     });
   }
 
@@ -117,7 +141,10 @@ class _ClassifyState extends State<ClassifyWidget> {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: LeftClassifyWidget(levelOneClassifys),
+            child: LeftClassifyWidget(
+              levelOneClassifys,
+              key: leftClassifyStateKey,
+            ),
           ),
           Expanded(
             flex: 8,
@@ -134,19 +161,15 @@ class LeftClassifyWidget extends StatefulWidget {
 
   List<ElementItem> levelOneClassifys = [];
 
-  LeftClassifyWidget(this.levelOneClassifys);
+  LeftClassifyWidget(this.levelOneClassifys, {Key key}):super(key: key);
 
   @override
-  _LeftClassifyState createState() => _LeftClassifyState(levelOneClassifys);
+  _LeftClassifyState createState() => _LeftClassifyState();
 }
 
 class _LeftClassifyState extends State<LeftClassifyWidget> {
   // 默认选中第一项
   int _selectIndex = 0;
-
-  List<ElementItem> levelOneClassifys = [];
-
-  _LeftClassifyState(this.levelOneClassifys);
 
   @override
   void initState() {
@@ -159,11 +182,19 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: levelOneClassifys.length,
+          itemCount: widget.levelOneClassifys.length,
           itemBuilder: (BuildContext context, int index) {
-            return getLevelOneClassifyItem(levelOneClassifys[index], index);
+            return getLevelOneClassifyItem(widget.levelOneClassifys[index], index);
           }),
     );
+  }
+
+  setSelectIndex(int index){
+    setState(() {
+
+      eventBus.fire(ClassifyEvent(widget.levelOneClassifys[index].id));
+      _selectIndex = index;
+    });
   }
 
   Widget getLevelOneClassifyItem (ElementItem item, int index) {
@@ -212,11 +243,13 @@ class _RightClassifyState extends State<RightClassifyWidget> {
   // 二级分类
   List<ElementItem> levelTwoClassifys = [];
 
+  StreamSubscription subscription;
+
   @override
   void initState() {
     super.initState();
 
-    eventBus.on<ClassifyEvent>().listen((event) {
+    subscription = eventBus.on<ClassifyEvent>().listen((event) {
       _updateView(event.levelOneId);
     });
   }
@@ -277,6 +310,15 @@ class _RightClassifyState extends State<RightClassifyWidget> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    if (subscription != null){
+      subscription.cancel();
+    }
   }
 
 }
