@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 
@@ -80,6 +82,15 @@ class _AdviseEditPageState extends State<AdviseEditPage> {
       return;
     }
     UIUtils.showToast2("提交成功");
+    LinkKnownApi.insertAdvise(_adviseController.text, "advise").then((value) {
+      if (value.status == "SUCCESS") {
+        UIUtils.showToast2("提交成功");
+    } else {
+        UIUtils.showToast2("提交失败");
+      }
+    }).catchError((e) {
+      UIUtils.showToast2((e as LinkKnownError).errorMsg);
+    });
   }
 
   Widget getAdivseEditWidget() {
