@@ -1,12 +1,27 @@
 
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/course_filter.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_search.dart';
 
-class CourseSearchPage extends StatelessWidget {
+class CourseSearchPage extends StatefulWidget {
 
   String search;
   String isCharge;
 
   CourseSearchPage(this.search, this.isCharge);
+
+  @override
+  _CourseSearchPageState createState() => _CourseSearchPageState();
+
+}
+
+class _CourseSearchPageState extends State<CourseSearchPage> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +37,16 @@ class CourseSearchPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          Text("1111111111111"),
+          SearchInputWidget(
+            handleSearch: (data) {
+              this.setState(() {
+                widget.search = data;
+              });
+            },
+          ),
+          CourseFilterWidget(widget.search, widget.isCharge),
         ],
       ),
     );
   }
-
 }
