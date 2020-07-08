@@ -1,9 +1,10 @@
-// 路由类
+
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
 
+// 路由类
 class Routes {
   static String root = "/";
   static String main = "/main";
@@ -12,21 +13,21 @@ class Routes {
 
   // 云博客
   static String cloudBlog = "/cloudBlog";
-
   // 个人中心
   static String personalCenter = "/personalCenter";
-
   // 已购课程页面
   static String buyCourse = "/buyCourse";
-
   // 我要吐槽（意见、建议）
   static String advise = "/advise";
-
+  // 意见编辑页
+  static String adviseEdit = "/adviseEdit";
   // 关于链知
   static String about = "/about";
 
   // 课程详情页
   static String courseDetail = "/courseDetail";
+  // 课程搜索页
+  static String courseSearch = "/courseSearch";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -47,10 +48,13 @@ class Routes {
     router.define(buyCourse, handler: buyCourseHandler);
     // 我要吐槽页
     router.define(advise, handler: adviseHandler);
+    router.define(adviseEdit, handler: adviseEditHandler);
     // 关于链知页
     router.define(about, handler: aboutHandler);
 
     // 课程详情页
     router.define(courseDetail, handler: courseDetailHandler);
+    // 课程搜索页
+    router.define(courseSearch, handler: courseSearchHandler);
   }
 }

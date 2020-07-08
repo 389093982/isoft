@@ -23,7 +23,6 @@ import com.linkknown.ilearning.factory.LinkKnownApiFactory;
 import com.linkknown.ilearning.helper.SwipeRefreshLayoutHelper;
 import com.linkknown.ilearning.model.AdviseListResponse;
 import com.linkknown.ilearning.model.BaseResponse;
-import com.linkknown.ilearning.model.CourseMetaResponse;
 import com.linkknown.ilearning.model.Paginator;
 import com.linkknown.ilearning.popup.BottomQuickEidtDialog;
 import com.linkknown.ilearning.util.CommonUtil;
@@ -44,7 +43,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class AdviseActivity extends BaseActivity {
 
-    private int itemType = CourseMetaResponse.MultiItemTypeCourseMeta.ITEM_TYPE_GRID;
 
     @BindView(R.id.toolbar)
     public Toolbar toolbar;

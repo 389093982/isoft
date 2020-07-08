@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/model/element.dart';
+import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_search.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -67,7 +73,6 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
 
 }
 
-
 class ClassifyWidget extends StatefulWidget {
 
   @override
@@ -75,6 +80,9 @@ class ClassifyWidget extends StatefulWidget {
 }
 
 class _ClassifyState extends State<ClassifyWidget> {
+
+  // GlobalKey 可用于跨组件通信,此处用于父组件通知子组件
+  final GlobalKey<_LeftClassifyState> leftClassifyStateKey = GlobalKey();
 
   ElementResponse elementResponse;
   // 全部分类
@@ -102,17 +110,41 @@ class _ClassifyState extends State<ClassifyWidget> {
           levelOneClassifys.add(element);
         }
       });
+
+      List<ElementItem> getLevelTwoClassifys (int levelOneId) {
+        List<ElementItem> levelTwoClassifys = [];
+        allClassifys.forEach((element) {
+          if (element.navigationParentId == levelOneId) {
+            levelTwoClassifys.add(element);
+          }
+        });
+        return levelTwoClassifys;
+      }
+
+      levelOneClassifys.sort((e1, e2) {
+        return getLevelTwoClassifys(e2.id).length - getLevelTwoClassifys(e1.id).length;
+      });
+    });
+
+    // 延迟设置选中第一项,主要是为了等待右侧组件绘制完成
+    Future.delayed(Duration(milliseconds: 500)).then((value) {
+      // 网络请求成功后，调用子组件方法，设置默认选中第一项
+      leftClassifyStateKey.currentState.setSelectIndex(0);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(right: 10),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: LeftClassifyWidget(levelOneClassifys),
+            child: LeftClassifyWidget(
+              levelOneClassifys,
+              key: leftClassifyStateKey,
+            ),
           ),
           Expanded(
             flex: 8,
@@ -129,19 +161,15 @@ class LeftClassifyWidget extends StatefulWidget {
 
   List<ElementItem> levelOneClassifys = [];
 
-  LeftClassifyWidget(this.levelOneClassifys);
+  LeftClassifyWidget(this.levelOneClassifys, {Key key}):super(key: key);
 
   @override
-  _LeftClassifyState createState() => _LeftClassifyState(levelOneClassifys);
+  _LeftClassifyState createState() => _LeftClassifyState();
 }
 
 class _LeftClassifyState extends State<LeftClassifyWidget> {
   // 默认选中第一项
   int _selectIndex = 0;
-
-  List<ElementItem> levelOneClassifys = [];
-
-  _LeftClassifyState(this.levelOneClassifys);
 
   @override
   void initState() {
@@ -154,11 +182,19 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
       color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: levelOneClassifys.length,
+          itemCount: widget.levelOneClassifys.length,
           itemBuilder: (BuildContext context, int index) {
-            return getLevelOneClassifyItem(levelOneClassifys[index], index);
+            return getLevelOneClassifyItem(widget.levelOneClassifys[index], index);
           }),
     );
+  }
+
+  setSelectIndex(int index){
+    setState(() {
+
+      eventBus.fire(ClassifyEvent(widget.levelOneClassifys[index].id));
+      _selectIndex = index;
+    });
   }
 
   Widget getLevelOneClassifyItem (ElementItem item, int index) {
@@ -183,6 +219,16 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
 
 }
 
+// 父widget用到子widget，第一次使用时，会执行子widget中声明的构造函数，然后执行其 State 构造函数
+// 再次使用时，会执行子 widget中声明的构造函数，不会再执行 State 的构造函数
+//  if (active) {
+//    return ActiveGameTabs(title);
+//  }
+//  修改为可以解决子组件不刷新的问题
+//  if (widget.active) {
+//    return ActiveGameTabs(title);
+//  }
+// 目的是使得build子组件的时候，我们使用的是widget的active(每次重构的时候Widget构造方法会被调用)，而不是State 的构造函数(不会重复执行)
 class RightClassifyWidget extends StatefulWidget {
 
   List<ElementItem> allClassifys;
@@ -190,49 +236,89 @@ class RightClassifyWidget extends StatefulWidget {
   RightClassifyWidget(this.allClassifys);
 
   @override
-  _RightClassifyState createState() => _RightClassifyState(allClassifys);
+  _RightClassifyState createState() => _RightClassifyState();
 }
 
 class _RightClassifyState extends State<RightClassifyWidget> {
-  // 全部分类
-  List<ElementItem> allClassifys;
   // 二级分类
   List<ElementItem> levelTwoClassifys = [];
 
-  _RightClassifyState(this.allClassifys);
-
+  StreamSubscription subscription;
 
   @override
   void initState() {
     super.initState();
 
-    eventBus.on<ClassifyEvent>().listen((event) {
+    subscription = eventBus.on<ClassifyEvent>().listen((event) {
       _updateView(event.levelOneId);
     });
   }
 
   _updateView(int levelOneId) {
-    setState(() {
-      levelTwoClassifys.clear();
-      allClassifys.forEach((element) {
-        if (element.navigationParentId == levelOneId) {
-          levelTwoClassifys.add(element);
-        }
+    // 在使用 setState() 方法之前, 先判断一下 mounted 是否为真, 可解决异步函数 setState() 导致内存泄漏的错误
+    if (mounted) {
+      setState(() {
+        levelTwoClassifys.clear();
+        widget.allClassifys.forEach((element) {
+          if (element.navigationParentId == levelOneId) {
+            levelTwoClassifys.add(element);
+          }
+        });
       });
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+//    return ListView.builder(
+//        shrinkWrap: true,
+//        itemCount: levelTwoClassifys.length,
+//        itemBuilder: (BuildContext context, int index) {
+//          return Text(levelTwoClassifys[index].elementLabel);
+//        });
+    return SizedBox(
+      height: ScreenUtil().setHeight(900.0),
+      child: GridView.builder(
+          itemCount: levelTwoClassifys.length,
+          // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //横轴元素个数
+              crossAxisCount: 3,
+              //纵轴间距
+              mainAxisSpacing: 10.0,
+              //横轴间距
+              crossAxisSpacing: 10.0,
+              //子组件宽高长度比例
+              childAspectRatio: 1.0),
+          itemBuilder: (BuildContext context, int index) {
+            return getWidget(levelTwoClassifys[index]);
+          }),
+    );
+  }
 
-    UIUtils.showToast(this.allClassifys.length.toString());
+  Widget getWidget(ElementItem item) {
+    return GestureDetector(
+      onTap: () {
+        // 中文需要进行编码,使用时解码
+        String searchText = FluroConvertUtil.fluroCnParamsEncode(item.elementLabel);
+        NavigatorUtil.goRouterPage(context, '${Routes.courseSearch}?search=${searchText}&isCharge=');
+      },
+      child: Column(
+        children: <Widget>[
+          Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
+          Text(item.elementLabel),
+        ],
+      ),
+    );
+  }
 
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: levelTwoClassifys.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Text(levelTwoClassifys[index].elementLabel);
-        });
+  @override
+  void dispose() {
+    super.dispose();
+
+    if (subscription != null){
+      subscription.cancel();
+    }
   }
 
 }

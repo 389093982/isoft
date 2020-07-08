@@ -14,7 +14,7 @@ class NavigatorUtil {
     Application.router.navigateTo(context, path,
         transitionDuration: transitionDuration,
         transitionBuilder: transitionBuilder,
-        transition: TransitionType.fadeIn);
+        transition: TransitionType.inFromRight);
   }
 
   // 返回

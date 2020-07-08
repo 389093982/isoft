@@ -1,11 +1,15 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:linkknown/page/advise_edit_page.dart';
 import 'package:linkknown/page/advise_page.dart';
 import 'package:linkknown/page/course_detail.dart';
+import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 
 
 // splash 页面
@@ -41,7 +45,7 @@ var cloudBlogHandler = new Handler(
 // 个人中心页
 var personalCenterHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
+      return PersonalCenterPage();
     });
 
 // 已购课程页
@@ -54,6 +58,11 @@ var buyCourseHandler = new Handler(
 var adviseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return AdvisePage();
+    });
+
+var adviseEditHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return AdviseEditPage();
     });
 
 // 关于链知页
@@ -69,3 +78,11 @@ var courseDetailHandler = new Handler(
       return CourseDetailPage(course_id);
     });
 
+// 课程搜索页
+var courseSearchHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+
+      String search = params['search'].first;
+      String isCharge = params['isCharge'].first;
+      return CourseSearchPage(FluroConvertUtil.fluroCnParamsDecode(search), isCharge);
+    });

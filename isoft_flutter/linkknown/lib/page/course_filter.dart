@@ -8,23 +8,19 @@ import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/course_card.dart';
 
-class TabCourseFilterWidget extends StatefulWidget {
+class CourseFilterWidget extends StatefulWidget {
 
   String search;
   String isCharge;
 
-  TabCourseFilterWidget(this.search, this.isCharge);
+  CourseFilterWidget(this.search, this.isCharge);
 
   @override
-  _TabCourseFilterState createState() => _TabCourseFilterState(isCharge);
+  _CourseFilterState createState() => _CourseFilterState();
 
 }
 
-class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProviderStateMixin {
-
-  String isCharge;
-
-  _TabCourseFilterState(this.isCharge);
+class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderStateMixin {
 
   List<Course> courseList = new List();
   ScrollController scrollController = ScrollController();
@@ -32,6 +28,9 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
   int page = 0;
   bool isLoading = false;//是否正在请求新数据
   bool showMore = false;//是否显示底部加载中提示
+
+   String _old_search;
+   String _old_isCharge;
 
   @override
   void initState() {
@@ -60,7 +59,7 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
       isLoading = true;
       page = current_page;
     });
-    LinkKnownApi.searchCourseList("", isCharge, current_page, offset).catchError((e) {
+    LinkKnownApi.searchCourseList(widget.search, widget.isCharge, current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
@@ -91,6 +90,9 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
 
   @override
   Widget build(BuildContext context) {
+    // 当搜索条件发生修改时重新刷新数据
+    checkCanRefreshData();
+
     return Stack(
       children: <Widget>[
         RefreshIndicator(
@@ -110,26 +112,40 @@ class _TabCourseFilterState extends State<TabCourseFilterWidget> with TickerProv
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: GridView.builder(
-                itemCount: courseList.length,
-                controller: scrollController,
-                // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              shrinkWrap: true,
+              itemCount: courseList.length,
+              controller: scrollController,
+              // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   //横轴元素个数
-                    crossAxisCount: 2,
-                    //纵轴间距
-                    mainAxisSpacing: 10.0,
-                    //横轴间距
-                    crossAxisSpacing: 10.0,
-                    //子组件宽高长度比例
-                    childAspectRatio: 1.0),
-                itemBuilder: (BuildContext context, int index) {
-                  return CourseCardWidget(courseList[index]);
-                }),
+                  crossAxisCount: 2,
+                  //纵轴间距
+                  mainAxisSpacing: 10.0,
+                  //横轴间距
+                  crossAxisSpacing: 10.0,
+                  //子组件宽高长度比例
+                  childAspectRatio: 1.0),
+              itemBuilder: (BuildContext context, int index) {
+                return CourseCardWidget(courseList[index]);
+              }),
           ),
           onRefresh: _onRefresh,
         ),
       ],
     );
+  }
+
+  void checkCanRefreshData() {
+    // _old_search 不为空表示不是初次搜索
+    if (_old_search != null) {
+      // 有一项不同则表示搜索条件变更
+      if (_old_search != widget.search || _old_isCharge != widget.isCharge) {
+        // 需要重新加载数据
+        initData();
+      }
+    }
+    _old_search = widget.search;
+    _old_isCharge = widget.isCharge;
   }
 
   @override

@@ -146,16 +146,13 @@ class CourseIntroduceWidget extends StatefulWidget {
   CourseIntroduceWidget(this.course);
 
   @override
-  _CourseIntroduceState createState() => _CourseIntroduceState(course);
+  _CourseIntroduceState createState() => _CourseIntroduceState();
 
 }
 
+// State 构造函数传参的话，只会执行一次，所以不使用 State 传参
+// 改用 widget.xxx 参数，widget 的构造器会重复执行
 class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
-
-  Course course;
-
-  _CourseIntroduceState(this.course);
-
 
   @override
   void initState() {
@@ -169,7 +166,7 @@ class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(course != null ? course.courseName : ''),
+          Text(widget.course != null ? widget.course.courseName : ''),
           VEmptyView(5),
           Row(
             children: <Widget>[
@@ -180,12 +177,12 @@ class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
             ],
           ),
           VEmptyView(5),
-          Text(course != null ? course.courseShortDesc : ''),
+          Text(widget.course != null ? widget.course.courseShortDesc : ''),
           // 分享点赞收藏播放
           // 作者信息
           VEmptyView(5),
           // 课程标签语
-          CourseLabelWidget(course != null ? course.courseLabel: ''),
+          CourseLabelWidget(widget.course != null ? widget.course.courseLabel: ''),
           // 分集视频
         ],
       ),
