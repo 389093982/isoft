@@ -22,6 +22,7 @@ import com.linkknown.ilearning.activity.AboutUsActivity;
 import com.linkknown.ilearning.activity.AdviseActivity;
 import com.linkknown.ilearning.activity.CloudBlogActivity;
 import com.linkknown.ilearning.activity.BoughtCourseActivity;
+import com.linkknown.ilearning.activity.LinkknownWithMeActivity;
 import com.linkknown.ilearning.activity.LoginActivity;
 import com.linkknown.ilearning.activity.MyCouponActivity;
 import com.linkknown.ilearning.activity.HuodongActivity;
@@ -133,6 +134,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public LinearLayout menuAboutLayout;
     @BindView(R.id.menuAbout)
     public TextView menuAbout;
+    //我与链知
+    @BindView(R.id.menuLinkKnownWithMeLayout)
+    public LinearLayout menuLinkKnownWithMeLayout;
+    @BindView(R.id.menuLinkKnownWithMe)
+    public TextView menuLinkKnownWithMe;
 
     private Context mContext;
 
@@ -167,6 +173,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         menuAdviseLayout.setOnClickListener(this);
         menuAboutLayout.setOnClickListener(this);
         setup.setOnClickListener(this);
+        menuLinkKnownWithMeLayout.setOnClickListener(this);
     }
 
 
@@ -281,6 +288,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.menuAboutLayout:
                 UIUtils.gotoActivity(mContext, AboutUsActivity.class);
                 break;
+            case R.id.menuLinkKnownWithMeLayout:
+                UIUtils.gotoActivity(mContext, LinkknownWithMeActivity.class);
+                break;
             default:
                 break;
         }
@@ -295,5 +305,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         UIUtils.setTextViewDrawbleImg(mContext, menuBoughtCourse, R.drawable.ic_course, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAdvise, R.drawable.ic_advise, 0, 2, 40, 42);
         UIUtils.setTextViewDrawbleImg(mContext, menuAbout, R.drawable.ic_about, 0, 2, 40, 42);
+        UIUtils.setTextViewDrawbleImg(mContext, menuLinkKnownWithMe, R.drawable.ic_link, 0, 2, 40, 42);
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/invitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/invite_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邀请他人:">
+        </TextView>
+
+        <!--搜索框-->
+        <include layout="@layout/layout_card_search_customer"
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/invite_tip"
+            android:layout_marginTop="10dp"/>
+
+        <!--分割线-->
+        <View style="@style/bg_line"
+            android:id="@+id/bg_line"
+            android:layout_below="@+id/search"
+            android:layout_marginTop="40dp"/>
+
+
+        <TextView
+            android:id="@+id/who_invite_me_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bg_line"
+            android:layout_marginTop="40dp"
+            android:text="正在邀请我:">
+        </TextView>
+
+        <!-- 下拉刷新控件 -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/who_invite_me_tip"
+            android:layout_marginTop="10dp">
+
+            <include layout="@layout/layout_recycleview"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    </RelativeLayout>
+
+</FrameLayout>
+
+
+
