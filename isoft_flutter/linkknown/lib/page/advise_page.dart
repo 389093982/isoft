@@ -41,6 +41,8 @@ class _AdvisePageState extends State<AdvisePage> {
         adviseList.addAll(adviseListResponse.advises);
 
         paginator = adviseListResponse.paginator;
+        // 结束加载显示没有更多数据
+        _easyRefreshController.finishLoad(noMore: paginator.currpage == paginator.totalpages);
       });
     }
     isLoading = false;
@@ -114,13 +116,14 @@ class _AdvisePageState extends State<AdvisePage> {
             showInfo: false,
           ),
           footer: ClassicalFooter(
-              loadText: '上拉加载',
-              loadReadyText: '准备加载',
-              loadingText: '加载中...',
-              loadedText: '加载完成',
-              noMoreText: '没有更多',
-              bgColor: Colors.transparent,
-              textColor: Colors.black87,
+            loadText: '上拉加载',
+            loadReadyText: '准备加载',
+            loadingText: '加载中...',
+            loadedText: '加载完成',
+            noMoreText: '没有更多数据',
+            bgColor: Colors.transparent,
+            textColor: Colors.black87,
+            showInfo: false,
           ),
           emptyWidget: canShowEmptyFlag && adviseList.length == 0
               ? Container(
@@ -178,8 +181,8 @@ class _AdvisePageState extends State<AdvisePage> {
 
   Future<void> _onLoadMore() async {
     if (paginator != null && paginator.currpage < paginator.totalpages){
-      await Future.delayed(Duration(seconds: 2), () {
-        loadPageData(paginator.currpage + 1, 10);
+      await Future.delayed(Duration(seconds: 2), () async {
+        await loadPageData(paginator.currpage + 1, 10);
       });
     }
   }
