@@ -29,12 +29,14 @@ import com.linkknown.ilearning.model.MessageListResponse;
 import com.linkknown.ilearning.model.PayOrderResponse;
 import com.linkknown.ilearning.model.PayShoppinpCartResponse;
 import com.linkknown.ilearning.model.QueryIsAttentionResponse;
+import com.linkknown.ilearning.model.QueryMyUpperAgentResponse;
 import com.linkknown.ilearning.model.RefreshTokenResponse;
 import com.linkknown.ilearning.model.RegistResponse;
 import com.linkknown.ilearning.model.SearchCouponForPayResponse;
 import com.linkknown.ilearning.model.SecondLevelCommentResponse;
 import com.linkknown.ilearning.model.UserAttentionListResponse;
 import com.linkknown.ilearning.model.UserDetailResponse;
+import com.linkknown.ilearning.model.UserLinkAgentResponse;
 import com.linkknown.ilearning.model.UserListResponse;
 import com.linkknown.ilearning.model.queryCouponByIdResponse;
 
@@ -434,4 +436,32 @@ public interface LinkKnownApi {
                                                                 @Query("AttentionOrFensi") String attentionOrFensi,
                                                                 @Query("current_page") int current_page,
                                                                 @Query("offset") int pageSize);
+
+
+
+    // 添加客户
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/AddUserLinkAgent")
+    Observable<BaseResponse> AddUserLinkAgent(@Query("user_name") String user_name);
+
+    // 查看今天邀请我的人
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryTodayInviteMe")
+    Observable<UserLinkAgentResponse> QueryTodayInviteMe(@Query("current_page") int current_page,
+                                                @Query("offset") int pageSize);
+
+    // 同意邀请
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/AgreeUserLinkAgent")
+    Observable<BaseResponse> AgreeUserLinkAgent(@Query("agent_user_name") String agent_user_name);
+
+
+    // 查看我的上级代理
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryMyUpperAgent")
+    Observable<QueryMyUpperAgentResponse> QueryMyUpperAgent();
+
+
+    // 查询我的客户
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryUserLinkAgent")
+    Observable<UserLinkAgentResponse> QueryUserLinkAgent(@Query("current_page") int current_page,
+                                                         @Query("offset") int pageSize);
+
+
 }

@@ -64,13 +64,27 @@
     <LinearLayout style="@style/wrap_layout"
         android:layout_marginBottom="40dp">     <!--底部预留一点空间-->
 
+        <!-- 上圆角-->
         <LinearLayout
             android:id="@+id/menuAboutLayout"
-            style="@style/single_layout">
+            style="@style/top_layout">
             <TextView
                 android:id="@+id/menuAbout"
                 style="@style/usertext"
                 android:text="  关于链知"/>
+            <ImageView style="@style/img_arrow"/>
+        </LinearLayout>
+
+        <View style="@style/bg_line"/>
+
+        <!-- 下圆角-->
+        <LinearLayout
+            android:id="@+id/menuLinkKnownWithMeLayout"
+            style="@style/bottom_layout">
+            <TextView
+                android:id="@+id/menuLinkKnownWithMe"
+                style="@style/usertext"
+                android:text="  我与链知" />
             <ImageView style="@style/img_arrow"/>
         </LinearLayout>
 
