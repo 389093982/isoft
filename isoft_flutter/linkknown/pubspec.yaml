@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^0.17.4
   event_bus:  ^1.1.1
   flutter_easyrefresh: ^2.1.1
+  cached_network_image: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
     - images/banner_coupon.png
     - images/banner_huodong.png
     - images/add.svg
+    - images/not_found.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

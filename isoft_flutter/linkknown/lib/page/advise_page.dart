@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/bezier_bounce_footer.dart';
+import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
@@ -7,6 +10,8 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/advise_list.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/widgets/divider_line.dart';
+import 'package:linkknown/widgets/v_empty_view.dart';
 
 class AdvisePage extends StatefulWidget {
   @override
@@ -84,13 +89,23 @@ class _AdvisePageState extends State<AdvisePage> {
       body: Center(
         child: EasyRefresh(
           controller: _easyRefreshController,
-          header: MaterialHeader(),
-          footer: MaterialFooter(),
+          header: BezierCircleHeader(backgroundColor: Colors.deepOrange),
+          footer: BezierBounceFooter(backgroundColor: Colors.deepOrange),
           child: ListView.builder(
 //            controller: scrollController,
             itemCount: adviseList.length, //列表长度+底部加载中提示
             itemBuilder: (BuildContext context, int position) {
-              return Text(adviseList[position].advise);
+              return Container(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(adviseList[position].advise),
+                    VEmptyView(20),
+                    DividerLineView(),
+                  ],
+                ),
+              );
             },
             // 解决 item 太少不能下拉刷新的问题
             physics: AlwaysScrollableScrollPhysics(),
@@ -114,4 +129,5 @@ class _AdvisePageState extends State<AdvisePage> {
     super.dispose();
 //    scrollController.dispose();
   }
+
 }
