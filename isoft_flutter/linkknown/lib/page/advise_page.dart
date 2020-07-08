@@ -163,7 +163,7 @@ class _AdvisePageState extends State<AdvisePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(adviseList[position].advise),
-                    VEmptyView(20),
+                    VEmptyView(50),
                     DividerLineView(),
                   ],
                 ),
