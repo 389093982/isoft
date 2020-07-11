@@ -46,7 +46,7 @@
             <Radio label="female">女</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem label="生日">
+        <FormItem label="生日" prop="birthday">
           <Tooltip content="温馨提示:  点击  ‘年份’  可以快速选择哦！" placement="top-start">
             <FormItem>
               <DatePicker type="date" placeholder="请选择出生日期" v-model="formValidate.birthday"></DatePicker>
@@ -101,6 +101,13 @@
           callback();
         }
       };
+      const checkBirthday = (rule, value, callback) => {
+        if (value.length<10) {
+          callback(new Error('生日格式不正确！'));
+        } else {
+          callback();
+        }
+      };
       return {
         hatDrawer:false,
         fileUploadUrl: fileUploadUrl + "?table_name=user&table_field=small_icon",
@@ -123,7 +130,16 @@
             { required: true,validator:checkNickName, trigger: 'blur' }
           ],
           gender: [
-            { required: true, message:'性别不能为空！',trigger: 'change' }
+            { required: true, message:'性别不能为空！',trigger: 'blur' }
+          ],
+          birthday: [
+            { required: true, validator:checkBirthday,trigger: 'blur,change' }
+          ],
+          current_residence: [
+            { required: true, message:'现居住地址不能为空！',trigger: 'blur' }
+          ],
+          hometown: [
+            { required: true, message:'家乡不能为空！',trigger: 'blur' }
           ],
         }
       }
