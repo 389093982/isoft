@@ -200,7 +200,7 @@ func (t *IWorkFuncProxy) FormatNowTimeToYYYYMMDD(args []interface{}) interface{}
 }
 
 func (t *IWorkFuncProxy) IsEmail(args []interface{}) (result bool) {
-	result, _ = regexp.MatchString(`^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`, args[0].(string))
+	result, _ = regexp.MatchString(`^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$`, args[0].(string))
 	return
 }
 

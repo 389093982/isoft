@@ -208,6 +208,12 @@ export function validateEmail(email) {
   return uPattern.test(email);
 }
 
+// 校验手机
+export function validatePhone(phone) {
+  var uPattern = /^[1][3,4,5,7,8][0-9]{9}$/;
+  return uPattern.test(phone);
+}
+
 // 校验密码
 export function validatePasswd(passwd) {
   // 最少6位，至少1个大小写字母，数字和特殊字符!
@@ -377,6 +383,20 @@ export function goToTargetLink(url) {
 // 字符串分割函数
 export function strSplit(str, sep) {
   return str.split(sep);
+}
+
+
+// 获取网站首页地址
+export function getWebIndex() {
+  if ("development"===process.env.NODE_ENV) {
+    return 'http://localhost:8002/ilearning/index';
+  }else if ("testing"===process.env.NODE_ENV) {
+    return 'www.test.linkknown.com';
+  }else if ("production" === process.env.NODE_ENV) {
+    return 'www.linkknown.com';
+  }else {
+    return 'http://localhost:8002/ilearning/index';
+  }
 }
 
 // 字符串重复 n 次

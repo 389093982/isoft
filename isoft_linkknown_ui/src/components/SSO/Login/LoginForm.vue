@@ -15,7 +15,7 @@
     </div>
 
     <div id="login_submit_content">
-      <input @click="showInputPasswordType()" class="focus" name="username" v-model.trim="username" placeholder="邮箱..." type="text" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " required @keyup.enter="login"/>
+      <input @click="showInputPasswordType()" class="focus" name="username" v-model.trim="username" placeholder="手机 / 邮箱..." type="text" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " required @keyup.enter="login"/>
       <input v-if="inputPasswordType" type="password" style="display:none">
       <input class="focus" name="passwd" v-model.trim="passwd" placeholder="密码..." type="password" style="width: 90%;height: 40px;margin: 15px 0 0 15px;padding-left: 10px " autocomplete="new-password" required @keyup.enter="login"/>
       <div style="margin: 0 0 0 0 ">
@@ -45,9 +45,10 @@
 
 <script>
   import {Login} from "../../../api"
-  import {checkEmpty, checkNotEmpty, strSplit} from "../../../tools"
+  import {checkEmpty, checkNotEmpty, strSplit, getWebIndex} from "../../../tools"
   import {setLoginInfo} from "../../../tools/sso"
   import {redirectToGitHubLogin, handleAfterGitHubLogin} from "../../../tools/gitlogin"
+  import {web_index} from "../../../tools/gitlogin";
 
   export default {
     name: "LoginForm",
@@ -74,7 +75,7 @@
         this.inputPasswordType=true;
       },
       storageRedirectUrl: function (){
-        let redirectUrl = "http://www.linkknown.com";
+        let redirectUrl = getWebIndex();
         var arr = strSplit(window.location.href, "?redirectUrl=");
         if (arr.length === 2) {
           redirectUrl = arr[1];

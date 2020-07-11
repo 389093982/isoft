@@ -25,8 +25,8 @@
           </h3>
           <hr>
           <div style="font-size: 12px;font-family: Tahoma, Helvetica, 'Microsoft Yahei', 微软雅黑, Arial, STHeiti;">
-            <p style="line-height: 30px;">1、现阶段需使用邮箱注册并登录</p>
-            <p style="line-height: 30px;">2、邮箱验证码,有效时间 5 分钟</p>
+            <p style="line-height: 30px;">1、现阶段需使用手机 / 邮箱注册并登录</p>
+            <p style="line-height: 30px;">2、手机 / 邮箱验证码,有效时间 5 分钟</p>
             <p style="line-height: 30px;">3、本站欢迎大家共同参与学习自己感兴趣的教程， 并分享自己制作的<b>原创</b>视频教程,为linkknown公共学习区域贡献自己的力量</p>
             <p style="line-height: 30px;">4、为制造良好的互联网环境，用户不得在本站发布相关法律、法规禁止的内容， 一经发现，立即封停账号</p>
           </div>

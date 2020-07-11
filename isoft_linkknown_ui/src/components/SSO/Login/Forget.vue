@@ -7,8 +7,8 @@
       </span>
     </div>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="邮箱" prop="username">
-        <Input v-model.trim="formValidate.username" placeholder="请输入注册邮箱"></Input>
+      <FormItem label="账号" prop="username">
+        <Input v-model.trim="formValidate.username" placeholder="手机 / 邮箱"></Input>
       </FormItem>
       <FormItem label="验证码" prop="verifycode">
         <Input v-model.trim="formValidate.verifycode" placeholder="请输入验证码"></Input>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {validateEmail, validatePatternForString} from "../../../tools"
+  import {validateEmail,validatePhone, validatePatternForString} from "../../../tools"
   import {CreateVerifyCode, ModifyPwd} from "../../../api"
 
   export default {
@@ -37,9 +37,9 @@
     data() {
       const _validateUserName = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('邮箱不能为空!'));
-        } else if (!validateEmail(value)) {
-          callback(new Error('邮箱不合法!'));
+          callback(new Error('账号不能为空!'));
+        } else if (!validateEmail(value) && !validatePhone(value)) {
+          callback(new Error('账号不合法!'));
         } else {
           callback();
         }
@@ -75,7 +75,7 @@
         }
       };
       return {
-        totalTime: 30,
+        totalTime: 60,
         VerifyCodeButtonDesc: '点击获取验证码',
         formValidate: {
           username: '',
@@ -121,19 +121,20 @@
         const result = await CreateVerifyCode(params);
         if (result.status === "SUCCESS") {
           this.$Message.success("验证码发送成功,请注意查收!");
-          //这里进行30秒的置灰设置
-          this.VerifyCodeButtonDesc = this.totalTime + 's后重新获取';//展示30
+          //这里进行60秒的置灰设置
+          this.VerifyCodeButtonDesc = this.totalTime + 's后重新获取';//展示60
           let clock = window.setInterval(() => {
             this.totalTime--;
             this.VerifyCodeButtonDesc = this.totalTime + 's后重新获取';
             if (this.totalTime < 0) {//当倒计时小于0时清除定时器
               window.clearInterval(clock);
               this.VerifyCodeButtonDesc = '点击获取验证码';
-              this.totalTime = 30
+              this.totalTime = 60
             }
           }, 1000);
         } else {
           this.$Message.error(result.errorMsg);
+          this.VerifyCodeButtonDesc = '点击获取验证码';
         }
       },
       handleSubmit: function (name) {
