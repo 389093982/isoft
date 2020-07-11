@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"regexp"
 )
 
 var FuncCallers []map[string]string
@@ -107,6 +108,8 @@ func (t *IWorkFuncProxy) getFuncCallers() []map[string]string {
 		{"group": "default", "funcDemo": "getByteSizeForMB($int64)", "funcDesc": "产生指定大小 MB 的字节数"},
 		{"group": "default", "funcDemo": "batchSqlBinding($varOrSlice1,$varOrSlice2,$varOrSlice3)", "funcDesc": "批量插入参数准备"},
 		{"group": "default", "funcDemo": "transformSqlQueryRowsToSliceByKey($rowDatas,$key)", "funcDesc": "将 sql 查询的多条记录根据字段名转换成切片"},
+		{"group": "default", "funcDemo": "isEmail($str)", "funcDesc": "判断是不是Email邮箱"},
+		{"group": "default", "funcDemo": "isPhone($str)", "funcDesc": "判断是不是手机号"},
 
 		{"group": "sql", "funcDemo": "BATCH[$values]", "funcDesc": "批量插入值"},
 		{"group": "sql", "funcDemo": "__AND__", "funcDesc": "动态识别 and 连接"},
@@ -194,6 +197,16 @@ func (t *IWorkFuncProxy) SliceLen(args []interface{}) interface{} {
 
 func (t *IWorkFuncProxy) FormatNowTimeToYYYYMMDD(args []interface{}) interface{} {
 	return time.Now().Format("20060102")
+}
+
+func (t *IWorkFuncProxy) IsEmail(args []interface{}) (result bool) {
+	result, _ = regexp.MatchString(`^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`, args[0].(string))
+	return
+}
+
+func (t *IWorkFuncProxy) IsPhone(args []interface{}) (result bool) {
+	result, _ = regexp.MatchString(`^[1][3,4,5,7,8][0-9]{9}$`, args[0].(string))
+	return
 }
 
 func (t *IWorkFuncProxy) ParseTimestampStrToDate(args []interface{}) interface{} {
