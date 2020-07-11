@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/provider/user_provider.dart';
 import 'package:linkknown/route/routes.dart';
@@ -11,6 +12,12 @@ void main() {
   Router router = Router();
   Routes.configureRoutes(router);
   Application.router = router;
+
+  //顶部状态栏透明
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+  );
+
   //打开主页
   // Provider不止提供了ChangeNotifierProvider，还有 Provider,ListenableProvider,ValueListenableProvider,StreamProvider,
   // 如果想管理多个对象可以用 MultiProvider,如下
