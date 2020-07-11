@@ -92,7 +92,7 @@
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="账号"
+                    android:hint="账号[手机/邮箱]"
                     android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 

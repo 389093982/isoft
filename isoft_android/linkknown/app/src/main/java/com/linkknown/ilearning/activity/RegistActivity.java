@@ -107,7 +107,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                     // 验证码倒计时不应该设置为 true
                     createVerifyCodeTip.setEnabled(true);
                 } else {
-                    ToastUtil.showText(mContext, "请使用邮箱进行注册！");
+                    ToastUtil.showText(mContext, "请使用 手机/邮箱 进行注册！");
                     createVerifyCodeTip.setEnabled(false);
                 }
             }
@@ -199,14 +199,14 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private void handleCreateVerifyCode() {
         UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
         // 30s 倒计时,一次一秒
-        new CountDownTimer(30 * 1000, 1000) {
+        new CountDownTimer(60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 禁用
                 createVerifyCodeTip.setEnabled(false);
                 // 倒计时秒数
                 long second = millisUntilFinished / 1000;
-                if (second > 28) {
+                if (second > 58) {
                     createVerifyCodeTip.setText("发送中...");
                 } else {
                     createVerifyCodeTip.setText(second + "s后重新获取");
@@ -253,11 +253,11 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         }
         //校验用户名
         if (StringUtils.isEmpty(_userName)) {
-            ToastUtil.showText(mContext,"请填写邮箱");
+            ToastUtil.showText(mContext,"请填写账号");
             return false;
         }
-        if (!CheckParamUtil.checkRegex(_userName, CheckParamUtil.REGEX_EMAIL)) {
-            ToastUtil.showText(mContext,"邮箱不合法");
+        if (!CheckParamUtil.checkRegex(_userName, CheckParamUtil.REGEX_EMAIL) && !CheckParamUtil.checkRegex(_userName, CheckParamUtil.REGEX_PHONE)) {
+            ToastUtil.showText(mContext,"请使用手机号或邮箱注册！");
             return false;
         }
         //验证码

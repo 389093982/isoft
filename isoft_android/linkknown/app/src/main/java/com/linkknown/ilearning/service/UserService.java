@@ -143,7 +143,7 @@ public class UserService {
     }
 
     public static boolean isUserNameValid(String username) {
-        return StringUtils.isNotBlank(username) && CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL);
+        return StringUtils.isNotBlank(username) && (CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_EMAIL) || CheckParamUtil.checkRegex(username, CheckParamUtil.REGEX_PHONE));
     }
 
 
