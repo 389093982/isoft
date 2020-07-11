@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -95,11 +96,21 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
       children: <Widget>[
         Container(
           margin: EdgeInsets.all(5),
-          child: Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+          child: SvgPicture.asset(
+            "images/setting.svg",
+            color: Colors.white,
+            width: 20,
+            height: 20,
+          ),
         ),
         Container(
           margin: EdgeInsets.all(5),
-          child: Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+          child: SvgPicture.asset(
+            "images/lingdang.svg",
+            color: Colors.white,
+            width: 20,
+            height: 20,
+          ),
         ),
       ],
     );

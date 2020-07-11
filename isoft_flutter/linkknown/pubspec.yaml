@@ -69,6 +69,8 @@ flutter:
     - images/banner_coupon.png
     - images/banner_huodong.png
     - images/add.svg
+    - images/setting.svg
+    - images/lingdang.svg
     - images/not_found.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/bezier_bounce_footer.dart';
+import 'package:flutter_easyrefresh/bezier_circle_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -106,25 +108,8 @@ class _AdvisePageState extends State<AdvisePage> {
             )),
           ),
           controller: _easyRefreshController,
-          header: ClassicalHeader(
-            refreshText: '下拉刷新',
-            refreshReadyText: '准备刷新',
-            refreshingText: '刷新中...',
-            refreshedText: '刷新完成',
-            bgColor: Colors.transparent,
-            textColor: Colors.black87,
-            showInfo: false,
-          ),
-          footer: ClassicalFooter(
-            loadText: '上拉加载',
-            loadReadyText: '准备加载',
-            loadingText: '加载中...',
-            loadedText: '加载完成',
-            noMoreText: '没有更多数据',
-            bgColor: Colors.transparent,
-            textColor: Colors.black87,
-            showInfo: false,
-          ),
+          header: BezierCircleHeader(),
+          footer: BezierBounceFooter(),
           emptyWidget: canShowEmptyFlag && adviseList.length == 0
               ? Container(
             height: double.infinity,
