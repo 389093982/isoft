@@ -197,28 +197,33 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
 
     //发送验证码
     private void handleCreateVerifyCode() {
-        UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
-        // 30s 倒计时,一次一秒
-        new CountDownTimer(60 * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // 禁用
-                createVerifyCodeTip.setEnabled(false);
-                // 倒计时秒数
-                long second = millisUntilFinished / 1000;
-                if (second > 58) {
-                    createVerifyCodeTip.setText("发送中...");
-                } else {
-                    createVerifyCodeTip.setText(second + "s后重新获取");
+        //发送前再做一道校验
+        if (UserService.isUserNameValid(StringUtils.trim(userName.getText().toString()))) {
+            UserService.createVerifyCode(StringUtils.trim(userName.getText().toString()));
+            // 30s 倒计时,一次一秒
+            new CountDownTimer(60 * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    // 禁用
+                    createVerifyCodeTip.setEnabled(false);
+                    // 倒计时秒数
+                    long second = millisUntilFinished / 1000;
+                    if (second > 58) {
+                        createVerifyCodeTip.setText("发送中...");
+                    } else {
+                        createVerifyCodeTip.setText(second + "s后重新获取");
+                    }
                 }
-            }
-            @Override
-            public void onFinish() {
-                createVerifyCodeTip.setEnabled(true);
-                createVerifyCodeTip.setText("重新获取验证码");
+                @Override
+                public void onFinish() {
+                    createVerifyCodeTip.setEnabled(true);
+                    createVerifyCodeTip.setText("重新获取验证码");
 
-            }
-        }.start();
+                }
+            }.start();
+        } else {
+            ToastUtil.showText(mContext, "请使用 手机/邮箱 进行注册！");
+        }
     }
 
     //点击注册按钮
