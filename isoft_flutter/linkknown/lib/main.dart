@@ -13,9 +13,8 @@ void main() {
   Routes.configureRoutes(router);
   Application.router = router;
 
-  //顶部状态栏透明
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+      SystemUiOverlayStyle(statusBarColor: Colors.red),
   );
 
   //打开主页
