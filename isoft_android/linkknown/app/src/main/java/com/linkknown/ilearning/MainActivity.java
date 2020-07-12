@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
 
     // 用户头像
     ImageView navigationHeaderIconView;
-    
+
     // 名人名言
     TextBannerView mingyanTextbanner;
 
@@ -181,6 +181,7 @@ public class MainActivity extends BaseActivity {
         View headerView = navigationView.getHeaderView(0);
         // navigation 未登录布局
         navigationUnLoginLayout = headerView.findViewById(R.id.navigationUnLoginLayout);
+        navigationUnLoginLayout.setOnClickListener(v -> UIUtils.gotoActivity(mContext,LoginActivity.class));
         // navigation 已登录布局
         navigationLoginLayout = headerView.findViewById(R.id.navigationLoginLayout);
         // 用户名和头像
