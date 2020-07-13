@@ -72,6 +72,8 @@ flutter:
     - images/setting.svg
     - images/lingdang.svg
     - images/not_found.png
+    - images/ic_play_circle_outline_black_24dp.png
+    - images/ic_subtitles_black_24dp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

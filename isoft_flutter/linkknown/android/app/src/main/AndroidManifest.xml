@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="链知晓课堂2"
+        android:label="链知课堂2"
         android:icon="@mipmap/linkknown">
         <activity
             android:name=".MainActivity"

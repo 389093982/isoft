@@ -15,14 +15,13 @@ class CourseCardWidget extends StatefulWidget {
   CourseCardWidget(this.course);
 
   @override
-  _CourseCardState createState() => _CourseCardState(course);
+  _CourseCardState createState() => _CourseCardState();
 }
 
 class _CourseCardState extends State<CourseCardWidget>
     with TickerProviderStateMixin {
-  Course course;
 
-  _CourseCardState(this.course);
+  _CourseCardState();
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +44,12 @@ class _CourseCardState extends State<CourseCardWidget>
               InkWell(
                 onTap: () {
                   NavigatorUtil.goRouterPage(
-                      context, "${Routes.courseDetail}?course_id=${course.id}");
+                      context, "${Routes.courseDetail}?course_id=${widget.course.id}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child: AspectRatio(
 //                  child: Image.network(UIUtils.replaceMediaUrl(course.smallImage), fit: BoxFit.fill, width: double.infinity,),
-                  child: CachedImageWidget(UIUtils.replaceMediaUrl(course.smallImage)),
+                  child: CachedImageWidget(UIUtils.replaceMediaUrl(widget.course.smallImage)),
                   aspectRatio: 1 / 0.6,
                 ),
               ),
@@ -59,7 +58,7 @@ class _CourseCardState extends State<CourseCardWidget>
                 child: Padding(
                   padding: EdgeInsets.all(5.0),
                   child:
-                      CommonLabel.getCommonLabel(course.isCharge == "charge" ? "付费课程" : "免费"),
+                      CommonLabel(widget.course.isCharge == "charge" ? "付费课程" : "免费"),
                 ),
               ),
             ],
@@ -69,24 +68,24 @@ class _CourseCardState extends State<CourseCardWidget>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(course.courseName),
+                Text(widget.course.courseName),
                 Container(
                   margin: EdgeInsets.only(top: 5),
                   child: Row(
                     children: <Widget>[
                       // 课程集数和播放次数
                       Image.asset(
-                        "images/linkknown.jpg",
+                        "images/ic_play_circle_outline_black_24dp.png",
                         width: 15,
                         height: 15,
                       ),
-                      Text(course.courseNumber.toString()),
+                      Text(widget.course.courseNumber.toString()),
                       Image.asset(
-                        "images/linkknown.jpg",
+                        "images/ic_subtitles_black_24dp.png",
                         width: 15,
                         height: 15,
                       ),
-                      Text(course.watchNumber.toString()),
+                      Text(widget.course.watchNumber.toString()),
                     ],
                   ),
                 ),
@@ -97,19 +96,19 @@ class _CourseCardState extends State<CourseCardWidget>
                       // offstage 组件控制组件是否隐藏
                       // 通过offsatge字段控制child是否显示,比较常用的控件
                       Offstage(
-                        offstage: !UIUtils.isValidPrice(course.price),
+                        offstage: !UIUtils.isValidPrice(widget.course.price),
                         child: Padding(
                           padding: EdgeInsets.only(right: 5),
                           child: Text(
-                            Constants.RMB + course.price,
+                            Constants.RMB + widget.course.price,
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
                       ),
                       Offstage(
-                        offstage: !UIUtils.isValidPrice(course.oldPrice),
+                        offstage: !UIUtils.isValidPrice(widget.course.oldPrice),
                         child: Text(
-                          Constants.RMB + course.oldPrice,
+                          Constants.RMB + widget.course.oldPrice,
                           style: TextStyle(
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough),
