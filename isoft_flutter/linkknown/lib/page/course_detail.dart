@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/common/styles/colors.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -208,41 +209,10 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(
               widget.course != null ? widget.course.courseLabel : ''),
-          getCourseVideoWidget(),
+          CourseVideosWidget(widget.course, widget.cVideos),
           // 分集视频
         ],
       ),
-    );
-  }
-
-  Widget getCourseVideoWidget() {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          color: LinkKnownColor.lightGrey,
-          child: Row(
-            children: <Widget>[
-              Text("分集视频"),
-              // 中间用Expanded控件
-              Expanded(
-                child: Text(''),
-              ),
-              Image.asset(
-                "images/linkknown.jpg",
-                width: ScreenUtil().setWidth(40),
-                height: ScreenUtil().setHeight(40),
-              ),
-            ],
-          ),
-        ),
-        ListView.builder(
-            shrinkWrap: true,
-            itemCount: (widget.cVideos ?? []).length,
-            itemBuilder: (BuildContext context, int index) {
-              return Text(widget.cVideos[index].videoName);
-            }),
-      ],
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 
 
@@ -81,8 +82,13 @@ var courseDetailHandler = new Handler(
 // 课程搜索页
 var courseSearchHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-
       String search = params['search'].first;
       String isCharge = params['isCharge'].first;
       return CourseSearchPage(FluroConvertUtil.fluroCnParamsDecode(search), isCharge);
+    });
+
+// 视频播放界面
+var videoPlayHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return VideoPlayPage();
     });
