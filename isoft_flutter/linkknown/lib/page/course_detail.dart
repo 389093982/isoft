@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/scroll_helper.dart';
+import 'package:linkknown/common/styles/colors.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -50,66 +52,69 @@ class _CourseDetailPageState extends State<CourseDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          // AppBar 和 SliverAppBar 是Material Design中的 App Bar，也就是 Android 中的 Toolbar
-          // SliverAppBar是一个与 CustomScrollView 结合使用的material design风格的标题栏 .
-          // 不同于AppBar, 它可以展开或收缩.
-          SliverAppBar(
-            leading: Container(
-                // 绘制返回键
-                margin: EdgeInsets.all(10), // 设置边距
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    // 返回上一页
-                    NavigatorUtil.goBack(context);
-                  },
-                )),
-            // appBar是否置顶
-            pinned: true,
-            elevation: 0,
-            expandedHeight: 200,
-            // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(course != null ? course.courseName : ""),
-              background: Image.network(
-                UIUtils.replaceMediaUrl(
-                    course != null ? course.smallImage : ""),
-                fit: BoxFit.fill,
+      body: ScrollConfiguration(
+        behavior: NoShadowScrollBehavior(),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            // AppBar 和 SliverAppBar 是Material Design中的 App Bar，也就是 Android 中的 Toolbar
+            // SliverAppBar是一个与 CustomScrollView 结合使用的material design风格的标题栏 .
+            // 不同于AppBar, 它可以展开或收缩.
+            SliverAppBar(
+              leading: Container(
+                  // 绘制返回键
+                  margin: EdgeInsets.all(10), // 设置边距
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      // 返回上一页
+                      NavigatorUtil.goBack(context);
+                    },
+                  )),
+              // appBar是否置顶
+              pinned: true,
+              elevation: 0,
+              expandedHeight: 200,
+              // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(course != null ? course.courseName : ""),
+                background: Image.network(
+                  UIUtils.replaceMediaUrl(
+                      course != null ? course.smallImage : ""),
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-          // SliverPersistentHeader最重要的一个属性是SliverPersistentHeaderDelegate，为此我们需要实现一个类继承自SliverPersistentHeaderDelegate
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: StickyTabBarDelegate(
-              child: TabBar(
-                labelColor: Colors.white,
-                indicatorColor: Colors.white,
-                indicatorSize: TabBarIndicatorSize.label,
+            // SliverPersistentHeader最重要的一个属性是SliverPersistentHeaderDelegate，为此我们需要实现一个类继承自SliverPersistentHeaderDelegate
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: StickyTabBarDelegate(
+                child: TabBar(
+                  labelColor: Colors.white,
+                  indicatorColor: Colors.white,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  controller: this.tabController,
+                  tabs: <Widget>[
+                    Tab(text: '简介'),
+                    Tab(text: '评论'),
+                  ],
+                ),
+              ),
+            ),
+            // SliverFillRemaining 创建填充视口中剩余空间的小条
+            SliverFillRemaining(
+              child: TabBarView(
                 controller: this.tabController,
-                tabs: <Widget>[
-                  Tab(text: '简介'),
-                  Tab(text: '评论'),
+                children: <Widget>[
+                  Center(child: CourseIntroduceWidget(course, cVideos)),
+                  Center(child: CourseIntroduceWidget(course, cVideos)),
                 ],
               ),
             ),
-          ),
-          // SliverFillRemaining 创建填充视口中剩余空间的小条
-          SliverFillRemaining(
-            child: TabBarView(
-              controller: this.tabController,
-              children: <Widget>[
-                Center(child: CourseIntroduceWidget(course, cVideos)),
-                Center(child: CourseIntroduceWidget(course, cVideos)),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -211,12 +216,34 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   }
 
   Widget getCourseVideoWidget() {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: (widget.cVideos ?? []).length,
-        itemBuilder: (BuildContext context, int index) {
-          return Text(widget.cVideos[index].videoName);
-        });
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          color: LinkKnownColor.lightGrey,
+          child: Row(
+            children: <Widget>[
+              Text("分集视频"),
+              // 中间用Expanded控件
+              Expanded(
+                child: Text(''),
+              ),
+              Image.asset(
+                "images/linkknown.jpg",
+                width: ScreenUtil().setWidth(40),
+                height: ScreenUtil().setHeight(40),
+              ),
+            ],
+          ),
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: (widget.cVideos ?? []).length,
+            itemBuilder: (BuildContext context, int index) {
+              return Text(widget.cVideos[index].videoName);
+            }),
+      ],
+    );
   }
 }
 

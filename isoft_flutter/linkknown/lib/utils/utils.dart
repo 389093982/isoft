@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:linkknown/config/env_config.dart';
 
 class UIUtils {
   static void showToast(String msg) {
@@ -20,7 +21,7 @@ class UIUtils {
   }
 
   static String replaceMediaUrl (String url) {
-    return url.replaceFirst("http://localhost:6001", "http://192.168.1.11:6001");
+    return url.replaceFirst(LinkKnownConfig.config.hostApiBaseUrl, LinkKnownConfig.config.apiBaseUrl);
   }
 
   static bool isValidPrice (String price) {
