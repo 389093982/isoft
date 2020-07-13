@@ -166,42 +166,42 @@ class HomeContentHeaderWidget extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text('我的课程'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_video.png", width: 24, height: 24,),
           onTap: (){
             UIUtils.showToast("我的课程");
           },
         ),
         ListTile(
           title: Text('订单列表'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_order.png", width: 24, height: 24,),
           onTap: (){
             UIUtils.showToast("订单列表");
           },
         ),
         ListTile(
           title: Text('购物车'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_shopping_cart.png", width: 25, height: 25,),
           onTap: (){
             UIUtils.showToast("购物车");
           },
         ),
         ListTile(
           title: Text('登陆'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_login.png", width: 25, height: 25,),
           onTap: (){
             NavigatorUtil.goLoginPage(context);
           },
         ),
         ListTile(
           title: Text('注册'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_regist.png", width: 25, height: 25,),
           onTap: (){
             NavigatorUtil.goRegistPage(context);
           },
         ),
         ListTile(
           title: Text('退出'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_logout.png", width: 25, height: 25,),
           onTap: (){
             // 退出并重新跳往登录页面
             LoginUtil.logout();
@@ -210,7 +210,7 @@ class HomeContentHeaderWidget extends StatelessWidget {
         ),
         ListTile(
           title: Text('分享'),
-          leading: Image.asset("images/linkknown.jpg", width: 30, height: 30,),
+          leading: Image.asset("images/ic_share.png", width: 25, height: 25,),
           onTap: (){
             UIUtils.showToast("分享");
           },
