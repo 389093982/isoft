@@ -59,7 +59,7 @@ class _CourseCardState extends State<CourseCardWidget>
                 child: Padding(
                   padding: EdgeInsets.all(5.0),
                   child:
-                      CommonLabel(course.isCharge == "charge" ? "付费课程" : "免费"),
+                      CommonLabel.getCommonLabel(course.isCharge == "charge" ? "付费课程" : "免费"),
                 ),
               ),
             ],

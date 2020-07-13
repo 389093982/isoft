@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -11,20 +10,22 @@ import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
 class CourseDetailPage extends StatefulWidget {
-
   int course_id;
+
   CourseDetailPage(this.course_id);
 
   @override
   _CourseDetailPageState createState() => _CourseDetailPageState(course_id);
 }
 
-class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProviderStateMixin {
-
+class _CourseDetailPageState extends State<CourseDetailPage>
+    with TickerProviderStateMixin {
   int course_id;
+
   _CourseDetailPageState(this.course_id);
 
   Course course;
+  List<CVideo> cVideos;
 
   TabController tabController;
 
@@ -37,10 +38,12 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
     initData();
   }
 
-  void initData () async {
-    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(course_id, null);
+  void initData() async {
+    CourseDetailResponse courseDetailResponse =
+        await LinkKnownApi.showCourseDetailForApp(course_id, null);
     setState(() {
       course = courseDetailResponse.course;
+      cVideos = courseDetailResponse.cVideos;
     });
   }
 
@@ -53,7 +56,8 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
           // SliverAppBar是一个与 CustomScrollView 结合使用的material design风格的标题栏 .
           // 不同于AppBar, 它可以展开或收缩.
           SliverAppBar(
-            leading: Container( // 绘制返回键
+            leading: Container(
+                // 绘制返回键
                 margin: EdgeInsets.all(10), // 设置边距
                 child: IconButton(
                   icon: Icon(
@@ -64,18 +68,18 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
                     // 返回上一页
                     NavigatorUtil.goBack(context);
                   },
-                )
-            ),
+                )),
             // appBar是否置顶
             pinned: true,
             elevation: 0,
-            expandedHeight: 250,
+            expandedHeight: 200,
             // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
             flexibleSpace: FlexibleSpaceBar(
               title: Text(course != null ? course.courseName : ""),
               background: Image.network(
-                UIUtils.replaceMediaUrl(course != null ? course.smallImage : ""),
-                fit: BoxFit.cover,
+                UIUtils.replaceMediaUrl(
+                    course != null ? course.smallImage : ""),
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -84,7 +88,9 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
             pinned: true,
             delegate: StickyTabBarDelegate(
               child: TabBar(
-                labelColor: Colors.black,
+                labelColor: Colors.white,
+                indicatorColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.label,
                 controller: this.tabController,
                 tabs: <Widget>[
                   Tab(text: '简介'),
@@ -98,8 +104,8 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
             child: TabBarView(
               controller: this.tabController,
               children: <Widget>[
-                Center(child: CourseIntroduceWidget(course)),
-                Center(child: Text('评论')),
+                Center(child: CourseIntroduceWidget(course, cVideos)),
+                Center(child: CourseIntroduceWidget(course, cVideos)),
               ],
             ),
           ),
@@ -107,7 +113,6 @@ class _CourseDetailPageState  extends State<CourseDetailPage> with TickerProvide
       ),
     );
   }
-
 }
 
 // SliverPersistentHeaderDelegate的实现类必须实现其4个方法
@@ -121,8 +126,12 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   StickyTabBarDelegate({@required this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return this.child;
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Material(
+      color: Colors.red,
+      child: this.child,
+    );
   }
 
   @override
@@ -137,23 +146,20 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-
 // 课程简介组件
 class CourseIntroduceWidget extends StatefulWidget {
-
   Course course;
+  List<CVideo> cVideos;
 
-  CourseIntroduceWidget(this.course);
+  CourseIntroduceWidget(this.course, this.cVideos);
 
   @override
   _CourseIntroduceState createState() => _CourseIntroduceState();
-
 }
 
 // State 构造函数传参的话，只会执行一次，所以不使用 State 传参
 // 改用 widget.xxx 参数，widget 的构造器会重复执行
-class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
-
+class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   @override
   void initState() {
     super.initState();
@@ -170,44 +176,60 @@ class _CourseIntroduceState  extends State<CourseIntroduceWidget> {
           VEmptyView(5),
           Row(
             children: <Widget>[
-              Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+              Image.asset(
+                "images/linkknown.jpg",
+                width: 20,
+                height: 20,
+              ),
               Text('0'),
-              Image.asset("images/linkknown.jpg", width: 20, height: 20,),
+              Image.asset(
+                "images/linkknown.jpg",
+                width: 20,
+                height: 20,
+              ),
               Text('0'),
             ],
           ),
           VEmptyView(5),
-          Text(widget.course != null ? widget.course.courseShortDesc : ''),
+          Text(
+            widget.course != null ? widget.course.courseShortDesc : '',
+            // 设置行间距 1.3
+            strutStyle:
+                StrutStyle(forceStrutHeight: true, height: 1.3, leading: 0.9),
+          ),
           // 分享点赞收藏播放
           // 作者信息
           VEmptyView(5),
           // 课程标签语
-          CourseLabelWidget(widget.course != null ? widget.course.courseLabel: ''),
+          CourseLabelWidget(
+              widget.course != null ? widget.course.courseLabel : ''),
+          getCourseVideoWidget(),
           // 分集视频
         ],
       ),
     );
   }
+
+  Widget getCourseVideoWidget() {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: (widget.cVideos ?? []).length,
+        itemBuilder: (BuildContext context, int index) {
+          return Text(widget.cVideos[index].videoName);
+        });
+  }
 }
 
 class CourseLabelWidget extends StatefulWidget {
-
   String label;
 
   CourseLabelWidget(this.label);
 
   @override
-  _CourseLabelState createState() => _CourseLabelState(label);
-
+  _CourseLabelState createState() => _CourseLabelState();
 }
 
-class _CourseLabelState  extends State<CourseLabelWidget> {
-
-  String label;
-
-  _CourseLabelState(this.label);
-
-
+class _CourseLabelState extends State<CourseLabelWidget> {
   @override
   void initState() {
     super.initState();
@@ -215,16 +237,18 @@ class _CourseLabelState  extends State<CourseLabelWidget> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> labels = StringUtil.splitLabel(label);
+    List<String> labels = StringUtil.splitLabel(widget.label);
 
     // Wrap是一个可以使子控件自动换行的控件，默认的方向是水平的
-    return Wrap(
-      spacing: 2, //主轴上子控件的间距
-      runSpacing: 5, //交叉轴上子控件之间的间距
-      children: List.generate(labels.length, (index) {
-        return CommonLabel(labels[index]);
-      }),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(20)),
+      child: Wrap(
+        spacing: 5, //主轴上子控件的间距
+        runSpacing: 5, //交叉轴上子控件之间的间距
+        children: List.generate(labels.length, (index) {
+          return CommonLabel.getCommonLabel2(labels[index]);
+        }),
+      ),
     );
   }
-
 }
