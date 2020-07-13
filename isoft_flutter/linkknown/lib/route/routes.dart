@@ -28,6 +28,8 @@ class Routes {
   static String courseDetail = "/courseDetail";
   // 课程搜索页
   static String courseSearch = "/courseSearch";
+  // 视频播放界面
+  static String videoPlay = "/videoPlay";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -56,5 +58,7 @@ class Routes {
     router.define(courseDetail, handler: courseDetailHandler);
     // 课程搜索页
     router.define(courseSearch, handler: courseSearchHandler);
+    // 视频播放界面
+    router.define(videoPlay, handler: videoPlayHandler);
   }
 }

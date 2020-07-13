@@ -81,6 +81,8 @@ flutter:
     - images/ic_regist.png
     - images/ic_logout.png
     - images/ic_share.png
+    - images/icon_list.svg
+    - images/icon_grid.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

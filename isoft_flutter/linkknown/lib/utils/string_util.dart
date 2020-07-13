@@ -19,4 +19,9 @@ class StringUtil {
     });
     return result;
   }
+
+
+  static String getFileName (String filepath) {
+    return filepath.substring(0, filepath.lastIndexOf("."));
+  }
 }
