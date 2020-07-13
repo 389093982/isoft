@@ -14,7 +14,7 @@ void main() {
   Application.router = router;
 
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      SystemUiOverlayStyle(statusBarColor: Colors.red),
   );
 
   //打开主页
@@ -35,9 +35,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: true,
-      title: '链知晓课堂',
-      theme: ThemeData(
-        // Add the 3 lines from here...
+      title: '链知课堂',
+      theme: ThemeData(          // Add the 3 lines from here...
         primaryColor: Colors.red,
       ),
       // home 指定为开屏页

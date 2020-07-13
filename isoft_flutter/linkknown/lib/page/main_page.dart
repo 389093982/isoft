@@ -67,28 +67,28 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       items: [
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
+                Icons.home,
             ),
             title: new Text(
               '首页',
             )),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.business,
+              Icons.view_list,
             ),
             title: new Text(
               '分类',
             )),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.find_in_page,
+              Icons.explore,
             ),
             title: new Text(
               '发现',
             )),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.mood,
+              Icons.account_circle,
             ),
             title: new Text(
               '我的',

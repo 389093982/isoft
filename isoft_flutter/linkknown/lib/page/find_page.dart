@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class FindPage extends StatefulWidget {
@@ -38,6 +39,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       //点击事件回调
       onTap: () {
         UIUtils.showToast("点击了文字");
+        NavigatorUtil.goRouterPage(context, item.redirectUrl);
       },
       child: Column(
         children: <Widget>[
@@ -51,7 +53,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
               ),
             ),
           ),
-          Expanded(child: Text(item.classifyName),),
+          Expanded(child: Text(item.classifyName,style: TextStyle(fontSize: 13),),),
         ],
       ),
     );
@@ -64,7 +66,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       // 没有AppBar的Flutter，如果不在Scaffold中使用AppBar会发现默认是沉浸式，预留出状态栏的高度方法
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.07),
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
         child: SafeArea(
           top: true,
           child: Offstage(),
