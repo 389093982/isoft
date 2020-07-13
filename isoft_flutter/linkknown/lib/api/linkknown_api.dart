@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/model/advise_list.dart';
 import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
@@ -12,7 +13,7 @@ import 'package:linkknown/utils/login_util.dart';
 
 class LinkKnownApi {
   static Dio _dio;
-  static final String baseUrl = 'http://192.168.1.11:6001';
+  static final String baseUrl = LinkKnownConfig.config.apiBaseUrl;
   static String tokenString = "";
 
   // 登录成功后调用此方法更新全局的 tokenString

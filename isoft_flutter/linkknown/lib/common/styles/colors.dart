@@ -13,8 +13,7 @@ class LinkKnownColor {
   static const Color white = Color(0xFFFFFFFF);
   static const Color actionBlue = Color(0xff267aff);
   static const Color subTextColor = Color(0xff959595);
-  static const Color subLightTextColor = Color(0xffc4c4c4);
-
+  static const Color lightGrey = Color(0xffc4c4c4);
 
   ///主色调，按钮，特殊需要强调和突出的文字
   static Color colorTheme = Color.fromARGB(255, 255, 134, 0);
