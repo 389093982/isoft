@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: true,
-      title: '链知晓课堂',
+      title: '链知课堂',
       theme: ThemeData(
         // Add the 3 lines from here...
         primaryColor: Colors.red,

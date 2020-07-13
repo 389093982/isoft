@@ -74,6 +74,13 @@ flutter:
     - images/not_found.png
     - images/ic_play_circle_outline_black_24dp.png
     - images/ic_subtitles_black_24dp.png
+    - images/ic_video.png
+    - images/ic_order.png
+    - images/ic_shopping_cart.png
+    - images/ic_login.png
+    - images/ic_regist.png
+    - images/ic_logout.png
+    - images/ic_share.png
     - images/icon_list.svg
     - images/icon_grid.svg
 
