@@ -83,6 +83,11 @@ flutter:
     - images/ic_share.png
     - images/icon_list.svg
     - images/icon_grid.svg
+    - images/ic_coupon.svg
+    - images/ic_shopping_cart.svg
+    - images/ic_order.svg
+    - images/ic_activity.svg
+    - images/ic_kaoshi.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

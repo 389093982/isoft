@@ -202,7 +202,8 @@ class MineCenterWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: ClickableTextImage(
-                imgpath: "images/linkknown.jpg",
+                imgpath: "images/ic_coupon.svg",
+                icon_color: Colors.white,
                 text: "优惠券",
                 onTap: (){
                   UIUtils.showToast("优惠券");
@@ -213,7 +214,8 @@ class MineCenterWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: ClickableTextImage(
-                imgpath: "images/linkknown.jpg",
+                imgpath: "images/ic_shopping_cart.svg",
+                icon_color: Colors.white,
                 text: "购物车",
                 onTap: (){
                   UIUtils.showToast("购物车");
@@ -224,7 +226,8 @@ class MineCenterWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: ClickableTextImage(
-                imgpath: "images/linkknown.jpg",
+                imgpath: "images/ic_order.svg",
+                icon_color: Colors.white,
                 text: "订单",
                 onTap: (){
                   UIUtils.showToast("订单");
@@ -235,7 +238,8 @@ class MineCenterWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: ClickableTextImage(
-                imgpath: "images/linkknown.jpg",
+                imgpath: "images/ic_activity.svg",
+                icon_color: Colors.white,
                 text: "活动中心",
                 onTap: (){
                   UIUtils.showToast("活动中心");
@@ -246,7 +250,8 @@ class MineCenterWidget extends StatelessWidget {
           Expanded(
             child: Center(
               child: ClickableTextImage(
-                imgpath: "images/linkknown.jpg",
+                imgpath: "images/ic_kaoshi.svg",
+                icon_color: Colors.white,
                 text: "考试",
                 onTap: (){
                   UIUtils.showToast("考试");
