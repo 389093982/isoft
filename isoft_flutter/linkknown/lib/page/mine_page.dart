@@ -27,10 +27,14 @@ class _MinePageState extends State<MinePage> with TickerProviderStateMixin, Auto
       // 没有AppBar的Flutter，如果不在Scaffold中使用AppBar会发现默认是沉浸式，预留出状态栏的高度方法
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.07),
-        child: SafeArea(
-          top: true,
-          child: Offstage(),
+            Size.fromHeight(MediaQuery.of(context).size.height * 0),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.red,
+//              gradient: LinearGradient(colors: [Colors.yellow, Colors.pink])
+              ),
         ),
       ),
       backgroundColor: Colors.white,

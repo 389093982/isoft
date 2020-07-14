@@ -30,6 +30,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
@@ -63,7 +64,16 @@ class _CourseVideosState extends State<CourseVideosWidget> {
             ],
           ),
         ),
-        widget.isListPattern ? getListWidget() : getGridWidget(),
+        // Flexible，Expanded,Spacer这三个小控件用于Row, Column, or Flex这三个容器；
+        // Spacer
+        // 顾名思义只是一个间距控件，可以用于调节小部件之间的间距，它有一个flex可以进行设置；
+        // Expanded
+        // Expanded会尽可能的充满分布在Row, Column, or Flex的主轴方向上；
+        // Flexible
+        // Flexible也是为小部件提供空间的，但是不会要求子空间填满可用空间；
+        Flexible(     // 此处使用 Flexible 解决溢出问题
+          child: widget.isListPattern ? getListWidget() : getGridWidget(),
+        ),
       ],
     );
   }
@@ -81,6 +91,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
       crossAxisCount: 5,
       //子Widget宽高比例
       childAspectRatio: 1.0,
+      physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
       //子Widget列表
       children: (widget.cVideos??[]).asMap().keys.map((index) {
         return InkWell(
@@ -104,6 +115,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: (widget.cVideos ?? []).length,
+        physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {

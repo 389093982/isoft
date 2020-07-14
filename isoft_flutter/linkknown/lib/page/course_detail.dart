@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
+import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
@@ -180,22 +181,27 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(widget.course != null ? widget.course.courseName : ''),
+          Text(widget.course != null ? widget.course.courseName : '', style: LinkKnownTextStyle.commonTitle,),
           VEmptyView(5),
           Row(
             children: <Widget>[
+              // 课程集数和播放次数
               Image.asset(
-                "images/linkknown.jpg",
-                width: 20,
-                height: 20,
+                "images/ic_play_circle_outline_black_24dp.png",
+                width: 15,
+                height: 15,
               ),
-              Text('0'),
+              // 设置间距
+              Container(width: 5,),
+              Text(widget.course != null ? widget.course.courseNumber.toString() : "0"),
+              Container(width: 15,),
               Image.asset(
-                "images/linkknown.jpg",
-                width: 20,
-                height: 20,
+                "images/ic_subtitles_black_24dp.png",
+                width: 15,
+                height: 15,
               ),
-              Text('0'),
+              Container(width: 5,),
+              Text(widget.course != null ? widget.course.watchNumber.toString() : "0"),
             ],
           ),
           VEmptyView(5),
@@ -211,9 +217,11 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(
               widget.course != null ? widget.course.courseLabel : ''),
-          CourseVideosWidget(widget.course, widget.cVideos,
-              clickCallBack: _clickCallBack),
-          // 分集视频
+          Expanded(
+            // 分集视频
+            child: CourseVideosWidget(widget.course, widget.cVideos,
+                clickCallBack: _clickCallBack),
+          ),
         ],
       ),
     );

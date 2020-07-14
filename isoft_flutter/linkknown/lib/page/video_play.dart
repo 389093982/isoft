@@ -41,7 +41,10 @@ class VideoPlayState extends State<VideoPlayPage> {
             fsFit: FijkFit.cover,
             player: player,
           ),
-          CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: _clickCallBack,),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: _clickCallBack,),
+          ),
         ],
       ),
     );
