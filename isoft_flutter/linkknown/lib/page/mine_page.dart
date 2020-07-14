@@ -210,7 +210,7 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "优惠券",
                 onTap: (){
-                  UIUtils.showToast("优惠券");
+                  NavigatorUtil.goRouterPage(context, Routes.myCoupon);
                 },
               ),
             ),
@@ -222,7 +222,7 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "购物车",
                 onTap: (){
-                  UIUtils.showToast("购物车");
+                  NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
                 },
               ),
             ),
@@ -234,7 +234,7 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "订单",
                 onTap: (){
-                  UIUtils.showToast("订单");
+                  NavigatorUtil.goRouterPage(context, Routes.payOrder);
                 },
               ),
             ),
@@ -246,7 +246,7 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "活动中心",
                 onTap: (){
-                  UIUtils.showToast("活动中心");
+                  NavigatorUtil.goRouterPage(context, Routes.huodong);
                 },
               ),
             ),
@@ -258,7 +258,7 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "考试",
                 onTap: (){
-                  UIUtils.showToast("考试");
+                  NavigatorUtil.goRouterPage(context, Routes.kaoshi);
                 },
               ),
             ),
@@ -312,10 +312,10 @@ class MineFooterWidget extends StatelessWidget{
         children: <Widget>[
           getOperateWidget(context, FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
           getOperateWidget(context, FooterItem("images/ic_personal_center.png", '个人中心', Routes.personalCenter)),
-          getOperateWidget(context, FooterItem("images/ic_course.png", '已购课程', Routes.buyCourse)),
+          getOperateWidget(context, FooterItem("images/ic_course.png", '已购课程', Routes.boughtCourse)),
           getOperateWidget(context, FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
           getOperateWidget(context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
-          getOperateWidget(context, FooterItem("images/ic_link.png", '我与链知', Routes.about)),
+          getOperateWidget(context, FooterItem("images/ic_link.png", '我与链知', Routes.linkKnownWithMe)),
         ],
       ),
     );
