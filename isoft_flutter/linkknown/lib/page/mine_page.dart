@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
 
@@ -59,6 +60,13 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   bool hasLogin = false;
 
+  String nickName = "";
+  String smallIcon = "";
+  String userPoints = "";
+  String userSignature = "";
+  String attentionCounts = "";
+  String fensiCounts = "";
+
   @override
   void initState() {
     super.initState();
@@ -67,8 +75,16 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   refreshLoginStatus () async {
     bool hasLogin = await LoginUtil.checkHasLogin();
-      this.setState(() {
+      this.setState(() async {
         this.hasLogin = hasLogin;
+        if(hasLogin){
+          this.nickName = await LoginUtil.getNickName();
+          this.smallIcon = await LoginUtil.getSmallIcon();
+          this.userPoints = await LoginUtil.getUserPoints();
+          this.userSignature = await LoginUtil.getUserSignature();
+          this.attentionCounts = await LoginUtil.getAttentionCounts();
+          this.fensiCounts = await LoginUtil.getFensiCounts();
+        }
       });
     }
 
@@ -99,17 +115,17 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
           child: SvgPicture.asset(
             "images/setting.svg",
             color: Colors.white,
-            width: 20,
-            height: 20,
+            width: 23,
+            height: 23,
           ),
         ),
         Container(
-          margin: EdgeInsets.all(5),
+          margin: EdgeInsets.only(right: 15),
           child: SvgPicture.asset(
             "images/lingdang.svg",
             color: Colors.white,
-            width: 20,
-            height: 20,
+            width: 23,
+            height: 23,
           ),
         ),
       ],
@@ -122,19 +138,20 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
         Container(
           margin: EdgeInsets.only(left: 30),
           child: ClipOval(
-            child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
+            child: Image.network(UIUtils.replaceMediaUrl(smallIcon), width: 80, height: 80,),
           ),
         ),
         Container(
+          width: 240,
           margin: EdgeInsets.only(left: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("用户名", style: TextStyle(color: Colors.white, fontSize: 20),),
-              Text("积分 10", style: TextStyle(color: Colors.white),),
-              Text("关注 99 粉丝 99", style: TextStyle(color: Colors.white),),
-              Text("这个家伙很懒，什么个性签名都没有留下", style: TextStyle(color: Colors.white),),
+              Text(nickName, style: TextStyle(color: Colors.white, fontSize: 20),),
+              Text("积分 ${userPoints}", style: TextStyle(color: Colors.white),),
+              Text("关注 ${attentionCounts}  粉丝 ${fensiCounts}", style: TextStyle(color: Colors.white),),
+              Text(StringUtil.checkEmpty(userSignature) == true ? "这个家伙很懒，什么个性签名都没有留下":userSignature, style: TextStyle(color: Colors.white,fontSize: 12),overflow: TextOverflow.ellipsis,),
             ],
           ),
         ),

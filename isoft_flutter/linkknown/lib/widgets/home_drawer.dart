@@ -52,7 +52,7 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
   bool hasLogin = await LoginUtil.checkHasLogin();
     if (hasLogin) {
       String nickName = await LoginUtil.getNickName();
-      String headerIcon = await LoginUtil.getUserHeaderIcon();
+      String headerIcon = await LoginUtil.getSmallIcon();
       this.setState(() {
         this.hasLogin = true;
         this.nickName = nickName;

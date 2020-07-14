@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/model/user.dart';
+import 'package:linkknown/model/login_user_response.dart';
 
 class UserModel with ChangeNotifier {
 

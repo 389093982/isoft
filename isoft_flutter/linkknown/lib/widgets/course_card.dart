@@ -64,13 +64,13 @@ class _CourseCardState extends State<CourseCardWidget>
             ],
           ),
           Container(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(5.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(widget.course.courseName),
                 Container(
-                  margin: EdgeInsets.only(top: 5),
+                  margin: EdgeInsets.only(top: 2),
                   child: Row(
                     children: <Widget>[
                       // 课程集数和播放次数
@@ -90,7 +90,7 @@ class _CourseCardState extends State<CourseCardWidget>
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 5),
+                  margin: EdgeInsets.only(top: 2),
                   child: Row(
                     children: <Widget>[
                       // offstage 组件控制组件是否隐藏
