@@ -265,17 +265,16 @@ class MineCenterWidget extends StatelessWidget {
   }
 }
 
+
 class FooterItem {
   String icon;
   String text;
   String router;      // 跳往的路由
-
   FooterItem(this.icon, this.text, this.router);
-
 }
 
-class MineFooterWidget extends StatelessWidget{
 
+class MineFooterWidget extends StatelessWidget{
   Widget getOperateWidget(BuildContext context, FooterItem item) {
     return Container(
       decoration: BoxDecoration(
@@ -289,13 +288,17 @@ class MineFooterWidget extends StatelessWidget{
           NavigatorUtil.goRouterPage(context, item.router);
         },
         child: ListTile(
-          leading: Icon(Icons.blur_circular),
-          title: Text(item.text),
+          leading: Image.asset(UIUtils.replaceMediaUrl(item.icon), width: 23, height: 23,),
+          title: Transform(
+            transform: Matrix4.translationValues(-20, 0, 0),
+            child: Text(item.text,style: TextStyle(fontSize: 14),),
+          ),
           trailing: Icon(Icons.keyboard_arrow_right),
         ),
       ),
    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -303,11 +306,12 @@ class MineFooterWidget extends StatelessWidget{
       margin: EdgeInsets.only(top: 10),
       child: Column(
         children: <Widget>[
-          getOperateWidget(context, FooterItem('', '云博客', Routes.cloudBlog)),
-          getOperateWidget(context, FooterItem('', '个人中心', Routes.personalCenter)),
-          getOperateWidget(context, FooterItem('', '已购课程', Routes.buyCourse)),
-          getOperateWidget(context, FooterItem('', '我要吐槽', Routes.advise)),
-          getOperateWidget(context, FooterItem('', '关于链知', Routes.about)),
+          getOperateWidget(context, FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
+          getOperateWidget(context, FooterItem("images/ic_personal_center.png", '个人中心', Routes.personalCenter)),
+          getOperateWidget(context, FooterItem("images/ic_course.png", '已购课程', Routes.buyCourse)),
+          getOperateWidget(context, FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
+          getOperateWidget(context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
+          getOperateWidget(context, FooterItem("images/ic_link.png", '我与链知', Routes.about)),
         ],
       ),
     );
