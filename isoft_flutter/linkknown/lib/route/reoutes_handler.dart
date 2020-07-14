@@ -1,3 +1,4 @@
+
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/advise_edit_page.dart';
@@ -12,6 +13,8 @@ import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 
+// 临时存储复杂的参数
+var routerParamMap = Map();
 
 // splash 页面
 var splashHandler = new Handler(
@@ -90,5 +93,6 @@ var courseSearchHandler = new Handler(
 // 视频播放界面
 var videoPlayHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return VideoPlayPage();
+      String index = params['index'].first;       // 播放当前视频的索引
+      return VideoPlayPage(routerParamMap["videoplay_courseKey"], routerParamMap["videoplay_cVideosKey"], int.parse(index));
     });

@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/model/course_detail.dart';
-import 'package:linkknown/route/routes.dart';
-import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
 
 class CourseVideosWidget extends StatefulWidget {
 
@@ -14,8 +11,10 @@ class CourseVideosWidget extends StatefulWidget {
   List<CVideo> cVideos;
   // 是否是列表模式,默认是列表模式
   bool isListPattern = true;
+  // 定义接收父类回调函数的指针
+  ValueChanged<int> clickCallBack;
 
-  CourseVideosWidget(this.course, this.cVideos);
+  CourseVideosWidget(this.course, this.cVideos, {this.clickCallBack});
 
   @override
   _CourseVideosState createState() => _CourseVideosState();
@@ -86,7 +85,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
       children: (widget.cVideos??[]).asMap().keys.map((index) {
         return InkWell(
           onTap: () {
-            NavigatorUtil.goRouterPage(context, Routes.videoPlay);
+            widget.clickCallBack(index);
           },
           child: Container(
             margin: EdgeInsets.all(5),
@@ -108,7 +107,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              NavigatorUtil.goRouterPage(context, Routes.videoPlay);
+              widget.clickCallBack(index);
             },
             child: Container(
               decoration: BoxDecoration(
@@ -117,7 +116,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
               child: Row(
                 children: <Widget>[
-                  Text(index.toString()),
+                  Text("${index+1}"),
                   Container(
                     width: 20,
                   ),
