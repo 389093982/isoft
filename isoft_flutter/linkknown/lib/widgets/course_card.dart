@@ -75,13 +75,13 @@ class _CourseCardState extends State<CourseCardWidget>
                     children: <Widget>[
                       // 课程集数和播放次数
                       Image.asset(
-                        "images/ic_play_circle_outline_black_24dp.png",
+                        "images/ic_views.png",
                         width: 15,
                         height: 15,
                       ),
                       Text(widget.course.courseNumber.toString()),
                       Image.asset(
-                        "images/ic_subtitles_black_24dp.png",
+                        "images/ic_list_counts.png",
                         width: 15,
                         height: 15,
                       ),

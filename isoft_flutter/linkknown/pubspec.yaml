@@ -73,8 +73,8 @@ flutter:
     - images/setting.svg
     - images/lingdang.svg
     - images/not_found.png
-    - images/ic_play_circle_outline_black_24dp.png
-    - images/ic_subtitles_black_24dp.png
+    - images/ic_views.png
+    - images/ic_list_counts.png
     - images/ic_video.png
     - images/ic_order.png
     - images/ic_shopping_cart.png
@@ -84,6 +84,17 @@ flutter:
     - images/ic_share.png
     - images/icon_list.svg
     - images/icon_grid.svg
+    - images/ic_coupon.svg
+    - images/ic_shopping_cart.svg
+    - images/ic_order.svg
+    - images/ic_activity.svg
+    - images/ic_kaoshi.svg
+    - images/ic_cloud_blog.png
+    - images/ic_personal_center.png
+    - images/ic_course.png
+    - images/ic_about.png
+    - images/ic_advise.png
+    - images/ic_link.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
