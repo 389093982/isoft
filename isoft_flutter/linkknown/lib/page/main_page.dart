@@ -88,7 +88,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             )),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.account_circle,
+              Icons.person,
             ),
             title: new Text(
               '我的',

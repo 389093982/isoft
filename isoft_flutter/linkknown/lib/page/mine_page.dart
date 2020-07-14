@@ -59,6 +59,13 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   bool hasLogin = false;
 
+  String headerIcon = "";
+  String nickName = "";
+  String userPoints = "";
+  String attention_counts = "";
+  String fensi_counts = "";
+  String user_signature = "";
+
   @override
   void initState() {
     super.initState();
@@ -67,8 +74,12 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   refreshLoginStatus () async {
     bool hasLogin = await LoginUtil.checkHasLogin();
-      this.setState(() {
+      this.setState(() async {
         this.hasLogin = hasLogin;
+        if(hasLogin){
+          this.nickName = await LoginUtil.getNickName();
+          this.headerIcon = await LoginUtil.getSmallIcon();
+        }
       });
     }
 
@@ -99,17 +110,17 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
           child: SvgPicture.asset(
             "images/setting.svg",
             color: Colors.white,
-            width: 20,
-            height: 20,
+            width: 23,
+            height: 23,
           ),
         ),
         Container(
-          margin: EdgeInsets.all(5),
+          margin: EdgeInsets.only(right: 15),
           child: SvgPicture.asset(
             "images/lingdang.svg",
             color: Colors.white,
-            width: 20,
-            height: 20,
+            width: 23,
+            height: 23,
           ),
         ),
       ],
@@ -126,6 +137,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
           ),
         ),
         Container(
+          width: 240,
           margin: EdgeInsets.only(left: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +146,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
               Text("用户名", style: TextStyle(color: Colors.white, fontSize: 20),),
               Text("积分 10", style: TextStyle(color: Colors.white),),
               Text("关注 99 粉丝 99", style: TextStyle(color: Colors.white),),
-              Text("这个家伙很懒，什么个性签名都没有留下", style: TextStyle(color: Colors.white),),
+              Text("这个家伙很懒，什么个性签名都没有留下", style: TextStyle(color: Colors.white,fontSize: 12),overflow: TextOverflow.ellipsis,),
             ],
           ),
         ),

@@ -132,8 +132,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
       return;
     }
 
-    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com')
-      .catchError((e) {
+    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com').catchError((e) {
         UIUtils.showToast((e as LinkKnownError).errorMsg);
       }).then((value){
         if(value != null) {
@@ -143,14 +142,30 @@ class __LoginWidgetState extends State<_LoginWidget> {
             LinkKnownApi.updateTokenString();
 
             // 调用事件广播，不用发送(因为发送的不是粘性消息)
-//            eventBus.fire(new LoginSuccessEvent(value));
+            //eventBus.fire(new LoginSuccessEvent(value));
             UIUtils.showToast("登录成功！");
             NavigatorUtil.goMainPage(context);
+
+            //查询用户基本信息
+            getUserDetail(_userName);
           } else {
             UIUtils.showToast("登录失败！" + value.errorMsg);
           }
         }
       });
+  }
+
+  //查询用户基本信息
+  getUserDetail(String userName){
+    LinkKnownApi.getUserDetail(userName, 'http://www.linkknown.com').catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value){
+      if(value != null) {
+        if (value.status == "SUCCESS") {
+          LoginUtil.memoryUserDetail(value);
+        }
+      }
+    });
   }
 
   @override

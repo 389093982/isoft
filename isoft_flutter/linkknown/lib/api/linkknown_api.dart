@@ -8,7 +8,8 @@ import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/element.dart';
-import 'package:linkknown/model/user.dart';
+import 'package:linkknown/model/get_user_detail_response.dart';
+import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
 class LinkKnownApi {
@@ -62,6 +63,17 @@ class LinkKnownApi {
           'redirectUrl': redirectUrl,
         });
     return LoginUserResponse.fromJson(response.data);
+  }
+
+  // 查询用户基本信息
+  static Future<GetUserDetailResponse> getUserDetail(String username,String redirectUrl) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/GetUserDetail',
+        params: {
+          'username': username,
+          'redirectUrl': redirectUrl,
+        });
+    return GetUserDetailResponse.fromJson(response.data);
   }
 
   // 课程搜索接口
