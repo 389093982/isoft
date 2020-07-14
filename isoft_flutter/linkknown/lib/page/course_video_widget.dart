@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/utils/string_util.dart';
 
@@ -40,7 +41,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Row(
             children: <Widget>[
-              Text("分集视频"),
+              Text("分集视频", style: LinkKnownTextStyle.commonTitle2,),
               // 中间用Expanded控件
               Expanded(
                 child: Text(''),
