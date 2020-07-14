@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
+import 'package:linkknown/constants.dart';
+import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/model/favorite_count_response.dart';
+import 'package:linkknown/model/favorite_is_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -85,7 +91,10 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 作者信息
           VEmptyView(5),
           // 课程操作组件
-          CourseOperateWidget(),
+          Offstage(
+            offstage: widget.course == null,
+            child: widget.course != null ? CourseOperateWidget(widget.course) : null,
+          ),
           // 课程标签语
           CourseLabelWidget(
               widget.course != null ? widget.course.courseLabel : ''),
@@ -140,26 +149,108 @@ class _CourseLabelState extends State<CourseLabelWidget> {
 }
 
 class CourseOperateWidget extends StatefulWidget {
+  Course course;
+
+  CourseOperateWidget(this.course);
+
+  int collectNumber = 0;
+  int priaseNumber = 0;
+  int watchNumber = 0;
+  bool isCollect = false;
+  bool isPriase = false;
+
   @override
   _CourseOperateState createState() => _CourseOperateState();
 }
 
 class _CourseOperateState extends State<CourseOperateWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    initCourseOperateData();
+  }
+
+  initCourseOperateData() async {
+    FavoriteCountResponse collectFavoriteCountResponse =
+        await LinkKnownApi.queryFavoriteCount(
+            widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
+    FavoriteCountResponse priaseFavoriteCountResponse =
+        await LinkKnownApi.queryFavoriteCount(
+            widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
+
+    String userName = await LoginUtil.getUserName();
+
+    IsFavoriteResponse collectIsFavoriteResponse = await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
+    IsFavoriteResponse priaseIsFavoriteResponse = await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
+
+    setState(() {
+      if (collectFavoriteCountResponse.status == "SUCCESS") {
+        this.widget.collectNumber = collectFavoriteCountResponse.counts;
+      }
+      if (priaseFavoriteCountResponse.status == "SUCCESS") {
+        this.widget.priaseNumber = priaseFavoriteCountResponse.counts;
+      }
+
+      if (collectIsFavoriteResponse.status == "SUCCESS") {
+        this.widget.isCollect = collectIsFavoriteResponse.isFavorite;
+      }
+      if (priaseIsFavoriteResponse.status == "SUCCESS") {
+        this.widget.isPriase = priaseIsFavoriteResponse.isFavorite;
+      }
+    });
+  }
+
+  void handleFavoriteClick (String favorite_type) async {
+    String userName = await LoginUtil.getUserName();
+    BaseResponse baseResponse = await LinkKnownApi.toggleFavorite(widget.course.id, favorite_type);
+    if (baseResponse.status == "SUCCESS") {
+      // 重新刷新状态
+      initCourseOperateData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
-          child: CourseOperateItemWidget(label: "分享", imagepath: "images/ic_share.svg",),
+          child: CourseOperateItemWidget(
+              label: "分享",
+              imagepath: "images/ic_share.svg",
+              enable: false,
+              number: 0,
+              clickCallback: () {}),
         ),
         Expanded(
-          child: CourseOperateItemWidget(label: "点赞", imagepath: "images/ic_praise.svg",),
+          child: CourseOperateItemWidget(
+              label: "点赞",
+              imagepath: "images/ic_praise.svg",
+              enable: widget.isPriase,
+              number: widget.priaseNumber,
+              clickCallback: () {
+                // 处理点击事件
+                handleFavoriteClick(Constants.FAVORITE_TYPE_COURSE_PRIASE);
+              }),
         ),
         Expanded(
-          child: CourseOperateItemWidget(label: "收藏", imagepath: "images/ic_collect.svg",),
+          child: CourseOperateItemWidget(
+              label: "收藏",
+              imagepath: "images/ic_collect.svg",
+              enable: widget.isCollect,
+              number: widget.collectNumber,
+              clickCallback: () {
+                // 处理点击事件
+                handleFavoriteClick(Constants.FAVORITE_TYPE_COURSE_COLLECT);
+              }),
         ),
         Expanded(
-          child: CourseOperateItemWidget(label: "播放", imagepath: "images/ic_play.svg",),
+          child: CourseOperateItemWidget(
+              label: "播放",
+              imagepath: "images/ic_play.svg",
+              enable: false,
+              number: widget.course.watchNumber,
+              clickCallback: () {}),
         ),
       ],
     );
@@ -167,11 +258,18 @@ class _CourseOperateState extends State<CourseOperateWidget> {
 }
 
 class CourseOperateItemWidget extends StatefulWidget {
-
   String label;
   String imagepath;
+  bool enable;
+  int number; // 显示收藏点赞观看数量
+  VoidCallback clickCallback;
 
-  CourseOperateItemWidget({this.label, this.imagepath});
+  CourseOperateItemWidget(
+      {this.label,
+      this.imagepath,
+      this.enable,
+      this.number,
+      this.clickCallback});
 
   @override
   _CourseOperateItemState createState() => _CourseOperateItemState();
@@ -183,20 +281,29 @@ class _CourseOperateItemState extends State<CourseOperateItemWidget> {
     return Center(
       child: Column(
         children: <Widget>[
-          Text("0", style: TextStyle(color: Colors.green),),
+          Text(
+            "${widget.number}",
+            style: TextStyle(color: Colors.green),
+          ),
           VEmptyView(3),
           GestureDetector(
-            onTap: (){
-              UIUtils.showToast2("點擊了操作~~~~");
-            },
+            onTap: widget.clickCallback,
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Image.asset("images/ic_operate_bg.png", width: 50, height:  50,),
-                Align(
-                  alignment: Alignment.center,
-                  child: SvgPicture.asset(widget.imagepath, width: 30, height: 30, color: Colors.grey,)
+                Image.asset(
+                  "images/ic_operate_bg.png",
+                  width: 50,
+                  height: 50,
                 ),
+                Align(
+                    alignment: Alignment.center,
+                    child: SvgPicture.asset(
+                      widget.imagepath,
+                      width: 30,
+                      height: 30,
+                      color: widget.enable ? Colors.red[300] : Colors.grey,
+                    )),
               ],
             ),
           ),
