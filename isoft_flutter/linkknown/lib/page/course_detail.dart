@@ -6,6 +6,8 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
+import 'package:linkknown/route/reoutes_handler.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -209,11 +211,18 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(
               widget.course != null ? widget.course.courseLabel : ''),
-          CourseVideosWidget(widget.course, widget.cVideos),
+          CourseVideosWidget(widget.course, widget.cVideos,
+              clickCallBack: _clickCallBack),
           // 分集视频
         ],
       ),
     );
+  }
+
+  _clickCallBack(index) {
+    routerParamMap["videoplay_courseKey"] = widget.course;
+    routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
+    NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
   }
 }
 
