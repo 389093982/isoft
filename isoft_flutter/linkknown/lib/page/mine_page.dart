@@ -195,7 +195,7 @@ class MineCenterWidget extends StatelessWidget {
         //设置四周圆角 角度
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
         //设置四周边框
-        border: new Border.all(width: 1, color: Colors.grey),
+        border: new Border.all(width: 1, color: Color(0xFFE0E0E0)),
       ),
       child: Row(
         children: <Widget>[
@@ -288,7 +288,7 @@ class MineFooterWidget extends StatelessWidget{
           NavigatorUtil.goRouterPage(context, item.router);
         },
         child: ListTile(
-          leading: Image.asset(UIUtils.replaceMediaUrl(item.icon), width: 23, height: 23,),
+          leading: Image.asset(UIUtils.replaceMediaUrl(item.icon), width: 22, height: 22,),
           title: Transform(
             transform: Matrix4.translationValues(-20, 0, 0),
             child: Text(item.text,style: TextStyle(fontSize: 14),),

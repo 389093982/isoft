@@ -25,7 +25,7 @@ class ClickableTextImage extends StatelessWidget {
             child: Container(
               color: bg_color==null?Colors.red:bg_color,
               padding: EdgeInsets.all(10),
-              child: imgpath.endsWith(".svg") ? SvgPicture.asset(imgpath, width: 30, height: 30, color: this.icon_color,): Image.asset(imgpath, width: 30, height: 30,),
+              child: imgpath.endsWith(".svg") ? SvgPicture.asset(imgpath, width: 22, height: 22, color: this.icon_color,): Image.asset(imgpath, width: 30, height: 30,),
             ),
           ),
           Text(text,style: TextStyle(fontSize: 12),),
