@@ -40,35 +40,6 @@ var registHandler = new Handler(
       return RegistPage();
     });
 
-// 云博客页
-var cloudBlogHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
-    });
-
-// 个人中心页
-var personalCenterHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return PersonalCenterPage();
-    });
-
-// 已购课程页
-var buyCourseHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
-    });
-
-// 我要吐槽页
-var adviseHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return AdvisePage();
-    });
-
-var adviseEditHandler = new Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return AdviseEditPage();
-    });
-
 // 关于链知页
 var aboutHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -95,4 +66,69 @@ var videoPlayHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       String index = params['index'].first;       // 播放当前视频的索引
       return VideoPlayPage(routerParamMap["videoplay_courseKey"], routerParamMap["videoplay_cVideosKey"], int.parse(index));
+    });
+
+//优惠券
+var myCouponHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String,List<String>> params){
+    return RegistPage();
+  });
+
+//购物车
+var shoppingCartHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return RegistPage();
+    });
+
+//订单
+var payOrderHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return RegistPage();
+    });
+
+//活动
+var huodongHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return RegistPage();
+    });
+
+//考试
+var kaoshiHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return RegistPage();
+    });
+
+// 云博客页
+var cloudBlogHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return RegistPage();
+    });
+
+// 个人中心页
+var personalCenterHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return PersonalCenterPage();
+    });
+
+// 已购课程页
+var boughtCourseHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return RegistPage();
+    });
+
+// 我要吐槽页
+var adviseHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return AdvisePage();
+    });
+
+var adviseEditHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return AdviseEditPage();
+    });
+
+//我与链知
+var linkKnownWithMeHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return RegistPage();
     });
