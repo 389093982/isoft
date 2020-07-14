@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
 
@@ -59,12 +60,12 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   bool hasLogin = false;
 
-  String headerIcon = "";
   String nickName = "";
+  String smallIcon = "";
   String userPoints = "";
-  String attention_counts = "";
-  String fensi_counts = "";
-  String user_signature = "";
+  String userSignature = "";
+  String attentionCounts = "";
+  String fensiCounts = "";
 
   @override
   void initState() {
@@ -78,7 +79,11 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
         this.hasLogin = hasLogin;
         if(hasLogin){
           this.nickName = await LoginUtil.getNickName();
-          this.headerIcon = await LoginUtil.getSmallIcon();
+          this.smallIcon = await LoginUtil.getSmallIcon();
+          this.userPoints = await LoginUtil.getUserPoints();
+          this.userSignature = await LoginUtil.getUserSignature();
+          this.attentionCounts = await LoginUtil.getAttentionCounts();
+          this.fensiCounts = await LoginUtil.getFensiCounts();
         }
       });
     }
@@ -133,7 +138,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
         Container(
           margin: EdgeInsets.only(left: 30),
           child: ClipOval(
-            child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
+            child: Image.network(UIUtils.replaceMediaUrl(smallIcon), width: 80, height: 80,),
           ),
         ),
         Container(
@@ -143,10 +148,10 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("用户名", style: TextStyle(color: Colors.white, fontSize: 20),),
-              Text("积分 10", style: TextStyle(color: Colors.white),),
-              Text("关注 99 粉丝 99", style: TextStyle(color: Colors.white),),
-              Text("这个家伙很懒，什么个性签名都没有留下", style: TextStyle(color: Colors.white,fontSize: 12),overflow: TextOverflow.ellipsis,),
+              Text(nickName, style: TextStyle(color: Colors.white, fontSize: 20),),
+              Text("积分 ${userPoints}", style: TextStyle(color: Colors.white),),
+              Text("关注 ${attentionCounts}  粉丝 ${fensiCounts}", style: TextStyle(color: Colors.white),),
+              Text(StringUtil.checkEmpty(userSignature) == true ? "这个家伙很懒，什么个性签名都没有留下":userSignature, style: TextStyle(color: Colors.white,fontSize: 12),overflow: TextOverflow.ellipsis,),
             ],
           ),
         ),

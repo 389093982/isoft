@@ -66,12 +66,11 @@ class LinkKnownApi {
   }
 
   // 查询用户基本信息
-  static Future<GetUserDetailResponse> getUserDetail(String username,String redirectUrl) async {
+  static Future<GetUserDetailResponse> getUserDetail(String userName) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/GetUserDetail',
         params: {
-          'username': username,
-          'redirectUrl': redirectUrl,
+          'userName': userName,
         });
     return GetUserDetailResponse.fromJson(response.data);
   }
