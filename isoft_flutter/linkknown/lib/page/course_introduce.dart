@@ -8,6 +8,7 @@ import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
+import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
 import 'package:linkknown/route/routes.dart';
@@ -16,6 +17,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
 // 课程简介组件
@@ -85,7 +87,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
             widget.course != null ? widget.course.courseShortDesc : '',
             // 设置行间距 1.3
             strutStyle:
-                StrutStyle(forceStrutHeight: true, height: 1.3, leading: 0.9),
+            StrutStyle(forceStrutHeight: true, height: 1.3, leading: 0.9),
           ),
           // 分享点赞收藏播放
           // 作者信息
@@ -93,7 +95,16 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程操作组件
           Offstage(
             offstage: widget.course == null,
-            child: widget.course != null ? CourseOperateWidget(widget.course) : null,
+            child: widget.course != null
+                ? CourseOperateWidget(widget.course, widget.cVideos)
+                : null,
+          ),
+          DividerLineView(
+            margin: EdgeInsets.symmetric(vertical: 20),
+          ),
+          widget.course != null ? CourseAuthorWidget(widget.course) : VEmptyView(1),
+          DividerLineView(
+            margin: EdgeInsets.symmetric(vertical: 20),
           ),
           // 课程标签语
           CourseLabelWidget(
@@ -101,17 +112,78 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           Expanded(
             // 分集视频
             child: CourseVideosWidget(widget.course, widget.cVideos,
-                clickCallBack: _clickCallBack),
+                clickCallBack: goToVideoPlay),
           ),
         ],
       ),
     );
   }
 
-  _clickCallBack(index) {
+  goToVideoPlay(index) {
     routerParamMap["videoplay_courseKey"] = widget.course;
     routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
     NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
+  }
+}
+
+class CourseAuthorWidget extends StatefulWidget {
+  Course course;
+  User user; // 作者信息
+  CourseAuthorWidget(this.course);
+
+  @override
+  _CourseAuthorState createState() => _CourseAuthorState();
+}
+
+class _CourseAuthorState extends State<CourseAuthorWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    initAuthorData();
+  }
+  initAuthorData() async {
+    GetUserDetailResponse userDetailResponse =
+        await LinkKnownApi.getUserDetail(widget.course.courseAuthor);
+    if (userDetailResponse.status == "SUCCESS") {
+      setState(() {
+        widget.user = userDetailResponse.user;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.user != null
+        ? Row(
+            children: <Widget>[
+              ClipOval(
+                child: Image.network(
+                  UIUtils.replaceMediaUrl(widget.user.smallIcon),
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text(widget.user.nickName),
+                      Text(widget.user.gender),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text("关注：${widget.user.attentionCounts}"),
+                      Text("粉丝：${widget.user.fensiCounts}"),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          )
+        : VEmptyView(10);
   }
 }
 
@@ -150,8 +222,9 @@ class _CourseLabelState extends State<CourseLabelWidget> {
 
 class CourseOperateWidget extends StatefulWidget {
   Course course;
+  List<CVideo> cVideos;
 
-  CourseOperateWidget(this.course);
+  CourseOperateWidget(this.course, this.cVideos);
 
   int collectNumber = 0;
   int priaseNumber = 0;
@@ -181,8 +254,11 @@ class _CourseOperateState extends State<CourseOperateWidget> {
 
     String userName = await LoginUtil.getUserName();
 
-    IsFavoriteResponse collectIsFavoriteResponse = await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
-    IsFavoriteResponse priaseIsFavoriteResponse = await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
+    IsFavoriteResponse collectIsFavoriteResponse =
+        await LinkKnownApi.isFavorite(
+            userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
+    IsFavoriteResponse priaseIsFavoriteResponse = await LinkKnownApi.isFavorite(
+        userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
 
     setState(() {
       if (collectFavoriteCountResponse.status == "SUCCESS") {
@@ -201,9 +277,10 @@ class _CourseOperateState extends State<CourseOperateWidget> {
     });
   }
 
-  void handleFavoriteClick (String favorite_type) async {
+  void handleFavoriteClick(String favorite_type) async {
     String userName = await LoginUtil.getUserName();
-    BaseResponse baseResponse = await LinkKnownApi.toggleFavorite(widget.course.id, favorite_type);
+    BaseResponse baseResponse =
+        await LinkKnownApi.toggleFavorite(widget.course.id, favorite_type);
     if (baseResponse.status == "SUCCESS") {
       // 重新刷新状态
       initCourseOperateData();
@@ -250,10 +327,23 @@ class _CourseOperateState extends State<CourseOperateWidget> {
               imagepath: "images/ic_play.svg",
               enable: false,
               number: widget.course.watchNumber,
-              clickCallback: () {}),
+              clickCallback: () {
+                if (widget.course.courseNumber == 0) {
+                  UIUtils.showToast2("暂无剧情，敬请期待！");
+                } else {
+                  // 默认前去播放第 0 集
+                  goToVideoPlay(0);
+                }
+              }),
         ),
       ],
     );
+  }
+
+  goToVideoPlay(index) {
+    routerParamMap["videoplay_courseKey"] = widget.course;
+    routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
+    NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
   }
 }
 

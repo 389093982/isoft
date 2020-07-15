@@ -1,21 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
 import 'package:linkknown/page/course_introduce.dart';
-import 'package:linkknown/page/course_video_widget.dart';
-import 'package:linkknown/route/reoutes_handler.dart';
-import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
-import 'package:linkknown/widgets/common_label.dart';
-import 'package:linkknown/widgets/v_empty_view.dart';
 
 class CourseDetailPage extends StatefulWidget {
   int course_id;
