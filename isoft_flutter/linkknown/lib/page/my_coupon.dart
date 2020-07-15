@@ -106,23 +106,13 @@ class _MyCouponState extends State<MyCouponWidget> with TickerProviderStateMixin
 //          ),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child: GridView.builder(
-              shrinkWrap: true,
-              itemCount: couponList.length,
-              controller: scrollController,
-              // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
-                  crossAxisCount: 2,
-                  //纵轴间距
-                  mainAxisSpacing: 10.0,
-                  //横轴间距
-                  crossAxisSpacing: 10.0,
-                  //子组件宽高长度比例
-                  childAspectRatio: 1.0),
-              itemBuilder: (BuildContext context, int index) {
-                return CouponItemWidget(couponList[index]);
-              }),
+            child: ListView.builder(
+                itemExtent:130,
+                itemCount: couponList.length,
+                controller: scrollController,
+                itemBuilder: (BuildContext context, int index) {
+                  return CouponItemWidget(couponList[index]);
+                }),
           ),
           onRefresh: _onRefresh,
         ),

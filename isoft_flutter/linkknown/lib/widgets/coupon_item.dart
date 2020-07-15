@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
@@ -21,39 +24,110 @@ class CouponItemWidget extends StatefulWidget {
 
 class _CouponItemState extends State<CouponItemWidget>
     with TickerProviderStateMixin {
-
   _CouponItemState();
 
   @override
   Widget build(BuildContext context) {
+    bool isGeneralCoupon = widget.coupon.couponType == "general";
+    bool isDisCount = widget.coupon.youhuiType == "discount";
     return Container(
-      padding: EdgeInsets.all(5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      margin: EdgeInsets.all(5),
+      color: Colors.white,
+      child: Row(
         children: <Widget>[
-          Text(widget.coupon.activityDesc),
-          Container(
-            margin: EdgeInsets.only(top: 2),
-            child: Row(
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
               children: <Widget>[
-                // 课程集数和播放次数
-                Image.asset(
-                  "images/ic_views.png",
-                  width: 15,
-                  height: 15,
+                Row(
+                  children: <Widget>[
+                    Text(
+                      isDisCount ? (double.parse(widget.coupon.discountRate) * 10).toStringAsFixed(1) + "折" : Constants.RMB + widget.coupon.couponAmount,
+                      style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
+                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                    ),
+                    Text(
+                        isDisCount ? "" : "  满 ${widget.coupon.goodsMinAmount} 元减 ${widget.coupon.couponAmount} 元",
+                        style: TextStyle(color: Color(0xFF757575),fontSize: 12),
+                        strutStyle: LinkKnownTextStyle.couponStrutStyle),
+                  ],
                 ),
-                Text(widget.coupon.couponId.toString()),
-                Image.asset(
-                  "images/ic_list_counts.png",
-                  width: 15,
-                  height: 15,
+                Row(
+                  children: <Widget>[
+                    Text(isGeneralCoupon ? "通用券" : "指定券",
+                        style: TextStyle(color: Color(0xFF757575)),
+                        strutStyle: LinkKnownTextStyle.couponStrutStyle
+                    ),
+                    Text(" 适用于",
+                      style: TextStyle(color: Color(0xFF757575)),
+                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                    ),
+                    Text(
+                      isGeneralCoupon ? "所有付费课程" : "${widget.coupon.targetName}",
+                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Color(0xFF2962FF)),
+                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                    )
+                  ],
                 ),
-                Text(widget.coupon.couponId.toString()),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "活动日期:  ${widget.coupon.startDate} - ${widget.coupon.endDate}",
+                      style: TextStyle(color: Color(0xFF757575)),
+                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                    )
+                  ],
+                )
               ],
             ),
+          )),
+          Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Image.asset(
+                getCouponBgPicture(widget.coupon),
+                width: 72,
+                height: 130,
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "已",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    "使",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    "用",
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+
+
+  //获取券的底色图片
+  getCouponBgPicture(Coupon coupon){
+    if(coupon.couponState=="used"){
+      return "images/coupon_grey.png";
+    }else{
+      var now = new DateTime.now();
+      String today = now.toString().substring(0,10).replaceAll("-", "");
+      if(int.parse(today) > int.parse(coupon.endDate)){
+        return "images/coupon_grey.png";
+      }else{
+        return "images/coupon_red.png";
+      }
+    }
+  }
+
 }
