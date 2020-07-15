@@ -43,8 +43,8 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
         children: <Widget>[
           Text(
             widget.course != null ? widget.course.courseName : '',
@@ -109,7 +109,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(
               widget.course != null ? widget.course.courseLabel : ''),
-          Expanded(
+          Container(
             // 分集视频
             child: CourseVideosWidget(widget.course, widget.cVideos,
                 clickCallBack: goToVideoPlay),
