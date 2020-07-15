@@ -106,7 +106,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
                 controller: this.tabController,
                 children: <Widget>[
                   Center(child: CourseIntroduceWidget(course, cVideos)),
-                  Center(child: CourseCommentWidget()),
+                  CourseCommentWidget(),
                 ],
               ),
             ),
