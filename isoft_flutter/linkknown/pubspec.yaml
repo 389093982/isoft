@@ -95,6 +95,11 @@ flutter:
     - images/ic_about.png
     - images/ic_advise.png
     - images/ic_link.png
+    - images/ic_operate_bg.png
+    - images/ic_play.svg
+    - images/ic_share.svg
+    - images/ic_praise.svg
+    - images/ic_collect.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

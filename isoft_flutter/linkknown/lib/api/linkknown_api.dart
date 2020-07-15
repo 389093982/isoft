@@ -8,6 +8,8 @@ import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/element.dart';
+import 'package:linkknown/model/favorite_count_response.dart';
+import 'package:linkknown/model/favorite_is_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -136,4 +138,40 @@ class LinkKnownApi {
     return AdviseListResponse.fromJson(response.data);
   }
 
+  // 查询收藏总人数
+  static Future<FavoriteCountResponse> queryFavoriteCount(int favorite_id,
+      String favorite_type) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount',
+        params: {
+          'favorite_id': favorite_id,
+          'favorite_type': favorite_type,
+        });
+    return FavoriteCountResponse.fromJson(response.data);
+  }
+
+  // 判断是否收藏
+  static Future<IsFavoriteResponse> isFavorite(String user_name, int favorite_id,
+      String favorite_type) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/IsFavorite',
+        params: {
+          'user_name': user_name,
+          'favorite_id': favorite_id,
+          'favorite_type': favorite_type,
+        });
+    return IsFavoriteResponse.fromJson(response.data);
+  }
+
+  // 切换收藏状态
+  static Future<BaseResponse> toggleFavorite(int favorite_id,
+      String favorite_type) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/ToggleFavorite',
+        params: {
+          'favorite_id': favorite_id,
+          'favorite_type': favorite_type,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
 }
