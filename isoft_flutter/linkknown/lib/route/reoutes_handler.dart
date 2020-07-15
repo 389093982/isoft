@@ -3,14 +3,17 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/advise_edit_page.dart';
 import 'package:linkknown/page/advise_page.dart';
+import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/page/user_agreement.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 
@@ -44,7 +47,7 @@ var registHandler = new Handler(
 // 关于链知页
 var aboutHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
+      return AboutPage();
     });
 
 // 课程详情页
@@ -132,4 +135,16 @@ var adviseEditHandler = new Handler(
 var linkKnownWithMeHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return RegistPage();
+    });
+
+// 用户协议
+var userAgreementHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return UserAgreementPage();
+    });
+
+// 商业合作
+var businessHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return BusinessPage();
     });
