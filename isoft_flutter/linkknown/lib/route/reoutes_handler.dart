@@ -7,6 +7,7 @@ import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/splash_page.dart';
@@ -71,7 +72,7 @@ var videoPlayHandler = new Handler(
 //优惠券
 var myCouponHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String,List<String>> params){
-    return RegistPage();
+    return MyCouponPage();
   });
 
 //购物车
