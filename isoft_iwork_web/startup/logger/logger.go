@@ -55,14 +55,12 @@ func ClearLog() error {
 	preDays, _ := strconv.Atoi(beego.AppConfig.String("iwork.clearRunAndValidateLog.preDays"))
 	oldTime := now.AddDate(0, 0, -preDays)
 
-	logs.Info("开始清理日志表 runlog_detail")
-	filter := orm.NewOrm().QueryTable("runlog_detail").Filter("last_updated_time__lt", oldTime)
-	delCount, _ := filter.Delete()
-	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
+	logs.Info("开始清理日志表 runlog_detail") //只保留最近100w条
+	orm.NewOrm().Raw("DELETE FROM runlog_detail WHERE id < (SELECT id FROM (SELECT id FROM runlog_detail ORDER BY id DESC LIMIT 1000000,1) tt)")
 
 	logs.Info("开始清理日志表 validatelog_detail")
-	filter = orm.NewOrm().QueryTable("validatelog_detail").Filter("last_updated_time__lt", oldTime)
-	delCount, _ = filter.Delete()
+	filter := orm.NewOrm().QueryTable("validatelog_detail").Filter("last_updated_time__lt", oldTime)
+	delCount, _ := filter.Delete()
 	logs.Info("实际删除条数:" + strconv.Itoa(int(delCount)))
 
 	logs.Info("开始清理日志表 validatelog_record")
