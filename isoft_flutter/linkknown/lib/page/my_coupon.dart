@@ -20,7 +20,10 @@ class MyCouponWidget extends StatefulWidget {
 
 }
 
-class _MyCouponState extends State<MyCouponWidget> with TickerProviderStateMixin {
+class _MyCouponState extends State<MyCouponWidget> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
 
   List<Coupon> couponList = new List();
   ScrollController scrollController = ScrollController();

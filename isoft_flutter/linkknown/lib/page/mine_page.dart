@@ -114,20 +114,30 @@ class _MineHeaderState extends State<MineHeaderWidget>
       children: <Widget>[
         Container(
           margin: EdgeInsets.all(5),
-          child: SvgPicture.asset(
-            "images/setting.svg",
-            color: Colors.white,
-            width: 23,
-            height: 23,
+          child: GestureDetector(
+            onTap: (){
+              NavigatorUtil.goRouterPage(context, Routes.setting);
+            },
+            child: SvgPicture.asset(
+              "images/setting.svg",
+              color: Colors.white,
+              width: 23,
+              height: 23,
+            ),
           ),
         ),
         Container(
           margin: EdgeInsets.only(right: 15),
-          child: SvgPicture.asset(
-            "images/lingdang.svg",
-            color: Colors.white,
-            width: 23,
-            height: 23,
+          child: GestureDetector(
+            onTap: (){
+              NavigatorUtil.goRouterPage(context, Routes.message);
+            },
+            child: SvgPicture.asset(
+              "images/lingdang.svg",
+              color: Colors.white,
+              width: 23,
+              height: 23,
+            ),
           ),
         ),
       ],

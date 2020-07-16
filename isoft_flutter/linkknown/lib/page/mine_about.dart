@@ -12,7 +12,7 @@ class AboutPage extends StatelessWidget{
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: new Text('我要吐槽'),
+        title: new Text('关于链知'),
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {

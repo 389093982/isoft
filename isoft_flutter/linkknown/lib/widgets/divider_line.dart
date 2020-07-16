@@ -11,7 +11,7 @@ class DividerLineView extends StatelessWidget {
     return Container(
       margin: this.margin ?? EdgeInsets.all(0),
       child: Divider(
-        color: Colors.grey[450],
+        color: Colors.grey[400],
         height: ScreenUtil().setHeight(1.0),
       ),
     );

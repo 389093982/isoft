@@ -13,7 +13,7 @@ class _UserAgreementState extends State<UserAgreementPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: new Text('我要吐槽'),
+        title: new Text('用户协议'),
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {

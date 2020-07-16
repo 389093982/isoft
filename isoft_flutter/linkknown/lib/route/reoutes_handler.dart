@@ -8,10 +8,12 @@ import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
+import 'package:linkknown/page/message_page.dart';
 import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
+import 'package:linkknown/page/setting_page.dart';
 import 'package:linkknown/page/shopping_cart_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
@@ -82,7 +84,7 @@ var myCouponHandler = new Handler(
 //购物车
 var shoppingCartHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
-      return ShoppingCartPage();
+      return RegistPage();
     });
 
 //订单
