@@ -19,7 +19,10 @@ class ShoppingCartGoodsWidget extends StatefulWidget {
 
 }
 
-class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with TickerProviderStateMixin {
+class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
 
   List<GoodsData> goodsList = new List();
   ScrollController scrollController = ScrollController();
