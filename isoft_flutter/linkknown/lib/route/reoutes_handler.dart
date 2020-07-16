@@ -151,3 +151,15 @@ var businessHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return BusinessPage();
     });
+
+// 消息中心
+var messageHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return MessagePage();
+    });
+
+// 设置
+var settingHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return SettingPage();
+    });
