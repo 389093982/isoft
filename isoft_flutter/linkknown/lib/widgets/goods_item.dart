@@ -34,7 +34,7 @@ class _GoodsItemState extends State<GoodsItemWidget>
     return Card(
       color: Colors.white,
       //z轴的高度，设置card的阴影
-      elevation: 3.0,
+      elevation: 1.2,
       //设置shape，这里设置成了R角
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
@@ -50,7 +50,7 @@ class _GoodsItemState extends State<GoodsItemWidget>
               InkWell(
                 onTap: () {
                   NavigatorUtil.goRouterPage(
-                      context, "${Routes.courseDetail}?course_id=11");
+                      context, "${Routes.courseDetail}?course_id=${widget.goods.goodsId}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(

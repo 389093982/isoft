@@ -14,6 +14,7 @@ import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
+import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
@@ -204,7 +205,6 @@ class LinkKnownApi {
   }
 
 
-
   // 查询我的购物车
   static Future<PayShoppinpCartResponse> queryPayShoppingCartList(int current_page, int offset) async {
     var response = await doPost(
@@ -215,6 +215,21 @@ class LinkKnownApi {
         });
     return PayShoppinpCartResponse.fromJson(response.data);
   }
+
+
+  // 我的订单
+  static Future<PayOrderResponse> queryPayOrderList(int currentPage, int offset,String user_name,String scope) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        params: {
+          'currentPage': currentPage,
+          'offset': offset,
+          'user_name': user_name,
+          'scope': scope,
+        });
+    return PayOrderResponse.fromJson(response.data);
+  }
+
 
 
 }

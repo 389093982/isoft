@@ -11,6 +11,7 @@ import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/message_page.dart';
 import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
+import 'package:linkknown/page/pay_order_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/setting_page.dart';
@@ -90,7 +91,7 @@ var shoppingCartHandler = new Handler(
 //订单
 var payOrderHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
-      return RegistPage();
+      return PayOrderPage();
     });
 
 //活动

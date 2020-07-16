@@ -104,6 +104,10 @@ flutter:
     - images/coupon_red.png
     - images/coupon_grey.png
     - images/business.jpg
+    - images/ic_pay_result_success.png
+    - images/ic_pay_result_fail.png
+    - images/ic_pay_result_wait_for_pay.png
+    - images/ic_pay_result_cancel.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

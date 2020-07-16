@@ -151,7 +151,7 @@ class _CouponItemState extends State<CouponItemWidget>
   }
 
   //获取第三个汉子
-  getThirdCharacter(Coupon coupon){
+  String getThirdCharacter(Coupon coupon){
     if(coupon.couponState=="used"){
       return "用";
     }else{
