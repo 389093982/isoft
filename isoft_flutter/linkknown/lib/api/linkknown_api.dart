@@ -13,6 +13,7 @@ import 'package:linkknown/model/favorite_is_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
+import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
 class LinkKnownApi {
@@ -190,5 +191,19 @@ class LinkKnownApi {
         });
     return MyCouponResponse.fromJson(response.data);
   }
+
+
+
+  // 查询我的购物车
+  static Future<PayShoppinpCartResponse> queryPayShoppingCartList(int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPayShoppingCartList',
+        params: {
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return PayShoppinpCartResponse.fromJson(response.data);
+  }
+
 
 }
