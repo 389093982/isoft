@@ -61,6 +61,10 @@ class Routes {
   static String userAgreement = "/userAgreement";
   // 商业合作
   static String business = "/business";
+  // 消息中心
+  static String message = "/message";
+  // 设置
+  static String setting = "/setting";
 
 
   static void configureRoutes(Router router) {
@@ -120,5 +124,9 @@ class Routes {
     router.define(userAgreement, handler: userAgreementHandler);
     // 商业合作
     router.define(business, handler: businessHandler);
+    // 消息中心
+    router.define(message, handler: messageHandler);
+    // 设置
+    router.define(setting, handler: settingHandler);
   }
 }

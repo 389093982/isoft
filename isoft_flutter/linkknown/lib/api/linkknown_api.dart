@@ -12,6 +12,7 @@ import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
+import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
@@ -176,7 +177,6 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
-
   // 查询我的优惠券
   static Future<MyCouponResponse> queryPersonalCouponList(String isExpired,
       String isUsed, int current_page, int offset) async {
@@ -189,6 +189,17 @@ class LinkKnownApi {
           'offset': offset,
         });
     return MyCouponResponse.fromJson(response.data);
+  }
+
+  // 查询消息
+  static Future<MessageListResponse> queryPageMessageList(int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPageMessageList',
+        params: {
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return MessageListResponse.fromJson(response.data);
   }
 
 }
