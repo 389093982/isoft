@@ -84,7 +84,7 @@ var myCouponHandler = new Handler(
 //购物车
 var shoppingCartHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
-      return RegistPage();
+      return ShoppingCartPage();
     });
 
 //订单
