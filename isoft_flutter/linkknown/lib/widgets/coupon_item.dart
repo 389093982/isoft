@@ -56,16 +56,16 @@ class _CouponItemState extends State<CouponItemWidget>
                 Row(
                   children: <Widget>[
                     Text(isGeneralCoupon ? "通用券" : "指定券",
-                        style: TextStyle(color: Color(0xFF757575)),
+                        style: TextStyle(color: Color(0xFF757575),fontSize: 13),
                         strutStyle: LinkKnownTextStyle.couponStrutStyle
                     ),
                     Text(" 适用于",
-                      style: TextStyle(color: Color(0xFF757575)),
+                      style: TextStyle(color: Color(0xFF757575),fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     ),
                     Text(
                       isGeneralCoupon ? "所有付费课程" : "${widget.coupon.targetName}",
-                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Color(0xFF2962FF)),
+                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Color(0xFF2962FF),fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     )
                   ],
@@ -74,7 +74,7 @@ class _CouponItemState extends State<CouponItemWidget>
                   children: <Widget>[
                     Text(
                       "活动日期:  ${widget.coupon.startDate} - ${widget.coupon.endDate}",
-                      style: TextStyle(color: Color(0xFF757575)),
+                      style: TextStyle(color: Color(0xFF757575),fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     )
                   ],
@@ -94,15 +94,15 @@ class _CouponItemState extends State<CouponItemWidget>
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    "已",
+                    getFirstCharacter(widget.coupon),
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(
-                    "使",
+                    getSecondCharacter(widget.coupon),
                     style: TextStyle(color: Colors.white),
                   ),
                   Text(
-                    "用",
+                    getThirdCharacter(widget.coupon),
                     style: TextStyle(color: Colors.white),
                   )
                 ],
@@ -129,5 +129,41 @@ class _CouponItemState extends State<CouponItemWidget>
       }
     }
   }
+
+  //获取第一个汉子
+  getFirstCharacter(Coupon coupon){
+    return "已";
+  }
+
+  //获取第二个汉子
+  getSecondCharacter(Coupon coupon){
+    if(coupon.couponState=="used"){
+      return "使";
+    }else{
+      var now = new DateTime.now();
+      String today = now.toString().substring(0,10).replaceAll("-", "");
+      if(int.parse(today) > int.parse(coupon.endDate)){
+        return "过";
+      }else{
+        return "领";
+      }
+    }
+  }
+
+  //获取第三个汉子
+  getThirdCharacter(Coupon coupon){
+    if(coupon.couponState=="used"){
+      return "用";
+    }else{
+      var now = new DateTime.now();
+      String today = now.toString().substring(0,10).replaceAll("-", "");
+      if(int.parse(today) > int.parse(coupon.endDate)){
+        return "期";
+      }else{
+        return "取";
+      }
+    }
+  }
+
 
 }
