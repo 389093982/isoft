@@ -56,7 +56,7 @@ class Routes {
   // 关于链知
   static String about = "/about";
   //我与链知
-  static String linkKnownWithMe = "/linkKnownWithMe";
+  static String linkknownWithMe = "/linkKnownWithMe";
   // 用户协议
   static String userAgreement = "/userAgreement";
   // 商业合作
@@ -119,7 +119,7 @@ class Routes {
     // 关于链知页
     router.define(about, handler: aboutHandler);
     //我与链知
-    router.define(linkKnownWithMe, handler: linkKnownWithMeHandler);
+    router.define(linkknownWithMe, handler: linkknownWithMeHandler);
     // 用户协议
     router.define(userAgreement, handler: userAgreementHandler);
     // 商业合作

@@ -7,6 +7,7 @@ import 'package:linkknown/page/bought_course_page.dart';
 import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
+import 'package:linkknown/page/linkknown_with_me_page.dart';
 import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/message_page.dart';
@@ -137,9 +138,9 @@ var adviseEditHandler = new Handler(
     });
 
 //我与链知
-var linkKnownWithMeHandler = new Handler(
+var linkknownWithMeHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
-      return RegistPage();
+      return LinkknownWithMePage();
     });
 
 // 用户协议
