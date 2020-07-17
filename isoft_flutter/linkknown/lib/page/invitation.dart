@@ -32,6 +32,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
   int page = 0;
   bool isLoading = false;//是否正在请求新数据
   bool showMore = false;//是否显示底部加载中提示
+  final searchInputController = TextEditingController();
 
   @override
   void initState() {
@@ -95,7 +96,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
     return Column(
       children: <Widget>[
         Container(
-          height: 90,
+          height: 100,
           padding: EdgeInsets.all(10),
           child: Column(children: <Widget>[
             Row(children: <Widget>[
@@ -103,8 +104,57 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
             ],),
             SizedBox(height: 20,),
             Row(children: <Widget>[
-              Text("请输入受邀者账号"),
-              Text("   图标"),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: 35,
+//                        maxWidth: 300
+                    ),
+                    child: TextField(
+                      //最大行数
+                      maxLines: 1,
+                      //光标颜色
+                      cursorColor: Colors.deepOrange,
+                      //光标宽度
+                      cursorWidth: 2.0,
+                      //输入文本的样式
+                      style: TextStyle(fontSize: 15.0),
+                      controller: searchInputController,
+                      decoration: new InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 12,top:0),
+                        hintText: '请输入受邀者账号..',
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange, //边框颜色
+                            width: 2, //宽度为5
+                          ),
+                          borderRadius: BorderRadius.circular(30),//四个角弧度
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange, //边框颜色
+                            width: 2, //宽度为5
+                          ),
+                          borderRadius: BorderRadius.circular(30),//四个角弧度
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () {
+//                            handleSearch(searchInputController.text);
+                          },
+                          child: Icon(
+                            Icons.person_add,
+                            color: Colors.blue,
+                          ),
+                        ),
+//                        border: InputBorder.none
+                      ),
+                      // onChanged: onSearchTextChanged,
+                    ),
+                  )
+                ),
+              ),
             ],),
           ],),
         ),
