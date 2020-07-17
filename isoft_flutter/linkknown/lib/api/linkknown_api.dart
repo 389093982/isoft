@@ -258,5 +258,16 @@ class LinkKnownApi {
   }
 
 
+  //添加客户
+  static Future<BaseResponse> AddUserLinkAgent(String user_name) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/AddUserLinkAgent',
+        params: {
+          'user_name': user_name,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
 
 }

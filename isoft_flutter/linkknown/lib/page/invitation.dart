@@ -5,6 +5,7 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
@@ -110,7 +111,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                         maxHeight: 35,
-//                        maxWidth: 300
+                        //maxWidth: 300
                     ),
                     child: TextField(
                       //最大行数
@@ -123,25 +124,25 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
                       style: TextStyle(fontSize: 15.0),
                       controller: searchInputController,
                       decoration: new InputDecoration(
-                        contentPadding: EdgeInsets.only(left: 12,top:0),
+                        contentPadding: EdgeInsets.only(left: 12,top:0),//光标距离左侧距离
                         hintText: '请输入受邀者账号..',
-                        enabledBorder: OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(//未点击输入框的效果
                           borderSide: BorderSide(
                             color: Colors.deepOrange, //边框颜色
-                            width: 2, //宽度为5
+                            width: 2, //宽度为2
                           ),
                           borderRadius: BorderRadius.circular(30),//四个角弧度
                         ),
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(//点击输入框后的效果
                           borderSide: BorderSide(
                             color: Colors.deepOrange, //边框颜色
-                            width: 2, //宽度为5
+                            width: 2, //宽度为2
                           ),
                           borderRadius: BorderRadius.circular(30),//四个角弧度
                         ),
                         suffixIcon: InkWell(
                           onTap: () {
-//                            handleSearch(searchInputController.text);
+                            AddUserLinkAgent(searchInputController.text);
                           },
                           child: Icon(
                             Icons.person_add,
@@ -159,7 +160,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
           ],),
         ),
         SizedBox(height: 20,),
-        DividerLineView(),
+        DividerLineView(),//黑色的分割线
         SizedBox(height: 20,),
         Container(
           margin: EdgeInsets.all(10),
@@ -190,6 +191,35 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
         ),
       ],
     );
+  }
+
+
+  AddUserLinkAgent(String userName) async {
+    if(""==userName){
+      UIUtils.showToast("请输入受邀者账号！");
+      return;
+    }
+    String user_name = await LoginUtil.getUserName();
+    if (userName == user_name){
+      UIUtils.showToast("不能邀请自己^_^");
+      return;
+    }
+
+    LinkKnownApi.AddUserLinkAgent(userName).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("邀请成功！请尽快通知对方接受邀请");
+      }else{
+        if(value.errorMsg.contains("今日已邀请")){
+          UIUtils.showToast(value.errorMsg+"请尽快通知对方接受邀请");
+        }else{
+          UIUtils.showToast(value.errorMsg);
+
+        }
+      }
+    });
+
   }
 
 
