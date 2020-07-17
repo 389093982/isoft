@@ -16,6 +16,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
 class LinkKnownApi {
@@ -231,6 +232,18 @@ class LinkKnownApi {
     return PayOrderResponse.fromJson(response.data);
   }
 
+
+
+  // 我的客户
+  static Future<UserLinkAgentResponse> QueryUserLinkAgent(int currentPage, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryUserLinkAgent',
+        params: {
+          'current_page': currentPage,
+          'offset': offset,
+        });
+    return UserLinkAgentResponse.fromJson(response.data);
+  }
 
 
 }

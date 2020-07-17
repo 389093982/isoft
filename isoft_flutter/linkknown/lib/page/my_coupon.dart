@@ -110,6 +110,7 @@ class _MyCouponState extends State<MyCouponWidget> with AutomaticKeepAliveClient
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
                 itemExtent:130,
                 itemCount: couponList.length,
                 controller: scrollController,

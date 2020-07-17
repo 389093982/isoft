@@ -359,7 +359,7 @@ class MineFooterWidget extends StatelessWidget {
           getOperateWidget(
               context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
           getOperateWidget(context,
-              FooterItem("images/ic_link.png", '我与链知', Routes.linkKnownWithMe)),
+              FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
         ],
       ),
     );

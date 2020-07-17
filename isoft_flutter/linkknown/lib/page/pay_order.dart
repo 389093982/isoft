@@ -113,6 +113,7 @@ class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClient
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
                 itemExtent:130,
                 itemCount: orders.length,
                 controller: scrollController,
