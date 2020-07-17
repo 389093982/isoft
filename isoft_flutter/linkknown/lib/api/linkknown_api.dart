@@ -246,4 +246,17 @@ class LinkKnownApi {
   }
 
 
+  //查询邀请我的人
+  static Future<UserLinkAgentResponse> QueryTodayInviteMe(int currentPage, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryTodayInviteMe',
+        params: {
+          'current_page': currentPage,
+          'offset': offset,
+        });
+    return UserLinkAgentResponse.fromJson(response.data);
+  }
+
+
+
 }

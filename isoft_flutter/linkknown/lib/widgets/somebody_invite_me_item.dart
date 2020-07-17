@@ -17,18 +17,18 @@ import 'package:linkknown/widgets/common_label.dart';
 
 import 'clickable_textimage.dart';
 
-class UserLinkAgentItemWidget extends StatefulWidget {
+class SomeBodyInviteMeItemWidget extends StatefulWidget {
   UserLinkAgent userLinkAgent;
 
-  UserLinkAgentItemWidget(this.userLinkAgent);
+  SomeBodyInviteMeItemWidget(this.userLinkAgent);
 
   @override
-  _UserLinkAgentItemState createState() => _UserLinkAgentItemState();
+  _SomeBodyInviteMeItemState createState() => _SomeBodyInviteMeItemState();
 }
 
-class _UserLinkAgentItemState extends State<UserLinkAgentItemWidget>
+class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
     with TickerProviderStateMixin {
-  _UserLinkAgentItemState();
+  _SomeBodyInviteMeItemState();
 
   @override
   Widget build(BuildContext context) {
@@ -86,19 +86,11 @@ class _UserLinkAgentItemState extends State<UserLinkAgentItemWidget>
                     ],
                   ),
                   SizedBox(height: 5,),
-                  Row(children: <Widget>[
-                    Text("关联时间:"+DateUtil.format2StandardTime(widget.userLinkAgent.bindTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
-                    SizedBox(width: 10,),
-                    Text("回报率:"+(double.parse(widget.userLinkAgent.returnRate)*100).toStringAsFixed(0)+"%",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                  ],),
+                  Text(widget.userLinkAgent.agentUserName,style: TextStyle(fontSize: 12,color: Colors.black54),),
                   SizedBox(height: 5,),
-                  Text(""==widget.userLinkAgent.userSignature?"暂无签名":widget.userLinkAgent.userSignature,
-                      softWrap: true,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 12,color: Colors.black54)
-                  ),
+                  Row(children: <Widget>[
+                    Text("邀请时间:"+DateUtil.format2StandardTime(widget.userLinkAgent.bindTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  ],),
                 ],
               ),
             ),

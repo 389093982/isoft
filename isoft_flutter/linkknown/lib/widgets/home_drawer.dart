@@ -98,19 +98,19 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
           Align(
             alignment: Alignment.center,
             child: Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: EdgeInsets.only(top: 60),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ClipOval(
                     child: StringUtil.checkNotEmpty(headerIcon) ?
                     Image.network(UIUtils.replaceMediaUrl(headerIcon),
-                      width: 100.0,
-                      height: 100.0,
+                      width: 80.0,
+                      height: 80.0,
                       fit: BoxFit.cover,) :
                     Image.asset("images/linkknown.jpg",
-                      width: 100.0,
-                      height: 100.0,
+                      width: 80.0,
+                      height: 80.0,
                       fit: BoxFit.cover,),
                   ),
                   VEmptyView(10),

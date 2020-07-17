@@ -6,6 +6,7 @@ import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/page/pay_order.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 
+import 'invitation.dart';
 import 'my_coupon.dart';
 import 'my_customer.dart';
 
@@ -28,7 +29,7 @@ class LinkknownWithMePage extends StatefulWidget {
 
   List<TabViewModel> viewModels = [
     TabViewModel(title: '我的客户', widget: MyCustomerWidget()),
-//    TabViewModel(title: '邀请', widget: InvitationWidget()),
+    TabViewModel(title: '邀请', widget: InvitationWidget()),
   ].map((item) => TabViewModel(
     title: item.title,
     widget: item.widget,
