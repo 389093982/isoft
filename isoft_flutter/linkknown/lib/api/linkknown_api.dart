@@ -269,5 +269,15 @@ class LinkKnownApi {
   }
 
 
+  //同意邀请
+  static Future<BaseResponse> AgreeUserLinkAgent(String agent_user_name) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/AgreeUserLinkAgent',
+        params: {
+          'agent_user_name': agent_user_name,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
 
 }

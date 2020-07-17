@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
@@ -15,6 +17,8 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
+import 'accept_invite_button_label.dart';
+import 'button_label.dart';
 import 'clickable_textimage.dart';
 
 class SomeBodyInviteMeItemWidget extends StatefulWidget {
@@ -50,8 +54,7 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(
-                      context, "${Routes.courseDetail}?course_id=11");
+                  NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=11");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
@@ -86,7 +89,11 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
                     ],
                   ),
                   SizedBox(height: 5,),
-                  Text(widget.userLinkAgent.agentUserName,style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  Row(
+                    children: <Widget>[
+                      Text(widget.userLinkAgent.agentUserName,style: TextStyle(fontSize: 12,color: Colors.black54),),
+                    ],
+                  ),
                   SizedBox(height: 5,),
                   Row(children: <Widget>[
                     Text("邀请时间:"+DateUtil.format2StandardTime(widget.userLinkAgent.bindTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
@@ -95,9 +102,37 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
               ),
             ),
           ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10),
+                child: InkWell(
+                  onTap: () {
+                    AgreeUserLinkAgent(widget.userLinkAgent.agentUserName);
+                  },
+                  child: AcceptInviteButtonLabel("接受邀请"),
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
+  }
+
+
+  //接受邀请
+  AgreeUserLinkAgent(String agent_user_name){
+    LinkKnownApi.AgreeUserLinkAgent(agent_user_name).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("关联成功！");
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    });
   }
 
 
