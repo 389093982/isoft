@@ -8,6 +8,7 @@ import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
+import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/somebody_invite_me_item.dart';
 import 'package:linkknown/widgets/user_link_agent_item.dart';
 
@@ -91,25 +92,51 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
 
-    return Stack(
+    return Column(
       children: <Widget>[
-        RefreshIndicator(
-          //指示器颜色
-          color: Theme.of(context).primaryColor,
-          //指示器显示时距顶部位置
-          displacement: 40,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
-                itemExtent:95,
-                itemCount: SomeBodyInviteMeList.length,
-                controller: scrollController,
-                itemBuilder: (BuildContext context, int index) {
-                  return SomeBodyInviteMeItemWidget(SomeBodyInviteMeList[index]);
-                }),
+        Container(
+          height: 90,
+          padding: EdgeInsets.all(10),
+          child: Column(children: <Widget>[
+            Row(children: <Widget>[
+              Text("邀请他人:",),
+            ],),
+            SizedBox(height: 20,),
+            Row(children: <Widget>[
+              Text("请输入受邀者账号"),
+              Text("   图标"),
+            ],),
+          ],),
+        ),
+        SizedBox(height: 20,),
+        DividerLineView(),
+        SizedBox(height: 20,),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: Row(children: <Widget>[
+            Text("正在邀请我:")
+          ],),
+        ),
+        SizedBox(height: 10,),
+        Expanded(
+          child: RefreshIndicator(
+            //指示器颜色
+            color: Theme.of(context).primaryColor,
+            //指示器显示时距顶部位置
+            displacement: 40,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: ListView.builder(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemExtent:95,
+                  itemCount: SomeBodyInviteMeList.length,
+                  controller: scrollController,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SomeBodyInviteMeItemWidget(SomeBodyInviteMeList[index]);
+                  }),
+            ),
+            onRefresh: _onRefresh,
           ),
-          onRefresh: _onRefresh,
         ),
       ],
     );
