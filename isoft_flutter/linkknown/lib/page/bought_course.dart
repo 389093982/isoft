@@ -5,24 +5,24 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
+import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/bought_course_item.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
-import 'package:linkknown/widgets/order_item.dart';
+import 'package:linkknown/widgets/goods_item.dart';
 
-class PayOrderWidget extends StatefulWidget {
+class BoughtCourseWidget extends StatefulWidget {
 
-  String scope;
-
-  PayOrderWidget(this.scope);
+  BoughtCourseWidget();
 
   @override
-  _PayOrderState createState() => _PayOrderState();
+  _BoughtCourseState createState() => _BoughtCourseState();
 
 }
 
-class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClientMixin {
+class _BoughtCourseState extends State<BoughtCourseWidget> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
 
   @override
   bool get wantKeepAlive => true;
@@ -62,7 +62,7 @@ class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClient
       page = current_page;
     });
     String userName = await LoginUtil.getUserName();
-    LinkKnownApi.queryPayOrderList(current_page, offset, userName,widget.scope).catchError((e) {
+    LinkKnownApi.queryPayOrderList(current_page, offset,userName,"PAID",goods_type:"course_theme_type").catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
@@ -117,7 +117,7 @@ class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClient
                 itemCount: orders.length,
                 controller: scrollController,
                 itemBuilder: (BuildContext context, int index) {
-                  return OrderItemWidget(orders[index]);
+                  return BoughtCourseItemWidget(orders[index]);
                 }),
           ),
           onRefresh: _onRefresh,

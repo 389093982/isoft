@@ -218,13 +218,14 @@ class LinkKnownApi {
 
 
   // 我的订单
-  static Future<PayOrderResponse> queryPayOrderList(int currentPage, int offset,String user_name,String scope) async {
+  static Future<PayOrderResponse> queryPayOrderList(int currentPage, int offset,String user_name,String scope,{String goods_type}) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
         params: {
           'currentPage': currentPage,
           'offset': offset,
           'user_name': user_name,
+          'goods_type': goods_type??"",
           'scope': scope,
         });
     return PayOrderResponse.fromJson(response.data);
