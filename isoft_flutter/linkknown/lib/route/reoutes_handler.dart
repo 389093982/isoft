@@ -3,6 +3,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/advise_edit_page.dart';
 import 'package:linkknown/page/advise_page.dart';
+import 'package:linkknown/page/bought_course_page.dart';
 import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
@@ -121,7 +122,7 @@ var personalCenterHandler = new Handler(
 // 已购课程页
 var boughtCourseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return RegistPage();
+      return BoughtCoursePage();
     });
 
 // 我要吐槽页
