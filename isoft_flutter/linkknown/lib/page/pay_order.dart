@@ -4,27 +4,30 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
-import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/pay_order_response.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
-import 'package:linkknown/widgets/goods_item.dart';
+import 'package:linkknown/widgets/order_item.dart';
 
-class ShoppingCartGoodsWidget extends StatefulWidget {
+class PayOrderWidget extends StatefulWidget {
 
-  ShoppingCartGoodsWidget();
+  String scope;
+
+  PayOrderWidget(this.scope);
 
   @override
-  _ShoppingCartGoodsState createState() => _ShoppingCartGoodsState();
+  _PayOrderState createState() => _PayOrderState();
 
 }
 
-class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
 
-  List<GoodsData> goodsList = new List();
+  List<Order> orders = new List();
   ScrollController scrollController = ScrollController();
 
   int page = 0;
@@ -58,7 +61,7 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with Ticker
       isLoading = true;
       page = current_page;
     });
-    LinkKnownApi.queryPayShoppingCartList(current_page, offset).catchError((e) {
+    LinkKnownApi.queryPayOrderList(current_page, offset, "1875112921@qq.com",widget.scope).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
@@ -67,9 +70,9 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with Ticker
       });
     }).then((value) {
       if (current_page == 1) {
-        goodsList.clear();
+        orders.clear();
       }
-      goodsList.addAll(value.goodsData);
+      orders.addAll(value.orders);
 
       setState(() {
         isLoading = false;
@@ -110,10 +113,10 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with Ticker
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
                 itemExtent:130,
-                itemCount: goodsList.length,
+                itemCount: orders.length,
                 controller: scrollController,
                 itemBuilder: (BuildContext context, int index) {
-                  return GoodsItemWidget(goodsList[index]);
+                  return OrderItemWidget(orders[index]);
                 }),
           ),
           onRefresh: _onRefresh,
