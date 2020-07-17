@@ -27,11 +27,6 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-//    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
-//      statusBarColor:
-//      Colors.blue,
-//    ));
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -62,7 +57,9 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
               ],
             ),
             SizedBox(height: 10,),
-            CourseFilterWidget(widget.search, widget.isCharge),
+            Expanded(
+              child: CourseFilterWidget(widget.search, widget.isCharge),
+            ),
           ],
         ),
       ),

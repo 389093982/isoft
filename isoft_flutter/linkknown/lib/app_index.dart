@@ -17,9 +17,13 @@ void runAppWithConfig(EnvConfig config) {
   Routes.configureRoutes(router);
   Application.router = router;
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-  );
+//  SystemChrome.setSystemUIOverlayStyle(
+//    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+//  );
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+    statusBarColor: Colors.red,
+  ));
 
   //打开主页
   // Provider不止提供了ChangeNotifierProvider，还有 Provider,ListenableProvider,ValueListenableProvider,StreamProvider,
