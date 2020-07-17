@@ -72,7 +72,6 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
           child: Offstage(),
         ),
       ),
-      backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(10),
         // infinity 无穷大

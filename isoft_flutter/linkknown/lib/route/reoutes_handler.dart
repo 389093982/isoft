@@ -66,8 +66,8 @@ var courseDetailHandler = new Handler(
 // 课程搜索页
 var courseSearchHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      String search = params['search'].first;
-      String isCharge = params['isCharge'].first;
+      String search = params['search'].first??'';
+      String isCharge = params['isCharge'].first??'';
       return CourseSearchPage(FluroConvertUtil.fluroCnParamsDecode(search), isCharge);
     });
 

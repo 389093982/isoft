@@ -50,7 +50,7 @@ class _SettingState extends State<SettingPage> {
               cacheInfo,
               clickCallBack: () async {
                 String _cacheInfo = await clearCache();
-                setState(() async {
+                setState(() {
                   cacheInfo = "清理完成，使用空间 ${_cacheInfo}";
                 });
               },
