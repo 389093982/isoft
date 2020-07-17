@@ -41,9 +41,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       title: '链知课堂',
       theme: ThemeData(
-        // Add the 3 lines from here...
         primaryColor: Colors.red,
+        // 全局背景颜色 scaffoldBackgroundColor
+        // 局部页面背景颜色使用 Scaffold 的 background 属性
+        scaffoldBackgroundColor: Colors.grey[50],
       ),
+
       // home 指定为开屏页
       home: new SplashPage(),
       onGenerateRoute: Application.router.generator,

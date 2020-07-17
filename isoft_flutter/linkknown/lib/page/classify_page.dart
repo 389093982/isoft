@@ -38,7 +38,6 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
           child: Offstage(),
         ),
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

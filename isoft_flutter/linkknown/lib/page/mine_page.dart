@@ -36,7 +36,6 @@ class _MinePageState extends State<MinePage>
           ),
         ),
       ),
-      backgroundColor: Colors.white,
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[
