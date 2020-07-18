@@ -49,23 +49,23 @@ class _CouponItemState extends State<CouponItemWidget>
                     ),
                     Text(
                         isDisCount ? "" : "  满 ${widget.coupon.goodsMinAmount} 元减 ${widget.coupon.couponAmount} 元",
-                        style: TextStyle(color: Color(0xFF757575),fontSize: 12),
+                        style: TextStyle(color: Colors.grey[600],fontSize: 12),
                         strutStyle: LinkKnownTextStyle.couponStrutStyle),
                   ],
                 ),
                 Row(
                   children: <Widget>[
                     Text(isGeneralCoupon ? "通用券" : "指定券",
-                        style: TextStyle(color: Color(0xFF757575),fontSize: 13),
+                        style: TextStyle(color: Colors.grey[600],fontSize: 13),
                         strutStyle: LinkKnownTextStyle.couponStrutStyle
                     ),
                     Text(" 适用于",
-                      style: TextStyle(color: Color(0xFF757575),fontSize: 13),
+                      style: TextStyle(color: Colors.grey[600],fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     ),
                     Text(
                       isGeneralCoupon ? "所有付费课程" : "${widget.coupon.targetName}",
-                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Color(0xFF2962FF),fontSize: 13),
+                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Colors.blueAccent[700],fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     )
                   ],
@@ -74,7 +74,7 @@ class _CouponItemState extends State<CouponItemWidget>
                   children: <Widget>[
                     Text(
                       "活动日期:  ${widget.coupon.startDate} - ${widget.coupon.endDate}",
-                      style: TextStyle(color: Color(0xFF757575),fontSize: 13),
+                      style: TextStyle(color: Colors.grey[600],fontSize: 13),
                       strutStyle: LinkKnownTextStyle.couponStrutStyle,
                     )
                   ],

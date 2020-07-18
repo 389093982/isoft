@@ -24,7 +24,7 @@ class ButtonLabel extends StatelessWidget {
       // 边框设置
       decoration: new BoxDecoration(
         //背景
-        color: Color(0xFFF5F5F5),
+        color: Colors.grey[100],
         //设置四周圆角 角度
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         //设置四周边框
