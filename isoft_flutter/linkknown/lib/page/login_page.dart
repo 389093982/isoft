@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             margin: EdgeInsets.all(10), // 设置边距
             child: IconButton(
               icon: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 size: 20,
               ),
               onPressed: () {

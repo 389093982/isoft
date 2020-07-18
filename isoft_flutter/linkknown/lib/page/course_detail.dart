@@ -62,7 +62,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
                   margin: EdgeInsets.all(10), // 设置边距
                   child: IconButton(
                     icon: Icon(
-                      Icons.arrow_back_ios,
+                      Icons.arrow_back,
                       size: 20,
                     ),
                     onPressed: () {

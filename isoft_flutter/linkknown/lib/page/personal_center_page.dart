@@ -22,7 +22,7 @@ class _PersonalCenterState  extends State<PersonalCenterPage> {
       appBar: AppBar(
         title: new Text('个人中心'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             }),

@@ -14,7 +14,7 @@ class AboutPage extends StatelessWidget{
       appBar: AppBar(
         title: new Text('关于链知'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             }),

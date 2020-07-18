@@ -31,7 +31,7 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
             margin: EdgeInsets.all(10), // 设置边距
             child: IconButton(
               icon: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 size: 20,
               ),
               onPressed: () {

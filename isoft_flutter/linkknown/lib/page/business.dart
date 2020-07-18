@@ -14,7 +14,7 @@ class _BusinessState extends State<BusinessPage> {
       appBar: AppBar(
         title: new Text('商业合作'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             }),

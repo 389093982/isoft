@@ -39,7 +39,7 @@ class _MessageState extends State<MessagePage> {
       appBar: AppBar(
         title: new Text('我的消息'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             }),

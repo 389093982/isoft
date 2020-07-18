@@ -33,7 +33,7 @@ class _SettingState extends State<SettingPage> {
       appBar: AppBar(
         title: new Text('设置'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             }),
