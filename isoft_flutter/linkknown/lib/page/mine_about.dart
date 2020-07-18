@@ -30,9 +30,9 @@ class AboutPage extends StatelessWidget{
                   ClipOval(
                     child: Image.asset("images/linkknown.jpg", width: 100, height: 100,),
                   ),
-                  Text("当前版本：v1.0.0"),
+                  Text("当前版本：v1.0.0",style: TextStyle(color: Colors.black54),),
                   VEmptyView(20),
-                  Text("链知课堂", style: LinkKnownTextStyle.commonTitle,),
+                  Text("链知课堂", style: TextStyle(color: Colors.black54,fontSize: 18),),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize:MainAxisSize.min,
