@@ -19,11 +19,23 @@ class VideoPlayPage extends StatefulWidget {
 }
 
 class VideoPlayState extends State<VideoPlayPage> {
-  final FijkPlayer player = FijkPlayer();
+
+  FijkPlayer player;
 
   @override
   void initState() {
     super.initState();
+
+    initVideoData();
+  }
+
+  void initVideoData() {
+    if (player != null) {
+      player.release();
+      player.dispose();
+    }
+
+    player = FijkPlayer();
     player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
   }
 
@@ -52,8 +64,10 @@ class VideoPlayState extends State<VideoPlayPage> {
 
   _clickCallBack (index){
     widget.index = index;
-    player.reset();
-    player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
+
+    initVideoData();
+
+    setState(() {});
   }
 
   @override

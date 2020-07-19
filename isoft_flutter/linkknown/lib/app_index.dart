@@ -9,6 +9,14 @@ import 'package:provider/provider.dart';
 
 import 'application.dart';
 
+// Flutter官方自带的splash启动页是在android或者ios的文件里面设置，但是不能添加倒计时之类的效果，自己做启动页需要全屏效果显示的时候，
+// 调用SystemChrome.setEnabledSystemUIOverlays([]); 这个方法把状态栏和虚拟按键隐藏掉，跳转到其他页面后需要调用
+// SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);把状态栏显示出来，需要一起调用底部虚拟按键（华为系列某些手机有虚拟按键），
+// 则SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]);
+
+//  SystemChrome.setEnabledSystemUIOverlays([]); // 隐藏
+//  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);  // 显示底部
+//  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values); //恢复
 void runAppWithConfig(EnvConfig config) {
   // 初始化配置
   LinkKnownConfig.config = config;
