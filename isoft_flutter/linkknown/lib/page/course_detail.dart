@@ -88,6 +88,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
             SliverPersistentHeader(
               pinned: true,
               delegate: StickyTabBarDelegate(
+                color: Colors.red,
                 child: TabBar(
                   labelColor: Colors.white,
                   indicatorColor: Colors.white,
@@ -124,14 +125,15 @@ class _CourseDetailPageState extends State<CourseDetailPage>
 // build：构建渲染的内容。
 class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar child;
+  Color color;
 
-  StickyTabBarDelegate({@required this.child});
+  StickyTabBarDelegate({@required this.child,this.color});
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
-      color: Colors.red,
+      color: this.color,
       child: this.child,
     );
   }

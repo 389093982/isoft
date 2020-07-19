@@ -1,24 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/page/pay_order.dart';
+import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 
+import 'course_comment.dart';
+import 'course_detail.dart';
+import 'course_introduce.dart';
 import 'invitation.dart';
 import 'my_coupon.dart';
 import 'my_customer.dart';
-
-class TabViewModel {
-  final String title;
-  final Widget widget;
-
-  const TabViewModel({
-    this.title,
-    this.widget,
-  });
-}
 
 class PersonalCenterPage extends StatefulWidget {
   @override
@@ -26,46 +22,64 @@ class PersonalCenterPage extends StatefulWidget {
 }
 
 class _PersonalCenterPage extends State<PersonalCenterPage> with TickerProviderStateMixin {
-
-  List<TabViewModel> viewModels = [
-    TabViewModel(title: '发布的课程', widget: MyCustomerWidget()),
-    TabViewModel(title: '收藏的课程', widget: InvitationWidget()),
-    TabViewModel(title: '观看的课程', widget: InvitationWidget()),
-  ].map((item) => TabViewModel(
-    title: item.title,
-    widget: item.widget,
-  )).toList();
-
   TabController tabController;
 
   @override
   void initState() {
     super.initState();
-    this.tabController = new TabController(length: 4, vsync: this);
+    this.tabController = new TabController(length: 3, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        child: AppBar(
-          title: Container(
-            child: _HeaderWidget(),
+    return Listener(
+      onPointerMove: (result) {
+        print(result.position);
+      },
+      child: CustomScrollView(
+        physics: ClampingScrollPhysics(),
+        slivers: <Widget>[
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            floating: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                NavigatorUtil.goBack(context);
+              },
+            ),
+            expandedHeight: 330,
+            flexibleSpace: FlexibleSpaceBar(
+              //title: Text("个人中心", style: TextStyle(color: Colors.black),),
+              background: SliverTopBar(),
+            ),
           ),
-        ),
-        preferredSize: Size.fromHeight(60.0),
-      ),
-      body: Container(
-        height: 40,
-        color: Colors.white,
-        child: _tabBar(),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((Context, index) {
+              return Container(
+                color: Colors.white,
+                child: tabBar(),
+              );
+            }, childCount: 1),
+          ),
+          SliverFillRemaining(
+            child: TabBarView(
+              controller: this.tabController,
+              children: <Widget>[
+                MyCustomerWidget(),
+                MyCustomerWidget(),
+                MyCustomerWidget(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
 
-  _tabBar() {
-    var titles = ['推荐', '商品', '情报', '美图'];
+  tabBar() {
+    var titles = ['发布的课程', '收藏的课程', '观看的课程'];
     var bars = new List<Widget>();
     for (int i = 0; i < titles.length; i++) {
       bars.add(
@@ -88,32 +102,46 @@ class _PersonalCenterPage extends State<PersonalCenterPage> with TickerProviderS
 
   }
 
-
 }
 
-
-
-class _HeaderWidget extends StatefulWidget {
-  @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<_HeaderWidget> with TickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
+class SliverTopBar extends StatelessWidget {
+  const SliverTopBar({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Stack(
       children: <Widget>[
-        Container(
-          child: Transform(
-            transform: Matrix4.translationValues(0, 0, 0),
-            child: Text("个人中心"),
-          ),
+        Column(
+          children: <Widget>[
+            Image.asset(
+              "images/personal_center_img02.jpg",
+              fit: BoxFit.fill,
+              width: 750,
+              height: 200,
+            ),
+            Container(
+              height: 100,
+              color: Colors.white,
+              child: Column(children: <Widget>[
+                Text("OK"),
+                Text("OK"),
+                Text("OK"),
+                Text("OK"),
+              ],),
+            ),
+          ],
         ),
+        Positioned(
+          top: 160,
+          left: 30,
+          child: ClipOval(
+            child: Image.asset(
+              "images/linkknown.jpg",
+              width: 80,
+              height: 80,
+            ),
+          ),
+        )
       ],
     );
   }
