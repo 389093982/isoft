@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
 import 'package:linkknown/page/course_introduce.dart';
@@ -104,10 +105,13 @@ class _CourseDetailPageState extends State<CourseDetailPage>
               ),
             ];
           },
-          body: TabBarView(controller: this.tabController, children: [
-            Center(child: CourseIntroduceWidget(course, cVideos)),
-            CourseCommentWidget(),
-          ]),
+          body: ScrollConfiguration(
+            behavior: NoShadowScrollBehavior(),
+            child: TabBarView(controller: this.tabController, children: [
+              CourseIntroduceWidget(course, cVideos),
+              CourseCommentWidget(),
+            ]),
+          ),
         ),
       ),
     );
