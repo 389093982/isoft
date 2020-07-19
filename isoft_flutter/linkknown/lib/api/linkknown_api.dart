@@ -6,6 +6,7 @@ import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/model/advise_list.dart';
 import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
@@ -16,6 +17,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 
@@ -279,5 +281,54 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
+
+  //发布的课程
+  static Future<CourseMetaResponse> getCourseListByUserName(String userName,int currentPage,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/getCourseListByUserName',
+        params: {
+          'userName': userName,
+          'current_page': currentPage,
+          'offset': offset,
+        });
+    return CourseMetaResponse.fromJson(response.data);
+  }
+
+
+  //查询收藏 -- 课程id集合
+  static Future<UserFavoriteListResponse> getUserFavoriteList(String userName,String favorite_type,int currentPage,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/getUserFavoriteList',
+        params: {
+          'user_name': userName,
+          'favorite_type': favorite_type,
+          'current_page': currentPage,
+          'offset': offset,
+        });
+    return UserFavoriteListResponse.fromJson(response.data);
+  }
+
+
+  //观看的课程 -- ids集合
+  static Future<CourseHistoryResponse> showCourseHistory(int currentPage,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/showCourseHistory',
+        params: {
+          'current_page': currentPage,
+          'offset': offset,
+        });
+    return CourseHistoryResponse.fromJson(response.data);
+  }
+
+
+  //根据ids批量查询课程
+  static Future<CourseMetaResponse> GetCourseListByIds(String ids) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByIds',
+        params: {
+          'ids': ids,
+        });
+    return CourseMetaResponse.fromJson(response.data);
+  }
 
 }
