@@ -108,6 +108,10 @@ flutter:
     - images/ic_pay_result_cancel.png
     - images/ic_male.png
     - images/ic_female.png
+    - images/personal_center_img01.jpg
+    - images/personal_center_img02.jpg
+    - images/personal_center_img03.jpg
+    - images/personal_center_img04.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

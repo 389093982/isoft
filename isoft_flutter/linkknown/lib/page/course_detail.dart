@@ -39,7 +39,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
 
   void initData() async {
     CourseDetailResponse courseDetailResponse =
-        await LinkKnownApi.showCourseDetailForApp(course_id, null);
+    await LinkKnownApi.showCourseDetailForApp(course_id, null);
     setState(() {
       course = courseDetailResponse.course;
       cVideos = courseDetailResponse.cVideos;
@@ -59,7 +59,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
               // 不同于AppBar, 它可以展开或收缩.
               SliverAppBar(
                 leading: Container(
-                    // 绘制返回键
+                  // 绘制返回键
                     margin: EdgeInsets.all(10), // 设置边距
                     child: IconButton(
                       icon: Icon(
