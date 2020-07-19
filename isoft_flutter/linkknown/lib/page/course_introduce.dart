@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/base.dart';
@@ -86,8 +87,8 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           Text(
             widget.course != null ? widget.course.courseShortDesc : '',
             // 设置行间距 1.3
-            strutStyle:
-            StrutStyle(forceStrutHeight: true, height: 1.3, leading: 0.9),
+            strutStyle: StrutStyle(
+                forceStrutHeight: true, height: 1.3, leading: 0.9),
           ),
           // 分享点赞收藏播放
           // 作者信息
@@ -102,7 +103,9 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           DividerLineView(
             margin: EdgeInsets.symmetric(vertical: 20),
           ),
-          widget.course != null ? CourseAuthorWidget(widget.course) : VEmptyView(1),
+          widget.course != null
+              ? CourseAuthorWidget(widget.course)
+              : VEmptyView(1),
           DividerLineView(
             margin: EdgeInsets.symmetric(vertical: 20),
           ),
@@ -142,6 +145,7 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
 
     initAuthorData();
   }
+
   initAuthorData() async {
     GetUserDetailResponse userDetailResponse =
         await LinkKnownApi.getUserDetail(widget.course.courseAuthor);
