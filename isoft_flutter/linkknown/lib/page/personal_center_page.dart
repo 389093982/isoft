@@ -5,8 +5,13 @@ import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
 import 'package:linkknown/page/course_introduce.dart';
 import 'package:linkknown/page/user_course.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/accept_invite_button_label.dart';
+import 'package:linkknown/widgets/attention_off_button_label.dart';
+import 'package:linkknown/widgets/attention_on_button_label.dart';
 
 import 'my_customer.dart';
 
@@ -18,9 +23,17 @@ class PersonalCenterPage extends StatefulWidget {
 }
 
 class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProviderStateMixin {
+  String headIcon;
+  String nickName;
+  String gender;
+  String userPoints;
+  String attentionCounts;
+  String fensiCounts;
+  String userSignature;
   _PersonalCenterPageState();
 
   TabController tabController;
+
 
   @override
   void initState() {
@@ -32,11 +45,18 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
   }
 
   void initData() async {
-//    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(course_id, null);
-//    setState(() {
-//      course = courseDetailResponse.course;
-//      cVideos = courseDetailResponse.cVideos;
-//    });
+    headIcon = await LoginUtil.getSmallIcon();
+    nickName = await LoginUtil.getNickName();
+    gender = await LoginUtil.getGender();
+    userPoints = await LoginUtil.getUserPoints();
+    attentionCounts = await LoginUtil.getAttentionCounts();
+    fensiCounts = await LoginUtil.getFensiCounts();
+    userSignature = await LoginUtil.getUserSignature();
+
+    //拿到数据后做个通知，重新执行build
+   setState(() {
+
+   });
   }
 
   @override
@@ -63,21 +83,53 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                 // appBar是否置顶
                 pinned: true,
                 elevation: 0,
-                expandedHeight: 200,
+                expandedHeight: 300,
                 // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
                 flexibleSpace: FlexibleSpaceBar(
                   //centerTitle: true,//靠左显示
-                  title: Text("个人中心"),
+                  title: Text(""),
                   background: Container(
                     height: 100,
                     color: Colors.white,
-                    child: Column(children: <Widget>[
-                      Text("OK"),
-                      Text("OK"),
-                      Text("OK"),
-                      Text("OK"),
-                    ],),
-                  ),
+                    child: Stack(
+                      children: <Widget>[
+                        Image.asset(
+                          "images/personal_center_img02.jpg",
+                          fit: BoxFit.fill,
+                          width: 750,
+                          height: 180,
+                        ),
+                        Positioned(
+                          top: 140,
+                          left: 30,
+                          child: ClipOval(
+                            child:
+                            StringUtil.checkNotEmpty(headIcon)?Image.network(
+                              UIUtils.replaceMediaUrl(headIcon??""),
+                              width: 80,
+                              height: 80,
+                            ):Image.asset(
+                                "images/linkknown.jpg",
+                                width: 80,
+                                height: 80,
+                            )
+                          ),
+                        ),
+                        Positioned(top: 230, left: 40, child: Row(children: <Widget>[
+                          Text(nickName??"",style: TextStyle(fontSize: 17,color: Colors.black54),),
+                          Image.asset(
+                            gender=="male"?"images/ic_male.png":"images/ic_female.png",
+                            height: 20,
+                          ),
+                        ],),),
+                        Positioned(top: 250, left: 40, child: Text("积分: "+(userPoints??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
+                        Positioned(top: 270, left: 40, child: Text("关注: "+(attentionCounts??"") + "  粉丝: "+(fensiCounts??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
+                        Positioned(top: 290, left: 40, child: Text((userSignature??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
+                        Positioned(top: 230, left: 230, child: AttentionOffButtonLabel("+ 关注"),),
+                        Positioned(top: 260, left: 230, child: AttentionOnButtonLabel("已关注"),),
+
+                      ],
+                    ))
                 ),
               ),
               // SliverPersistentHeader最重要的一个属性是SliverPersistentHeaderDelegate，为此我们需要实现一个类继承自SliverPersistentHeaderDelegate

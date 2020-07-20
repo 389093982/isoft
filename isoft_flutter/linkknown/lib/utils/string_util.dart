@@ -2,11 +2,11 @@
 class StringUtil {
 
   static bool checkNotEmpty (String str) {
-    return str.isNotEmpty;
+    return str!=null && str.isNotEmpty;
   }
 
   static bool checkEmpty (String str) {
-    return str.isEmpty;
+    return !checkNotEmpty(str);
   }
 
   static List<String> splitLabel (String str) {

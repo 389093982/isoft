@@ -4,14 +4,10 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
-import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
-import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
-import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
-import 'package:linkknown/widgets/user_link_agent_item.dart';
 
 class UserCourseWidget extends StatefulWidget {
   String searchLable;
@@ -42,8 +38,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
     initData();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         print('滑动到了最底部${scrollController.position.pixels}');
         setState(() {
           showMore = true;
@@ -187,15 +182,6 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
           color: Theme.of(context).primaryColor,
           //指示器显示时距顶部位置
           displacement: 40,
-//          child: ListView.builder(
-//            controller: scrollController,
-//            itemCount: courseList.length,//列表长度+底部加载中提示
-//            itemBuilder: (BuildContext context, int position) {
-//              return Text(courseList[position].courseName);
-//            },
-//            // 解决 item 太少不能下拉刷新的问题
-//            physics: AlwaysScrollableScrollPhysics(),
-//          ),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: GridView.builder(
