@@ -62,15 +62,11 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Flutter去掉AppBar避免body溢出到状态栏
-      // 没有AppBar的Flutter，如果不在Scaffold中使用AppBar会发现默认是沉浸式，预留出状态栏的高度方法
-      appBar: PreferredSize(
-        preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
-        child: SafeArea(
-          top: true,
-          child: Offstage(),
-        ),
+      appBar: AppBar(
+        // 禁用返回，也可以使用    leading: Text(''),
+        automaticallyImplyLeading: false,
+        title: Text("发现精彩"),
+        centerTitle: true,
       ),
       body: Container(
         padding: EdgeInsets.all(10),

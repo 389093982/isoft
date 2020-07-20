@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
@@ -34,6 +35,8 @@ class _CourseDetailPageState extends State<CourseDetailPage>
 
   @override
   void initState() {
+//    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
     super.initState();
     // 用来控制controller对应widget的各种各样交互行为以及状态变化的控制（类似于widget本身只是一个静态的物品，而通过对controller的操作控制让这个widget活了起来）
     this.tabController = TabController(length: 2, vsync: this);
@@ -48,7 +51,6 @@ class _CourseDetailPageState extends State<CourseDetailPage>
     setState(() {
       showTitle = !(scrollController.position.maxScrollExtent - height < 100);
     });
-
   }
 
   void initData() async {
@@ -93,10 +95,23 @@ class _CourseDetailPageState extends State<CourseDetailPage>
                 // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: showTitle ? Text(course != null ? course.courseName : "") : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[Image.asset("images/ic_fab_play.png", width: 30, height: 30, fit: BoxFit.fill,), SizedBox(width: 10,),Text("立即播放")],
-                  ),
+                  title: showTitle
+                      ? Text(course != null ? course.courseName : "")
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              "images/ic_fab_play.png",
+                              width: 30,
+                              height: 30,
+                              fit: BoxFit.fill,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("立即播放")
+                          ],
+                        ),
                   background: Image.network(
                     UIUtils.replaceMediaUrl(
                         course != null ? course.smallImage : ""),
@@ -157,7 +172,10 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
-      child: this.child,
+      child: Container(
+        margin: EdgeInsets.only(right: 250),
+        child: this.child,
+      ),
     );
   }
 

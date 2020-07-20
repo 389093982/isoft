@@ -36,8 +36,7 @@ class _MinePageState extends State<MinePage>
           ),
         ),
       ),
-      body: ListView(
-        shrinkWrap: true,
+      body: Column(
         children: <Widget>[
           Column(
             children: <Widget>[
@@ -76,17 +75,18 @@ class _MineHeaderState extends State<MineHeaderWidget>
 
   refreshLoginStatus() async {
     bool hasLogin = await LoginUtil.checkHasLogin();
-    this.setState(() async {
-      this.hasLogin = hasLogin;
-      if (hasLogin) {
-        this.nickName = await LoginUtil.getNickName();
-        this.smallIcon = await LoginUtil.getSmallIcon();
-        this.userPoints = await LoginUtil.getUserPoints();
-        this.userSignature = await LoginUtil.getUserSignature();
-        this.attentionCounts = await LoginUtil.getAttentionCounts();
-        this.fensiCounts = await LoginUtil.getFensiCounts();
-      }
-    });
+
+    this.hasLogin = hasLogin;
+    if (hasLogin) {
+      this.nickName = await LoginUtil.getNickName();
+      this.smallIcon = await LoginUtil.getSmallIcon();
+      this.userPoints = await LoginUtil.getUserPoints();
+      this.userSignature = await LoginUtil.getUserSignature();
+      this.attentionCounts = await LoginUtil.getAttentionCounts();
+      this.fensiCounts = await LoginUtil.getFensiCounts();
+    }
+
+    setState(() {});
   }
 
   @override
@@ -114,7 +114,7 @@ class _MineHeaderState extends State<MineHeaderWidget>
         Container(
           margin: EdgeInsets.all(5),
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               NavigatorUtil.goRouterPage(context, Routes.setting);
             },
             child: SvgPicture.asset(
@@ -128,7 +128,7 @@ class _MineHeaderState extends State<MineHeaderWidget>
         Container(
           margin: EdgeInsets.only(right: 15),
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               NavigatorUtil.goRouterPage(context, Routes.message);
             },
             child: SvgPicture.asset(
@@ -345,12 +345,20 @@ class MineFooterWidget extends StatelessWidget {
       margin: EdgeInsets.only(top: 10),
       child: Column(
         children: <Widget>[
-          getOperateWidget(context, FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
-          getOperateWidget(context, FooterItem("images/ic_personal_center.png", '个人中心', Routes.personalCenter)),
-          getOperateWidget(context, FooterItem("images/ic_course.png", '已购课程', Routes.boughtCourse)),
-          getOperateWidget(context, FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
-          getOperateWidget(context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
-          getOperateWidget(context, FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
+          getOperateWidget(context,
+              FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
+          getOperateWidget(
+              context,
+              FooterItem("images/ic_personal_center.png", '个人中心',
+                  Routes.personalCenter)),
+          getOperateWidget(context,
+              FooterItem("images/ic_course.png", '已购课程', Routes.boughtCourse)),
+          getOperateWidget(context,
+              FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
+          getOperateWidget(
+              context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
+          getOperateWidget(context,
+              FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
         ],
       ),
     );
