@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/model/element.dart';
@@ -74,9 +73,9 @@ class _ClassifyState extends State<ClassifyWidget> {
   }
 
   initData() async {
+    String placementName = "placement_host_course_type_carousel";
     ElementResponse elementResponse =
-        await LinkKnownApi.filterElementByPlacement(
-            "placement_host_course_type_carousel");
+        await LinkKnownApi.filterElementByPlacement(placementName);
     setState(() {
       // 全部元素
       this.elementResponse = elementResponse;
