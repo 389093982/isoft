@@ -18,8 +18,8 @@ class ClassifyPage extends StatefulWidget {
 // Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
 // 怎么为了让tab一直保存在内存中,不被销毁?
 // 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
-class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-
+class _ClassifyPageState extends State<ClassifyPage>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -36,7 +36,8 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
                 color: Colors.white,
               ),
               onPressed: () {
-                NavigatorUtil.goRouterPage(context, "${Routes.courseSearch}?search=&isCharge=");
+                NavigatorUtil.goRouterPage(
+                    context, "${Routes.courseSearch}?search=&isCharge=");
               }),
         ],
       ),
@@ -46,26 +47,24 @@ class _ClassifyPageState extends State<ClassifyPage> with TickerProviderStateMix
       ),
     );
   }
-
 }
 
 class ClassifyWidget extends StatefulWidget {
-
   @override
   _ClassifyState createState() => _ClassifyState();
 }
 
 class _ClassifyState extends State<ClassifyWidget> {
-
   // GlobalKey 可用于跨组件通信,此处用于父组件通知子组件
   final GlobalKey<_LeftClassifyState> leftClassifyStateKey = GlobalKey();
 
   ElementResponse elementResponse;
+
   // 全部分类
   List<ElementItem> allClassifys = [];
+
   // 一级分类
   List<ElementItem> levelOneClassifys = [];
-
 
   @override
   void initState() {
@@ -75,7 +74,9 @@ class _ClassifyState extends State<ClassifyWidget> {
   }
 
   initData() async {
-    ElementResponse elementResponse = await LinkKnownApi.filterElementByPlacement("placement_host_course_type_carousel");
+    ElementResponse elementResponse =
+        await LinkKnownApi.filterElementByPlacement(
+            "placement_host_course_type_carousel");
     setState(() {
       // 全部元素
       this.elementResponse = elementResponse;
@@ -87,7 +88,7 @@ class _ClassifyState extends State<ClassifyWidget> {
         }
       });
 
-      List<ElementItem> getLevelTwoClassifys (int levelOneId) {
+      List<ElementItem> getLevelTwoClassifys(int levelOneId) {
         List<ElementItem> levelTwoClassifys = [];
         allClassifys.forEach((element) {
           if (element.navigationParentId == levelOneId) {
@@ -98,7 +99,8 @@ class _ClassifyState extends State<ClassifyWidget> {
       }
 
       levelOneClassifys.sort((e1, e2) {
-        return getLevelTwoClassifys(e2.id).length - getLevelTwoClassifys(e1.id).length;
+        return getLevelTwoClassifys(e2.id).length -
+            getLevelTwoClassifys(e1.id).length;
       });
     });
 
@@ -114,6 +116,7 @@ class _ClassifyState extends State<ClassifyWidget> {
     return Container(
       padding: EdgeInsets.only(right: 10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
             flex: 2,
@@ -130,14 +133,12 @@ class _ClassifyState extends State<ClassifyWidget> {
       ),
     );
   }
-
 }
 
 class LeftClassifyWidget extends StatefulWidget {
-
   List<ElementItem> levelOneClassifys = [];
 
-  LeftClassifyWidget(this.levelOneClassifys, {Key key}):super(key: key);
+  LeftClassifyWidget(this.levelOneClassifys, {Key key}) : super(key: key);
 
   @override
   _LeftClassifyState createState() => _LeftClassifyState();
@@ -155,31 +156,31 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
       child: ListView.builder(
           shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
           itemCount: widget.levelOneClassifys.length,
           itemBuilder: (BuildContext context, int index) {
-            return getLevelOneClassifyItem(widget.levelOneClassifys[index], index);
+            return getLevelOneClassifyItem(
+                widget.levelOneClassifys[index], index);
           }),
     );
   }
 
-  setSelectIndex(int index){
+  setSelectIndex(int index) {
     setState(() {
-
       eventBus.fire(ClassifyEvent(widget.levelOneClassifys[index].id));
       _selectIndex = index;
     });
   }
 
-  Widget getLevelOneClassifyItem (ElementItem item, int index) {
+  Widget getLevelOneClassifyItem(ElementItem item, int index) {
     return Container(
       width: 100,
       height: 50,
       alignment: Alignment.centerLeft,
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           eventBus.fire(ClassifyEvent(item.id));
           setState(() {
             // 更新状态
@@ -187,12 +188,14 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
           });
         },
         child: index == _selectIndex
-        ? Text(item.elementLabel, style: TextStyle(color: Colors.red),)
-        : Text(item.elementLabel),
+            ? Text(
+                item.elementLabel,
+                style: TextStyle(color: Colors.red),
+              )
+            : Text(item.elementLabel),
       ),
     );
   }
-
 }
 
 // 父widget用到子widget，第一次使用时，会执行子widget中声明的构造函数，然后执行其 State 构造函数
@@ -206,7 +209,6 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
 //  }
 // 目的是使得build子组件的时候，我们使用的是widget的active(每次重构的时候Widget构造方法会被调用)，而不是State 的构造函数(不会重复执行)
 class RightClassifyWidget extends StatefulWidget {
-
   List<ElementItem> allClassifys;
 
   RightClassifyWidget(this.allClassifys);
@@ -246,43 +248,40 @@ class _RightClassifyState extends State<RightClassifyWidget> {
 
   @override
   Widget build(BuildContext context) {
-//    return ListView.builder(
-//        shrinkWrap: true,
-//        itemCount: levelTwoClassifys.length,
-//        itemBuilder: (BuildContext context, int index) {
-//          return Text(levelTwoClassifys[index].elementLabel);
-//        });
-    return SizedBox(
-      height: ScreenUtil().setHeight(900.0),
-      child: GridView.builder(
-          itemCount: levelTwoClassifys.length,
-          // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    return GridView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: levelTwoClassifys.length,
+        // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             //横轴元素个数
-              crossAxisCount: 3,
-              //纵轴间距
-              mainAxisSpacing: 10.0,
-              //横轴间距
-              crossAxisSpacing: 10.0,
-              //子组件宽高长度比例
-              childAspectRatio: 1.0),
-          itemBuilder: (BuildContext context, int index) {
-            return getWidget(levelTwoClassifys[index]);
-          }),
-    );
+            crossAxisCount: 3,
+            //纵轴间距
+            mainAxisSpacing: 10.0,
+            //横轴间距
+            crossAxisSpacing: 10.0,
+            //子组件宽高长度比例
+            childAspectRatio: 1.0),
+        itemBuilder: (BuildContext context, int index) {
+          return getWidget(levelTwoClassifys[index]);
+        });
   }
 
   Widget getWidget(ElementItem item) {
     return GestureDetector(
       onTap: () {
         // 中文需要进行编码,使用时解码
-        String searchText = FluroConvertUtil.fluroCnParamsEncode(item.elementLabel);
-        NavigatorUtil.goRouterPage(context, '${Routes.courseSearch}?search=${searchText}&isCharge=');
+        String searchText =
+            FluroConvertUtil.fluroCnParamsEncode(item.elementLabel);
+        NavigatorUtil.goRouterPage(
+            context, '${Routes.courseSearch}?search=${searchText}&isCharge=');
       },
       child: Column(
         children: <Widget>[
           Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
-          Text(item.elementLabel),
+          Text(
+            item.elementLabel,
+            style: TextStyle(color: Colors.grey[800]),
+          ),
         ],
       ),
     );
@@ -292,9 +291,6 @@ class _RightClassifyState extends State<RightClassifyWidget> {
   void dispose() {
     super.dispose();
 
-    if (subscription != null){
-      subscription.cancel();
-    }
+    subscription?.cancel();
   }
-
 }
