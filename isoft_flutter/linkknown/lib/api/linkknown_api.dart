@@ -12,11 +12,13 @@ import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
+import 'package:linkknown/model/get_user_info_by_names_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -330,5 +332,32 @@ class LinkKnownApi {
         });
     return CourseMetaResponse.fromJson(response.data);
   }
+
+
+  // 查询博客
+  static Future<QueryPageBlogResponse> queryPageBlog(String search_type,String search_data,String search_user_name,int current_page,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPageBlog',
+        params: {
+          'search_type': search_type,
+          'search_data': search_data,
+          'search_user_name': search_user_name,
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return QueryPageBlogResponse.fromJson(response.data);
+  }
+
+
+  // 根据usernames批量查询用户基本信息
+  static Future<GetUserInfoByNamesResponse> GetUserInfoByNames(String usernames) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/GetUserInfoByNames',
+        params: {
+          'usernames': usernames,
+        });
+    return GetUserInfoByNamesResponse.fromJson(response.data);
+  }
+
 
 }

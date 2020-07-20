@@ -13,26 +13,22 @@ import 'package:linkknown/widgets/accept_invite_button_label.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
 
+import 'cloud_blog.dart';
 import 'my_customer.dart';
 
-class PersonalCenterPage extends StatefulWidget {
-  PersonalCenterPage();
+class CloudBlogPage extends StatefulWidget {
+  CloudBlogPage();
 
   @override
-  _PersonalCenterPageState createState() => _PersonalCenterPageState();
+  _CloudBlogPageState createState() => _CloudBlogPageState();
 }
 
-class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProviderStateMixin {
+class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateMixin {
   String headIcon;
   String nickName;
-  String gender;
-  String userPoints;
-  String attentionCounts;
-  String fensiCounts;
-  String userSignature;
-  _PersonalCenterPageState();
-
+  _CloudBlogPageState();
   int tabCounts = 3;
+
   TabController tabController;
 
 
@@ -48,12 +44,6 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
   void initData() async {
     headIcon = await LoginUtil.getSmallIcon();
     nickName = await LoginUtil.getNickName();
-    gender = await LoginUtil.getGender();
-    userPoints = await LoginUtil.getUserPoints();
-    attentionCounts = await LoginUtil.getAttentionCounts();
-    fensiCounts = await LoginUtil.getFensiCounts();
-    userSignature = await LoginUtil.getUserSignature();
-
     //拿到数据后做个通知，重新执行build
    setState(() {
 
@@ -116,16 +106,6 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                             )
                           ),
                         ),
-                        Positioned(top: 230, left: 40, child: Row(children: <Widget>[
-                          Text(nickName??"",style: TextStyle(fontSize: 17,color: Colors.black54),),
-                          Image.asset(
-                            gender=="male"?"images/ic_male.png":"images/ic_female.png",
-                            height: 20,
-                          ),
-                        ],),),
-                        Positioned(top: 250, left: 40, child: Text("积分: "+(userPoints??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
-                        Positioned(top: 270, left: 40, child: Text("关注: "+(attentionCounts??"") + "  粉丝: "+(fensiCounts??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
-                        Positioned(top: 290, left: 40, child: Text((userSignature??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
                         Positioned(top: 230, left: 230, child: AttentionOffButtonLabel("+ 关注"),),
                         Positioned(top: 260, left: 230, child: AttentionOnButtonLabel("已关注"),),
 
@@ -144,9 +124,9 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                     indicatorSize: TabBarIndicatorSize.label,
                     controller: this.tabController,
                     tabs: <Widget>[
-                      Tab(text: '发布的课程'),
-                      Tab(text: '收藏的课程'),
-                      Tab(text: '观看的课程'),
+                      Tab(text: '云博客'),
+                      Tab(text: '我的关注'),
+                      Tab(text: '我的博客'),
                     ],
                   ),
                 ),
@@ -154,9 +134,9 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
             ];
           },
           body: TabBarView(controller: this.tabController, children: [
-            UserCourseWidget("DISPLAY_TYPE_NEW"),
-            UserCourseWidget("DISPLAY_TYPE_FAVORITE"),
-            UserCourseWidget("DISPLAY_TYPE_VIEWED"),
+            CloudBlogWidget("SCOPE_ALL"),
+            CloudBlogWidget("SCOPE_MYSELF"),
+            CloudBlogWidget("SCOPE_MYSELF"),
           ]),
         ),
       ),
