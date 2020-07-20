@@ -26,6 +26,8 @@ class _ClassifyPageState extends State<ClassifyPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // 禁用返回，也可以使用    leading: Text(''),
+        automaticallyImplyLeading: false,
         title: Text("链知课堂"),
         centerTitle: true,
         actions: <Widget>[
