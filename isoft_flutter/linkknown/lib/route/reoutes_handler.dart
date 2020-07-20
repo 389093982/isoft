@@ -106,7 +106,7 @@ var huodongHandler = new Handler(
 //考试
 var kaoshiHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
-      return RegistPage();
+      return SplashPage();
     });
 
 // 云博客页
