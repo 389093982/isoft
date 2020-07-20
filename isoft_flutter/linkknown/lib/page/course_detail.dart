@@ -19,6 +19,10 @@ class CourseDetailPage extends StatefulWidget {
 
 class _CourseDetailPageState extends State<CourseDetailPage>
     with TickerProviderStateMixin {
+  ScrollController scrollController = ScrollController();
+  double height = 0;
+  bool showTitle = true;
+
   int course_id;
 
   _CourseDetailPageState(this.course_id);
@@ -34,12 +38,22 @@ class _CourseDetailPageState extends State<CourseDetailPage>
     // 用来控制controller对应widget的各种各样交互行为以及状态变化的控制（类似于widget本身只是一个静态的物品，而通过对controller的操作控制让这个widget活了起来）
     this.tabController = TabController(length: 2, vsync: this);
 
+    scrollController.addListener(offsetListener);
+
     initData();
+  }
+
+  offsetListener() {
+    height = scrollController.offset;
+    setState(() {
+      showTitle = !(scrollController.position.maxScrollExtent - height < 100);
+    });
+
   }
 
   void initData() async {
     CourseDetailResponse courseDetailResponse =
-    await LinkKnownApi.showCourseDetailForApp(course_id, null);
+        await LinkKnownApi.showCourseDetailForApp(course_id, null);
     setState(() {
       course = courseDetailResponse.course;
       cVideos = courseDetailResponse.cVideos;
@@ -52,6 +66,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
       length: 2,
       child: Scaffold(
         body: NestedScrollView(
+          controller: scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               // AppBar 和 SliverAppBar 是Material Design中的 App Bar，也就是 Android 中的 Toolbar
@@ -59,7 +74,7 @@ class _CourseDetailPageState extends State<CourseDetailPage>
               // 不同于AppBar, 它可以展开或收缩.
               SliverAppBar(
                 leading: Container(
-                  // 绘制返回键
+                    // 绘制返回键
                     margin: EdgeInsets.all(10), // 设置边距
                     child: IconButton(
                       icon: Icon(
@@ -78,7 +93,10 @@ class _CourseDetailPageState extends State<CourseDetailPage>
                 // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(course != null ? course.courseName : ""),
+                  title: showTitle ? Text(course != null ? course.courseName : "") : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Image.asset("images/ic_fab_play.png", width: 30, height: 30, fit: BoxFit.fill,), SizedBox(width: 10,),Text("立即播放")],
+                  ),
                   background: Image.network(
                     UIUtils.replaceMediaUrl(
                         course != null ? course.smallImage : ""),
@@ -115,6 +133,13 @@ class _CourseDetailPageState extends State<CourseDetailPage>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(offsetListener);
+    scrollController.dispose();
+    super.dispose();
   }
 }
 
