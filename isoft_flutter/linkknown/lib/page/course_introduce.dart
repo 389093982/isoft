@@ -131,7 +131,6 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
 class CourseAuthorWidget extends StatefulWidget {
   Course course;
-  User user; // 作者信息
   CourseAuthorWidget(this.course);
 
   @override
@@ -139,6 +138,9 @@ class CourseAuthorWidget extends StatefulWidget {
 }
 
 class _CourseAuthorState extends State<CourseAuthorWidget> {
+
+  User user; // 作者信息
+
   @override
   void initState() {
     super.initState();
@@ -151,19 +153,19 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
         await LinkKnownApi.getUserDetail(widget.course.courseAuthor);
     if (userDetailResponse.status == "SUCCESS") {
       setState(() {
-        widget.user = userDetailResponse.user;
+        this.user = userDetailResponse.user;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.user != null
+    return this.user != null
         ? Row(
             children: <Widget>[
               ClipOval(
                 child: Image.network(
-                  UIUtils.replaceMediaUrl(widget.user.smallIcon),
+                  UIUtils.replaceMediaUrl(this.user.smallIcon),
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
@@ -173,14 +175,14 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(widget.user.nickName),
-                      Text(widget.user.gender),
+                      Text(this.user.nickName),
+                      Text(this.user.gender),
                     ],
                   ),
                   Row(
                     children: <Widget>[
-                      Text("关注：${widget.user.attentionCounts}"),
-                      Text("粉丝：${widget.user.fensiCounts}"),
+                      Text("关注：${this.user.attentionCounts}"),
+                      Text("粉丝：${this.user.fensiCounts}"),
                     ],
                   ),
                 ],
