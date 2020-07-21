@@ -45,10 +45,7 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
               color: Colors.red,
               child: SearchInputWidget(
                 handleSearch: (data) {
-                  this.setState(() {
-                    widget.search = data;
-                     CommonUtil.recordSearchHistory(data);
-                  });
+                  _handleSearch(data);
                 },
               ),
             ),
@@ -96,6 +93,13 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
     );
   }
 
+  void _handleSearch(data) {
+    this.setState(() {
+      widget.search = data;
+       CommonUtil.recordSearchHistory(data);
+    });
+  }
+
   List hotSearch1 = ["前端", "后端", "数据库", "基础", "运维", "测试", "游戏", "全栈", "人工智能", "github"];
   List hotSearch2 = ["大数据", "云计算", "爬虫", "算法", "自动化", "区块链", "深度学习"];
 
@@ -132,7 +136,13 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
             spacing: 5, //主轴上子控件的间距
             runSpacing: 5, //交叉轴上子控件之间的间距
             children: List.generate(hotSearch.length, (index) {
-              return CommonLabel.getCommonLabel2(hotSearch[index]);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  _handleSearch(hotSearch[index]);
+                },
+                child: CommonLabel.getCommonLabel2(hotSearch[index]),
+              );
             }),
           ),
           Padding(
@@ -215,7 +225,13 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
               spacing: 5, //主轴上子控件的间距
               runSpacing: 5, //交叉轴上子控件之间的间距
               children: List.generate(searchHistory.length, (index) {
-                return CommonLabel.getCommonLabel2(searchHistory[index]);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    _handleSearch(searchHistory[index]);
+                  },
+                  child: CommonLabel.getCommonLabel2(searchHistory[index]),
+                );
               }),
             ),
           ],
