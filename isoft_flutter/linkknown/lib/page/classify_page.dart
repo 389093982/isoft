@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
@@ -8,6 +9,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/swiper_info.dart';
 
 class ClassifyPage extends StatefulWidget {
   @override
@@ -114,24 +116,32 @@ class _ClassifyState extends State<ClassifyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(right: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(right: BorderSide(color: Colors.grey[300])),
+            ),
             child: LeftClassifyWidget(
               levelOneClassifys,
               key: leftClassifyStateKey,
             ),
           ),
-          Expanded(
-            flex: 8,
+        ),
+        Expanded(
+          flex: 8,
+          child: Container(
+            height: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: RightClassifyWidget(allClassifys),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -179,6 +189,8 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
     return Container(
       width: 100,
       height: 50,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      color: index == _selectIndex ? Colors.grey[200] : null,
       alignment: Alignment.centerLeft,
       child: GestureDetector(
         onTap: () {
@@ -188,12 +200,13 @@ class _LeftClassifyState extends State<LeftClassifyWidget> {
             _selectIndex = index;
           });
         },
-        child: index == _selectIndex
-            ? Text(
-                item.elementLabel,
-                style: TextStyle(color: Colors.red),
-              )
-            : Text(item.elementLabel),
+        child: Text(
+          item.elementLabel,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              fontSize: 12,
+              color: index == _selectIndex ? Colors.red : Colors.black),
+        ),
       ),
     );
   }
@@ -249,22 +262,30 @@ class _RightClassifyState extends State<RightClassifyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: levelTwoClassifys.length,
-        // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //横轴元素个数
-            crossAxisCount: 3,
-            //纵轴间距
-            mainAxisSpacing: 10.0,
-            //横轴间距
-            crossAxisSpacing: 10.0,
-            //子组件宽高长度比例
-            childAspectRatio: 1.0),
-        itemBuilder: (BuildContext context, int index) {
-          return getWidget(levelTwoClassifys[index]);
-        });
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          SwiperDataWidget(margin: EdgeInsets.only(bottom: 20), height: 120,),
+          GridView.builder(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              itemCount: levelTwoClassifys.length,
+              // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //横轴元素个数
+                  crossAxisCount: 3,
+                  //纵轴间距
+                  mainAxisSpacing: 5.0,
+                  //横轴间距
+                  crossAxisSpacing: 10.0,
+                  //子组件宽高长度比例
+                  childAspectRatio: 1.0),
+              itemBuilder: (BuildContext context, int index) {
+                return getWidget(levelTwoClassifys[index]);
+              }),
+        ],
+      ),
+    );
   }
 
   Widget getWidget(ElementItem item) {
