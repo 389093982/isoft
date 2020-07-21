@@ -113,6 +113,7 @@ flutter:
     - images/personal_center_img03.jpg
     - images/personal_center_img04.jpg
     - images/ic_fab_play.png
+    - images/ic_add_blog.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

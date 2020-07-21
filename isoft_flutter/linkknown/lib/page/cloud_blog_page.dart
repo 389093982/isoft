@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
@@ -30,6 +31,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
   int tabCounts = 2;
 
   TabController tabController;
+  final searchInputController = TextEditingController();
 
 
   @override
@@ -106,14 +108,67 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                             )
                           ),
                         ),
-                        Positioned(top: 230, left: 230, child: AttentionOffButtonLabel("+ 关注"),),
-                        Positioned(top: 260, left: 230, child: AttentionOnButtonLabel("已关注"),),
+                        Positioned(top: 190, left: 110, child: Text(nickName,style: TextStyle(fontSize: 18,color: Colors.black54),)),
+                        Positioned(top: 190, left: 300, child: SvgPicture.asset(
+                          "images/ic_add_blog.svg",
+                          height: 20,
+                          color: Colors.black54,
+                        ),),
+                        Positioned(
+                          top: 250,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: 35,
+                              maxWidth: 325
+                            ),
+                            child: Container(
+                              margin: EdgeInsets.only(left: 30),
+                              alignment: Alignment.center,
+                              child: TextField(
+                                //最大行数
+                                maxLines: 1,
+                                //光标颜色
+                                cursorColor: Colors.grey,
+                                //光标宽度
+                                cursorWidth: 2.0,
+                                //输入文本的样式
+                                style: TextStyle(fontSize: 15.0),
+                                controller: searchInputController,
+                                decoration: new InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 12,top:0),//光标距离左侧距离
+                                  hintText: '搜索..',
+                                  enabledBorder: OutlineInputBorder(//未点击输入框的效果
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[300], //边框颜色
+                                      width: 2, //宽度为2
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                  ),
+                                  focusedBorder: OutlineInputBorder(//点击输入框后的效果
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[300], //边框颜色
+                                      width: 2, //宽度为2
+                                    ),
+                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                  ),
+                                  suffixIcon: InkWell(
+                                    onTap: () {
 
+                                    },
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                // onChanged: onSearchTextChanged,
+                              ),
+                            )
+                          )),
                       ],
                     ))
                 ),
               ),
-              // SliverPersistentHeader最重要的一个属性是SliverPersistentHeaderDelegate，为此我们需要实现一个类继承自SliverPersistentHeaderDelegate
               SliverPersistentHeader(
                 pinned: true,
                 delegate: StickyTabBarDelegate(
