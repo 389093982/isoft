@@ -36,7 +36,7 @@ class SearchInputWidget extends StatelessWidget {
               // 默认设置
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 35.0),
+                      vertical: 5.0, horizontal: 35.0),
                   border: InputBorder.none,
                   suffixIcon: InkWell(
                     onTap: () {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/page/course_filter.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/common_search.dart';
 
@@ -46,6 +47,7 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
                 handleSearch: (data) {
                   this.setState(() {
                     widget.search = data;
+                     CommonUtil.recordSearchHistory(data);
                   });
                 },
               ),
@@ -177,10 +179,48 @@ class _CourseSearchPageState extends State<CourseSearchPage> {
     );
   }
 
+  List<String> searchHistory = [];
+
+  getSearchHistory (Function _setState) async {
+    List<String> _searchHistory = await CommonUtil.getSearchHistory();
+    _setState(() {
+      searchHistory = _searchHistory;
+    });
+  }
+
   Widget showHistoryWidget (Function _setState, BuildContext context) {
+    getSearchHistory(_setState);
+
     return Container(
       height: MediaQuery.of(context).size.height / 2,
-      child: Text("history"),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text("搜索历史"),
+                Expanded(child: Text("")),
+                InkWell(
+                  onTap: () {
+                    CommonUtil.clearHistory();
+                  },
+                  child: Text("清空"),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Wrap(
+              spacing: 5, //主轴上子控件的间距
+              runSpacing: 5, //交叉轴上子控件之间的间距
+              children: List.generate(searchHistory.length, (index) {
+                return CommonLabel.getCommonLabel2(searchHistory[index]);
+              }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
