@@ -82,7 +82,10 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                   SizedBox(height: 5,),
                   Row(
                     children: <Widget>[
-                      Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                      Container(
+                        width: 240,
+                        child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                      )
                     ],
                   ),
                   SizedBox(height: 5,),
@@ -94,14 +97,15 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                     ],
                   ),
                   SizedBox(height: 5,),
-                  Row(children: <Widget>[
-                    Text((DateUtil.format2StandardTime(widget.blog.createdTime)).substring(11,19),style: TextStyle(fontSize: 12,color: Colors.black54),),
-                    SizedBox(width: 20,),
-                    Icon(Icons.thumb_up, size: 13,color: Colors.black54,),
-                    Text("12",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                    SizedBox(width: 20,),
-                    Icon(Icons.textsms, size: 13,color: Colors.black54,),
-                    Text("18",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  Row(
+                    children: <Widget>[
+                      Text((DateUtil.formatPublishTime(widget.blog.createdTime)),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                      SizedBox(width: 20,),
+//                      Icon(Icons.remove_red_eye, size: 13,color: Colors.black38,),
+                      Text(widget.blog.views.toString()+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                      SizedBox(width: 20,),
+//                      Icon(Icons.textsms, size: 13,color: Colors.black38,),
+                      Text(widget.blog.comments.toString()+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
                   ],),
                 ],
               ),

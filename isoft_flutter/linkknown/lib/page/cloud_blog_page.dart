@@ -27,7 +27,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
   String headIcon;
   String nickName;
   _CloudBlogPageState();
-  int tabCounts = 3;
+  int tabCounts = 2;
 
   TabController tabController;
 
@@ -125,7 +125,6 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                     controller: this.tabController,
                     tabs: <Widget>[
                       Tab(text: '云博客'),
-                      Tab(text: '我的关注'),
                       Tab(text: '我的博客'),
                     ],
                   ),
@@ -135,7 +134,6 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
           },
           body: TabBarView(controller: this.tabController, children: [
             CloudBlogWidget("SCOPE_ALL"),
-            CloudBlogWidget("SCOPE_MYSELF"),
             CloudBlogWidget("SCOPE_MYSELF"),
           ]),
         ),
@@ -158,7 +156,10 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
-      child: this.child,
+      child: Container(
+        margin: EdgeInsets.only(right: 180),
+        child: this.child,
+      ),
     );
   }
 
