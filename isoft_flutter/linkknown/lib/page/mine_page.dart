@@ -67,10 +67,18 @@ class _MineHeaderState extends State<MineHeaderWidget>
   String attentionCounts = "";
   String fensiCounts = "";
 
+  // 铃铛旋转动画控制器
+  AnimationController rotationAnimationController;
+  Animation rotationAnimation;
+
   @override
   void initState() {
     super.initState();
     refreshLoginStatus();
+
+    rotationAnimationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    rotationAnimation = Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
+    rotationAnimationController.repeat(reverse: true);
   }
 
   refreshLoginStatus() async {
@@ -131,11 +139,15 @@ class _MineHeaderState extends State<MineHeaderWidget>
             onTap: () {
               NavigatorUtil.goRouterPage(context, Routes.message);
             },
-            child: SvgPicture.asset(
-              "images/lingdang.svg",
-              color: Colors.white,
-              width: 23,
-              height: 23,
+            // 给铃铛添加旋转动画
+            child: RotationTransition(
+              turns: rotationAnimation,
+              child: SvgPicture.asset(
+                "images/lingdang.svg",
+                color: Colors.white,
+                width: 23,
+                height: 23,
+              ),
             ),
           ),
         ),
@@ -217,6 +229,13 @@ class _MineHeaderState extends State<MineHeaderWidget>
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // 释放铃铛旋转动画
+    rotationAnimationController.dispose();
   }
 }
 
