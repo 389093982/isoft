@@ -8,6 +8,7 @@ import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/cloud_blog_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
+import 'package:linkknown/page/edit_cloud_page.dart';
 import 'package:linkknown/page/huodong_page.dart';
 import 'package:linkknown/page/linkknown_with_me_page.dart';
 import 'package:linkknown/page/login_page.dart';
@@ -114,6 +115,12 @@ var kaoshiHandler = new Handler(
 var cloudBlogHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return CloudBlogPage();
+    });
+
+// 编辑博客
+var editBlogHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return EditBlogPage();
     });
 
 // 个人中心页

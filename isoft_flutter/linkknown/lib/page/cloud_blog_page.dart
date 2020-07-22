@@ -6,6 +6,7 @@ import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
 import 'package:linkknown/page/course_introduce.dart';
 import 'package:linkknown/page/user_course.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -109,11 +110,18 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                           ),
                         ),
                         Positioned(top: 190, left: 110, child: Text(nickName,style: TextStyle(fontSize: 18,color: Colors.black54),)),
-                        Positioned(top: 190, left: 300, child: SvgPicture.asset(
-                          "images/ic_add_blog.svg",
-                          height: 20,
-                          color: Colors.black54,
-                        ),),
+                        Positioned(top: 190, left: 300,
+                          child: InkWell(
+                            onTap:(){
+                              NavigatorUtil.goRouterPage(context, "${Routes.editBlog}");
+                            },
+                            child: SvgPicture.asset(
+                              "images/ic_add_blog.svg",
+                              height: 20,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
                         Positioned(
                           top: 250,
                           child: ConstrainedBox(
@@ -122,6 +130,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                               maxWidth: 325
                             ),
                             child: Container(
+                              color: Colors.grey[50],
                               margin: EdgeInsets.only(left: 30),
                               alignment: Alignment.center,
                               child: TextField(
@@ -140,16 +149,16 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                                   enabledBorder: OutlineInputBorder(//未点击输入框的效果
                                     borderSide: BorderSide(
                                       color: Colors.grey[300], //边框颜色
-                                      width: 2, //宽度为2
+                                      width: 1, //宽度为2
                                     ),
-                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                    borderRadius: BorderRadius.circular(1),//四个角弧度
                                   ),
                                   focusedBorder: OutlineInputBorder(//点击输入框后的效果
                                     borderSide: BorderSide(
-                                      color: Colors.grey[300], //边框颜色
-                                      width: 2, //宽度为2
+                                      color: Colors.grey[400], //边框颜色
+                                      width: 1, //宽度为2
                                     ),
-                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                    borderRadius: BorderRadius.circular(1),//四个角弧度
                                   ),
                                   suffixIcon: InkWell(
                                     onTap: () {
@@ -157,7 +166,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                                     },
                                     child: Icon(
                                       Icons.search,
-                                      color: Colors.grey,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                 ),

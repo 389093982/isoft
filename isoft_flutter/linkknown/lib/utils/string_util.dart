@@ -2,7 +2,7 @@
 class StringUtil {
 
   static bool checkNotEmpty (String str) {
-    return str!=null && str.isNotEmpty;
+    return str!=null && str.trim().isNotEmpty;
   }
 
   static bool checkEmpty (String str) {

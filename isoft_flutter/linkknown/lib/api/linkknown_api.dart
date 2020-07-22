@@ -11,6 +11,7 @@ import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
+import 'package:linkknown/model/get_my_catalogs_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/get_user_info_by_names_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
@@ -359,5 +360,43 @@ class LinkKnownApi {
     return GetUserInfoByNamesResponse.fromJson(response.data);
   }
 
+
+  // 添加博客分类
+  static Future<BaseResponse> BlogCatalogEdit(String catalog_name,String catalog_desc) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/BlogCatalogEdit',
+        params: {
+          'catalog_name':catalog_name,
+          'catalog_desc':catalog_desc,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
+  // 查询我的博客分类
+  static Future<GetMyCatalogsResponse> GetMyCatalogs() async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/GetMyCatalogs',
+        params: {});
+    return GetMyCatalogsResponse.fromJson(response.data);
+  }
+
+
+  // 发布博客
+  static Future<BaseResponse> BlogArticleEdit(String article_id,String blog_title,String key_words,String catalog_name,int blog_status,String content,String link_href,String first_img) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/BlogArticleEdit',
+        params: {
+          'article_id':article_id,
+          'blog_title':blog_title,
+          'key_words':key_words,
+          'catalog_name':catalog_name,
+          'blog_status':blog_status,
+          'content':content,
+          'link_href':link_href,
+          'first_img':first_img,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
 
 }
