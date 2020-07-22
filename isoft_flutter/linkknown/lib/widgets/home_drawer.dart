@@ -8,6 +8,7 @@ import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
 class HomeDrawerWidget extends StatelessWidget {
@@ -121,7 +122,7 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Text("名人名言"),
+            child: MingYanWidget(),
           ),
         ],
       ),
