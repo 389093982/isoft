@@ -241,7 +241,7 @@
       },
       deleteBlog: async function () {
         let params = {
-          'blog_id':this.$route.query.blog_id
+          'article_id':this.$route.query.blog_id
         };
         const result = await ArticleDelete(params);
         if (result.status === "SUCCESS") {
