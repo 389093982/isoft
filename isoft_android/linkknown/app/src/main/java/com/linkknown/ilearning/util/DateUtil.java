@@ -68,7 +68,7 @@ public class DateUtil {
     }
 
     /**
-     * 输入14位时间戳 返回 标准时间 yyyyMMdd hh:mm:ss
+     * 输入14位时间戳 返回 标准时间 yyyy-MM-dd hh:mm:ss
      * 或者输入一个Date 做格式化
      * @return
      */
