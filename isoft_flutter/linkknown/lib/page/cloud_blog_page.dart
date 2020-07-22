@@ -173,6 +173,9 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                                     ),
                                   ),
                                 ),
+                                onChanged: (String value) {
+                                  searchContentHasChange();
+                                },
                                 // onChanged: onSearchTextChanged,
                               ),
                             )
@@ -219,6 +222,15 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
       UIUtils.showToast("请输入搜索内容..");
     }
   }
+
+  //搜索框内内容发生改变
+ void searchContentHasChange(){
+   if(StringUtil.checkEmpty(searchInputController.text)){
+     this.searchData = "";
+     scope_all_key.currentState.onRefresh(searchData:searchData);
+     myself_key.currentState.onRefresh(searchData:searchData);
+   }
+ }
 
 
 }

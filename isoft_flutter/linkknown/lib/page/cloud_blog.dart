@@ -78,6 +78,8 @@ class CloudBlogState extends State<CloudBlogWidget>
     //如果searchData传过来了值，那就是根据内容来查了，这里给内容赋值
     if (StringUtil.checkNotEmpty(widget.searchData)) {
       search_data = widget.searchData;
+    }else{
+      search_data = "";
     }
 
     LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).catchError((e) {
@@ -131,9 +133,7 @@ class CloudBlogState extends State<CloudBlogWidget>
   }
 
   Future<void> onRefresh({String searchData}) async {
-    if(StringUtil.checkNotEmpty(searchData)){
-      widget.searchData = searchData;
-    }
+    widget.searchData = searchData;
     initData();
   }
 
