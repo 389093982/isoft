@@ -4,12 +4,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
+import 'package:linkknown/provider/user_provider.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:provider/provider.dart';
 
 class HomeDrawerWidget extends StatelessWidget {
   @override
@@ -206,6 +208,9 @@ class HomeContentHeaderWidget extends StatelessWidget {
           onTap: (){
             // 退出并重新跳往登录页面
             LoginUtil.logout();
+
+            Provider.of<LoginUserInfo>(context).logout();
+
             NavigatorUtil.goLoginPage(context);
          },
         ),

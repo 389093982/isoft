@@ -34,8 +34,8 @@ void runAppWithConfig(EnvConfig config) {
   // 如果想管理多个对象可以用 MultiProvider,如下
   runApp(new MultiProvider(
     providers: [
-      new ChangeNotifierProvider<UserModel>(
-        create: (_) => UserModel(),
+      new ChangeNotifierProvider<LoginUserInfo>(
+        create: (_) => LoginUserInfo(),
       ),
     ],
     child: new MyApp(),

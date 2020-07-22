@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/login_user_response.dart';
 
-class UserModel with ChangeNotifier {
+class LoginUserInfo with ChangeNotifier {
 
-  LoginUserResponse _user;
+  LoginUserResponse loginUserResponse;
 
-  LoginUserResponse get user => _user;
+  update (LoginUserResponse loginUserResponse) {
+    this.loginUserResponse = loginUserResponse;
 
-  /// 登录
-  Future<LoginUserResponse> postLogin(String username, String passwd, String redirectUrl) async {
-    return LinkKnownApi.postLogin(username, passwd, redirectUrl);
+    notifyListeners();
   }
 
+  logout () {
+    loginUserResponse = null;
+    notifyListeners();
+  }
 }
