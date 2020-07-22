@@ -45,6 +45,8 @@ class Routes {
 
   // 云博客
   static String cloudBlog = "/cloudBlog";
+  //编辑博客
+  static String editBlog = "/editBlog";
   // 个人中心
   static String personalCenter = "/personalCenter";
   // 已购课程页面
@@ -109,6 +111,8 @@ class Routes {
     router.define(kaoshi, handler: kaoshiHandler);
     // 云博客页
     router.define(cloudBlog, handler: cloudBlogHandler);
+    //编辑博客
+    router.define(editBlog, handler: editBlogHandler);
     // 个人中心页
     router.define(personalCenter, handler: personalCenterHandler);
     // 已购课程页
@@ -128,5 +132,6 @@ class Routes {
     router.define(message, handler: messageHandler);
     // 设置
     router.define(setting, handler: settingHandler);
+
   }
 }

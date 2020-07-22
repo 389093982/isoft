@@ -8,21 +8,24 @@ import 'package:linkknown/model/get_user_info_by_names_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/blog_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
 
 class CloudBlogWidget extends StatefulWidget {
-  String searchLable;
-  CloudBlogWidget(this.searchLable);
+  String searchScop;
+  String searchData;
+
+  CloudBlogWidget(this.searchScop, this.searchData, {Key key})
+      : super(key: key);
 
   @override
-  _CloudBlogState createState() => _CloudBlogState();
-
+  CloudBlogState createState() => CloudBlogState();
 }
 
-class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClientMixin {
-
+class CloudBlogState extends State<CloudBlogWidget>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -36,8 +39,8 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
   String search_user_name = "";
 
   int page = 0;
-  bool isLoading = false;//是否正在请求新数据
-  bool showMore = false;//是否显示底部加载中提示
+  bool isLoading = false; //是否正在请求新数据
+  bool showMore = false; //是否显示底部加载中提示
 
   @override
   void initState() {
@@ -47,7 +50,8 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
     initData();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         print('滑动到了最底部${scrollController.position.pixels}');
         setState(() {
           showMore = true;
@@ -57,30 +61,36 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
     });
   }
 
-
-  Future<void> loadPageData (int current_page, int offset) async {
+  Future<void> loadPageData(int current_page, int offset) async {
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
-
+    isLoading = true;
+    page = current_page;
     String userName = await LoginUtil.getUserName();
 
     //查询博客
-    if ("SCOPE_MYSELF"==widget.searchLable){
+    if ("SCOPE_MYSELF" == widget.searchScop) {
       search_user_name = userName;
-    }else if ("SCOPE_ALL"==widget.searchLable){
+    } else if ("SCOPE_ALL" == widget.searchScop) {
       search_type = "_all";
     }
+    //如果searchData传过来了值，那就是根据内容来查了，这里给内容赋值
+    if (StringUtil.checkNotEmpty(widget.searchData)) {
+      search_data = widget.searchData;
+    }else{
+      search_data = "";
+    }
 
-    LinkKnownApi.queryPageBlog(search_type,search_data,search_user_name,current_page, offset).catchError((e) {
+    LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).catchError((e) {
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
       UIUtils.showToast((e as LinkKnownError).errorMsg);
     }).then((value) {
       List<Blog> blogList = value.blogs;
-      if(blogList.length>0){
+      if (blogList.length > 0) {
         //1.给blogs 添加内容
         if (current_page == 1) {
           blogs.clear();
@@ -88,11 +98,11 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
         blogs.addAll(value.blogs);
         //2.获取userName字段
         String usernames = "";
-        for(var blog in blogList){
-          usernames+=blog.author+",";
+        for (var blog in blogList) {
+          usernames += blog.author + ",";
         }
         //3.去掉最后一个逗号
-        usernames = usernames.substring(0,usernames.length-1);
+        usernames = usernames.substring(0, usernames.length - 1);
         //4.根据usernames查询用户信息
         LinkKnownApi.GetUserInfoByNames(usernames).catchError((e) {
           UIUtils.showToast((e as LinkKnownError).errorMsg);
@@ -108,22 +118,27 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
             showMore = false;
           });
         });
+      }else{
+        setState(() {
+          isLoading = false;
+          showMore = false;
+        });
+        UIUtils.showToast("未匹配到相应数据..");
       }
     });
-
   }
 
   void initData() {
     loadPageData(1, 10);
   }
 
-  Future < void > _onRefresh() async {
+  Future<void> onRefresh({String searchData}) async {
+    widget.searchData = searchData;
     initData();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: <Widget>[
         RefreshIndicator(
@@ -133,7 +148,7 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
           displacement: 40,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child:  Container(
+            child: Container(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: ListView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
@@ -141,21 +156,22 @@ class _CloudBlogState extends State<CloudBlogWidget> with AutomaticKeepAliveClie
                   itemCount: blogs.length,
                   //controller: scrollController,
                   itemBuilder: (BuildContext context, int index) {
-                    return BlogItemWidget(blogs[index],users.firstWhere((element) => element.userName==blogs[index].author));
+                    return BlogItemWidget(
+                        blogs[index],
+                        users.firstWhere((element) =>
+                            element.userName == blogs[index].author));
                   }),
             ),
           ),
-          onRefresh: _onRefresh,
+          onRefresh: onRefresh,
         ),
       ],
     );
   }
-
 
   @override
   void dispose() {
     super.dispose();
     scrollController.dispose();
   }
-
 }

@@ -6,6 +6,7 @@ import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_comment.dart';
 import 'package:linkknown/page/course_introduce.dart';
 import 'package:linkknown/page/user_course.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -25,14 +26,18 @@ class CloudBlogPage extends StatefulWidget {
 }
 
 class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateMixin {
+  _CloudBlogPageState();
+
+  GlobalKey<CloudBlogState> scope_all_key = GlobalKey();
+  GlobalKey<CloudBlogState> myself_key = GlobalKey();
+
   String headIcon;
   String nickName;
-  _CloudBlogPageState();
-  int tabCounts = 2;
-
   TabController tabController;
   final searchInputController = TextEditingController();
-
+  //查询博客--初始值就设置为空串
+  String searchData = "";
+  int tabCounts = 2;
 
   @override
   void initState() {
@@ -47,9 +52,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
     headIcon = await LoginUtil.getSmallIcon();
     nickName = await LoginUtil.getNickName();
     //拿到数据后做个通知，重新执行build
-   setState(() {
-
-   });
+    setState(() {});
   }
 
   @override
@@ -109,11 +112,18 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                           ),
                         ),
                         Positioned(top: 190, left: 110, child: Text(nickName,style: TextStyle(fontSize: 18,color: Colors.black54),)),
-                        Positioned(top: 190, left: 300, child: SvgPicture.asset(
-                          "images/ic_add_blog.svg",
-                          height: 20,
-                          color: Colors.black54,
-                        ),),
+                        Positioned(top: 190, left: 300,
+                          child: InkWell(
+                            onTap:(){
+                              NavigatorUtil.goRouterPage(context, "${Routes.editBlog}");
+                            },
+                            child: SvgPicture.asset(
+                              "images/ic_add_blog.svg",
+                              height: 20,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
                         Positioned(
                           top: 250,
                           child: ConstrainedBox(
@@ -122,6 +132,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                               maxWidth: 325
                             ),
                             child: Container(
+                              color: Colors.grey[50],
                               margin: EdgeInsets.only(left: 30),
                               alignment: Alignment.center,
                               child: TextField(
@@ -140,27 +151,31 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                                   enabledBorder: OutlineInputBorder(//未点击输入框的效果
                                     borderSide: BorderSide(
                                       color: Colors.grey[300], //边框颜色
-                                      width: 2, //宽度为2
+                                      width: 1, //宽度为2
                                     ),
-                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                    borderRadius: BorderRadius.circular(1),//四个角弧度
                                   ),
                                   focusedBorder: OutlineInputBorder(//点击输入框后的效果
                                     borderSide: BorderSide(
-                                      color: Colors.grey[300], //边框颜色
-                                      width: 2, //宽度为2
+                                      color: Colors.grey[400], //边框颜色
+                                      width: 1, //宽度为2
                                     ),
-                                    borderRadius: BorderRadius.circular(30),//四个角弧度
+                                    borderRadius: BorderRadius.circular(1),//四个角弧度
                                   ),
                                   suffixIcon: InkWell(
                                     onTap: () {
-
+                                      //查询博客
+                                      searchBlog(searchInputController.text);
                                     },
                                     child: Icon(
                                       Icons.search,
-                                      color: Colors.grey,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                 ),
+                                onChanged: (String value) {
+                                  searchContentHasChange();
+                                },
                                 // onChanged: onSearchTextChanged,
                               ),
                             )
@@ -188,13 +203,36 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
             ];
           },
           body: TabBarView(controller: this.tabController, children: [
-            CloudBlogWidget("SCOPE_ALL"),
-            CloudBlogWidget("SCOPE_MYSELF"),
+            CloudBlogWidget("SCOPE_ALL",searchData, key: scope_all_key,),
+            CloudBlogWidget("SCOPE_MYSELF",searchData, key: myself_key,),
           ]),
         ),
       ),
     );
   }
+
+
+  //查询博客
+  void searchBlog(String searchData){
+    if(StringUtil.checkNotEmpty(searchData)){
+      this.searchData = searchData;
+      scope_all_key.currentState.onRefresh(searchData:searchData);
+      myself_key.currentState.onRefresh(searchData:searchData);
+    }else{
+      UIUtils.showToast("请输入搜索内容..");
+    }
+  }
+
+  //搜索框内内容发生改变
+ void searchContentHasChange(){
+   if(StringUtil.checkEmpty(searchInputController.text)){
+     this.searchData = "";
+     scope_all_key.currentState.onRefresh(searchData:searchData);
+     myself_key.currentState.onRefresh(searchData:searchData);
+   }
+ }
+
+
 }
 
 // SliverPersistentHeaderDelegate的实现类必须实现其4个方法
