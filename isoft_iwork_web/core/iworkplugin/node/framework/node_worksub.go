@@ -14,6 +14,7 @@ import (
 	"isoft/isoft_iwork_web/core/iworkutil/errorutil"
 	"isoft/isoft_iwork_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iwork_web/models"
+	"isoft/isoft_iwork_web/startup/sysconfig"
 	"strings"
 )
 
@@ -41,10 +42,11 @@ func (this *WorkSubNode) RunOnceSubWork(work_id int64, trackingId string,
 		if err := recover(); err != nil {
 			// 将错误写入 Error 中去
 			this.DataStore.CacheDatas("Error", map[string]interface{}{
-				"isError":             true,
-				"isNoError":           false,
-				"errorMsg":            errorutil.ToError(err),
-				"insensitiveErrorMsg": errorutil.ToError(err),
+				"isError":   true,
+				"isNoError": false,
+				"errorMsg":  errorutil.ToError(err).Error(),
+				// TODO 此处 insensitiveErrorMsg 异常信息需要从子流程中获取，而不是写死
+				"insensitiveErrorMsg": sysconfig.INTERNAL_ERROR_MSG,
 			})
 			panic(err)
 		}

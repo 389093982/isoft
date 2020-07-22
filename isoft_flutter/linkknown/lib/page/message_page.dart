@@ -35,7 +35,6 @@ class _MessageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: new Text('我的消息'),
         leading: IconButton(
@@ -50,6 +49,10 @@ class _MessageState extends State<MessagePage> {
         itemBuilder: (BuildContext context, int position) {
           return Container(
             padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(bottom: BorderSide(color: Colors.grey[300])),
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -86,7 +89,6 @@ class _MessageState extends State<MessagePage> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.black54),
                       ),
-                      DividerLineView(),
                     ],
                   ),
                 ),
