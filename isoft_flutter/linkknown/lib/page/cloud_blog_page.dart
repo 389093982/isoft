@@ -26,14 +26,18 @@ class CloudBlogPage extends StatefulWidget {
 }
 
 class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateMixin {
+  _CloudBlogPageState();
+
+  GlobalKey<CloudBlogState> scope_all_key = GlobalKey();
+  GlobalKey<CloudBlogState> myself_key = GlobalKey();
+
   String headIcon;
   String nickName;
-  _CloudBlogPageState();
-  int tabCounts = 2;
-
   TabController tabController;
   final searchInputController = TextEditingController();
-
+  //查询博客--初始值就设置为空串
+  String searchData = "";
+  int tabCounts = 2;
 
   @override
   void initState() {
@@ -48,9 +52,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
     headIcon = await LoginUtil.getSmallIcon();
     nickName = await LoginUtil.getNickName();
     //拿到数据后做个通知，重新执行build
-   setState(() {
-
-   });
+    setState(() {});
   }
 
   @override
@@ -162,7 +164,8 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                                   ),
                                   suffixIcon: InkWell(
                                     onTap: () {
-
+                                      //查询博客
+                                      searchBlog(searchInputController.text);
                                     },
                                     child: Icon(
                                       Icons.search,
@@ -197,13 +200,27 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
             ];
           },
           body: TabBarView(controller: this.tabController, children: [
-            CloudBlogWidget("SCOPE_ALL"),
-            CloudBlogWidget("SCOPE_MYSELF"),
+            CloudBlogWidget("SCOPE_ALL",searchData, key: scope_all_key,),
+            CloudBlogWidget("SCOPE_MYSELF",searchData, key: myself_key,),
           ]),
         ),
       ),
     );
   }
+
+
+  //查询博客
+  void searchBlog(String searchData){
+    if(StringUtil.checkNotEmpty(searchData)){
+      this.searchData = searchData;
+      scope_all_key.currentState.onRefresh(searchData:searchData);
+      myself_key.currentState.onRefresh(searchData:searchData);
+    }else{
+      UIUtils.showToast("请输入搜索内容..");
+    }
+  }
+
+
 }
 
 // SliverPersistentHeaderDelegate的实现类必须实现其4个方法
