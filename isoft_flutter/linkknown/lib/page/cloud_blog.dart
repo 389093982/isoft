@@ -7,11 +7,13 @@ import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/get_user_info_by_names_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
+import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/blog_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
+import 'package:provider/provider.dart';
 
 class CloudBlogWidget extends StatefulWidget {
   String searchScop;
@@ -139,33 +141,41 @@ class CloudBlogState extends State<CloudBlogWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        RefreshIndicator(
-          //指示器颜色
-          color: Theme.of(context).primaryColor,
-          //指示器显示时距顶部位置
-          displacement: 40,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  //itemExtent:130,
-                  itemCount: blogs.length,
-                  //controller: scrollController,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BlogItemWidget(
-                        blogs[index],
-                        users.firstWhere((element) =>
+    return Consumer(
+      builder: (BuildContext context, CloudBlogRefreshNotifer cloudBlogRefreshNotifer, Widget child) {
+        if(cloudBlogRefreshNotifer.hasChanged){
+          initData();
+          cloudBlogRefreshNotifer.hasChanged = false;
+        }
+        return Stack(
+          children: <Widget>[
+            RefreshIndicator(
+              //指示器颜色
+              color: Theme.of(context).primaryColor,
+              //指示器显示时距顶部位置
+              displacement: 40,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      //itemExtent:130,
+                      itemCount: blogs.length,
+                      //controller: scrollController,
+                      itemBuilder: (BuildContext context, int index) {
+                        return BlogItemWidget(
+                            blogs[index],
+                            users.firstWhere((element) =>
                             element.userName == blogs[index].author));
-                  }),
+                      }),
+                ),
+              ),
+              onRefresh: onRefresh,
             ),
-          ),
-          onRefresh: onRefresh,
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 

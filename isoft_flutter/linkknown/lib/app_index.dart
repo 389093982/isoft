@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,9 @@ void runAppWithConfig(EnvConfig config) {
     providers: [
       new ChangeNotifierProvider<LoginUserInfoNotifer>(
         create: (_) => LoginUserInfoNotifer(),
+      ),
+      new ChangeNotifierProvider<CloudBlogRefreshNotifer>(
+        create: (_) => CloudBlogRefreshNotifer(),
       ),
     ],
     child: new MyApp(),

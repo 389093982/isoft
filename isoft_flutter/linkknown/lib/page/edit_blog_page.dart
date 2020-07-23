@@ -2,9 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/page/shopping_cart_goods.dart';
+import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -12,6 +14,7 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:provider/provider.dart';
 
 import 'my_coupon.dart';
 
@@ -298,6 +301,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
     }).then((value) {
       if (value.status == "SUCCESS") {
         UIUtils.showToast("发布成功");
+        Provider.of<CloudBlogRefreshNotifer>(context).update(true);
         NavigatorUtil.goBack(context);
       } else {
         UIUtils.showToast(value.errorMsg);
