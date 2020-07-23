@@ -56,7 +56,7 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=11");
+                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
@@ -84,7 +84,12 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                     children: <Widget>[
                       Container(
                         width: 240,
-                        child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                        child: InkWell(
+                          onTap: (){
+                            NavigatorUtil.goRouterPage(context, Routes.blogDetail);
+                          },
+                          child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                        ),
                       )
                     ],
                   ),
