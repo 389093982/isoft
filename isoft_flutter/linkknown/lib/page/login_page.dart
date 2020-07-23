@@ -146,6 +146,8 @@ class __LoginWidgetState extends State<_LoginWidget> {
             UIUtils.showToast("登录成功！");
             NavigatorUtil.goMainPage(context);
 
+            Provider.of<LoginUserInfo>(context).update(value);
+
             //查询用户基本信息
             getUserDetail(_userName);
           } else {
@@ -212,14 +214,10 @@ class __LoginWidgetState extends State<_LoginWidget> {
             },
           ),
           VEmptyView(120),
-          Consumer<UserModel>(
-            builder: (BuildContext context, UserModel value, Widget child) {
-              return CommonButton(
-                callback: postLogin,
-                content: '登录',
-                width: double.infinity,
-              );
-            },
+          CommonButton(
+            callback: postLogin,
+            content: '登录',
+            width: double.infinity,
           ),
           VEmptyView(10),
           Container(
