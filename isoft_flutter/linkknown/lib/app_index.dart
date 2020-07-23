@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/page/splash_page.dart';
-import 'package:linkknown/provider/user_provider.dart';
+import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -34,8 +34,8 @@ void runAppWithConfig(EnvConfig config) {
   // 如果想管理多个对象可以用 MultiProvider,如下
   runApp(new MultiProvider(
     providers: [
-      new ChangeNotifierProvider<LoginUserInfo>(
-        create: (_) => LoginUserInfo(),
+      new ChangeNotifierProvider<LoginUserInfoNotifer>(
+        create: (_) => LoginUserInfoNotifer(),
       ),
     ],
     child: new MyApp(),

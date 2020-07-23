@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/provider/user_provider.dart';
+import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 import 'package:provider/provider.dart';
@@ -96,8 +96,8 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
       children: <Widget>[
         Expanded(
           child: Consumer(
-            builder: (BuildContext context, LoginUserInfo loginUserInfo, Widget child) {
-              return getLoginHeaderWidget(loginUserInfo);
+            builder: (BuildContext context, LoginUserInfoNotifer loginUserInfoNotifer, Widget child) {
+              return getLoginHeaderWidget(loginUserInfoNotifer);
             },
           ),
         ),
@@ -119,20 +119,20 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
     );
   }
 
-  Widget getLoginHeaderWidget (LoginUserInfo loginUserInfo) {
-    if (loginUserInfo.loginUserResponse == null) {
+  Widget getLoginHeaderWidget (LoginUserInfoNotifer loginUserInfoNotifer) {
+    if (loginUserInfoNotifer.loginUserResponse == null) {
       return Text("前去登录", style: TextStyle(color: Colors.white),);
     }
     return Row(
       children: <Widget>[
         ClipOval(
-          child: loginUserInfo.loginUserResponse != null ?
-          Image.network(UIUtils.replaceMediaUrl(loginUserInfo.loginUserResponse.headerIcon), width: 20, height: 20, fit: BoxFit.fill,) : null,
+          child: loginUserInfoNotifer.loginUserResponse != null ?
+          Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 20, height: 20, fit: BoxFit.fill,) : null,
         ),
         SizedBox(width: 5,),
         Text(
-          loginUserInfo.loginUserResponse != null
-              ? loginUserInfo.loginUserResponse.nickName
+          loginUserInfoNotifer.loginUserResponse != null
+              ? loginUserInfoNotifer.loginUserResponse.nickName
               : "",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

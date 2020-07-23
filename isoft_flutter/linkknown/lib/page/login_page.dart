@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/event/event_bus.dart';
-import 'package:linkknown/provider/user_provider.dart';
+import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -146,7 +146,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
             UIUtils.showToast("登录成功！");
             NavigatorUtil.goMainPage(context);
 
-            Provider.of<LoginUserInfo>(context).update(value);
+            Provider.of<LoginUserInfoNotifer>(context).update(value);
 
             //查询用户基本信息
             getUserDetail(_userName);

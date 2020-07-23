@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
-import 'package:linkknown/provider/user_provider.dart';
+import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -209,7 +209,7 @@ class HomeContentHeaderWidget extends StatelessWidget {
             // 退出并重新跳往登录页面
             LoginUtil.logout();
 
-            Provider.of<LoginUserInfo>(context).logout();
+            Provider.of<LoginUserInfoNotifer>(context).logout();
 
             NavigatorUtil.goLoginPage(context);
          },

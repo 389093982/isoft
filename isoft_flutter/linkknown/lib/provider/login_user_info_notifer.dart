@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/login_user_response.dart';
 
-class LoginUserInfo with ChangeNotifier {
+class LoginUserInfoNotifer with ChangeNotifier {
 
   LoginUserResponse loginUserResponse;
 
