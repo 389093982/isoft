@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
+import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
+import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:provider/provider.dart';
 
 class TabViewModel {
@@ -58,6 +62,8 @@ class _HomePageState extends State<HomePage>
       appBar: PreferredSize(
         child: AppBar(
           title: Container(
+            height: 80,
+            padding: EdgeInsets.only(top: 10),
             child: _HomeHeaderWidget(),
           ),
           bottom: TabBar(
@@ -94,25 +100,24 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Expanded(
+        Container(
+          width: 80,
           child: Consumer(
             builder: (BuildContext context, LoginUserInfoNotifer loginUserInfoNotifer, Widget child) {
               return getLoginHeaderWidget(loginUserInfoNotifer);
             },
           ),
         ),
-        Container(
-          child: Text(
-            "222222222",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Expanded(
+          child: MingYanWidget(),
         ),
         Container(
-          child: Text(
-            "3333",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          // TODO 改成其它快捷入口
+          child: SvgPicture.asset(
+            "images/lingdang.svg",
+            color: Colors.white,
+            width: 23,
+            height: 23,
           ),
         ),
       ],
@@ -121,13 +126,18 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
 
   Widget getLoginHeaderWidget (LoginUserInfoNotifer loginUserInfoNotifer) {
     if (loginUserInfoNotifer.loginUserResponse == null) {
-      return Text("前去登录", style: TextStyle(color: Colors.white),);
+      return GestureDetector(
+        onTap: () {
+          NavigatorUtil.goRouterPage(context, Routes.login);
+        },
+        child: Text("前去登录", style: TextStyle(color: Colors.white),),
+      );
     }
     return Row(
       children: <Widget>[
         ClipOval(
           child: loginUserInfoNotifer.loginUserResponse != null ?
-          Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 20, height: 20, fit: BoxFit.fill,) : null,
+          Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 22, height: 22, fit: BoxFit.fill,) : null,
         ),
         SizedBox(width: 5,),
         Text(
