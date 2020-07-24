@@ -153,7 +153,9 @@ class _CustomCourseState extends State<CustomCourseWidget> {
       padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          CommonHeaderWidget(custom_tag_name),
+          CommonHeaderWidget(custom_tag_name, onClickCallBack: () {
+            NavigatorUtil.goRouterPage(context, "${Routes.customTagCourse}?custom_tag=${widget.custom_tag}");
+          },),
           SizedBox(height: 5,),
           GridView.builder(
               physics: NeverScrollableScrollPhysics(),
@@ -181,22 +183,29 @@ class _CustomCourseState extends State<CustomCourseWidget> {
       ),
     );
   }
-  
+
   Widget getCustomTagCourseWidget(CustomTagCourse customTagCourse) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         GestureDetector(
-          onTap: (){
-            NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=${customTagCourse.id}");
+          onTap: () {
+            NavigatorUtil.goRouterPage(context,
+                "${Routes.courseDetail}?course_id=${customTagCourse.id}");
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.network(UIUtils.replaceMediaUrl(customTagCourse.smallImage), height: 100, width: double.infinity, fit: BoxFit.fill,),
+            child: Image.network(
+              UIUtils.replaceMediaUrl(customTagCourse.smallImage), height: 100,
+              width: double.infinity,
+              fit: BoxFit.fill,),
           ),
         ),
-        Text(customTagCourse.courseName, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300),),
-        Text("${customTagCourse.courseType}/${customTagCourse.courseSubType}", overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+        Text(customTagCourse.courseName,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300),),
+        Text("${customTagCourse.courseType}/${customTagCourse.courseSubType}",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.grey[700], fontSize: 12)),
       ],
     );
   }

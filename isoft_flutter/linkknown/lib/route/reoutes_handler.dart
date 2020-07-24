@@ -9,6 +9,7 @@ import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/cloud_blog_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
+import 'package:linkknown/page/customtag_course_page.dart';
 import 'package:linkknown/page/edit_blog_page.dart';
 import 'package:linkknown/page/huodong_page.dart';
 import 'package:linkknown/page/linkknown_with_me_page.dart';
@@ -80,6 +81,13 @@ var videoPlayHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       String index = params['index'].first;       // 播放当前视频的索引
       return VideoPlayPage(routerParamMap["videoplay_courseKey"], routerParamMap["videoplay_cVideosKey"], int.parse(index));
+    });
+
+// customTag 课程搜索页
+var customTagCourseHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      String custom_tag = params['custom_tag'].first;       // 播放当前视频的索引
+      return CustomTagCoursePage(custom_tag);
     });
 
 //优惠券

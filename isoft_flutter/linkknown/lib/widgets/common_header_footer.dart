@@ -5,10 +5,10 @@ import 'package:linkknown/widgets/common_label.dart';
 class CommonHeaderWidget extends StatefulWidget {
 
   String headerText;
-  VoidCallback onClickMore;
+  VoidCallback onClickCallBack;
 
 
-  CommonHeaderWidget(this.headerText, {this.onClickMore});
+  CommonHeaderWidget(this.headerText, {this.onClickCallBack});
 
   @override
   _CommonHeaderState createState() => _CommonHeaderState();
@@ -25,7 +25,7 @@ class _CommonHeaderState extends State<CommonHeaderWidget> {
         ),
         Expanded(child: Text("")),
         GestureDetector(
-          onTap: widget.onClickMore,
+          onTap: widget.onClickCallBack,
           child: CommonLabel.getCommonLabel3("查看更多"),
         ),
       ],
