@@ -6,10 +6,12 @@ import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/first_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
+import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/course_card.dart';
 import 'package:linkknown/widgets/first_level_comment_item.dart';
+import 'package:provider/provider.dart';
 
 class FirstLevelCommentWidget extends StatefulWidget {
   String theme_pk;
@@ -56,10 +58,8 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
 
     LinkKnownApi.FilterCommentFirstLevel(widget.theme_pk,widget.theme_type,widget.comment_type,current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
@@ -90,27 +90,34 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
 
   @override
   Widget build(BuildContext context) {
-
-    return Stack(
-      children: <Widget>[
-        RefreshIndicator(
-          child: Container(
-            height: 400,
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: firstLevelComments.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return FirstLevelCommentItem(firstLevelComments[index]);
-                }),
+    return Consumer(
+        builder: (BuildContext context, FirstLevelCommentRefreshNotifer firstLevelCommentRefreshNotifer, Widget child) {
+          if (firstLevelCommentRefreshNotifer.hasChanged) {
+            initData();
+            firstLevelCommentRefreshNotifer.hasChanged = false;
+          }
+          return RefreshIndicator(
+            child: Container(
+              height: 400,
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                        controller: scrollController,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: firstLevelComments.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return FirstLevelCommentItem(firstLevelComments[index]);
+                        }),
+                  )
+                ],
+              ),
             ),
-          ),
-          onRefresh: _onRefresh,
-        ),
-      ],
+            onRefresh: _onRefresh,
+          );
+        }
     );
   }
 

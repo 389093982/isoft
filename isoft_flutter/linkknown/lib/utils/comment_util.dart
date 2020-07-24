@@ -25,7 +25,11 @@ class CommentUtil {
                  onTap: (){
                    Navigator.of(context).pop();
                  },
-                 child: Icon(Icons.arrow_back,size: 20,),
+                 child: Container(
+                   alignment: Alignment.topLeft,
+                   width: 50,
+                   child: Icon(Icons.arrow_back,size: 20,),
+                 ),
                ),
              ),
              SizedBox(height: 10,),
@@ -35,14 +39,7 @@ class CommentUtil {
                Container(child: Text("全部评论(208)"),),
              ],),
              SizedBox(height: 10,),
-             Expanded(
-               child: ListView(
-                 shrinkWrap: true,
-                 children: <Widget>[
-                   FirstLevelCommentWidget(theme_pk,theme_type,comment_type),
-                 ],
-               ),
-             ),
+             FirstLevelCommentWidget(theme_pk,theme_type,comment_type),
            ],),
          ),
        );

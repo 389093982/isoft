@@ -58,10 +58,9 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     LinkKnownApi.QueryTodayInviteMe(current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 

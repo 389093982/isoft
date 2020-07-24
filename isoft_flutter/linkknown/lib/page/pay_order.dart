@@ -57,10 +57,9 @@ class _PayOrderState extends State<PayOrderWidget> with AutomaticKeepAliveClient
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     String userName = await LoginUtil.getUserName();
     LinkKnownApi.queryPayOrderList(current_page, offset, userName,widget.scope).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
