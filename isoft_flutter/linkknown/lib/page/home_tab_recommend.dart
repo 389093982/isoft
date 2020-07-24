@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:linkknown/route/routes.dart';
@@ -10,9 +9,8 @@ class TabRecommendWidget extends StatefulWidget {
   _TabRecommenState createState() => _TabRecommenState();
 }
 
-
-class _TabRecommenState extends State<TabRecommendWidget> with TickerProviderStateMixin {
-
+class _TabRecommenState extends State<TabRecommendWidget>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -24,9 +22,10 @@ class _TabRecommenState extends State<TabRecommendWidget> with TickerProviderSta
       ////滑动到底部回弹效果
       physics: BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SwiperDataWidget(),
-          Text("好无聊奥~~"),
+          SpecialContentWidget(),
           Text("好无聊奥~~"),
           Text("好无聊奥~~"),
           Text("好无聊奥~~"),
@@ -35,7 +34,69 @@ class _TabRecommenState extends State<TabRecommendWidget> with TickerProviderSta
       ),
     );
   }
+}
 
+class SpecialContentWidget extends StatefulWidget {
+  @override
+  _SpecialContentState createState() => _SpecialContentState();
+}
 
-
+class _SpecialContentState extends State<SpecialContentWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text(
+                "特色功能",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              Expanded(child: Text("")),
+              Text(
+                "查看更多",
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    backgroundColor: Colors.grey),
+              ),
+            ],
+          ),
+          SizedBox(height: 5,),
+          GridView.count(
+            shrinkWrap: true,
+            //水平子 Widget 之间间距
+            crossAxisSpacing: 10.0,
+            //垂直子 Widget 之间间距
+            mainAxisSpacing: 10.0,
+            //GridView内边距
+//            padding: EdgeInsets.all(10.0),
+            //一行的Widget数量
+            crossAxisCount: 2,
+            //子Widget宽高比例
+            childAspectRatio: 2.0,
+            //子Widget列表
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  "images/image_wenjuan.png",
+                  fit: BoxFit.fill,
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  "images/image_kaoshi.png",
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }

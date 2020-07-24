@@ -65,8 +65,12 @@ flutter:
   assets:
     - images/linkknown.jpg
     - images/home53.png
+    - images/banner_biancheng.png
     - images/banner_coupon.png
     - images/banner_huodong.png
+    - images/banner_shaoer.png
+    - images/image_wenjuan.png
+    - images/image_kaoshi.png
     - images/add.svg
     - images/setting.svg
     - images/lingdang.svg
