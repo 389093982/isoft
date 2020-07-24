@@ -429,6 +429,23 @@ class LinkKnownApi {
   }
 
 
+  // 新增评论接口
+  static Future<BaseResponse> AddComment(int theme_pk,String theme_type,String comment_type,String content,int org_parent_id,int parent_id,String refer_user_name) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/AddComment',
+        params: {
+          'theme_pk':theme_pk,
+          'theme_type':theme_type,
+          'comment_type':comment_type,
+          'content':content,
+          'org_parent_id':org_parent_id,
+          'parent_id':parent_id,
+          'refer_user_name':refer_user_name,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
   // 删除评论接口
   static Future<BaseResponse> deleteComment(int level,int id,int theme_pk,String theme_type,int org_parent_id) async {
     var response = await doPost(

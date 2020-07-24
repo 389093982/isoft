@@ -161,7 +161,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                 InkWell(
                   onTap: (){
                     //评论弹框
-                    CommentUtil.showFirstLevelCommentDialog(context,blog.id.toString(),"blog_theme_type","comment");
+                    CommentUtil.showFirstLevelCommentDialog(context,blog.id.toString(),"blog_theme_type","comment",blog.author);
                   },
                   child: Container(
                     width: 40,
