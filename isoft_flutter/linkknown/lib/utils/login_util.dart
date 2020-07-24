@@ -91,6 +91,14 @@ class LoginUtil {
     return await SharedPreferenceUtil.get(NICK_NAME);
   }
 
+  static Future<String> getLoginUserName () async {
+    bool hasLogin = await LoginUtil.checkHasLogin();
+    if (hasLogin) {
+      return await SharedPreferenceUtil.get(USER_NAME);
+    }
+    return "";
+  }
+
   static Future<String> getUserName () async {
     return await SharedPreferenceUtil.get(USER_NAME);
   }

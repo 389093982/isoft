@@ -41,8 +41,8 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
   }
 
   initData() async {
-    loginUserName = await LoginUtil.getUserName();
-    setState(() {});
+      loginUserName = await LoginUtil.getLoginUserName();
+      setState(() {});
   }
 
   @override
@@ -103,7 +103,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                       onTap: (){
                         deleteComment(widget.comment);
                       },
-                      child: Text("删除",style: TextStyle(fontSize: 13,color: Colors.grey[700]),),
+                      child: Text(loginUserName,style: TextStyle(fontSize: 13,color: Colors.grey[700]),),
                     )
                     :
                     Text("")
