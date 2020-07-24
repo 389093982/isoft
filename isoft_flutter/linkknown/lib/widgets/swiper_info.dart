@@ -28,7 +28,10 @@ class _SwiperDataState extends State<SwiperDataWidget> {
   @override
   void initState() {
     super.initState();
-    swperList..add(SwiperData("images/banner_coupon.png", Routes.login))
+    swperList
+      ..add(SwiperData("images/banner_coupon.png", Routes.login))
+      ..add(SwiperData("images/banner_biancheng.png", Routes.login))
+      ..add(SwiperData("images/banner_shaoer.png", Routes.login))
       ..add(SwiperData("images/banner_huodong.png", Routes.login));
   }
 
