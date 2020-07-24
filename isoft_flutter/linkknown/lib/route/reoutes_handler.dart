@@ -7,6 +7,7 @@ import 'package:linkknown/page/blog_detail_page.dart';
 import 'package:linkknown/page/bought_course_page.dart';
 import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/cloud_blog_page.dart';
+import 'package:linkknown/page/coming_soon_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/customtag_course_page.dart';
@@ -191,3 +192,11 @@ var settingHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return SettingPage();
     });
+
+// 敬请期待页面
+var comingSoonHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return ComingSoonPage();
+    });
+
+

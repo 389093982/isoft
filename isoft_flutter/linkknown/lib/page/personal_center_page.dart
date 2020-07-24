@@ -109,10 +109,12 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                               UIUtils.replaceMediaUrl(headIcon??""),
                               width: 80,
                               height: 80,
+                              fit: BoxFit.fill,
                             ):Image.asset(
                                 "images/linkknown.jpg",
                                 width: 80,
                                 height: 80,
+                                fit: BoxFit.fill,
                             )
                           ),
                         ),
@@ -121,6 +123,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                           Image.asset(
                             gender=="male"?"images/ic_male.png":"images/ic_female.png",
                             height: 20,
+                            fit: BoxFit.fill,
                           ),
                         ],),),
                         Positioned(top: 250, left: 40, child: Text("积分: "+(userPoints??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
