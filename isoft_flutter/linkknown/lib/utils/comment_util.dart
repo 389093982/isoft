@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class CommentUtil {
 
     //显示一级评论
-  static showFirstLevelCommentDialog(BuildContext context,String theme_pk,String theme_type,String comment_type,String author){
+  static showFirstLevelCommentDialog(BuildContext context,String theme_pk,String theme_type,String comment_type,String author,String currentCommentCounts){
    showModalBottomSheet(
      isScrollControlled:true,
      context: context,
@@ -48,8 +48,8 @@ class CommentUtil {
                  },
                  child: Text("+发表评论"),
                ),
-               SizedBox(width: 150,),
-               Container(child: Text("全部评论(208)"),),
+               SizedBox(width: 170,),
+               Container(child: Text("全部评论("+currentCommentCounts+")"),),
              ],),
              SizedBox(height: 10,),
              FirstLevelCommentWidget(theme_pk,theme_type,comment_type),

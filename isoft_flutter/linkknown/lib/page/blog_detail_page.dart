@@ -102,7 +102,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                       onTap: (){
 
                                       },
-                                      child: Text(this.blog!=null?this.blog.blogTitle:"博客标题..",style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                                      child: Text(this.blog!=null?this.blog.blogTitle:"博客标题..",style: TextStyle(fontSize: 17),overflow: TextOverflow.clip,),
                                     ),
                                   )
                                 ],
@@ -143,7 +143,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                     Container(
                       padding: EdgeInsets.only(left: 20,right: 20),
                       alignment: Alignment.topLeft,
-                      child: Text(this.blog!=null?this.blog.content:"内容..",style: TextStyle(color: Colors.grey[700],fontSize: 14),),
+                      child: Text(this.blog!=null?this.blog.content:"内容..",style: TextStyle(color: Colors.grey[700],fontSize: 15),),
                     ),
                     SizedBox(height: 50,),
                   ],
@@ -161,7 +161,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                 InkWell(
                   onTap: (){
                     //评论弹框
-                    CommentUtil.showFirstLevelCommentDialog(context,blog.id.toString(),"blog_theme_type","comment",blog.author);
+                    CommentUtil.showFirstLevelCommentDialog(context,blog.id.toString(),"blog_theme_type","comment",blog.author,blog.comments.toString());
                   },
                   child: Container(
                     width: 40,
