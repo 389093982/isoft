@@ -428,6 +428,21 @@ class LinkKnownApi {
     return FirstLevelCommentResponse.fromJson(response.data);
   }
 
+
+  // 删除评论接口
+  static Future<BaseResponse> deleteComment(int level,int id,int theme_pk,String theme_type,int org_parent_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/deleteComment',
+        params: {
+          'level':level,
+          'id':id,
+          'theme_pk':theme_pk,
+          'theme_type':theme_type,
+          'org_parent_id':org_parent_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 根据自定义 tag 搜索课程
   static Future<CustomTagCourseResponse> queryCustomTagCourse(String custom_tag, int current_page, int offset) async {
     var response = await doPost(

@@ -99,12 +99,13 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: Expanded(
               child: ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: firstLevelComments.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FirstLevelCommentItem(firstLevelComments[index]);
-                  }),
+                controller: scrollController,
+                physics: AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: firstLevelComments.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FirstLevelCommentItem(firstLevelComments[index]);
+                }),
             ),
           ),
           onRefresh: _onRefresh,

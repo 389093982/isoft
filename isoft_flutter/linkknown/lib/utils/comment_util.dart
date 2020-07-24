@@ -16,9 +16,19 @@ class CommentUtil {
          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
          child: Container(
            alignment: Alignment.topLeft,
-           height: 450,
-           padding: EdgeInsets.only(left: 20,top: 20,right: 20),
+           height: 480,
+           padding: EdgeInsets.only(left: 10,top: 10,right: 10),
            child: Column(children: <Widget>[
+             Container(
+               alignment: Alignment.topLeft,
+               child: InkWell(
+                 onTap: (){
+                   Navigator.of(context).pop();
+                 },
+                 child: Icon(Icons.arrow_back,size: 20,),
+               ),
+             ),
+             SizedBox(height: 10,),
              Row(children: <Widget>[
                Container(child: Text("+发表评论"),),
                SizedBox(width: 150,),
