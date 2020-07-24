@@ -54,10 +54,9 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with Ticker
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     LinkKnownApi.queryPayShoppingCartList(current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 

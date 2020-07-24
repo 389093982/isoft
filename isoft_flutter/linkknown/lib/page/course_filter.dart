@@ -55,10 +55,9 @@ class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderSt
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     LinkKnownApi.searchCourseList(widget.search, widget.isCharge, current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 

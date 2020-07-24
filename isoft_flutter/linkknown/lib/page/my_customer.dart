@@ -54,10 +54,9 @@ class _MyCustomerState extends State<MyCustomerWidget> with AutomaticKeepAliveCl
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     LinkKnownApi.QueryUserLinkAgent(current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 

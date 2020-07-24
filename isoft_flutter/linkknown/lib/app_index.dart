@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
+import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,9 @@ void runAppWithConfig(EnvConfig config) {
       ),
       new ChangeNotifierProvider<CloudBlogRefreshNotifer>(
         create: (_) => CloudBlogRefreshNotifer(),
+      ),
+      new ChangeNotifierProvider<FirstLevelCommentRefreshNotifer>(
+        create: (_) => FirstLevelCommentRefreshNotifer(),
       ),
     ],
     child: new MyApp(),

@@ -55,10 +55,9 @@ class _MyCouponState extends State<MyCouponWidget> with AutomaticKeepAliveClient
     if (isLoading) {
       return;
     }
-    setState(() {
-      isLoading = true;
-      page = current_page;
-    });
+    isLoading = true;
+    page = current_page;
+
     LinkKnownApi.queryPersonalCouponList(widget.isExpired, widget.isUsed, current_page, offset).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
 

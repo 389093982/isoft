@@ -25,7 +25,11 @@ class CommentUtil {
                  onTap: (){
                    Navigator.of(context).pop();
                  },
-                 child: Icon(Icons.arrow_back,size: 20,),
+                 child: Container(
+                   alignment: Alignment.topLeft,
+                   width: 50,
+                   child: Icon(Icons.arrow_back,size: 20,),
+                 ),
                ),
              ),
              SizedBox(height: 10,),

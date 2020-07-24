@@ -7,6 +7,8 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/first_level_comment_response.dart';
+import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
+import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -14,6 +16,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:provider/provider.dart';
 
 import 'divider_line.dart';
 
@@ -125,6 +128,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
     }).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("删除成功");
+        Provider.of<FirstLevelCommentRefreshNotifer>(context).update(true);
       }else{
         UIUtils.showToast(value.errorMsg);
       }
