@@ -90,27 +90,26 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
 
   @override
   Widget build(BuildContext context) {
-
-    return Stack(
-      children: <Widget>[
-        RefreshIndicator(
-          child: Container(
-            height: 400,
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Expanded(
+    return RefreshIndicator(
+      child: Container(
+        height: 400,
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          children: <Widget>[
+            Expanded(
               child: ListView.builder(
-                controller: scrollController,
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: firstLevelComments.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return FirstLevelCommentItem(firstLevelComments[index]);
-                }),
-            ),
-          ),
-          onRefresh: _onRefresh,
+                  controller: scrollController,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: firstLevelComments.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FirstLevelCommentItem(firstLevelComments[index]);
+                  }),
+            )
+          ],
         ),
-      ],
+      ),
+      onRefresh: _onRefresh,
     );
   }
 

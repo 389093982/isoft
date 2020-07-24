@@ -35,14 +35,7 @@ class CommentUtil {
                Container(child: Text("全部评论(208)"),),
              ],),
              SizedBox(height: 10,),
-             Expanded(
-               child: ListView(
-                 shrinkWrap: true,
-                 children: <Widget>[
-                   FirstLevelCommentWidget(theme_pk,theme_type,comment_type),
-                 ],
-               ),
-             ),
+             FirstLevelCommentWidget(theme_pk,theme_type,comment_type),
            ],),
          ),
        );
