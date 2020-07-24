@@ -299,7 +299,8 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "活动中心",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.huodong);
+                  NavigatorUtil.goRouterPage(context, Routes.comingSoon);
+//                  NavigatorUtil.goRouterPage(context, Routes.huodong);
                 },
               ),
             ),
@@ -311,7 +312,8 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "考试",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.kaoshi);
+                  NavigatorUtil.goRouterPage(context, Routes.comingSoon);
+//                  NavigatorUtil.goRouterPage(context, Routes.kaoshi);
                 },
               ),
             ),

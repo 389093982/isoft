@@ -71,6 +71,8 @@ class Routes {
   static String message = "/message";
   // 设置
   static String setting = "/setting";
+  // 敬请期待页面
+  static String comingSoon = "/comingSoon";
 
 
   static void configureRoutes(Router router) {
@@ -140,6 +142,8 @@ class Routes {
     router.define(message, handler: messageHandler);
     // 设置
     router.define(setting, handler: settingHandler);
+    // 敬请期待页面
+    router.define(comingSoon, handler: comingSoonHandler);
 
   }
 }
