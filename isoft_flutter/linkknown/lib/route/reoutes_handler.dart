@@ -127,7 +127,8 @@ var editBlogHandler = new Handler(
 // 博客详情
 var BlogDetailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return BlogDetailgPage();
+      String blog_id = params['blog_id'].first??"0";
+      return BlogDetailgPage(int.parse(blog_id));
     });
 
 // 个人中心页

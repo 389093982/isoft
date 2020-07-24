@@ -85,8 +85,7 @@ class _MessageState extends State<MessagePage> {
                       SizedBox(height: 5,),
                       Text(
                         "@${nickName}:${messageList[position].messageText}",
-                        maxLines: 10,
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.clip,
                         style: TextStyle(color: Colors.black54),
                       ),
                     ],

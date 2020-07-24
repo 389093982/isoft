@@ -14,6 +14,7 @@ import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
@@ -86,7 +87,7 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                         width: 240,
                         child: InkWell(
                           onTap: (){
-                            NavigatorUtil.goRouterPage(context, Routes.blogDetail);
+                            NavigatorUtil.goRouterPage(context, "${Routes.blogDetail}?blog_id=${widget.blog.id}");
                           },
                           child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
                         ),
@@ -96,9 +97,17 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                   SizedBox(height: 5,),
                   Row(
                     children: <Widget>[
-                      Text(widget.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
+                      InkWell(
+                        onTap: (){
+                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                        },
+                        child: Text(widget.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
+                      ),
                       Text(" • ",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                      Text(widget.blog.catalogName,style: TextStyle(fontSize: 12,color: Colors.black54),),
+                      Container(
+                        width: 120,
+                        child: Text(widget.blog.catalogName,style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                      ),
                     ],
                   ),
                   SizedBox(height: 5,),

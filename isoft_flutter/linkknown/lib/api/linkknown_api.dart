@@ -5,12 +5,14 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/model/advise_list.dart';
 import 'package:linkknown/model/base.dart';
+import 'package:linkknown/model/blog_detail_response.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
+import 'package:linkknown/model/first_level_comment_response.dart';
 import 'package:linkknown/model/get_my_catalogs_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/get_user_info_by_names_response.dart';
@@ -397,6 +399,32 @@ class LinkKnownApi {
           'first_img':first_img,
         });
     return BaseResponse.fromJson(response.data);
+  }
+
+
+  // 博客详情
+  static Future<BlogDetailResponse> ShowBlogArticleDetail(String id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/ShowBlogArticleDetail',
+        params: {
+          'id':id,
+        });
+    return BlogDetailResponse.fromJson(response.data);
+  }
+
+
+  // 评论查询接口,查询一级评论
+  static Future<FirstLevelCommentResponse> FilterCommentFirstLevel(String theme_pk,String theme_type,String comment_type,int current_page,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/FilterCommentFirstLevel',
+        params: {
+          'theme_pk':theme_pk,
+          'theme_type':theme_type,
+          'comment_type':comment_type,
+          'current_page':current_page,
+          'offset':offset,
+        });
+    return FirstLevelCommentResponse.fromJson(response.data);
   }
 
 }
