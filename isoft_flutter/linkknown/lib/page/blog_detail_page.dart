@@ -143,7 +143,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                     Container(
                       padding: EdgeInsets.only(left: 20,right: 20),
                       alignment: Alignment.topLeft,
-                      child: Text(this.blog!=null?this.blog.content:"内容..",style: TextStyle(color: Colors.black54,fontSize: 14),),
+                      child: Text(this.blog!=null?this.blog.content:"内容..",style: TextStyle(color: Colors.grey[700],fontSize: 14),),
                     ),
                     SizedBox(height: 50,),
                   ],
