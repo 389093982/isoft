@@ -9,6 +9,7 @@ import 'package:linkknown/model/blog_detail_response.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/model/customtag_course_response.dart';
 import 'package:linkknown/model/element.dart';
 import 'package:linkknown/model/favorite_count_response.dart';
 import 'package:linkknown/model/favorite_is_response.dart';
@@ -442,6 +443,16 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
-
+  // 根据自定义 tag 搜索课程
+  static Future<CustomTagCourseResponse> queryCustomTagCourse(String custom_tag, int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse',
+        params: {
+          'custom_tag':custom_tag,
+          'current_page':current_page,
+          'offset':offset,
+        });
+    return CustomTagCourseResponse.fromJson(response.data);
+  }
 
 }
