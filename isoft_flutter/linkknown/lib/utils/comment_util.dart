@@ -6,6 +6,7 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/page/first_level_comment.dart';
 import 'package:linkknown/page/second_level_comment.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -65,54 +66,59 @@ class CommentUtil {
   static String commentContent;
 
  //发布一级评论--弹框
- static publisFirstLevelComment(BuildContext context,String theme_pk,String theme_type,String comment_type,String author){
-  showModalBottomSheet(
-    isScrollControlled:true,
-    context: context,
-    builder: (BuildContext context) {
-      return SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(20),
-                child: Column(children: <Widget>[
-                  TextField(
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      labelText: '评论内容..',
-                    ),
-                    onChanged: (String value) {
-                      commentContent = value;
-                    },
-                  ),
-                  VEmptyView(40),
-                  VEmptyView(40),
-                  CommonButton(
-                    callback: () {
-                      addComment(context,int.parse(theme_pk),theme_type,comment_type,author);
-                    },
-                    content: '提 交',
-                    //width: double.infinity,
-                  ),
-                  VEmptyView(40),
-                ],),
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  ).then((val) {
-    print(val);
-  });
+ static publisFirstLevelComment(BuildContext context,String theme_pk,String theme_type,String comment_type,String author) async {
+   bool isLogin = await LoginUtil.checkHasLogin();
+   if(isLogin){
+     showModalBottomSheet(
+       isScrollControlled:true,
+       context: context,
+       builder: (BuildContext context) {
+         return SingleChildScrollView(
+           child: Container(
+             padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               mainAxisSize: MainAxisSize.min,
+               children: <Widget>[
+                 Container(
+                   padding: EdgeInsets.all(20),
+                   child: Column(children: <Widget>[
+                     TextField(
+                       maxLines: 3,
+                       decoration: InputDecoration(
+                         labelText: '评论内容..',
+                       ),
+                       onChanged: (String value) {
+                         commentContent = value;
+                       },
+                     ),
+                     VEmptyView(40),
+                     VEmptyView(40),
+                     CommonButton(
+                       callback: () {
+                         addComment(context,int.parse(theme_pk),theme_type,comment_type,author);
+                       },
+                       content: '提 交',
+                       //width: double.infinity,
+                     ),
+                     VEmptyView(40),
+                   ],),
+                 )
+               ],
+             ),
+           ),
+         );
+       },
+     ).then((val) {
+       print(val);
+     });
+   }else{
+     UIUtils.showToast("未登录..");
+   }
  }
 
  //添加评论
- static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,String author){
+ static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,String author) {
    String content = commentContent;
    int org_parent_id = 0;
    int parent_id = 0;                   // 一级评论
