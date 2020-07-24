@@ -10,6 +10,7 @@ import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/page/second_level_comment.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
+import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -17,8 +18,10 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
 
+import 'common_button.dart';
 import 'divider_line.dart';
 
 class SecondLevelCommentItem extends StatefulWidget {
@@ -79,6 +82,8 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
                 children: <Widget>[
                   Row(children: <Widget>[
                     Text(widget.comment.createdUserNickName,style: TextStyle(color: Colors.blue),),
+                    Text(widget.comment.depth==2?" 回复 ":""),
+                    Text(widget.comment.depth==2?"${widget.comment.referNickName}: ":"",style: TextStyle(color: Colors.blue),),
                   ],),
                   Row(children: <Widget>[
                     Row(children: <Widget>[
@@ -99,7 +104,14 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
                     Text("  •  ",style: TextStyle(color: Colors.black45),),
                     InkWell(
                       onTap: (){
-//                        showSecondLevelCommentDialog(widget.comment);
+                        publisSecondLevelComment_reply(context,
+                            widget.comment.themePk,
+                            widget.comment.themeType,
+                            widget.comment.commentType,
+                            widget.comment.orgParentId,
+                            widget.comment.id,
+                            widget.comment.createdBy
+                        );
                       },
                       child: Text(widget.comment.subAmount>0?"${widget.comment.subAmount}回复":"回复",style: TextStyle(color: Colors.grey[700],fontSize: 13),),
                     ),
@@ -122,7 +134,7 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
   }
 
 
-  //删除一级评论
+  //删除二级评论
   deleteComment(Comment comment){
     int level = comment.parentId > 0 ? 2 : 1;    // 有父评论就是二级评论，否则就是一级评论
     int id = comment.id;                         // 评论 id
@@ -134,13 +146,89 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
     }).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("删除成功");
-        Provider.of<FirstLevelCommentRefreshNotifer>(context).update(true);
+        Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
       }else{
         UIUtils.showToast(value.errorMsg);
       }
     });
   }
 
+
+  //回复内容
+  static String replyContent;
+
+  //发布评论回复的回复 -- 弹框
+  publisSecondLevelComment_reply(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(isLogin){
+      showModalBottomSheet(
+        isScrollControlled:true,
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(children: <Widget>[
+                      TextField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          labelText: '回复内容..',
+                        ),
+                        onChanged: (String value) {
+                          replyContent = value;
+                        },
+                      ),
+                      VEmptyView(40),
+                      VEmptyView(40),
+                      CommonButton(
+                        callback: () {
+                          addComment(context,theme_pk,theme_type,comment_type,orgParentId,parentId,referUserName);
+                        },
+                        content: '回 复',
+                        //width: double.infinity,
+                      ),
+                      VEmptyView(40),
+                    ],),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ).then((val) {
+        print(val);
+      });
+    }else{
+      UIUtils.showToast("未登录..");
+    }
+  }
+
+
+  //添加回复的回复
+  static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) {
+    String content = replyContent;
+    int org_parent_id = orgParentId;
+    int parent_id = parentId;                   // 一级评论
+    String refer_user_name = referUserName;     // 被评论人
+
+    LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("评论成功");
+        Navigator.of(context).pop();
+        Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    });
+  }
 
 
 }

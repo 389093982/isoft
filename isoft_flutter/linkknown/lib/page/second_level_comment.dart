@@ -7,6 +7,7 @@ import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
+import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/course_card.dart';
@@ -92,10 +93,10 @@ class _SecondLevelCommentState extends State<SecondLevelCommentWidget> with Auto
   @override
   Widget build(BuildContext context) {
     return Consumer(
-        builder: (BuildContext context, FirstLevelCommentRefreshNotifer firstLevelCommentRefreshNotifer, Widget child) {
-          if (firstLevelCommentRefreshNotifer.hasChanged) {
+        builder: (BuildContext context, SecondLevelCommentRefreshNotifer secondLevelCommentRefreshNotifer, Widget child) {
+          if (secondLevelCommentRefreshNotifer.hasChanged) {
             initData();
-            firstLevelCommentRefreshNotifer.hasChanged = false;
+            secondLevelCommentRefreshNotifer.hasChanged = false;
           }
           return RefreshIndicator(
             child: Container(

@@ -63,7 +63,7 @@ class CommentUtil {
  }
 
  //评论内容
-  static String commentContent;
+  static String firstLevelCommentContent;
 
  //发布一级评论--弹框
  static publisFirstLevelComment(BuildContext context,String theme_pk,String theme_type,String comment_type,String author) async {
@@ -89,7 +89,7 @@ class CommentUtil {
                          labelText: '评论内容..',
                        ),
                        onChanged: (String value) {
-                         commentContent = value;
+                         firstLevelCommentContent = value;
                        },
                      ),
                      VEmptyView(40),
@@ -98,7 +98,7 @@ class CommentUtil {
                        callback: () {
                          addComment(context,int.parse(theme_pk),theme_type,comment_type,author);
                        },
-                       content: '提 交',
+                       content: '评 论',
                        //width: double.infinity,
                      ),
                      VEmptyView(40),
@@ -117,9 +117,9 @@ class CommentUtil {
    }
  }
 
- //添加评论
+ //添加一级评论
  static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,String author) {
-   String content = commentContent;
+   String content = firstLevelCommentContent;
    int org_parent_id = 0;
    int parent_id = 0;                   // 一级评论
    String refer_user_name = author;     // 被评论人

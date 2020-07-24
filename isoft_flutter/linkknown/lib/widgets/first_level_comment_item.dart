@@ -10,6 +10,7 @@ import 'package:linkknown/model/first_level_comment_response.dart';
 import 'package:linkknown/page/second_level_comment.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
+import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -17,8 +18,10 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
 
+import 'common_button.dart';
 import 'divider_line.dart';
 
 class FirstLevelCommentItem extends StatefulWidget {
@@ -228,7 +231,14 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
               Row(children: <Widget>[
                 InkWell(
                   onTap: (){
-                    publisSecondLevelComment(context,firstLevelComment.themePk,firstLevelComment.themeType,firstLevelComment.commentType,firstLevelComment.createdBy);
+                    publisSecondLevelComment(context,
+                        firstLevelComment.themePk,
+                        firstLevelComment.themeType,
+                        firstLevelComment.commentType,
+                        firstLevelComment.id,
+                        firstLevelComment.id,
+                        firstLevelComment.createdBy
+                    );
                   },
                   child: Text("+添加回复"),
                 ),
@@ -251,10 +261,82 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
   }
 
 
-  //发布二级评论 -- 弹框
-  publisSecondLevelComment(BuildContext context,int theme_pk,String theme_type,String comment_type,String author){
+  //评论内容
+  static String secondLevelCommentContent;
 
+  //发布二级评论 -- 弹框
+  publisSecondLevelComment(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(isLogin){
+      showModalBottomSheet(
+        isScrollControlled:true,
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(children: <Widget>[
+                      TextField(
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          labelText: '回复内容..',
+                        ),
+                        onChanged: (String value) {
+                          secondLevelCommentContent = value;
+                        },
+                      ),
+                      VEmptyView(40),
+                      VEmptyView(40),
+                      CommonButton(
+                        callback: () {
+                          addComment(context,theme_pk,theme_type,comment_type,orgParentId,parentId,referUserName);
+                        },
+                        content: '回 复',
+                        //width: double.infinity,
+                      ),
+                      VEmptyView(40),
+                    ],),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      ).then((val) {
+        print(val);
+      });
+    }else{
+      UIUtils.showToast("未登录..");
+    }
   }
+
+
+  //添加二级评论
+  static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) {
+    String content = secondLevelCommentContent;
+    int org_parent_id = orgParentId;
+    int parent_id = parentId;                   // 一级评论
+    String refer_user_name = referUserName;     // 被评论人
+
+    LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("评论成功");
+        Navigator.of(context).pop();
+        Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    });
+  }
+
 
 
 }
