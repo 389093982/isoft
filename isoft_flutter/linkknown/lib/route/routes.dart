@@ -20,6 +20,8 @@ class Routes {
   static String courseSearch = "/courseSearch";
   // 视频播放界面
   static String videoPlay = "/videoPlay";
+  // customTag 课程搜索页
+  static String customTagCourse = "/customTagCoursePage";
 
 
 
@@ -91,6 +93,8 @@ class Routes {
     router.define(courseSearch, handler: courseSearchHandler);
     // 视频播放界面
     router.define(videoPlay, handler: videoPlayHandler);
+    // customTag 课程搜索页
+    router.define(customTagCourse, handler: customTagCourseHandler);
 
     //====================【分类】====================
 
