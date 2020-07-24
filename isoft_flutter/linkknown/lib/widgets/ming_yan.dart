@@ -10,12 +10,14 @@ class MingYanWidget extends StatefulWidget {
 
 class _MingYanState extends State<MingYanWidget> with TickerProviderStateMixin {
   String text = "";
+  int showIndex = 0;
 
   List mingyans = [
-    "发现程序之美，遇见最好的自己",
+    "发现程序之美",
+    "遇见最好的自己",
     "今天你学习了吗？",
-    "你是最棒的，奔跑吧孩子！",
-    "路漫漫其修远兮，吾将上下而求索",
+    "路漫漫其修远兮",
+    "吾将上下而求索",
   ];
 
   Timer timer;
@@ -27,7 +29,12 @@ class _MingYanState extends State<MingYanWidget> with TickerProviderStateMixin {
 
     timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
       setState(() {
-        text = mingyans[Random().nextInt(mingyans.length)];
+        if (showIndex < mingyans.length - 1) {
+          showIndex ++;
+        } else {
+          showIndex = 0;
+        }
+        text = mingyans[showIndex];
       });
     });
   }
