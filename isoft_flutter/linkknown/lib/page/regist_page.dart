@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -27,6 +29,9 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
   final TextEditingController _passwdController = TextEditingController();
   final TextEditingController _comfirmPasswdController = TextEditingController();
   String _gender = "";
+
+  String verifyCodeTipText = "获取验证码";
+  Color verifyCodeTipText_Color = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +87,30 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
                   labelText: '账号[手机号/邮箱]',
                 ),
               ),
-              TextField(
-                controller: _verifyCodeController,
-                decoration: InputDecoration(
-                  labelText: '验证码',
-                ),
+              Stack(
+                children: <Widget>[
+                  TextField(
+                    controller: _verifyCodeController,
+                    decoration: InputDecoration(
+                      labelText: '验证码',
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      width: 120,
+                      height: 35,
+                      margin: EdgeInsets.only(top: 20),
+                      child: GestureDetector(
+                        onTap: (){
+                          createVerifyCode();
+                        },
+                        child: Text(verifyCodeTipText,style: TextStyle(fontSize: 16,color: verifyCodeTipText_Color),),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               TextField(
                 obscureText: true,
@@ -163,6 +187,71 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
     );
   }
 
+
+  //发送验证码
+  createVerifyCode(){
+    String userName = _userNameController.text;
+
+    //userName
+    if(StringUtil.checkEmpty(userName)){
+      UIUtils.showToast("请填写账号");
+      return;
+    }
+    if (!CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_EMAIL) && !CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_PHONE)) {
+      UIUtils.showToast("请使用手机号或邮箱注册");
+      return;
+    }
+
+    //灰色tip文字，则不允许再次发送
+    if(verifyCodeTipText_Color == Colors.black45){
+      return;
+    }
+    //首次点击就该置灰
+    verifyCodeTipText_Color = Colors.black45;
+    setState(() {
+
+    });
+
+    LinkKnownApi.createVerifyCode(userName).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value){
+      if(value.status=="SUCCESS"){
+        verifyCodeTime();
+        UIUtils.showToast("发送成功");
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    });
+  }
+
+
+  Timer timer;
+
+  //倒计时60秒
+  verifyCodeTime(){
+    int verifyCodeSecondCount = 60;
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+      setState(() {
+        if (verifyCodeSecondCount > 58) {
+          verifyCodeTipText = "发送中...";
+        } else {
+          verifyCodeTipText = "${verifyCodeSecondCount}s后重新获取";
+        }
+        verifyCodeSecondCount --;
+        if(verifyCodeSecondCount==0){
+          verifyCodeTipText = "获取验证码";
+          verifyCodeTipText_Color = Colors.black;
+          timer?.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   //注册
   regist(){

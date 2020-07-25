@@ -101,6 +101,16 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
+  // 生成验证码接口
+  static Future<BaseResponse> createVerifyCode(String username) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode',
+        params: {
+          'username': username,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 查询用户基本信息
   static Future<GetUserDetailResponse> getUserDetail(String userName) async {
     var response = await doPost(

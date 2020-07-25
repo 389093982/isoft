@@ -46,7 +46,7 @@ class _MingYanState extends State<MingYanWidget> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     timer?.cancel();
+    super.dispose();
   }
 }
