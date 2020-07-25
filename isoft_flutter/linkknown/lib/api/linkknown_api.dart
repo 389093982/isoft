@@ -23,6 +23,7 @@ import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
+import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -426,6 +427,21 @@ class LinkKnownApi {
           'offset':offset,
         });
     return FirstLevelCommentResponse.fromJson(response.data);
+  }
+
+
+  // 评论查询接口,查询二级评论
+  static Future<SecondLevelCommentResponse> FilterCommentSecondLevel(int theme_pk,String theme_type,int org_parent_id,int current_page,int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/FilterCommentSecondLevel',
+        params: {
+          'theme_pk':theme_pk,
+          'theme_type':theme_type,
+          'org_parent_id':org_parent_id,
+          'current_page':current_page,
+          'offset':offset,
+        });
+    return SecondLevelCommentResponse.fromJson(response.data);
   }
 
 

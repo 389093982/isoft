@@ -4,26 +4,34 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_history_response.dart';
 import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
+import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
+import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/course_card.dart';
+import 'package:linkknown/widgets/first_level_comment_item.dart';
+import 'package:linkknown/widgets/second_level_comment_item.dart';
+import 'package:provider/provider.dart';
 
-class UserCourseWidget extends StatefulWidget {
-  String searchLable;
-  UserCourseWidget(this.searchLable);
+class SecondLevelCommentWidget extends StatefulWidget {
+  String theme_pk;
+  String theme_type;
+  int org_parent_id;
+  SecondLevelCommentWidget(this.theme_pk,this.theme_type,this.org_parent_id);
 
   @override
-  _UserCourseState createState() => _UserCourseState();
+  _SecondLevelCommentState createState() => _SecondLevelCommentState();
 
 }
 
-class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveClientMixin {
+class _SecondLevelCommentState extends State<SecondLevelCommentWidget> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
 
-  List<Course> courses = new List();
+  List<Comment> secondLevelComments = new List();
   ScrollController scrollController = ScrollController();
 
   int page = 0;
@@ -55,110 +63,22 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
     isLoading = true;
     page = current_page;
 
-    String userName = await LoginUtil.getUserName();
-
-    //发布的课程
-    if("DISPLAY_TYPE_NEW"==widget.searchLable){
-      LinkKnownApi.getCourseListByUserName(userName,current_page, offset).catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
-        setState(() {
-          isLoading = false;
-          showMore = false;
-        });
-      }).then((value) {
-        if (current_page == 1) {
-          courses.clear();
-        }
-        courses.addAll(value.courses);
-        setState(() {
-          isLoading = false;
-          showMore = false;
-        });
+    LinkKnownApi.FilterCommentSecondLevel(int.parse(widget.theme_pk),widget.theme_type,widget.org_parent_id,current_page, offset).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      setState(() {
+        isLoading = false;
+        showMore = false;
       });
-
-    //收藏的课程
-    }else if("DISPLAY_TYPE_FAVORITE"==widget.searchLable){
-      LinkKnownApi.getUserFavoriteList(userName,"course_collect",current_page, offset).catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
-      }).then((value) {
-        //查询到课程id集合
-        if("SUCCESS"==value.status){
-          List<Favorite> favorites = value.favorites;
-          if(favorites.length>0){
-            //开始拼ids
-            String ids = "";
-            for(int i = 0;i<favorites.length;i++){
-              ids += (favorites[i].favoriteId).toString()+",";
-            }
-            //去除最后一个逗号
-            ids = ids.substring(0,ids.length-1);
-
-            //发送请求，根据ids批量查询课程
-            LinkKnownApi.GetCourseListByIds(ids).catchError((e) {
-              UIUtils.showToast((e as LinkKnownError).errorMsg);
-              setState(() {
-                isLoading = false;
-                showMore = false;
-              });
-            }).then((value) {
-              if (current_page == 1) {
-                courses.clear();
-              }
-              courses.addAll(value.courses);
-              setState(() {
-                isLoading = false;
-                showMore = false;
-              });
-            });
-
-          }
-        }else{
-          UIUtils.showToast(value.errorMsg);
-        }
+    }).then((value) {
+      if (current_page == 1) {
+        secondLevelComments.clear();
+      }
+      secondLevelComments.addAll(value.comments);
+      setState(() {
+        isLoading = false;
+        showMore = false;
       });
-
-    //观看的课程
-    }else if("DISPLAY_TYPE_VIEWED"==widget.searchLable){
-      LinkKnownApi.showCourseHistory(current_page, offset).catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
-      }).then((value) {
-
-        //查询到课程id集合
-        if("SUCCESS"==value.status){
-          List<History> historys = value.historys;
-          if(historys.length>0){
-            //开始拼ids
-            String ids = "";
-            for(int i = 0;i<historys.length;i++){
-              ids += (historys[i].historyValue).toString()+",";
-            }
-            //去除最后一个逗号
-            ids = ids.substring(0,ids.length-1);
-
-            //发送请求，根据ids批量查询课程
-            LinkKnownApi.GetCourseListByIds(ids).catchError((e) {
-              UIUtils.showToast((e as LinkKnownError).errorMsg);
-              setState(() {
-                isLoading = false;
-                showMore = false;
-              });
-            }).then((value) {
-              if (current_page == 1) {
-                courses.clear();
-              }
-              courses.addAll(value.courses);
-              setState(() {
-                isLoading = false;
-                showMore = false;
-              });
-            });
-
-          }
-        }else{
-          UIUtils.showToast(value.errorMsg);
-        }
-      });
-    }
+    });
 
   }
 
@@ -172,38 +92,34 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
-
-    return Stack(
-      children: <Widget>[
-        RefreshIndicator(
-          //指示器颜色
-          color: Theme.of(context).primaryColor,
-          //指示器显示时距顶部位置
-          displacement: 40,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: GridView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: courses.length,
-                //controller: scrollController,//注释掉就可以达到个人中心协调效果了
-                // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
-                    crossAxisCount: 2,
-                    //纵轴间距
-                    mainAxisSpacing: 10.0,
-                    //横轴间距
-                    crossAxisSpacing: 10.0,
-                    //子组件宽高长度比例
-                    childAspectRatio: 1.0),
-                itemBuilder: (BuildContext context, int index) {
-                  return CourseCardWidget(courses[index]);
-                }),
-          ),
-          onRefresh: _onRefresh,
-        ),
-      ],
+    return Consumer(
+        builder: (BuildContext context, SecondLevelCommentRefreshNotifer secondLevelCommentRefreshNotifer, Widget child) {
+          if (secondLevelCommentRefreshNotifer.hasChanged) {
+            initData();
+            secondLevelCommentRefreshNotifer.hasChanged = false;
+          }
+          return RefreshIndicator(
+            child: Container(
+              height: 400,
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                        controller: scrollController,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: secondLevelComments.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return SecondLevelCommentItem(secondLevelComments[index]);
+                        }),
+                  )
+                ],
+              ),
+            ),
+            onRefresh: _onRefresh,
+          );
+        }
     );
   }
 

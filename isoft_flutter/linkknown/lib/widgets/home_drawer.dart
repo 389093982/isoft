@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -171,21 +172,21 @@ class HomeContentHeaderWidget extends StatelessWidget {
           title: Text('我的课程'),
           leading: Image.asset("images/ic_video.png", width: 24, height: 24,),
           onTap: (){
-            UIUtils.showToast("我的课程");
+            NavigatorUtil.goRouterPage(context, Routes.personalCenter);
           },
         ),
         ListTile(
           title: Text('订单列表'),
           leading: Image.asset("images/ic_order.png", width: 24, height: 24,),
           onTap: (){
-            UIUtils.showToast("订单列表");
+            NavigatorUtil.goRouterPage(context, Routes.payOrder);
           },
         ),
         ListTile(
           title: Text('购物车'),
           leading: Image.asset("images/ic_shopping_cart.png", width: 25, height: 25,),
           onTap: (){
-            UIUtils.showToast("购物车");
+            NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
           },
         ),
         ListTile(

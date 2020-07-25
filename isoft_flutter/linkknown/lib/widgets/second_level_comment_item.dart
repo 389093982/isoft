@@ -6,7 +6,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
-import 'package:linkknown/model/first_level_comment_response.dart';
+import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/page/second_level_comment.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/login_user_info_notifer.dart';
@@ -24,17 +24,17 @@ import 'package:provider/provider.dart';
 import 'common_button.dart';
 import 'divider_line.dart';
 
-class FirstLevelCommentItem extends StatefulWidget {
+class SecondLevelCommentItem extends StatefulWidget {
   Comment comment;
 
-  FirstLevelCommentItem(this.comment);
+  SecondLevelCommentItem(this.comment);
 
   @override
-  _FirstLevelCommentItemState createState() => _FirstLevelCommentItemState();
+  _SecondLevelCommentItemState createState() => _SecondLevelCommentItemState();
 }
 
-class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with TickerProviderStateMixin {
-  _FirstLevelCommentItemState();
+class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with TickerProviderStateMixin {
+  _SecondLevelCommentItemState();
 
   String loginUserName = "";
 
@@ -66,7 +66,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                 child:Container(
                   child: ClipOval(
                     child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.comment.smallIcon),
+                      UIUtils.replaceMediaUrl(widget.comment.createdUserSmallIcon),
                       width: 40,
                       height: 40,
                       fit: BoxFit.cover,
@@ -81,7 +81,9 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(children: <Widget>[
-                    Text(widget.comment.nickName,style: TextStyle(color: Colors.blue),),
+                    Text(widget.comment.createdUserNickName,style: TextStyle(color: Colors.blue),),
+                    Text(widget.comment.depth==2?" 回复 ":""),
+                    Text(widget.comment.depth==2?"${widget.comment.referNickName}: ":"",style: TextStyle(color: Colors.blue),),
                   ],),
                   Row(children: <Widget>[
                     Row(children: <Widget>[
@@ -102,12 +104,19 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                     Text("  •  ",style: TextStyle(color: Colors.black45),),
                     InkWell(
                       onTap: (){
-                        showSecondLevelCommentDialog(widget.comment);
+                        publisSecondLevelComment_reply(context,
+                            widget.comment.themePk,
+                            widget.comment.themeType,
+                            widget.comment.commentType,
+                            widget.comment.orgParentId,
+                            widget.comment.id,
+                            widget.comment.createdBy
+                        );
                       },
                       child: Text(widget.comment.subAmount>0?"${widget.comment.subAmount}回复":"回复",style: TextStyle(color: Colors.grey[700],fontSize: 13),),
                     ),
                     SizedBox(width: 20,),
-                    widget.comment.userName==loginUserName?
+                    widget.comment.createdBy==loginUserName?
                     InkWell(
                       onTap: (){
                         deleteComment(widget.comment);
@@ -125,7 +134,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
   }
 
 
-  //删除一级评论
+  //删除二级评论
   deleteComment(Comment comment){
     int level = comment.parentId > 0 ? 2 : 1;    // 有父评论就是二级评论，否则就是一级评论
     int id = comment.id;                         // 评论 id
@@ -137,7 +146,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
     }).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("删除成功");
-        Provider.of<FirstLevelCommentRefreshNotifer>(context).update(true);
+        Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
       }else{
         UIUtils.showToast(value.errorMsg);
       }
@@ -145,129 +154,11 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
   }
 
 
-  //二级评论弹框
-  showSecondLevelCommentDialog(Comment firstLevelComment){
-    showModalBottomSheet(
-      isScrollControlled:true,
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Container(
-            alignment: Alignment.topLeft,
-            height: 600,
-            padding: EdgeInsets.only(left: 10,top: 10,right: 10),
-            child: Column(children: <Widget>[
-              Row(children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      width: 50,
-                      child: Icon(Icons.arrow_back,size: 20,),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 90,),
-                Text("回复详情"),
-              ],),
-              SizedBox(height: 10,),
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      child: InkWell(
-                        onTap: () {
-                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
-                        },
-                        // AspectRatio的作用是调整 child 到设置的宽高比
-                        child:Container(
-                          child: ClipOval(
-                            child: Image.network(
-                              UIUtils.replaceMediaUrl(firstLevelComment.smallIcon),
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(children: <Widget>[
-                            Text(firstLevelComment.nickName,style: TextStyle(color: Colors.blue),),
-                          ],),
-                          Row(children: <Widget>[
-                            Row(children: <Widget>[
-                              Container(
-                                width: 260,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(height: 5,),
-                                    Text(firstLevelComment.content,style: TextStyle(fontSize: 15,color: Colors.grey[700]),overflow: TextOverflow.ellipsis,maxLines: 3,)
-                                  ],
-                                ),
-                              )
-                            ],)
-                          ],),
-                          Text(DateUtil.formatPublishTime(firstLevelComment.createdTime),style: TextStyle(color: Colors.black38,fontSize: 13),),
-                        ],
-                      ),
-                    ),
-                  ],),
-              ),
-              SizedBox(height: 10,),
-              Row(children: <Widget>[
-                InkWell(
-                  onTap: (){
-                    publisSecondLevelComment(context,
-                        firstLevelComment.themePk,
-                        firstLevelComment.themeType,
-                        firstLevelComment.commentType,
-                        firstLevelComment.id,
-                        firstLevelComment.id,
-                        firstLevelComment.createdBy
-                    );
-                  },
-                  child: Text("+添加回复"),
-                ),
-                SizedBox(width: 170,),
-                Container(child: Text("全部回复("+firstLevelComment.subAmount.toString()+")"),),
-              ],),
-              SizedBox(height: 10,),
-              DividerLineView(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-              ),
-              SizedBox(height: 10,),
-              Expanded(
-                child: SecondLevelCommentWidget(firstLevelComment.themePk.toString(),firstLevelComment.themeType,firstLevelComment.id),
-              ),
-            ],),
-          ),
-        );
-      },
-    ).then((val) {
-      print(val);
-    });
-  }
+  //回复内容
+  static String replyContent;
 
-
-  //评论内容
-  static String secondLevelCommentContent;
-
-  //发布二级评论 -- 弹框
-  publisSecondLevelComment(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) async {
+  //发布评论回复的回复 -- 弹框
+  publisSecondLevelComment_reply(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) async {
     bool isLogin = await LoginUtil.checkHasLogin();
     if(isLogin){
       showModalBottomSheet(
@@ -290,7 +181,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                           labelText: '回复内容..',
                         ),
                         onChanged: (String value) {
-                          secondLevelCommentContent = value;
+                          replyContent = value;
                         },
                       ),
                       VEmptyView(40),
@@ -319,9 +210,9 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
   }
 
 
-  //添加二级评论
+  //添加回复的回复
   static addComment(BuildContext context,int theme_pk,String theme_type,String comment_type,int orgParentId,int parentId,String referUserName) {
-    String content = secondLevelCommentContent;
+    String content = replyContent;
     int org_parent_id = orgParentId;
     int parent_id = parentId;                   // 一级评论
     String refer_user_name = referUserName;     // 被评论人
@@ -338,7 +229,6 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
       }
     });
   }
-
 
 
 }
