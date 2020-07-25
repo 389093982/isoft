@@ -50,8 +50,8 @@ class _ImagesAnimationState extends State<ImagesAnimationWidget> with TickerProv
 
   @override
   void dispose() {
-    super.dispose();
     _controller?.dispose();
+    super.dispose();
   }
 }
 
