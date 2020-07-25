@@ -145,7 +145,7 @@ packages:
       name: flutter_screenutil
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.1"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -185,7 +185,7 @@ packages:
       name: http
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.1"
+    version: "0.12.2"
   http_parser:
     dependency: transitive
     description:
@@ -393,7 +393,7 @@ packages:
       name: synchronized
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.2.0+1"
+    version: "2.2.0+2"
   term_glyph:
     dependency: transitive
     description:

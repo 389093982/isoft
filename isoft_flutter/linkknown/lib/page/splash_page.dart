@@ -69,7 +69,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     // 初始化 api 工厂
     LinkKnownApi.init();
     // 假如设计稿是按 iPhone6 的尺寸设计的 (iPhone6 750*1334)
-    ScreenUtil.init(width: 750, height: 1334);
+    ScreenUtil.init(context, width: 750, height: 1334);
 
     return Scaffold(
       backgroundColor: Colors.white,

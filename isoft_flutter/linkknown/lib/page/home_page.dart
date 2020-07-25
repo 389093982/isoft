@@ -89,11 +89,26 @@ class _HomeHeaderWidget extends StatefulWidget {
   _HomeHeaderWidgetState createState() => _HomeHeaderWidgetState();
 }
 
-class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
-    with TickerProviderStateMixin {
+class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProviderStateMixin {
+
+  // 铃铛旋转动画控制器
+  AnimationController rotationAnimationController;
+  Animation rotationAnimation;
+
   @override
   void initState() {
     super.initState();
+
+    rotationAnimationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    rotationAnimation = Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
+    rotationAnimationController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // 释放铃铛旋转动画
+    rotationAnimationController.dispose();
   }
 
   @override
@@ -112,12 +127,21 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
           child: Center(child: MingYanWidget(),),
         ),
         Container(
-          // TODO 改成其它快捷入口
-          child: SvgPicture.asset(
-            "images/lingdang.svg",
-            color: Colors.white,
-            width: 23,
-            height: 23,
+          margin: EdgeInsets.only(right: 15),
+          child: GestureDetector(
+            onTap: () {
+              NavigatorUtil.goRouterPage(context, Routes.message);
+            },
+            // 给铃铛添加旋转动画
+            child: RotationTransition(
+              turns: rotationAnimation,
+              child: SvgPicture.asset(
+                "images/lingdang.svg",
+                color: Colors.white,
+                width: 23,
+                height: 23,
+              ),
+            ),
           ),
         ),
       ],
@@ -130,23 +154,32 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
         onTap: () {
           NavigatorUtil.goRouterPage(context, Routes.login);
         },
-        child: Text("前去登录", style: TextStyle(color: Colors.white),),
+        child: Text("未登录", style: TextStyle(color: Colors.white,fontSize: 17),),
       );
     }
     return Row(
       children: <Widget>[
-        ClipOval(
-          child: loginUserInfoNotifer.loginUserResponse != null ?
-          Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 22, height: 22, fit: BoxFit.fill,) : null,
+        InkWell(
+          onTap: (){
+            NavigatorUtil.goRouterPage(context, Routes.personalCenter);
+          },
+          child: Container(
+            transform: Matrix4.translationValues(0, -1, 0),
+            child: ClipOval(
+              child: loginUserInfoNotifer.loginUserResponse != null ?
+              Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 23, height: 23, fit: BoxFit.fill,) : null,
+            ),
+          ),
         ),
         SizedBox(width: 5,),
-        Text(
-          loginUserInfoNotifer.loginUserResponse != null
-              ? loginUserInfoNotifer.loginUserResponse.nickName
-              : "",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+//        Text(
+//          loginUserInfoNotifer.loginUserResponse != null
+//              ? loginUserInfoNotifer.loginUserResponse.nickName
+//              : "",
+//          maxLines: 1,
+//          overflow: TextOverflow.ellipsis,
+//          style: TextStyle(fontSize: 14),
+//        ),
       ],
     );
   }
