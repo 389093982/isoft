@@ -1,8 +1,10 @@
 
+import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/utils/shared_preference_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 
 class LoginUtil {
@@ -162,4 +164,23 @@ class LoginUtil {
     return await SharedPreferenceUtil.get(FENSI_COUNTS);
   }
 
+  // 判断过期时间是否是最近 3 小时之内
+  static Future<bool> checkRecently (BuildContext context) async {
+    return new DateTime.now().millisecondsSinceEpoch - await getExpiredTime() <  3 * 3600 * 1000;
+  }
+
+  // 之前登录过，即有 tokenString
+  // 在最近过期 N 小时内才可以自动登录
+  static Future<bool> checkCanRefreshToken (BuildContext context) async {
+    String tokenString = await getTokenString();
+    return StringUtil.checkNotEmpty(tokenString) && await checkRecently(context);
+  }
+
+  static memoryRefreshToken(BuildContext context, String tokenString, int expireSecond) {
+    int _expireSecond = new DateTime.now().millisecondsSinceEpoch + (expireSecond * 1000);
+    SharedPreferenceUtil.save(USER_EXPIRE_SECOND, _expireSecond.toString());
+    SharedPreferenceUtil.save(USER_TOKEN_STRING, tokenString);
+
+    LinkKnownApi.updateTokenString();
+  }
 }
