@@ -144,7 +144,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
             // 调用事件广播，不用发送(因为发送的不是粘性消息)
             //eventBus.fire(new LoginSuccessEvent(value));
             UIUtils.showToast("登录成功！");
-            NavigatorUtil.goMainPage(context);
+            NavigatorUtil.goBack(context);
 
             Provider.of<LoginUserInfoNotifer>(context).update(value);
 

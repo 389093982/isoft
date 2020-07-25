@@ -159,11 +159,16 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
     }
     return Row(
       children: <Widget>[
-        Container(
-          transform: Matrix4.translationValues(0, -1, 0),
-          child: ClipOval(
-            child: loginUserInfoNotifer.loginUserResponse != null ?
-            Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 23, height: 23, fit: BoxFit.fill,) : null,
+        InkWell(
+          onTap: (){
+            NavigatorUtil.goRouterPage(context, Routes.personalCenter);
+          },
+          child: Container(
+            transform: Matrix4.translationValues(0, -1, 0),
+            child: ClipOval(
+              child: loginUserInfoNotifer.loginUserResponse != null ?
+              Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 23, height: 23, fit: BoxFit.fill,) : null,
+            ),
           ),
         ),
         SizedBox(width: 5,),
