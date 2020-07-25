@@ -2,7 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
+import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/check_param_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -16,13 +21,12 @@ class RegistPage extends StatefulWidget {
 
 class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
 
-  String gender = "";
-
-  final TextEditingController _nickNameController = TextEditingController(text: "ok");
+  final TextEditingController _nickNameController = TextEditingController(text: "");
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _verifyCodeController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
   final TextEditingController _comfirmPasswdController = TextEditingController();
+  String _gender = "";
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +74,6 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
                 decoration: InputDecoration(
                   labelText: '昵称',
                 ),
-                onChanged: (String value) {
-//                  blogTitle = value;
-                },
               ),
               VEmptyView(40),
               TextField(
@@ -80,60 +81,50 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
                 decoration: InputDecoration(
                   labelText: '账号[手机号/邮箱]',
                 ),
-                onChanged: (String value) {
-//                  blogTitle = value;
-                },
               ),
               TextField(
                 controller: _verifyCodeController,
                 decoration: InputDecoration(
                   labelText: '验证码',
                 ),
-                onChanged: (String value) {
-//                  blogTitle = value;
-                },
               ),
               TextField(
+                obscureText: true,
                 controller: _passwdController,
                 decoration: InputDecoration(
                   labelText: '密码',
                 ),
-                onChanged: (String value) {
-//                  blogTitle = value;
-                },
               ),
               TextField(
+                obscureText: true,
                 controller: _comfirmPasswdController,
                 decoration: InputDecoration(
                   labelText: '确认密码',
                 ),
-                onChanged: (String value) {
-//                  blogTitle = value;
-                },
               ),
               SizedBox(height: 10,),
               Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Radio(
-                  value: "1",
+                  value: "male",
                   activeColor: Colors.red,
-                  groupValue: this.gender,
+                  groupValue: this._gender,
                   onChanged: (value) {
                     setState(() {
-                      this.gender = value;
+                      this._gender = value;
                     });
                   },
                 ),
                 Text('男'),
                 SizedBox(width: 10,),
                 Radio(
-                  value: "2",
+                  value: "female",
                   activeColor: Colors.red,
-                  groupValue: this.gender,
+                  groupValue: this._gender,
                   onChanged: (value) {
                     setState(() {
-                      this.gender = value;
+                      this._gender = value;
                     });
                   },
                 ),
@@ -173,8 +164,80 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
   }
 
 
+  //注册
   regist(){
-    UIUtils.showToast(_nickNameController.text);
+    String nickName = _nickNameController.text;
+    String userName = _userNameController.text;
+    String verifyCode = _verifyCodeController.text;
+    String passwd = _passwdController.text;
+    String comfirmPasswd = _comfirmPasswdController.text;
+    String gender = _gender;
+
+    //nickName
+    if(StringUtil.checkEmpty(nickName)){
+      UIUtils.showToast("昵称不能为空");
+      return;
+    }
+    if(nickName.length>10){
+      UIUtils.showToast("昵称长度不能超过10个字符");
+      return;
+    }
+
+    //userName
+    if(StringUtil.checkEmpty(userName)){
+      UIUtils.showToast("请填写账号");
+      return;
+    }
+    if (!CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_EMAIL) && !CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_PHONE)) {
+      UIUtils.showToast("请使用手机号或邮箱注册");
+      return;
+    }
+
+    //verifyCode
+    if(StringUtil.checkEmpty(verifyCode) || verifyCode.length!=6){
+      UIUtils.showToast("请填写6位验证码");
+      return;
+    }
+
+    //passwd
+    if(StringUtil.checkEmpty(passwd)){
+      UIUtils.showToast("请填写密码");
+      return;
+    }
+    if (!CheckParamUtil.checkRegex(passwd, CheckParamUtil.REGEX_PASSWD)) {
+      UIUtils.showToast("密码必须由数字或字母组合，长度 6-20");
+      return;
+    }
+
+    //comfirmPasswd
+    if(StringUtil.checkEmpty(comfirmPasswd)){
+      UIUtils.showToast("请填写确认密码");
+      return;
+    }
+    if (comfirmPasswd!=passwd) {
+      UIUtils.showToast("两次密码输入不一致");
+      return;
+    }
+
+    //gender
+    if(StringUtil.checkEmpty(gender)){
+      UIUtils.showToast("请选择性别");
+      return;
+    }
+
+
+    LinkKnownApi.regist(userName, passwd, nickName, gender, verifyCode, "linkknown").catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).then((value){
+        if(value.status=="SUCCESS"){
+          UIUtils.showToast("注册成功");
+          NavigatorUtil.goRouterPage(context, Routes.login);
+        }else{
+          UIUtils.showToast(value.errorMsg);
+        }
+    });
+
+
   }
 
 }
