@@ -128,6 +128,14 @@ flutter:
     - images/loading_05.png
     - images/loading_06.png
     - images/loading_07.png
+    - images/fenlei.png
+    - images/kaoshi.png
+    - images/video.png
+    - images/zhaopin.png
+    - images/book.png
+    - images/huodong.png
+    - images/coupon.png
+    - images/personalCenter.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

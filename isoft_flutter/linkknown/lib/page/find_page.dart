@@ -19,14 +19,14 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
 
   List<ClassifyItem> getDataList() {
     List<ClassifyItem> list = [];
-    list..add(ClassifyItem("分类", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("考试", "images/home53.png", Routes.login))
-      ..add(ClassifyItem("推荐视频", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("名师招募令", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("畅享图书", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("锦鲤活动", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("领券中心", "images/linkknown.jpg", Routes.login))
-      ..add(ClassifyItem("个人中心", "images/linkknown.jpg", Routes.login));
+    list..add(ClassifyItem("分类", "images/fenlei.png", Routes.login))
+      ..add(ClassifyItem("考试", "images/kaoshi.png", Routes.login))
+      ..add(ClassifyItem("推荐视频", "images/video.png", Routes.login))
+      ..add(ClassifyItem("名师招募令", "images/zhaopin.png", Routes.login))
+      ..add(ClassifyItem("畅享图书", "images/book.png", Routes.login))
+      ..add(ClassifyItem("锦鲤活动", "images/huodong.png", Routes.login))
+      ..add(ClassifyItem("领券中心", "images/coupon.png", Routes.login))
+      ..add(ClassifyItem("个人中心", "images/personalCenter.png", Routes.login));
     return list;
   }
 
@@ -44,7 +44,8 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       child: Column(
         children: <Widget>[
           Container(
-            width: ScreenUtil().setWidth(95),
+            padding:EdgeInsets.all(40),
+            width: ScreenUtil().setWidth(100),
             height: ScreenUtil().setWidth(100),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
