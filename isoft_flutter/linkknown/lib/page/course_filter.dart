@@ -79,7 +79,11 @@ class _CourseFilterState extends State<CourseFilterWidget>
         paginator = courseMetaResponse.paginator;
 
         setState(() {
-          loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
+          if (paginator.totalcount == 0) {
+            loadingStatus = LoadingStatus.LOADED_EMPTY;
+          } else {
+            loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
+          }
         });
       });
     });

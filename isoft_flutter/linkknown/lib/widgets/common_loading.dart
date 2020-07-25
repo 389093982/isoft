@@ -6,13 +6,16 @@ enum LoadingStatus {
   LOADED_COMPLETED,         // 加载完成
   LOADED_COMPLETED_ALL,     // 加载完成，没有更多数据
   LOADED_FAILED,            // 加载失败
+  LOADED_EMPTY,             // 暂无数据
+  NET_ERROR,                // 网络异常
 }
 
 class FooterLoadingWidget extends StatefulWidget {
 
   dynamic loadingStatus;
+  ValueChanged refreshOnFailCallBack;
 
-  FooterLoadingWidget({this.loadingStatus = LoadingStatus.LOADED_COMPLETED});
+  FooterLoadingWidget({this.loadingStatus = LoadingStatus.LOADED_COMPLETED, this.refreshOnFailCallBack,});
 
   @override
   _FooterLoadingState createState() => _FooterLoadingState();
@@ -24,13 +27,16 @@ class _FooterLoadingState extends State<FooterLoadingWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            getImageWidget(),
-            getLoadingStatusWidget(),
-          ],
+      child: GestureDetector(
+        onTap: _onTap,
+        child: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              getImageWidget(),
+              getLoadingStatusWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -59,5 +65,11 @@ class _FooterLoadingState extends State<FooterLoadingWidget> {
       statusText = "加载失败，请点我重试";
     }
     return Text(statusText, style: TextStyle(fontSize: 12, color: Colors.grey[500]),);
+  }
+
+  _onTap () {
+    if (widget.loadingStatus == LoadingStatus.NET_ERROR || widget.loadingStatus == LoadingStatus.LOADED_FAILED) {
+      widget.refreshOnFailCallBack(widget.loadingStatus);
+    }
   }
 }
