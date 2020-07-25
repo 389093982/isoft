@@ -1,15 +1,15 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';
+import 'package:linkknown/model/paginator.dart' as common_paginator;
 
 class CourseFilterWidget extends StatefulWidget {
-
   String search;
   String isCharge;
 
@@ -17,20 +17,19 @@ class CourseFilterWidget extends StatefulWidget {
 
   @override
   _CourseFilterState createState() => _CourseFilterState();
-
 }
 
-class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderStateMixin {
-
+class _CourseFilterState extends State<CourseFilterWidget>
+    with TickerProviderStateMixin {
   List<Course> courseList = new List();
   ScrollController scrollController = ScrollController();
 
+  common_paginator.Paginator paginator;
   int page = 0;
-  bool isLoading = false;//是否正在请求新数据
-  bool showMore = false;//是否显示底部加载中提示
+  dynamic loadingStatus;
 
-   String _old_search;
-   String _old_isCharge;
+  String _old_search;
+  String _old_isCharge;
 
   @override
   void initState() {
@@ -40,50 +39,57 @@ class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderSt
     initData();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
-        print('滑动到了最底部${scrollController.position.pixels}');
-        setState(() {
-          showMore = true;
-        });
-        loadPageData(page + 1, 10);
+      print("${scrollController.position.pixels}");
+      print("${scrollController.position.maxScrollExtent}");
+      print("${scrollController.position.pixels == scrollController.position.maxScrollExtent}");
+      // 预留底部 loading 的高度 30
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        loadPageData(page + 1, 10, delayed: true);
       }
     });
   }
 
-  void loadPageData (int current_page, int offset) {
-    if (isLoading) {
+  void loadPageData(int current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
       return;
     }
-    isLoading = true;
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
     page = current_page;
 
-    LinkKnownApi.searchCourseList(widget.search, widget.isCharge, current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.searchCourseList(
+          widget.search, widget.isCharge, current_page, offset)
+          .catchError((e) {
+        UIUtils.showToast((e as LinkKnownError).errorMsg);
 
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-    }).then((value) {
-      if (current_page == 1) {
-        courseList.clear();
-      }
-      courseList.addAll(value.courses);
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
+      }).then((courseMetaResponse) {
+        if (current_page == 1) {
+          courseList.clear();
+        }
+        courseList.addAll(courseMetaResponse.courses);
+        paginator = courseMetaResponse.paginator;
 
-      setState(() {
-        isLoading = false;
-        showMore = false;
+        setState(() {
+          loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
+        });
       });
     });
-
   }
 
   void initData() {
-    loadPageData(1, 10);
+    loadPageData(1, 10, resetLoadingStatus: true);
   }
 
-  Future < void > _onRefresh() async {
+  Future<void> _onRefresh() async {
     initData();
   }
 
@@ -108,14 +114,18 @@ class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderSt
 //            // 解决 item 太少不能下拉刷新的问题
 //            physics: AlwaysScrollableScrollPhysics(),
 //          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: GridView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: courseList.length,
-                controller: scrollController,
-                // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: <Widget>[
+              // 如果不是Sliver家族的Widget，需要使用SliverToBoxAdapter做层包裹
+              SliverToBoxAdapter(
+                child: getHeaderWidget(),
+              ),
+              SliverGrid(
+                delegate:
+                SliverChildBuilderDelegate((BuildContext context, int position) {
+                  return CourseCardWidget(courseList[position]);
+                }, childCount: courseList.length,),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     //横轴元素个数
                     crossAxisCount: 2,
@@ -124,14 +134,32 @@ class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderSt
                     //横轴间距
                     crossAxisSpacing: 10.0,
                     //子组件宽高长度比例
-                    childAspectRatio: 1.0),
-                itemBuilder: (BuildContext context, int index) {
-                return CourseCardWidget(courseList[index]);
-              }),
+                    childAspectRatio: 1.0,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: FooterLoadingWidget(loadingStatus: loadingStatus),
+              ),
+            ],
           ),
           onRefresh: _onRefresh,
         ),
       ],
+    );
+  }
+
+  Widget getHeaderWidget () {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+      child: Row(
+        children: <Widget>[
+          Image.asset("images/ic_hot_logo.png", width: 25, height: 25, fit: BoxFit.fill,),
+          SizedBox(width: 5,),
+          Text("热门推荐", style: TextStyle(fontWeight: FontWeight.w200),),
+          Expanded(child: Text(""),),
+          CommonLabel.getCommonLabel4("精品课程"),
+        ],
+      ),
     );
   }
 
@@ -153,5 +181,4 @@ class _CourseFilterState extends State<CourseFilterWidget> with TickerProviderSt
     super.dispose();
     scrollController.dispose();
   }
-
 }

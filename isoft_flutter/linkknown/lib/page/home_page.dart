@@ -109,7 +109,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget>
           ),
         ),
         Expanded(
-          child: MingYanWidget(),
+          child: Center(child: MingYanWidget(),),
         ),
         Container(
           // TODO 改成其它快捷入口
