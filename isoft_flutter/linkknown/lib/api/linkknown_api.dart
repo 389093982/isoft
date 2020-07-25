@@ -34,8 +34,13 @@ class LinkKnownApi {
   static String tokenString = "";
 
   // 登录成功后调用此方法更新全局的 tokenString
-  static void updateTokenString() async {
-    tokenString = await LoginUtil.getTokenString();
+  static void updateTokenString({disalbe: false}) async {
+    // disable 为 true 时表示注销 tokenString,如登出操作
+    if (disalbe) {
+      tokenString = "";
+    } else {
+      tokenString = await LoginUtil.getTokenString();
+    }
   }
 
   static void init() async {

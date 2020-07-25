@@ -23,6 +23,7 @@ class FooterLoadingWidget extends StatefulWidget {
 }
 
 class _FooterLoadingState extends State<FooterLoadingWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +34,8 @@ class _FooterLoadingState extends State<FooterLoadingWidget> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              getImageWidget(),
-              getLoadingStatusWidget(),
+              getLoadingStatusPrefixImageWidget(),
+              getLoadingStatusTextWidget(),
             ],
           ),
         ),
@@ -42,18 +43,18 @@ class _FooterLoadingState extends State<FooterLoadingWidget> {
     );
   }
 
-  Widget getImageWidget () {
+  Widget getLoadingStatusPrefixImageWidget () {
     if (widget.loadingStatus == LoadingStatus.LOADING) {
       return Padding(
         padding: EdgeInsets.only(right: 10),
         child: ImagesAnimationWidget(width: 15, height: 15, entry: ImagesAnimationEntry(1, 7, "images/loading_0%s.png",), durationSeconds: 3,),
       );
     } else {
-      return SizedBox();
+      return SizedBox(width: 1,);
     }
   }
 
-  Widget getLoadingStatusWidget () {
+  Widget getLoadingStatusTextWidget () {
     String statusText = "";
     if (widget.loadingStatus == LoadingStatus.LOADING) {
       statusText = "正在加载中...";
