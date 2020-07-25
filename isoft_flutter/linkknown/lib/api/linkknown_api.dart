@@ -81,6 +81,21 @@ class LinkKnownApi {
     return LoginUserResponse.fromJson(response.data);
   }
 
+  // 注册接口
+  static Future<BaseResponse> regist(String username, String passwd, String nickname, String gender, String verifyCode, String third_user_type) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/regist',
+        params: {
+          'username': username,
+          'passwd': passwd,
+          'nickname': nickname,
+          'gender': gender,
+          'verifyCode': verifyCode,
+          'third_user_type': third_user_type,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 查询用户基本信息
   static Future<GetUserDetailResponse> getUserDetail(String userName) async {
     var response = await doPost(
