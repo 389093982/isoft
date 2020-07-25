@@ -10,7 +10,7 @@ class DateUtil {
   //获取今日 ： yyyy-MM-dd
   static String getToday_YYYY_MM_DD(){
     String today = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).toString();
-    return today.substring(0,10).replaceAll("-", "");
+    return today.substring(0,10);
   }
 
   //获取此刻时间 ： HH:mm:ss   带有冒号
@@ -46,14 +46,12 @@ class DateUtil {
     if (dateTime.substring(0,4)==(today.substring(0,4))){
       var difference = new DateTime.now().difference(DateTime.parse(dateTime));
       int days = difference.inDays;
-      //2.判断是不是3天以内
-      if (days<=2){
-        if (days==0){
+      //2.添加修饰
+      if (days<=1){
+        if (days==0 && today==dateTime.substring(0,10)){
           return "今天"+dateTime.substring(dateTime.length-8,dateTime.length);
-        }else if (days==1){
+        }else if ((days==0 && today!=dateTime.substring(0,10)) || days==1){
           return "昨天"+dateTime.substring(dateTime.length-8,dateTime.length);
-        }else if (days==2){
-          return "前天"+dateTime.substring(dateTime.length-8,dateTime.length);
         }else{
           return dateTime;
         }
