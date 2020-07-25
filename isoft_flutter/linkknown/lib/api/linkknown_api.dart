@@ -23,6 +23,7 @@ import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
+import 'package:linkknown/model/refresh_token_response.dart';
 import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
@@ -491,6 +492,16 @@ class LinkKnownApi {
           'offset':offset,
         });
     return CustomTagCourseResponse.fromJson(response.data);
+  }
+
+  // 根据自定义 tag 搜索课程
+  static Future<RefreshTokenResponse> refreshToken(String tokenString) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/RefreshToken',
+        params: {
+          'tokenString':tokenString,
+        });
+    return RefreshTokenResponse.fromJson(response.data);
   }
 
 }

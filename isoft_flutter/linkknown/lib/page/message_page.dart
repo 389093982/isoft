@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/model/message.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 
 class MessagePage extends StatefulWidget {
@@ -49,7 +48,8 @@ class _MessageState extends State<MessagePage> {
 
     // delayed 为 true 时延迟 2s 让底部动画显示
     Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
-      LinkKnownApi.queryPageMessageList(current_page, offset).then((messageListResponse) async {
+      LinkKnownApi.queryPageMessageList(current_page, offset)
+          .then((messageListResponse) async {
         nickName = await LoginUtil.getNickName();
 
         if (messageListResponse.status == "SUCCESS") {
@@ -75,7 +75,7 @@ class _MessageState extends State<MessagePage> {
         }
       }).catchError((err) {
         // 弹出登录对话框
-        LinkKnownError.checkCanShowUnLoginDialog(context, err);
+        AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
 
         setState(() {
           loadingStatus = LoadingStatus.LOADED_FAILED;
@@ -165,7 +165,12 @@ class _MessageState extends State<MessagePage> {
               );
             }, childCount: messageList.length)),
             SliverToBoxAdapter(
-              child: FooterLoadingWidget(loadingStatus: loadingStatus),
+              child: FooterLoadingWidget(
+                loadingStatus: loadingStatus,
+                refreshOnFailCallBack: (status) {
+                  _onRefresh();
+                },
+              ),
             ),
           ],
         ),
