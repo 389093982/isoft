@@ -124,8 +124,10 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
             )
           ),
           Align(
-            alignment: Alignment.bottomCenter,
-            child: MingYanWidget(),
+            child: Container(
+              margin: EdgeInsets.only(top: 160),
+              child: MingYanWidget(),
+            ),
           ),
         ],
       ),
