@@ -25,14 +25,11 @@ class EditBlogPage extends StatefulWidget {
 
 class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
   //发布博客字段
-  String blogTitle;
-  String catalogName;
-  String blogContent;
   TextEditingController blogTitleController;
   TextEditingController catalogNameController;
   TextEditingController blogContentController;
 
-  //添加博客字段
+  //添加博客分类字段
   String catalog_name;
   String catalog_desc;
 
@@ -89,9 +86,6 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
                 decoration: InputDecoration(
                   labelText: '文章标题',
                 ),
-                onChanged: (String value) {
-                  blogTitle = value;
-                },
               ),
               VEmptyView(40),
               TextField(
@@ -119,9 +113,6 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
                 decoration: InputDecoration(
                   labelText: '文章内容',
                 ),
-                onChanged: (String value) {
-                  blogContent = value;
-                },
               ),
               VEmptyView(40),
               VEmptyView(40),
@@ -159,8 +150,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
           SimpleDialogOption(
                 child: new Text(_catalogName),
                 onPressed: () {
-                  catalogName = _catalogName;
-                  catalogNameController = new TextEditingController(text: catalogName);
+                  catalogNameController = new TextEditingController(text: _catalogName);
                   Navigator.of(context).pop();
                 },
               )
@@ -259,39 +249,39 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
 
   //发布博客
   void publishBlog(BuildContext context) {
-    if (StringUtil.checkEmpty(blogTitle)) {
+    if (StringUtil.checkEmpty(blogTitleController.text)) {
       UIUtils.showToast("文章标题不能为空");
       return;
     }
-    if (blogTitle.length > 40) {
+    if (blogTitleController.text.length > 40) {
       UIUtils.showToast("文章标题不能超过40个字符");
       return;
     }
 
-    if (StringUtil.checkEmpty(catalogName)) {
+    if (StringUtil.checkEmpty(catalogNameController.text)) {
       UIUtils.showToast("文章分类不能为空");
       return;
     }
-    if (catalogNameList.indexOf(catalogName) <= 0) {
+    if (catalogNameList.indexOf(catalogNameController.text) <= 0) {
       UIUtils.showToast("文章分类有误");
       return;
     }
 
-    if (StringUtil.checkEmpty(blogContent)) {
+    if (StringUtil.checkEmpty(blogContentController.text)) {
       UIUtils.showToast("文章内容不能为空");
       return;
     }
-    if (blogContent.length > 20000) {
+    if (blogContentController.text.length > 20000) {
       UIUtils.showToast("文章内容不能超过20000个字符");
       return;
     }
 
     String article_id = "";
-    String blog_title = blogTitle;
+    String blog_title = blogTitleController.text;
     String key_words = "";
-    String catalog_name = catalogName;
+    String catalog_name = catalogNameController.text;
     int blog_status = 1;
-    String content = blogContent;
+    String content = blogContentController.text;
     String link_href = "";
     String first_img = "";
     LinkKnownApi.BlogArticleEdit(article_id, blog_title, key_words,

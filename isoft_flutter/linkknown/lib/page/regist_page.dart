@@ -1,7 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
@@ -14,8 +16,13 @@ class RegistPage extends StatefulWidget {
 
 class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
 
-  final TextEditingController _nickNameController = TextEditingController();
+  String gender = "";
+
+  final TextEditingController _nickNameController = TextEditingController(text: "ok");
   final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _verifyCodeController = TextEditingController();
+  final TextEditingController _passwdController = TextEditingController();
+  final TextEditingController _comfirmPasswdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,11 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.only(
+            left: ScreenUtil().setWidth(80),
+            right: ScreenUtil().setWidth(80),
+            top: ScreenUtil().setWidth(30),
+          ),
           child: Column(
             children: <Widget>[
               Container(
@@ -56,69 +67,85 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
               VEmptyView(40),
               TextField(
                 controller: _nickNameController,
-                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                    hintText: '昵称',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
+                  labelText: '昵称',
+                ),
+                onChanged: (String value) {
+//                  blogTitle = value;
+                },
               ),
+              VEmptyView(40),
               TextField(
                 controller: _userNameController,
-                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                    hintText: '账号',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
+                  labelText: '账号[手机号/邮箱]',
+                ),
+                onChanged: (String value) {
+//                  blogTitle = value;
+                },
               ),
               TextField(
-                controller: _userNameController,
-                keyboardType: TextInputType.phone,
+                controller: _verifyCodeController,
                 decoration: InputDecoration(
-                    hintText: '验证码',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
+                  labelText: '验证码',
+                ),
+                onChanged: (String value) {
+//                  blogTitle = value;
+                },
               ),
               TextField(
-                controller: _userNameController,
-                keyboardType: TextInputType.phone,
+                controller: _passwdController,
                 decoration: InputDecoration(
-                    hintText: '密码',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
+                  labelText: '密码',
+                ),
+                onChanged: (String value) {
+//                  blogTitle = value;
+                },
               ),
               TextField(
-                controller: _userNameController,
-                keyboardType: TextInputType.phone,
+                controller: _comfirmPasswdController,
                 decoration: InputDecoration(
-                    hintText: '确认密码',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
+                  labelText: '确认密码',
+                ),
+                onChanged: (String value) {
+//                  blogTitle = value;
+                },
               ),
-              TextField(
-                controller: _userNameController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                    hintText: '性别',
-                    prefixIcon: Icon(
-                      Icons.account_circle,
-                      color: Colors.grey,
-                    )),
-              ),
+              SizedBox(height: 10,),
+              Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Radio(
+                  value: "1",
+                  activeColor: Colors.red,
+                  groupValue: this.gender,
+                  onChanged: (value) {
+                    setState(() {
+                      this.gender = value;
+                    });
+                  },
+                ),
+                Text('男'),
+                SizedBox(width: 10,),
+                Radio(
+                  value: "2",
+                  activeColor: Colors.red,
+                  groupValue: this.gender,
+                  onChanged: (value) {
+                    setState(() {
+                      this.gender = value;
+                    });
+                  },
+                ),
+                Text('女'),
+              ],
+            ),
+              SizedBox(height: 10,),
               CommonButton(
                 callback: () {
-
+                  regist();
                 },
-                content: '注册',
+                content: '注 册',
                 width: double.infinity,
               ),
               VEmptyView(10),
@@ -143,6 +170,11 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+
+  regist(){
+    UIUtils.showToast(_nickNameController.text);
   }
 
 }
