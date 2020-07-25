@@ -42,6 +42,7 @@ dependencies:
   flutter_spinkit: ^4.1.2
   fijkplayer: ^0.8.7
   path_provider: ^1.6.11
+  sprintf: ^4.0.2
 
 dev_dependencies:
   flutter_test:
@@ -119,6 +120,14 @@ flutter:
     - images/ic_fab_play.png
     - images/ic_add_blog.svg
     - images/page_coming_soon.gif
+    - images/ic_hot_logo.png
+    - images/loading_01.png
+    - images/loading_02.png
+    - images/loading_03.png
+    - images/loading_04.png
+    - images/loading_05.png
+    - images/loading_06.png
+    - images/loading_07.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

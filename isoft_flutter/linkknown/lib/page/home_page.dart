@@ -124,7 +124,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
           ),
         ),
         Expanded(
-          child: MingYanWidget(),
+          child: Center(child: MingYanWidget(),),
         ),
         Container(
           margin: EdgeInsets.only(right: 15),

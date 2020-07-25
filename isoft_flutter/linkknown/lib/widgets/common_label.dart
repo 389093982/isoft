@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CommonLabel extends StatelessWidget {
+
   static CommonLabel getCommonLabel(String labelText) {
     return CommonLabel(labelText);
   }
@@ -17,6 +18,16 @@ class CommonLabel extends StatelessWidget {
     return CommonLabel(
       labelText,
       bgColor: Colors.grey[500],
+      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+      radius: 0,
+    );
+  }
+
+  static CommonLabel getCommonLabel4(String labelText) {
+    return CommonLabel(
+      labelText,
+      textColor: Colors.white,
+      bgColor: Colors.yellow[800],
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
       radius: 0,
     );
