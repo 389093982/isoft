@@ -250,7 +250,9 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                 margin: EdgeInsets.symmetric(horizontal: 10),
               ),
               SizedBox(height: 10,),
-              SecondLevelCommentWidget(firstLevelComment.themePk.toString(),firstLevelComment.themeType,firstLevelComment.id),
+              Expanded(
+                child: SecondLevelCommentWidget(firstLevelComment.themePk.toString(),firstLevelComment.themeType,firstLevelComment.id),
+              ),
             ],),
           ),
         );

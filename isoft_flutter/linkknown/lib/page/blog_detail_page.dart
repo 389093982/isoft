@@ -102,7 +102,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                       onTap: (){
 
                                       },
-                                      child: Text(this.blog!=null?this.blog.blogTitle:"博客标题..",style: TextStyle(fontSize: 17),overflow: TextOverflow.clip,),
+                                      child: Text(this.blog!=null?this.blog.blogTitle:"加载中..",style: TextStyle(fontSize: 17),overflow: TextOverflow.clip,),
                                     ),
                                   )
                                 ],
@@ -114,19 +114,19 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                     onTap: (){
                                       NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
                                     },
-                                    child: Text(this.user!=null?this.user.nickName:"昵称..",style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
+                                    child: Text(this.user!=null?this.user.nickName:"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
                                   ),
                                   Text(" • ",style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   Container(
                                     width: 120,
-                                    child: Text(this.blog!=null?this.blog.catalogName:"分类名称..",style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                                    child: Text(this.blog!=null?this.blog.catalogName:"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 5,),
                               Row(
                                 children: <Widget>[
-                                  Text(this.blog!=null?DateUtil.formatPublishTime(this.blog.createdTime):"时间..",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  Text(this.blog!=null?DateUtil.formatPublishTime(this.blog.createdTime):"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   SizedBox(width: 20,),
 //                      Icon(Icons.remove_red_eye, size: 13,color: Colors.black38,),
                                   Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
@@ -143,7 +143,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                     Container(
                       padding: EdgeInsets.only(left: 20,right: 20),
                       alignment: Alignment.topLeft,
-                      child: Text(this.blog!=null?this.blog.content:"内容..",style: TextStyle(color: Colors.grey[700],fontSize: 15),),
+                      child: Text(this.blog!=null?this.blog.content:"加载中..",style: TextStyle(color: Colors.grey[700],fontSize: 15),),
                     ),
                     SizedBox(height: 50,),
                   ],
