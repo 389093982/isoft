@@ -100,8 +100,7 @@ class _SecondLevelCommentState extends State<SecondLevelCommentWidget> with Auto
           }
           return RefreshIndicator(
             child: Container(
-              height: 400,
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              padding: EdgeInsets.only(left: 5,right: 5,bottom: 10),
               child: Column(
                 children: <Widget>[
                   Expanded(

@@ -43,7 +43,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
         children: <Widget>[
