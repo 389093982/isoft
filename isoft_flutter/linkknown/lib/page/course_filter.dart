@@ -39,9 +39,6 @@ class _CourseFilterState extends State<CourseFilterWidget>
     initData();
 
     scrollController.addListener(() {
-      print("${scrollController.position.pixels}");
-      print("${scrollController.position.maxScrollExtent}");
-      print("${scrollController.position.pixels == scrollController.position.maxScrollExtent}");
       // 预留底部 loading 的高度 30
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         loadPageData(page + 1, 10, delayed: true);
