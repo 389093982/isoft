@@ -43,7 +43,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
         children: <Widget>[
@@ -81,6 +81,18 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
               Text(widget.course != null
                   ? widget.course.watchNumber.toString()
                   : "0"),
+              SizedBox(width: 80,),
+              Text(widget.course!=null?Constants.RMB+widget.course.price:"",style: TextStyle(color: Colors.red,fontSize: 16),),
+              SizedBox(width: 5,),
+              Offstage(
+                offstage: widget.course==null?false:widget.course.isShowOldPrice=="N",
+                child:
+                  Text(widget.course!=null?Constants.RMB+widget.course.oldPrice:"",
+                    style: TextStyle(color: Colors.black45,fontSize: 14,decoration: TextDecoration.lineThrough),
+                  ),
+              ),
+
+
             ],
           ),
           VEmptyView(5),

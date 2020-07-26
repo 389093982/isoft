@@ -154,7 +154,6 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
               alignment: Alignment.center,
               padding: EdgeInsets.only(left: 20),
               height: 40,
-              width: 500,
               color: Colors.grey[200],
               child: Row(children: <Widget>[
                 SizedBox(width: 70,),
