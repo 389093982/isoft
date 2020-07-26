@@ -44,17 +44,14 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       child: Column(
         children: <Widget>[
           Container(
-            padding:EdgeInsets.all(40),
-            width: ScreenUtil().setWidth(100),
-            height: ScreenUtil().setWidth(100),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: new ExactAssetImage(item.classifyIcon),
-              ),
+            padding:EdgeInsets.all(5),
+            child: Image.asset(
+                item.classifyIcon,
+                width: 40,
+                height: 40,
             ),
           ),
-          Expanded(child: Text(item.classifyName,style: TextStyle(fontSize: 13),),),
+          Expanded(child: Text(item.classifyName,style: TextStyle(fontSize: 12),),),
         ],
       ),
     );

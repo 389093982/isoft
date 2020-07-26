@@ -10,8 +10,7 @@ class CourseVideosWidget extends StatefulWidget {
 
   Course course;
   List<CVideo> cVideos;
-  // 是否是列表模式,默认是列表模式
-  bool isListPattern = true;
+
   // 定义接收父类回调函数的指针
   ValueChanged<int> clickCallBack;
 
@@ -22,6 +21,8 @@ class CourseVideosWidget extends StatefulWidget {
 }
 
 class _CourseVideosState extends State<CourseVideosWidget> {
+  // 是否是列表模式,默认是列表模式
+  bool isListPattern = true;
 
   @override
   void initState() {
@@ -49,13 +50,13 @@ class _CourseVideosState extends State<CourseVideosWidget> {
               InkWell(
                 onTap: (){
                   setState(() {
-                    widget.isListPattern = !widget.isListPattern;
+                    isListPattern = !isListPattern;
                   });
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: SvgPicture.asset(
-                    widget.isListPattern ? "images/icon_list.svg" : "images/icon_grid.svg",
+                    isListPattern ? "images/icon_list.svg" : "images/icon_grid.svg",
                     width: ScreenUtil().setWidth(40),
                     height: ScreenUtil().setHeight(40),
                     color: Colors.red,
@@ -73,7 +74,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
         // Flexible
         // Flexible也是为小部件提供空间的，但是不会要求子空间填满可用空间；
         Flexible(     // 此处使用 Flexible 解决溢出问题
-          child: widget.isListPattern ? getListWidget() : getGridWidget(),
+          child: isListPattern ? getListWidget() : getGridWidget(),
         ),
       ],
     );
