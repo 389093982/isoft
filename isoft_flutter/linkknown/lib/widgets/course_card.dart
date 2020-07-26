@@ -109,7 +109,7 @@ class _CourseCardState extends State<CourseCardWidget>
                         ),
                       ),
                       Offstage(
-                        offstage: !UIUtils.isValidPrice(widget.course.oldPrice),
+                        offstage: widget.course==null?false:widget.course.isShowOldPrice=="N",
                         child: Text(
                           Constants.RMB + widget.course.oldPrice,
                           style: TextStyle(
