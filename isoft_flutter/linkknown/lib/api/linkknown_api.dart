@@ -22,6 +22,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/refresh_token_response.dart';
 import 'package:linkknown/model/second_level_comment_response.dart';
@@ -393,6 +394,18 @@ class LinkKnownApi {
           'usernames': usernames,
         });
     return GetUserInfoByNamesResponse.fromJson(response.data);
+  }
+
+
+  // 查询是否关注
+  static Future<QueryIsAttentionResponse> QueryIsAttention(String attention_object_type,String attention_object_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryIsAttention',
+        params: {
+          'attention_object_type': attention_object_type,
+          'attention_object_id': attention_object_id,
+        });
+    return QueryIsAttentionResponse.fromJson(response.data);
   }
 
 
