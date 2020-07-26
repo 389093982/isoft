@@ -409,6 +409,19 @@ class LinkKnownApi {
   }
 
 
+  // 关注和取消
+  static Future<BaseResponse> DoAttention(String attention_object_type,String attention_object_id,String state) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/DoAttention',
+        params: {
+          'attention_object_type': attention_object_type,
+          'attention_object_id': attention_object_id,
+          'state': state,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
   // 添加博客分类
   static Future<BaseResponse> BlogCatalogEdit(String catalog_name,String catalog_desc) async {
     var response = await doPost(

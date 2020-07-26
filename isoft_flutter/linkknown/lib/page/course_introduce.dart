@@ -250,10 +250,19 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Row(children: <Widget>[
-//                    SizedBox(width: 100,),
                     showAttentionButton ?
-                    (isAttention?AttentionOnButtonLabel("已关注"):AttentionOffButtonLabel("+ 关注"))
+                    (isAttention?
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.course.courseAuthor, "off");},
+                          child: AttentionOnButtonLabel("已关注"),
+                        )
                         :
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.course.courseAuthor, "on");},
+                          child: AttentionOffButtonLabel("+ 关注"),
+                        )
+                    )
+                    :
                     Text(""),
                   ],),
                 ],
@@ -262,6 +271,34 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
           )
         : VEmptyView(10);
   }
+
+
+  //关注和取消
+  doAttention(String attention_object_type,String attention_object_id,String state) async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(!isLogin){
+      UIUtils.showToast("未登录..");
+      return;
+    }
+    LinkKnownApi.DoAttention(attention_object_type,attention_object_id,state).then((value) {
+      if(value.status=="SUCCESS"){
+        if(state=="on"){
+          UIUtils.showToast("关注成功");
+          isAttention = true;
+        }else if(state=="off"){
+          UIUtils.showToast("取消成功");
+          isAttention = false;
+        }
+        showAttentionButton = true;
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+      setState(() {});
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
 }
 
 class CourseLabelWidget extends StatefulWidget {
