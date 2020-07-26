@@ -232,17 +232,18 @@ class CourseOperateWidget extends StatefulWidget {
 
   CourseOperateWidget(this.course, this.cVideos);
 
+  @override
+  _CourseOperateState createState() => _CourseOperateState();
+}
+
+class _CourseOperateState extends State<CourseOperateWidget> {
+
   int collectNumber = 0;
   int priaseNumber = 0;
   int watchNumber = 0;
   bool isCollect = false;
   bool isPriase = false;
 
-  @override
-  _CourseOperateState createState() => _CourseOperateState();
-}
-
-class _CourseOperateState extends State<CourseOperateWidget> {
   @override
   void initState() {
     super.initState();
@@ -268,17 +269,17 @@ class _CourseOperateState extends State<CourseOperateWidget> {
 
     setState(() {
       if (collectFavoriteCountResponse.status == "SUCCESS") {
-        this.widget.collectNumber = collectFavoriteCountResponse.counts;
+        this.collectNumber = collectFavoriteCountResponse.counts;
       }
       if (priaseFavoriteCountResponse.status == "SUCCESS") {
-        this.widget.priaseNumber = priaseFavoriteCountResponse.counts;
+        this.priaseNumber = priaseFavoriteCountResponse.counts;
       }
 
       if (collectIsFavoriteResponse.status == "SUCCESS") {
-        this.widget.isCollect = collectIsFavoriteResponse.isFavorite;
+        this.isCollect = collectIsFavoriteResponse.isFavorite;
       }
       if (priaseIsFavoriteResponse.status == "SUCCESS") {
-        this.widget.isPriase = priaseIsFavoriteResponse.isFavorite;
+        this.isPriase = priaseIsFavoriteResponse.isFavorite;
       }
     });
   }
@@ -309,8 +310,8 @@ class _CourseOperateState extends State<CourseOperateWidget> {
           child: CourseOperateItemWidget(
               label: "点赞",
               imagepath: "images/ic_praise.svg",
-              enable: widget.isPriase,
-              number: widget.priaseNumber,
+              enable: isPriase,
+              number: priaseNumber,
               clickCallback: () {
                 // 处理点击事件
                 handleFavoriteClick(Constants.FAVORITE_TYPE_COURSE_PRIASE);
@@ -320,8 +321,8 @@ class _CourseOperateState extends State<CourseOperateWidget> {
           child: CourseOperateItemWidget(
               label: "收藏",
               imagepath: "images/ic_collect.svg",
-              enable: widget.isCollect,
-              number: widget.collectNumber,
+              enable: isCollect,
+              number: collectNumber,
               clickCallback: () {
                 // 处理点击事件
                 handleFavoriteClick(Constants.FAVORITE_TYPE_COURSE_COLLECT);
