@@ -29,21 +29,26 @@ class AutoLoginDialogHelper {
   }
 
   // 主动弹框提示前去登录
-  static bool showUnLoginDialog(BuildContext context) {
+  static bool openUnLoginDialog(BuildContext context) {
     isShowDialogFlag = true;
 
     showRefreshOrConfirmDialog(context);
+
+    // 防止异常导致  isShowDialogFlag 没有设置为 false
+    Future.delayed(Duration(seconds: 10), () {
+      isShowDialogFlag = false;
+    });
   }
 
   static void showRefreshOrConfirmDialog(BuildContext context) async {
     if (await LoginUtil.checkCanRefreshToken(context)) {
-      showAutoRefreshLoginDialog(context);
+      _showAutoRefreshLoginDialog(context);
     } else {
-      showUnLoginDialog(context);
+      _showUnLoginDialog(context);
     }
   }
 
-  static void showAutoRefreshLoginDialog(BuildContext context) async {
+  static void _showAutoRefreshLoginDialog(BuildContext context) async {
     RefreshTokenResponse refreshTokenResponse =
     await LinkKnownApi.refreshToken(await LoginUtil.getTokenString());
     if (refreshTokenResponse.status == "SUCCESS") {
