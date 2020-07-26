@@ -20,7 +20,7 @@ class _MessageState extends State<MessagePage> {
   dynamic loadingStatus;
 
   Paginator paginator;
-  int page = 0;
+  int current_page = 0;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _MessageState extends State<MessagePage> {
     loadPageData(1, 10, resetLoadingStatus: true);
   }
 
-  void loadPageData(int current_page, int offset,
+  void loadPageData(int _current_page, int offset,
       {bool delayed = false, bool resetLoadingStatus = false}) async {
     if (resetLoadingStatus) {
       loadingStatus = "";
@@ -44,7 +44,7 @@ class _MessageState extends State<MessagePage> {
     setState(() {
       loadingStatus = LoadingStatus.LOADING;
     });
-    page = current_page;
+    current_page = _current_page;
 
     // delayed 为 true 时延迟 2s 让底部动画显示
     Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
@@ -52,7 +52,7 @@ class _MessageState extends State<MessagePage> {
           .then((messageListResponse) async {
         nickName = await LoginUtil.getNickName();
 
-        if (messageListResponse.status == "SUCCESS") {
+        if (messageListResponse?.status == "SUCCESS") {
           if (current_page == 1) {
             messageList.clear();
           }
@@ -113,7 +113,9 @@ class _MessageState extends State<MessagePage> {
               //    });
               if (notification.metrics.pixels ==
                   notification.metrics.maxScrollExtent) {
-                loadPageData(page + 1, 10, delayed: true);
+                if (paginator != null && paginator.currpage < paginator.totalpages) {
+                  loadPageData(current_page + 1, 10, delayed: true);
+                }
               }
             }
             // 返回 true 取消冒泡

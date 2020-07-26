@@ -25,7 +25,7 @@ class _CourseFilterState extends State<CourseFilterWidget>
   ScrollController scrollController = ScrollController();
 
   common_paginator.Paginator paginator;
-  int page = 0;
+  int current_page = 1;
   dynamic loadingStatus;
 
   String _old_search;
@@ -41,12 +41,14 @@ class _CourseFilterState extends State<CourseFilterWidget>
     scrollController.addListener(() {
       // 预留底部 loading 的高度 30
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        loadPageData(page + 1, 10, delayed: true);
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
+        }
       }
     });
   }
 
-  void loadPageData(int current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
+  void loadPageData(int _current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
     if (resetLoadingStatus) {
       loadingStatus = "";
     }
@@ -56,31 +58,37 @@ class _CourseFilterState extends State<CourseFilterWidget>
     setState(() {
       loadingStatus = LoadingStatus.LOADING;
     });
-    page = current_page;
+    current_page = _current_page;
 
     // delayed 为 true 时延迟 2s 让底部动画显示
     Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
       LinkKnownApi.searchCourseList(
           widget.search, widget.isCharge, current_page, offset)
-          .catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
+          .then((courseMetaResponse) {
+        if (courseMetaResponse?.status == "SUCCESS") {
+          if (current_page == 1) {
+            courseList.clear();
+          }
+          courseList.addAll(courseMetaResponse.courses);
+          paginator = courseMetaResponse.paginator;
+
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
+        }
+      }).catchError((e) {
+//        UIUtils.showToast((e as LinkKnownError).errorMsg);
 
         setState(() {
           loadingStatus = LoadingStatus.LOADED_FAILED;
-        });
-      }).then((courseMetaResponse) {
-        if (current_page == 1) {
-          courseList.clear();
-        }
-        courseList.addAll(courseMetaResponse.courses);
-        paginator = courseMetaResponse.paginator;
-
-        setState(() {
-          if (paginator.totalcount == 0) {
-            loadingStatus = LoadingStatus.LOADED_EMPTY;
-          } else {
-            loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
-          }
         });
       });
     });
@@ -179,7 +187,7 @@ class _CourseFilterState extends State<CourseFilterWidget>
 
   @override
   void dispose() {
+    scrollController?.dispose();
     super.dispose();
-    scrollController.dispose();
   }
 }
