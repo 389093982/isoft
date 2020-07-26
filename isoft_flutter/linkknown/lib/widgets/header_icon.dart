@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/utils/utils.dart';
 
@@ -41,11 +42,23 @@ class _HeaderIconWidgetState extends State<HeaderIconWidget> {
       );
     }
     return ClipOval(
-      child: Image.network(
-        UIUtils.replaceMediaUrl(widget.headerIcon),
+      child: CachedNetworkImage(
+        imageUrl:  UIUtils.replaceMediaUrl(widget.headerIcon),
+        fit: BoxFit.fill,
         width: widget.width,
         height: widget.height,
-        fit: BoxFit.fill,
+        placeholder: (context, url) => Image.asset(
+          "images/unlogin_head_no_circle.png",
+          fit: BoxFit.fill,
+          width: widget.width,
+          height: widget.height,
+        ),
+        errorWidget: (context, url, error) => Image.asset(
+          "images/not_found.png",
+          fit: BoxFit.fill,
+          width: widget.width,
+          height: widget.height,
+        ),
       ),
     );
   }

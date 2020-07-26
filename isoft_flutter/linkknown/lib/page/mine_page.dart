@@ -76,8 +76,10 @@ class _MineHeaderState extends State<MineHeaderWidget>
     super.initState();
     refreshLoginStatus();
 
-    rotationAnimationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
-    rotationAnimation = Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
+    rotationAnimationController =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    rotationAnimation =
+        Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
     rotationAnimationController.repeat(reverse: true);
   }
 
@@ -100,18 +102,27 @@ class _MineHeaderState extends State<MineHeaderWidget>
   @override
   Widget build(BuildContext context) {
 //    return hasLogin ? getLoginWidget() : getUnLoginWidget();
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: 180,
-          color: Colors.red,
-          child: hasLogin ? getLoginWidget() : getUnLoginWidget(),
+    return Container(
+      decoration: BoxDecoration(
+        // 添加背景图片
+        image: new DecorationImage(
+          image: new AssetImage("images/my_center_01.jpg"),
+          fit: BoxFit.fill,
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: getSettingMessageWidget(),
-        ),
-      ],
+      ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: 180,
+//            color: Colors.red,
+            child: hasLogin ? getLoginWidget() : getUnLoginWidget(),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: getSettingMessageWidget(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -209,14 +220,15 @@ class _MineHeaderState extends State<MineHeaderWidget>
           margin: EdgeInsets.only(left: 40),
           child: ClipOval(
             child: Image.asset(
-              "images/linkknown.jpg",
+              "images/unlogin_head_no_circle.png",
               width: 80,
               height: 80,
+              fit: BoxFit.fill,
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(left: 10),
+          margin: EdgeInsets.only(left: 20),
           child: InkWell(
             onTap: () {
               NavigatorUtil.goLoginPage(context);
