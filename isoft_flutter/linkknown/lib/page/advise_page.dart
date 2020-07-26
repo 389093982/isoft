@@ -11,6 +11,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/divider_line.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 class AdvisePage extends StatefulWidget {
   @override
@@ -157,28 +158,32 @@ class _AdvisePageState extends State<AdvisePage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            ClipOval(
-                              child: Image.network(
-                                UIUtils.replaceMediaUrl(users
-                                    .firstWhere((element) =>
-                                element.userName ==
-                                    adviseList[position].createdBy)
-                                    .smallIcon),
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.fill,
-                              ),
+                            HeaderIconWidget(
+                              UIUtils.replaceMediaUrl(users
+                                  .firstWhere((element) =>
+                                      element.userName ==
+                                      adviseList[position].createdBy)
+                                  ?.smallIcon),
+                              size: HeaderIconSize.SIZE_BIG,
                             ),
-                            SizedBox(width: 10,),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text(users.firstWhere((element) => element.userName ==
-                                        adviseList[position].createdBy).nickName),
-                                    SizedBox(width: 10,),
-                                    Text(DateUtil.format2StandardTime(adviseList[position].createdTime)),
+                                    Text(users
+                                        .firstWhere((element) =>
+                                            element.userName ==
+                                            adviseList[position].createdBy)
+                                        ?.nickName),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(DateUtil.format2StandardTime(
+                                        adviseList[position].createdTime)),
                                   ],
                                 ),
                                 Text(adviseList[position].advise),
