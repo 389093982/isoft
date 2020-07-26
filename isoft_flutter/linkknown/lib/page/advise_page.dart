@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/advise_list.dart';
+import 'package:linkknown/model/get_user_info_by_names_response.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/divider_line.dart';
-import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 class AdvisePage extends StatefulWidget {
   @override
@@ -18,56 +20,101 @@ class AdvisePage extends StatefulWidget {
 
 class _AdvisePageState extends State<AdvisePage> {
   List<Advise> adviseList = new List();
-  bool isLoading = false; //是否正在请求新数据
-  bool isFirstLoading = false; // 是否第一次请求
+  Set<User> users = new Set();
   Paginator paginator;
-  EasyRefreshController _easyRefreshController = EasyRefreshController();
+  int current_page = 1;
+  dynamic loadingStatus;
+
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
-    _onRefresh();
-  }
+    initData();
 
-  Future<void> _onLoadMore() async {
-    if (paginator != null && paginator.currpage < paginator.totalpages) {
-      await Future.delayed(Duration(seconds: 2), () async {
-        await loadPageData(paginator.currpage + 1, 10);
-      });
-    }
-  }
-
-  Future<void> _onRefresh() async {
-    // 第一次请求 paginator 为空
-    isFirstLoading = paginator == null;
-    await Future.delayed(Duration(seconds: 2), () {
-      loadPageData(1, 10);
+    scrollController.addListener(() {
+      // 预留底部 loading 的高度 30
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
+        }
+      }
     });
   }
 
-  void loadPageData(int current_page, int offset) async {
-    if (isLoading) {
+  void initData() {
+    loadPageData(1, 10, resetLoadingStatus: true);
+  }
+
+  Future<void> _onRefresh() async {
+    initData();
+  }
+
+  void loadPageData(int _currentpage, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
       return;
     }
-    isLoading = true;
-    AdviseListResponse adviseListResponse =
-        await LinkKnownApi.queryPageAdvise(current_page, offset);
-    if (adviseListResponse.status == "SUCCESS") {
-      setState(() {
-        if (current_page == 1) {
-          adviseList.clear();
-        }
-        adviseList.addAll(adviseListResponse.advises);
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _currentpage;
 
-        paginator = adviseListResponse.paginator;
-        // 结束加载显示没有更多数据
-        _easyRefreshController.finishLoad(
-            noMore: paginator.currpage == paginator.totalpages);
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.queryPageAdvise(current_page, offset)
+          .then((adviseListResponse) async {
+        if (adviseListResponse?.status == "SUCCESS") {
+          if (current_page == 1) {
+            adviseList.clear();
+          }
+          adviseList.addAll(adviseListResponse.advises);
+
+          // 获取userName字段，并用逗号拼接
+          await getUserInfoByNames(adviseListResponse);
+
+          paginator = adviseListResponse.paginator;
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
+        }
+      }).catchError((e) {
+//      UIUtils.showToast((e as LinkKnownError).errorMsg);
+
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
       });
+    });
+  }
+
+  void getUserInfoByNames(AdviseListResponse adviseListResponse) async {
+    // 获取userName字段，并用逗号拼接
+    String userNames = adviseListResponse.advises
+        .map((advise) => advise.createdBy)
+        .toSet()
+        .join(",");
+    //根据usernames查询用户信息
+    GetUserInfoByNamesResponse response =
+        await LinkKnownApi.GetUserInfoByNames(userNames);
+    if (response.status == "SUCCESS") {
+      users.addAll(response.users);
     }
-    isLoading = false;
-    isFirstLoading = false;
   }
 
   @override
@@ -95,116 +142,73 @@ class _AdvisePageState extends State<AdvisePage> {
           ),
         ],
       ),
-      body: getBodyWidget(),
-    );
-  }
-
-  Widget getBodyWidget() {
-    if (isFirstLoading) {
-      return getFirstLoadingWidget(context);
-    } else if (paginator != null && paginator.totalcount == 0) {
-      return getEmptyDataWidget();
-    } else {
-      return getListDataWidget();
-    }
-  }
-
-  Widget getEmptyDataWidget () {
-    return Center(
-      child: Container(
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: SizedBox(),
-              flex: 2,
+      body: ScrollConfiguration(
+        behavior: NoShadowScrollBehavior(),
+        child: RefreshIndicator(
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int position) {
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            HeaderIconWidget(
+                              UIUtils.replaceMediaUrl(users
+                                  .firstWhere((element) =>
+                                      element.userName ==
+                                      adviseList[position].createdBy)
+                                  ?.smallIcon),
+                              size: HeaderIconSize.SIZE_BIG,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Text(users
+                                        .firstWhere((element) =>
+                                            element.userName ==
+                                            adviseList[position].createdBy)
+                                        ?.nickName),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(DateUtil.format2StandardTime(
+                                        adviseList[position].createdTime)),
+                                  ],
+                                ),
+                                Text(adviseList[position].advise),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      DividerLineView(),
+                    ],
+                  );
+                }, childCount: adviseList.length)),
+                SliverToBoxAdapter(
+                  child: FooterLoadingWidget(loadingStatus: loadingStatus),
+                ),
+              ],
             ),
-            SizedBox(
-              width: 100.0,
-              height: 100.0,
-              child: Image.asset('images/linkknown.jpg'),
-            ),
-            Text(
-              "没有数据",
-              style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
-            ),
-            Expanded(
-              child: SizedBox(),
-              flex: 3,
-            ),
-          ],
-        ),
+            onRefresh: _onRefresh),
       ),
-    );
-  }
-
-  Widget getListDataWidget() {
-    var length = adviseList?.length ?? 0;
-
-    return RefreshIndicator(
-        child: ScrollConfiguration(
-          behavior: NoShadowScrollBehavior(),
-          child: ListView.builder(
-            itemCount: adviseList.length,
-            itemBuilder: (BuildContext context, int position) {
-              // 显示最后一条的时候加载下一页数据
-              if (position == length - 1) {
-                _onLoadMore();
-              }
-              return Container(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(adviseList[position].advise),
-                    VEmptyView(50),
-                    DividerLineView(),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-        onRefresh: _onRefresh);
-  }
-
-  Widget getFirstLoadingWidget(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(
-          child: SizedBox(
-        height: 200.0,
-        width: 300.0,
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: 50.0,
-                height: 50.0,
-                child: SpinKitFadingCube(
-                  color: Theme.of(context).primaryColor,
-                  size: 25.0,
-                ),
-              ),
-              Container(
-                child: Text("正在加载..."),
-              )
-            ],
-          ),
-        ),
-      )),
     );
   }
 
   @override
   void dispose() {
+    scrollController?.dispose();
     super.dispose();
-//    scrollController.dispose();
   }
-
 }

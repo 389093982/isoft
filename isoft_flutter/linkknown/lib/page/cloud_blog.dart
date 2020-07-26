@@ -106,15 +106,15 @@ class CloudBlogState extends State<CloudBlogWidget>
         //3.去掉最后一个逗号
         usernames = usernames.substring(0, usernames.length - 1);
         //4.根据usernames查询用户信息
-        LinkKnownApi.GetUserInfoByNames(usernames).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+        LinkKnownApi.GetUserInfoByNames(usernames).then((value) {
+          //将用户信息放入users 集合
+          users.addAll(value.users);
           setState(() {
             isLoading = false;
             showMore = false;
           });
-        }).then((value) {
-          //将用户信息放入users 集合
-          users.addAll(value.users);
+        }).catchError((e) {
+          UIUtils.showToast((e as LinkKnownError).errorMsg);
           setState(() {
             isLoading = false;
             showMore = false;
