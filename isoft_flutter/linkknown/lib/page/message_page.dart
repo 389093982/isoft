@@ -113,7 +113,8 @@ class _MessageState extends State<MessagePage> {
               //    });
               if (notification.metrics.pixels ==
                   notification.metrics.maxScrollExtent) {
-                if (paginator != null && paginator.currpage < paginator.totalpages) {
+                if (paginator != null &&
+                    paginator.currpage < paginator.totalpages) {
                   loadPageData(current_page + 1, 10, delayed: true);
                 }
               }
@@ -132,67 +133,71 @@ class _MessageState extends State<MessagePage> {
               slivers: <Widget>[
                 SliverList(
                     delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int position) {
-                          return Container(
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border(bottom: BorderSide(color: Colors.grey[300])),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Image.asset(
-                                  "images/linkknown.jpg",
-                                  width: 35,
-                                  height: 35,
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      RichText(
-                                        text: TextSpan(
-                                            style: DefaultTextStyle.of(context).style,
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                  text: '链知课堂：',
-                                                  style: TextStyle(
-                                                      color: Colors.blue, fontSize: 16)),
-                                              TextSpan(
-                                                  text: '推送消息',
-                                                  style: TextStyle(fontSize: 16)),
-                                            ]),
-                                      ),
-                                      Text(
-                                        DateUtil.format2StandardTime(
-                                            messageList[position].lastUpdatedTime),
-                                        style: TextStyle(color: Colors.black54),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "@${nickName}:${messageList[position].messageText}",
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(color: Colors.black54),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }, childCount: messageList.length)),
+                        (BuildContext context, int position) {
+                  return Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border:
+                          Border(bottom: BorderSide(color: Colors.grey[300])),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Image.asset(
+                          "images/linkknown.jpg",
+                          width: 35,
+                          height: 35,
+                          fit: BoxFit.fill,
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                    style: DefaultTextStyle.of(context).style,
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '链知课堂：',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 16)),
+                                      TextSpan(
+                                          text: '推送消息',
+                                          style: TextStyle(fontSize: 16)),
+                                    ]),
+                              ),
+                              Text(
+                                DateUtil.format2StandardTime(
+                                    messageList[position].lastUpdatedTime),
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "@${nickName}:${messageList[position].messageText}",
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }, childCount: messageList.length)),
                 SliverToBoxAdapter(
                   child: FooterLoadingWidget(
                     loadingStatus: loadingStatus,
                     refreshOnFailCallBack: (status) {
-                      _onRefresh();
+                      if (status == LoadingStatus.LOADED_EMPTY) {
+                        initData();
+                      }
                     },
                   ),
                 ),
@@ -204,5 +209,4 @@ class _MessageState extends State<MessagePage> {
       ),
     );
   }
-
 }

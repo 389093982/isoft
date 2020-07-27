@@ -40,7 +40,8 @@ class _CourseFilterState extends State<CourseFilterWidget>
 
     scrollController.addListener(() {
       // 预留底部 loading 的高度 30
-      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
         if (paginator != null && paginator.currpage < paginator.totalpages) {
           loadPageData(current_page + 1, 10, delayed: true);
         }
@@ -48,7 +49,8 @@ class _CourseFilterState extends State<CourseFilterWidget>
     });
   }
 
-  void loadPageData(int _current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
+  void loadPageData(int _current_page, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
     if (resetLoadingStatus) {
       loadingStatus = "";
     }
@@ -63,7 +65,7 @@ class _CourseFilterState extends State<CourseFilterWidget>
     // delayed 为 true 时延迟 2s 让底部动画显示
     Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
       LinkKnownApi.searchCourseList(
-          widget.search, widget.isCharge, current_page, offset)
+              widget.search, widget.isCharge, current_page, offset)
           .then((courseMetaResponse) {
         if (courseMetaResponse?.status == "SUCCESS") {
           if (current_page == 1) {
@@ -76,7 +78,9 @@ class _CourseFilterState extends State<CourseFilterWidget>
             if (paginator.totalcount == 0) {
               loadingStatus = LoadingStatus.LOADED_EMPTY;
             } else {
-              loadingStatus = paginator.currpage < paginator.totalpages ? LoadingStatus.LOADED_COMPLETED : LoadingStatus.LOADED_COMPLETED_ALL;
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
             }
           });
         } else {
@@ -131,23 +135,32 @@ class _CourseFilterState extends State<CourseFilterWidget>
                 child: getHeaderWidget(),
               ),
               SliverGrid(
-                delegate:
-                SliverChildBuilderDelegate((BuildContext context, int position) {
-                  return CourseCardWidget(courseList[position]);
-                }, childCount: courseList.length,),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int position) {
+                    return CourseCardWidget(courseList[position]);
+                  },
+                  childCount: courseList.length,
+                ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //横轴元素个数
-                    crossAxisCount: 2,
-                    //纵轴间距
-                    mainAxisSpacing: 10.0,
-                    //横轴间距
-                    crossAxisSpacing: 10.0,
-                    //子组件宽高长度比例
-                    childAspectRatio: 1.0,
+                  //横轴元素个数
+                  crossAxisCount: 2,
+                  //纵轴间距
+                  mainAxisSpacing: 10.0,
+                  //横轴间距
+                  crossAxisSpacing: 10.0,
+                  //子组件宽高长度比例
+                  childAspectRatio: 1.0,
                 ),
               ),
               SliverToBoxAdapter(
-                child: FooterLoadingWidget(loadingStatus: loadingStatus),
+                child: FooterLoadingWidget(
+                  loadingStatus: loadingStatus,
+                  refreshOnFailCallBack: (status) {
+                    if (status == LoadingStatus.LOADED_EMPTY) {
+                      initData();
+                    }
+                  },
+                ),
               ),
             ],
           ),
@@ -157,15 +170,27 @@ class _CourseFilterState extends State<CourseFilterWidget>
     );
   }
 
-  Widget getHeaderWidget () {
+  Widget getHeaderWidget() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
       child: Row(
         children: <Widget>[
-          Image.asset("images/ic_hot_logo.png", width: 25, height: 25, fit: BoxFit.fill,),
-          SizedBox(width: 5,),
-          Text("热门推荐", style: TextStyle(fontWeight: FontWeight.w200),),
-          Expanded(child: Text(""),),
+          Image.asset(
+            "images/ic_hot_logo.png",
+            width: 25,
+            height: 25,
+            fit: BoxFit.fill,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            "热门推荐",
+            style: TextStyle(fontWeight: FontWeight.w200),
+          ),
+          Expanded(
+            child: Text(""),
+          ),
           CommonLabel.getCommonLabel4("精品课程"),
         ],
       ),
