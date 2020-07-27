@@ -22,6 +22,7 @@ import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/divider_line.dart';
+import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
 // 课程简介组件
@@ -105,10 +106,27 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
             strutStyle: StrutStyle(
                 forceStrutHeight: true, height: 0.8, leading: 0.9),
           ),
-          // 分享点赞收藏播放
-          // 作者信息
-          VEmptyView(5),
-          // 课程操作组件
+          VEmptyView(20),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 70,),
+              InkWell(
+                onTap: (){
+                  UIUtils.showToast("购物车");
+                },
+                child: Image.asset(
+                  "images/shoppingCart_green.png",
+                  width: 45,
+                ),
+              ),
+              SizedBox(width: 20,),
+              FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
+              SizedBox(width: 20,),
+              FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
+            ],
+          ),
+          VEmptyView(20),
+          //分享点赞收藏播放
           Offstage(
             offstage: widget.course == null,
             child: widget.course != null

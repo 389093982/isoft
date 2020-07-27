@@ -139,6 +139,7 @@ flutter:
     - images/unlogin_head_no_circle.png
     - images/unlogin_head_with_circle.png
     - images/my_center_01.jpg
+    - images/shoppingCart_green.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
