@@ -46,73 +46,70 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return widget.course==null?Text("加载中.."):Container(
       padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
         children: <Widget>[
           Text(
-            widget.course != null ? widget.course.courseName : '',
+            widget.course.courseName,
             style: LinkKnownTextStyle.commonTitle,
           ),
           VEmptyView(5),
           Row(
             children: <Widget>[
               // 课程集数和播放次数
-              widget.course!=null? Image.asset(
+              Image.asset(
                 "images/ic_views.png",
                 width: 15,
                 height: 15,
-              ):Text("加载中.."),
+              ),
               // 设置间距
               Container(
                 width: 5,
               ),
-              Text(widget.course != null
-                  ? widget.course.courseNumber.toString()
-                  : ""),
+              Text(widget.course.courseNumber.toString()),
               Container(
                 width: 15,
               ),
-              widget.course!=null? Image.asset(
+              Image.asset(
                 "images/ic_list_counts.png",
                 width: 15,
                 height: 15,
-              ):Text(""),
+              ),
               Container(
                 width: 5,
               ),
-              Text(widget.course != null
-                  ? widget.course.watchNumber.toString()
-                  : ""),
+              Text(widget.course.watchNumber.toString()),
               SizedBox(width: 80,),
-              Text(widget.course!=null?Constants.RMB+widget.course.price:"",style: TextStyle(color: Colors.red,fontSize: 16),),
+              Offstage(
+                offstage: !(widget.course.isCharge=="charge"),
+                child: Text(Constants.RMB+widget.course.price,style: TextStyle(color: Colors.red,fontSize: 16),),
+              ),
               SizedBox(width: 5,),
               Offstage(
-                offstage: widget.course==null?false:widget.course.isShowOldPrice=="N",
+                offstage: widget.course.isShowOldPrice=="N",
                 child:
-                  Text(widget.course!=null?Constants.RMB+widget.course.oldPrice:"",
+                  Text(Constants.RMB+widget.course.oldPrice,
                     style: TextStyle(color: Colors.black45,fontSize: 14,decoration: TextDecoration.lineThrough),
                   ),
               ),
-
-
             ],
           ),
           SizedBox(height: 8,),
           Text(
-            widget.course != null ? widget.course.courseShortDesc : '',
+            widget.course.courseShortDesc,
             // 设置行间距 1.3
             strutStyle: StrutStyle(
                 forceStrutHeight: true, height: 0.8, leading: 0.9),
           ),
           VEmptyView(20),
-          Row(
+          widget.course.isCharge=="free"?Text(""):Row(
             children: <Widget>[
               SizedBox(width: 70,),
               GestureDetector(
                 onTap: (){
-                  NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+                  goToShoppingCart();
                 },
                 child: Image.asset(
                   "images/shoppingCart_green.png",
@@ -129,7 +126,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
               SizedBox(width: 20,),
               GestureDetector(
                 onTap: (){
-                  UIUtils.showToast("立即购买");
+                  toBuy();
                 },
                 child: FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
               ),
@@ -137,24 +134,19 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           ),
           VEmptyView(20),
           //分享点赞收藏播放
-          Offstage(
-            offstage: widget.course == null,
-            child: widget.course != null
-                ? CourseOperateWidget(widget.course, widget.cVideos)
-                : null,
+          CourseOperateWidget(widget.course, widget.cVideos),
+          //黑色分割线
+          DividerLineView(
+            margin: EdgeInsets.symmetric(vertical: 20),
           ),
-          //黑色分割线
-          widget.course != null? DividerLineView(
-            margin: EdgeInsets.symmetric(vertical: 20),
-          ):Text(""),
           //作者信息
-          widget.course != null ? CourseAuthorWidget(widget.course) : VEmptyView(1),
+          CourseAuthorWidget(widget.course),
           //黑色分割线
-          widget.course != null? DividerLineView(
+          DividerLineView(
             margin: EdgeInsets.symmetric(vertical: 20),
-          ):Text(""),
+          ),
           // 课程标签语
-          CourseLabelWidget(widget.course != null ? widget.course.courseLabel : ''),
+          CourseLabelWidget(widget.course.courseLabel),
           // 分集视频
           Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay),
           ),
@@ -163,23 +155,57 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     );
   }
 
+  //进入购物车
+  goToShoppingCart() async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName)){
+      NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+    }else{
+      UIUtils.showToast("未登录..");
+    }
+  }
+
+  //添加购物车
+  addToShoppingCart(String goods_type,String goods_id,String goods_price_on_add) async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName)){
+      if(loginUserName!=widget.course.courseAuthor){
+        LinkKnownApi.addToShoppingCart(goods_type, goods_id,goods_price_on_add).then((value) {
+          if(value.status=="SUCCESS"){
+            UIUtils.showToast("添加成功");
+          }else{
+            UIUtils.showToast(value.errorMsg);
+          }
+        }).catchError((e) {
+          UIUtils.showToast((e as LinkKnownError).errorMsg);
+        });
+      }else{
+        UIUtils.showToast("您无需购买自己的课程^_^");
+      }
+    }else{
+      UIUtils.showToast("未登录..");
+    }
+  }
+
+  //立即购买
+  toBuy() async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName)){
+      if(loginUserName!=widget.course.courseAuthor){
+        UIUtils.showToast("立即购买");
+      }else{
+        UIUtils.showToast("您无需购买自己的课程^_^");
+      }
+    }else{
+      UIUtils.showToast("未登录..");
+    }
+  }
+
+  //播放视频
   goToVideoPlay(index) {
     routerParamMap["videoplay_courseKey"] = widget.course;
     routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
     NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
-  }
-
-  //添加购物车
-  addToShoppingCart(String goods_type,String goods_id,String goods_price_on_add){
-    LinkKnownApi.addToShoppingCart(goods_type, goods_id,goods_price_on_add).then((value) {
-      if(value.status=="SUCCESS"){
-        UIUtils.showToast("添加成功");
-      }else{
-        UIUtils.showToast(value.errorMsg);
-      }
-    }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    });
   }
 
 
