@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/model/refresh_token_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class AutoLoginDialogHelper {
 
@@ -17,6 +19,9 @@ class AutoLoginDialogHelper {
     if (err is LinkKnownError &&
         (err as LinkKnownError).errorCode == 401 &&
         isShowDialogFlag == false) {
+
+      eventBus.fire(LoginStateChangeEvent());
+
       isShowDialogFlag = true;
 
       showRefreshOrConfirmDialog(context);
@@ -54,6 +59,8 @@ class AutoLoginDialogHelper {
     if (refreshTokenResponse.status == "SUCCESS") {
       LoginUtil.memoryRefreshToken(context, refreshTokenResponse.tokenString,
           int.parse(refreshTokenResponse.expireSecond));
+
+      eventBus.fire(LoginStateChangeEvent());
 
       showDialog(
           context: context,

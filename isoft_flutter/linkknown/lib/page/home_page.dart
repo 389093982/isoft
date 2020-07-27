@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:provider/provider.dart';
@@ -95,6 +99,12 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
   AnimationController rotationAnimationController;
   Animation rotationAnimation;
 
+  bool hasLogin = false;
+  String nickName = "";
+  String headerIcon = "";
+
+  StreamSubscription subscription;
+
   @override
   void initState() {
     super.initState();
@@ -102,13 +112,36 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
     rotationAnimationController = AnimationController(duration: const Duration(seconds: 1), vsync: this);
     rotationAnimation = Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
     rotationAnimationController.repeat(reverse: true);
+
+    refreshLoginStatus();
+
+    subscription = eventBus.on<LoginStateChangeEvent>().listen((event) {
+      refreshLoginStatus();
+    });
+  }
+
+  refreshLoginStatus() async {
+    bool hasLogin = await LoginUtil.checkHasLogin();
+
+    this.hasLogin = hasLogin;
+    if (hasLogin) {
+      this.nickName = await LoginUtil.getNickName();
+      this.headerIcon = await LoginUtil.getSmallIcon();
+//      this.userPoints = await LoginUtil.getUserPoints();
+//      this.userSignature = await LoginUtil.getUserSignature();
+//      this.attentionCounts = await LoginUtil.getAttentionCounts();
+//      this.fensiCounts = await LoginUtil.getFensiCounts();
+    }
+
+    setState(() {});
   }
 
   @override
   void dispose() {
-    super.dispose();
+    subscription?.cancel();
     // 释放铃铛旋转动画
     rotationAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -117,11 +150,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
       children: <Widget>[
         Container(
           width: 80,
-          child: Consumer(
-            builder: (BuildContext context, LoginUserInfoNotifer loginUserInfoNotifer, Widget child) {
-              return getLoginHeaderWidget(loginUserInfoNotifer);
-            },
-          ),
+          child: getLoginHeaderWidget(),
         ),
         Expanded(
           child: Center(child: MingYanWidget(),),
@@ -148,8 +177,29 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
     );
   }
 
-  Widget getLoginHeaderWidget (LoginUserInfoNotifer loginUserInfoNotifer) {
-    if (loginUserInfoNotifer.loginUserResponse == null) {
+  Widget getLoginHeaderWidget () {
+    if (hasLogin) {
+      return Row(
+        children: <Widget>[
+          InkWell(
+            onTap: (){
+              NavigatorUtil.goRouterPage(context, Routes.personalCenter);
+            },
+            child: Container(
+              transform: Matrix4.translationValues(0, -1, 0),
+              child: HeaderIconWidget(headerIcon, width: 23, height: 23,),
+            ),
+          ),
+          SizedBox(width: 5,),
+//        Text(
+//          nickName,
+//          maxLines: 1,
+//          overflow: TextOverflow.ellipsis,
+//          style: TextStyle(fontSize: 14),
+//        ),
+        ],
+      );
+    } else {
       return GestureDetector(
         onTap: () {
           NavigatorUtil.goRouterPage(context, Routes.login);
@@ -157,30 +207,5 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
         child: Text("未登录", style: TextStyle(color: Colors.white,fontSize: 17),),
       );
     }
-    return Row(
-      children: <Widget>[
-        InkWell(
-          onTap: (){
-            NavigatorUtil.goRouterPage(context, Routes.personalCenter);
-          },
-          child: Container(
-            transform: Matrix4.translationValues(0, -1, 0),
-            child: ClipOval(
-              child: loginUserInfoNotifer.loginUserResponse != null ?
-              Image.network(UIUtils.replaceMediaUrl(loginUserInfoNotifer.loginUserResponse.headerIcon), width: 23, height: 23, fit: BoxFit.fill,) : null,
-            ),
-          ),
-        ),
-        SizedBox(width: 5,),
-//        Text(
-//          loginUserInfoNotifer.loginUserResponse != null
-//              ? loginUserInfoNotifer.loginUserResponse.nickName
-//              : "",
-//          maxLines: 1,
-//          overflow: TextOverflow.ellipsis,
-//          style: TextStyle(fontSize: 14),
-//        ),
-      ],
-    );
   }
 }

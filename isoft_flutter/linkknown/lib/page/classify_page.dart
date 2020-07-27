@@ -311,8 +311,7 @@ class _RightClassifyState extends State<RightClassifyWidget> {
 
   @override
   void dispose() {
-    super.dispose();
-
     subscription?.cancel();
+    super.dispose();
   }
 }

@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
+import 'package:provider/provider.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -71,6 +75,8 @@ class _MineHeaderState extends State<MineHeaderWidget>
   AnimationController rotationAnimationController;
   Animation rotationAnimation;
 
+  StreamSubscription subscription;
+
   @override
   void initState() {
     super.initState();
@@ -81,6 +87,11 @@ class _MineHeaderState extends State<MineHeaderWidget>
     rotationAnimation =
         Tween(begin: -0.08, end: 0.08).animate(rotationAnimationController);
     rotationAnimationController.repeat(reverse: true);
+
+
+    subscription = eventBus.on<LoginStateChangeEvent>().listen((event) {
+      refreshLoginStatus();
+    });
   }
 
   refreshLoginStatus() async {
@@ -245,9 +256,10 @@ class _MineHeaderState extends State<MineHeaderWidget>
 
   @override
   void dispose() {
-    super.dispose();
+    subscription?.cancel();
     // 释放铃铛旋转动画
     rotationAnimationController.dispose();
+    super.dispose();
   }
 }
 
