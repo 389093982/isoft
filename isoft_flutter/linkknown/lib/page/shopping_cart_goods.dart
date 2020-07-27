@@ -113,7 +113,9 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> with Ticker
                 itemCount: goodsList.length,
                 controller: scrollController,
                 itemBuilder: (BuildContext context, int index) {
-                  return GoodsItemWidget(goodsList[index]);
+                  return GoodsItemWidget(goodsList[index],callback: (){
+                    initData();
+                  },);
                 }),
           ),
           onRefresh: _onRefresh,

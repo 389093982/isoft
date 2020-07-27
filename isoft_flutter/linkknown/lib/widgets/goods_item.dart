@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
@@ -19,7 +21,9 @@ import 'button_label.dart';
 class GoodsItemWidget extends StatefulWidget {
   GoodsData goods;
 
-  GoodsItemWidget(this.goods);
+  VoidCallback callback;
+
+  GoodsItemWidget(this.goods, {this.callback});
 
   @override
   _GoodsItemState createState() => _GoodsItemState();
@@ -94,7 +98,12 @@ class _GoodsItemState extends State<GoodsItemWidget>
                 Row(children: <Widget>[
                   ButtonLabel("前去支付"),
                   SizedBox(width: 10,),
-                  ButtonLabel("删除"),
+                  GestureDetector(
+                    onTap: (){
+                      deleteFromShoppingCart("course_theme_type",widget.goods.id.toString());
+                    },
+                    child: ButtonLabel("删除"),
+                  ),
                 ],)
               ],
             ),
@@ -104,5 +113,19 @@ class _GoodsItemState extends State<GoodsItemWidget>
     );
   }
 
+
+  //从购物车删除
+  deleteFromShoppingCart(String goods_type, String goods_id){
+    LinkKnownApi.deleteFromShoppingCart(goods_type, goods_id).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("删除成功");
+        widget.callback();
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
 
 }

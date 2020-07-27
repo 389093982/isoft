@@ -271,6 +271,16 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
+  // 从购物车里删除
+  static Future<BaseResponse> deleteFromShoppingCart(String goods_type, String goods_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/deleteFromShoppingCart',
+        params: {
+          'goods_type': goods_type,
+          'goods_id': goods_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
 
   // 我的订单
   static Future<PayOrderResponse> queryPayOrderList(int currentPage, int offset,String user_name,String scope,{String goods_type}) async {
