@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
@@ -17,6 +18,8 @@ import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/attention_off_button_label.dart';
+import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -55,32 +58,32 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           Row(
             children: <Widget>[
               // 课程集数和播放次数
-              Image.asset(
+              widget.course!=null? Image.asset(
                 "images/ic_views.png",
                 width: 15,
                 height: 15,
-              ),
+              ):Text("加载中.."),
               // 设置间距
               Container(
                 width: 5,
               ),
               Text(widget.course != null
                   ? widget.course.courseNumber.toString()
-                  : "0"),
+                  : ""),
               Container(
                 width: 15,
               ),
-              Image.asset(
+              widget.course!=null? Image.asset(
                 "images/ic_list_counts.png",
                 width: 15,
                 height: 15,
-              ),
+              ):Text(""),
               Container(
                 width: 5,
               ),
               Text(widget.course != null
                   ? widget.course.watchNumber.toString()
-                  : "0"),
+                  : ""),
               SizedBox(width: 80,),
               Text(widget.course!=null?Constants.RMB+widget.course.price:"",style: TextStyle(color: Colors.red,fontSize: 16),),
               SizedBox(width: 5,),
@@ -95,12 +98,12 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
             ],
           ),
-          VEmptyView(5),
+          SizedBox(height: 8,),
           Text(
             widget.course != null ? widget.course.courseShortDesc : '',
             // 设置行间距 1.3
             strutStyle: StrutStyle(
-                forceStrutHeight: true, height: 1.3, leading: 0.9),
+                forceStrutHeight: true, height: 0.8, leading: 0.9),
           ),
           // 分享点赞收藏播放
           // 作者信息
@@ -112,22 +115,20 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
                 ? CourseOperateWidget(widget.course, widget.cVideos)
                 : null,
           ),
-          DividerLineView(
+          //黑色分割线
+          widget.course != null? DividerLineView(
             margin: EdgeInsets.symmetric(vertical: 20),
-          ),
-          widget.course != null
-              ? CourseAuthorWidget(widget.course)
-              : VEmptyView(1),
-          DividerLineView(
+          ):Text(""),
+          //作者信息
+          widget.course != null ? CourseAuthorWidget(widget.course) : VEmptyView(1),
+          //黑色分割线
+          widget.course != null? DividerLineView(
             margin: EdgeInsets.symmetric(vertical: 20),
-          ),
+          ):Text(""),
           // 课程标签语
-          CourseLabelWidget(
-              widget.course != null ? widget.course.courseLabel : ''),
-          Container(
-            // 分集视频
-            child: CourseVideosWidget(widget.course, widget.cVideos,
-                clickCallBack: goToVideoPlay),
+          CourseLabelWidget(widget.course != null ? widget.course.courseLabel : ''),
+          // 分集视频
+          Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay),
           ),
         ],
       ),
@@ -151,13 +152,18 @@ class CourseAuthorWidget extends StatefulWidget {
 
 class _CourseAuthorState extends State<CourseAuthorWidget> {
 
-  User user; // 作者信息
+  // 作者信息
+  User user;
+  //是否展示关注按钮
+  bool showAttentionButton = false;
+  //是否已关注
+  bool isAttention = false;
 
   @override
   void initState() {
     super.initState();
-
     initAuthorData();
+    QueryIsAttention();
   }
 
   initAuthorData() async {
@@ -168,6 +174,37 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
         this.user = userDetailResponse.user;
       });
     }
+  }
+
+  //是否显示关注按钮
+  QueryIsAttention() async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName)){
+      //登录人和作者不是同一个人，才能看到按钮
+      if(loginUserName!=widget.course.courseAuthor){
+        LinkKnownApi.QueryIsAttention("user",widget.course.courseAuthor).then((value) {
+          if(value.status=="SUCCESS"){
+            //展示按钮
+            showAttentionButton = true;
+            value.attentionRecords>0 ? isAttention=true : isAttention=false;
+          }
+          setState(() {});
+        }).catchError((e) {
+          UIUtils.showToast((e as LinkKnownError).errorMsg);
+        });
+      }else{
+        //自己，则不展示按钮
+        showAttentionButton = false;
+        setState(() {});
+      }
+    }else{
+      //未登录，可以看到按钮
+      showAttentionButton = true;
+      //可以看到按钮,但是必须是未关注的
+      isAttention = false;
+      setState(() {});
+    }
+
   }
 
   @override
@@ -184,25 +221,84 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(this.user.nickName),
-                      Text(this.user.gender),
+                      Text(" "+this.user.nickName,style: TextStyle(fontSize: 16,color: Colors.black45),),
+                      Image.asset(
+                          this.user.gender=="male"?"images/ic_male.png":"images/ic_female.png",width: 20,
+                      )
                     ],
                   ),
+                  SizedBox(height: 2,),
                   Row(
                     children: <Widget>[
-                      Text("关注：${this.user.attentionCounts}"),
-                      Text("粉丝：${this.user.fensiCounts}"),
+                      Text(" 关注:${this.user.attentionCounts}",style: TextStyle(fontSize: 12,color: Colors.grey),),
+                      Text("   粉丝:${this.user.fensiCounts}",style: TextStyle(fontSize: 12,color: Colors.grey),),
                     ],
                   ),
+                  Row(children: <Widget>[
+                    Container(
+                      width: 200,
+                      child: Text(this.user.userSignature,style: TextStyle(color:Colors.grey,fontSize: 12,),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    )
+                  ],),
                 ],
               ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Row(children: <Widget>[
+                    showAttentionButton ?
+                    (isAttention?
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.course.courseAuthor, "off");},
+                          child: AttentionOnButtonLabel("已关注"),
+                        )
+                        :
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.course.courseAuthor, "on");},
+                          child: AttentionOffButtonLabel("+ 关注"),
+                        )
+                    )
+                    :
+                    Text(""),
+                  ],),
+                ],
+              )
             ],
           )
         : VEmptyView(10);
   }
+
+
+  //关注和取消
+  doAttention(String attention_object_type,String attention_object_id,String state) async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(!isLogin){
+      UIUtils.showToast("未登录..");
+      return;
+    }
+    LinkKnownApi.DoAttention(attention_object_type,attention_object_id,state).then((value) {
+      if(value.status=="SUCCESS"){
+        if(state=="on"){
+          UIUtils.showToast("关注成功");
+          isAttention = true;
+        }else if(state=="off"){
+          UIUtils.showToast("取消成功");
+          isAttention = false;
+        }
+        showAttentionButton = true;
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+      setState(() {});
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
 }
 
 class CourseLabelWidget extends StatefulWidget {
@@ -223,10 +319,8 @@ class _CourseLabelState extends State<CourseLabelWidget> {
   @override
   Widget build(BuildContext context) {
     List<String> labels = StringUtil.splitLabel(widget.label);
-
-    // Wrap是一个可以使子控件自动换行的控件，默认的方向是水平的
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(20)),
+    return Container(
+      padding: EdgeInsets.only(bottom: 20),
       child: Wrap(
         spacing: 5, //主轴上子控件的间距
         runSpacing: 5, //交叉轴上子控件之间的间距

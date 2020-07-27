@@ -6,6 +6,7 @@ import 'package:linkknown/model/login_user_response.dart';
 import 'package:linkknown/utils/shared_preference_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/string_util.dart';
+import 'package:linkknown/utils/utils.dart';
 
 class LoginUtil {
 
@@ -66,7 +67,7 @@ class LoginUtil {
   // 获取登录过期时间
   static Future<int> getExpiredTime() async {
     String expireSecond = await SharedPreferenceUtil.get(USER_EXPIRE_SECOND);
-    return int.parse(expireSecond);
+    return int.parse(expireSecond??"0");
   }
 
   static Future<String> getPasswd () async {
