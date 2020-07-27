@@ -259,6 +259,19 @@ class LinkKnownApi {
   }
 
 
+  // 添加购物车
+  static Future<BaseResponse> addToShoppingCart(String goods_type, String goods_id, String goods_price_on_add) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart',
+        params: {
+          'goods_type': goods_type,
+          'goods_id': goods_id,
+          'goods_price_on_add': goods_price_on_add,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
   // 我的订单
   static Future<PayOrderResponse> queryPayOrderList(int currentPage, int offset,String user_name,String scope,{String goods_type}) async {
     var response = await doPost(

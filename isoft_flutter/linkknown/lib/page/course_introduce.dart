@@ -110,9 +110,9 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           Row(
             children: <Widget>[
               SizedBox(width: 70,),
-              InkWell(
+              GestureDetector(
                 onTap: (){
-                  UIUtils.showToast("购物车");
+                  NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
                 },
                 child: Image.asset(
                   "images/shoppingCart_green.png",
@@ -120,9 +120,19 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
                 ),
               ),
               SizedBox(width: 20,),
-              FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
+              GestureDetector(
+                onTap: (){
+                  addToShoppingCart("course_theme_type",widget.course.id.toString(),widget.course.price);
+                },
+                child: FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
+              ),
               SizedBox(width: 20,),
-              FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
+              GestureDetector(
+                onTap: (){
+                  UIUtils.showToast("立即购买");
+                },
+                child: FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
+              ),
             ],
           ),
           VEmptyView(20),
@@ -158,6 +168,21 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
     NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
   }
+
+  //添加购物车
+  addToShoppingCart(String goods_type,String goods_id,String goods_price_on_add){
+    LinkKnownApi.addToShoppingCart(goods_type, goods_id,goods_price_on_add).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("添加成功");
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
+
 }
 
 class CourseAuthorWidget extends StatefulWidget {
