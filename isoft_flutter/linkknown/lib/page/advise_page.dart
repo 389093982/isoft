@@ -34,7 +34,6 @@ class _AdvisePageState extends State<AdvisePage> {
     initData();
 
     scrollController.addListener(() {
-      // 预留底部 loading 的高度 30
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         if (paginator != null && paginator.currpage < paginator.totalpages) {
@@ -197,7 +196,14 @@ class _AdvisePageState extends State<AdvisePage> {
                   );
                 }, childCount: adviseList.length)),
                 SliverToBoxAdapter(
-                  child: FooterLoadingWidget(loadingStatus: loadingStatus),
+                  child: FooterLoadingWidget(
+                    loadingStatus: loadingStatus,
+                    refreshOnFailCallBack: (status) {
+                      if (status == LoadingStatus.LOADED_EMPTY) {
+                        initData();
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

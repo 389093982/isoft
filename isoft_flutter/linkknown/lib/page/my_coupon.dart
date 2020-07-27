@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/common/error.dart';
-import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
-import 'package:linkknown/widgets/course_card.dart';
 
 class MyCouponWidget extends StatefulWidget {
-
   String isExpired;
   String isUsed;
 
@@ -17,20 +14,19 @@ class MyCouponWidget extends StatefulWidget {
 
   @override
   _MyCouponState createState() => _MyCouponState();
-
 }
 
-class _MyCouponState extends State<MyCouponWidget> with AutomaticKeepAliveClientMixin {
-
+class _MyCouponState extends State<MyCouponWidget>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
   List<Coupon> couponList = new List();
   ScrollController scrollController = ScrollController();
 
-  int page = 0;
-  bool isLoading = false;//是否正在请求新数据
-  bool showMore = false;//是否显示底部加载中提示
+  Paginator paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
 
   @override
   void initState() {
@@ -41,93 +37,106 @@ class _MyCouponState extends State<MyCouponWidget> with AutomaticKeepAliveClient
 
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
-        print('滑动到了最底部${scrollController.position.pixels}');
-        setState(() {
-          showMore = true;
-        });
-        loadPageData(page + 1, 10);
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
+        }
       }
     });
   }
 
-  void loadPageData (int current_page, int offset) {
-    if (isLoading) {
+  void loadPageData(int _currentpage, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
       return;
     }
-    isLoading = true;
-    page = current_page;
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _currentpage;
 
-    LinkKnownApi.queryPersonalCouponList(widget.isExpired, widget.isUsed, current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    LinkKnownApi.queryPersonalCouponList(
+            widget.isExpired, widget.isUsed, current_page, offset)
+        .then((myCouponResponse) async {
+      if (myCouponResponse?.status == "SUCCESS") {
+        if (current_page == 1) {
+          couponList.clear();
+        }
+        couponList.addAll(myCouponResponse.coupons);
 
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-    }).then((value) {
-      if (current_page == 1) {
-        couponList.clear();
+        paginator = myCouponResponse.paginator;
+        setState(() {
+          if (paginator.totalcount == 0) {
+            loadingStatus = LoadingStatus.LOADED_EMPTY;
+          } else {
+            loadingStatus = paginator.currpage < paginator.totalpages
+                ? LoadingStatus.LOADED_COMPLETED
+                : LoadingStatus.LOADED_COMPLETED_ALL;
+          }
+        });
+      } else {
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
       }
-      couponList.addAll(value.coupons);
+    }).catchError((e) {
+//      UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
-        isLoading = false;
-        showMore = false;
+        loadingStatus = LoadingStatus.LOADED_FAILED;
       });
     });
-
   }
 
   void initData() {
-    loadPageData(1, 10);
+    loadPageData(1, 10, resetLoadingStatus: true);
   }
 
-  Future < void > _onRefresh() async {
+  Future<void> _onRefresh() async {
     initData();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return Stack(
-      children: <Widget>[
-        RefreshIndicator(
-          //指示器颜色
-          color: Theme.of(context).primaryColor,
-          //指示器显示时距顶部位置
-          displacement: 40,
-//          child: ListView.builder(
-//            controller: scrollController,
-//            itemCount: courseList.length,//列表长度+底部加载中提示
-//            itemBuilder: (BuildContext context, int position) {
-//              return Text(courseList[position].courseName);
-//            },
-//            // 解决 item 太少不能下拉刷新的问题
-//            physics: AlwaysScrollableScrollPhysics(),
-//          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(),
-                itemExtent:130,
-                itemCount: couponList.length,
-                controller: scrollController,
-                itemBuilder: (BuildContext context, int index) {
-                  return CouponItemWidget(couponList[index]);
-                }),
-          ),
-          onRefresh: _onRefresh,
+    return ScrollConfiguration(
+      behavior: NoShadowScrollBehavior(),
+      child: RefreshIndicator(
+        //指示器颜色
+        color: Theme.of(context).primaryColor,
+        //指示器显示时距顶部位置
+        displacement: 40,
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: <Widget>[
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int position) {
+              return CouponItemWidget(couponList[position]);
+            }, childCount: couponList.length)),
+            SliverToBoxAdapter(
+              child: FooterLoadingWidget(
+                loadingStatus: loadingStatus,
+                refreshOnFailCallBack: (status) {
+                  if (status == LoadingStatus.LOADED_EMPTY) {
+                    initData();
+                  }
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+        onRefresh: _onRefresh,
+      ),
     );
   }
 
-
   @override
   void dispose() {
+    scrollController?.dispose();
     super.dispose();
-    scrollController.dispose();
   }
-
 }

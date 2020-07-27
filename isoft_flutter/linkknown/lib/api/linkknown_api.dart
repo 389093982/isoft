@@ -225,7 +225,7 @@ class LinkKnownApi {
   static Future<MyCouponResponse> queryPersonalCouponList(String isExpired,
       String isUsed, int current_page, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPersonalCouponList',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPersonalCouponList',
         params: {
           'isExpired': isExpired,
           'isUsed': isUsed,
