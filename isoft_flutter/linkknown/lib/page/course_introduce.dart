@@ -22,6 +22,7 @@ import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/divider_line.dart';
+import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
 // 课程简介组件
@@ -105,10 +106,37 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
             strutStyle: StrutStyle(
                 forceStrutHeight: true, height: 0.8, leading: 0.9),
           ),
-          // 分享点赞收藏播放
-          // 作者信息
-          VEmptyView(5),
-          // 课程操作组件
+          VEmptyView(20),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 70,),
+              GestureDetector(
+                onTap: (){
+                  NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+                },
+                child: Image.asset(
+                  "images/shoppingCart_green.png",
+                  width: 45,
+                ),
+              ),
+              SizedBox(width: 20,),
+              GestureDetector(
+                onTap: (){
+                  addToShoppingCart("course_theme_type",widget.course.id.toString(),widget.course.price);
+                },
+                child: FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
+              ),
+              SizedBox(width: 20,),
+              GestureDetector(
+                onTap: (){
+                  UIUtils.showToast("立即购买");
+                },
+                child: FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
+              ),
+            ],
+          ),
+          VEmptyView(20),
+          //分享点赞收藏播放
           Offstage(
             offstage: widget.course == null,
             child: widget.course != null
@@ -140,6 +168,21 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
     NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
   }
+
+  //添加购物车
+  addToShoppingCart(String goods_type,String goods_id,String goods_price_on_add){
+    LinkKnownApi.addToShoppingCart(goods_type, goods_id,goods_price_on_add).then((value) {
+      if(value.status=="SUCCESS"){
+        UIUtils.showToast("添加成功");
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
+
 }
 
 class CourseAuthorWidget extends StatefulWidget {
