@@ -5,7 +5,6 @@ import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
-import 'package:linkknown/provider/login_user_info_notifer.dart';
 import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:provider/provider.dart';
@@ -37,9 +36,6 @@ void runAppWithConfig(EnvConfig config) {
   // 如果想管理多个对象可以用 MultiProvider,如下
   runApp(new MultiProvider(
     providers: [
-      new ChangeNotifierProvider<LoginUserInfoNotifer>(
-        create: (_) => LoginUserInfoNotifer(),
-      ),
       new ChangeNotifierProvider<CloudBlogRefreshNotifer>(
         create: (_) => CloudBlogRefreshNotifer(),
       ),
