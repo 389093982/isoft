@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/route/routes.dart';
@@ -20,7 +18,6 @@ class CourseCardWidget extends StatefulWidget {
 
 class _CourseCardState extends State<CourseCardWidget>
     with TickerProviderStateMixin {
-
   _CourseCardState();
 
   @override
@@ -39,29 +36,40 @@ class _CourseCardState extends State<CourseCardWidget>
       child: Column(
         children: <Widget>[
           // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
-          Stack(
-            children: <Widget>[
-              InkWell(
-                onTap: () {
-                  NavigatorUtil.goRouterPage(
-                      context, "${Routes.courseDetail}?course_id=${widget.course.id}");
-                },
+          InkWell(
+            onTap: () {
+              NavigatorUtil.goRouterPage(context,
+                  "${Routes.courseDetail}?course_id=${widget.course.id}");
+            },
+            child: Stack(
+              children: <Widget>[
                 // AspectRatio的作用是调整 child 到设置的宽高比
-                child: AspectRatio(
+                AspectRatio(
 //                  child: Image.network(UIUtils.replaceMediaUrl(course.smallImage), fit: BoxFit.fill, width: double.infinity,),
-                  child: CachedImageWidget(UIUtils.replaceMediaUrl(widget.course.smallImage)),
+                  child: CachedImageWidget(
+                      UIUtils.replaceMediaUrl(widget.course.smallImage)),
                   aspectRatio: 1 / 0.6,
                 ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child:
-                      CommonLabel(widget.course.isCharge == "charge" ? "付费课程" : "免费"),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: CommonLabel(
+                        widget.course.isCharge == "charge" ? "付费课程" : "免费"),
+                  ),
                 ),
-              ),
-            ],
+                Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 30),
+                      child: Image.asset(
+                        "images/video_play.png",
+                        width: 60,
+                        height: 60,
+                      ),
+                    )),
+              ],
+            ),
           ),
           Container(
             padding: EdgeInsets.all(5.0),
@@ -79,15 +87,21 @@ class _CourseCardState extends State<CourseCardWidget>
                         width: 15,
                         height: 15,
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Text(widget.course.courseNumber.toString()),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Image.asset(
                         "images/ic_list_counts.png",
                         width: 15,
                         height: 15,
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Text(widget.course.watchNumber.toString()),
                     ],
                   ),
@@ -109,7 +123,9 @@ class _CourseCardState extends State<CourseCardWidget>
                         ),
                       ),
                       Offstage(
-                        offstage: widget.course==null?false:widget.course.isShowOldPrice=="N",
+                        offstage: widget.course == null
+                            ? false
+                            : widget.course.isShowOldPrice == "N",
                         child: Text(
                           Constants.RMB + widget.course.oldPrice,
                           style: TextStyle(
