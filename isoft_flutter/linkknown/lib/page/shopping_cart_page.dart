@@ -1,92 +1,151 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:linkknown/page/course_filter.dart';
-import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/page/shopping_cart_goods.dart';
-import 'package:linkknown/widgets/home_drawer.dart';
-
-import 'my_coupon.dart';
-
-class TabViewModel {
-  final Widget widget;
-
-  const TabViewModel({
-    this.widget,
-  });
-}
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
+import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/goods_item.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   @override
-  _ShoppingCartPage createState() => _ShoppingCartPage();
+  _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
-// Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
-// 怎么为了让tab一直保存在内存中,不被销毁?
-// 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
-class _ShoppingCartPage extends State<ShoppingCartPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   bool get wantKeepAlive => true;
-
-  List<TabViewModel> viewModels = [
-    TabViewModel(widget: ShoppingCartGoodsWidget()),
-  ].map((item) => TabViewModel(
-    widget: item.widget,
-  )).toList();
-
-  TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    this.tabController = new TabController(length: viewModels.length, vsync: this);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Container(
-            child: _HeaderWidget(),
-          ),
+          title: Text("购物车"),
         ),
         preferredSize: Size.fromHeight(60.0),
       ),
-      body: TabBarView(
-        controller: this.tabController,
-        children: this.viewModels.map((item) => item.widget).toList(),
-      ),
+      body: ShoppingCartGoodsWidget(),
     );
   }
-
 }
 
+class ShoppingCartGoodsWidget extends StatefulWidget {
+  ShoppingCartGoodsWidget();
 
-
-class _HeaderWidget extends StatefulWidget {
   @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
+  _ShoppingCartGoodsState createState() => _ShoppingCartGoodsState();
 }
 
-class _HeaderWidgetState extends State<_HeaderWidget> with TickerProviderStateMixin {
+class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  List<GoodsData> goodsList = new List();
+  ScrollController scrollController = ScrollController();
+
+  int page = 0;
+  bool isLoading = false; //是否正在请求新数据
+  bool showMore = false; //是否显示底部加载中提示
+
   @override
   void initState() {
     super.initState();
+
+    // 发送网络请求加载数据
+    initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        print('滑动到了最底部${scrollController.position.pixels}');
+        setState(() {
+          showMore = true;
+        });
+        loadPageData(page + 1, 10);
+      }
+    });
+  }
+
+  void loadPageData(int current_page, int offset) {
+    if (isLoading) {
+      return;
+    }
+    isLoading = true;
+    page = current_page;
+
+    LinkKnownApi.queryPayShoppingCartList(current_page, offset).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
+    }).then((value) {
+      if (current_page == 1) {
+        goodsList.clear();
+      }
+      goodsList.addAll(value.goodsData);
+
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
+    });
+  }
+
+  void initData() {
+    loadPageData(1, 10);
+  }
+
+  Future<void> _onRefresh() async {
+    initData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Stack(
       children: <Widget>[
-        Container(
-          child: Transform(
-            transform: Matrix4.translationValues(0, 0, 0),
-            child: Text("购物车"),
+        RefreshIndicator(
+          //指示器颜色
+          color: Theme.of(context).primaryColor,
+          //指示器显示时距顶部位置
+          displacement: 40,
+//          child: ListView.builder(
+//            controller: scrollController,
+//            itemCount: courseList.length,//列表长度+底部加载中提示
+//            itemBuilder: (BuildContext context, int position) {
+//              return Text(courseList[position].courseName);
+//            },
+//            // 解决 item 太少不能下拉刷新的问题
+//            physics: AlwaysScrollableScrollPhysics(),
+//          ),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: AlwaysScrollableScrollPhysics(),
+                itemCount: goodsList.length,
+                controller: scrollController,
+                itemBuilder: (BuildContext context, int index) {
+                  return GoodsItemWidget(
+                    goodsList[index],
+                    callback: () {
+                      initData();
+                    },
+                  );
+                }),
           ),
+          onRefresh: _onRefresh,
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController?.dispose();
+    super.dispose();
   }
 }

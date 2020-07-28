@@ -13,6 +13,7 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/accept_invite_button_label.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 import 'cloud_blog.dart';
 import 'my_customer.dart';
@@ -31,7 +32,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
   GlobalKey<CloudBlogState> myself_key = GlobalKey();
 
   String headIcon;
-  String nickName;
+  String nickName = "";
   TabController tabController;
   final searchInputController = TextEditingController();
   //查询博客--初始值就设置为空串
@@ -97,18 +98,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                         Positioned(
                           top: 140,
                           left: 30,
-                          child: ClipOval(
-                            child:
-                            StringUtil.checkNotEmpty(headIcon)?Image.network(
-                              UIUtils.replaceMediaUrl(headIcon??""),
-                              width: 80,
-                              height: 80,
-                            ):Image.asset(
-                                "images/linkknown.jpg",
-                                width: 80,
-                                height: 80,
-                            )
-                          ),
+                          child: HeaderIconWidget(headIcon, width: 80, height: 80,),
                         ),
                         Positioned(top: 190, left: 110, child: Text(nickName,style: TextStyle(fontSize: 18,color: Colors.black54),)),
                         Positioned(top: 190, left: 300,

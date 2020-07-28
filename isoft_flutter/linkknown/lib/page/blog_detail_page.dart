@@ -1,24 +1,15 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/blog_detail_response.dart';
 import 'package:linkknown/model/get_user_detail_response.dart';
-import 'package:linkknown/page/course_filter.dart';
-import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/page/shopping_cart_goods.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/date_util.dart';
-import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
-import 'package:linkknown/widgets/common_button.dart';
-import 'package:linkknown/widgets/home_drawer.dart';
-import 'package:linkknown/widgets/v_empty_view.dart';
-
-import 'my_coupon.dart';
 
 class BlogDetailgPage extends StatefulWidget {
   int blog_id;
