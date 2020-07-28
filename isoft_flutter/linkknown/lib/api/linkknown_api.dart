@@ -22,6 +22,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/refresh_token_response.dart';
@@ -219,6 +220,17 @@ class LinkKnownApi {
           'favorite_type': favorite_type,
         });
     return BaseResponse.fromJson(response.data);
+  }
+
+  // 查询领券中心分页优惠券信息
+  static Future<QueryCouponCenterListResponse> QueryCouponCenterList(int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryCouponCenterList',
+        params: {
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return QueryCouponCenterListResponse.fromJson(response.data);
   }
 
   // 查询我的优惠券

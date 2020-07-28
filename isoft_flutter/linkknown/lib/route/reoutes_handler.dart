@@ -21,6 +21,7 @@ import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/pay_order_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
+import 'package:linkknown/page/receive_coupon_center_page.dart';
 import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/setting_page.dart';
 import 'package:linkknown/page/shopping_cart_page.dart';
@@ -96,6 +97,12 @@ var myCouponHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String,List<String>> params){
     return MyCouponPage();
   });
+
+//领券中心
+var receiveCouponCenterHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return ReceiveCouponCenterPage();
+    });
 
 //购物车
 var shoppingCartHandler = new Handler(

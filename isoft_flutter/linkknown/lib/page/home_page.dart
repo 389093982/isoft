@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage>
             tabs: this.viewModels.map((item) => Tab(text: item.title)).toList(),
           ),
         ),
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: Size.fromHeight(90.0),
       ),
       body: TabBarView(
         controller: this.tabController,
