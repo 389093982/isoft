@@ -38,7 +38,6 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
     return new InkWell(
       //点击事件回调
       onTap: () {
-        UIUtils.showToast("点击了文字");
         NavigatorUtil.goRouterPage(context, item.redirectUrl);
       },
       child: Column(
