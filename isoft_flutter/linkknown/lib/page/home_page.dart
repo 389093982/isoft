@@ -186,16 +186,19 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
               NavigatorUtil.goRouterPage(context, Routes.personalCenter);
             },
             child: Container(
-              transform: Matrix4.translationValues(0, -1, 0),
-              child: HeaderIconWidget(headerIcon, width: 23, height: 23,),
+              transform: Matrix4.translationValues(-10, -5, 0),
+              child: HeaderIconWidget(headerIcon, width: 33, height: 33,),
             ),
           ),
           SizedBox(width: 5,),
-//        Text(
-//          nickName,
-//          maxLines: 1,
-//          overflow: TextOverflow.ellipsis,
-//          style: TextStyle(fontSize: 14),
+//        Container(
+//          color: Colors.blue[200],
+//          child: Text(
+//            nickName,
+//            maxLines: 1,
+//            overflow: TextOverflow.ellipsis,
+//            style: TextStyle(fontSize: 14),
+//          ),
 //        ),
         ],
       );
@@ -204,7 +207,10 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
         onTap: () {
           NavigatorUtil.goRouterPage(context, Routes.login);
         },
-        child: Text("未登录", style: TextStyle(color: Colors.white,fontSize: 17),),
+        child: Container(
+          transform: Matrix4.translationValues(-10, -5, 0),
+          child: Text("未登录", style: TextStyle(color: Colors.white,fontSize: 20),),
+        ),
       );
     }
   }
