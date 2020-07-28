@@ -48,26 +48,21 @@ class _GoodsItemState extends State<GoodsItemWidget>
       semanticContainer: false,
       child: Row(
         children: <Widget>[
-          // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
-          Stack(
-            children: <Widget>[
-              InkWell(
-                onTap: () {
-                  NavigatorUtil.goRouterPage(
-                      context, "${Routes.courseDetail}?course_id=${widget.goods.goodsId}");
-                },
-                // AspectRatio的作用是调整 child 到设置的宽高比
-                child:Container(
-                  padding: EdgeInsets.all(10),
-                  child: Image.network(
-                    UIUtils.replaceMediaUrl(widget.goods.smallImage),
-                    width: 130,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+          InkWell(
+            onTap: () {
+              NavigatorUtil.goRouterPage(
+                  context, "${Routes.courseDetail}?course_id=${widget.goods.goodsId}");
+            },
+            // AspectRatio的作用是调整 child 到设置的宽高比
+            child:Container(
+              padding: EdgeInsets.all(10),
+              child: Image.network(
+                UIUtils.replaceMediaUrl(widget.goods.smallImage),
+                width: 130,
+                height: 100,
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           ),
           Container(
             padding: EdgeInsets.all(10),

@@ -1,92 +1,167 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:linkknown/page/course_filter.dart';
-import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/page/shopping_cart_goods.dart';
-import 'package:linkknown/widgets/home_drawer.dart';
-
-import 'my_coupon.dart';
-
-class TabViewModel {
-  final Widget widget;
-
-  const TabViewModel({
-    this.widget,
-  });
-}
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
+import 'package:linkknown/common/scroll_helper.dart';
+import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_loading.dart';
+import 'package:linkknown/widgets/goods_item.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   @override
-  _ShoppingCartPage createState() => _ShoppingCartPage();
+  _ShoppingCartPageState createState() => _ShoppingCartPageState();
 }
 
-// Flutter中为了节约内存不会保存widget的状态,widget都是临时变量.当我们使用TabBar,TabBarView是我们就会发现,切换tab，initState又会被调用一次
-// 怎么为了让tab一直保存在内存中,不被销毁?
-// 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
-class _ShoppingCartPage extends State<ShoppingCartPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-
-  @override
-  bool get wantKeepAlive => true;
-
-  List<TabViewModel> viewModels = [
-    TabViewModel(widget: ShoppingCartGoodsWidget()),
-  ].map((item) => TabViewModel(
-    widget: item.widget,
-  )).toList();
-
-  TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    this.tabController = new TabController(length: viewModels.length, vsync: this);
-  }
-
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Container(
-            child: _HeaderWidget(),
-          ),
+          title: Text("购物车"),
         ),
         preferredSize: Size.fromHeight(60.0),
       ),
-      body: TabBarView(
-        controller: this.tabController,
-        children: this.viewModels.map((item) => item.widget).toList(),
-      ),
+      body: ShoppingCartGoodsWidget(),
     );
   }
-
 }
 
+class ShoppingCartGoodsWidget extends StatefulWidget {
+  ShoppingCartGoodsWidget();
 
-
-class _HeaderWidget extends StatefulWidget {
   @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
+  _ShoppingCartGoodsState createState() => _ShoppingCartGoodsState();
 }
 
-class _HeaderWidgetState extends State<_HeaderWidget> with TickerProviderStateMixin {
+class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> {
+  List<GoodsData> goodsList = new List();
+  ScrollController scrollController = ScrollController();
+
+  Paginator paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
+
   @override
   void initState() {
     super.initState();
+
+    // 发送网络请求加载数据
+    initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
+        }
+      }
+    });
+  }
+
+  void initData() {
+    loadPageData(1, 10, resetLoadingStatus: true);
+  }
+
+  Future<void> _onRefresh() async {
+    initData();
+  }
+
+  void loadPageData(int _currentpage, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
+      return;
+    }
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _currentpage;
+
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.queryPayShoppingCartList(current_page, offset)
+          .then((payShoppinpCartResponse) async {
+        if (payShoppinpCartResponse?.status == "SUCCESS") {
+          if (current_page == 1) {
+            goodsList.clear();
+          }
+          goodsList.addAll(payShoppinpCartResponse.goodsData);
+
+          paginator = payShoppinpCartResponse.paginator;
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
+        }
+      }).catchError((err) {
+        AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
+
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          child: Transform(
-            transform: Matrix4.translationValues(0, 0, 0),
-            child: Text("购物车"),
+    return ScrollConfiguration(
+        behavior: NoShadowScrollBehavior(),
+        child: RefreshIndicator(
+          //指示器颜色
+          color: Theme.of(context).primaryColor,
+          //指示器显示时距顶部位置
+          displacement: 40,
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: <Widget>[
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int position) {
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                  child: GoodsItemWidget(
+                    goodsList[position],
+                    callback: () {
+                      initData();
+                    },
+                  ),
+                );
+              }, childCount: goodsList.length)),
+              SliverToBoxAdapter(
+                child: FooterLoadingWidget(
+                  loadingStatus: loadingStatus,
+                  refreshOnFailCallBack: (status) {
+                    if (status == LoadingStatus.LOADED_EMPTY) {
+                      initData();
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
-    );
+          onRefresh: _onRefresh,
+        ));
+  }
+
+  @override
+  void dispose() {
+    scrollController?.dispose();
+    super.dispose();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/widgets/common_loading.dart';
@@ -83,8 +84,9 @@ class _MyCouponState extends State<MyCouponWidget>
           loadingStatus = LoadingStatus.LOADED_FAILED;
         });
       }
-    }).catchError((e) {
-//      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    }).catchError((err) {
+      // 弹出登录对话框
+      AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
 
       setState(() {
         loadingStatus = LoadingStatus.LOADED_FAILED;

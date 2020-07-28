@@ -1,13 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:linkknown/page/course_filter.dart';
-import 'package:linkknown/page/home_tab_recommend.dart';
-import 'package:linkknown/page/shopping_cart_goods.dart';
-import 'package:linkknown/widgets/home_drawer.dart';
 
 import 'bought_course.dart';
-import 'my_coupon.dart';
 
 class TabViewModel {
   final Widget widget;
