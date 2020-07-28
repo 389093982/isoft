@@ -6,6 +6,7 @@ import 'package:linkknown/model/customtag_course_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 
 class CustomTagCoursePage extends StatefulWidget {
   String custom_tag;
@@ -19,44 +20,82 @@ class CustomTagCoursePage extends StatefulWidget {
 class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
   bool showGrid = true;
 
-  List<CustomTagCourse> customTagCourses = [];
-  String custom_tag_name = "";
+  List<CustomTagCourse> customTagCourses = new List();
+  ScrollController scrollController = ScrollController();
+
   Paginator paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
 
   @override
   void initState() {
     super.initState();
 
+    // 发送网络请求加载数据
+    initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 15, delayed: true);
+        }
+      }
+    });
+  }
+
+  void initData() {
+    loadPageData(1, 15, resetLoadingStatus: true);
+  }
+
+  Future<void> _onRefresh() async {
     initData();
   }
 
-  initData() {
-    loadPageData(1);
-  }
+  void loadPageData(int _currentpage, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
+      return;
+    }
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _currentpage;
 
-  loadPageData(int current_page) async {
-    CustomTagCourseResponse customTagCourseResponse =
-        await LinkKnownApi.queryCustomTagCourse(
-            widget.custom_tag, current_page, 10);
-    if (customTagCourseResponse.status == "SUCCESS") {
-      setState(() {
-        paginator = customTagCourseResponse.paginator;
-        if (current_page == 1) {
-          customTagCourses.clear();
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.queryCustomTagCourse(widget.custom_tag, current_page, offset)
+          .then((customTagCourseResponse) async {
+        if (customTagCourseResponse?.status == "SUCCESS") {
+          if (current_page == 1) {
+            customTagCourses.clear();
+          }
+          customTagCourses.addAll(customTagCourseResponse.customTagCourses);
+
+          paginator = customTagCourseResponse.paginator;
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
         }
-        customTagCourses.addAll(customTagCourseResponse.customTagCourses);
-        custom_tag_name =
-            customTagCourseResponse.customTagCourses.first.customTagName;
+      }).catchError((err) {
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
       });
-    }
-  }
-
-  loadNextPageData() async {
-    if (paginator != null) {
-      if (paginator.currpage < paginator.totalpages) {
-        loadPageData(paginator.currpage + 1);
-      }
-    }
+    });
   }
 
   @override
@@ -91,10 +130,38 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
         padding: EdgeInsets.all(10),
         child: ScrollConfiguration(
           behavior: NoShadowScrollBehavior(),
-          child: getBodyWidget(),
+          child: RefreshIndicator(
+            //指示器颜色
+            color: Theme.of(context).primaryColor,
+            //指示器显示时距顶部位置
+            displacement: 40,
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
+                getBodyWidget(),
+                SliverToBoxAdapter(
+                  child: FooterLoadingWidget(
+                    loadingStatus: loadingStatus,
+                    refreshOnFailCallBack: (status) {
+                      if (status == LoadingStatus.LOADED_EMPTY) {
+                        initData();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+            onRefresh: _onRefresh,
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController?.dispose();
+    super.dispose();
   }
 
   Widget getBodyWidget() {
@@ -112,59 +179,69 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
     double desiredCellHeight = 150;
     double _childAspectRatio = cellWidth / desiredCellHeight;
 
-    return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: customTagCourses.length,
-        //controller: scrollController,//注释掉就可以达到个人中心协调效果了
-        // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //横轴元素个数
-          crossAxisCount: 3,
-          //纵轴间距
-          mainAxisSpacing: 10.0,
-          //横轴间距
-          crossAxisSpacing: 10.0,
-          //子组件宽高长度比例
-          childAspectRatio: _childAspectRatio,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return getCustomTagCourseWidget(customTagCourses[index]);
-        });
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int position) {
+          return getCustomTagCourseWidget(customTagCourses[position]);
+        },
+        childCount: customTagCourses.length,
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //横轴元素个数
+        crossAxisCount: 3,
+        //纵轴间距
+        mainAxisSpacing: 10.0,
+        //横轴间距
+        crossAxisSpacing: 10.0,
+        //子组件宽高长度比例
+        childAspectRatio: _childAspectRatio,
+      ),
+    );
   }
 
   Widget getListBodyWidget() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: customTagCourses.length,
-      itemBuilder: (BuildContext context, int position) {
-        return Container(
-          padding: EdgeInsets.all(5),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Image.network(
+    return SliverList(
+        delegate:
+            SliverChildBuilderDelegate((BuildContext context, int position) {
+      return Container(
+        padding: EdgeInsets.all(5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                NavigatorUtil.goRouterPage(context,
+                    "${Routes.courseDetail}?course_id=${customTagCourses[position].id}");
+              },
+              child: Image.network(
                 UIUtils.replaceMediaUrl(customTagCourses[position].smallImage),
                 height: 80,
                 width: 120,
                 fit: BoxFit.fill,
               ),
-              SizedBox(width: 10,),
-              Container(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(customTagCourses[position].courseName),
-                  Text(
-                      "${customTagCourses[position].courseType}/${customTagCourses[position].courseSubType}"),
-                  Text(customTagCourses[position].courseShortDesc),
-                ],
-              )),
-            ],
-          ),
-        );
-      },
-    );
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Container(
+                    child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(customTagCourses[position].courseName),
+                Text(
+                    "${customTagCourses[position].courseType}/${customTagCourses[position].courseSubType}"),
+                Text(
+                  customTagCourses[position].courseShortDesc,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+              ],
+            ))),
+          ],
+        ),
+      );
+    }, childCount: customTagCourses.length));
   }
 
   Widget getCustomTagCourseWidget(CustomTagCourse customTagCourse) {
