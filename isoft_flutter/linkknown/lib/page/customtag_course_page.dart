@@ -230,11 +230,12 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
               children: <Widget>[
                 Text(customTagCourses[position].courseName),
                 Text(
-                    "${customTagCourses[position].courseType}/${customTagCourses[position].courseSubType}"),
+                    "${customTagCourses[position].courseType}/${customTagCourses[position].courseSubType}", style: TextStyle(color: Colors.grey[700], fontSize: 12)),
                 Text(
                   customTagCourses[position].courseShortDesc,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
+                    style: TextStyle(color: Colors.grey[700], fontSize: 12)
                 ),
               ],
             ))),
