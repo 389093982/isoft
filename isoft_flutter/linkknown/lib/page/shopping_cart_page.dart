@@ -133,11 +133,14 @@ class _ShoppingCartGoodsState extends State<ShoppingCartGoodsWidget> {
               SliverList(
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int position) {
-                return GoodsItemWidget(
-                  goodsList[position],
-                  callback: () {
-                    initData();
-                  },
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                  child: GoodsItemWidget(
+                    goodsList[position],
+                    callback: () {
+                      initData();
+                    },
+                  ),
                 );
               }, childCount: goodsList.length)),
               SliverToBoxAdapter(
