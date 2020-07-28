@@ -49,8 +49,7 @@ class _CourseFilterState extends State<CourseFilterWidget>
     });
   }
 
-  void loadPageData(int _current_page, int offset,
-      {bool delayed = false, bool resetLoadingStatus = false}) {
+  void loadPageData(int _current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
     if (resetLoadingStatus) {
       loadingStatus = "";
     }

@@ -7,9 +7,11 @@ import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/page/course_filter.dart';
 import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 import 'package:linkknown/widgets/receive_coupon_center_item.dart';
+import 'package:linkknown/model/paginator.dart' as common_paginator;
 
 import 'my_coupon.dart';
 
@@ -23,45 +25,80 @@ class _ReceiveCouponCenterPageState extends State<ReceiveCouponCenterPage> with 
   List<Coupon> coupons = new List();
   ScrollController scrollController = ScrollController();
 
-  int page = 0;
-  bool isLoading = false;//是否正在请求新数据
-  bool showMore = false;//是否显示底部加载中提示
+  common_paginator.Paginator paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
 
   @override
   void initState() {
     super.initState();
+
     initData();
+
+    scrollController.addListener(() {
+      // 预留底部 loading 的高度 30
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
+        }
+      }
+    });
   }
 
   void initData() {
-    loadPageData(1, 10);
+    loadPageData(1, 10, resetLoadingStatus: true);
   }
 
-  void loadPageData (int current_page, int offset) {
-    if (isLoading) {
+  Future<void> _onRefresh() async {
+    initData();
+  }
+
+  void loadPageData(int _current_page, int offset, {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
       return;
     }
-    isLoading = true;
-    page = current_page;
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _current_page;
 
-    LinkKnownApi.QueryCouponCenterList(current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.QueryCouponCenterList(current_page, offset).then((QueryCouponCenterListResponse) {
+        if (QueryCouponCenterListResponse?.status == "SUCCESS") {
+          if (current_page == 1) {
+            coupons.clear();
+          }
+          coupons.addAll(QueryCouponCenterListResponse.coupons);
+          paginator = QueryCouponCenterListResponse.paginator;
 
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-    }).then((value) {
-      if (current_page == 1) {
-        coupons.clear();
-      }
-      coupons.addAll(value.coupons);
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
+        }
+      }).catchError((e) {
+//        UIUtils.showToast((e as LinkKnownError).errorMsg);
 
-      setState(() {
-        isLoading = false;
-        showMore = false;
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
       });
     });
+
 
   }
 
@@ -76,14 +113,24 @@ class _ReceiveCouponCenterPageState extends State<ReceiveCouponCenterPage> with 
         ),
             preferredSize: Size.fromHeight(60.0),
       ),
-      body:ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemExtent:130,
-          itemCount: coupons.length,
-          controller: scrollController,
-          itemBuilder: (BuildContext context, int index) {
-            return ReceiveCouponCenterItemWidget(coupons[index]);
-          }),
+      body:RefreshIndicator(
+        //指示器颜色
+        color: Theme.of(context).primaryColor,
+        //指示器显示时距顶部位置
+        displacement: 40,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              itemExtent:130,
+              itemCount: coupons.length,
+              controller: scrollController,
+              itemBuilder: (BuildContext context, int index) {
+                return ReceiveCouponCenterItemWidget(coupons[index]);
+              }),
+        ),
+        onRefresh: _onRefresh,
+      ),
     );
   }
 
