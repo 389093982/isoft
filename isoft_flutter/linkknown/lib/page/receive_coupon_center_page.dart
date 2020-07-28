@@ -126,7 +126,10 @@ class _ReceiveCouponCenterPageState extends State<ReceiveCouponCenterPage> with 
               itemCount: coupons.length,
               controller: scrollController,
               itemBuilder: (BuildContext context, int index) {
-                return ReceiveCouponCenterItemWidget(coupons[index]);
+                return ReceiveCouponCenterItemWidget(
+                    coupons[index],
+                    callback: () {initData();}
+                 );
               }),
         ),
         onRefresh: _onRefresh,

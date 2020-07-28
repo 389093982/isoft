@@ -233,6 +233,16 @@ class LinkKnownApi {
     return QueryCouponCenterListResponse.fromJson(response.data);
   }
 
+  //领券
+  static Future<BaseResponse> receiveCoupon(String activity_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/receiveCoupon',
+        params: {
+          'activity_id': activity_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 查询我的优惠券
   static Future<MyCouponResponse> queryPersonalCouponList(String isExpired,
       String isUsed, int current_page, int offset) async {

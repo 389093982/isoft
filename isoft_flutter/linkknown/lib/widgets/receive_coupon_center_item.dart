@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
+import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/route/routes.dart';
@@ -15,8 +17,9 @@ import 'package:linkknown/widgets/common_label.dart';
 
 class ReceiveCouponCenterItemWidget extends StatefulWidget {
   Coupon coupon;
+  VoidCallback callback;
 
-  ReceiveCouponCenterItemWidget(this.coupon);
+  ReceiveCouponCenterItemWidget(this.coupon,{this.callback});
 
   @override
   _ReceiveCouponCenterItemState createState() => _ReceiveCouponCenterItemState();
@@ -81,33 +84,39 @@ class _ReceiveCouponCenterItemState extends State<ReceiveCouponCenterItemWidget>
               ],
             ),
           )),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Image.asset(
-                getCouponBgPicture(widget.coupon),
-                width: 72,
-                height: 130,
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    getFirstCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getSecondCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getThirdCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-            ],
-          ),
+          GestureDetector(
+            onTap: (){
+              receiveCoupon(widget.coupon.activityId);
+              widget.callback();
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.asset(
+                  getCouponBgPicture(widget.coupon),
+                  width: 72,
+                  height: 130,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      getFirstCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      getSecondCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      getThirdCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -132,6 +141,20 @@ class _ReceiveCouponCenterItemState extends State<ReceiveCouponCenterItemWidget>
   //获取第三个汉子
   String getThirdCharacter(Coupon coupon){
     return "取";
+  }
+
+
+  //领券
+  receiveCoupon(String activity_id){
+    LinkKnownApi.receiveCoupon(activity_id).then((BaseResponse) {
+      if(BaseResponse.status=="SUCCESS"){
+        UIUtils.showToast("领取成功");
+      }else{
+        UIUtils.showToast(BaseResponse.errorMsg);
+      }
+    }).catchError((e) {
+      UIUtils.showToast("领取失败..");
+    });
   }
 
 
