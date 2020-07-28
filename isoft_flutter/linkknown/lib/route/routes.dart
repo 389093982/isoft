@@ -30,6 +30,8 @@ class Routes {
 
 
   //====================【发现】====================
+  // 领券中心
+  static String receiveCouponCenter = "/receiveCouponCenter";
 
 
 
@@ -74,7 +76,7 @@ class Routes {
   // 敬请期待页面
   static String comingSoon = "/comingSoon";
 
-
+//=================================================================以下是跳转配置======================================================================
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -103,6 +105,8 @@ class Routes {
 
 
     //====================【发现】====================
+    // 领券中心
+    router.define(receiveCouponCenter, handler: receiveCouponCenterHandler);
 
 
 

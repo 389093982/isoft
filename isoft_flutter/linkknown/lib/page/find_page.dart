@@ -25,7 +25,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
       ..add(ClassifyItem("名师招募令", "images/zhaopin.png", Routes.login))
       ..add(ClassifyItem("畅享图书", "images/book.png", Routes.login))
       ..add(ClassifyItem("锦鲤活动", "images/huodong.png", Routes.login))
-      ..add(ClassifyItem("领券中心", "images/coupon.png", Routes.login))
+      ..add(ClassifyItem("领券中心", "images/coupon.png", Routes.receiveCouponCenter))
       ..add(ClassifyItem("个人中心", "images/personalCenter.png", Routes.login));
     return list;
   }
