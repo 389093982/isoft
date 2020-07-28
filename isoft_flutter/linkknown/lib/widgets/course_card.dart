@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/route/routes.dart';
@@ -60,6 +58,13 @@ class _CourseCardState extends State<CourseCardWidget>
                   child:
                       CommonLabel(widget.course.isCharge == "charge" ? "付费课程" : "免费"),
                 ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  child: Image.asset("images/video_play.png", width: 60, height: 60,),
+                )
               ),
             ],
           ),

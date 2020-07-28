@@ -58,6 +58,8 @@ class MyApp extends StatelessWidget {
       title: '链知课堂',
       theme: ThemeData(
         primaryColor: Colors.red,
+        // primarySwatch 是一个 MaterialColor 对象，内部由10种不同深浅的颜色组成，用来做主题色调再合适不过
+        primarySwatch: Colors.red,
         // 全局背景颜色 scaffoldBackgroundColor
         // 局部页面背景颜色使用 Scaffold 的 background 属性
         scaffoldBackgroundColor: Colors.grey[50],

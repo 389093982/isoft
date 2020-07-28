@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -10,7 +9,6 @@ import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
-import 'package:provider/provider.dart';
 
 class HomeDrawerWidget extends StatelessWidget {
   @override
@@ -45,7 +43,7 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
 
     subscription = eventBus.on<LoginStateChangeEvent>().listen((event) {
       refreshLoginStatus();
-    });
+   });
   }
 
   refreshLoginStatus() async {
@@ -149,6 +147,10 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
             child: GestureDetector(
               // 点击事件
               onTap: () {
+                // 关闭抽屉
+                if (Scaffold.of(context).isDrawerOpen) {
+                  Navigator.pop(context); // close the drawer
+                }
                 NavigatorUtil.goLoginPage(context);
               },
               child: Text(
@@ -215,6 +217,10 @@ class HomeContentHeaderWidget extends StatelessWidget {
             height: 25,
           ),
           onTap: () {
+            // 关闭抽屉
+            if (Scaffold.of(context).isDrawerOpen) {
+              Navigator.pop(context); // close the drawer
+            }
             NavigatorUtil.goLoginPage(context);
           },
         ),
@@ -226,6 +232,10 @@ class HomeContentHeaderWidget extends StatelessWidget {
             height: 25,
           ),
           onTap: () {
+            // 关闭抽屉
+            if (Scaffold.of(context).isDrawerOpen) {
+              Navigator.pop(context); // close the drawer
+            }
             NavigatorUtil.goRegistPage(context);
           },
         ),
