@@ -19,6 +19,7 @@ import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/message_page.dart';
 import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
+import 'package:linkknown/page/pay_order_commit_page.dart';
 import 'package:linkknown/page/pay_order_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
 import 'package:linkknown/page/receive_coupon_center_page.dart';
@@ -29,6 +30,7 @@ import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
+import 'package:linkknown/utils/utils.dart';
 
 // 临时存储复杂的参数
 var routerParamMap = Map();
@@ -114,6 +116,17 @@ var shoppingCartHandler = new Handler(
 var payOrderHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return PayOrderPage();
+    });
+
+//订单提交页面
+var payOrderCommitHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      String goodsType = params['goodsType'].first??"0";
+      String goodsId = params['goodsId'].first??"0";
+      String goodsImg = params['goodsImg'].first??"0";
+      String goodsDesc = params['goodsDesc'].first??"0";
+      String price = params['price'].first??"0";
+      return PayOrderCommitPage(goodsType,goodsId,FluroConvertUtil.fluroCnParamsDecode(goodsImg),FluroConvertUtil.fluroCnParamsDecode(goodsDesc),price);
     });
 
 //活动

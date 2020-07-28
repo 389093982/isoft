@@ -11,6 +11,7 @@ import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
@@ -91,7 +92,12 @@ class _GoodsItemState extends State<GoodsItemWidget>
                 SizedBox(height: 5,),
                 SizedBox(height: 5,),
                 Row(children: <Widget>[
-                  ButtonLabel("前去支付"),
+                  GestureDetector(
+                    onTap: (){
+                      toPay();
+                    },
+                    child: ButtonLabel("前去支付"),
+                  ),
                   SizedBox(width: 10,),
                   GestureDetector(
                     onTap: (){
@@ -106,6 +112,24 @@ class _GoodsItemState extends State<GoodsItemWidget>
         ],
       ),
     );
+  }
+
+
+  //前去支付
+  toPay(){
+    if(widget.goods.goodsType=="course_theme_type"){
+      String _smallImage = FluroConvertUtil.fluroCnParamsEncode(widget.goods.smallImage);
+      String _courseName = FluroConvertUtil.fluroCnParamsEncode(widget.goods.courseName);
+      NavigatorUtil.goRouterPage(context,
+          "${Routes.payOrderCommit}?goodsType=${widget.goods.goodsType}"
+              + "&goodsId=${widget.goods.goodsId}"
+              + "&goodsImg=${_smallImage}"
+              + "&goodsDesc=${_courseName}"
+              + "&price=${widget.goods.price}"
+      );
+    }else{
+      UIUtils.showToast("非课程,待定..");
+    }
   }
 
 
