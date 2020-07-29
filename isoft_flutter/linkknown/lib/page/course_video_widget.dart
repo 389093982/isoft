@@ -16,21 +16,49 @@ class CourseVideosWidget extends StatefulWidget {
   // 定义接收父类回调函数的指针
   ValueChanged<int> clickCallBack;
 
-  CourseVideosWidget(this.course, this.cVideos, {this.clickCallBack});
+  CourseVideosWidget(this.course, this.cVideos, {Key key,this.clickCallBack}): super(key: key);
 
   @override
-  _CourseVideosState createState() => _CourseVideosState();
+  CourseVideosWidgetState createState() => CourseVideosWidgetState();
 }
 
-class _CourseVideosState extends State<CourseVideosWidget> {
+class CourseVideosWidgetState extends State<CourseVideosWidget> {
   // 是否是列表模式,默认是列表模式
   bool isListPattern = true;
+
+  // 已播放历史
+  List<String> playHistories = [];
+  // 当前正在播放的视频 id
+  int currentVideoId = -1;
+
+  void updateState ({int currentVideoId = -1}) async {
+    if (currentVideoId > 0) {
+      this.currentVideoId = currentVideoId;
+    } else {
+      CourseVideoCurrentPlaying playing = await CommonUtil.readVideoPlaying();
+      if (playing.courseId == widget.course.id){
+        this.currentVideoId = playing.videoId;
+      }
+    }
+    initVideoPlayHistory();
+  }
 
   @override
   void initState() {
     super.initState();
+
+    initVideoPlayHistory();
   }
 
+  void initVideoPlayHistory () async {
+    // 记录观看记录
+    List<String> playHistories = await CommonUtil.readVideoPlayHistory(widget.course.id);
+    setState(() {
+      this.playHistories = playHistories;
+    });
+  }
+
+  // TODO 顺序倒序
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -132,14 +160,14 @@ class _CourseVideosState extends State<CourseVideosWidget> {
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Row(
                     children: <Widget>[
-                      Text("${index+1}"),
+                      Text("${index+1}", style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
                       Container(
                         width: 20,
                       ),
-                      Text(StringUtil.getFileName(widget.cVideos[index].videoName)),
+                      Text(StringUtil.getFileName(widget.cVideos[index].videoName), style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
                       Expanded(child: Text(""),),
-                      SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: Colors.grey[600],),
-                      Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: Colors.grey[600], fontSize: 12),),
+                      SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: renderColor(widget.cVideos[index].id),),
+                      Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: renderColor(widget.cVideos[index].id), fontSize: 12),),
                     ],
                   ),
                 ),
@@ -148,5 +176,15 @@ class _CourseVideosState extends State<CourseVideosWidget> {
             ),
           );
         });
+  }
+
+  Color renderColor (int videoId) {
+    if (currentVideoId == videoId) {
+      return Colors.deepOrangeAccent;
+    }
+    else if (playHistories.contains(videoId.toString())) {
+      return Colors.grey[500];
+    }
+    return Colors.black;
   }
 }

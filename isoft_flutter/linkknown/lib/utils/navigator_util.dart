@@ -5,13 +5,12 @@ import 'package:linkknown/route/routes.dart';
 import '../application.dart';
 
 class NavigatorUtil {
-
   // 静态私有方法,无返回值
   static _navigateTo(BuildContext context, String path,
       // 默认值参数
       {Duration transitionDuration = const Duration(milliseconds: 250),
-      RouteTransitionsBuilder transitionBuilder}) {
-    Application.router.navigateTo(context, path,
+      RouteTransitionsBuilder transitionBuilder}) async {
+    return await Application.router.navigateTo(context, path,
         transitionDuration: transitionDuration,
         transitionBuilder: transitionBuilder,
         transition: TransitionType.inFromRight);
@@ -38,8 +37,7 @@ class NavigatorUtil {
   }
 
   // 动态跳往页面
-  static void goRouterPage(BuildContext context, String router) {
-    _navigateTo(context, router);
+  static void goRouterPage(BuildContext context, String router) async {
+    return _navigateTo(context, router);
   }
-
 }

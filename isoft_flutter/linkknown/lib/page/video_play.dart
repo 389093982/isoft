@@ -3,6 +3,7 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class VideoPlayPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class VideoPlayPage extends StatefulWidget {
 class VideoPlayState extends State<VideoPlayPage> {
 
   FijkPlayer player = FijkPlayer();
+  GlobalKey<CourseVideosWidgetState> courseVideosWidgetKey = new GlobalKey();
 
   @override
   void initState() {
@@ -36,6 +38,20 @@ class VideoPlayState extends State<VideoPlayPage> {
   }
 
   void initVideoData() async {
+    // 记录观看记录
+    CommonUtil.recordVideoPlayHistory(widget.course.id, widget.cVideos[widget.index].id);
+
+    // 更新分集列表中的视频状态(样式)
+    int delayedSecond = 0;
+    // 没有 mounted 挂载则延迟 1 s之后再进行父子组件通信
+    if (courseVideosWidgetKey.currentState == null) {
+      delayedSecond = 1;
+    }
+    Future.delayed(Duration(seconds: delayedSecond), (){
+      courseVideosWidgetKey.currentState?.updateState(currentVideoId:widget.cVideos[widget.index].id);
+    });
+
+    // 设置播放器播放源
     await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true, showCover: true);
   }
 
@@ -60,7 +76,7 @@ class VideoPlayState extends State<VideoPlayPage> {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex,),
+            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex, key: courseVideosWidgetKey,),
           ),
         ],
       ),
@@ -82,5 +98,4 @@ class VideoPlayState extends State<VideoPlayPage> {
     player?.release();
     super.dispose();
   }
-
 }

@@ -39,6 +39,9 @@ class CourseIntroduceWidget extends StatefulWidget {
 // State 构造函数传参的话，只会执行一次，所以不使用 State 传参
 // 改用 widget.xxx 参数，widget 的构造器会重复执行
 class _CourseIntroduceState extends State<CourseIntroduceWidget> {
+
+  GlobalKey<CourseVideosWidgetState> courseVideosWidgetState = new GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -148,7 +151,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(widget.course.courseLabel),
           // 分集视频
-          Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay),
+          Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay, key: courseVideosWidgetState,),
           ),
         ],
       ),
@@ -202,12 +205,12 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   }
 
   //播放视频
-  goToVideoPlay(index) {
+  goToVideoPlay(index) async {
     routerParamMap["videoplay_courseKey"] = widget.course;
     routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
-    NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
+    await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
+    courseVideosWidgetState.currentState.updateState();
   }
-
 
 }
 

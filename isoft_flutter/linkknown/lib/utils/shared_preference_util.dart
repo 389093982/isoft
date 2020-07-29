@@ -4,7 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceUtil {
 
+  // 课程搜索历史
   static final String COURSE_SEARCH_HISTORY = "COURSE_SEARCH_HISTORY";
+  // 当前正在播放的课程信息
+  static final String COURSE_HISTORY_PLAYING = "COURSE_HISTORY_PLAYING";
+  // 已经播放过的课程信息
+  static final String COURSE_HISTORY_PLAYED = "COURSE_HISTORY_PLAYED";
 
   // 异步保存
   static Future save(String key, String value) async {
