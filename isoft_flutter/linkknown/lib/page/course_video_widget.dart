@@ -25,6 +25,8 @@ class CourseVideosWidget extends StatefulWidget {
 class CourseVideosWidgetState extends State<CourseVideosWidget> {
   // 是否是列表模式,默认是列表模式
   bool isListPattern = true;
+  // 默认顺序
+  bool order_asc = true;
 
   // 已播放历史
   List<String> playHistories = [];
@@ -72,11 +74,13 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
               SvgPicture.asset("images/ic_play2.svg", width: 25, height: 25, fit: BoxFit.fill, color: Colors.deepOrangeAccent,),
               SizedBox(width: 5,),
               Text("分集视频", style: LinkKnownTextStyle.commonTitle2,),
+              SizedBox(width: 5,),
+              Text("(共${(widget.cVideos??[]).length}集)"),
               // 中间用Expanded控件
               Expanded(
                 child: Text(''),
               ),
-              InkWell(
+              GestureDetector(
                 onTap: (){
                   setState(() {
                     isListPattern = !isListPattern;
@@ -92,8 +96,28 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
                   ),
                 ),
               ),
-              SizedBox(width: 5,),
-              Text("共${(widget.cVideos??[]).length}集"),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    order_asc = !order_asc;
+                  });
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Row(
+                    children: <Widget>[
+                      SvgPicture.asset(
+                        order_asc ? "images/order_asc.svg" : "images/order_desc.svg",
+                        width: ScreenUtil().setWidth(40),
+                        height: ScreenUtil().setHeight(40),
+                        color: Colors.deepOrangeAccent,
+                      ),
+                      SizedBox(width: 5,),
+                      Text( order_asc ? "正序" : "倒序",),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -113,6 +137,7 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
   
   Widget getGridWidget () {
     return GridView.count(
+      reverse: !order_asc,      // 是否反序
       shrinkWrap: true,
       //水平子 Widget 之间间距
       crossAxisSpacing: 10.0,
@@ -146,6 +171,7 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
 
   Widget getListWidget(){
     return ListView.builder(
+        reverse: !order_asc,      // 是否反序
         shrinkWrap: true,
         itemCount: (widget.cVideos ?? []).length,
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
