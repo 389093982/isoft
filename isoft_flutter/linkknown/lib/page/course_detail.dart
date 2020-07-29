@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
@@ -34,8 +33,6 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
 
   @override
   void initState() {
-//    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-
     super.initState();
 
     scrollController.addListener(offsetListener);

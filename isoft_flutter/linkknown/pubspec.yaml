@@ -144,6 +144,8 @@ flutter:
     - images/no_data.png
     - images/video_play.png
     - images/ic_clock.svg
+    - images/order_asc.svg
+    - images/order_desc.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

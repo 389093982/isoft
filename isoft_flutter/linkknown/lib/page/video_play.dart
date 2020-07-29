@@ -3,6 +3,7 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class VideoPlayPage extends StatefulWidget {
@@ -21,16 +22,37 @@ class VideoPlayPage extends StatefulWidget {
 class VideoPlayState extends State<VideoPlayPage> {
 
   FijkPlayer player = FijkPlayer();
+  GlobalKey<CourseVideosWidgetState> courseVideosWidgetKey = new GlobalKey();
 
   @override
   void initState() {
     super.initState();
 
+    player.addListener(() {
+      // 连播模式
+      if (player.value.state == FijkState.completed && widget.index < widget.cVideos.length - 1) {
+        playVideoByIndex(widget.index + 1);
+      }
+    });
     initVideoData();
   }
 
   void initVideoData() async {
-    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
+    // 记录观看记录
+    CommonUtil.recordVideoPlayHistory(widget.course.id, widget.cVideos[widget.index].id);
+
+    // 更新分集列表中的视频状态(样式)
+    int delayedSecond = 0;
+    // 没有 mounted 挂载则延迟 1 s之后再进行父子组件通信
+    if (courseVideosWidgetKey.currentState == null) {
+      delayedSecond = 1;
+    }
+    Future.delayed(Duration(seconds: delayedSecond), (){
+      courseVideosWidgetKey.currentState?.updateState(currentVideoId:widget.cVideos[widget.index].id);
+    });
+
+    // 设置播放器播放源
+    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true, showCover: true);
   }
 
   @override
@@ -46,17 +68,22 @@ class VideoPlayState extends State<VideoPlayPage> {
             fit: FijkFit.cover,
             fsFit: FijkFit.cover,
             player: player,
+            // TODO 封面图设置未生效
+            // FijkView 中的参数 cover 可用于设置封面图。 cover 是 ImageProvider 类型。
+            // 视频加载过程中，封面图显示在 FijkView 中，填充了 FijkView 中计算出的实际视频区域。
+            // 视频开始播放后封面图不再显示。
+            cover: NetworkImage(widget.course.smallImage,),
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: _clickCallBack,),
+            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex, key: courseVideosWidgetKey,),
           ),
         ],
       ),
     );
   }
 
-  _clickCallBack (index) async {
+  playVideoByIndex (index) async {
     widget.index = index;
     // 重置播放器进入 idle 状态，可以再次 setDataSource
     await player.reset();
@@ -71,5 +98,4 @@ class VideoPlayState extends State<VideoPlayPage> {
     player?.release();
     super.dispose();
   }
-
 }
