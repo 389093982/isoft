@@ -1,9 +1,11 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 
 class CourseVideosWidget extends StatefulWidget {
@@ -35,13 +37,12 @@ class _CourseVideosState extends State<CourseVideosWidget> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            border: Border(left: BorderSide(color: Colors.red, width: 3, style: BorderStyle.solid)),
-          ),
+          color: Colors.grey[200],
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Row(
             children: <Widget>[
+              SvgPicture.asset("images/ic_play2.svg", width: 25, height: 25, fit: BoxFit.fill, color: Colors.deepOrangeAccent,),
+              SizedBox(width: 5,),
               Text("分集视频", style: LinkKnownTextStyle.commonTitle2,),
               // 中间用Expanded控件
               Expanded(
@@ -57,12 +58,14 @@ class _CourseVideosState extends State<CourseVideosWidget> {
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: SvgPicture.asset(
                     isListPattern ? "images/icon_list.svg" : "images/icon_grid.svg",
-                    width: ScreenUtil().setWidth(40),
-                    height: ScreenUtil().setHeight(40),
-                    color: Colors.red,
+                    width: ScreenUtil().setWidth(30),
+                    height: ScreenUtil().setHeight(30),
+                    color: Colors.deepOrangeAccent,
                   ),
                 ),
               ),
+              SizedBox(width: 5,),
+              Text("共${(widget.cVideos??[]).length}集"),
             ],
           ),
         ),
@@ -96,7 +99,7 @@ class _CourseVideosState extends State<CourseVideosWidget> {
       physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
       //子Widget列表
       children: (widget.cVideos??[]).asMap().keys.map((index) {
-        return InkWell(
+        return GestureDetector(
           onTap: () {
             widget.clickCallBack(index);
           },
@@ -123,20 +126,25 @@ class _CourseVideosState extends State<CourseVideosWidget> {
             onTap: () {
               widget.clickCallBack(index);
             },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[300])),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: Row(
-                children: <Widget>[
-                  Text("${index+1}"),
-                  Container(
-                    width: 20,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Text("${index+1}"),
+                      Container(
+                        width: 20,
+                      ),
+                      Text(StringUtil.getFileName(widget.cVideos[index].videoName)),
+                      Expanded(child: Text(""),),
+                      SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: Colors.grey[600],),
+                      Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: Colors.grey[600], fontSize: 12),),
+                    ],
                   ),
-                  Text(StringUtil.getFileName(widget.cVideos[index].videoName)),
-                ],
-              ),
+                ),
+                Divider(height: 2, color: Colors.grey[400],),
+              ],
             ),
           );
         });

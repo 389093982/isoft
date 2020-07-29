@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class LinkKnownTextStyle {
 
-  static const TextStyle commonTitle = TextStyle(fontSize: 20);
+  static const TextStyle commonTitle = TextStyle(fontSize: 18);
 
-  static const TextStyle commonTitle2 = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  static const TextStyle commonTitle2 = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
 
   //自定义普通行高
   static const StrutStyle commonStrutStyle = StrutStyle(forceStrutHeight: true, height: 1.5);

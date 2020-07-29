@@ -40,15 +40,12 @@ class _MinePageState extends State<MinePage>
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              MineHeaderWidget(),
-              MineCenterWidget(),
-              MineFooterWidget(),
-            ],
-          ),
+          MineHeaderWidget(),
+          MineCenterWidget(),
+          MineFooterWidget(),
         ],
       ),
     );
