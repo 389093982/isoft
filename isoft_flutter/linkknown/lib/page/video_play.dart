@@ -26,11 +26,17 @@ class VideoPlayState extends State<VideoPlayPage> {
   void initState() {
     super.initState();
 
+    player.addListener(() {
+      // 连播模式
+      if (player.value.state == FijkState.completed && widget.index < widget.cVideos.length - 1) {
+        playVideoByIndex(widget.index + 1);
+      }
+    });
     initVideoData();
   }
 
   void initVideoData() async {
-    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
+    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true, showCover: true);
   }
 
   @override
@@ -46,17 +52,22 @@ class VideoPlayState extends State<VideoPlayPage> {
             fit: FijkFit.cover,
             fsFit: FijkFit.cover,
             player: player,
+            // TODO 封面图设置未生效
+            // FijkView 中的参数 cover 可用于设置封面图。 cover 是 ImageProvider 类型。
+            // 视频加载过程中，封面图显示在 FijkView 中，填充了 FijkView 中计算出的实际视频区域。
+            // 视频开始播放后封面图不再显示。
+            cover: NetworkImage(widget.course.smallImage,),
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: _clickCallBack,),
+            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex,),
           ),
         ],
       ),
     );
   }
 
-  _clickCallBack (index) async {
+  playVideoByIndex (index) async {
     widget.index = index;
     // 重置播放器进入 idle 状态，可以再次 setDataSource
     await player.reset();
