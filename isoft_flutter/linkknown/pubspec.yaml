@@ -100,6 +100,7 @@ flutter:
     - images/ic_link.png
     - images/ic_operate_bg.png
     - images/ic_play.svg
+    - images/ic_play2.svg
     - images/ic_share.svg
     - images/ic_praise.svg
     - images/ic_collect.svg
@@ -142,6 +143,7 @@ flutter:
     - images/shoppingCart_green.png
     - images/no_data.png
     - images/video_play.png
+    - images/ic_clock.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

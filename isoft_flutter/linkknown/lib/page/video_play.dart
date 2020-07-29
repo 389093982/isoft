@@ -30,11 +30,6 @@ class VideoPlayState extends State<VideoPlayPage> {
   }
 
   void initVideoData() {
-    if (player != null) {
-      player.release();
-      player.dispose();
-    }
-
     player = FijkPlayer();
     player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
   }

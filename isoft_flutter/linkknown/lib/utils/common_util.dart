@@ -1,5 +1,6 @@
 
 import 'package:linkknown/utils/shared_preference_util.dart';
+import 'package:sprintf/sprintf.dart';
 
 class CommonUtil {
 
@@ -23,6 +24,16 @@ class CommonUtil {
 
   static clearHistory () async {
     await SharedPreferenceUtil.remove(SharedPreferenceUtil.COURSE_SEARCH_HISTORY);
+  }
+
+  // 格式化视频时长 秒转分秒
+  static String formateDuration(int duration) {
+    if (duration <= 0){
+      return "00:00";
+    }
+    int second = duration % 60;
+    int minute = (duration / 60).toInt();
+    return sprintf("%2d:%2d", [minute, second]);
   }
 
 }
