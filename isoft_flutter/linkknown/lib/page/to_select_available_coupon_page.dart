@@ -9,6 +9,7 @@ import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/search_coupon_for_pay_response.dart';
+import 'package:linkknown/provider/select_available_coupon_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
@@ -20,6 +21,7 @@ import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/goods_item.dart';
+import 'package:provider/provider.dart';
 
 class ToSelectAvailableCouponPage extends StatefulWidget {
   String userName;
@@ -90,7 +92,13 @@ class _ToSelectAvailableCouponPageState extends State<ToSelectAvailableCouponPag
         itemCount: availableCoupons.length,
         controller: scrollController,
         itemBuilder: (BuildContext context, int index) {
-          return AvailableCouponsItemWidget(availableCoupons[index]);
+          return AvailableCouponsItemWidget(
+            availableCoupons[index],
+            changed: (couponId){
+              NavigatorUtil.goBack(context);
+              Provider.of<SelectAvailableCouponNotifer>(context).update(true,couponId);
+            },
+          );
         }
       )
     );

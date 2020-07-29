@@ -15,8 +15,10 @@ import 'package:linkknown/widgets/common_label.dart';
 
 class AvailableCouponsItemWidget extends StatefulWidget {
   Coupon coupon;
+  ValueChanged changed;
 
-  AvailableCouponsItemWidget(this.coupon);
+
+  AvailableCouponsItemWidget(this.coupon, {this.changed});
 
   @override
   _AvailableCouponsItemState createState() => _AvailableCouponsItemState();
@@ -30,86 +32,91 @@ class _AvailableCouponsItemState extends State<AvailableCouponsItemWidget>
   Widget build(BuildContext context) {
     bool isGeneralCoupon = widget.coupon.couponType == "general";
     bool isDisCount = widget.coupon.youhuiType == "discount";
-    return Container(
-      margin: EdgeInsets.all(5),
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-              child: Padding(
-            padding: EdgeInsets.all(15),
-            child: Column(
+    return InkWell(
+      onTap: (){
+        widget.changed(widget.coupon.couponId);
+      },
+      child: Container(
+        margin: EdgeInsets.all(5),
+        color: Colors.white,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            isDisCount ? (double.parse(widget.coupon.discountRate) * 10).toStringAsFixed(1) + "折" : Constants.RMB + widget.coupon.couponAmount,
+                            style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
+                            strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                          ),
+                          Text(
+                              isDisCount ? "" : "  满 ${widget.coupon.goodsMinAmount} 元减 ${widget.coupon.couponAmount} 元",
+                              style: TextStyle(color: Colors.grey[600],fontSize: 12),
+                              strutStyle: LinkKnownTextStyle.couponStrutStyle),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(isGeneralCoupon ? "通用券" : "指定券",
+                              style: TextStyle(color: Colors.grey[600],fontSize: 13),
+                              strutStyle: LinkKnownTextStyle.couponStrutStyle
+                          ),
+                          Text(" 适用于",
+                            style: TextStyle(color: Colors.grey[600],fontSize: 13),
+                            strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                          ),
+                          Text(
+                            isGeneralCoupon ? "所有付费课程" : "${widget.coupon.targetName}",
+                            style: TextStyle(color: isGeneralCoupon ? Colors.red : Colors.blueAccent[700],fontSize: 13),
+                            strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "活动日期:  ${widget.coupon.startDate} - ${widget.coupon.endDate}",
+                            style: TextStyle(color: Colors.grey[600],fontSize: 13),
+                            strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+            Stack(
+              alignment: Alignment.center,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      isDisCount ? (double.parse(widget.coupon.discountRate) * 10).toStringAsFixed(1) + "折" : Constants.RMB + widget.coupon.couponAmount,
-                      style: TextStyle(color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
-                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
-                    ),
-                    Text(
-                        isDisCount ? "" : "  满 ${widget.coupon.goodsMinAmount} 元减 ${widget.coupon.couponAmount} 元",
-                        style: TextStyle(color: Colors.grey[600],fontSize: 12),
-                        strutStyle: LinkKnownTextStyle.couponStrutStyle),
-                  ],
+                Image.asset(
+                  getCouponBgPicture(widget.coupon),
+                  width: 72,
+                  height: 130,
                 ),
-                Row(
+                Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(isGeneralCoupon ? "通用券" : "指定券",
-                        style: TextStyle(color: Colors.grey[600],fontSize: 13),
-                        strutStyle: LinkKnownTextStyle.couponStrutStyle
-                    ),
-                    Text(" 适用于",
-                      style: TextStyle(color: Colors.grey[600],fontSize: 13),
-                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                    Text(
+                      getFirstCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
                     ),
                     Text(
-                      isGeneralCoupon ? "所有付费课程" : "${widget.coupon.targetName}",
-                      style: TextStyle(color: isGeneralCoupon ? Colors.red : Colors.blueAccent[700],fontSize: 13),
-                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
+                      getSecondCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      getThirdCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
                     )
                   ],
                 ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "活动日期:  ${widget.coupon.startDate} - ${widget.coupon.endDate}",
-                      style: TextStyle(color: Colors.grey[600],fontSize: 13),
-                      strutStyle: LinkKnownTextStyle.couponStrutStyle,
-                    )
-                  ],
-                )
               ],
             ),
-          )),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Image.asset(
-                getCouponBgPicture(widget.coupon),
-                width: 72,
-                height: 130,
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    getFirstCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getSecondCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getThirdCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

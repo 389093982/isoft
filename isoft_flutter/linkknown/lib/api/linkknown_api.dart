@@ -22,6 +22,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_coupon_by_id_response.dart';
 import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
@@ -233,6 +234,18 @@ class LinkKnownApi {
         });
     return QueryCouponCenterListResponse.fromJson(response.data);
   }
+
+
+  // 根据couponId查询优惠券
+  static Future<QueryCouponByIdResponse> queryCouponById(String coupon_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryCouponById',
+        params: {
+          'coupon_id': coupon_id,
+        });
+    return QueryCouponByIdResponse.fromJson(response.data);
+  }
+
 
   //领券
   static Future<BaseResponse> receiveCoupon(String activity_id) async {

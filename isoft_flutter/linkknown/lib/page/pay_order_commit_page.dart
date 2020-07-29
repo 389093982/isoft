@@ -8,7 +8,9 @@ import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_coupon_by_id_response.dart';
 import 'package:linkknown/model/search_coupon_for_pay_response.dart';
+import 'package:linkknown/provider/select_available_coupon_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
@@ -18,6 +20,7 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/goods_item.dart';
+import 'package:provider/provider.dart';
 
 class PayOrderCommitPage extends StatefulWidget {
   String goodsType;
@@ -35,6 +38,7 @@ class PayOrderCommitPage extends StatefulWidget {
 class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
 
   List<Coupon> couponsForPay = new List();
+  SelectedCoupon selectedCoupon = new SelectedCoupon();
 
   @override
   void initState() {
@@ -66,6 +70,21 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
     }).catchError((err) {
       //UIUtils.showToast("查询可用优惠券失败..");
     });
+  }
+
+
+  //查询已选择的优惠券
+  queryCouponById(String couponId){
+    LinkKnownApi.queryCouponById(couponId).then((QueryCouponByIdResponse) async {
+      if (QueryCouponByIdResponse?.status == "SUCCESS") {
+        selectedCoupon = QueryCouponByIdResponse.coupon;
+        setState(() {
+          //刷新
+        });
+      } else {
+        UIUtils.showToast(QueryCouponByIdResponse.errorMsg);
+      }
+    }).catchError((err) {});
   }
 
 
@@ -132,21 +151,37 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
               ],
             ),
             SizedBox(height: 20,),
-            Row(
-              children: <Widget>[
-                Container(child: Text("优惠券:"),),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: (){
-                        toSelectAvailableCouponPage();
-                      },
-                      child: Text(couponsForPay.length==0?"无可用":"有优惠券可以使用",style: TextStyle(fontSize: 14),),
+            GestureDetector(
+              onTap: (){
+                toSelectAvailableCouponPage();
+              },
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Text("优惠券:"),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topRight,
+                      child: Consumer(
+                        builder: (BuildContext context, SelectAvailableCouponNotifer selectAvailableCouponNotifer, Widget child) {
+                          if(selectAvailableCouponNotifer.hasChanged){
+                            queryCouponById(selectAvailableCouponNotifer.couponId);
+                            selectAvailableCouponNotifer.hasChanged = false;
+                          }
+                          return this.selectedCoupon.couponId==null?
+                          Text(couponsForPay.length==0?"无可用":"有优惠券可以使用",style: TextStyle(fontSize: 14),)
+                          :
+                          Text(
+                            selectedCoupon.youhuiType=="discount"?(double.parse(selectedCoupon.discountRate) * 10).toStringAsFixed(1)+"折" : "- "+Constants.RMB+selectedCoupon.couponAmount,
+                            style: TextStyle(color: Colors.red,fontSize: 18),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SizedBox(height: 20,),
             Divider(color: Colors.black45, height: 2,),
@@ -157,7 +192,16 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.topRight,
-                    child: Text(Constants.RMB+widget.price,style: TextStyle(fontSize: 20,color: Colors.red),),
+                    child: selectedCoupon.couponId!=null?Text(
+                      Constants.RMB+
+                          (this.selectedCoupon.youhuiType=="discount"?
+                          (double.parse(widget.price) * double.parse(selectedCoupon.discountRate)).toStringAsFixed(2)
+                            :
+                          (double.parse(widget.price) - double.parse(selectedCoupon.couponAmount)).toStringAsFixed(2)),
+                      style: TextStyle(fontSize: 20,color: Colors.red),
+                    )
+                    :
+                    Text(widget.price,style: TextStyle(fontSize: 20,color: Colors.red)),
                   ),
                 ),
               ],
