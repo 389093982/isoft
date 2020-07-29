@@ -9,8 +9,11 @@ import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/search_coupon_for_pay_response.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
@@ -71,7 +74,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Text("支付中心"),
+          title: Text("提交订单"),
         ),
         preferredSize: Size.fromHeight(60.0),
       ),
@@ -135,7 +138,12 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.topRight,
-                    child: Text(couponsForPay.length==0?"无可用":"有优惠券可以使用",style: TextStyle(fontSize: 14),),
+                    child: GestureDetector(
+                      onTap: (){
+                        toSelectAvailableCouponPage();
+                      },
+                      child: Text(couponsForPay.length==0?"无可用":"有优惠券可以使用",style: TextStyle(fontSize: 14),),
+                    ),
                   ),
                 ),
               ],
@@ -171,4 +179,27 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
       ),
     );
   }
+
+
+  //选择可用优惠券
+  toSelectAvailableCouponPage() async {
+    String userName = await LoginUtil.getLoginUserName();
+    String target_type = "course";
+    String target_id = widget.goodsId;
+    String paid_amount = widget.price;
+    String today = DateUtil.getToday_YYYYMMDD();
+    if(widget.goodsType=="course_theme_type"){
+      NavigatorUtil.goRouterPage(context,
+          "${Routes.toSelectAvailableCoupon}?userName=${userName}"
+              + "&target_type=${target_type}"
+              + "&target_id=${target_id}"
+              + "&paid_amount=${paid_amount}"
+              + "&today=${today}"
+      );
+    }else{
+      UIUtils.showToast("非课程,待定..");
+    }
+
+  }
+
 }

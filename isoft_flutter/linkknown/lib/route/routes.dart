@@ -44,6 +44,8 @@ class Routes {
   static String payOrder = "/payOrder";
   //订单提交页面
   static String payOrderCommit = "/payOrderCommit";
+  //选择可用优惠券
+  static String toSelectAvailableCoupon = "/toSelectAvailableCoupon";
   //活动中心
   static String huodong = "/huodong";
   //考试
@@ -121,6 +123,8 @@ class Routes {
     router.define(payOrder, handler: payOrderHandler);
     //订单提交页面
     router.define(payOrderCommit, handler: payOrderCommitHandler);
+    //选择可用优惠券
+    router.define(toSelectAvailableCoupon, handler: toSelectAvailableCouponHandler);
     // 活动
     router.define(huodong, handler: huodongHandler);
     // 考试
