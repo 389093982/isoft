@@ -27,6 +27,7 @@ import 'package:linkknown/page/regist_page.dart';
 import 'package:linkknown/page/setting_page.dart';
 import 'package:linkknown/page/shopping_cart_page.dart';
 import 'package:linkknown/page/splash_page.dart';
+import 'package:linkknown/page/to_select_available_coupon_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
@@ -127,6 +128,17 @@ var payOrderCommitHandler = new Handler(
       String goodsDesc = params['goodsDesc'].first??"0";
       String price = params['price'].first??"0";
       return PayOrderCommitPage(goodsType,goodsId,FluroConvertUtil.fluroCnParamsDecode(goodsImg),FluroConvertUtil.fluroCnParamsDecode(goodsDesc),price);
+    });
+
+//选择可用优惠券
+var toSelectAvailableCouponHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      String userName = params['userName'].first??"0";
+      String target_type = params['target_type'].first??"0";
+      String target_id = params['target_id'].first??"0";
+      String paid_amount = params['paid_amount'].first??"0";
+      String today = params['today'].first??"0";
+      return ToSelectAvailableCouponPage(userName,target_type,target_id,paid_amount,today);
     });
 
 //活动
