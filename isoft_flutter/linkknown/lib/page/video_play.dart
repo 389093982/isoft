@@ -20,7 +20,7 @@ class VideoPlayPage extends StatefulWidget {
 
 class VideoPlayState extends State<VideoPlayPage> {
 
-  FijkPlayer player;
+  FijkPlayer player = FijkPlayer();
 
   @override
   void initState() {
@@ -29,9 +29,8 @@ class VideoPlayState extends State<VideoPlayPage> {
     initVideoData();
   }
 
-  void initVideoData() {
-    player = FijkPlayer();
-    player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
+  void initVideoData() async {
+    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true);
   }
 
   @override
@@ -57,18 +56,20 @@ class VideoPlayState extends State<VideoPlayPage> {
     );
   }
 
-  _clickCallBack (index){
+  _clickCallBack (index) async {
     widget.index = index;
+    // 重置播放器进入 idle 状态，可以再次 setDataSource
+    await player.reset();
+    await initVideoData();
+    setState(() {
 
-    initVideoData();
-
-    setState(() {});
+    });
   }
 
   @override
   void dispose() {
+    player?.release();
     super.dispose();
-    player.release();
   }
 
 }
