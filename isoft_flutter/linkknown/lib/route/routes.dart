@@ -42,6 +42,8 @@ class Routes {
   static String shoppingCart = "/shoppingCart";
   //订单
   static String payOrder = "/payOrder";
+  //订单提交页面
+  static String payOrderCommit = "/payOrderCommit";
   //活动中心
   static String huodong = "/huodong";
   //考试
@@ -117,6 +119,8 @@ class Routes {
     router.define(shoppingCart, handler: shoppingCartHandler);
     // 订单
     router.define(payOrder, handler: payOrderHandler);
+    //订单提交页面
+    router.define(payOrderCommit, handler: payOrderCommitHandler);
     // 活动
     router.define(huodong, handler: huodongHandler);
     // 考试

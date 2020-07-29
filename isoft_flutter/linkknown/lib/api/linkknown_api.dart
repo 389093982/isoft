@@ -26,6 +26,7 @@ import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/refresh_token_response.dart';
+import 'package:linkknown/model/search_coupon_for_pay_response.dart';
 import 'package:linkknown/model/second_level_comment_response.dart';
 import 'package:linkknown/model/user_favorite_list_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
@@ -256,6 +257,23 @@ class LinkKnownApi {
         });
     return MyCouponResponse.fromJson(response.data);
   }
+
+
+  // 查询可用优惠券
+  static Future<SearchCouponForPayResponse> SearchCouponForPay(String userName, String target_type, String target_id, String paid_amount, String today) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/SearchCouponForPay',
+        params: {
+          'userName': userName,
+          'target_type': target_type,
+          'target_id': target_id,
+          'paid_amount': paid_amount,
+          'today': today,
+        });
+    return SearchCouponForPayResponse.fromJson(response.data);
+  }
+
+
 
   // 查询消息
   static Future<MessageListResponse> queryPageMessageList(int current_page, int offset) async {
