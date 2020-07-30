@@ -49,7 +49,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.course==null?Text("加载中.."):Container(
+    return widget.course==null?Text(""):Container(
       padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件

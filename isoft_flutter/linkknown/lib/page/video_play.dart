@@ -95,6 +95,9 @@ class VideoPlayState extends State<VideoPlayPage> {
 
   @override
   void dispose() {
+    //录观看记录
+    CommonUtil.recordVideoPlayHistory(widget.course.id, widget.cVideos[widget.index].id, progress: player.currentPos.inSeconds);
+
     player?.release();
     super.dispose();
   }

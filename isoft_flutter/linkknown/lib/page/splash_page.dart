@@ -61,7 +61,9 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   void goPage() async {
-      NavigatorUtil.goMainPage(context);
+    // 销毁当前页面,并跳往主页
+    Navigator.pop(context);
+    NavigatorUtil.goMainPage(context);
   }
 
   @override

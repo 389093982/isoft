@@ -38,8 +38,8 @@ class CommonUtil {
   }
 
   // 记录课程播放记录
-  static void recordVideoPlayHistory(int courseId, int videoId) async {
-    CourseVideoCurrentPlaying playing = CourseVideoCurrentPlaying(courseId: courseId, videoId: videoId);
+  static void recordVideoPlayHistory(int courseId, int videoId, {int progress}) async {
+    CourseVideoCurrentPlaying playing = CourseVideoCurrentPlaying(courseId: courseId, videoId: videoId, progress: progress);
     await SharedPreferenceUtil.save(SharedPreferenceUtil.COURSE_HISTORY_PLAYING, jsonEncode(playing.toJson()));
     // 根据 id 获取观看记录
     List<String> videoIds = await SharedPreferenceUtil.getList(SharedPreferenceUtil.COURSE_HISTORY_PLAYED + "${courseId}");
@@ -68,20 +68,24 @@ class CommonUtil {
 class CourseVideoCurrentPlaying {
   int courseId;
   int videoId;
+  int progress;     // 播放进度,单位秒,用于下次继续播放
 
   CourseVideoCurrentPlaying(
       {this.courseId,
-        this.videoId});
+        this.videoId,
+        this.progress});
 
   CourseVideoCurrentPlaying.fromJson(Map<String, dynamic> json) {
     courseId = json['courseId'];
     videoId = json['videoId'];
+    progress = json['progress'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['courseId'] = this.courseId;
     data['videoId'] = this.videoId;
+    data['progress'] = this.progress;
     return data;
   }
 }
