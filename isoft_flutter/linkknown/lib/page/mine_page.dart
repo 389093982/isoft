@@ -255,7 +255,7 @@ class _MineHeaderState extends State<MineHeaderWidget>
   void dispose() {
     subscription?.cancel();
     // 释放铃铛旋转动画
-    rotationAnimationController.dispose();
+    rotationAnimationController?.dispose();
     super.dispose();
   }
 }
