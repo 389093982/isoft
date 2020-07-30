@@ -20,6 +20,7 @@ import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/goods_item.dart';
+import 'package:provider/provider.dart';
 
 class ToSelectAvailableCouponPage extends StatefulWidget {
   String userName;
@@ -90,7 +91,12 @@ class _ToSelectAvailableCouponPageState extends State<ToSelectAvailableCouponPag
         itemCount: availableCoupons.length,
         controller: scrollController,
         itemBuilder: (BuildContext context, int index) {
-          return AvailableCouponsItemWidget(availableCoupons[index]);
+          return AvailableCouponsItemWidget(
+            availableCoupons[index],
+            changed: (couponId){
+              NavigatorUtil.goBack(context,map:{"couponId":couponId});
+            },
+          );
         }
       )
     );

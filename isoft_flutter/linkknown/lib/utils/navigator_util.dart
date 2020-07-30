@@ -6,7 +6,7 @@ import '../application.dart';
 
 class NavigatorUtil {
   // 静态私有方法,无返回值
-  static _navigateTo(BuildContext context, String path,
+  static Future<dynamic> _navigateTo(BuildContext context, String path,
       // 默认值参数
       {Duration transitionDuration = const Duration(milliseconds: 250),
       RouteTransitionsBuilder transitionBuilder}) async {
@@ -17,8 +17,8 @@ class NavigatorUtil {
   }
 
   // 返回
-  static void goBack(BuildContext context) {
-    Navigator.pop(context);
+  static void goBack(BuildContext context, {Map<String,dynamic> map}) {
+    Navigator.pop(context, map);
   }
 
   /// 登录页
@@ -37,7 +37,7 @@ class NavigatorUtil {
   }
 
   // 动态跳往页面
-  static void goRouterPage(BuildContext context, String router) async {
-    return _navigateTo(context, router);
+  static Future<dynamic> goRouterPage(BuildContext context, String router) async {
+    return await _navigateTo(context, router);
   }
 }
