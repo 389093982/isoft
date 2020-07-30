@@ -39,11 +39,27 @@ class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
 
   TabController tabController;
 
+  // 抖动动画
+  AnimationController rotationAnimationController;
+  Animation rotationAnimation;
+
   @override
   void initState() {
     super.initState();
     this.tabController =
         new TabController(length: viewModels.length, vsync: this);
+
+    rotationAnimationController =
+        AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    rotationAnimation =
+        Tween(begin: -0.05, end: 0.05).animate(rotationAnimationController);
+    rotationAnimationController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    rotationAnimationController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,7 +84,10 @@ class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endFloat, 0, - 20),
       floatingActionButton: FloatingActionButton.extended(
-        icon: SvgPicture.asset("images/ic_coupon.svg", width: 30, height: 30, color: Colors.white,),
+        icon: RotationTransition(
+          turns: rotationAnimation,
+          child: SvgPicture.asset("images/ic_coupon.svg", width: 20, height: 20, color: Colors.white,),
+        ),
         backgroundColor: Colors.orange,
         label: Text("领券中心"),
         onPressed: () {
@@ -77,6 +96,7 @@ class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
       ),
     );
   }
+
 }
 
 class CustomFloatingActionButtonLocation extends FloatingActionButtonLocation {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/page/classify_page.dart';
 import 'package:linkknown/page/find_page.dart';
 import 'package:linkknown/page/mine_page.dart';
+import 'package:linkknown/widgets/exit_app.dart';
 
 import 'home_page.dart';
 
@@ -15,12 +16,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new BottomNavigationWidget();
   }
-
 }
 
-
 class BottomNavigationWidget extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return new BottomNavigationWidgetState();
@@ -40,7 +38,11 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       ..add(FindPage())
       ..add(MinePage());
 
-    _controller = PageController(initialPage: 0, viewportFraction: 1, keepPage: true,);
+    _controller = PageController(
+      initialPage: 0,
+      viewportFraction: 1,
+      keepPage: true,
+    );
   }
 
   @override
@@ -56,7 +58,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
      */
     return new Scaffold(
       bottomNavigationBar: _buildBottomNavigationBarWidget(),
-      body: _buildBodyWidget(),
+      body: DoubleTapBackExitApp(child: _buildBodyWidget()),
     );
   }
 
@@ -67,7 +69,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       items: [
         BottomNavigationBarItem(
             icon: Icon(
-                Icons.home,
+              Icons.home,
             ),
             title: new Text(
               '首页',
@@ -111,17 +113,15 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return PageView.builder(
         controller: _controller,
         itemCount: pages.length,
-        physics:BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         pageSnapping: true,
-        onPageChanged: (index){
+        onPageChanged: (index) {
           setState(() {
-            _currentIndex=index;
+            _currentIndex = index;
           });
         },
-        itemBuilder: (BuildContext context,int index){
+        itemBuilder: (BuildContext context, int index) {
           return pages[index];
-        }
-    );
+        });
   }
-
 }

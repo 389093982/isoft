@@ -92,6 +92,7 @@ class _MessageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: new Text('我的消息'),
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -135,12 +136,18 @@ class _MessageState extends State<MessagePage> {
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int position) {
                   return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border:
-                          Border(bottom: BorderSide(color: Colors.grey[300])),
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0x80DCE7FA),
+                              offset: const Offset(0.0, 2.0),
+                              blurRadius: 8.0,
+                              spreadRadius: 0.0),
+                        ]),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -157,24 +164,32 @@ class _MessageState extends State<MessagePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                    style: DefaultTextStyle.of(context).style,
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                          text: '链知课堂：',
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontSize: 16)),
-                                      TextSpan(
-                                          text: '推送消息',
-                                          style: TextStyle(fontSize: 16)),
-                                    ]),
-                              ),
-                              Text(
-                                DateUtil.format2StandardTime(
-                                    messageList[position].lastUpdatedTime),
-                                style: TextStyle(color: Colors.black54),
+                              Row(
+                                children: <Widget>[
+                                  RichText(
+                                    text: TextSpan(
+                                        style:
+                                            DefaultTextStyle.of(context).style,
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                              text: '链知课堂：',
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 16)),
+                                          TextSpan(
+                                              text: '推送消息',
+                                              style: TextStyle(fontSize: 16)),
+                                        ]),
+                                  ),
+                                  Expanded(
+                                    child: Text(""),
+                                  ),
+                                  Text(
+                                    DateUtil.format2StandardTime(
+                                        messageList[position].lastUpdatedTime),
+                                    style: TextStyle(color: Colors.black54),
+                                  ),
+                                ],
                               ),
                               SizedBox(
                                 height: 5,
