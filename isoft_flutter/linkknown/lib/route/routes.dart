@@ -42,6 +42,8 @@ class Routes {
   static String shoppingCart = "/shoppingCart";
   //订单
   static String payOrder = "/payOrder";
+  //订单详情
+  static String orderDetail = "/orderDetail";
   //订单提交页面
   static String payOrderCommit = "/payOrderCommit";
   //选择可用优惠券
@@ -121,6 +123,8 @@ class Routes {
     router.define(shoppingCart, handler: shoppingCartHandler);
     // 订单
     router.define(payOrder, handler: payOrderHandler);
+    // 订单详情
+    router.define(orderDetail, handler: orderDetailHandler);
     //订单提交页面
     router.define(payOrderCommit, handler: payOrderCommitHandler);
     //选择可用优惠券

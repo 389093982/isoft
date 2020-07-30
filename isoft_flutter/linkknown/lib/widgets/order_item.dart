@@ -3,13 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
+import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
@@ -19,8 +23,9 @@ import 'button_label.dart';
 
 class OrderItemWidget extends StatefulWidget {
   Order order;
+  VoidCallback callback;
 
-  OrderItemWidget(this.order);
+  OrderItemWidget(this.order,{this.callback});
 
   @override
   _OrderItemState createState() => _OrderItemState();
@@ -84,7 +89,12 @@ class _OrderItemState extends State<OrderItemWidget>
                     Row(children: <Widget>[
                       Offstage(
                         offstage: !(""==widget.order.payResult),
-                        child: ButtonLabel("前去支付"),
+                        child: GestureDetector(
+                          onTap: (){
+                            toPay();
+                          },
+                          child: ButtonLabel("前去支付"),
+                        ),
                       ),
                       Offstage(
                         offstage: !(""==widget.order.payResult),
@@ -92,11 +102,21 @@ class _OrderItemState extends State<OrderItemWidget>
                       ),
                       Offstage(
                         offstage: !(""==widget.order.payResult),
-                        child: ButtonLabel("取消订单"),
+                        child: GestureDetector(
+                          onTap: (){
+                            toCancelOrder();
+                          },
+                          child: ButtonLabel("取消订单"),
+                        ),
                       ),
                       Offstage(
                         offstage: !("SUCCESS"==widget.order.payResult || "FAIL"==widget.order.payResult),
-                        child: ButtonLabel("订单详情"),
+                        child: GestureDetector(
+                          onTap: (){
+                            toOrderDetail();
+                          },
+                          child: ButtonLabel("订单详情"),
+                        ),
                       ),
                     ],)
                   ],
@@ -145,5 +165,41 @@ class _OrderItemState extends State<OrderItemWidget>
     }
 
   }
+
+  //前往支付页面
+  toPay(){
+    String _smallImage = FluroConvertUtil.fluroCnParamsEncode(widget.order.goodsImg);
+    String _courseName = FluroConvertUtil.fluroCnParamsEncode(widget.order.goodsDesc);
+    NavigatorUtil.goRouterPage(context,
+        "${Routes.payOrderCommit}?goodsType=course_theme_type"
+            + "&goodsId=${widget.order.goodsId}"
+            + "&goodsImg=${_smallImage}"
+            + "&goodsDesc=${_courseName}"
+            + "&price=${widget.order.goodsOriginalPrice}"
+    );
+  }
+
+
+  //取消订单
+  toCancelOrder(){
+    LinkKnownApi.OrderCancelledById(widget.order.orderId).then((BaseResponse) {
+      if(BaseResponse.status=="SUCCESS"){
+        UIUtils.showToast("取消成功");
+        widget.callback();
+      }else{
+        UIUtils.showToast("取消失败");
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
+
+  //订单详情
+  toOrderDetail(){
+    String _orderId = FluroConvertUtil.fluroCnParamsEncode(widget.order.orderId);
+    NavigatorUtil.goRouterPage(context, "${Routes.orderDetail}?orderId=${_orderId}");
+  }
+
 
 }

@@ -14,6 +14,7 @@ import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
@@ -49,7 +50,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.course==null?Text("加载中.."):Container(
+    return widget.course==null?Text(""):Container(
       padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
         physics: new NeverScrollableScrollPhysics(), // 解决嵌套滑动问题：禁用滑动事件
@@ -195,7 +196,15 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     String loginUserName = await LoginUtil.getLoginUserName();
     if(StringUtil.checkNotEmpty(loginUserName)){
       if(loginUserName!=widget.course.courseAuthor){
-        UIUtils.showToast("立即购买");
+        String _smallImage = FluroConvertUtil.fluroCnParamsEncode(widget.course.smallImage);
+        String _courseName = FluroConvertUtil.fluroCnParamsEncode(widget.course.courseName);
+        NavigatorUtil.goRouterPage(context,
+            "${Routes.payOrderCommit}?goodsType=course_theme_type"
+                + "&goodsId=${widget.course.id}"
+                + "&goodsImg=${_smallImage}"
+                + "&goodsDesc=${_courseName}"
+                + "&price=${widget.course.price}"
+        );
       }else{
         UIUtils.showToast("您无需购买自己的课程^_^");
       }

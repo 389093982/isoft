@@ -19,6 +19,7 @@ import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/message_page.dart';
 import 'package:linkknown/page/mine_about.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
+import 'package:linkknown/page/order_detail_page.dart';
 import 'package:linkknown/page/pay_order_commit_page.dart';
 import 'package:linkknown/page/pay_order_page.dart';
 import 'package:linkknown/page/personal_center_page.dart';
@@ -117,6 +118,13 @@ var shoppingCartHandler = new Handler(
 var payOrderHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return PayOrderPage();
+    });
+
+//订单详情
+var orderDetailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      String orderId = params['orderId'].first??"0";
+      return OrderDetailPage(FluroConvertUtil.fluroCnParamsDecode(orderId));
     });
 
 //订单提交页面
