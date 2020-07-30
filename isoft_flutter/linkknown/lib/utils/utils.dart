@@ -20,6 +20,21 @@ class UIUtils {
         fontSize: ScreenUtil().setSp(28.0));
   }
 
+  static void showToast3(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: ScreenUtil().setSp(28.0));
+  }
+
+  static void cancelToast() {
+    Fluttertoast.cancel();
+  }
+
   static String replaceMediaUrl (String url) {
     return url.replaceFirst(LinkKnownConfig.config.hostApiBaseUrl, LinkKnownConfig.config.apiBaseUrl);
   }
