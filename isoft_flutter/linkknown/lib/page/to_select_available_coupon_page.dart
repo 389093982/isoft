@@ -9,7 +9,6 @@ import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/search_coupon_for_pay_response.dart';
-import 'package:linkknown/provider/select_available_coupon_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
@@ -95,8 +94,7 @@ class _ToSelectAvailableCouponPageState extends State<ToSelectAvailableCouponPag
           return AvailableCouponsItemWidget(
             availableCoupons[index],
             changed: (couponId){
-              NavigatorUtil.goBack(context);
-              Provider.of<SelectAvailableCouponNotifer>(context).update(true,couponId);
+              NavigatorUtil.goBack(context,map:{"couponId":couponId});
             },
           );
         }

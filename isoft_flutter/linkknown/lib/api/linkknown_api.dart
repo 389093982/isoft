@@ -247,6 +247,41 @@ class LinkKnownApi {
   }
 
 
+  //下单入pay_order
+  static Future<BaseResponse> addPayOrder(String order_id,String user_name,String goods_type,String goods_id,String goods_desc,String paid_amount,
+      String goods_original_price,String activity_type,String activity_type_bind_id,String goods_img,String pay_result,String code_url) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/addPayOrder',
+        params: {
+          'order_id': order_id,
+          'user_name': user_name,
+          'goods_type': goods_type,
+          'goods_id': goods_id,
+          'goods_desc': goods_desc,
+          'paid_amount': paid_amount,
+          'goods_original_price': goods_original_price,
+          'activity_type': activity_type,
+          'activity_type_bind_id': activity_type_bind_id,
+          'goods_img': goods_img,
+          'pay_result': pay_result,
+          'code_url': code_url,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
+  //更新券状态为 used
+  static Future<BaseResponse> UpdateCouponIsUsed(String userName,String coupon_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/UpdateCouponIsUsed',
+        params: {
+          'userName': userName,
+          'coupon_id': coupon_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
+
   //领券
   static Future<BaseResponse> receiveCoupon(String activity_id) async {
     var response = await doPost(
@@ -286,6 +321,21 @@ class LinkKnownApi {
     return SearchCouponForPayResponse.fromJson(response.data);
   }
 
+
+  // 查询商品（课程）是否被购买
+  static Future<PayOrderResponse> queryPayOrderListIsPaid(int currentPage, int pageSize, String goods_type, String goods_id, String user_name, String pay_result) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        params: {
+          'currentPage': currentPage,
+          'offset': pageSize,
+          'goods_type': goods_type,
+          'goods_id': goods_id,
+          'user_name': user_name,
+          'pay_result': pay_result,
+        });
+    return PayOrderResponse.fromJson(response.data);
+  }
 
 
   // 查询消息

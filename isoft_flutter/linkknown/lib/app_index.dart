@@ -6,7 +6,6 @@ import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
-import 'package:linkknown/provider/select_available_coupon_notifer.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -45,9 +44,6 @@ void runAppWithConfig(EnvConfig config) {
       ),
       new ChangeNotifierProvider<SecondLevelCommentRefreshNotifer>(
         create: (_) => SecondLevelCommentRefreshNotifer(),
-      ),
-      new ChangeNotifierProvider<SelectAvailableCouponNotifer>(
-        create: (_) => SelectAvailableCouponNotifer(),
       ),
     ],
     child: new MyApp(),
