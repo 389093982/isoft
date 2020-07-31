@@ -24,6 +24,7 @@
 <script>
   import {ShowCourseHistory} from "../../../api"
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
+  import {getLoginUserName} from "../../../tools/sso";
 
   export default {
     name: "RecentlyViewed",
@@ -40,6 +41,7 @@
       },
       async refreshRecentlyViewed() {
         let params = {
+          'userName':getLoginUserName(),
           'offset':this.page.offset,
           'current_page':this.page.currentPage
         };
