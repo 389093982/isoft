@@ -293,12 +293,17 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
     return this.user != null
         ? Row(
             children: <Widget>[
-              ClipOval(
-                child: Image.network(
-                  UIUtils.replaceMediaUrl(this.user.smallIcon),
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
+              GestureDetector(
+                onTap: (){
+                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${this.user.userName}");
+                },
+                child: ClipOval(
+                  child: Image.network(
+                    UIUtils.replaceMediaUrl(this.user.smallIcon),
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Column(

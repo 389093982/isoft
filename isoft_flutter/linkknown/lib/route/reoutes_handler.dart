@@ -32,6 +32,7 @@ import 'package:linkknown/page/to_select_available_coupon_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 // 临时存储复杂的参数
@@ -183,7 +184,8 @@ var BlogDetailHandler = new Handler(
 // 个人中心页
 var personalCenterHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return PersonalCenterPage();
+      String userName = params['userName'].first??"";
+      return PersonalCenterPage(userName);
     });
 
 // 已购课程页

@@ -351,7 +351,55 @@ class FooterItem {
   FooterItem(this.icon, this.text, this.router);
 }
 
-class MineFooterWidget extends StatelessWidget {
+class MineFooterWidget extends StatefulWidget {
+  @override
+  _MineFooterState createState() => _MineFooterState();
+}
+
+class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateMixin {
+
+  String loginUserName;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(this.loginUserName==null || this.loginUserName==""){
+      queryLoginUserName();
+    }
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(
+        children: <Widget>[
+          getOperateWidget(context,
+              FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
+          getOperateWidget(
+              context,
+              FooterItem("images/ic_personal_center.png", '个人中心', "${Routes.personalCenter}?userName=${loginUserName}")),
+          getOperateWidget(context,
+              FooterItem("images/ic_course.png", '已购课程', Routes.boughtCourse)),
+          getOperateWidget(context,
+              FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
+          getOperateWidget(
+              context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
+          getOperateWidget(context,
+              FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
+        ],
+      ),
+    );
+  }
+
+
   Widget getOperateWidget(BuildContext context, FooterItem item) {
     return Container(
       decoration: BoxDecoration(
@@ -359,7 +407,11 @@ class MineFooterWidget extends StatelessWidget {
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
       child: InkWell(
         onTap: () {
-          NavigatorUtil.goRouterPage(context, item.router);
+          if(this.loginUserName==null || this.loginUserName == ""){
+            UIUtils.showToast("未登录..");
+          }else{
+            NavigatorUtil.goRouterPage(context, item.router);
+          }
         },
         child: ListTile(
           leading: Image.asset(
@@ -380,28 +432,4 @@ class MineFooterWidget extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Column(
-        children: <Widget>[
-          getOperateWidget(context,
-              FooterItem("images/ic_cloud_blog.png", '云博客', Routes.cloudBlog)),
-          getOperateWidget(
-              context,
-              FooterItem("images/ic_personal_center.png", '个人中心',
-                  Routes.personalCenter)),
-          getOperateWidget(context,
-              FooterItem("images/ic_course.png", '已购课程', Routes.boughtCourse)),
-          getOperateWidget(context,
-              FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
-          getOperateWidget(
-              context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
-          getOperateWidget(context,
-              FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
-        ],
-      ),
-    );
-  }
 }

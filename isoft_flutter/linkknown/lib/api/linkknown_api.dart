@@ -513,10 +513,11 @@ class LinkKnownApi {
 
 
   //观看的课程 -- ids集合
-  static Future<CourseHistoryResponse> showCourseHistory(int currentPage,int offset) async {
+  static Future<CourseHistoryResponse> showCourseHistory(String userName, int currentPage,int offset) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/showCourseHistory',
         params: {
+          'userName': userName,
           'current_page': currentPage,
           'offset': offset,
         });
