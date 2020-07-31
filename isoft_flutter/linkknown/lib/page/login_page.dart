@@ -16,7 +16,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
-
   Animation<double> _animation;
   AnimationController _controller;
 
@@ -41,7 +40,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         backgroundColor: Colors.red,
         elevation: 0,
         brightness: Brightness.light,
-        leading: Container( // 绘制返回键
+        leading: Container(
+            // 绘制返回键
             margin: EdgeInsets.all(10), // 设置边距
             child: IconButton(
               icon: Icon(
@@ -53,8 +53,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 NavigatorUtil.goMainPage(context);
 //                Navigator.pop(context); // 关闭当前页面--
               },
-            )
-        ),
+            )),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -75,9 +74,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       ),
     );
   }
-
 }
-
 
 class _LoginWidget extends StatefulWidget {
   @override
@@ -85,7 +82,6 @@ class _LoginWidget extends StatefulWidget {
 }
 
 class __LoginWidgetState extends State<_LoginWidget> {
-
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
   var _userName = "";
@@ -98,7 +94,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
   }
 
   // 异步填充表单(自动填充登录信息)
-  void fillAccountFromMemory () async {
+  void fillAccountFromMemory() async {
     _userName = await LoginUtil.getUserName();
     _password = await LoginUtil.getPasswd();
     // 表单填充新值
@@ -121,7 +117,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
     _passwdController.removeListener(_passwordChange);
   }
 
-  postLogin () {
+  postLogin() {
     if (_userName == null || _userName.isEmpty) {
       UIUtils.showToast('请输入账号');
       return;
@@ -131,37 +127,36 @@ class __LoginWidgetState extends State<_LoginWidget> {
       return;
     }
 
-    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com').catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
-      }).then((value){
-        if(value != null) {
-          if (value.status == "SUCCESS") {
-            LoginUtil.memoryAccount(_userName, _password, value);
+    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com')
+        .then((value) {
+      if (value != null) {
+        if (value.status == "SUCCESS") {
+          LoginUtil.memoryAccount(_userName, _password, value);
 
-            LinkKnownApi.updateTokenString();
+          LinkKnownApi.updateTokenString();
 
-            // 调用事件广播，不用发送(因为发送的不是粘性消息)
-            //eventBus.fire(new LoginSuccessEvent(value));
-            UIUtils.showToast("登录成功！");
-            NavigatorUtil.goBack(context);
+          UIUtils.showToast("登录成功！");
+          NavigatorUtil.goBack(context);
 
-            eventBus.fire(LoginStateChangeEvent());
+          eventBus.fire(LoginStateChangeEvent());
 
-            //查询用户基本信息
-            getUserDetail(_userName);
-          } else {
-            UIUtils.showToast("登录失败！" + value.errorMsg);
-          }
+          //查询用户基本信息
+          getUserDetail(_userName);
+        } else {
+          UIUtils.showToast("登录失败！" + value.errorMsg);
         }
-      });
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
   }
 
   //查询用户基本信息
-  getUserDetail(String userName){
+  getUserDetail(String userName) {
     LinkKnownApi.getUserDetail(userName).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value){
-      if(value != null) {
+    }).then((value) {
+      if (value != null) {
         if (value.status == "SUCCESS") {
           LoginUtil.memoryUserDetail(value);
         }
@@ -182,7 +177,11 @@ class __LoginWidgetState extends State<_LoginWidget> {
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
             // 设置图片
-            child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
+            child: Image.asset(
+              "images/linkknown.jpg",
+              width: 80,
+              height: 80,
+            ),
           ),
           VEmptyView(50),
           TextField(
@@ -223,7 +222,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 10),
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 NavigatorUtil.goRegistPage(context);
               },
               child: Text(
@@ -244,6 +243,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
 class _LoginAnimatedWidget extends AnimatedWidget {
   // 透明度
   final Tween<double> _opacityTween = Tween(begin: 0, end: 1);
+
   // 偏移量
   final Tween<double> _offsetTween = Tween(begin: 40, end: 0);
   final Animation animation;
@@ -264,4 +264,3 @@ class _LoginAnimatedWidget extends AnimatedWidget {
     );
   }
 }
-
