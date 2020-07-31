@@ -26,6 +26,7 @@ import 'package:linkknown/model/query_coupon_by_id_response.dart';
 import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
+import 'package:linkknown/model/query_page_pay_activity_response.dart';
 import 'package:linkknown/model/refresh_token_response.dart';
 import 'package:linkknown/model/search_coupon_for_pay_response.dart';
 import 'package:linkknown/model/second_level_comment_response.dart';
@@ -307,6 +308,21 @@ class LinkKnownApi {
   }
 
 
+  // 查询券对应的活动信息
+  static Future<QueryPagePayActivityResponse> QueryPagePayActivity(String search_start_date,String search_end_date, String search_activity_id, int currentPage, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPagePayActivity',
+        params: {
+          'search_start_date': search_start_date,
+          'search_end_date': search_end_date,
+          'search_activity_id': search_activity_id,
+          'currentPage': currentPage,
+          'offset': offset,
+        });
+    return QueryPagePayActivityResponse.fromJson(response.data);
+  }
+
+
   // 查询可用优惠券
   static Future<SearchCouponForPayResponse> SearchCouponForPay(String userName, String target_type, String target_id, String paid_amount, String today) async {
     var response = await doPost(
@@ -399,6 +415,28 @@ class LinkKnownApi {
     return PayOrderResponse.fromJson(response.data);
   }
 
+
+  // 根据订单号查询订单
+  static Future<PayOrderResponse> queryOrderByOrderId(int currentPage, int offset,String orderId) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        params: {
+          'currentPage': currentPage,
+          'offset': offset,
+          'order_id': orderId,
+        });
+    return PayOrderResponse.fromJson(response.data);
+  }
+
+  // 取消订单
+  static Future<BaseResponse> OrderCancelledById(String order_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/OrderCancelledById',
+        params: {
+          'order_id': order_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
 
 
   // 我的客户

@@ -185,7 +185,12 @@ class _PayOrderState extends State<PayOrderWidget>
                       (BuildContext context, int position) {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                  child: OrderItemWidget(orders[position]),
+                  child: OrderItemWidget(
+                      orders[position],
+                      callback: (){
+                        initData();
+                      },
+                  ),
                 );
               }, childCount: orders.length)),
               SliverToBoxAdapter(
