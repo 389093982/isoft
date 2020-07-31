@@ -10,8 +10,9 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/course_card.dart';
 
 class UserCourseWidget extends StatefulWidget {
+  String userName;
   String searchLable;
-  UserCourseWidget(this.searchLable);
+  UserCourseWidget(this.userName,this.searchLable);
 
   @override
   _UserCourseState createState() => _UserCourseState();
@@ -55,7 +56,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
     isLoading = true;
     page = current_page;
 
-    String userName = await LoginUtil.getUserName();
+    String userName = widget.userName;
 
     //发布的课程
     if("DISPLAY_TYPE_NEW"==widget.searchLable){
@@ -119,7 +120,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
 
     //观看的课程
     }else if("DISPLAY_TYPE_VIEWED"==widget.searchLable){
-      LinkKnownApi.showCourseHistory(current_page, offset).catchError((e) {
+      LinkKnownApi.showCourseHistory(widget.userName,current_page, offset).catchError((e) {
         UIUtils.showToast((e as LinkKnownError).errorMsg);
       }).then((value) {
 

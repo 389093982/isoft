@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_introduce.dart';
 import 'package:linkknown/page/user_course.dart';
@@ -15,7 +16,8 @@ import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'my_customer.dart';
 
 class PersonalCenterPage extends StatefulWidget {
-  PersonalCenterPage();
+  String userName;
+  PersonalCenterPage(this.userName);
 
   @override
   _PersonalCenterPageState createState() => _PersonalCenterPageState();
@@ -31,6 +33,11 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
   String userSignature;
   _PersonalCenterPageState();
 
+  //是否展示关注按钮
+  bool showAttentionButton = false;
+  //是否已关注
+  bool isAttention = false;
+
   int tabCounts = 3;
   TabController tabController;
 
@@ -42,22 +49,72 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
     this.tabController = TabController(length: tabCounts, vsync: this);
 
     initData();
+    QueryIsAttention();
   }
+
 
   void initData() async {
-    headIcon = await LoginUtil.getSmallIcon();
-    nickName = await LoginUtil.getNickName();
-    gender = await LoginUtil.getGender();
-    userPoints = await LoginUtil.getUserPoints();
-    attentionCounts = await LoginUtil.getAttentionCounts();
-    fensiCounts = await LoginUtil.getFensiCounts();
-    userSignature = await LoginUtil.getUserSignature();
-
-    //拿到数据后做个通知，重新执行build
-   setState(() {
-
-   });
+    String userName = await LoginUtil.getLoginUserName();
+    if(userName==widget.userName){
+      headIcon = await LoginUtil.getSmallIcon();
+      nickName = await LoginUtil.getNickName();
+      gender = await LoginUtil.getGender();
+      userPoints = await LoginUtil.getUserPoints();
+      attentionCounts = await LoginUtil.getAttentionCounts();
+      fensiCounts = await LoginUtil.getFensiCounts();
+      userSignature = await LoginUtil.getUserSignature();
+      //拿到数据后做个通知，重新执行build
+      setState(() {});
+    }else{
+      LinkKnownApi.getUserDetail(widget.userName).then((GetUserDetailResponse) {
+        if(GetUserDetailResponse.status=="SUCCESS"){
+          headIcon = GetUserDetailResponse.user.smallIcon;
+          nickName = GetUserDetailResponse.user.nickName;
+          gender = GetUserDetailResponse.user.gender;
+          userPoints = GetUserDetailResponse.user.userPoints.toString();
+          attentionCounts = GetUserDetailResponse.user.attentionCounts.toString();
+          fensiCounts = GetUserDetailResponse.user.fensiCounts.toString();
+          userSignature = GetUserDetailResponse.user.userSignature;
+          //拿到数据后做个通知，重新执行build
+          setState(() {});
+        }
+      }).catchError((e) {});
+    }
   }
+
+
+  //是否显示关注按钮
+  QueryIsAttention() async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName)){
+      //登录人和作者不是同一个人，才能看到按钮
+      if(loginUserName!=widget.userName){
+        LinkKnownApi.QueryIsAttention("user",widget.userName).then((value) {
+          if(value.status=="SUCCESS"){
+            //展示按钮
+            showAttentionButton = true;
+            value.attentionRecords>0 ? isAttention=true : isAttention=false;
+          }
+          setState(() {});
+        }).catchError((e) {
+          UIUtils.showToast((e as LinkKnownError).errorMsg);
+        });
+      }else{
+        //自己，则不展示按钮
+        showAttentionButton = false;
+        setState(() {});
+      }
+    }else{
+      //未登录，可以看到按钮
+      showAttentionButton = true;
+      //可以看到按钮,但是必须是未关注的
+      isAttention = false;
+      setState(() {});
+    }
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +185,20 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                         Positioned(top: 250, left: 40, child: Text("积分: "+(userPoints??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
                         Positioned(top: 270, left: 40, child: Text("关注: "+(attentionCounts??"") + "  粉丝: "+(fensiCounts??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
                         Positioned(top: 290, left: 40, child: Text((userSignature??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
-                        Positioned(top: 230, left: 230, child: AttentionOffButtonLabel("+ 关注"),),
-                        Positioned(top: 260, left: 230, child: AttentionOnButtonLabel("已关注"),),
+                        Positioned(top: 230, left: 250, child: showAttentionButton ?
+                        (isAttention?
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.userName, "off");},
+                          child: AttentionOnButtonLabel("已关注"),
+                        )
+                            :
+                        GestureDetector(
+                          onTap: (){doAttention("user", widget.userName, "on");},
+                          child: AttentionOffButtonLabel("+ 关注"),
+                        )
+                        )
+                            :
+                        Text(""),),
 
                       ],
                     ))
@@ -156,21 +225,50 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
             ];
           },
           body: TabBarView(controller: this.tabController, children: [
-            UserCourseWidget("DISPLAY_TYPE_NEW"),
-            UserCourseWidget("DISPLAY_TYPE_FAVORITE"),
-            UserCourseWidget("DISPLAY_TYPE_VIEWED"),
+            UserCourseWidget(widget.userName,"DISPLAY_TYPE_NEW"),
+            UserCourseWidget(widget.userName,"DISPLAY_TYPE_FAVORITE"),
+            UserCourseWidget(widget.userName,"DISPLAY_TYPE_VIEWED"),
           ]),
         ),
       ),
     );
   }
+
+
+
+  //关注和取消
+  doAttention(String attention_object_type,String attention_object_id,String state) async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(!isLogin){
+      UIUtils.showToast("未登录..");
+      return;
+    }
+    LinkKnownApi.DoAttention(attention_object_type,attention_object_id,state).then((value) {
+      if(value.status=="SUCCESS"){
+        if(state=="on"){
+          UIUtils.showToast("关注成功");
+          isAttention = true;
+        }else if(state=="off"){
+          UIUtils.showToast("取消成功");
+          isAttention = false;
+        }
+        showAttentionButton = true;
+      }else{
+        UIUtils.showToast(value.errorMsg);
+      }
+      setState(() {});
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
+
+
+
 }
 
-// SliverPersistentHeaderDelegate的实现类必须实现其4个方法
-// minExtent：收起状态下组件的高度；
-// maxExtent：展开状态下组件的高度；
-// shouldRebuild：类似于react中的shouldComponentUpdate；
-// build：构建渲染的内容。
+
+
+
 class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar child;
 
