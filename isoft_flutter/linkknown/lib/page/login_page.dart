@@ -8,7 +8,6 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -86,6 +85,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
   final TextEditingController _passwdController = TextEditingController();
   var _userName = "";
   var _password = "";
+  bool passwordVisibility = false;
 
   @override
   void initState() {
@@ -199,14 +199,27 @@ class __LoginWidgetState extends State<_LoginWidget> {
           ),
           VEmptyView(40),
           TextField(
-            obscureText: true,
+            obscureText: !passwordVisibility,   // 是否是密码,和 visibility 相反
             controller: _passwdController,
+            keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
-                hintText: '密码',
-                prefixIcon: Icon(
-                  Icons.lock,
+              hintText: '密码',
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.grey,
+              ),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    passwordVisibility = !passwordVisibility;
+                  });
+                },
+                child: Icon(
+                  passwordVisibility ? Icons.visibility : Icons.visibility_off,
                   color: Colors.grey,
-                )),
+                ),
+              ),
+            ),
             onChanged: (String value) {
               _password = value;
             },
