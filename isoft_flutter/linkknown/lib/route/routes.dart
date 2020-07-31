@@ -11,6 +11,7 @@ class Routes {
   static String main = "/main";
   static String login = "/login";
   static String regist = "/regist";
+  static String forgetPwd = "/forgetPwd";
 
 
   //====================【首页课程相关】====================
@@ -95,6 +96,7 @@ class Routes {
     router.define(main, handler: mainHandler);
     router.define(login, handler: loginHandler);
     router.define(regist, handler: registHandler);
+    router.define(forgetPwd, handler: forgetPwdHandler);
 
     //====================【首页课程相关】====================
     // 课程详情页

@@ -107,6 +107,18 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
+  // 修改密码
+  static Future<BaseResponse> modifyPwd(String username, String passwd, String verifyCode) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/modifyPwd',
+        params: {
+          'username': username,
+          'passwd': passwd,
+          'verifyCode': verifyCode,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 生成验证码接口
   static Future<BaseResponse> createVerifyCode(String username) async {
     var response = await doPost(

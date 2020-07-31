@@ -12,6 +12,7 @@ import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/customtag_course_page.dart';
 import 'package:linkknown/page/edit_blog_page.dart';
+import 'package:linkknown/page/forget_pwd_page.dart';
 import 'package:linkknown/page/huodong_page.dart';
 import 'package:linkknown/page/linkknown_with_me_page.dart';
 import 'package:linkknown/page/login_page.dart';
@@ -59,6 +60,12 @@ var loginHandler = new Handler(
 var registHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return RegistPage();
+    });
+
+// 忘记密码页
+var forgetPwdHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return ForgetPwdPage();
     });
 
 // 关于链知页

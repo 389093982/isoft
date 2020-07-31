@@ -40,4 +40,10 @@ class NavigatorUtil {
   static Future<dynamic> goRouterPage(BuildContext context, String router) async {
     return await _navigateTo(context, router);
   }
+
+  // 动态跳往页面,并关闭当前页面
+  static Future<dynamic> goRouterPageWithClose(BuildContext context, String router) async {
+    Navigator.pop(context);
+    return await _navigateTo(context, router);
+  }
 }
