@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/page/classify_page.dart';
 import 'package:linkknown/page/find_page.dart';
 import 'package:linkknown/page/mine_page.dart';
+import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/widgets/exit_app.dart';
 
 import 'home_page.dart';
@@ -43,12 +47,37 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       viewportFraction: 1,
       keepPage: true,
     );
+
+    // 进行自动登录
+    autoLogin();
+  }
+
+  autoLogin() async {
+    String userName = await LoginUtil.getUserName();
+    String passwd = await LoginUtil.getPasswd();
+    bool hasLogin = await LoginUtil.checkHasLogin();
+
+    if (StringUtil.checkNotEmpty(userName) &&
+        StringUtil.checkNotEmpty(passwd) &&
+        !hasLogin) {
+      LinkKnownApi.postLogin("", "", 'http://www.linkknown.com').then((value) {
+        if (value != null) {
+          if (value.status == "SUCCESS") {
+            LoginUtil.memoryAccount(userName, passwd, value);
+
+            LinkKnownApi.updateTokenString();
+
+            eventBus.fire(LoginStateChangeEvent());
+          }
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
+    _controller?.dispose();
     super.dispose();
-    _controller.dispose();
   }
 
   @override
