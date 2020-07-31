@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/check_param_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -33,6 +34,8 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
   String verifyCodeTipText = "获取验证码";
   Color verifyCodeTipText_Color = Colors.black;
 
+  bool passwordVisibility = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,130 +60,167 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
             )
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(
-            left: ScreenUtil().setWidth(80),
-            right: ScreenUtil().setWidth(80),
-            top: ScreenUtil().setWidth(30),
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                // 居中对齐
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(top: 30),
-                // 设置图片
-                child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
-              ),
-              VEmptyView(40),
-              TextField(
-                controller: _nickNameController,
-                decoration: InputDecoration(
-                  labelText: '昵称',
+      body: ScrollConfiguration(
+        behavior: NoShadowScrollBehavior(),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(80),
+              right: ScreenUtil().setWidth(80),
+              top: ScreenUtil().setWidth(30),
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  // 居中对齐
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 30),
+                  // 设置图片
+                  child: Image.asset("images/linkknown.jpg", width: 80, height: 80,),
                 ),
-              ),
-              VEmptyView(40),
-              TextField(
-                controller: _userNameController,
-                decoration: InputDecoration(
-                  labelText: '账号[手机号/邮箱]',
-                ),
-              ),
-              Stack(
-                children: <Widget>[
-                  TextField(
-                    controller: _verifyCodeController,
-                    decoration: InputDecoration(
-                      labelText: '验证码',
+                VEmptyView(40),
+                TextField(
+                  controller: _nickNameController,
+                  decoration: InputDecoration(
+                    hintText: '昵称',
+                    prefixIcon: Icon(
+                      Icons.account_box,
+                      color: Colors.grey,
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
+                ),
+                SizedBox(height: 10,),
+                TextField(
+                  controller: _userNameController,
+                  decoration: InputDecoration(
+                      hintText: '账号',
+                      prefixIcon: Icon(
+                        Icons.account_circle,
+                        color: Colors.grey,
+                      )
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Stack(
+                  children: <Widget>[
+                    TextField(
+                      controller: _verifyCodeController,
+                      decoration: InputDecoration(
+                        hintText: '验证码',
+                        prefixIcon: Icon(
+                          Icons.verified_user,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Align(
                       alignment: Alignment.topRight,
-                      width: 120,
-                      height: 35,
-                      margin: EdgeInsets.only(top: 20),
-                      child: GestureDetector(
-                        onTap: (){
-                          createVerifyCode();
-                        },
-                        child: Text(verifyCodeTipText,style: TextStyle(fontSize: 16,color: verifyCodeTipText_Color),),
+                      child: Container(
+                        alignment: Alignment.topRight,
+                        width: 120,
+                        height: 35,
+                        margin: EdgeInsets.only(top: 20),
+                        child: GestureDetector(
+                          onTap: (){
+                            createVerifyCode();
+                          },
+                          child: Text(verifyCodeTipText,style: TextStyle(fontSize: 16,color: verifyCodeTipText_Color),),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                TextField(
+                  obscureText: !passwordVisibility,   // 是否是密码,和 visibility 相反
+                  controller: _passwdController,
+                  decoration: InputDecoration(
+                    hintText: '密码',
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.grey,
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          passwordVisibility = !passwordVisibility;
+                        });
+                      },
+                      child: Icon(
+                        passwordVisibility ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
-                ],
-              ),
-              TextField(
-                obscureText: true,
-                controller: _passwdController,
-                decoration: InputDecoration(
-                  labelText: '密码',
                 ),
-              ),
-              TextField(
-                obscureText: true,
-                controller: _comfirmPasswdController,
-                decoration: InputDecoration(
-                  labelText: '确认密码',
-                ),
-              ),
-              SizedBox(height: 10,),
-              Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Radio(
-                  value: "male",
-                  activeColor: Colors.red,
-                  groupValue: this._gender,
-                  onChanged: (value) {
-                    setState(() {
-                      this._gender = value;
-                    });
-                  },
-                ),
-                Text('男'),
-                SizedBox(width: 10,),
-                Radio(
-                  value: "female",
-                  activeColor: Colors.red,
-                  groupValue: this._gender,
-                  onChanged: (value) {
-                    setState(() {
-                      this._gender = value;
-                    });
-                  },
-                ),
-                Text('女'),
-              ],
-            ),
-              SizedBox(height: 10,),
-              CommonButton(
-                callback: () {
-                  regist();
-                },
-                content: '注 册',
-                width: double.infinity,
-              ),
-              VEmptyView(10),
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(top: 10),
-                child: GestureDetector(
-                  onTap: (){
-                    NavigatorUtil.goLoginPage(context);
-                  },
-                  child: Text(
-                    '已有账号？登录',
-                    style: TextStyle(
+                SizedBox(height: 10,),
+                TextField(
+                  obscureText: true,
+                  controller: _comfirmPasswdController,
+                  decoration: InputDecoration(
+                    hintText: '确认密码',
+                    prefixIcon: Icon(
+                      Icons.lock,
                       color: Colors.grey,
-                      fontSize: 18,
                     ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 10,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Radio(
+                      value: "male",
+                      activeColor: Colors.red,
+                      groupValue: this._gender,
+                      onChanged: (value) {
+                        setState(() {
+                          this._gender = value;
+                        });
+                      },
+                    ),
+                    Text('男'),
+                    SizedBox(width: 10,),
+                    Radio(
+                      value: "female",
+                      activeColor: Colors.red,
+                      groupValue: this._gender,
+                      onChanged: (value) {
+                        setState(() {
+                          this._gender = value;
+                        });
+                      },
+                    ),
+                    Text('女'),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                CommonButton(
+                  callback: () {
+                    regist();
+                  },
+                  content: '注 册',
+                  width: double.infinity,
+                ),
+                VEmptyView(10),
+                Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 10),
+                  child: GestureDetector(
+                    onTap: (){
+                      NavigatorUtil.goLoginPage(context);
+                    },
+                    child: Text(
+                      '已有账号？登录',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
