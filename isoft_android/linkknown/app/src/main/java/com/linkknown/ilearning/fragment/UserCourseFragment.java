@@ -188,7 +188,7 @@ public class UserCourseFragment extends BaseLazyLoadFragment {
                         });
                     });
         } else if (display_type == DISPLAY_TYPE_VIEWED) {
-            return LinkKnownApiFactory.getLinkKnownApi().showCourseHistory(current_page, pageSize)
+            return LinkKnownApiFactory.getLinkKnownApi().showCourseHistory(userName,current_page, pageSize)
                     .flatMap(new Function<HistoryResponse, ObservableSource<CourseMetaResponse>>() {
                         @Override
                         public ObservableSource<CourseMetaResponse> apply(HistoryResponse historyResponse) throws Exception {

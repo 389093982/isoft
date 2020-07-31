@@ -197,7 +197,8 @@ public interface LinkKnownApi {
 
     // 课程观看记录
     @POST("/api/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory")
-    Observable<HistoryResponse> showCourseHistory( @Query("current_page") int current_page,
+    Observable<HistoryResponse> showCourseHistory(@Query("userName") String userName,
+                                                  @Query("current_page") int current_page,
                                                    @Query("offset") int offset);
 
 
