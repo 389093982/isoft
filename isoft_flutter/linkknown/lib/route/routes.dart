@@ -38,6 +38,8 @@ class Routes {
   //====================【我的】====================
   //优惠券
   static String myCoupon = "/myCoupon";
+  //可使用优惠券的商品
+  static String couponGoods = "/couponGoods";
   //购物车
   static String shoppingCart = "/shoppingCart";
   //订单
@@ -119,6 +121,8 @@ class Routes {
     //====================【我的】====================
     // 优惠券
     router.define(myCoupon, handler: myCouponHandler);
+    // 可使用优惠券的商品
+    router.define(couponGoods, handler: couponGoodsHandler);
     // 购物车
     router.define(shoppingCart, handler: shoppingCartHandler);
     // 订单

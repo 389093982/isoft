@@ -82,32 +82,37 @@ class _CouponItemState extends State<CouponItemWidget>
               ],
             ),
           )),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Image.asset(
-                getCouponBgPicture(widget.coupon),
-                width: 72,
-                height: 130,
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    getFirstCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getSecondCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    getThirdCharacter(widget.coupon),
-                    style: TextStyle(color: Colors.white),
-                  )
-                ],
-              ),
-            ],
+          InkWell(
+            onTap: (){
+              toUseThisCoupon(widget.coupon);
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.asset(
+                  getCouponBgPicture(widget.coupon),
+                  width: 78,
+                  height: 130,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      getFirstCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      getSecondCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      getThirdCharacter(widget.coupon),
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -132,7 +137,17 @@ class _CouponItemState extends State<CouponItemWidget>
 
   //获取第一个汉子
   getFirstCharacter(Coupon coupon){
-    return "已";
+    if(coupon.couponState=="used"){
+      return "已";
+    }else{
+      var now = new DateTime.now();
+      String today = now.toString().substring(0,10).replaceAll("-", "");
+      if(int.parse(today) > int.parse(coupon.endDate)){
+        return "已";
+      }else{
+        return "去";
+      }
+    }
   }
 
   //获取第二个汉子
@@ -145,7 +160,7 @@ class _CouponItemState extends State<CouponItemWidget>
       if(int.parse(today) > int.parse(coupon.endDate)){
         return "过";
       }else{
-        return "领";
+        return "使";
       }
     }
   }
@@ -160,10 +175,39 @@ class _CouponItemState extends State<CouponItemWidget>
       if(int.parse(today) > int.parse(coupon.endDate)){
         return "期";
       }else{
-        return "取";
+        return "用";
       }
     }
   }
 
+
+  //去使用优惠券
+  toUseThisCoupon(Coupon coupon){
+    if(coupon.couponState=="used"){
+      //不做跳转
+    }else{
+      var now = new DateTime.now();
+      String today = now.toString().substring(0,10).replaceAll("-", "");
+      if(int.parse(today) > int.parse(coupon.endDate)){
+        //不做跳转
+      }else{
+        //需要做跳转
+        goToUseCoupon();
+      }
+    }
+  }
+
+  //跳转
+  goToUseCoupon(){
+    if(widget.coupon.couponType=="designated"){
+      if(widget.coupon.targetType=="course"){
+        NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=${widget.coupon.targetId}");
+      }else{
+        UIUtils.showToast("非课程");
+      }
+    }else if(widget.coupon.couponType=="general"){
+      NavigatorUtil.goRouterPage(context, "${Routes.couponGoods}?youhui_type=${widget.coupon.youhuiType}&goods_min_amount=${widget.coupon.goodsMinAmount}");
+    }
+  }
 
 }

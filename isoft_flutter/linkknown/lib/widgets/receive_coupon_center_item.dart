@@ -94,7 +94,7 @@ class _ReceiveCouponCenterItemState extends State<ReceiveCouponCenterItemWidget>
               children: <Widget>[
                 Image.asset(
                   getCouponBgPicture(widget.coupon),
-                  width: 72,
+                  width: 78,
                   height: 130,
                 ),
                 Column(
