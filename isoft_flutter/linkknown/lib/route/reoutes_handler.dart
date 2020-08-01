@@ -20,6 +20,7 @@ import 'package:linkknown/page/login_page.dart';
 import 'package:linkknown/page/main_page.dart';
 import 'package:linkknown/page/message_page.dart';
 import 'package:linkknown/page/mine_about.dart';
+import 'package:linkknown/page/modify_header.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/order_detail_page.dart';
 import 'package:linkknown/page/pay_order_commit_page.dart';
@@ -68,6 +69,12 @@ var registHandler = new Handler(
 var forgetPwdHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       return ForgetPwdPage();
+    });
+
+// 修改头像页
+var modifyHeaderHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return ModifyHeaderPage();
     });
 
 // 关于链知页

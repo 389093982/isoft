@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^1.6.11
   sprintf: ^4.0.2
   share: ^0.6.4+3
+  image_picker: 0.6.7+4
 
 dev_dependencies:
   flutter_test:
@@ -147,6 +148,7 @@ flutter:
     - images/ic_clock.svg
     - images/order_asc.svg
     - images/order_desc.svg
+    - images/icon_add.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

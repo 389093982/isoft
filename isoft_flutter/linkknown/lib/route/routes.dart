@@ -12,6 +12,7 @@ class Routes {
   static String login = "/login";
   static String regist = "/regist";
   static String forgetPwd = "/forgetPwd";
+  static String modifyHeader = "/modifyHeader";
 
 
   //====================【首页课程相关】====================
@@ -99,6 +100,7 @@ class Routes {
     router.define(login, handler: loginHandler);
     router.define(regist, handler: registHandler);
     router.define(forgetPwd, handler: forgetPwdHandler);
+    router.define(modifyHeader, handler: modifyHeaderHandler);
 
     //====================【首页课程相关】====================
     // 课程详情页
