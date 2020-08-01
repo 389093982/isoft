@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/cache_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -42,7 +43,9 @@ class _SettingState extends State<SettingPage> {
       body: new Builder(builder: (BuildContext context) {
         return ListView(
           children: <Widget>[
-            SettingItemWidget("头像", "设置我的头像"),
+            SettingItemWidget("头像", "设置我的头像", clickCallBack: (){
+              NavigatorUtil.goRouterPage(context, Routes.modifyHeader);
+            },),
             SettingItemWidget("用户信息", "编辑用户基本信息"),
             SettingItemWidget("个性签名", "编辑个性签名"),
             SettingItemWidget(
