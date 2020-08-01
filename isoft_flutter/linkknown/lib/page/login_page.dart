@@ -238,7 +238,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
                   NavigatorUtil.goRouterPage(context, Routes.forgetPwd);
                 },
                 child: Text(
-                  "忘记密码?",
+                  "忘记密码？",
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w200,
