@@ -59,7 +59,7 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
             Container(
               child: InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.comment.createdBy}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
