@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/event/event_bus.dart';
+import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
@@ -199,7 +200,8 @@ class __LoginWidgetState extends State<_LoginWidget> {
           ),
           VEmptyView(40),
           TextField(
-            obscureText: !passwordVisibility,   // 是否是密码,和 visibility 相反
+            obscureText: !passwordVisibility,
+            // 是否是密码,和 visibility 相反
             controller: _passwdController,
             keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
@@ -224,7 +226,30 @@ class __LoginWidgetState extends State<_LoginWidget> {
               _password = value;
             },
           ),
-          VEmptyView(120),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(child: Text("")),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  NavigatorUtil.goRouterPage(context, Routes.forgetPwd);
+                },
+                child: Text(
+                  "忘记密码?",
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
           CommonButton(
             callback: postLogin,
             content: '登录',
@@ -239,10 +264,10 @@ class __LoginWidgetState extends State<_LoginWidget> {
                 NavigatorUtil.goRegistPage(context);
               },
               child: Text(
-                '没有账号？注册',
+                '没有账号,前去注册',
                 style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
+                  color: Colors.black54,
+                  fontSize: 16,
                 ),
               ),
             ),
