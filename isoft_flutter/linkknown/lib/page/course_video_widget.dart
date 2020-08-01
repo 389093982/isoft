@@ -156,13 +156,31 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
           onTap: () {
             widget.clickCallBack(index);
           },
-          child: Container(
-            margin: EdgeInsets.all(5),
-            padding: EdgeInsets.all(10),
-            color: Colors.grey[200],
-            child: Center(
-              child: Text("${index + 1}"),
-            ),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(5),
+                padding: EdgeInsets.all(10),
+                color: Colors.grey[200],
+                child: Center(
+                  child: Text("${index + 1}"),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.all(0),
+                  child: widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
+                          FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
+                            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                            borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
+                          :
+                          FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+                            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                            borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                ),
+              ),
+            ],
           ),
         );
       }).toList(),
@@ -183,25 +201,25 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 5),
                   child: Row(
                     children: <Widget>[
-                      Text("${index+1}", style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
-                      SizedBox(width: 20,),
-                      Text(StringUtil.getFileName(widget.cVideos[index].videoName).length<10?StringUtil.getFileName(widget.cVideos[index].videoName):StringUtil.getFileName(widget.cVideos[index].videoName).substring(0,10)+"..",
+                      Text("${index+1}.", style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
+                      SizedBox(width: 8,),
+                      Text(StringUtil.getFileName(widget.cVideos[index].videoName).length<14?StringUtil.getFileName(widget.cVideos[index].videoName):StringUtil.getFileName(widget.cVideos[index].videoName).substring(0,14)+"..",
                         style: TextStyle(color: renderColor(widget.cVideos[index].id)),overflow: TextOverflow.ellipsis,),
                       Expanded(child: Text(""),),
                       SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: renderColor(widget.cVideos[index].id),),
                       Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: renderColor(widget.cVideos[index].id), fontSize: 12),),
-                      SizedBox(width: 20,),
-                      index+1<widget.course.preListFree?
-                      FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
-                        borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                        borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
-                          :
+                      SizedBox(width: 10,),
+                      widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
                       FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
                         borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
                         borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
+                          :
+                      FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+                        borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                        borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
                     ],
                   ),
                 ),
