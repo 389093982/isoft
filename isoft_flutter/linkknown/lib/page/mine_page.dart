@@ -166,7 +166,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
           child: GestureDetector(
             onTap: () {
               if(this.loginUserName==null || this.loginUserName==""){
-                UIUtils.showToast("未登录.");
+                UIUtils.showToast("未登录..");
               }else{
                 NavigatorUtil.goRouterPage(context, Routes.message);
               }

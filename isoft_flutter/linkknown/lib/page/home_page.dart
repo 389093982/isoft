@@ -105,6 +105,15 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
 
   StreamSubscription subscription;
 
+  String loginUserName;
+
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -127,10 +136,6 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
     if (hasLogin) {
       this.nickName = await LoginUtil.getNickName();
       this.headerIcon = await LoginUtil.getSmallIcon();
-//      this.userPoints = await LoginUtil.getUserPoints();
-//      this.userSignature = await LoginUtil.getUserSignature();
-//      this.attentionCounts = await LoginUtil.getAttentionCounts();
-//      this.fensiCounts = await LoginUtil.getFensiCounts();
     }
 
     setState(() {});
@@ -146,6 +151,9 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
+    if(this.loginUserName==null || this.loginUserName==""){
+      queryLoginUserName();
+    }
     return Row(
       children: <Widget>[
         Container(
@@ -159,7 +167,11 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
           margin: EdgeInsets.only(right: 15),
           child: GestureDetector(
             onTap: () {
-              NavigatorUtil.goRouterPage(context, Routes.message);
+              if(this.loginUserName==null || this.loginUserName==""){
+                UIUtils.showToast("未登录..");
+              }else{
+                NavigatorUtil.goRouterPage(context, Routes.message);
+              }
             },
             // 给铃铛添加旋转动画
             child: RotationTransition(
