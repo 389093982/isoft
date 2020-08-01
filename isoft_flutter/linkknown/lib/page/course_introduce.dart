@@ -216,10 +216,14 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   //播放视频
   goToVideoPlay(index) async {
-    routerParamMap["videoplay_courseKey"] = widget.course;
-    routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
-    await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
-    courseVideosWidgetState.currentState.updateState();
+    if(index+1<widget.course.preListFree){
+      routerParamMap["videoplay_courseKey"] = widget.course;
+      routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
+      await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
+      courseVideosWidgetState.currentState.updateState();
+    }else{
+      UIUtils.showToast2("付费课程,前去购买？");
+    }
   }
 
 }
@@ -498,7 +502,7 @@ class _CourseOperateState extends State<CourseOperateWidget> {
               enable: false,
               number: 0,
               clickCallback: () {
-                Share.share('编程进阶：${widget.course.courseName}', subject: "链知课堂");
+                Share.share('链知课程：${widget.course.courseName}', subject: "链知课堂");
               }),
         ),
         Expanded(

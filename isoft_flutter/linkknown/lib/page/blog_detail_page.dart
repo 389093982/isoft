@@ -10,6 +10,7 @@ import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:share/share.dart';
 
 class BlogDetailgPage extends StatefulWidget {
   int blog_id;
@@ -171,10 +172,12 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                 Text(this.blog!=null?blog.views.toString():"0",style: TextStyle(color: Colors.black45),),
                 SizedBox(width: 30,),
                 InkWell(
-                  onTap: (){},
-                  child: Icon(Icons.favorite_border,color: Colors.black45,size: 20,),
+                  onTap: (){
+                    Share.share(this.blog!=null?'云博客：${blog.blogTitle}':"", subject: "链知课堂");
+                  },
+                  child: Icon(Icons.share,color: Colors.black45,size: 20,),
                 ),
-                Text("222",style: TextStyle(color: Colors.black45),),
+                Text("分享",style: TextStyle(color: Colors.black45),),
               ],),
             ),
           ],

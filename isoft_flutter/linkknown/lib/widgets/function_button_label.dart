@@ -7,18 +7,23 @@ class FunctionButtonLabel extends StatelessWidget {
 
   double borderHeight;
   String labelText;
+  Color labelTextColor;
   double labelSize;
   double borderRadius;
   Color bgColor;
   Color borderColor;
+  double paddingVertical;
+  double paddingHorizontal;
 
 
-  FunctionButtonLabel({this.borderHeight=20,this.labelText="按钮",this.labelSize=14,this.borderRadius=0,this.bgColor=Colors.red,this.borderColor=Colors.red});
+  FunctionButtonLabel({this.borderHeight=20,this.labelText="按钮",this.labelTextColor=Colors.white,
+    this.labelSize=14,this.borderRadius=0,this.bgColor=Colors.red,this.borderColor=Colors.red,
+    this.paddingVertical=5,this.paddingHorizontal=8});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      padding: EdgeInsets.symmetric(vertical: paddingVertical, horizontal: paddingHorizontal),
       // 边框设置
       decoration: new BoxDecoration(
         //背景
@@ -34,7 +39,7 @@ class FunctionButtonLabel extends StatelessWidget {
           labelText,
           style: TextStyle(
             fontSize: labelSize,
-            color: Colors.white,
+            color: labelTextColor,
           ),
         ),
       )

@@ -9,6 +9,7 @@ import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:share/share.dart';
 
 class HomeDrawerWidget extends StatefulWidget {
   @override
@@ -303,7 +304,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
             height: 25,
           ),
           onTap: () {
-            UIUtils.showToast("分享");
+            Share.share('链知课堂：链知课堂APP', subject: "链知课堂");
           },
         ),
       ],

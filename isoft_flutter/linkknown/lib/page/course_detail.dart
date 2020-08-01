@@ -8,6 +8,7 @@ import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:share/share.dart';
 
 class CourseDetailPage extends StatefulWidget {
   int course_id;
@@ -157,10 +158,12 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
               Text(this.course!=null?course.watchNumber.toString():"0",style: TextStyle(color: Colors.black45),),
               SizedBox(width: 30,),
               InkWell(
-                onTap: (){},
-                child: Icon(Icons.favorite_border,color: Colors.black45,size: 20,),
+                onTap: (){
+                  Share.share('链知课程：${this.course.courseName}', subject: "链知课堂");
+                },
+                child: Icon(Icons.share,color: Colors.black45,size: 20,),
               ),
-              Text("222",style: TextStyle(color: Colors.black45),),
+              Text("分享",style: TextStyle(color: Colors.black45),),
             ],),
           ),
         ],
