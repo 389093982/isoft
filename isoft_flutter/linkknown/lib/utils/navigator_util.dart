@@ -13,7 +13,8 @@ class NavigatorUtil {
     return await Application.router.navigateTo(context, path,
         transitionDuration: transitionDuration,
         transitionBuilder: transitionBuilder,
-        transition: TransitionType.inFromRight);
+        // TransitionType.native //无进入动画
+        transition: TransitionType.native);
   }
 
   // 返回

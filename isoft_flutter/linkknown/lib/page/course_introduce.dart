@@ -25,6 +25,7 @@ import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:share/share.dart';
 
 // 课程简介组件
 class CourseIntroduceWidget extends StatefulWidget {
@@ -496,7 +497,9 @@ class _CourseOperateState extends State<CourseOperateWidget> {
               imagepath: "images/ic_share.svg",
               enable: false,
               number: 0,
-              clickCallback: () {}),
+              clickCallback: () {
+                Share.share('编程进阶：${widget.course.courseName}', subject: "链知课堂");
+              }),
         ),
         Expanded(
           child: CourseOperateItemWidget(
