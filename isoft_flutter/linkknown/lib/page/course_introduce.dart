@@ -498,7 +498,7 @@ class _CourseOperateState extends State<CourseOperateWidget> {
               enable: false,
               number: 0,
               clickCallback: () {
-                Share.share('编程进阶：${widget.course.courseName}', subject: "链知课堂");
+                Share.share('链知课程：${widget.course.courseName}', subject: "链知课堂");
               }),
         ),
         Expanded(
