@@ -128,8 +128,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
       return;
     }
 
-    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com')
-        .then((value) {
+    LinkKnownApi.postLogin(_userName, _password, 'http://www.linkknown.com').then((value) {
       if (value != null) {
         if (value.status == "SUCCESS") {
           LoginUtil.memoryAccount(_userName, _password, value);
@@ -137,7 +136,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
           LinkKnownApi.updateTokenString();
 
           UIUtils.showToast("登录成功！");
-          NavigatorUtil.goBack(context);
+          NavigatorUtil.goRouterPage(context, "${Routes.main}");
 
           eventBus.fire(LoginStateChangeEvent());
 
@@ -238,7 +237,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
                   NavigatorUtil.goRouterPage(context, Routes.forgetPwd);
                 },
                 child: Text(
-                  "忘记密码?",
+                  "忘记密码？",
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.w200,

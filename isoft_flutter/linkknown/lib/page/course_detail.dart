@@ -5,6 +5,7 @@ import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_introduce.dart';
 import 'package:linkknown/utils/comment_util.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
@@ -51,8 +52,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   }
 
   void initData() async {
-    CourseDetailResponse courseDetailResponse =
-        await LinkKnownApi.showCourseDetailForApp(course_id, null);
+    String loginUserName = await LoginUtil.getLoginUserName();
+    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(course_id, loginUserName);
     setState(() {
       course = courseDetailResponse.course;
       cVideos = courseDetailResponse.cVideos;

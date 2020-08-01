@@ -8,6 +8,7 @@ import 'package:linkknown/page/bought_course_page.dart';
 import 'package:linkknown/page/business.dart';
 import 'package:linkknown/page/cloud_blog_page.dart';
 import 'package:linkknown/page/coming_soon_page.dart';
+import 'package:linkknown/page/coupon_goods_page.dart';
 import 'package:linkknown/page/course_detail.dart';
 import 'package:linkknown/page/course_search.dart';
 import 'package:linkknown/page/customtag_course_page.dart';
@@ -109,6 +110,14 @@ var myCouponHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String,List<String>> params){
     return MyCouponPage();
   });
+
+//可使用优惠券的商品
+var couponGoodsHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      String youhui_type = params['youhui_type'].first;
+      String goods_min_amount = params['goods_min_amount'].first;
+      return CouponGoodsPage(youhui_type,goods_min_amount);
+    });
 
 //领券中心
 var receiveCouponCenterHandler = new Handler(

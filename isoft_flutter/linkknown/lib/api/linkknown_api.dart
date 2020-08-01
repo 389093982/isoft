@@ -24,6 +24,7 @@ import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/model/query_coupon_by_id_response.dart';
 import 'package:linkknown/model/query_coupon_center_list_response.dart';
+import 'package:linkknown/model/query_general_coupon_targets_response.dart';
 import 'package:linkknown/model/query_is_attention_response.dart';
 import 'package:linkknown/model/query_page_blog_response.dart';
 import 'package:linkknown/model/query_page_pay_activity_response.dart';
@@ -347,6 +348,20 @@ class LinkKnownApi {
           'today': today,
         });
     return SearchCouponForPayResponse.fromJson(response.data);
+  }
+
+
+  // 根据券来查可以购买的课程
+  static Future<QueryGeneralCouponTargetsResponse> QueryGeneralCouponTargets(String youhui_type, String goods_min_amount, int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryGeneralCouponTargets',
+        params: {
+          'youhui_type': youhui_type,
+          'goods_min_amount': goods_min_amount,
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return QueryGeneralCouponTargetsResponse.fromJson(response.data);
   }
 
 

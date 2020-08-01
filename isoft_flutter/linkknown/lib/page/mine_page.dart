@@ -57,9 +57,16 @@ class MineHeaderWidget extends StatefulWidget {
   _MineHeaderState createState() => _MineHeaderState();
 }
 
-class _MineHeaderState extends State<MineHeaderWidget>
-    with TickerProviderStateMixin {
+class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateMixin {
   bool hasLogin = false;
+  String loginUserName;
+
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
 
   String nickName = "";
   String smallIcon = "";
@@ -109,7 +116,9 @@ class _MineHeaderState extends State<MineHeaderWidget>
 
   @override
   Widget build(BuildContext context) {
-//    return hasLogin ? getLoginWidget() : getUnLoginWidget();
+    if(this.loginUserName==null || this.loginUserName==""){
+      queryLoginUserName();
+    }
     return Container(
       decoration: BoxDecoration(
         // 添加背景图片
@@ -156,7 +165,11 @@ class _MineHeaderState extends State<MineHeaderWidget>
           margin: EdgeInsets.only(right: 15),
           child: GestureDetector(
             onTap: () {
-              NavigatorUtil.goRouterPage(context, Routes.message);
+              if(this.loginUserName==null || this.loginUserName==""){
+                UIUtils.showToast("未登录.");
+              }else{
+                NavigatorUtil.goRouterPage(context, Routes.message);
+              }
             },
             // 给铃铛添加旋转动画
             child: RotationTransition(
@@ -260,9 +273,33 @@ class _MineHeaderState extends State<MineHeaderWidget>
   }
 }
 
-class MineCenterWidget extends StatelessWidget {
+class MineCenterWidget extends StatefulWidget {
+
+  @override
+  _MineCenterState createState() => _MineCenterState();
+}
+
+class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateMixin {
+
+  String loginUserName;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if(this.loginUserName==null || this.loginUserName==""){
+      queryLoginUserName();
+    }
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.all(10),
@@ -284,7 +321,11 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "优惠券",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.myCoupon);
+                  if(this.loginUserName==null || this.loginUserName == ""){
+                    UIUtils.showToast("未登录..");
+                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.myCoupon);
+                  }
                 },
               ),
             ),
@@ -296,7 +337,11 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "购物车",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+                  if(this.loginUserName==null || this.loginUserName == ""){
+                    UIUtils.showToast("未登录..");
+                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+                  }
                 },
               ),
             ),
@@ -308,7 +353,11 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "订单",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.payOrder);
+                  if(this.loginUserName==null || this.loginUserName == ""){
+                    UIUtils.showToast("未登录..");
+                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.payOrder);
+                  }
                 },
               ),
             ),
@@ -320,8 +369,11 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "活动中心",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.comingSoon);
-//                  NavigatorUtil.goRouterPage(context, Routes.huodong);
+                  if(this.loginUserName==null || this.loginUserName == ""){
+                    UIUtils.showToast("未登录..");
+                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.comingSoon);
+                  }
                 },
               ),
             ),
@@ -333,7 +385,11 @@ class MineCenterWidget extends StatelessWidget {
                 icon_color: Colors.white,
                 text: "考试",
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, Routes.kaoshi);
+                  if(this.loginUserName==null || this.loginUserName == ""){
+                    UIUtils.showToast("未登录..");
+                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.kaoshi);
+                  }
                 },
               ),
             ),
@@ -342,7 +398,9 @@ class MineCenterWidget extends StatelessWidget {
       ),
     );
   }
+
 }
+
 
 class FooterItem {
   String icon;

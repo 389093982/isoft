@@ -10,7 +10,12 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
-class HomeDrawerWidget extends StatelessWidget {
+class HomeDrawerWidget extends StatefulWidget {
+  @override
+  _HomeDrawerWidgetState createState() => _HomeDrawerWidgetState();
+}
+
+class _HomeDrawerWidgetState extends State<HomeDrawerWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -171,9 +176,32 @@ class _HomeDrawerHeaderState extends State<HomeDrawerHeaderWidget> {
   }
 }
 
-class HomeContentHeaderWidget extends StatelessWidget {
+class HomeContentHeaderWidget extends StatefulWidget {
+  @override
+  _HomeContentHeaderWidgetState createState() => _HomeContentHeaderWidgetState();
+}
+
+class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with TickerProviderStateMixin {
+
+  String loginUserName;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if(this.loginUserName==null || this.loginUserName==""){
+      queryLoginUserName();
+    }
     return Column(
       children: <Widget>[
         ListTile(
@@ -184,7 +212,11 @@ class HomeContentHeaderWidget extends StatelessWidget {
             height: 24,
           ),
           onTap: () {
-            NavigatorUtil.goRouterPage(context, Routes.personalCenter);
+            if(this.loginUserName==null || this.loginUserName == ""){
+              UIUtils.showToast("未登录..");
+            }else{
+              NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${loginUserName}");
+            }
           },
         ),
         ListTile(
@@ -195,7 +227,11 @@ class HomeContentHeaderWidget extends StatelessWidget {
             height: 24,
           ),
           onTap: () {
-            NavigatorUtil.goRouterPage(context, Routes.payOrder);
+            if(this.loginUserName==null || this.loginUserName == ""){
+              UIUtils.showToast("未登录..");
+            }else{
+              NavigatorUtil.goRouterPage(context, Routes.payOrder);
+            }
           },
         ),
         ListTile(
@@ -206,7 +242,11 @@ class HomeContentHeaderWidget extends StatelessWidget {
             height: 25,
           ),
           onTap: () {
-            NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+            if(this.loginUserName==null || this.loginUserName == ""){
+              UIUtils.showToast("未登录..");
+            }else{
+              NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
+            }
           },
         ),
         ListTile(
@@ -270,3 +310,4 @@ class HomeContentHeaderWidget extends StatelessWidget {
     );
   }
 }
+

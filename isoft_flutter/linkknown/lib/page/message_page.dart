@@ -106,12 +106,6 @@ class _MessageState extends State<MessagePage> {
           onNotification: (notification) {
             if (notification is ScrollUpdateNotification &&
                 notification.depth == 0) {
-              //    等价于
-              //    scrollController.addListener(() {
-              //      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-              //        loadPageData(page + 1, 10, delayed: true);
-              //      }
-              //    });
               if (notification.metrics.pixels ==
                   notification.metrics.maxScrollExtent) {
                 if (paginator != null &&
@@ -156,9 +150,6 @@ class _MessageState extends State<MessagePage> {
                           width: 35,
                           height: 35,
                           fit: BoxFit.fill,
-                        ),
-                        Container(
-                          width: 10,
                         ),
                         Expanded(
                           child: Column(
