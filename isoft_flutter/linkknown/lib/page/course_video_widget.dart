@@ -7,6 +7,7 @@ import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/string_util.dart';
+import 'package:linkknown/widgets/function_button_label.dart';
 
 class CourseVideosWidget extends StatefulWidget {
 
@@ -60,7 +61,6 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
     });
   }
 
-  // TODO 顺序倒序
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -183,17 +183,25 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
                   child: Row(
                     children: <Widget>[
                       Text("${index+1}", style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
-                      Container(
-                        width: 20,
-                      ),
-                      Text(StringUtil.getFileName(widget.cVideos[index].videoName), style: TextStyle(color: renderColor(widget.cVideos[index].id)),),
+                      SizedBox(width: 20,),
+                      Text(StringUtil.getFileName(widget.cVideos[index].videoName).length<10?StringUtil.getFileName(widget.cVideos[index].videoName):StringUtil.getFileName(widget.cVideos[index].videoName).substring(0,10)+"..",
+                        style: TextStyle(color: renderColor(widget.cVideos[index].id)),overflow: TextOverflow.ellipsis,),
                       Expanded(child: Text(""),),
                       SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: renderColor(widget.cVideos[index].id),),
                       Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: renderColor(widget.cVideos[index].id), fontSize: 12),),
+                      SizedBox(width: 20,),
+                      index+1<widget.course.preListFree?
+                      FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+                        borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                        borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                          :
+                      FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
+                        borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                        borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
                     ],
                   ),
                 ),
