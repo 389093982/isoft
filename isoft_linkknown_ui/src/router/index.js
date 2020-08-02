@@ -75,6 +75,7 @@ const ElementList = () => import("@/components/Background/IPlacement/ElementList
 const ElementEdit = () => import("@/components/Background/IPlacement/ElementEdit");
 const PlacementList = () => import("@/components/Background/IPlacement/PlacementList");
 const PlacementEdit = () => import("@/components/Background/IPlacement/PlacementEdit");
+const AppVersionList = () => import("@/components/Background/AppVersionList");
 const UserSearch = () => import("@/components/Background/UserSearch");
 const CreateActivity = () => import("@/components/Background/Pay/CreateActivity");
 const SearchActivity = () => import("@/components/Background/Pay/SearchActivity");
@@ -160,6 +161,7 @@ const ICMSReouter = [{
       {path: 'elementList', component: ElementList},
       {path: 'placementList', component: PlacementList},
       {path: 'placementEdit', component: PlacementEdit},
+      {path: 'appVersionList', component: AppVersionList},
       {path: 'userSearch', component: UserSearch},
       {path: 'createActivity', component: CreateActivity},
       {path: 'searchActivity', component: SearchActivity},

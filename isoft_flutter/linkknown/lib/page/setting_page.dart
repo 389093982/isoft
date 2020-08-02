@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/model/app_version.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/cache_util.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -59,7 +61,13 @@ class _SettingState extends State<SettingPage> {
               },
             ),
             SettingItemWidget("用户协议", "查看用户协议"),
-            SettingItemWidget("版本更新", "检查版本更新"),
+            SettingItemWidget("版本更新", "检查版本更新",
+            clickCallBack: () async {
+              GetAppNewVersionResponse getAppNewVersionResponse = await LinkKnownApi.getAppNewVersion("1.0.0");
+              if (getAppNewVersionResponse.status == "SUCCESS" && getAppNewVersionResponse.newAppVersion != null) {
+                UIUtils.showToast2("识别到了新版本,是否更新？");
+              }
+            },),
             SettingItemWidget(
               "退出登录",
               "退出链知 app 账号",

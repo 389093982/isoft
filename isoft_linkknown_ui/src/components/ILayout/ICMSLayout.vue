@@ -52,6 +52,9 @@
               <MenuItem name="6-1">
                 <router-link to="/background/placementList">占位符管理</router-link>
               </MenuItem>
+              <MenuItem name="6-2">
+                <router-link to="/background/appVersionList">app版本管理</router-link>
+              </MenuItem>
             </Submenu>
             <Submenu name="7">
               <template slot="title">

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/model/advise_list.dart';
+import 'package:linkknown/model/app_version.dart';
 import 'package:linkknown/model/base.dart';
 import 'package:linkknown/model/blog_detail_response.dart';
 import 'package:linkknown/model/course_detail.dart';
@@ -825,7 +826,6 @@ class LinkKnownApi {
     return FileUploadResponse.fromJson(response.data);
   }
 
-
   // 更新用户头像
   static Future<BaseResponse> updateUserIcon(String userName, String small_icon) async {
     var response = await doPost(
@@ -835,5 +835,15 @@ class LinkKnownApi {
           'small_icon': small_icon,
         });
     return BaseResponse.fromJson(response.data);
+  }
+
+  // 更新用户头像
+  static Future<GetAppNewVersionResponse> getAppNewVersion(String current_version) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/GetAppNewVersion',
+        params: {
+          'current_version': current_version,
+        });
+    return GetAppNewVersionResponse.fromJson(response.data);
   }
 }
