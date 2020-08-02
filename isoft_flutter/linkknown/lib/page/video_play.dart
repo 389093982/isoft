@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class VideoPlayPage extends StatefulWidget {
@@ -84,13 +85,18 @@ class VideoPlayState extends State<VideoPlayPage> {
   }
 
   playVideoByIndex (index) async {
-    widget.index = index;
-    // 重置播放器进入 idle 状态，可以再次 setDataSource
-    await player.reset();
-    await initVideoData();
-    setState(() {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
+      widget.index = index;
+      // 重置播放器进入 idle 状态，可以再次 setDataSource
+      await player.reset();
+      await initVideoData();
+      setState(() {
 
-    });
+      });
+    }else{
+      UIUtils.showToast2("付费课程,前去购买？");
+    }
   }
 
   @override

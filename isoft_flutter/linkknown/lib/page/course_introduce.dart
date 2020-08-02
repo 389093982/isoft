@@ -217,7 +217,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   //播放视频
   goToVideoPlay(index) async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    if(index+1<widget.course.preListFree || widget.course.courseAuthor==loginUserName){
+    if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
       routerParamMap["videoplay_courseKey"] = widget.course;
       routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
       await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
