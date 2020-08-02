@@ -153,8 +153,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
           // 课程标签语
           CourseLabelWidget(widget.course.courseLabel),
           // 分集视频
-          Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay, key: courseVideosWidgetState,),
-          ),
+          Container(child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: goToVideoPlay, key: courseVideosWidgetState,),),
         ],
       ),
     );

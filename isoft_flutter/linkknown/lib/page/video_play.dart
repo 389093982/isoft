@@ -75,9 +75,15 @@ class VideoPlayState extends State<VideoPlayPage> {
             // 视频开始播放后封面图不再显示。
             cover: NetworkImage(widget.course.smallImage,),
           ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex, key: courseVideosWidgetKey,),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: CourseVideosWidget(widget.course, widget.cVideos, clickCallBack: playVideoByIndex, key: courseVideosWidgetKey,),
+                )
+              ],
+            ),
           ),
         ],
       ),
