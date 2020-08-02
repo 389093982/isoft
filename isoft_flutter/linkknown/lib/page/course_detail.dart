@@ -134,36 +134,48 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             height: 40,
             color: Colors.grey[200],
             child: Row(children: <Widget>[
-              SizedBox(width: 70,),
+              SizedBox(width: 50,),
               InkWell(
                 onTap: (){
                   //评论弹框
                   CommentUtil.showFirstLevelCommentDialog(context,course.id.toString(),"course_theme_type","comment",course.courseAuthor,course.comments.toString());
                 },
                 child: Container(
-                  width: 40,
+                  width: 90,
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.textsms,color: Colors.black45,size: 20,),
+                      SizedBox(width: 2,),
                       Text(this.course!=null?course.comments.toString():"0",style: TextStyle(color: Colors.black45),),
                     ],
                   ),
                 ),
               ),
-              SizedBox(width: 30,),
               InkWell(
                 onTap: (){},
-                child: Icon(Icons.remove_red_eye,color: Colors.black45,size: 20,),
+                child: Container(
+                  width: 90,
+                  child: Row(children: <Widget>[
+                    Icon(Icons.remove_red_eye,color: Colors.black45,size: 20,),
+                    SizedBox(width: 2,),
+                    Text(this.course!=null?course.watchNumber.toString():"0",style: TextStyle(color: Colors.black45),),
+                  ],),
+                ),
               ),
-              Text(this.course!=null?course.watchNumber.toString():"0",style: TextStyle(color: Colors.black45),),
-              SizedBox(width: 30,),
               InkWell(
                 onTap: (){
                   Share.share('链知课程：${this.course.courseName}', subject: "链知课堂");
                 },
-                child: Icon(Icons.share,color: Colors.black45,size: 20,),
+                child: Container(
+                  width: 90,
+                  child: Row(children: <Widget>[
+                    Icon(Icons.share,color: Colors.black45,size: 20,),
+                    SizedBox(width: 2,),
+                    Text("分享",style: TextStyle(color: Colors.black45),),
+                  ],),
+                ),
               ),
-              Text("分享",style: TextStyle(color: Colors.black45),),
+
             ],),
           ),
         ],
