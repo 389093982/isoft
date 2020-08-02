@@ -187,6 +187,8 @@ export const QueryElementById = (params) => ajax(BASE_URL + '/iwork/httpservice/
 export const CopyElement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/CopyElement', params, 'POST');
 export const UpdateElementStatus = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/UpdateElementStatus', params, 'POST');
 export const FilterElementByPlacement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/FilterElementByPlacement', params, 'POST');
+export const QueryPageAppVersion = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAppVersion', params, 'POST');
+export const AddAppVersion = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/AddAppVersion', params, 'POST');
 
 
 //【Pay模块】***************************************************************************************************
