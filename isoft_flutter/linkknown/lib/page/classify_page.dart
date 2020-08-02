@@ -37,10 +37,10 @@ class _ClassifyPageState extends State<ClassifyPage>
               icon: Icon(
                 Icons.search,
                 color: Colors.white,
+                size: 30,
               ),
               onPressed: () {
-                NavigatorUtil.goRouterPage(
-                    context, "${Routes.courseSearch}?search=&isCharge=");
+                NavigatorUtil.goRouterPage(context, "${Routes.courseSearch}?search=&isCharge=");
               }),
         ],
       ),
@@ -78,8 +78,7 @@ class _ClassifyState extends State<ClassifyWidget> {
 
   initData() async {
     String placementName = "placement_host_course_type_carousel";
-    ElementResponse elementResponse =
-        await LinkKnownApi.filterElementByPlacement(placementName);
+    ElementResponse elementResponse = await LinkKnownApi.filterElementByPlacement(placementName);
     setState(() {
       // 全部元素
       this.elementResponse = elementResponse;

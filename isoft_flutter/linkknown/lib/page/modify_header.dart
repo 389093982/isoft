@@ -21,44 +21,43 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text("修改用户头像"),
+        title: Text("点击图片更换头像"),
       ),
-      body: ListView(
-        children: <Widget>[
-          Text("修改用户头像",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              )),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: ImageSelectWidget(
-                  label: "从相册中获取",
-                  source: ImageSelectWidget.SOURCE_GALLERY,
-                  onSelect: (_filePath){
-                    filePath = _filePath;
-                  },
+      body: Container(
+        padding: EdgeInsets.all(60),
+        child: ListView(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child:
+                  ImageSelectWidget(
+                    label: "从相册中获取",
+                    source: ImageSelectWidget.SOURCE_GALLERY,
+                    onSelect: (_filePath){
+                      filePath = _filePath;
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ImageSelectWidget(
-                  label: "拍照上传头像",
-                  source: ImageSelectWidget.SOURCE_CAMERA,
-                  onSelect: (_filePath){
-                    filePath = _filePath;
-                  },
+                Expanded(
+                  child: ImageSelectWidget(
+                    label: "拍照上传头像",
+                    source: ImageSelectWidget.SOURCE_CAMERA,
+                    onSelect: (_filePath){
+                      filePath = _filePath;
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-          CommonButton(
-            callback: modifyHeader,
-            content: '提交',
-            width: double.infinity,
-          ),
-        ],
+              ],
+            ),
+            SizedBox(height: 20,),
+            CommonButton(
+              callback: modifyHeader,
+              content: '提交',
+              width: double.infinity,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -69,12 +68,12 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
       String userName = await LoginUtil.getUserName();
       BaseResponse baseResponse = await LinkKnownApi.updateUserIcon(userName, fileUploadResponse.fileServerPath);
       if (baseResponse.status == "SUCCESS") {
-        UIUtils.showToast2("修改成功！");
+        UIUtils.showToast2("设置成功！");
       } else {
-        UIUtils.showToast2("修改失败！");
+        UIUtils.showToast2("设置失败！");
       }
     } else {
-      UIUtils.showToast2("上传失败！");
+      UIUtils.showToast2("文件上传失败！");
     }
   }
 }

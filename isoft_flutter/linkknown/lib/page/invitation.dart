@@ -125,6 +125,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
                       decoration: new InputDecoration(
                         contentPadding: EdgeInsets.only(left: 12,top:0),//光标距离左侧距离
                         hintText: '请输入受邀者账号..',
+                        hintStyle: new TextStyle(fontSize: 14, color: Colors.grey[400]),
                         enabledBorder: OutlineInputBorder(//未点击输入框的效果
                           borderSide: BorderSide(
                             color: Colors.deepOrange, //边框颜色
