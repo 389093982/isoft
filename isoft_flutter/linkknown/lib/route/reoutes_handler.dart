@@ -33,6 +33,7 @@ import 'package:linkknown/page/shopping_cart_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/page/to_select_available_coupon_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
+import 'package:linkknown/page/user_signature_page.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
@@ -110,6 +111,12 @@ var customTagCourseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       String custom_tag = params['custom_tag'].first;       // 播放当前视频的索引
       return CustomTagCoursePage(custom_tag);
+    });
+
+//个性签名
+var userSignatureHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return UserSignaturePage();
     });
 
 //优惠券

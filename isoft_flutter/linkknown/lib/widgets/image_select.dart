@@ -6,13 +6,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class ImageSelectWidget extends StatefulWidget{
-  static const String SOURCE_GALLERY = "SOURCE_GALLERY";  // 相册
-  static const String SOURCE_CAMERA = "SOURCE_CAMERA";  // 拍照
-
   ValueChanged onSelect;
   String label;
   String source;
-  ImageSelectWidget({this.label = "点击设置头像", this.source = SOURCE_GALLERY, this.onSelect});
+  String currentSmallIcon;
+  ImageSelectWidget({this.label = "点击设置头像", this.currentSmallIcon,this.onSelect});
+
+  static const String SOURCE_GALLERY = "SOURCE_GALLERY";  // 相册
+  static const String SOURCE_CAMERA = "SOURCE_CAMERA";  // 拍照
 
   @override
   State<StatefulWidget> createState() => ImageSelectWidgetState();
@@ -31,7 +32,7 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
           InkWell(
             borderRadius: BorderRadius.circular(40),
             onTap: (){
-              _getImage();
+              showStyleDialogList();
             },
             child: Container(
               width: 80,
@@ -40,7 +41,15 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
                 // 图片圆角展示
                 borderRadius: BorderRadius.circular(40),
                 image: DecorationImage(
-                  image: imageFile == null ? AssetImage("images/icon_add.png") : FileImage(imageFile),
+                  image: imageFile != null ? FileImage(imageFile):AssetImage("images/icon_add.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: imageFile != null ? Text(""):ClipOval(
+                child: Image.network(
+                  UIUtils.replaceMediaUrl(widget.currentSmallIcon),
+                  width: 80,
+                  height: 80,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -53,6 +62,44 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
   }
 
 
+  //选择图片来源选择框
+  showStyleDialogList() {
+    showDialog<Null>(
+      context: context,
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                new SimpleDialogOption(
+                  child: Text('从相册中选择',style: TextStyle(fontSize: 18),),
+                  onPressed: () {
+                    widget.source = ImageSelectWidget.SOURCE_GALLERY;
+                    _getImage();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new SimpleDialogOption(
+                  child: Divider(),
+                ),
+                new SimpleDialogOption(
+                  child: Text('拍摄照片',style: TextStyle(fontSize: 18),),
+                  onPressed: () {
+                    widget.source = ImageSelectWidget.SOURCE_CAMERA;
+                    _getImage();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
+
+  //获取照片：从相册选择、拍照
   Future<void> _getImage() async {
     try {
       PickedFile pickedFile = await picker.getImage(source: widget.source == ImageSelectWidget.SOURCE_GALLERY ? ImageSource.gallery : ImageSource.camera, maxWidth: 800);

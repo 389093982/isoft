@@ -150,6 +150,16 @@ class LinkKnownApi {
     return GetUserDetailResponse.fromJson(response.data);
   }
 
+  // 编辑个性签名
+  static Future<BaseResponse> EditUserSignature(String user_signature) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/EditUserSignature',
+        params: {
+          'user_signature': user_signature,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 课程搜索接口
   static Future<CourseMetaResponse> searchCourseList(
       String search, String isCharge, int current_page, int offset) async {

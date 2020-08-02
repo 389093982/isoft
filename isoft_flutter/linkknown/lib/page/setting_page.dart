@@ -15,15 +15,16 @@ class SettingPage extends StatefulWidget {
 
 class _SettingState extends State<SettingPage> {
   String cacheInfo = "";
+  String loginUserName;
 
   @override
   void initState() {
     super.initState();
-
     initData();
   }
 
   initData() async {
+    loginUserName = await LoginUtil.getLoginUserName();
     String _chacheIfo = await getCacheSize();
     setState(() {
       cacheInfo = "已使用空间 ${_chacheIfo}";
@@ -46,15 +47,27 @@ class _SettingState extends State<SettingPage> {
       body: new Builder(builder: (BuildContext context) {
         return ListView(
           children: <Widget>[
-            SettingItemWidget(
-              "头像",
-              "设置我的头像",
-              clickCallBack: () {
+            SettingItemWidget("头像", "设置我的头像", clickCallBack: (){
+              if(loginUserName==null || loginUserName==""){
+                UIUtils.showToast("未登录..");
+              }else{
                 NavigatorUtil.goRouterPage(context, Routes.modifyHeader);
-              },
-            ),
-            SettingItemWidget("用户信息", "编辑用户基本信息"),
-            SettingItemWidget("个性签名", "编辑个性签名"),
+              }
+            },),
+            SettingItemWidget("用户信息", "编辑用户基本信息",clickCallBack:(){
+              if(loginUserName==null || loginUserName==""){
+                UIUtils.showToast("未登录..");
+              }else{
+                NavigatorUtil.goRouterPage(context, Routes.userSignature);
+              }
+            }),
+            SettingItemWidget("个性签名", "编辑个性签名",clickCallBack:(){
+              if(loginUserName==null || loginUserName==""){
+                UIUtils.showToast("未登录..");
+              }else{
+                NavigatorUtil.goRouterPage(context, Routes.userSignature);
+              }
+            }),
             SettingItemWidget(
               "清除缓存",
               cacheInfo,
@@ -75,19 +88,20 @@ class _SettingState extends State<SettingPage> {
               "退出登录",
               "退出链知 app 账号",
               clickCallBack: () {
-                // 登出
-                LoginUtil.logout();
-                // snackbar 弹框提示
-                // 当BuildContext在Scaffold之前时，调用Scaffold.of(context)会报错
-                final snackBar = new SnackBar(
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 2),
-                    content: new Text('账号退出成功!'));
-                Scaffold.of(context).showSnackBar(snackBar);
-                // 延迟 2 s 后跳往登陆页面
-                Future.delayed(Duration(seconds: 3), () {
-                  NavigatorUtil.goLoginPage(context);
-                });
+                if(loginUserName==null || loginUserName==""){
+                  UIUtils.showToast("未登录..");
+                }else{
+                  LoginUtil.logout();
+                  final snackBar = new SnackBar(
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 1),
+                      content: new Text('账号退出成功!'));
+                  Scaffold.of(context).showSnackBar(snackBar);
+                  // 延迟 1 s 后跳往登陆页面
+                  Future.delayed(Duration(seconds: 1), () {
+                    NavigatorUtil.goLoginPage(context);
+                  });
+                }
               },
             ),
           ],
