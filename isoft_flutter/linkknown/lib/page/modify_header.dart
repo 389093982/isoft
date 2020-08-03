@@ -18,7 +18,7 @@ class ModifyHeaderPage extends StatefulWidget {
 
 class ModifyHeaderPageState extends State<ModifyHeaderPage> {
 
-  String loginUserSamllIcon;
+  String loginUserSamllIcon = "testUrl";
   String filePath;
 
   @override
@@ -32,7 +32,9 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
     if(loginUserName!=null && loginUserName!=""){
       LinkKnownApi.getUserDetail(loginUserName).then((GetUserDetailResponse) {
         if (GetUserDetailResponse != null && GetUserDetailResponse.status == "SUCCESS") {
-          loginUserSamllIcon = GetUserDetailResponse.user.smallIcon;
+          if(StringUtil.checkNotEmpty(GetUserDetailResponse.user.smallIcon)){
+            loginUserSamllIcon = GetUserDetailResponse.user.smallIcon;
+          }
           setState(() {
           //刷新
           });
@@ -45,9 +47,6 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(StringUtil.checkEmpty(loginUserSamllIcon)){
-      return Text("");
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text("点击图片更换头像"),

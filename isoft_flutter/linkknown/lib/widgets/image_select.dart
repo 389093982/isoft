@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class ImageSelectWidget extends StatefulWidget{
@@ -41,18 +42,20 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
                 // 图片圆角展示
                 borderRadius: BorderRadius.circular(40),
                 image: DecorationImage(
-                  image: imageFile != null ? FileImage(imageFile):AssetImage("images/icon_add.png"),
+                  image: imageFile != null ? FileImage(imageFile):AssetImage("images/linkknown.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
-              child: imageFile != null ? Text(""):ClipOval(
-                child: Image.network(
-                  UIUtils.replaceMediaUrl(widget.currentSmallIcon),
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: imageFile != null ?
+                      Text("")
+                      :
+                      ClipOval(child: Image.network(
+                          UIUtils.replaceMediaUrl(widget.currentSmallIcon),
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
             ),
           ),
           SizedBox(height: 5,),

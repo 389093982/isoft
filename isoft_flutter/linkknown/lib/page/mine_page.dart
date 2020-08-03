@@ -193,7 +193,15 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
         Container(
           margin: EdgeInsets.only(left: 30),
           child: ClipOval(
-            child: Image.network(
+            child: smallIcon==""?
+            Image.asset(
+              "images/linkknown.jpg",
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+            )
+                :
+            Image.network(
               UIUtils.replaceMediaUrl(smallIcon),
               width: 80,
               height: 80,
