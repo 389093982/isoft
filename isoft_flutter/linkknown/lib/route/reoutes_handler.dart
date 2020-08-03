@@ -33,6 +33,7 @@ import 'package:linkknown/page/shopping_cart_page.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/page/to_select_available_coupon_page.dart';
 import 'package:linkknown/page/user_agreement.dart';
+import 'package:linkknown/page/user_info_page.dart';
 import 'package:linkknown/page/user_signature_page.dart';
 import 'package:linkknown/page/video_play.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
@@ -118,6 +119,13 @@ var userSignatureHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String,List<String>> params){
       return UserSignaturePage();
     });
+
+//用户信息
+var userInfoHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return UserInfoPage();
+    });
+
 
 //优惠券
 var myCouponHandler = new Handler(

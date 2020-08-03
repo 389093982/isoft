@@ -66,7 +66,7 @@ class _SettingState extends State<SettingPage> {
               if(loginUserName==null || loginUserName==""){
                 UIUtils.showToast("未登录..");
               }else{
-                NavigatorUtil.goRouterPage(context, Routes.userSignature);
+                NavigatorUtil.goRouterPage(context, Routes.userInfo);
               }
             }),
             SettingItemWidget("个性签名", "编辑个性签名",clickCallBack:(){

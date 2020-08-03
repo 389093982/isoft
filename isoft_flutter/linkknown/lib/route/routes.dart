@@ -40,6 +40,8 @@ class Routes {
   //====================【我的】====================
   //个性签名
   static String userSignature = "/userSignature";
+  //用户信息
+  static String userInfo = "/userInfo";
   //优惠券
   static String myCoupon = "/myCoupon";
   //可使用优惠券的商品
@@ -127,6 +129,8 @@ class Routes {
     //====================【我的】====================
     //个性签名
     router.define(userSignature, handler: userSignatureHandler);
+    //用户信息
+    router.define(userInfo, handler: userInfoHandler);
     // 优惠券
     router.define(myCoupon, handler: myCouponHandler);
     // 可使用优惠券的商品

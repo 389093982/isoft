@@ -160,6 +160,24 @@ class LinkKnownApi {
     return BaseResponse.fromJson(response.data);
   }
 
+  // 更新用户信息
+  static Future<BaseResponse> UpdateUserDetail(String user_name,String nick_name,String gender,String birthday,
+      String current_residence,String hometown,String hat,String hat_in_use) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/UpdateUserDetail',
+        params: {
+          'user_name': user_name,
+          'nick_name': nick_name,
+          'gender': gender,
+          'birthday': birthday,
+          'current_residence': current_residence,
+          'hometown': hometown,
+          'hat': hat,
+          'hat_in_use': hat_in_use,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 课程搜索接口
   static Future<CourseMetaResponse> searchCourseList(
       String search, String isCharge, int current_page, int offset) async {
