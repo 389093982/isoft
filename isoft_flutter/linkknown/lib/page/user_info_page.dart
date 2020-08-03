@@ -24,9 +24,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
   TextEditingController nickNameController;
   TextEditingController birthDayController;
-  TextEditingController genderController;
   TextEditingController currentResidenceController;
   TextEditingController hometownController;
+  String _gender = "";
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
         if (value.status == "SUCCESS") {
           nickNameController = new TextEditingController(text: value.user.nickName);
           birthDayController = new TextEditingController(text: DateUtil.format2StandardTime(value.user.birthday).substring(0,10));
-          genderController = new TextEditingController(text: value.user.gender);
+          _gender = value.user.gender;
           currentResidenceController = new TextEditingController(text: value.user.currentResidence);
           hometownController = new TextEditingController(text: value.user.hometown);
           setState(() {
@@ -77,14 +77,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
               ),
             ),
             TextField(
-              controller: genderController,
-              maxLines: 1,
-              maxLength: 6,
-              decoration: InputDecoration(
-                labelText: '性别',
-              ),
-            ),
-            TextField(
               controller: birthDayController,
               maxLines: 1,
               maxLength: 10,
@@ -108,10 +100,52 @@ class _UserInfoPageState extends State<UserInfoPage> {
                 labelText: '家乡',
               ),
             ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Radio(
+                  value: "male",
+                  activeColor: Colors.red,
+                  groupValue: this._gender,
+                  onChanged: (value) {
+                    setState(() {
+                      this._gender = value;
+                    });
+                  },
+                ),
+                Text('男'),
+                SizedBox(width: 10,),
+                Radio(
+                  value: "female",
+                  activeColor: Colors.red,
+                  groupValue: this._gender,
+                  onChanged: (value) {
+                    setState(() {
+                      this._gender = value;
+                    });
+                  },
+                ),
+                Text('女'),
+              ],
+            ),
             SizedBox(height: 20,),
             CommonButton(
               callback: () {
-                editUserInfo();
+//                editUserInfo();
+                showDatePicker(
+                  context: context,
+                  initialDate: new DateTime.now(), //默认日期
+                  firstDate: DateTime(1900), //选择最早的日期范围
+                  lastDate: DateTime(2100), //最晚的日期范围
+                  locale: Locale('zh', 'CH'),
+                ).then((DateTime val) {
+                  setState(() {
+//                    selectDate=val;
+                  });
+                }).catchError((err) {
+                  print(err);
+                });
+
               },
               content: '提 交',
               //width: double.infinity,
@@ -135,11 +169,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
       return;
     }
 
-    if(StringUtil.checkEmpty(genderController.text)){
-      UIUtils.showToast("性别不能为空..");
-      return;
-    }
-
     if(StringUtil.checkEmpty(currentResidenceController.text)){
       UIUtils.showToast("现居住地址不能为空..");
       return;
@@ -150,9 +179,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
       return;
     }
 
+    if(StringUtil.checkEmpty(_gender)){
+      UIUtils.showToast("性别不能为空..");
+      return;
+    }
+
     String user_name = await LoginUtil.getLoginUserName();
     String nick_name = nickNameController.text;
-    String gender= genderController.text;
 
     int year = int.parse(birthDayController.text.substring(0,4));
     int month = int.parse(birthDayController.text.substring(5,7));
@@ -161,6 +194,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
     String current_residence = currentResidenceController.text;
     String hometown = hometownController.text;
+    String gender= _gender;
     String hat = "";
     String hat_in_use = "N";
 
@@ -179,5 +213,3 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
 
 }
-
-

@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:linkknown/config/env_config.dart';
 import 'package:linkknown/page/splash_page.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
@@ -68,6 +69,16 @@ class MyApp extends StatelessWidget {
       // home 指定为开屏页
       home: new SplashPage(),
       onGenerateRoute: Application.router.generator,
+      //国际化
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('zh', 'CH'),
+        const Locale('en', 'US'),
+      ],
+      locale: Locale('zh'),
     );
   }
 }
