@@ -3,10 +3,12 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/app_version.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/cache_util.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/update_dialog.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class SettingPage extends StatefulWidget {
 
 class _SettingState extends State<SettingPage> {
   String cacheInfo = "";
+  String version = "";
   String loginUserName;
 
   @override
@@ -28,6 +31,11 @@ class _SettingState extends State<SettingPage> {
     String _chacheIfo = await getCacheSize();
     setState(() {
       cacheInfo = "已使用空间 ${_chacheIfo}";
+    });
+
+    PackageInfo packageInfo = await CommonUtil.getPackageInfo();
+    setState(() {
+      version = packageInfo.version;
     });
   }
 
@@ -81,7 +89,7 @@ class _SettingState extends State<SettingPage> {
             SettingItemWidget("用户协议", "查看用户协议"),
             SettingItemWidget(
               "版本更新",
-              "检查版本更新",
+              "当前版本 $version, 检查版本更新",
               clickCallBack: getNewsVersion,
             ),
             SettingItemWidget(
@@ -120,7 +128,7 @@ class _SettingState extends State<SettingPage> {
 
   getNewsVersion() async {
     GetAppNewVersionResponse getAppNewVersionResponse =
-        await LinkKnownApi.getAppNewVersion("1.0.0");
+        await LinkKnownApi.getAppNewVersion(version);
     if (getAppNewVersionResponse.status == "SUCCESS") {
       if (getAppNewVersionResponse.newAppVersion != null){
         _showUpdateDialog(getAppNewVersionResponse.newAppVersion.androidDownloadUrl, getAppNewVersionResponse.newAppVersion.forceUpdate == "Y");
