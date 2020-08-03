@@ -45,6 +45,9 @@ dependencies:
   sprintf: ^4.0.2
   share: ^0.6.4+3
   image_picker: 0.6.7+4
+  flustars: ^0.3.3
+  install_apk_plugin: ^1.0.0
+  permission_handler: ^5.0.1+1
 
 dev_dependencies:
   flutter_test:
@@ -149,6 +152,7 @@ flutter:
     - images/order_asc.svg
     - images/order_desc.svg
     - images/icon_add.png
+    - images/update_head.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

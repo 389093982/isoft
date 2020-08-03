@@ -6,6 +6,7 @@ import 'package:linkknown/utils/cache_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/update_dialog.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -78,13 +79,11 @@ class _SettingState extends State<SettingPage> {
               },
             ),
             SettingItemWidget("用户协议", "查看用户协议"),
-            SettingItemWidget("版本更新", "检查版本更新",
-            clickCallBack: () async {
-              GetAppNewVersionResponse getAppNewVersionResponse = await LinkKnownApi.getAppNewVersion("1.0.0");
-              if (getAppNewVersionResponse.status == "SUCCESS" && getAppNewVersionResponse.newAppVersion != null) {
-                UIUtils.showToast2("识别到了新版本,是否更新？");
-              }
-            },),
+            SettingItemWidget(
+              "版本更新",
+              "检查版本更新",
+              clickCallBack: getNewsVersion,
+            ),
             SettingItemWidget(
               "退出登录",
               "退出链知 app 账号",
@@ -109,6 +108,27 @@ class _SettingState extends State<SettingPage> {
         );
       }),
     );
+  }
+
+  void _showUpdateDialog(String androidDownloadUrl, bool forceUpdate) {
+    showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => UpdateDialog(androidDownloadUrl, forceUpdate),
+    );
+  }
+
+  getNewsVersion() async {
+    GetAppNewVersionResponse getAppNewVersionResponse =
+        await LinkKnownApi.getAppNewVersion("1.0.0");
+    if (getAppNewVersionResponse.status == "SUCCESS") {
+      if (getAppNewVersionResponse.newAppVersion != null){
+        _showUpdateDialog(getAppNewVersionResponse.newAppVersion.androidDownloadUrl, getAppNewVersionResponse.newAppVersion.forceUpdate == "Y");
+      }else {
+        UIUtils.showToast2("当前版本已经是最新版本！");
+      }
+
+    }
   }
 }
 
