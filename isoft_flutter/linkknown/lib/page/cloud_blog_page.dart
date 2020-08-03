@@ -222,6 +222,13 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
  }
 
 
+ @override
+  void dispose() {
+   searchInputController?.dispose();
+    super.dispose();
+  }
+
+
 }
 
 // SliverPersistentHeaderDelegate的实现类必须实现其4个方法

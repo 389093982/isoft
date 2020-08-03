@@ -292,6 +292,14 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
     });
   }
 
+  @override
+  void dispose() {
+    blogTitleController?.dispose();
+    catalogNameController?.dispose();
+    blogContentController?.dispose();
+    super.dispose();
+  }
+
 }
 
 class _HeaderWidget extends StatefulWidget {
