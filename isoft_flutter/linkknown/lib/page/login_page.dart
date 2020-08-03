@@ -103,19 +103,12 @@ class __LoginWidgetState extends State<_LoginWidget> {
     _passwdController.value = new TextEditingValue(text: _password ?? "");
   }
 
-  _usernameChange() {
-    _userName = _userNameController.text;
-  }
-
-  _passwordChange() {
-    _password = _passwdController.text;
-  }
 
   @override
   void dispose() {
+    _userNameController?.dispose();
+    _passwdController?.dispose();
     super.dispose();
-    _userNameController.removeListener(_usernameChange);
-    _passwdController.removeListener(_passwordChange);
   }
 
   postLogin() {

@@ -290,6 +290,11 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     timer?.cancel();
+    _nickNameController?.dispose();
+    _userNameController?.dispose();
+    _verifyCodeController?.dispose();
+    _passwdController?.dispose();
+    _comfirmPasswdController?.dispose();
     super.dispose();
   }
 
@@ -365,8 +370,6 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
     }).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
-
-
   }
 
 }

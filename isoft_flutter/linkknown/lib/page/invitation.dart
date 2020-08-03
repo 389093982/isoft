@@ -227,6 +227,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
   void dispose() {
     super.dispose();
     scrollController.dispose();
+    searchInputController.dispose();
   }
 
 }

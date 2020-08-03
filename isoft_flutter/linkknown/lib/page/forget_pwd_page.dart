@@ -21,8 +21,7 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _verifyCodeController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
-  final TextEditingController _comfirmPasswdController =
-      TextEditingController();
+  final TextEditingController _comfirmPasswdController = TextEditingController();
 
   String verifyCodeTipText = "获取验证码";
   Color verifyCodeTipText_Color = Colors.black;
@@ -313,6 +312,10 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
   @override
   void dispose() {
     timer?.cancel();
+    _userNameController?.dispose();
+    _verifyCodeController?.dispose();
+    _passwdController?.dispose();
+    _comfirmPasswdController?.dispose();
     super.dispose();
   }
 }

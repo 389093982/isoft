@@ -1,19 +1,17 @@
 import 'dart:ui';
 
+import 'package:city_pickers/city_pickers.dart';
+import 'package:city_pickers/modal/result.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
-import 'package:linkknown/common/login_dialog.dart';
-import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_button.dart';
-import 'package:linkknown/widgets/common_loading.dart';
-import 'package:linkknown/widgets/goods_item.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -107,17 +105,25 @@ class _UserInfoPageState extends State<UserInfoPage> {
               controller: currentResidenceController,
               maxLines: 1,
               maxLength: 50,
+              readOnly: true,
               decoration: InputDecoration(
                 labelText: '现居住地址',
               ),
+              onTap: (){
+                showCurrentAddressDialog(context);
+              },
             ),
             TextField(
               controller: hometownController,
               maxLines: 1,
               maxLength: 50,
+              readOnly: true,
               decoration: InputDecoration(
                 labelText: '家乡',
               ),
+              onTap: (){
+                showHomeTownAddressDialog(context);
+              },
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,6 +165,48 @@ class _UserInfoPageState extends State<UserInfoPage> {
         ),
       ),
     );
+  }
+
+
+  //现居住地址选择弹框
+  showCurrentAddressDialog(context) async {
+    Result temp = await CityPickers.showCityPicker(
+      context: context,
+      itemExtent: ScreenUtil().setHeight(100),
+      itemBuilder: (item, list, index) {
+        return Center(child: Text(item,
+                maxLines: 1,
+                style: TextStyle(fontSize: ScreenUtil().setSp(26.0))
+        ));
+      },
+      height: ScreenUtil().setHeight(500),
+    );
+
+    setState(() {
+      //UIUtils.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
+      currentResidenceController = new TextEditingController(text: temp.provinceName +"-"+ temp.cityName +"-"+ temp.areaName);
+    });
+  }
+
+
+  //家乡地址选择弹框
+  showHomeTownAddressDialog(context) async {
+    Result temp = await CityPickers.showCityPicker(
+      context: context,
+      itemExtent: ScreenUtil().setHeight(100),
+      itemBuilder: (item, list, index) {
+        return Center(child: Text(item,
+            maxLines: 1,
+            style: TextStyle(fontSize: ScreenUtil().setSp(26.0))
+        ));
+      },
+      height: ScreenUtil().setHeight(500),
+    );
+
+    setState(() {
+      //UIUtils.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
+      hometownController = new TextEditingController(text: temp.provinceName +"-"+ temp.cityName +"-"+ temp.areaName);
+    });
   }
 
 
@@ -216,5 +264,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
 
   }
 
+  @override
+  void dispose() {
+    nickNameController?.dispose();
+    birthDayController?.dispose();
+    currentResidenceController?.dispose();
+    hometownController?.dispose();
+    super.dispose();
+  }
 
 }
