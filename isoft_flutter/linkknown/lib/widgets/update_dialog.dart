@@ -6,8 +6,10 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:install_apk_plugin/install_apk_plugin.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:package_info/package_info.dart';
 
 class UpdateDialog extends StatefulWidget {
 
@@ -77,6 +79,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                     SizedBox(height: 10,),
                     Text('1.又双叒修复了一大堆bug。\n\n2.祭天了多名程序猿。'),
                     SizedBox(height: 15,),
+                    // 下载中显示进度条,否则显示提示按钮
                     _isDownload ? LinearProgressIndicator(
                       backgroundColor: Color(0xFFEEEEEE),
                       valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
@@ -197,8 +200,9 @@ void onClickInstallApk(String _apkFilePath) async {
 //  Map<PermissionGroup, PermissionStatus> permissions =
 //  await PermissionHandler().requestPermissions([PermissionGroup.storage]);
 //  if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
-    // TODO 此处 appId 需要根据实际情况修改，建议改成 com.linkknown.ilearning
-    InstallPlugin.installApk(_apkFilePath, 'com.linkknown')
+    // TODO 此处 appId 需要根据实际情况修改，可使用以下方式获取
+    PackageInfo packageInfo = await CommonUtil.getPackageInfo();
+    InstallPlugin.installApk(_apkFilePath, packageInfo.packageName)
         .then((result) {
       print('install apk $result');
     }).catchError((error) {

@@ -1,12 +1,36 @@
 
 import 'package:flutter/material.dart';
-import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/widgets/copy_right.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
+import 'package:package_info/package_info.dart';
 
-class AboutPage extends StatelessWidget{
+
+class AboutPage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+
+  String version = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    initData();
+  }
+
+  initData () async {
+    PackageInfo packageInfo = await CommonUtil.getPackageInfo();
+    setState(() {
+      version = packageInfo.version;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +54,7 @@ class AboutPage extends StatelessWidget{
                   ClipOval(
                     child: Image.asset("images/linkknown.jpg", width: 100, height: 100,),
                   ),
-                  Text("当前版本：v1.0.0",style: TextStyle(color: Colors.black54),),
+                  Text("当前版本：v$version",style: TextStyle(color: Colors.black54),),
                   VEmptyView(20),
                   Text("链知课堂", style: TextStyle(color: Colors.black54,fontSize: 18),),
                   Row(
