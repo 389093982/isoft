@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:infinite_cards/infinite_cards.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/widgets/click_item.dart';
 import 'package:linkknown/widgets/copy_right.dart';
-import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:package_info/package_info.dart';
 
 class AboutPage extends StatefulWidget {
@@ -15,11 +17,30 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   String version = "";
 
+  InfiniteCardsController infiniteCardsController;
+  Timer timer;
+
   @override
   void initState() {
     super.initState();
 
+    infiniteCardsController = InfiniteCardsController(
+      itemBuilder: _renderItem,
+      itemCount: 5,
+      animType: AnimType.SWITCH,
+    );
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) {
+      infiniteCardsController.reset(animType: AnimType.TO_END);
+      infiniteCardsController.next();
+    });
+
     initData();
+  }
+
+  Widget _renderItem(BuildContext context, int index) {
+    return Image(
+      image: AssetImage(index % 2 == 0 ? 'images/nuli.jpg' : 'images/image_wenjuan.png',),
+    );
   }
 
   initData() async {
@@ -46,17 +67,22 @@ class _AboutPageState extends State<AboutPage> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 120),
+              margin: EdgeInsets.only(top: 50),
               child: Column(
                 children: <Widget>[
-                  ClipOval(
-                    child: Image.asset(
-                      "images/linkknown.jpg",
-                      width: 100,
-                      height: 100,
-                    ),
+                  InfiniteCards(
+                    controller: infiniteCardsController,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 3,
                   ),
-                  SizedBox(height: 20,),
+//                  ClipOval(
+//                    child: Image.asset(
+//                      "images/linkknown.jpg",
+//                      width: 100,
+//                      height: 100,
+//                    ),
+//              ),
+                  SizedBox(height: 10,),
                   ClickItem(
                     title: "应用名称",
                     content: "链知课堂",
@@ -91,5 +117,11 @@ class _AboutPageState extends State<AboutPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }

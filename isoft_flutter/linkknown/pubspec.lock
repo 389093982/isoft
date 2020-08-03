@@ -240,6 +240,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
+  infinite_cards:
+    dependency: "direct main"
+    description:
+      name: infinite_cards
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   install_apk_plugin:
     dependency: "direct main"
     description:
