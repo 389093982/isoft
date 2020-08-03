@@ -210,4 +210,11 @@ class _AdviseEditPageState extends State<AdviseEditPage> {
           );
         });
   }
+
+  @override
+  void dispose() {
+    _adviseController?.dispose();
+    super.dispose();
+  }
+
 }

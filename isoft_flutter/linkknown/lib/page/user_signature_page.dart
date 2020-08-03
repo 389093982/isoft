@@ -99,6 +99,12 @@ class _UserSignaturePageState extends State<UserSignaturePage> {
 
   }
 
+  @override
+  void dispose() {
+    signatureController?.dispose();
+    super.dispose();
+  }
+
 
 }
 
