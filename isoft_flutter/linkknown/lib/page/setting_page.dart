@@ -96,20 +96,16 @@ class _SettingState extends State<SettingPage> {
               "退出登录",
               "退出链知 app 账号",
               clickCallBack: () {
-                if(loginUserName==null || loginUserName==""){
-                  UIUtils.showToast("未登录..");
-                }else{
-                  LoginUtil.logout();
-                  final snackBar = new SnackBar(
-                      backgroundColor: Colors.red,
-                      duration: Duration(seconds: 1),
-                      content: new Text('账号退出成功!'));
-                  Scaffold.of(context).showSnackBar(snackBar);
-                  // 延迟 1 s 后跳往登陆页面
-                  Future.delayed(Duration(seconds: 1), () {
-                    NavigatorUtil.goLoginPage(context);
-                  });
-                }
+                LoginUtil.logout();
+                final snackBar = new SnackBar(
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 1),
+                    content: new Text('账号退出成功!'));
+                Scaffold.of(context).showSnackBar(snackBar);
+                // 延迟 1 s 后跳往登陆页面
+                Future.delayed(Duration(seconds: 1), () {
+                  NavigatorUtil.goLoginPage(context);
+                });
               },
             ),
           ],
