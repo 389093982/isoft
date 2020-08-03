@@ -80,9 +80,28 @@ class _UserInfoPageState extends State<UserInfoPage> {
               controller: birthDayController,
               maxLines: 1,
               maxLength: 10,
+              readOnly: true,
               decoration: InputDecoration(
                 labelText: '生日',
               ),
+              onTap: (){
+                int year = int.parse(birthDayController.text.substring(0,4));
+                int month = int.parse(birthDayController.text.substring(5,7));
+                int day = int.parse(birthDayController.text.substring(8,10));
+                showDatePicker(
+                  context: context,
+                  initialDate: new DateTime(year,month,day), //默认日期
+                  firstDate: DateTime(1900), //选择最早的日期范围
+                  lastDate: DateTime(3020), //最晚的日期范围
+                  locale: Locale('zh', 'CH'),
+                ).then((DateTime selectedDateTime) {
+                  setState(() {
+                    birthDayController = new TextEditingController(text: selectedDateTime.toString().substring(0,10));
+                  });
+                }).catchError((err) {
+                  print(err);
+                });
+              },
             ),
             TextField(
               controller: currentResidenceController,
@@ -131,21 +150,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
             SizedBox(height: 20,),
             CommonButton(
               callback: () {
-//                editUserInfo();
-                showDatePicker(
-                  context: context,
-                  initialDate: new DateTime.now(), //默认日期
-                  firstDate: DateTime(1900), //选择最早的日期范围
-                  lastDate: DateTime(2100), //最晚的日期范围
-                  locale: Locale('zh', 'CH'),
-                ).then((DateTime val) {
-                  setState(() {
-//                    selectDate=val;
-                  });
-                }).catchError((err) {
-                  print(err);
-                });
-
+                editUserInfo();
               },
               content: '提 交',
               //width: double.infinity,
