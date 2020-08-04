@@ -60,7 +60,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     if (StringUtil.checkNotEmpty(userName) &&
         StringUtil.checkNotEmpty(passwd) &&
         !hasLogin) {
-      LinkKnownApi.postLogin("", "", 'http://www.linkknown.com').then((value) {
+      LinkKnownApi.postLogin(userName, passwd, 'http://www.linkknown.com').then((value) {
         if (value != null) {
           if (value.status == "SUCCESS") {
             LoginUtil.memoryAccount(userName, passwd, value);

@@ -48,7 +48,7 @@ class _CourseCardState extends State<CourseCardWidget>
 //                  child: Image.network(UIUtils.replaceMediaUrl(course.smallImage), fit: BoxFit.fill, width: double.infinity,),
                   child: CachedImageWidget(
                       UIUtils.replaceMediaUrl(widget.course.smallImage)),
-                  aspectRatio: 1 / 0.6,
+                  aspectRatio: 100 / 68,
                 ),
                 Align(
                   alignment: Alignment.topRight,

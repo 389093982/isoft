@@ -148,7 +148,7 @@ class _CourseFilterState extends State<CourseFilterWidget>
                   //横轴间距
                   crossAxisSpacing: 10.0,
                   //子组件宽高长度比例
-                  childAspectRatio: 1.0,
+                  childAspectRatio: 0.9,
                 ),
               ),
               SliverToBoxAdapter(
