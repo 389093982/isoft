@@ -54,6 +54,7 @@ dependencies:
   package_info: 0.4.1
   city_pickers: ^0.1.30
   infinite_cards: ^1.0.3
+  photo_view: ^0.9.2
 
 dev_dependencies:
   flutter_test:

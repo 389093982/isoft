@@ -457,7 +457,7 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
           getOperateWidget(context,
               FooterItem("images/ic_advise.png", '我要吐槽', Routes.advise)),
           getOperateWidget(
-              context, FooterItem("images/ic_about.png", '关于链知', Routes.about)),
+              context, FooterItem("images/ic_about.png", '关于链知', Routes.about,), requireLogin: false),
           getOperateWidget(context,
               FooterItem("images/ic_link.png", '我与链知', Routes.linkknownWithMe)),
         ],
@@ -466,14 +466,14 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
   }
 
 
-  Widget getOperateWidget(BuildContext context, FooterItem item) {
+  Widget getOperateWidget(BuildContext context, FooterItem item, {bool requireLogin = true}) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
       child: InkWell(
         onTap: () {
-          if(this.loginUserName==null || this.loginUserName == ""){
+          if(requireLogin && (this.loginUserName==null || this.loginUserName == "")){
             UIUtils.showToast("未登录..");
           }else{
             NavigatorUtil.goRouterPage(context, item.router);
