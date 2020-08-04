@@ -21,11 +21,9 @@ class _AboutPageState extends State<AboutPage> {
   String version = "";
 
   List<String> assetNames = [
-    'images/nuli.jpg',
-    'images/image_wenjuan.png',
-    'images/nuli.jpg',
-    'images/image_wenjuan.png',
-    'images/nuli.jpg',
+    'images/about_linkknown01.jpg',
+    'images/about_linkknown02.jpg',
+    'images/about_linkknown03.jpg',
   ];
 
   InfiniteCardsController infiniteCardsController;

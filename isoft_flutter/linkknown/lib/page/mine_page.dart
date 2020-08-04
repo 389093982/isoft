@@ -377,11 +377,11 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "活动中心",
                 onTap: () {
-                  if(this.loginUserName==null || this.loginUserName == ""){
-                    UIUtils.showToast("未登录..");
-                  }else{
+//                  if(this.loginUserName==null || this.loginUserName == ""){
+//                    UIUtils.showToast("未登录..");
+//                  }else{
                     NavigatorUtil.goRouterPage(context, Routes.comingSoon);
-                  }
+//                  }
                 },
               ),
             ),
@@ -393,11 +393,11 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "考试",
                 onTap: () {
-                  if(this.loginUserName==null || this.loginUserName == ""){
-                    UIUtils.showToast("未登录..");
-                  }else{
-                    NavigatorUtil.goRouterPage(context, Routes.kaoshi);
-                  }
+//                  if(this.loginUserName==null || this.loginUserName == ""){
+//                    UIUtils.showToast("未登录..");
+//                  }else{
+                    NavigatorUtil.goRouterPage(context, Routes.comingSoon);
+//                  }
                 },
               ),
             ),
