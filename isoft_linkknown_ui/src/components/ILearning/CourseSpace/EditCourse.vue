@@ -48,9 +48,15 @@
             <Input v-model.trim="formValidate.course_short_desc" type="textarea" :rows="2" placeholder="请输入课程描述"></Input>
           </FormItem>
           <FormItem label="收费情况" prop="isCharge">
-            <RadioGroup v-model="formValidate.isCharge">
+            <RadioGroup v-if="this.$route.query.course_id != null" v-model="formValidate.isCharge">
+              <Radio disabled label='free'>免费</Radio>
+              <Radio disabled label='charge'>收费</Radio>
+              <Radio disabled label='vip'>会员专享</Radio>
+            </RadioGroup>
+            <RadioGroup v-else v-model="formValidate.isCharge">
               <Radio label='free'>免费</Radio>
               <Radio label='charge'>收费</Radio>
+              <Radio label='vip'>会员专享</Radio>
             </RadioGroup>
           </FormItem>
           <div v-if="formValidate.isCharge==='charge'">
@@ -255,13 +261,24 @@
         if (result.status == "SUCCESS") {
           this.formValidate = result.course;
         }
+      },
+      initPage(){
+        if (!checkEmpty(this.$route.query.course_id) && this.$route.query.course_id > 0) {
+          this.refreshCourseInfo(this.$route.query.course_id);
+        } else {
+          this.$refs['formValidate'].resetFields();
+        }
       }
     },
     mounted() {
-      if (!checkEmpty(this.$route.query.course_id) && this.$route.query.course_id > 0) {
-        this.refreshCourseInfo(this.$route.query.course_id);
+      this.initPage();
+    },
+    watch:{
+      // 监听路由是否变化
+      '$route' (to, from) {
+        this.initPage();
       }
-    }
+    },
   }
 </script>
 
