@@ -160,6 +160,9 @@ flutter:
     - images/order_desc.svg
     - images/icon_add.png
     - images/update_head.jpg
+    - images/about_linkknown01.jpg
+    - images/about_linkknown02.jpg
+    - images/about_linkknown03.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
