@@ -55,7 +55,8 @@ class _CourseCardState extends State<CourseCardWidget>
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
                     child: CommonLabel(
-                        widget.course.isCharge == "charge" ? "付费课程" : "免费"),
+                        getCourseCommonLabel(widget.course.isCharge)
+                    ),
                   ),
                 ),
                 Align(
@@ -143,4 +144,16 @@ class _CourseCardState extends State<CourseCardWidget>
       ),
     );
   }
+
+
+  String getCourseCommonLabel(String isCharge){
+    if("charge"==isCharge){
+      return "付费课程";
+    }else if("free"==isCharge){
+      return "免费";
+    }else if("vip"==isCharge){
+      return "会员";
+    }
+  }
+
 }

@@ -216,14 +216,29 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   //播放视频
   goToVideoPlay(index) async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
-      routerParamMap["videoplay_courseKey"] = widget.course;
-      routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
-      await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
-      courseVideosWidgetState.currentState.updateState();
+    String vipLevel = await LoginUtil.getVipLevel();
+    String vipExpiredTime = await LoginUtil.getVipExpiredTime();
+    if(widget.course.isCharge=="vip"){
+      if(int.parse(vipLevel)>0){
+        toPlay(index);
+      }else{
+        UIUtils.showToast2("会员专享课程!");
+      }
     }else{
-      UIUtils.showToast2("付费课程,前去购买？");
+      if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
+        toPlay(index);
+      }else{
+        UIUtils.showToast2("付费课程,前去购买？");
+      }
     }
+  }
+
+  //播放
+  toPlay(index) async {
+    routerParamMap["videoplay_courseKey"] = widget.course;
+    routerParamMap["videoplay_cVideosKey"] = widget.cVideos;
+    await NavigatorUtil.goRouterPage(context, "${Routes.videoPlay}?index=${index}");
+    courseVideosWidgetState.currentState.updateState();
   }
 
 }

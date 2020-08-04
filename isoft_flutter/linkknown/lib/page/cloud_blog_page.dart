@@ -246,7 +246,7 @@ class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
       child: Container(
-        margin: EdgeInsets.only(right: 180),
+        margin: EdgeInsets.only(right: 160),
         child: this.child,
       ),
     );

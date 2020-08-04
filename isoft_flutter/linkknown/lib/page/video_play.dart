@@ -92,18 +92,32 @@ class VideoPlayState extends State<VideoPlayPage> {
 
   playVideoByIndex (index) async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
-      widget.index = index;
-      // 重置播放器进入 idle 状态，可以再次 setDataSource
-      await player.reset();
-      await initVideoData();
-      setState(() {
-
-      });
+    String vipLevel = await LoginUtil.getVipLevel();
+    String vipExpiredTime = await LoginUtil.getVipExpiredTime();
+    if(widget.course.isCharge=="vip"){
+      if(int.parse(vipLevel)>0){
+        toPlay(index);
+      }else{
+        UIUtils.showToast2("会员专享课程!");
+      }
     }else{
-      UIUtils.showToast2("付费课程,前去购买？");
+      if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
+        toPlay(index);
+      }else{
+        UIUtils.showToast2("付费课程,前去购买？");
+      }
     }
   }
+
+  //播放
+  toPlay(index) async {
+    widget.index = index;
+    // 重置播放器进入 idle 状态，可以再次 setDataSource
+    await player.reset();
+    await initVideoData();
+    setState(() {});
+  }
+
 
   @override
   void dispose() {

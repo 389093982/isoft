@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage>
   List<TabViewModel> viewModels = [
     TabViewModel(title: '免费', widget: CourseFilterWidget("", "free")),
     TabViewModel(title: '付费', widget: CourseFilterWidget("", "charge")),
+    TabViewModel(title: '会员', widget: CourseFilterWidget("", "vip")),
     TabViewModel(title: '全部', widget: CourseFilterWidget("", "")),
     TabViewModel(title: '推荐', widget: TabRecommendWidget()),
-    TabViewModel(title: '会员', widget: Text("宠物卡片")),
   ]
       .map((item) => TabViewModel(
             title: item.title,

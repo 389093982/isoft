@@ -36,8 +36,8 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
   // 当前正在播放的视频 id
   int currentVideoId = -1;
 
-  //是否展示免费、付费按钮
-  bool isShowFreeAndChargeButton = true;
+  //是否展示免费、付费、vip按钮
+  bool isShowFreeChargeAndVipButton = true;
 
   void updateState ({int currentVideoId = -1}) async {
     if (currentVideoId > 0) {
@@ -67,11 +67,11 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
     });
   }
 
-  //是否展示免费、付费按钮
+  //是否展示免费、付费、vip按钮
   showFreeAndChargeButton() async {
     String loginUserName = await LoginUtil.getLoginUserName();
     if(loginUserName==widget.course.courseAuthor){
-      isShowFreeAndChargeButton = false;
+      isShowFreeChargeAndVipButton = false;
       setState(() {
         //刷新
       });
@@ -187,15 +187,24 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.all(0),
-                  child: isShowFreeAndChargeButton==false?Text(""):
-                            widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
-                            FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
-                              borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                              borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
-                                :
-                            FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
-                              borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                              borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                  child: isShowFreeChargeAndVipButton==false?Text(""):
+                            (
+                                widget.course.isCharge=="vip"?
+                                FunctionButtonLabel(labelText: "Vip",labelTextColor: Colors.red,
+                                  borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                                  borderColor: Colors.red,paddingHorizontal: 3,paddingVertical: 3,)
+                                    :
+                                (
+                                    widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
+                                    FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
+                                      borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                                      borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
+                                        :
+                                    FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+                                      borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                                      borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                                )
+                            )
                 ),
               ),
             ],
@@ -230,15 +239,24 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
                       SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: renderColor(widget.cVideos[index].id),),
                       Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: renderColor(widget.cVideos[index].id), fontSize: 12),),
                       SizedBox(width: 10,),
-                      isShowFreeAndChargeButton==false?Text(""):
-                        widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
-                        FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
-                          borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                          borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
-                            :
-                        FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
-                          borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                          borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                      isShowFreeChargeAndVipButton==false?Text(""):
+                      (
+                          widget.course.isCharge=="vip"?
+                          FunctionButtonLabel(labelText: "Vip",labelTextColor: Colors.red,
+                            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                            borderColor: Colors.red,paddingHorizontal: 3,paddingVertical: 3,)
+                              :
+                          (
+                              widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
+                              FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
+                                borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                                borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
+                                  :
+                              FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+                                borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+                                borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
+                          )
+                      )
                     ],
                   ),
                 ),
