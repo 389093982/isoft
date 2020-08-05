@@ -578,10 +578,10 @@ class LinkKnownApi {
   }
 
   //发布的课程
-  static Future<CourseMetaResponse> getCourseListByUserName(
+  static Future<CourseMetaResponse> GetCourseListByUserName(
       String userName, int currentPage, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/getCourseListByUserName',
+        '/api/iwork/httpservice/isoft_linkknown_api/GetCourseListByUserName',
         params: {
           'userName': userName,
           'current_page': currentPage,
@@ -591,10 +591,10 @@ class LinkKnownApi {
   }
 
   //查询收藏 -- 课程id集合
-  static Future<UserFavoriteListResponse> getUserFavoriteList(String userName,
+  static Future<UserFavoriteListResponse> GetUserFavoriteList(String userName,
       String favorite_type, int currentPage, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/getUserFavoriteList',
+        '/api/iwork/httpservice/isoft_linkknown_api/GetUserFavoriteList',
         params: {
           'user_name': userName,
           'favorite_type': favorite_type,
@@ -605,10 +605,10 @@ class LinkKnownApi {
   }
 
   //观看的课程 -- ids集合
-  static Future<CourseHistoryResponse> showCourseHistory(
+  static Future<CourseHistoryResponse> ShowCourseHistory(
       String userName, int currentPage, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/showCourseHistory',
+        '/api/iwork/httpservice/isoft_linkknown_api/ShowCourseHistory',
         params: {
           'userName': userName,
           'current_page': currentPage,

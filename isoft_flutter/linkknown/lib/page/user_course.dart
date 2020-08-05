@@ -60,7 +60,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
 
     //发布的课程
     if("DISPLAY_TYPE_NEW"==widget.searchLable){
-      LinkKnownApi.getCourseListByUserName(userName,current_page, offset).catchError((e) {
+      LinkKnownApi.GetCourseListByUserName(userName,current_page, offset).catchError((e) {
         UIUtils.showToast((e as LinkKnownError).errorMsg);
         setState(() {
           isLoading = false;
@@ -79,7 +79,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
 
     //收藏的课程
     }else if("DISPLAY_TYPE_FAVORITE"==widget.searchLable){
-      LinkKnownApi.getUserFavoriteList(userName,"course_collect",current_page, offset).catchError((e) {
+      LinkKnownApi.GetUserFavoriteList(userName,"course_collect",current_page, offset).catchError((e) {
         UIUtils.showToast((e as LinkKnownError).errorMsg);
       }).then((value) {
         //查询到课程id集合
@@ -120,7 +120,7 @@ class _UserCourseState extends State<UserCourseWidget> with AutomaticKeepAliveCl
 
     //观看的课程
     }else if("DISPLAY_TYPE_VIEWED"==widget.searchLable){
-      LinkKnownApi.showCourseHistory(widget.userName,current_page, offset).catchError((e) {
+      LinkKnownApi.ShowCourseHistory(widget.userName,current_page, offset).catchError((e) {
         UIUtils.showToast((e as LinkKnownError).errorMsg);
       }).then((value) {
 
