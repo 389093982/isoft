@@ -173,19 +173,24 @@ class _AdvisePageState extends State<AdvisePage> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text(users
-                                        .firstWhere((element) =>
-                                            element.userName ==
-                                            adviseList[position].createdBy)
-                                        ?.nickName),
-                                    SizedBox(
-                                      width: 10,
+                                    Text(users.firstWhere((element) => element.userName == adviseList[position].createdBy)?.nickName,overflow: TextOverflow.ellipsis,style: TextStyle(color:Colors.orangeAccent)),
+                                    Image.asset(
+                                      "male"==users.firstWhere((element) => element.userName == adviseList[position].createdBy)?.gender?"images/ic_male.png":"images/ic_female.png",
+                                      height: 20,
+                                      fit: BoxFit.fill,
                                     ),
-                                    Text(DateUtil.format2StandardTime(
-                                        adviseList[position].createdTime)),
                                   ],
                                 ),
-                                Text(adviseList[position].advise),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 260,
+                                      child: Text(adviseList[position].advise,overflow:TextOverflow.clip,style: TextStyle(color: Colors.black45,fontSize: 13),)
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Text(DateUtil.format2StandardTime(adviseList[position].createdTime),style: TextStyle(color:Colors.grey,fontSize: 12),),
                               ],
                             )
                           ],
