@@ -38,6 +38,10 @@ class Routes {
 
 
   //====================【我的】====================
+  //我的关注
+  static String myAttention = "/myAttention";
+  //我的粉丝
+  static String myFensi = "/myFensi";
   //个性签名
   static String userSignature = "/userSignature";
   //用户信息
@@ -127,6 +131,10 @@ class Routes {
 
 
     //====================【我的】====================
+    //我的关注
+    router.define(myAttention, handler: myAttentionHandler);
+    //我的粉丝
+    router.define(myFensi, handler: myFensiHandler);
     //个性签名
     router.define(userSignature, handler: userSignatureHandler);
     //用户信息

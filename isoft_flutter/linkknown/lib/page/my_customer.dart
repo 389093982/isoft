@@ -109,7 +109,7 @@ class _MyCustomerState extends State<MyCustomerWidget> with AutomaticKeepAliveCl
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: ListView.builder(
                 physics: AlwaysScrollableScrollPhysics(),
-                itemExtent:95,
+                itemExtent:110,
                 itemCount: userLinkAgentList.length,
                 controller: scrollController,
                 itemBuilder: (BuildContext context, int index) {

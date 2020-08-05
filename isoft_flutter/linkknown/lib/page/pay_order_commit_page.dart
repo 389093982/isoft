@@ -209,7 +209,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
                     child: Container(
                       alignment: Alignment.topCenter,
                       child: FunctionButtonLabel(labelText: "                    立即付款                    ",
-                        labelSize: 18,borderHeight: 24,bgColor: Colors.green,borderColor: Colors.green,),
+                        labelSize: 18,borderHeight: 28,bgColor: Colors.green,borderColor: Colors.green,),
                     ),
                   ),
                 ),
