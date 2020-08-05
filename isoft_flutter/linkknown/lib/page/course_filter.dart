@@ -39,7 +39,6 @@ class _CourseFilterState extends State<CourseFilterWidget>
     initData();
 
     scrollController.addListener(() {
-      // 预留底部 loading 的高度 30
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         if (paginator != null && paginator.currpage < paginator.totalpages) {
@@ -88,8 +87,6 @@ class _CourseFilterState extends State<CourseFilterWidget>
           });
         }
       }).catchError((e) {
-//        UIUtils.showToast((e as LinkKnownError).errorMsg);
-
         setState(() {
           loadingStatus = LoadingStatus.LOADED_FAILED;
         });
