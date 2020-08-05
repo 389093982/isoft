@@ -221,13 +221,23 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               Text(
-                "积分 ${userPoints}",
+                "积分: ${userPoints}",
                 style: TextStyle(color: Colors.white),
               ),
-              Text(
-                "关注 ${attentionCounts}  粉丝 ${fensiCounts}",
-                style: TextStyle(color: Colors.white),
-              ),
+              Row(children: <Widget>[
+                GestureDetector(
+                  onTap: (){
+                    NavigatorUtil.goRouterPage(context, Routes.myAttention);
+                  },
+                  child: Text("关注: ${attentionCounts}     ", style: TextStyle(color: Colors.white),),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    NavigatorUtil.goRouterPage(context, Routes.myFensi);
+                  },
+                  child: Text("粉丝: ${fensiCounts}", style: TextStyle(color: Colors.white),),
+                ),
+              ],),
               Text(
                 StringUtil.checkEmpty(userSignature) == true
                     ? "这个家伙很懒，什么个性签名都没有留下"
