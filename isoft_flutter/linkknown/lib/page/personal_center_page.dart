@@ -184,7 +184,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                         ],),),
                         Positioned(top: 250, left: 40, child: Text("积分: "+(userPoints??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
                         Positioned(top: 270, left: 40, child: Text("关注: "+(attentionCounts??"") + "  粉丝: "+(fensiCounts??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
-                        Positioned(top: 290, left: 40, child: Text((userSignature??""),style: TextStyle(fontSize: 13,color: Colors.black54)),),
+                        Positioned(top: 290, left: 40, child: Text((userSignature??""),style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,),),
                         Positioned(top: 230, left: 250, child: showAttentionButton ?
                         (isAttention?
                         GestureDetector(

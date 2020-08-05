@@ -2,110 +2,160 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/pay_shopping_cart_response.dart';
-import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
-import 'package:linkknown/widgets/common_button.dart';
+import 'package:linkknown/model/query_attention_or_fensi_response.dart';
+import 'package:linkknown/widgets/attention_or_fensi_item.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/goods_item.dart';
 
 class MyAttentionPage extends StatefulWidget {
   @override
-  _UserSignaturePageState createState() => _UserSignaturePageState();
+  _MyAttentionPageState createState() => _MyAttentionPageState();
 }
 
-class _UserSignaturePageState extends State<MyAttentionPage> {
-
-  TextEditingController signatureController;
-
-  @override
-  void initState() {
-    super.initState();
-    initSignature();
-  }
-
-  initSignature() async {
-    String loginUserName = await LoginUtil.getLoginUserName();
-    LinkKnownApi.getUserDetail(loginUserName).then((value) {
-      if (value != null) {
-        if (value.status == "SUCCESS") {
-          signatureController = new TextEditingController(text: value.user.userSignature);
-          setState(() {
-            //刷新
-          });
-        }
-      }
-    }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    });
-  }
-
+class _MyAttentionPageState extends State<MyAttentionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Text("编辑个性签名"),
+          title: Text("我的关注"),
         ),
         preferredSize: Size.fromHeight(60.0),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(children: <Widget>[
-          SizedBox(height: 10,),
-          TextField(
-            controller: signatureController,
-            maxLines: 2,
-            maxLength: 30,
-            decoration: InputDecoration(
-              labelText: '个性签名',
-            ),
-          ),
-          SizedBox(height: 20,),
-          CommonButton(
-            callback: () {
-              editUserSignature();
-            },
-            content: '提 交',
-            //width: double.infinity,
-          ),
-        ],),
-      ),
+      body: MyAttentionWidget(),
     );
   }
+}
 
+class MyAttentionWidget extends StatefulWidget {
+  MyAttentionWidget();
 
-  //编辑个性签名
-  editUserSignature(){
-    if(StringUtil.checkEmpty(signatureController.text)){
-      UIUtils.showToast("个性签名不能为空..");
-      return;
-    }
-    LinkKnownApi.EditUserSignature(signatureController.text).then((value) {
-      if (value != null) {
-        if (value.status == "SUCCESS") {
-          UIUtils.showToast("更新成功");
-          NavigatorUtil.goBack(context);
+  @override
+  _MyAttentionState createState() => _MyAttentionState();
+}
+
+class _MyAttentionState extends State<MyAttentionWidget> {
+  List<AttentionOrFensi> attentions = new List();
+  ScrollController scrollController = ScrollController();
+
+  Paginator paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 发送网络请求加载数据
+    initData();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (paginator != null && paginator.currpage < paginator.totalpages) {
+          loadPageData(current_page + 1, 10, delayed: true);
         }
       }
-    }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
+  }
 
+  void initData() {
+    loadPageData(1, 10, resetLoadingStatus: true);
+  }
+
+  Future<void> _onRefresh() async {
+    initData();
+  }
+
+  void loadPageData(int _currentpage, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
+      return;
+    }
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _currentpage;
+
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.QueryAttentionOrFensi("user","Attention",current_page, offset)
+          .then((value) async {
+        if (value?.status == "SUCCESS") {
+          if (current_page == 1) {
+            attentions.clear();
+          }
+          attentions.addAll(value.queryDatas);
+
+          paginator = value.paginator;
+          setState(() {
+            if (paginator.totalcount == 0) {
+              loadingStatus = LoadingStatus.LOADED_EMPTY;
+            } else {
+              loadingStatus = paginator.currpage < paginator.totalpages
+                  ? LoadingStatus.LOADED_COMPLETED
+                  : LoadingStatus.LOADED_COMPLETED_ALL;
+            }
+          });
+        } else {
+          setState(() {
+            loadingStatus = LoadingStatus.LOADED_FAILED;
+          });
+        }
+      }).catchError((err) {
+        AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
+
+        setState(() {
+          loadingStatus = LoadingStatus.LOADED_FAILED;
+        });
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScrollConfiguration(
+        behavior: NoShadowScrollBehavior(),
+        child: RefreshIndicator(
+          //指示器颜色
+          color: Theme.of(context).primaryColor,
+          //指示器显示时距顶部位置
+          displacement: 40,
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: <Widget>[
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int position) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                          child: AttentionOrFensiItemWidget(attentions[position],),
+                        );
+                      }, childCount: attentions.length)),
+              SliverToBoxAdapter(
+                child: FooterLoadingWidget(
+                  loadingStatus: loadingStatus,
+                  refreshOnFailCallBack: (status) {
+                    if (status == LoadingStatus.LOADED_EMPTY) {
+                      initData();
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          onRefresh: _onRefresh,
+        ));
   }
 
   @override
   void dispose() {
-    signatureController?.dispose();
+    scrollController?.dispose();
     super.dispose();
   }
-
-
 }
-
-

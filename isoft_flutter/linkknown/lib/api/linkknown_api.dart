@@ -24,6 +24,7 @@ import 'package:linkknown/model/message.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
 import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/model/query_attention_or_fensi_response.dart';
 import 'package:linkknown/model/query_coupon_by_id_response.dart';
 import 'package:linkknown/model/query_coupon_center_list_response.dart';
 import 'package:linkknown/model/query_general_coupon_targets_response.dart';
@@ -679,6 +680,19 @@ class LinkKnownApi {
           'state': state,
         });
     return BaseResponse.fromJson(response.data);
+  }
+
+  // 查询粉丝和关注
+  static Future<QueryAttentionOrFensiResponse> QueryAttentionOrFensi(String attention_object_type,String AttentionOrFensi, int current_page, int offset) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryAttentionOrFensi',
+        params: {
+          'attention_object_type': attention_object_type,
+          'AttentionOrFensi': AttentionOrFensi,
+          'current_page': current_page,
+          'offset': offset,
+        });
+    return QueryAttentionOrFensiResponse.fromJson(response.data);
   }
 
   // 添加博客分类

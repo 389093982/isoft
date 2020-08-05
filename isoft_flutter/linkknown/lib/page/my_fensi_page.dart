@@ -50,7 +50,7 @@ class _UserSignaturePageState extends State<MyFensiPage> {
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(
-          title: Text("编辑个性签名"),
+          title: Text("我的粉丝"),
         ),
         preferredSize: Size.fromHeight(60.0),
       ),

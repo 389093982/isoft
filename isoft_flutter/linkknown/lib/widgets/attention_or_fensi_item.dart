@@ -7,6 +7,7 @@ import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
+import 'package:linkknown/model/query_attention_or_fensi_response.dart';
 import 'package:linkknown/model/user_link_agent_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
@@ -17,18 +18,18 @@ import 'package:linkknown/widgets/common_label.dart';
 
 import 'clickable_textimage.dart';
 
-class UserLinkAgentItemWidget extends StatefulWidget {
-  UserLinkAgent userLinkAgent;
+class AttentionOrFensiItemWidget extends StatefulWidget {
+  AttentionOrFensi attentionOrFensi;
 
-  UserLinkAgentItemWidget(this.userLinkAgent);
+  AttentionOrFensiItemWidget(this.attentionOrFensi);
 
   @override
-  _UserLinkAgentItemState createState() => _UserLinkAgentItemState();
+  _AttentionOrFensiItemState createState() => _AttentionOrFensiItemState();
 }
 
-class _UserLinkAgentItemState extends State<UserLinkAgentItemWidget>
+class _AttentionOrFensiItemState extends State<AttentionOrFensiItemWidget>
     with TickerProviderStateMixin {
-  _UserLinkAgentItemState();
+  _AttentionOrFensiItemState();
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +51,14 @@ class _UserLinkAgentItemState extends State<UserLinkAgentItemWidget>
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.userLinkAgent.userName}");
+                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.attentionOrFensi.userName}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ClipOval(
                     child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.userLinkAgent.smallIcon),
+                      UIUtils.replaceMediaUrl(widget.attentionOrFensi.smallIcon),
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -76,22 +77,17 @@ class _UserLinkAgentItemState extends State<UserLinkAgentItemWidget>
                   SizedBox(height: 5,),
                   Row(
                     children: <Widget>[
-                      Text(widget.userLinkAgent.nickName,style: TextStyle(fontSize: 15),),
+                      Text(widget.attentionOrFensi.nickName,style: TextStyle(fontSize: 15),),
                       Image.asset(
-                        "male"==widget.userLinkAgent.gender?"images/ic_male.png":"images/ic_female.png",
+                        "male"==widget.attentionOrFensi.gender?"images/ic_male.png":"images/ic_female.png",
                         height: 20,
                         fit: BoxFit.fill,
                       ),
                     ],
                   ),
                   SizedBox(height: 5,),
-                  Row(children: <Widget>[
-                    Text("关联时间:"+DateUtil.format2StandardTime(widget.userLinkAgent.bindTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
-                    SizedBox(width: 10,),
-                    Text("回报率:"+(double.parse(widget.userLinkAgent.returnRate)*100).toStringAsFixed(0)+"%",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                  ],),
                   SizedBox(height: 5,),
-                  Text(""==widget.userLinkAgent.userSignature?"暂无签名":widget.userLinkAgent.userSignature,
+                  Text(""==widget.attentionOrFensi.userSignature?"暂无签名":widget.attentionOrFensi.userSignature,
                       softWrap: true,
                       textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
