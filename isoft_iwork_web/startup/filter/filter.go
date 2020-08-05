@@ -17,6 +17,11 @@ import (
 func FilterFunc(ctx *context.Context) {
 	app_name := ctx.Input.Param(":app_name")
 	work_name := ctx.Input.Param(":work_name")
+	// A-Z: 65-90
+	if work_name[0] < 65 || work_name[0] > 90 {
+		ctx.Output.JSON(&map[string]interface{}{"status": "ERROR", "errorMsg": "The api interface is not accessible!"}, true, false)
+		return
+	}
 	appId, _ := memory.GetAppIdWithCache(-1, app_name)
 	workCache, err := iworkcache.GetWorkCacheWithName(appId.Id, work_name)
 	if err != nil {
