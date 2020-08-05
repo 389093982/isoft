@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
+import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/customtag_course_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -201,48 +202,119 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
 
   Widget getListBodyWidget() {
     return SliverList(
-        delegate:
-            SliverChildBuilderDelegate((BuildContext context, int position) {
-      return Container(
-        padding: EdgeInsets.all(5),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                NavigatorUtil.goRouterPage(context,
-                    "${Routes.courseDetail}?course_id=${customTagCourses[position].id}");
-              },
-              child: Image.network(
-                UIUtils.replaceMediaUrl(customTagCourses[position].smallImage),
-                height: 80,
-                width: 120,
-                fit: BoxFit.fill,
+        delegate: SliverChildBuilderDelegate((BuildContext context, int position) {
+            return Card(
+              color: Colors.white,
+              //z轴的高度，设置card的阴影
+              elevation: 1.2,
+              //设置shape，这里设置成了R角
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-                child: Container(
-                    child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(customTagCourses[position].courseName),
-                Text(
-                    "${customTagCourses[position].courseType}/${customTagCourses[position].courseSubType}", style: TextStyle(color: Colors.grey[700], fontSize: 12)),
-                Text(
-                  customTagCourses[position].courseShortDesc,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                    style: TextStyle(color: Colors.grey[700], fontSize: 12)
-                ),
-              ],
-            ))),
-          ],
-        ),
-      );
-    }, childCount: customTagCourses.length));
+              // 对Widget截取的行为，比如这里 Clip.antiAlias 指抗锯齿
+              clipBehavior: Clip.antiAlias,
+              semanticContainer: false,
+              child: Row(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      NavigatorUtil.goRouterPage(
+                          context, "${Routes.courseDetail}?course_id=${customTagCourses[position].id}");
+                    },
+                    // AspectRatio的作用是调整 child 到设置的宽高比
+                    child:Container(
+                      padding: EdgeInsets.all(10),
+                      child: Image.network(
+                        UIUtils.replaceMediaUrl(customTagCourses[position].smallImage),
+                        width: 130,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(customTagCourses[position].courseName,style: TextStyle(fontSize: 15),),
+                          SizedBox(height: 5,),
+                          Text(customTagCourses[position].courseShortDesc,
+                              softWrap: true,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(fontSize: 12,color: Colors.black54)
+                          ),
+                          SizedBox(height: 5,),
+                          Container(
+                            margin: EdgeInsets.only(top: 2),
+                            child: Row(
+                              children: <Widget>[
+                                // 课程集数和播放次数
+                                Image.asset(
+                                  "images/ic_views.png",
+                                  width: 15,
+                                  height: 15,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(customTagCourses[position].courseNumber.toString()),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Image.asset(
+                                  "images/ic_list_counts.png",
+                                  width: 15,
+                                  height: 15,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(customTagCourses[position].watchNumber.toString()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 5,),
+                          Row(
+                            children: <Widget>[
+                              // offstage 组件控制组件是否隐藏
+                              // 通过offsatge字段控制child是否显示,比较常用的控件
+                              Offstage(
+                                offstage: !UIUtils.isValidPrice(customTagCourses[position].price),
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 5),
+                                  child: Text(
+                                    Constants.RMB + customTagCourses[position].price,
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                              Offstage(
+                                offstage: customTagCourses[position] == null
+                                    ? false
+                                    : customTagCourses[position].isShowOldPrice == "N",
+                                child: Text(
+                                  Constants.RMB + customTagCourses[position].oldPrice,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough),
+                                ),
+                              ),
+                            ],
+                          )
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+        }, childCount: customTagCourses.length)
+    );
   }
 
   Widget getCustomTagCourseWidget(CustomTagCourse customTagCourse) {
@@ -266,7 +338,7 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
         ),
         Text(
           customTagCourse.courseName,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300,),overflow: TextOverflow.ellipsis,
         ),
         Text("${customTagCourse.courseType}/${customTagCourse.courseSubType}",
             overflow: TextOverflow.ellipsis,
