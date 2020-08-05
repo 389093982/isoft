@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/model/course_detail.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
+import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
@@ -92,10 +93,13 @@ class VideoPlayState extends State<VideoPlayPage> {
 
   playVideoByIndex (index) async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    String vipLevel = await LoginUtil.getVipLevel();
-    String vipExpiredTime = await LoginUtil.getVipExpiredTime();
+    String vipLevel = await LoginUtil.getVipLevel()??"0";
+    String vipExpiredTime = DateUtil.format2StandardTime(await LoginUtil.getVipExpiredTime()??"19700101235959");
+    String nowTime = DateUtil.getNow_yyyyMMddHHmmss();
+    bool compare = DateUtil.compareStandardTime(vipExpiredTime, nowTime);
+
     if(widget.course.isCharge=="vip"){
-      if(int.parse(vipLevel)>0){
+      if(int.parse(vipLevel)>0 && compare){
         toPlay(index);
       }else{
         UIUtils.showToast2("会员专享课程!");

@@ -14,6 +14,7 @@ import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/route/reoutes_handler.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -216,10 +217,13 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   //播放视频
   goToVideoPlay(index) async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    String vipLevel = await LoginUtil.getVipLevel();
-    String vipExpiredTime = await LoginUtil.getVipExpiredTime();
+    String vipLevel = await LoginUtil.getVipLevel()??"0";
+    String vipExpiredTime = DateUtil.format2StandardTime(await LoginUtil.getVipExpiredTime()??"19700101235959");
+    String nowTime = DateUtil.getNow_yyyyMMddHHmmss();
+    bool compare = DateUtil.compareStandardTime(vipExpiredTime, nowTime);
+
     if(widget.course.isCharge=="vip"){
-      if(int.parse(vipLevel)>0){
+      if(int.parse(vipLevel)>0 && compare){
         toPlay(index);
       }else{
         UIUtils.showToast2("会员专享课程!");

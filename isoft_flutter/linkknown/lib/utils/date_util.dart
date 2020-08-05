@@ -64,4 +64,13 @@ class DateUtil {
     }
   }
 
+
+  //比较两个标准时间 yyyyMMddHHssmm 的大小
+  static bool compareStandardTime(String time1,String time2){
+    String t1 = time1.replaceAll(":", "").replaceAll("-", "").replaceAll(" ", "");
+    String t2 = time2.replaceAll(":", "").replaceAll("-", "").replaceAll(" ", "");
+    return int.parse(t1)-int.parse(t2)>0;
+  }
+
+
 }
