@@ -84,13 +84,7 @@ class CloudBlogState extends State<CloudBlogWidget>
       search_data = "";
     }
 
-    LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).catchError((e) {
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).then((value) {
       List<Blog> blogList = value.blogs;
       if (blogList.length > 0) {
         //1.给blogs 添加内容
@@ -127,6 +121,12 @@ class CloudBlogState extends State<CloudBlogWidget>
         });
         UIUtils.showToast("未匹配到相应数据..");
       }
+    }).catchError((e) {
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

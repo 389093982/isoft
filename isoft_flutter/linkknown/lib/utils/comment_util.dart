@@ -124,9 +124,7 @@ class CommentUtil {
    int parent_id = 0;                   // 一级评论
    String refer_user_name = author;     // 被评论人
 
-   LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).catchError((e) {
-     UIUtils.showToast((e as LinkKnownError).errorMsg);
-   }).then((value) {
+   LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).then((value) {
      if(value.status=="SUCCESS"){
        UIUtils.showToast("评论成功");
        Navigator.of(context).pop();
@@ -134,6 +132,8 @@ class CommentUtil {
      }else{
        UIUtils.showToast(value.errorMsg);
      }
+   }).catchError((e) {
+     UIUtils.showToast((e as LinkKnownError).errorMsg);
    });
  }
 

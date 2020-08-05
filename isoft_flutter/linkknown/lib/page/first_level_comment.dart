@@ -61,17 +61,17 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
     isLoading = true;
     page = current_page;
 
-    LinkKnownApi.FilterCommentFirstLevel(widget.theme_pk,widget.theme_type,widget.comment_type,current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-    }).then((value) {
+    LinkKnownApi.FilterCommentFirstLevel(widget.theme_pk,widget.theme_type,widget.comment_type,current_page, offset).then((value) {
       if (current_page == 1) {
         firstLevelComments.clear();
       }
       firstLevelComments.addAll(value.comments);
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
       setState(() {
         isLoading = false;
         showMore = false;

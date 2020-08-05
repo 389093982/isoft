@@ -63,17 +63,17 @@ class _SecondLevelCommentState extends State<SecondLevelCommentWidget> with Auto
     isLoading = true;
     page = current_page;
 
-    LinkKnownApi.FilterCommentSecondLevel(int.parse(widget.theme_pk),widget.theme_type,widget.org_parent_id,current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-      setState(() {
-        isLoading = false;
-        showMore = false;
-      });
-    }).then((value) {
+    LinkKnownApi.FilterCommentSecondLevel(int.parse(widget.theme_pk),widget.theme_type,widget.org_parent_id,current_page, offset).then((value) {
       if (current_page == 1) {
         secondLevelComments.clear();
       }
       secondLevelComments.addAll(value.comments);
+      setState(() {
+        isLoading = false;
+        showMore = false;
+      });
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
       setState(() {
         isLoading = false;
         showMore = false;

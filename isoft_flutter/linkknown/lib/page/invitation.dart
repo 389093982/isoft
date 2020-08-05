@@ -61,18 +61,18 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
     isLoading = true;
     page = current_page;
 
-    LinkKnownApi.QueryTodayInviteMe(current_page, offset).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    LinkKnownApi.QueryTodayInviteMe(current_page, offset).then((value) {
+      if (current_page == 1) {
+        SomeBodyInviteMeList.clear();
+      }
+      SomeBodyInviteMeList.addAll(value.userLinkAgentList);
 
       setState(() {
         isLoading = false;
         showMore = false;
       });
-    }).then((value) {
-      if (current_page == 1) {
-        SomeBodyInviteMeList.clear();
-      }
-      SomeBodyInviteMeList.addAll(value.userLinkAgentList);
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
         isLoading = false;
@@ -205,9 +205,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
       return;
     }
 
-    LinkKnownApi.AddUserLinkAgent(userName).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.AddUserLinkAgent(userName).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("邀请成功！请尽快通知对方接受邀请");
       }else{
@@ -218,6 +216,8 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
 
         }
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
 
   }

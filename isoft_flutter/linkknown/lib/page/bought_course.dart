@@ -61,18 +61,18 @@ class _BoughtCourseState extends State<BoughtCourseWidget> with TickerProviderSt
     page = current_page;
 
     String userName = await LoginUtil.getUserName();
-    LinkKnownApi.queryPayOrderList(current_page, offset,userName,"PAID",goods_type:"course_theme_type").catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    LinkKnownApi.queryPayOrderList(current_page, offset,userName,"PAID",goods_type:"course_theme_type").then((value) {
+      if (current_page == 1) {
+        orders.clear();
+      }
+      orders.addAll(value.orders);
 
       setState(() {
         isLoading = false;
         showMore = false;
       });
-    }).then((value) {
-      if (current_page == 1) {
-        orders.clear();
-      }
-      orders.addAll(value.orders);
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
         isLoading = false;

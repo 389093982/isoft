@@ -146,14 +146,14 @@ class __LoginWidgetState extends State<_LoginWidget> {
 
   //查询用户基本信息
   getUserDetail(String userName) {
-    LinkKnownApi.getUserDetail(userName).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.getUserDetail(userName).then((value) {
       if (value != null) {
         if (value.status == "SUCCESS") {
           LoginUtil.memoryUserDetail(value);
         }
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
