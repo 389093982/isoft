@@ -223,7 +223,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     bool compare = DateUtil.compareStandardTime(vipExpiredTime, nowTime);
 
     if(widget.course.isCharge=="vip"){
-      if(int.parse(vipLevel)>0 && compare){
+      if((int.parse(vipLevel)>0 && compare) || widget.course.courseAuthor==loginUserName){
         toPlay(index);
       }else{
         UIUtils.showToast2("会员专享课程!");
