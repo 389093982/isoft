@@ -157,11 +157,15 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
     return Row(
       children: <Widget>[
         Container(
+          height: 50,
           width: 80,
           child: getLoginHeaderWidget(),
         ),
         Expanded(
-          child: Center(child: MingYanWidget(),),
+          child: Container(
+            transform: Matrix4.translationValues(0, -3, 0),
+            child: Center(child: MingYanWidget(),),
+          ),
         ),
         Container(
           margin: EdgeInsets.only(right: 15),
@@ -176,11 +180,14 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
             // 给铃铛添加旋转动画
             child: RotationTransition(
               turns: rotationAnimation,
-              child: SvgPicture.asset(
-                "images/lingdang.svg",
-                color: Colors.white,
-                width: 23,
-                height: 23,
+              child: Container(
+                transform: Matrix4.translationValues(0, -5, 0),
+                child: SvgPicture.asset(
+                  "images/lingdang.svg",
+                  color: Colors.white,
+                  width: 23,
+                  height: 23,
+                ),
               ),
             ),
           ),
@@ -195,11 +202,11 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
         children: <Widget>[
           InkWell(
             onTap: (){
-              NavigatorUtil.goRouterPage(context, Routes.personalCenter);
+              NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${this.loginUserName}");
             },
             child: Container(
               transform: Matrix4.translationValues(-10, -5, 0),
-              child: HeaderIconWidget(headerIcon, width: 33, height: 33,),
+              child: HeaderIconWidget(headerIcon, HeaderIconSize.SIZE_SMALL_40),
             ),
           ),
           SizedBox(width: 5,),

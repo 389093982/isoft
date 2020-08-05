@@ -12,6 +12,7 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/accept_invite_button_label.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 import 'my_customer.dart';
 
@@ -161,12 +162,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
                           left: 30,
                           child: ClipOval(
                             child:
-                            StringUtil.checkNotEmpty(headIcon)?Image.network(
-                              UIUtils.replaceMediaUrl(headIcon??""),
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.fill,
-                            ):Image.asset(
+                            StringUtil.checkNotEmpty(headIcon)?HeaderIconWidget(headIcon, HeaderIconSize.SIZE_BIG_80):Image.asset(
                                 "images/linkknown.jpg",
                                 width: 80,
                                 height: 80,

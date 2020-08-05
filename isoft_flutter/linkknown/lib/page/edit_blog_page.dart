@@ -255,7 +255,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       UIUtils.showToast("文章分类不能为空");
       return;
     }
-    if (catalogNameList.indexOf(catalogNameController.text) <= 0) {
+    if (catalogNameList.indexOf(catalogNameController.text) < 0) {
       UIUtils.showToast("文章分类有误");
       return;
     }

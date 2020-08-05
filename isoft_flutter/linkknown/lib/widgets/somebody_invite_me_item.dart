@@ -16,6 +16,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 import 'accept_invite_button_label.dart';
 import 'button_label.dart';
@@ -60,12 +61,7 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
                 child:Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ClipOval(
-                    child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.userLinkAgent.smallIcon),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
+                    child: HeaderIconWidget(widget.userLinkAgent.smallIcon, HeaderIconSize.SIZE_NORMAL_50),
                   ),
                 ),
               ),

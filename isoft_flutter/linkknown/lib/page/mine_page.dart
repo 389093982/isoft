@@ -9,6 +9,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:provider/provider.dart';
 
 class MinePage extends StatefulWidget {
@@ -201,12 +202,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
               fit: BoxFit.cover,
             )
                 :
-            Image.network(
-              UIUtils.replaceMediaUrl(smallIcon),
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
-            ),
+            HeaderIconWidget(smallIcon, HeaderIconSize.SIZE_BIG_80),
           ),
         ),
         Container(

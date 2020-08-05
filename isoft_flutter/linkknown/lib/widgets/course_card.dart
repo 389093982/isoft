@@ -45,7 +45,6 @@ class _CourseCardState extends State<CourseCardWidget>
               children: <Widget>[
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 AspectRatio(
-//                  child: Image.network(UIUtils.replaceMediaUrl(course.smallImage), fit: BoxFit.fill, width: double.infinity,),
                   child: CachedImageWidget(
                       UIUtils.replaceMediaUrl(widget.course.smallImage)),
                   aspectRatio: 100 / 68,

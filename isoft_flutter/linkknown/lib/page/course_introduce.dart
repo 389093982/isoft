@@ -25,6 +25,7 @@ import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:share/share.dart';
 
@@ -322,12 +323,7 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
                   NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${this.user.userName}");
                 },
                 child: ClipOval(
-                  child: Image.network(
-                    UIUtils.replaceMediaUrl(this.user.smallIcon),
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
+                  child: HeaderIconWidget(this.user.smallIcon, HeaderIconSize.SIZE_NORMAL_50),
                 ),
               ),
               Column(

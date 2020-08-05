@@ -98,7 +98,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
                         Positioned(
                           top: 140,
                           left: 30,
-                          child: HeaderIconWidget(headIcon, width: 80, height: 80,),
+                          child: HeaderIconWidget(headIcon, HeaderIconSize.SIZE_BIG_80),
                         ),
                         Positioned(top: 190, left: 110, child: Text(nickName,style: TextStyle(fontSize: 18,color: Colors.black54),)),
                         Positioned(top: 190, left: 300,

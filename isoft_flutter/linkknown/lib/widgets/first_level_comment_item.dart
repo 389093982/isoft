@@ -17,6 +17,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
 
@@ -64,12 +65,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
                   child: ClipOval(
-                    child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.comment.smallIcon),
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
+                    child: HeaderIconWidget(widget.comment.smallIcon, HeaderIconSize.SIZE_SMALL_40),
                   ),
                 ),
               ),
@@ -183,17 +179,12 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
                     Container(
                       child: InkWell(
                         onTap: () {
-                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${firstLevelComment.userName}");
                         },
                         // AspectRatio的作用是调整 child 到设置的宽高比
                         child:Container(
                           child: ClipOval(
-                            child: Image.network(
-                              UIUtils.replaceMediaUrl(firstLevelComment.smallIcon),
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                            ),
+                            child: HeaderIconWidget(firstLevelComment.smallIcon, HeaderIconSize.SIZE_SMALL_40),
                           ),
                         ),
                       ),

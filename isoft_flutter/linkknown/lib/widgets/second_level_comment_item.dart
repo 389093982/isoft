@@ -17,6 +17,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
 
@@ -64,12 +65,7 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
                   child: ClipOval(
-                    child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.comment.createdUserSmallIcon),
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
+                    child: HeaderIconWidget(widget.comment.createdUserSmallIcon, HeaderIconSize.SIZE_SMALL_40),
                   ),
                 ),
               ),

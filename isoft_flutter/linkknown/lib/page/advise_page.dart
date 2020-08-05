@@ -163,7 +163,7 @@ class _AdvisePageState extends State<AdvisePage> {
                                       element.userName ==
                                       adviseList[position].createdBy)
                                   ?.smallIcon),
-                              size: HeaderIconSize.SIZE_BIG,
+                              HeaderIconSize.SIZE_NORMAL_50
                             ),
                             SizedBox(
                               width: 10,
