@@ -120,14 +120,14 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
 
   //接受邀请
   AgreeUserLinkAgent(String agent_user_name){
-    LinkKnownApi.AgreeUserLinkAgent(agent_user_name).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.AgreeUserLinkAgent(agent_user_name).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("关联成功！");
       }else{
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

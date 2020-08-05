@@ -33,16 +33,12 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
 
   void initData() {
     //查询博客详情
-    LinkKnownApi.ShowBlogArticleDetail(widget.blog_id.toString()).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.ShowBlogArticleDetail(widget.blog_id.toString()).then((value) {
       if (value.status == "SUCCESS") {
         this.blog = value.blog;
 
         //查询用户详情
-        LinkKnownApi.getUserDetail(this.blog.author).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
-        }).then((value) {
+        LinkKnownApi.getUserDetail(this.blog.author).then((value) {
           if (value.status == "SUCCESS") {
             this.user = value.user;
             setState(() {
@@ -51,11 +47,15 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
           } else {
             UIUtils.showToast(value.errorMsg);
           }
+        }).catchError((e) {
+          UIUtils.showToast((e as LinkKnownError).errorMsg);
         });
 
       } else {
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

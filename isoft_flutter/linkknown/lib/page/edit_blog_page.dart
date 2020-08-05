@@ -44,9 +44,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
   //查询博客分类
   void queryCatalogNames(){
     //获取文章分类
-    LinkKnownApi.GetMyCatalogs().catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.GetMyCatalogs().then((value) {
       if (value.status == "SUCCESS") {
         catalogNameList.clear();
         for (var catalog in value.catalogs) {
@@ -55,6 +53,8 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       } else {
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -227,9 +227,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       return;
     }
 
-    LinkKnownApi.BlogCatalogEdit(catalog_name, catalog_desc).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.BlogCatalogEdit(catalog_name, catalog_desc).then((value) {
       if (value.status == "SUCCESS") {
         Navigator.of(context).pop();
         UIUtils.showToast("添加成功");
@@ -237,6 +235,8 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       } else {
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -279,9 +279,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
     String first_img = "";
     LinkKnownApi.BlogArticleEdit(article_id, blog_title, key_words,
             catalog_name, blog_status, content, link_href, first_img)
-        .catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+        .then((value) {
       if (value.status == "SUCCESS") {
         UIUtils.showToast("发布成功");
         Provider.of<CloudBlogRefreshNotifer>(context).update(true);
@@ -289,6 +287,8 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       } else {
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

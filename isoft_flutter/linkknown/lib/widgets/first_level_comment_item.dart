@@ -127,15 +127,15 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
     int orgParentId = comment.orgParentId;       // 父评论 id
     int themePk = comment.themePk;               // 课程 id
     String themeType = comment.themeType;
-    LinkKnownApi.deleteComment(level,id,themePk,themeType,orgParentId).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.deleteComment(level,id,themePk,themeType,orgParentId).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("删除成功");
         Provider.of<FirstLevelCommentRefreshNotifer>(context).update(true);
       }else{
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -316,9 +316,7 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
     int parent_id = parentId;                   // 一级评论
     String refer_user_name = referUserName;     // 被评论人
 
-    LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
-    }).then((value) {
+    LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).then((value) {
       if(value.status=="SUCCESS"){
         UIUtils.showToast("评论成功");
         Navigator.of(context).pop();
@@ -326,6 +324,8 @@ class _FirstLevelCommentItemState extends State<FirstLevelCommentItem> with Tick
       }else{
         UIUtils.showToast(value.errorMsg);
       }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
