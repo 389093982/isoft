@@ -227,7 +227,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
           NavigatorUtil.goRouterPage(context, Routes.login);
         },
         child: Container(
-          transform: Matrix4.translationValues(-10, -5, 0),
+          transform: Matrix4.translationValues(-10, 4, 0),
           child: Text("未登录", style: TextStyle(color: Colors.white,fontSize: 20),),
         ),
       );

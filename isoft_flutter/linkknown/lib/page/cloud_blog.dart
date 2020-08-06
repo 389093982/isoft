@@ -12,6 +12,7 @@ import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/blog_item.dart';
+import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';
 import 'package:provider/provider.dart';
 
@@ -33,16 +34,15 @@ class CloudBlogState extends State<CloudBlogWidget>
 
   List<Blog> blogs = new List();
   Set<User> users = new Set();
-  ScrollController scrollController = ScrollController();
 
   //博客查询的条件
   String search_type = "";
   String search_data = "";
   String search_user_name = "";
 
-  int page = 0;
-  bool isLoading = false; //是否正在请求新数据
-  bool showMore = false; //是否显示底部加载中提示
+  dynamic paginator;
+  int current_page = 1;
+  dynamic loadingStatus;
 
   @override
   void initState() {
@@ -50,25 +50,21 @@ class CloudBlogState extends State<CloudBlogWidget>
 
     // 发送网络请求加载数据
     initData();
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        print('滑动到了最底部${scrollController.position.pixels}');
-        setState(() {
-          showMore = true;
-        });
-        loadPageData(page + 1, 10);
-      }
-    });
   }
 
-  Future<void> loadPageData(int current_page, int offset) async {
-    if (isLoading) {
+  Future<void> loadPageData(int _current_page, int offset,
+      {bool delayed = false, bool resetLoadingStatus = false}) async {
+    if (resetLoadingStatus) {
+      loadingStatus = "";
+    }
+    if (loadingStatus == LoadingStatus.LOADING) {
       return;
     }
-    isLoading = true;
-    page = current_page;
+    setState(() {
+      loadingStatus = LoadingStatus.LOADING;
+    });
+    current_page = _current_page;
+
     String userName = await LoginUtil.getUserName();
 
     //查询博客
@@ -84,54 +80,58 @@ class CloudBlogState extends State<CloudBlogWidget>
       search_data = "";
     }
 
-    LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).then((value) {
-      List<Blog> blogList = value.blogs;
-      if (blogList.length > 0) {
-        //1.给blogs 添加内容
-        if (current_page == 1) {
-          blogs.clear();
-        }
-        blogs.addAll(value.blogs);
-        //2.获取userName字段
-        String usernames = "";
-        for (var blog in blogList) {
-          usernames += blog.author + ",";
-        }
-        //3.去掉最后一个逗号
-        usernames = usernames.substring(0, usernames.length - 1);
-        //4.根据usernames查询用户信息
-        LinkKnownApi.GetUserInfoByNames(usernames).then((value) {
-          //将用户信息放入users 集合
-          users.addAll(value.users);
-          setState(() {
-            isLoading = false;
-            showMore = false;
+    // delayed 为 true 时延迟 2s 让底部动画显示
+    Future.delayed(Duration(seconds: delayed ? 2 : 0), () {
+      LinkKnownApi.queryPageBlog(search_type, search_data, search_user_name, current_page, offset).then((value) {
+        List<Blog> blogList = value.blogs;
+        if (blogList.length > 0) {
+          //1.给blogs 添加内容
+          if (current_page == 1) {
+            blogs.clear();
+          }
+          blogs.addAll(value.blogs);
+          paginator = value.paginator;
+          //2.获取userName字段
+          String usernames = "";
+          for (var blog in blogList) {
+            usernames += blog.author + ",";
+          }
+          //3.去掉最后一个逗号
+          usernames = usernames.substring(0, usernames.length - 1);
+          //4.根据usernames查询用户信息
+          LinkKnownApi.GetUserInfoByNames(usernames).then((value) {
+            //将用户信息放入users 集合
+            users.addAll(value.users);
+            setState(() {
+              if (paginator.totalcount == 0) {
+                loadingStatus = LoadingStatus.LOADED_EMPTY;
+              } else {
+                loadingStatus = paginator.currpage < paginator.totalpages
+                    ? LoadingStatus.LOADED_COMPLETED
+                    : LoadingStatus.LOADED_COMPLETED_ALL;
+              }
+            });
+          }).catchError((e) {
+            setState(() {
+              loadingStatus = LoadingStatus.LOADED_FAILED;
+            });
           });
-        }).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+        }else{
           setState(() {
-            isLoading = false;
-            showMore = false;
+            loadingStatus = LoadingStatus.LOADED_EMPTY;
           });
-        });
-      }else{
+          UIUtils.showToast("未匹配到相应数据..");
+        }
+      }).catchError((e) {
         setState(() {
-          isLoading = false;
-          showMore = false;
+          loadingStatus = LoadingStatus.LOADED_FAILED;
         });
-        UIUtils.showToast("未匹配到相应数据..");
-      }
-    }).catchError((e) {
-      setState(() {
-        isLoading = false;
-        showMore = false;
       });
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
   void initData() {
-    loadPageData(1, 10);
+    loadPageData(1, 10, resetLoadingStatus: true);
   }
 
   Future<void> onRefresh({String searchData}) async {
@@ -141,25 +141,41 @@ class CloudBlogState extends State<CloudBlogWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (BuildContext context, CloudBlogRefreshNotifer cloudBlogRefreshNotifer, Widget child) {
-        if(cloudBlogRefreshNotifer.hasChanged){
-          initData();
-          cloudBlogRefreshNotifer.hasChanged = false;
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is ScrollUpdateNotification &&
+            notification.depth == 0) {
+          if (notification.metrics.pixels ==
+              notification.metrics.maxScrollExtent) {
+            if (paginator != null &&
+                paginator.currpage < paginator.totalpages) {
+              loadPageData(current_page + 1, 10, delayed: true);
+            }
+          }
         }
-        return Stack(
-          children: <Widget>[
-            RefreshIndicator(
-              //指示器颜色
-              color: Theme.of(context).primaryColor,
-              //指示器显示时距顶部位置
-              displacement: 40,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
+        // 返回 true 取消冒泡
+        return true;
+      },
+      child: Consumer(
+        builder: (BuildContext context, CloudBlogRefreshNotifer cloudBlogRefreshNotifer, Widget child) {
+          if(cloudBlogRefreshNotifer.hasChanged){
+            initData();
+            cloudBlogRefreshNotifer.hasChanged = false;
+          }
+          return RefreshIndicator(
+            //指示器颜色
+            color: Theme.of(context).primaryColor,
+            //指示器显示时距顶部位置
+            displacement: 40,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       //itemExtent:130,
                       itemCount: blogs.length,
                       //controller: scrollController,
@@ -169,19 +185,26 @@ class CloudBlogState extends State<CloudBlogWidget>
                             users.firstWhere((element) =>
                             element.userName == blogs[index].author));
                       }),
-                ),
+                  FooterLoadingWidget(
+                    loadingStatus: loadingStatus,
+                    refreshOnFailCallBack: (status) {
+                      if (status == LoadingStatus.LOADED_EMPTY) {
+                        initData();
+                      }
+                    },
+                  )
+                ],
               ),
-              onRefresh: onRefresh,
             ),
-          ],
-        );
-      },
+            onRefresh: onRefresh,
+          );
+        },
+      )
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    scrollController.dispose();
   }
 }

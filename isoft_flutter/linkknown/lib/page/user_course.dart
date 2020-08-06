@@ -27,8 +27,6 @@ class _UserCourseState extends State<UserCourseWidget>
 
   List<Course> courses = new List();
 
-//  ScrollController scrollController = ScrollController();
-
   dynamic paginator;
   int current_page = 1;
   dynamic loadingStatus;
@@ -39,15 +37,6 @@ class _UserCourseState extends State<UserCourseWidget>
 
     // 发送网络请求加载数据
     initData();
-
-//    scrollController.addListener(() {
-//      if (scrollController.position.pixels ==
-//          scrollController.position.maxScrollExtent) {
-//        if (paginator != null && paginator.currpage < paginator.totalpages) {
-//          loadPageData(current_page + 1, 10, delayed: true);
-//        }
-//      }
-//    });
   }
 
   void loadPageData(int _current_page, int offset,
@@ -246,8 +235,6 @@ class _UserCourseState extends State<UserCourseWidget>
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: courses.length,
-                  //controller: scrollController,//注释掉就可以达到个人中心协调效果了
-                  // SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       //横轴元素个数
                       crossAxisCount: 2,
@@ -278,7 +265,6 @@ class _UserCourseState extends State<UserCourseWidget>
 
   @override
   void dispose() {
-//    scrollController?.dispose();
     super.dispose();
   }
 }
