@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
@@ -11,12 +13,13 @@ import 'package:linkknown/utils/utils.dart';
 import 'package:share/share.dart';
 
 class CourseDetailPage extends StatefulWidget {
+
   int course_id;
 
   CourseDetailPage(this.course_id);
 
   @override
-  _CourseDetailPageState createState() => _CourseDetailPageState(course_id);
+  _CourseDetailPageState createState() => _CourseDetailPageState();
 }
 
 class _CourseDetailPageState extends State<CourseDetailPage> {
@@ -25,13 +28,13 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   bool showTitle = true;
   bool showTitleOld = false;
 
-  int course_id;
-
-  _CourseDetailPageState(this.course_id);
-
   Course course;
   List<CVideo> cVideos;
 
+  // StreamBuilder 实现局部刷新
+  // 使用StreamBuilder来局部刷新，通过sink.add方法向streamController.sink中添加一个事件流，这个流会被StreamBuilder中stream接收，然后触发builder方法。
+  // 最后在页面销毁的时候释放资源
+  final StreamController _streamController = StreamController<bool>();
 
   @override
   void initState() {
@@ -46,15 +49,14 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     height = scrollController.offset;
     showTitle = !(scrollController.position.maxScrollExtent - height < 70);
     if (showTitle != showTitleOld) {
-     setState(() {
-       showTitleOld = showTitle;
-     });
+      showTitleOld = showTitle;
+     _streamController.sink.add(showTitle);
     }
   }
 
   void initData() async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(course_id, loginUserName);
+    CourseDetailResponse courseDetailResponse = await LinkKnownApi.showCourseDetailForApp(widget.course_id, loginUserName);
     setState(() {
       course = courseDetailResponse.course;
       cVideos = courseDetailResponse.cVideos;
@@ -95,22 +97,28 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       // 一个显示在 AppBar 下方的控件，高度和 AppBar 高度一样，可以实现一些特殊的效果，该属性通常在 SliverAppBar 中使用
                       flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
-                        title: showTitle
-                            ? Text(course != null ? course.courseName : "")
-                            : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              "images/ic_fab_play.png",
-                              width: 30,
-                              height: 30,
-                              fit: BoxFit.fill,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text("立即播放")
-                          ],
+                        title: StreamBuilder<bool>(
+                          stream: _streamController.stream,
+                          initialData: true,    // showTitle
+                          builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
+                            return snapshot.data
+                                ? Text(course != null ? course.courseName : "")
+                                : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.asset(
+                                  "images/ic_fab_play.png",
+                                  width: 30,
+                                  height: 30,
+                                  fit: BoxFit.fill,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("立即播放")
+                              ],
+                            );
+                          },
                         ),
                         background: Image.network(
                           UIUtils.replaceMediaUrl(
@@ -138,7 +146,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
               InkWell(
                 onTap: (){
                   //评论弹框
-                  CommentUtil.showFirstLevelCommentDialog(context,course.id.toString(),"course_theme_type","comment",course.courseAuthor,course.comments.toString());
+                  CommentUtil.showFirstLevelCommentDialog(context, widget.course_id.toString(),"course_theme_type","comment",course.courseAuthor,course.comments.toString());
                 },
                 child: Container(
                   width: 90,
@@ -187,6 +195,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   void dispose() {
     scrollController?.removeListener(offsetListener);
     scrollController?.dispose();
+    _streamController?.close();
     super.dispose();
   }
 }
