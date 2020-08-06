@@ -151,15 +151,10 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                         await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
                                         initData();
                                       },
-                                      child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
-                                    ):Text(""),
-                                    this.isShowEditIcon?
-                                    GestureDetector(
-                                      onTap: ()async{
-                                        await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
-                                        initData();
-                                      },
-                                      child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                      child: Row(children: <Widget>[
+                                        Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                        Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                      ],),
                                     ):Text(""),
                                     SizedBox(width: 10,),
                                     this.isShowEditIcon?
@@ -167,14 +162,10 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                       onTap: ()async{
                                         deleteBlog(this.blog.id);
                                       },
-                                      child: Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
-                                    ):Text(""),
-                                    this.isShowEditIcon?
-                                    GestureDetector(
-                                      onTap: ()async{
-                                        deleteBlog(this.blog.id);
-                                      },
-                                      child: Icon(Icons.delete, color: Colors.orange,size: 16,),
+                                      child: Row(children: <Widget>[
+                                        Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                        Icon(Icons.delete, color: Colors.orange,size: 16,),
+                                      ],),
                                     ):Text(""),
                                   ],
                                 )
@@ -198,15 +189,10 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                       await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
                                       initData();
                                     },
-                                    child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
-                                  ):Text(""),
-                                  this.isShowEditIcon?
-                                  GestureDetector(
-                                      onTap: ()async{
-                                        await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
-                                        initData();
-                                      },
-                                      child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                    child: Row(children: <Widget>[
+                                      Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                      Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                    ],),
                                   ):Text(""),
                                   SizedBox(width: 10,),
                                   this.isShowEditIcon?
@@ -214,14 +200,10 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                     onTap: ()async{
                                       deleteBlog(this.blog.id);
                                     },
-                                    child: Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
-                                  ):Text(""),
-                                  this.isShowEditIcon?
-                                  GestureDetector(
-                                    onTap: ()async{
-                                      deleteBlog(this.blog.id);
-                                    },
-                                    child: Icon(Icons.delete, color: Colors.orange,size: 16,),
+                                    child: Row(children: <Widget>[
+                                      Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                      Icon(Icons.delete, color: Colors.orange,size: 16,),
+                                    ],),
                                   ):Text(""),
                                 ],)
                               ],)
