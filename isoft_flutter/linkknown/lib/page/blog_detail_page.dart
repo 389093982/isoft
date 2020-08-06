@@ -135,32 +135,50 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                               ),
                               SizedBox(height: 5,),
                               this.blog.createdTime==this.blog.lastUpdatedTime?
-                              Row(
-                                children: <Widget>[
-                                  Text(DateUtil.formatPublishTime(this.blog.createdTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
-                                  SizedBox(width: 20,),
-                                  Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                                  SizedBox(width: 20,),
-                                  Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                                  SizedBox(width: 20,),
-                                  this.isShowEditIcon?
-                                  GestureDetector(
-                                    onTap: ()async{
-                                      await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
-                                      initData();
-                                    },
-                                    child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
-                                  ):Text(""),
-                                  this.isShowEditIcon?
-                                  GestureDetector(
-                                    onTap: ()async{
-                                      await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
-                                      initData();
-                                    },
-                                    child: Icon(Icons.edit, color: Colors.orange,size: 16,),
-                                  ):Text(""),
-
-                                ],)
+                              Column(children: <Widget>[
+                                Row(children: <Widget>[
+                                    Text(DateUtil.formatPublishTime(this.blog.createdTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                    SizedBox(width: 10,),
+                                    Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                    SizedBox(width: 10,),
+                                    Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                    SizedBox(width: 10,),
+                                  ],),
+                                Row(children: <Widget>[
+                                    this.isShowEditIcon?
+                                    GestureDetector(
+                                      onTap: ()async{
+                                        await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                        initData();
+                                      },
+                                      child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                    ):Text(""),
+                                    this.isShowEditIcon?
+                                    GestureDetector(
+                                      onTap: ()async{
+                                        await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                        initData();
+                                      },
+                                      child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                    ):Text(""),
+                                    SizedBox(width: 10,),
+                                    this.isShowEditIcon?
+                                    GestureDetector(
+                                      onTap: ()async{
+                                        deleteBlog(this.blog.id);
+                                      },
+                                      child: Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                    ):Text(""),
+                                    this.isShowEditIcon?
+                                    GestureDetector(
+                                      onTap: ()async{
+                                        deleteBlog(this.blog.id);
+                                      },
+                                      child: Icon(Icons.delete, color: Colors.orange,size: 16,),
+                                    ):Text(""),
+                                  ],
+                                )
+                              ],)
                                   :
                               Column(children: <Widget>[
                                 Row(children: <Widget>[
@@ -189,6 +207,21 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                         initData();
                                       },
                                       child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                  ):Text(""),
+                                  SizedBox(width: 10,),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                    onTap: ()async{
+                                      deleteBlog(this.blog.id);
+                                    },
+                                    child: Text("删除",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                  ):Text(""),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                    onTap: ()async{
+                                      deleteBlog(this.blog.id);
+                                    },
+                                    child: Icon(Icons.delete, color: Colors.orange,size: 16,),
                                   ):Text(""),
                                 ],)
                               ],)
@@ -264,6 +297,19 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
   }
 
 
+  //删除博客
+  deleteBlog(int blog_id){
+    LinkKnownApi.ArticleDelete(blog_id.toString()).then((value) {
+      if (value.status == "SUCCESS") {
+        UIUtils.showToast("删除成功");
+        NavigatorUtil.goBack(context);
+      } else {
+        UIUtils.showToast("删除失败");
+      }
+    }).catchError((e) {
+      UIUtils.showToast((e as LinkKnownError).errorMsg);
+    });
+  }
 
 
 }

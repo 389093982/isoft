@@ -750,6 +750,16 @@ class LinkKnownApi {
     return BlogDetailResponse.fromJson(response.data);
   }
 
+  // 删除博客
+  static Future<BaseResponse> ArticleDelete(String article_id) async {
+    var response = await doPost(
+        '/api/iwork/httpservice/isoft_linkknown_api/ArticleDelete',
+        params: {
+          'article_id': article_id,
+        });
+    return BaseResponse.fromJson(response.data);
+  }
+
   // 评论查询接口,查询一级评论
   static Future<FirstLevelCommentResponse> FilterCommentFirstLevel(
       String theme_pk,

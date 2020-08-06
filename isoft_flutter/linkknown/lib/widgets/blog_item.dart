@@ -29,7 +29,9 @@ class BlogItemWidget extends StatefulWidget {
   Blog blog;
   User user;
 
-  BlogItemWidget(this.blog,this.user);
+  VoidCallback refreshCallback;
+
+  BlogItemWidget(this.blog,this.user, {this.refreshCallback});
 
   @override
   _BlogItemState createState() => _BlogItemState();
@@ -84,8 +86,9 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                           Container(
                             width: 280,
                             child: InkWell(
-                              onTap: (){
-                                NavigatorUtil.goRouterPage(context, "${Routes.blogDetail}?blog_id=${widget.blog.id}");
+                              onTap: () async {
+                                await NavigatorUtil.goRouterPage(context, "${Routes.blogDetail}?blog_id=${widget.blog.id}");
+                                widget.refreshCallback();
                               },
                               child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
                             ),

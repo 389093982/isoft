@@ -185,7 +185,11 @@ class CloudBlogState extends State<CloudBlogWidget>
                         return BlogItemWidget(
                             blogs[index],
                             users.firstWhere((element) =>
-                            element.userName == blogs[index].author));
+                            element.userName == blogs[index].author),
+                            refreshCallback: (){
+                              initData();
+                            },
+                        );
                       }),
                   FooterLoadingWidget(
                     loadingStatus: loadingStatus,
