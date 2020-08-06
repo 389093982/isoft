@@ -223,7 +223,8 @@ var cloudBlogHandler = new Handler(
 // 编辑博客
 var editBlogHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return EditBlogPage();
+      String blog_id = params['blog_id']?.first??"-1";
+      return EditBlogPage(blog_id:blog_id??"0");
     });
 
 // 博客详情

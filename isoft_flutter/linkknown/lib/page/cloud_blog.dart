@@ -159,7 +159,9 @@ class CloudBlogState extends State<CloudBlogWidget>
       child: Consumer(
         builder: (BuildContext context, CloudBlogRefreshNotifer cloudBlogRefreshNotifer, Widget child) {
           if(cloudBlogRefreshNotifer.hasChanged){
-            initData();
+            Future.delayed(Duration(milliseconds: 200)).then((e) {
+              initData();
+            });
             cloudBlogRefreshNotifer.hasChanged = false;
           }
           return RefreshIndicator(

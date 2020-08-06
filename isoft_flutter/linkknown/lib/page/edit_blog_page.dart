@@ -12,6 +12,10 @@ import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
 
 class EditBlogPage extends StatefulWidget {
+  String blog_id;
+
+  EditBlogPage({this.blog_id});
+
   @override
   _EditBlogPage createState() => _EditBlogPage();
 }
@@ -30,9 +34,29 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
 
   @override
   Future<void> initState() {
-    blogTitleController = new TextEditingController(text: '');
-    catalogNameController = new TextEditingController(text: '');
-    blogContentController = new TextEditingController(text: '');
+    if(int.parse(widget.blog_id)>0){
+      //更新博客
+      LinkKnownApi.ShowBlogArticleDetail(widget.blog_id.toString()).then((value) {
+        if (value.status == "SUCCESS") {
+          blogTitleController = new TextEditingController(text: value.blog.blogTitle);
+          catalogNameController = new TextEditingController(text: value.blog.catalogName);
+          blogContentController = new TextEditingController(text: value.blog.content);
+          setState(() {
+            //刷新一下
+          });
+        } else {
+          UIUtils.showToast(value.errorMsg);
+        }
+      }).catchError((e) {
+        UIUtils.showToast((e as LinkKnownError).errorMsg);
+      });
+    }else{
+      //新增博客
+      blogTitleController = new TextEditingController(text: '');
+      catalogNameController = new TextEditingController(text: '');
+      blogContentController = new TextEditingController(text: '');
+    }
+
     initData();
     super.initState();
   }
@@ -269,7 +293,7 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
       return;
     }
 
-    String article_id = "";
+    String article_id = int.parse(widget.blog_id)>0?widget.blog_id:"";
     String blog_title = blogTitleController.text;
     String key_words = "";
     String catalog_name = catalogNameController.text;
@@ -281,7 +305,12 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
             catalog_name, blog_status, content, link_href, first_img)
         .then((value) {
       if (value.status == "SUCCESS") {
-        UIUtils.showToast("发布成功");
+        if(int.parse(widget.blog_id)>0){
+          UIUtils.showToast("更新成功");
+        }else{
+          UIUtils.showToast("发布成功");
+        }
+
         Provider.of<CloudBlogRefreshNotifer>(context).update(true);
         NavigatorUtil.goBack(context);
       } else {

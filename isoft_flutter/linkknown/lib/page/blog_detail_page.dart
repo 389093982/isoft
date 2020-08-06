@@ -8,7 +8,9 @@ import 'package:linkknown/model/get_user_detail_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/date_util.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:share/share.dart';
 
@@ -24,6 +26,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
 
   Blog blog;
   User user;
+  bool isShowEditIcon = false;
 
   @override
   Future<void> initState() {
@@ -36,14 +39,12 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
     LinkKnownApi.ShowBlogArticleDetail(widget.blog_id.toString()).then((value) {
       if (value.status == "SUCCESS") {
         this.blog = value.blog;
-
         //查询用户详情
         LinkKnownApi.getUserDetail(this.blog.author).then((value) {
           if (value.status == "SUCCESS") {
             this.user = value.user;
-            setState(() {
-              //执行build
-            });
+            //做个判断是否展示编辑按钮
+            showEditIcon();
           } else {
             UIUtils.showToast(value.errorMsg);
           }
@@ -57,6 +58,22 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
     }).catchError((e) {
       UIUtils.showToast((e as LinkKnownError).errorMsg);
     });
+  }
+
+  //是否展示编辑按钮
+  showEditIcon() async {
+    String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkNotEmpty(loginUserName) && loginUserName==blog.author){
+      this.isShowEditIcon = true;
+      setState(() {
+        //刷新一下
+      });
+    }else{
+      this.isShowEditIcon = false;
+      setState(() {
+        //刷新一下
+      });
+    }
   }
 
 
@@ -125,6 +142,24 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                   Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   SizedBox(width: 20,),
                                   Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  SizedBox(width: 20,),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                    onTap: ()async{
+                                      await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                      initData();
+                                    },
+                                    child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                  ):Text(""),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                    onTap: ()async{
+                                      await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                      initData();
+                                    },
+                                    child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                  ):Text(""),
+
                                 ],)
                                   :
                               Column(children: <Widget>[
@@ -135,10 +170,27 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                   Text("发布于: "+DateUtil.formatPublishTime(this.blog.createdTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
                                 ],),
                                 Row(children: <Widget>[
-                                    Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                                    SizedBox(width: 10,),
-                                    Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                                  ],)
+                                  Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  SizedBox(width: 10,),
+                                  Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  SizedBox(width: 20,),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                    onTap: ()async{
+                                      await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                      initData();
+                                    },
+                                    child: Text("编辑",style: TextStyle(fontSize: 12,color: Colors.orange),),
+                                  ):Text(""),
+                                  this.isShowEditIcon?
+                                  GestureDetector(
+                                      onTap: ()async{
+                                        await NavigatorUtil.goRouterPage(context, "${Routes.editBlog}?blog_id=${this.blog.id}");
+                                        initData();
+                                      },
+                                      child: Icon(Icons.edit, color: Colors.orange,size: 16,),
+                                  ):Text(""),
+                                ],)
                               ],)
                             ],
                           ),
