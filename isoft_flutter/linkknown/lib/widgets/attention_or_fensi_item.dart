@@ -15,6 +15,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 import 'clickable_textimage.dart';
 
@@ -57,12 +58,7 @@ class _AttentionOrFensiItemState extends State<AttentionOrFensiItemWidget>
                 child:Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ClipOval(
-                    child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.attentionOrFensi.smallIcon),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
+                    child: HeaderIconWidget(widget.attentionOrFensi.smallIcon, HeaderIconSize.SIZE_NORMAL_50),
                   ),
                 ),
               ),

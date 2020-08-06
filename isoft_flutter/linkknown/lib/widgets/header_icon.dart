@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/utils/utils.dart';
 
 enum HeaderIconSize {
-  SIZE_SMALL,
-  SIZE_NORMAL,
-  SIZE_BIG,
+  SIZE_BIG_80,                //用与设置大头像：登录、‘我的’、...
+  SIZE_NORMAL_50,             //正常头像：课程详情里面作者、发表博客...
+  SIZE_SMALL_40,             //评论的头像 (比正常的要小一点点)、首页
 }
 
 class HeaderIconWidget extends StatefulWidget {
   String headerIcon;
-  double width;
-  double height;
   HeaderIconSize size;
 
-  HeaderIconWidget(this.headerIcon,
-      {this.size, this.width = 30, this.height = 30});
+  double width;
+  double height;
+
+  HeaderIconWidget(this.headerIcon, this.size);
 
   @override
   _HeaderIconWidgetState createState() => _HeaderIconWidgetState();
@@ -65,15 +65,15 @@ class _HeaderIconWidgetState extends State<HeaderIconWidget> {
 
   void checkWidgetSize() {
     if (widget.size != null) {
-      if (widget.size == HeaderIconSize.SIZE_SMALL) {
-        widget.width = 10;
-        widget.height = 10;
-      } else if (widget.size == HeaderIconSize.SIZE_NORMAL) {
-        widget.width = 30;
-        widget.height = 30;
-      } else if (widget.size == HeaderIconSize.SIZE_BIG) {
-        widget.width = 60;
-        widget.height = 60;
+      if (widget.size == HeaderIconSize.SIZE_BIG_80) {
+        widget.width = 80;
+        widget.height = 80;
+      } else if (widget.size == HeaderIconSize.SIZE_NORMAL_50) {
+        widget.width = 50;
+        widget.height = 50;
+      } else if (widget.size == HeaderIconSize.SIZE_SMALL_40) {
+        widget.width = 40;
+        widget.height = 40;
       }
     }
   }

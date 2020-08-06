@@ -19,6 +19,7 @@ import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 import 'accept_invite_button_label.dart';
 import 'button_label.dart';
@@ -57,18 +58,13 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
                 },
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 child:Container(
                   margin: EdgeInsets.only(left: 10),
                   child: ClipOval(
-                    child: Image.network(
-                      UIUtils.replaceMediaUrl(widget.user.smallIcon),
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
+                      child: HeaderIconWidget(widget.user.smallIcon,HeaderIconSize.SIZE_NORMAL_50),
                   ),
                 ),
               ),
@@ -99,7 +95,7 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
                     children: <Widget>[
                       InkWell(
                         onTap: (){
-                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
                         },
                         child: Text(widget.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
                       ),

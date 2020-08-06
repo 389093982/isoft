@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 
 class ImageSelectWidget extends StatefulWidget{
   ValueChanged onSelect;
@@ -49,13 +50,7 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
               child: imageFile != null ?
                       Text("")
                       :
-                      ClipOval(child: Image.network(
-                          UIUtils.replaceMediaUrl(widget.currentSmallIcon),
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      ClipOval(child: HeaderIconWidget(widget.currentSmallIcon, HeaderIconSize.SIZE_BIG_80),),
             ),
           ),
           SizedBox(height: 5,),

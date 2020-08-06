@@ -104,7 +104,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                 children: <Widget>[
                                   InkWell(
                                     onTap: (){
-                                      NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}");
+                                      NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${this.user.userName}");
                                     },
                                     child: Text(this.user!=null?this.user.nickName:"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
                                   ),

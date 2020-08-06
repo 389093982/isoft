@@ -7,6 +7,7 @@ import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/widgets/header_icon.dart';
 import 'package:provider/provider.dart';
 
 class AutoLoginDialogHelper {
@@ -243,12 +244,7 @@ class _RefreshTokenState extends State<RefreshTokenWidget>
                     turns: rotationAnimation,
                     child: ClipOval(
                       child: StringUtil.checkNotEmpty(headerIcon)
-                          ? Image.network(
-                        UIUtils.replaceMediaUrl(headerIcon),
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.fill,
-                      )
+                          ? HeaderIconWidget(headerIcon,HeaderIconSize.SIZE_BIG_80)
                           : Image.asset(
                         "images/linkknown.jpg",
                         width: 80,
