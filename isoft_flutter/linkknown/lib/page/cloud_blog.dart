@@ -168,7 +168,7 @@ class CloudBlogState extends State<CloudBlogWidget>
             //指示器显示时距顶部位置
             displacement: 40,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 5),
               child: ListView(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),

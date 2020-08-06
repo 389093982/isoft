@@ -76,7 +76,8 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
+                child: this.blog==null?Text(""):
+                Column(
                   children: <Widget>[
                     Row(children: <Widget>[
                       Expanded(
@@ -94,7 +95,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                       onTap: (){
 
                                       },
-                                      child: Text(this.blog!=null?this.blog.blogTitle:"加载中..",style: TextStyle(fontSize: 17),overflow: TextOverflow.clip,),
+                                      child: Text(this.blog.blogTitle,style: TextStyle(fontSize: 17),overflow: TextOverflow.clip,),
                                     ),
                                   )
                                 ],
@@ -106,26 +107,39 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                                     onTap: (){
                                       NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${this.user.userName}");
                                     },
-                                    child: Text(this.user!=null?this.user.nickName:"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
+                                    child: Text(this.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
                                   ),
                                   Text(" • ",style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   Container(
                                     width: 120,
-                                    child: Text(this.blog!=null?this.blog.catalogName:"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                                    child: Text(this.blog.catalogName,style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
                                   ),
                                 ],
                               ),
                               SizedBox(height: 5,),
+                              this.blog.createdTime==this.blog.lastUpdatedTime?
                               Row(
                                 children: <Widget>[
-                                  Text(this.blog!=null?DateUtil.formatPublishTime(this.blog.createdTime):"加载中..",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  Text(DateUtil.formatPublishTime(this.blog.createdTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   SizedBox(width: 20,),
-//                      Icon(Icons.remove_red_eye, size: 13,color: Colors.black38,),
                                   Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
                                   SizedBox(width: 20,),
-//                      Icon(Icons.textsms, size: 13,color: Colors.black38,),
                                   Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                ],)
+                                  :
+                              Column(children: <Widget>[
+                                Row(children: <Widget>[
+                                  Text("更新于: "+DateUtil.formatPublishTime(this.blog.lastUpdatedTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
                                 ],),
+                                Row(children: <Widget>[
+                                  Text("发布于: "+DateUtil.formatPublishTime(this.blog.createdTime),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                ],),
+                                Row(children: <Widget>[
+                                    Text((this.blog!=null?this.blog.views.toString():"0")+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                    SizedBox(width: 10,),
+                                    Text((this.blog!=null?this.blog.comments.toString():"0")+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                                  ],)
+                              ],)
                             ],
                           ),
                         ),
@@ -135,7 +149,7 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
                     Container(
                       padding: EdgeInsets.only(left: 20,right: 20),
                       alignment: Alignment.topLeft,
-                      child: Text(this.blog!=null?this.blog.content:"加载中..",style: TextStyle(color: Colors.grey[700],fontSize: 15),),
+                      child: Text(this.blog.content,style: TextStyle(color: Colors.grey[700],fontSize: 15),),
                     ),
                     SizedBox(height: 50,),
                   ],

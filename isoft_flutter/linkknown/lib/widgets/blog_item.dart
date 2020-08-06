@@ -51,78 +51,119 @@ class _BlogItemState extends State<BlogItemWidget> with TickerProviderStateMixin
       // 对Widget截取的行为，比如这里 Clip.antiAlias 指抗锯齿
       clipBehavior: Clip.antiAlias,
       semanticContainer: false,
-      child: Row(
+      child: Column(
         children: <Widget>[
-          // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
-          Stack(
+          Row(
             children: <Widget>[
-              InkWell(
-                onTap: () {
-                  NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
-                },
-                // AspectRatio的作用是调整 child 到设置的宽高比
-                child:Container(
-                  margin: EdgeInsets.only(left: 10),
-                  child: ClipOval(
-                      child: HeaderIconWidget(widget.user.smallIcon,HeaderIconSize.SIZE_NORMAL_50),
+              // Stack类似FrameLayout,子 widget可以通过父容器的四个角固定位置,子widget可以重叠
+              Stack(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
+                    },
+                    // AspectRatio的作用是调整 child 到设置的宽高比
+                    child:Container(
+                      margin: EdgeInsets.only(left: 10,top: 10),
+                      child: ClipOval(
+                        child: HeaderIconWidget(widget.user.smallIcon,HeaderIconSize.SIZE_SMALL_40),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(top: 2,bottom: 2,left: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10,),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 280,
+                            child: InkWell(
+                              onTap: (){
+                                NavigatorUtil.goRouterPage(context, "${Routes.blogDetail}?blog_id=${widget.blog.id}");
+                              },
+                              child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 2,),
+                      Row(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: (){
+                              NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
+                            },
+                            child: Text(widget.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
+                          ),
+                          Text(" • ",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                          Container(
+                            width: 120,
+                            child: Text(widget.blog.catalogName,style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 5,),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: 240,
-                        child: InkWell(
-                          onTap: (){
-                            NavigatorUtil.goRouterPage(context, "${Routes.blogDetail}?blog_id=${widget.blog.id}");
-                          },
-                          child: Text(widget.blog.blogTitle,style: TextStyle(fontSize: 15),overflow: TextOverflow.ellipsis,maxLines: 1,),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Row(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: (){
-                          NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${widget.user.userName}");
-                        },
-                        child: Text(widget.user.nickName,style: TextStyle(fontSize: 12,color: Colors.black54,decoration: TextDecoration.underline),),
-                      ),
-                      Text(" • ",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                      Container(
-                        width: 120,
-                        child: Text(widget.blog.catalogName,style: TextStyle(fontSize: 12,color: Colors.black54),overflow: TextOverflow.ellipsis,maxLines: 1,),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5,),
-                  Row(
-                    children: <Widget>[
-                      Text((DateUtil.formatPublishTime(widget.blog.createdTime)),style: TextStyle(fontSize: 12,color: Colors.black54),),
-                      SizedBox(width: 20,),
-//                      Icon(Icons.remove_red_eye, size: 13,color: Colors.black38,),
-                      Text(widget.blog.views.toString()+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
-                      SizedBox(width: 20,),
-//                      Icon(Icons.textsms, size: 13,color: Colors.black38,),
-                      Text(widget.blog.comments.toString()+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+          widget.blog.createdTime==widget.blog.lastUpdatedTime?
+          Container(
+            margin: EdgeInsets.only(left: 55),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text((DateUtil.formatPublishTime(widget.blog.createdTime)),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                    SizedBox(width: 10,),
+                    Text(widget.blog.views.toString()+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                    SizedBox(width: 10,),
+                    Text(widget.blog.comments.toString()+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
                   ],),
-                ],
-              ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                  ],
+                )
+              ],
             ),
-          ),
+          )
+              :
+          Container(
+            margin: EdgeInsets.only(left: 55),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    widget.blog.createdTime==widget.blog.lastUpdatedTime?Text(""):
+                    Text("更新于: "+(DateUtil.formatPublishTime(widget.blog.lastUpdatedTime)),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  ],),
+                SizedBox(height: 2,),
+                Row(
+                  children: <Widget>[
+                    Text("发布于: "+(DateUtil.formatPublishTime(widget.blog.createdTime)),style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  ],),
+                SizedBox(height: 2,),
+                Row(
+                  children: <Widget>[
+                    Text(widget.blog.views.toString()+"次阅读",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                    SizedBox(width: 10,),
+                    Text(widget.blog.comments.toString()+"条评论",style: TextStyle(fontSize: 12,color: Colors.black54),),
+                  ],
+                ),
+                SizedBox(height: 10,),
+              ],
+            ),
+          )
         ],
-      ),
+      )
     );
   }
 
