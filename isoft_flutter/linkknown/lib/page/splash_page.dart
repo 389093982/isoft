@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/event/event_bus.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
 // State 的生命周期和 StatefulWidget 不同，当 StatefulWidget 状态改变后就会被重建，但是 State 不会改变，
@@ -61,9 +64,34 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   }
 
   void goPage() async {
+    // 进行自动登录
+    autoLogin();
+
     // 销毁当前页面,并跳往主页
     Navigator.pop(context);
     NavigatorUtil.goMainPage(context);
+  }
+
+  autoLogin() async {
+    String userName = await LoginUtil.getUserName();
+    String passwd = await LoginUtil.getPasswd();
+    bool hasLogin = await LoginUtil.checkHasLogin();
+
+    if (StringUtil.checkNotEmpty(userName) &&
+        StringUtil.checkNotEmpty(passwd) &&
+        !hasLogin) {
+      LinkKnownApi.postLogin(userName, passwd, 'http://www.linkknown.com').then((value) {
+        if (value != null) {
+          if (value.status == "SUCCESS") {
+            LoginUtil.memoryAccount(userName, passwd, value);
+
+            LinkKnownApi.updateTokenString();
+
+            eventBus.fire(LoginStateChangeEvent());
+          }
+        }
+      });
+    }
   }
 
   @override
