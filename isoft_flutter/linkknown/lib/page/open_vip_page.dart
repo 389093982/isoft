@@ -32,6 +32,7 @@ class OpenVipPage extends StatefulWidget {
 class _OpenVipPageState extends State<OpenVipPage> {
 
   String loginUserName;
+  String openingTime = "1个月 / ¥12";
 
   @override
   void initState() {
@@ -70,7 +71,7 @@ class _OpenVipPageState extends State<OpenVipPage> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.topRight,
-                    child: Text("微信支付"),
+                    child: Text(this.loginUserName),
                   ),
                 ),
               ],
@@ -78,29 +79,55 @@ class _OpenVipPageState extends State<OpenVipPage> {
             SizedBox(height: 20,),
             Row(
               children: <Widget>[
-                Container(child: Text("商品描述:"),),
+                Container(child: Text("会员类型:"),),
                 Expanded(
                   child: Container(
                     alignment: Alignment.topRight,
-                    child: Text("111"),
+                    child: Text("[ 链知课堂&网站 ] 会员"),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20,),
             SizedBox(height: 20,),
             Row(
               children: <Widget>[
-                Container(child: Text("商品价格:"),),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.topRight,
-                    child: Text("待定",style: TextStyle(fontSize: 20,color: Colors.red),),
+                Container(
+                  child: Image.asset(
+                    "images/vip_card.png",
+                    height: 160,
+                    width: 280,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 20,),
+            Row(
+              children: <Widget>[
+                Container(child: Text("会员价格:"),),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                          items: <String>['1个月 / ¥12', '3个月 / ¥30', '6个月 / ¥50', '12个月 / ¥80'].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          value: openingTime,
+                          onChanged:(String selectedValue){
+                            setState(() {
+                              this.openingTime = selectedValue;
+                            });
+                          }
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: 20,),
             Divider(color: Colors.black45, height: 2,),
             SizedBox(height: 20,),
