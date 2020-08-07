@@ -155,8 +155,7 @@ class _MessageState extends State<MessagePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
+                              Row(children: <Widget>[
                                   RichText(
                                     text: TextSpan(
                                         style:
@@ -175,20 +174,20 @@ class _MessageState extends State<MessagePage> {
                                   Expanded(
                                     child: Text(""),
                                   ),
-                                  Text(
-                                    DateUtil.format2StandardTime(
-                                        messageList[position].lastUpdatedTime),
-                                    style: TextStyle(color: Colors.black54),
-                                  ),
                                 ],
                               ),
                               SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                "@${nickName}:${messageList[position].messageText}",
+                                "${messageList[position].messageText}",
                                 overflow: TextOverflow.clip,
                                 style: TextStyle(color: Colors.black54),
+                              ),
+                              SizedBox(height: 10,),
+                              Text(
+                                DateUtil.formatPublishTime(messageList[position].lastUpdatedTime),
+                                style: TextStyle(color: Colors.black54,fontSize: 12),
                               ),
                             ],
                           ),

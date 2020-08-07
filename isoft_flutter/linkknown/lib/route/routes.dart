@@ -38,6 +38,8 @@ class Routes {
 
 
   //====================【我的】====================
+  //开通会员
+  static String openVip = "/openVip";
   //我的关注
   static String myAttention = "/myAttention";
   //我的粉丝
@@ -131,6 +133,8 @@ class Routes {
 
 
     //====================【我的】====================
+    //开通会员
+    router.define(openVip, handler: openVipHandler);
     //我的关注
     router.define(myAttention, handler: myAttentionHandler);
     //我的粉丝

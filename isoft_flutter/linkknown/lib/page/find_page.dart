@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 
 class FindPage extends StatefulWidget {
@@ -14,19 +16,28 @@ class FindPage extends StatefulWidget {
 // 添加AutomaticKeepAliveClientMixin,并设置为true,这样就能一直保持当前不被initState了
 class _FindPageState extends State<FindPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
 
+  String loginUserName;
+
   @override
   bool get wantKeepAlive => true;
 
+  queryLoginUserName() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    setState(() {
+      //刷新
+    });
+  }
+
   List<ClassifyItem> getDataList() {
     List<ClassifyItem> list = [];
-    list..add(ClassifyItem("分类", "images/fenlei.png", Routes.login))
-      ..add(ClassifyItem("考试", "images/kaoshi.png", Routes.login))
-      ..add(ClassifyItem("推荐视频", "images/video.png", Routes.login))
-      ..add(ClassifyItem("名师招募令", "images/zhaopin.png", Routes.login))
-      ..add(ClassifyItem("畅享图书", "images/book.png", Routes.login))
-      ..add(ClassifyItem("锦鲤活动", "images/huodong.png", Routes.login))
+    list..add(ClassifyItem("搜索课程", "images/fenlei.png", "${Routes.courseSearch}?search=&isCharge="))
+      ..add(ClassifyItem("考试", "images/kaoshi.png", Routes.comingSoon))
+      ..add(ClassifyItem("推荐视频", "images/video.png", Routes.comingSoon))
+      ..add(ClassifyItem("名师招募令", "images/zhaopin.png", Routes.comingSoon))
+      ..add(ClassifyItem("畅享图书", "images/book.png", Routes.comingSoon))
+      ..add(ClassifyItem("活动中心", "images/huodong.png", Routes.comingSoon))
       ..add(ClassifyItem("领券中心", "images/coupon.png", Routes.receiveCouponCenter))
-      ..add(ClassifyItem("个人中心", "images/personalCenter.png", Routes.login));
+      ..add(ClassifyItem("个人中心", "images/personalCenter.png", "${Routes.personalCenter}?userName=${this.loginUserName}"));
     return list;
   }
 
@@ -38,7 +49,15 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
     return new InkWell(
       //点击事件回调
       onTap: () {
-        NavigatorUtil.goRouterPage(context, item.redirectUrl);
+        if(item.redirectUrl.indexOf("personalCenter")>0){
+          if(StringUtil.checkNotEmpty(this.loginUserName)){
+            NavigatorUtil.goRouterPage(context, item.redirectUrl);
+          }else{
+            UIUtils.showToast(("未登录.."));
+          }
+        }else{
+          NavigatorUtil.goRouterPage(context, item.redirectUrl);
+        }
       },
       child: Column(
         children: <Widget>[
@@ -58,6 +77,10 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
 
   @override
   Widget build(BuildContext context) {
+    if(this.loginUserName==null){
+      queryLoginUserName();
+      return Text("");
+    }
     return Scaffold(
       appBar: AppBar(
         // 禁用返回，也可以使用    leading: Text(''),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/my_coupon_response.dart';
 import 'package:linkknown/model/pay_order_response.dart';
@@ -72,7 +73,7 @@ class _BoughtCourseState extends State<BoughtCourseWidget> with TickerProviderSt
         showMore = false;
       });
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, e);
 
       setState(() {
         isLoading = false;

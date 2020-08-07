@@ -8,6 +8,7 @@ import 'package:linkknown/page/home_tab_recommend.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
@@ -151,8 +152,9 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
-    if(this.loginUserName==null || this.loginUserName==""){
+    if(this.loginUserName==null){
       queryLoginUserName();
+      return Text("");
     }
     return Row(
       children: <Widget>[

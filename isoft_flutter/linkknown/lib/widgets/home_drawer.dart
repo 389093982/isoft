@@ -196,8 +196,9 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
 
   @override
   Widget build(BuildContext context) {
-    if(this.loginUserName==null || this.loginUserName==""){
+    if(this.loginUserName==null){
       queryLoginUserName();
+      return Text("");
     }
     return Column(
       children: <Widget>[
@@ -209,7 +210,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
             height: 24,
           ),
           onTap: () {
-            if(this.loginUserName==null || this.loginUserName == ""){
+            if(StringUtil.checkEmpty(this.loginUserName)){
               UIUtils.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${loginUserName}");
@@ -224,7 +225,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
             height: 24,
           ),
           onTap: () {
-            if(this.loginUserName==null || this.loginUserName == ""){
+            if(StringUtil.checkEmpty(this.loginUserName)){
               UIUtils.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, Routes.payOrder);
@@ -239,7 +240,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
             height: 25,
           ),
           onTap: () {
-            if(this.loginUserName==null || this.loginUserName == ""){
+            if(StringUtil.checkEmpty(this.loginUserName)){
               UIUtils.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, Routes.shoppingCart);

@@ -24,6 +24,7 @@ import 'package:linkknown/page/modify_header.dart';
 import 'package:linkknown/page/my_attention_page.dart';
 import 'package:linkknown/page/my_coupon_page.dart';
 import 'package:linkknown/page/my_fensi_page.dart';
+import 'package:linkknown/page/open_vip_page.dart';
 import 'package:linkknown/page/order_detail_page.dart';
 import 'package:linkknown/page/pay_order_commit_page.dart';
 import 'package:linkknown/page/pay_order_page.dart';
@@ -114,6 +115,12 @@ var customTagCourseHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
       String custom_tag = params['custom_tag'].first;       // 播放当前视频的索引
       return CustomTagCoursePage(custom_tag);
+    });
+
+//开通会员
+var openVipHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String,List<String>> params){
+      return OpenVipPage();
     });
 
 //我的关注

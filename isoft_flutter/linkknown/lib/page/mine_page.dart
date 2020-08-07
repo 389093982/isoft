@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/route/routes.dart';
+import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
+import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -75,6 +77,8 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
   String userSignature = "";
   String attentionCounts = "";
   String fensiCounts = "";
+  String vipLevel = "0";
+  String vipExpiredTime = "";
 
   // 铃铛旋转动画控制器
   AnimationController rotationAnimationController;
@@ -110,6 +114,8 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
       this.userSignature = await LoginUtil.getUserSignature();
       this.attentionCounts = await LoginUtil.getAttentionCounts();
       this.fensiCounts = await LoginUtil.getFensiCounts();
+      this.vipLevel = await LoginUtil.getVipLevel();
+      this.vipExpiredTime = await LoginUtil.getVipExpiredTime();
     }
 
     setState(() {});
@@ -117,8 +123,9 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if(this.loginUserName==null || this.loginUserName==""){
+    if(this.loginUserName==null){
       queryLoginUserName();
+      return Text("");
     }
     return Container(
       decoration: BoxDecoration(
@@ -216,10 +223,25 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
                 nickName,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
-              Text(
-                "积分: ${userPoints}",
-                style: TextStyle(color: Colors.white),
-              ),
+              Row(children: <Widget>[
+                Text("积分: ${userPoints}", style: TextStyle(color: Colors.white),),
+                SizedBox(width: 10,),
+                GestureDetector(
+                  onTap: () async {
+                    await NavigatorUtil.goRouterPage(context, Routes.openVip);
+                    setState(() {
+                      //刷新一下
+                    });
+                  },
+                  child: FunctionButtonLabel(
+                    labelText: "vip",
+                    labelTextColor: int.parse(this.vipLevel)>0 && DateUtil.compareStandardTime(DateUtil.format2StandardTime(this.vipExpiredTime), DateUtil.getNow_yyyyMMddHHmmss()) ? Colors.white:Colors.black45,
+                    labelSize: 16,
+                    borderRadius: 20,
+                    borderHeight: 20,
+                  ),
+                ),
+              ],),
               Row(children: <Widget>[
                 GestureDetector(
                   onTap: (){
@@ -311,8 +333,9 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if(this.loginUserName==null || this.loginUserName==""){
+    if(this.loginUserName==null){
       queryLoginUserName();
+      return Text("");
     }
     return Container(
       alignment: Alignment.center,
@@ -335,7 +358,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "优惠券",
                 onTap: () {
-                  if(this.loginUserName==null || this.loginUserName == ""){
+                  if(StringUtil.checkEmpty(this.loginUserName)){
                     UIUtils.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.myCoupon);
@@ -351,7 +374,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "购物车",
                 onTap: () {
-                  if(this.loginUserName==null || this.loginUserName == ""){
+                  if(StringUtil.checkEmpty(this.loginUserName)){
                     UIUtils.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
@@ -367,7 +390,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "订单",
                 onTap: () {
-                  if(this.loginUserName==null || this.loginUserName == ""){
+                  if(StringUtil.checkEmpty(this.loginUserName)){
                     UIUtils.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.payOrder);
@@ -383,7 +406,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "活动中心",
                 onTap: () {
-//                  if(this.loginUserName==null || this.loginUserName == ""){
+//                  if(StringUtil.checkEmpty(this.loginUserName)){
 //                    UIUtils.showToast("未登录..");
 //                  }else{
                     NavigatorUtil.goRouterPage(context, Routes.comingSoon);
@@ -399,7 +422,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 icon_color: Colors.white,
                 text: "考试",
                 onTap: () {
-//                  if(this.loginUserName==null || this.loginUserName == ""){
+//                  if(StringUtil.checkEmpty(this.loginUserName)){
 //                    UIUtils.showToast("未登录..");
 //                  }else{
                     NavigatorUtil.goRouterPage(context, Routes.comingSoon);
@@ -446,8 +469,9 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    if(this.loginUserName==null || this.loginUserName==""){
+    if(this.loginUserName==null){
       queryLoginUserName();
+      return Text("");
     }
     return Container(
       margin: EdgeInsets.only(top: 10),
