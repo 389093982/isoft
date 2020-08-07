@@ -2,8 +2,8 @@
 	<work>
 		<Id>472</Id>
 		<AppId>5</AppId>
-		<WorkName>queryCouponById</WorkName>
-		<WorkDesc>queryCouponById</WorkDesc>
+		<WorkName>QueryCouponById</WorkName>
+		<WorkDesc>QueryCouponById</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Pay</ModuleName>
 		<CacheResult>false</CacheResult>

@@ -2,8 +2,8 @@
 	<work>
 		<Id>422</Id>
 		<AppId>5</AppId>
-		<WorkName>queryFavoriteCount</WorkName>
-		<WorkDesc>queryFavoriteCount</WorkDesc>
+		<WorkName>QueryFavoriteCount</WorkName>
+		<WorkDesc>QueryFavoriteCount</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Common</ModuleName>
 		<CacheResult>false</CacheResult>

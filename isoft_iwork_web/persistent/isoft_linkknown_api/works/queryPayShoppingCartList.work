@@ -2,8 +2,8 @@
 	<work>
 		<Id>467</Id>
 		<AppId>5</AppId>
-		<WorkName>queryPayShoppingCartList</WorkName>
-		<WorkDesc>queryPayShoppingCartList</WorkDesc>
+		<WorkName>QueryPayShoppingCartList</WorkName>
+		<WorkDesc>QueryPayShoppingCartList</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Pay</ModuleName>
 		<CacheResult>false</CacheResult>

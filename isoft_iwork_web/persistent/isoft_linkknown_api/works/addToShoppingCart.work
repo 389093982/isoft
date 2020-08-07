@@ -2,8 +2,8 @@
 	<work>
 		<Id>469</Id>
 		<AppId>5</AppId>
-		<WorkName>addToShoppingCart</WorkName>
-		<WorkDesc>addToShoppingCart</WorkDesc>
+		<WorkName>AddToShoppingCart</WorkName>
+		<WorkDesc>AddToShoppingCart</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Pay</ModuleName>
 		<CacheResult>false</CacheResult>

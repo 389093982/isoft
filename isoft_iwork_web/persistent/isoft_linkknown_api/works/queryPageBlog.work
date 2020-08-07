@@ -2,7 +2,7 @@
 	<work>
 		<Id>153</Id>
 		<AppId>5</AppId>
-		<WorkName>queryPageBlog</WorkName>
+		<WorkName>QueryPageBlog</WorkName>
 		<WorkDesc>分页查询 blog 数据</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Blog</ModuleName>

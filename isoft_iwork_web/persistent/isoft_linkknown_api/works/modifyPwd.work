@@ -2,7 +2,7 @@
 	<work>
 		<Id>339</Id>
 		<AppId>5</AppId>
-		<WorkName>modifyPwd</WorkName>
+		<WorkName>ModifyPwd</WorkName>
 		<WorkDesc>更新用户密码</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>User</ModuleName>

@@ -2,7 +2,7 @@
 	<work>
 		<Id>338</Id>
 		<AppId>5</AppId>
-		<WorkName>createVerifyCode</WorkName>
+		<WorkName>CreateVerifyCode</WorkName>
 		<WorkDesc>生成验证码</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>User</ModuleName>

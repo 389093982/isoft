@@ -2,8 +2,8 @@
 	<work>
 		<Id>421</Id>
 		<AppId>5</AppId>
-		<WorkName>deleteComment</WorkName>
-		<WorkDesc>deleteComment</WorkDesc>
+		<WorkName>DeleteComment</WorkName>
+		<WorkDesc>DeleteComment</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Comment</ModuleName>
 		<CacheResult>false</CacheResult>

@@ -2,7 +2,7 @@
 	<work>
 		<Id>331</Id>
 		<AppId>5</AppId>
-		<WorkName>queryPageAdvise</WorkName>
+		<WorkName>QueryPageAdvise</WorkName>
 		<WorkDesc>分页查询意见建议或者吐槽</WorkDesc>
 		<WorkType>work</WorkType>
 		<ModuleName>Advise</ModuleName>
