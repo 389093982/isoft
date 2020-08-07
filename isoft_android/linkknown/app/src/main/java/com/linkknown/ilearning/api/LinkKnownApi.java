@@ -104,7 +104,7 @@ public interface LinkKnownApi {
 
 
     //文件上传
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/fileUpload")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/FileUpload")
     @Multipart
     Observable<FileUploadResponse> fileUpload(@Query("table_name") String table_name,
                                               @Query("table_field") String table_field,
@@ -177,7 +177,7 @@ public interface LinkKnownApi {
                                                @Query("refer_user_name") String refer_user_name);
 
     // 删除评论接口
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/deleteComment")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/DeleteComment")
     Observable<BaseResponse> deleteComment(@Query("level") int level,
                                            @Query("id") int id,
                                            @Query("theme_pk") int theme_pk,
@@ -192,7 +192,7 @@ public interface LinkKnownApi {
                                                      @Query("offset") int offset);
 
     // 生成验证码接口
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/CreateVerifyCode")
     Observable<CreateVerifyCodeResponse> createVerifyCode(@Query("username") String username);
 
     // 课程观看记录
@@ -214,7 +214,7 @@ public interface LinkKnownApi {
                                               @Query("favorite_type") String favorite_type);
 
     // 查询收藏总人数
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryFavoriteCount")
     Observable<FavoriteCountResponse> queryFavoriteCount(@Query("favorite_id") int favorite_id,
                                                          @Query("favorite_type") String favorite_type);
 
@@ -234,14 +234,14 @@ public interface LinkKnownApi {
     Observable<BaseResponse> receiveCoupon(@Query("activity_id") String activity_id);
 
     // 查询我的订单
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
                                                    @Query("user_name") String user_name,
                                                    @Query("scope") String scope);
 
     // 查询我的订单 -- 已购课程
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
                                                    @Query("user_name") String user_name,
@@ -250,7 +250,7 @@ public interface LinkKnownApi {
 
 
     // 查询博客
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPageBlog")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPageBlog")
     Observable<BlogListResponse> queryPageBlog(@Query("search_type") String search_type,
                                                @Query("search_data") String search_data,
                                                @Query("search_user_name") String search_user_name,
@@ -302,7 +302,7 @@ public interface LinkKnownApi {
 
 
     // 查询商品（课程）是否被购买
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList")
     Observable<PayOrderResponse> queryPayOrderList(@Query("currentPage") int current_page,
                                                    @Query("offset") int pageSize,
                                                    @Query("goods_type") String goods_type,
@@ -311,7 +311,7 @@ public interface LinkKnownApi {
                                                    @Query("pay_result") String pay_result);
 
     //根据 coupon_id 查券
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryCouponById")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryCouponById")
     Observable<queryCouponByIdResponse> queryCouponById(@Query("coupon_id") String coupon_id);
 
 
@@ -322,7 +322,7 @@ public interface LinkKnownApi {
 
 
     // 添加购物车
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/AddToShoppingCart")
     Observable<BaseResponse> addToShoppingCart(@Query("goods_type") String goods_type,
                                                @Query("goods_id") String goods_id,
                                                @Query("goods_price_on_add") String goods_price_on_add);
@@ -335,13 +335,13 @@ public interface LinkKnownApi {
 
 
     // 查询购物车
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPayShoppingCartList")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPayShoppingCartList")
     Observable<PayShoppinpCartResponse> queryPayShoppingCartList(@Query("current_page") int current_page,
                                                                  @Query("offset") int pageSize);
 
 
     // 从购物车里删除
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/deleteFromShoppingCart")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/DeleteFromShoppingCart")
     Observable<BaseResponse> deleteFromShoppingCart(@Query("goods_type") String goodsType,
                                                     @Query("goods_id") String goodsId);
 
@@ -357,7 +357,7 @@ public interface LinkKnownApi {
                                                          @Query("offset") int pageSize);
 
     // 意见、建议或吐槽
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/queryPageAdvise")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/QueryPageAdvise")
     Observable<AdviseListResponse> queryPageAdvise(@Query("current_page") int current_page,
                                                    @Query("offset") int pageSize);
 
@@ -388,7 +388,7 @@ public interface LinkKnownApi {
                                                               @Query("today") String today);
 
     //下单入pay_order
-    @POST("/api/iwork/httpservice/isoft_linkknown_api/addPayOrder")
+    @POST("/api/iwork/httpservice/isoft_linkknown_api/AddPayOrder")
     Observable<SearchCouponForPayResponse> addPayOrder(@Query("order_id") String order_id,
                                                        @Query("user_name") String user_name,
                                                        @Query("goods_type") String goods_type,
