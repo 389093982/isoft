@@ -1,12 +1,12 @@
 <Filters>
-	<Id>43</Id>
+	<Id>44</Id>
 	<AppId>5</AppId>
 	<FilterWorkId>209</FilterWorkId>
 	<FilterWorkName>SsoFilter</FilterWorkName>
-	<WorkName>PostCatalogEdit2,GetMyBlogs2,GetMyCatalogs2,BlogArticleEdit,BlogCatalogEdit,ArticleDelete,EditAdvertisement,GetPersonalAdvertisement,BookEdit,BookArticleEdit,UpdateBookIcon,DeleteBookById,BookCatalogEdit,AddComment2,EditCorporateDetail,ApplyJob,GetJobApplyList,EditJobDetail,EditResume,InsertMessage,QueryPageMessageList,EditResource,DownloadResourceFile,InsertAdvise,ToggleFavorite2,DeleteBookCatalog,ChangeCatalogOrder,EditQuestion</WorkName>
+	<WorkName>PostCatalogEdit2,GetMyBlogs2,GetMyCatalogs2,BlogArticleEdit,BlogCatalogEdit,ArticleDelete,EditAdvertisement,GetPersonalAdvertisement,BookEdit,BookArticleEdit,UpdateBookIcon,DeleteBookById,BookCatalogEdit,AddComment2,EditCorporateDetail,ApplyJob,GetJobApplyList,EditJobDetail,EditResume,InsertMessage,QueryPageMessageList,EditResource,DownloadResourceFile,InsertAdvise,ToggleFavorite2,DeleteBookCatalog,ChangeCatalogOrder,EditQuestion,LoginRecordList,UpdateUserIcon,EditUserSignature,UpdateUserDetail,DoAttention,QueryIsAttention,QueryAttentionOrFensi,QueryAttentionUserList,AddUserLinkAgent,AgreeUserLinkAgent,QueryUserLinkAgent,QueryMyUpperAgent,QueryTodayInviteMe,GetMyBlogs,GetMyCatalogs,EditCourse,UploadVideo,InsertOrUpdateVedioRecord,UpdateCourseIcon,DeleteVideo,ChangeVideoOrder,AddComment,DeleteComment,GoodsEdit,IsFavorite,ToggleFavorite,FileUpload,GetUserFavoriteList,UpdateVoteTag,EditExpertAnswer,ModifyGoodNumber,IWantAskAlso,QueryRechargeRight,AddPayOrder,QueryPayOrderList,AddPayActivity,QueryPagePayActivity,ReceiveCoupon,UpdateActivity,QueryPagePayCoupon,SearchCouponForPay,UpdateCouponIsUsed,QueryPersonalCouponList,QueryPayShoppingCartList,DeleteFromShoppingCart,AddToShoppingCart,OrderCancelledById,UpdatePayOrder,AddContactMessage,AddAppVersion,QueryPageAppVersion</WorkName>
 	<ComplexWorkName></ComplexWorkName>
 	<CreatedBy>SYSTEM</CreatedBy>
-	<CreatedTime>2020-03-30T13:29:50+08:00</CreatedTime>
+	<CreatedTime>2020-08-07T10:07:33+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-03-30T13:29:50+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-08-07T10:07:33+08:00</LastUpdatedTime>
 </Filters>
