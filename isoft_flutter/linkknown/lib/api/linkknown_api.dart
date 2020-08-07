@@ -106,7 +106,7 @@ class LinkKnownApi {
       String verifyCode,
       String third_user_type) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/regist',
+        '/api/iwork/httpservice/isoft_linkknown_api/Regist',
         params: {
           'username': username,
           'passwd': passwd,
@@ -122,7 +122,7 @@ class LinkKnownApi {
   static Future<BaseResponse> modifyPwd(
       String username, String passwd, String verifyCode) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/modifyPwd',
+        '/api/iwork/httpservice/isoft_linkknown_api/ModifyPwd',
         params: {
           'username': username,
           'passwd': passwd,
@@ -134,7 +134,7 @@ class LinkKnownApi {
   // 生成验证码接口
   static Future<BaseResponse> createVerifyCode(String username) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/createVerifyCode',
+        '/api/iwork/httpservice/isoft_linkknown_api/CreateVerifyCode',
         params: {
           'username': username,
         });
@@ -232,7 +232,7 @@ class LinkKnownApi {
   static Future<AdviseListResponse> queryPageAdvise(
       int current_page, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPageAdvise',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPageAdvise',
         params: {
           'current_page': current_page,
           'offset': offset,
@@ -244,7 +244,7 @@ class LinkKnownApi {
   static Future<FavoriteCountResponse> queryFavoriteCount(
       int favorite_id, String favorite_type) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryFavoriteCount',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryFavoriteCount',
         params: {
           'favorite_id': favorite_id,
           'favorite_type': favorite_type,
@@ -293,7 +293,7 @@ class LinkKnownApi {
   static Future<QueryCouponByIdResponse> queryCouponById(
       String coupon_id) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryCouponById',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryCouponById',
         params: {
           'coupon_id': coupon_id,
         });
@@ -315,7 +315,7 @@ class LinkKnownApi {
       String pay_result,
       String code_url) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/addPayOrder',
+        '/api/iwork/httpservice/isoft_linkknown_api/AddPayOrder',
         params: {
           'order_id': order_id,
           'user_name': user_name,
@@ -348,7 +348,7 @@ class LinkKnownApi {
   //领券
   static Future<BaseResponse> receiveCoupon(String activity_id) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/receiveCoupon',
+        '/api/iwork/httpservice/isoft_linkknown_api/ReceiveCoupon',
         params: {
           'activity_id': activity_id,
         });
@@ -433,7 +433,7 @@ class LinkKnownApi {
       String user_name,
       String pay_result) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList',
         params: {
           'currentPage': currentPage,
           'offset': pageSize,
@@ -461,7 +461,7 @@ class LinkKnownApi {
   static Future<PayShoppinpCartResponse> queryPayShoppingCartList(
       int current_page, int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPayShoppingCartList',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPayShoppingCartList',
         params: {
           'current_page': current_page,
           'offset': offset,
@@ -473,7 +473,7 @@ class LinkKnownApi {
   static Future<BaseResponse> addToShoppingCart(
       String goods_type, String goods_id, String goods_price_on_add) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/addToShoppingCart',
+        '/api/iwork/httpservice/isoft_linkknown_api/AddToShoppingCart',
         params: {
           'goods_type': goods_type,
           'goods_id': goods_id,
@@ -486,7 +486,7 @@ class LinkKnownApi {
   static Future<BaseResponse> deleteFromShoppingCart(
       String goods_type, String goods_id) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/deleteFromShoppingCart',
+        '/api/iwork/httpservice/isoft_linkknown_api/DeleteFromShoppingCart',
         params: {
           'goods_type': goods_type,
           'goods_id': goods_id,
@@ -499,7 +499,7 @@ class LinkKnownApi {
       int currentPage, int offset, String user_name, String scope,
       {String goods_type}) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList',
         params: {
           'currentPage': currentPage,
           'offset': offset,
@@ -514,7 +514,7 @@ class LinkKnownApi {
   static Future<PayOrderResponse> queryOrderByOrderId(
       int currentPage, int offset, String orderId) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPayOrderList',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList',
         params: {
           'currentPage': currentPage,
           'offset': offset,
@@ -635,7 +635,7 @@ class LinkKnownApi {
       int current_page,
       int offset) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/queryPageBlog',
+        '/api/iwork/httpservice/isoft_linkknown_api/QueryPageBlog',
         params: {
           'search_type': search_type,
           'search_data': search_data,
@@ -825,7 +825,7 @@ class LinkKnownApi {
   static Future<BaseResponse> deleteComment(int level, int id, int theme_pk,
       String theme_type, int org_parent_id) async {
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/deleteComment',
+        '/api/iwork/httpservice/isoft_linkknown_api/DeleteComment',
         params: {
           'level': level,
           'id': id,
@@ -869,7 +869,7 @@ class LinkKnownApi {
       ),
     });
     var response = await doPost(
-        '/api/iwork/httpservice/isoft_linkknown_api/fileUpload',
+        '/api/iwork/httpservice/isoft_linkknown_api/FileUpload',
         params: {
           'table_name': table_name,
           'table_field': table_field,
