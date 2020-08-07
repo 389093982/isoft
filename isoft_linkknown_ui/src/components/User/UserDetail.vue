@@ -62,15 +62,15 @@
           <div v-if="isLoginUserName(user.user_name)" style="background-color: white;height: 80px">
             <Row>
               <Col span="3" offset="3">
-                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
-                  <Icon type="ios-create-outline" style="font-size: 40px" />
-                  <div style="font-size: 12px;">发布博客</div>
-                </div>
-              </Col>
-              <Col span="3">
                 <div @click="$router.push({ path: '/ilearning/courseSpace'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
                   <Icon type="ios-videocam-outline" style="font-size: 40px" />
                   <div style="font-size: 12px;">我的课程</div>
+                </div>
+              </Col>
+              <Col span="3">
+                <div @click="$router.push({ path: '/iblog/blogArticleEdit'})" style="margin: 10px 0 0 0 ;cursor: pointer;text-align: center" class="hvr-grow isoft_hover_red">
+                  <Icon type="ios-create-outline" style="font-size: 40px" />
+                  <div style="font-size: 12px;">发布博客</div>
                 </div>
               </Col>
               <Col span="3">

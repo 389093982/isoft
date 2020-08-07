@@ -16,7 +16,8 @@
                   {{myCourse.price}}
                 </span>
               </span>
-              <span v-else style="color: #cc0000;font-size: 15px">免费视频</span>
+              <span v-else-if="myCourse.isCharge==='free'" style="color: #cc0000;font-size: 15px">免费视频</span>
+              <span v-else-if="myCourse.isCharge==='vip'" style="color: #1bcc0b;font-size: 15px">会员专享</span>
             </span>
           </p>
         </Col>

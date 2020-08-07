@@ -26,6 +26,7 @@
               <div v-if="showDisplayIcon" class="ico_play" style="position: absolute;top: -65px;left: 50px;"></div>
               <p class="isoft_font12 isoft_inline_ellipsis">{{course.course_name}}</p>
               <span v-if="course.isCharge==='free'" class="isoft_free" style="position: absolute;top: -80px;left: 85px">免费</span>
+              <span v-else-if="course.isCharge==='vip'" class="isoft_free" style="position: absolute;top: -80px;left: 85px">会员</span>
             </router-link>
           </li>
         </ul>
