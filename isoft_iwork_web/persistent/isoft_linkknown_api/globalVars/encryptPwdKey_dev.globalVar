@@ -1,0 +1,14 @@
+<GlobalVar>
+	<Id>9</Id>
+	<AppId>5</AppId>
+	<EnvName>dev</EnvName>
+	<Name>encryptPwdKey</Name>
+	<Value>zhourui&amp;zhoupeng12345678</Value>
+	<EncryptFalg>false</EncryptFalg>
+	<Type>1</Type>
+	<Desc></Desc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-02-24T09:22:47+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-02-24T09:22:47+08:00</LastUpdatedTime>
+</GlobalVar>
