@@ -64,7 +64,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
   bool hasLogin = false;
   String loginUserName;
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -124,7 +124,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Container(
@@ -324,7 +324,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
     super.initState();
   }
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -334,7 +334,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Container(
@@ -460,7 +460,7 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
     super.initState();
   }
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -470,7 +470,7 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Container(

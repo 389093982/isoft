@@ -46,6 +46,22 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   GlobalKey<CourseVideosWidgetState> courseVideosWidgetState = new GlobalKey();
 
+  String loginUserName;
+  String vipLevel;
+  String vipExpiredTime;
+  bool compare;
+
+  queryLoginUserInfo() async {
+    this.loginUserName = await LoginUtil.getLoginUserName();
+    this.vipLevel = await LoginUtil.getVipLevel()??"0";
+    this.vipExpiredTime = DateUtil.format2StandardTime(await LoginUtil.getVipExpiredTime()??"19700101235959");
+    String nowTime = DateUtil.getNow_yyyyMMddHHmmss();
+    this.compare = DateUtil.compareStandardTime(vipExpiredTime, nowTime);
+    setState(() {
+      //刷新
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +69,10 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if(this.loginUserName==null){
+      queryLoginUserInfo();
+      return Text("");
+    }
     return widget.course==null?Text(""):Container(
       padding: EdgeInsets.only(left: 10,top: 10,right: 10),
       child: ListView(
@@ -111,34 +131,10 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
                 forceStrutHeight: true, height: 0.8, leading: 0.9),
           ),
           VEmptyView(20),
-          widget.course.isCharge=="free"?Text(""):Row(
-            children: <Widget>[
-              SizedBox(width: 70,),
-              GestureDetector(
-                onTap: (){
-                  goToShoppingCart();
-                },
-                child: Image.asset(
-                  "images/shoppingCart_green.png",
-                  width: 45,
-                ),
-              ),
-              SizedBox(width: 20,),
-              GestureDetector(
-                onTap: (){
-                  addToShoppingCart("course_theme_type",widget.course.id.toString(),widget.course.price);
-                },
-                child: FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
-              ),
-              SizedBox(width: 20,),
-              GestureDetector(
-                onTap: (){
-                  toBuy();
-                },
-                child: FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
-              ),
-            ],
-          ),
+          widget.course.isCharge=="vip"?
+            showVipButton()
+            :
+            (widget.course.isCharge=="free"?Text(""):showShoppingCartAndBuy()),
           VEmptyView(20),
           //分享点赞收藏播放
           CourseOperateWidget(widget.course, widget.cVideos),
@@ -160,6 +156,64 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
       ),
     );
   }
+
+
+  //展示vip开通按钮
+  Widget showVipButton() {
+    if(loginUserName==widget.course.courseAuthor || (int.parse(vipLevel)>0 && compare)){
+      return Text("");
+    }else{
+      return Row(
+        children: <Widget>[
+          Expanded(child: Text(""),),
+          GestureDetector(
+            onTap: (){
+              if(StringUtil.checkEmpty(this.loginUserName)){
+                UIUtil.showToast("未登录..");
+              }else{
+                NavigatorUtil.goRouterPage(context, Routes.openVip);
+              }
+            },
+            child: FunctionButtonLabel(labelText: " 开通vip ",borderRadius: 20,),
+          ),
+          SizedBox(width: 40,),
+        ],
+      );
+    }
+  }
+
+  //展示购物车和购买按钮
+  Widget showShoppingCartAndBuy(){
+    return Row(
+      children: <Widget>[
+        SizedBox(width: 70,),
+        GestureDetector(
+          onTap: (){
+            goToShoppingCart();
+          },
+          child: Image.asset(
+            "images/shoppingCart_green.png",
+            width: 45,
+          ),
+        ),
+        SizedBox(width: 20,),
+        GestureDetector(
+          onTap: (){
+            addToShoppingCart("course_theme_type",widget.course.id.toString(),widget.course.price);
+          },
+          child: FunctionButtonLabel(labelText: "加入购物车",borderRadius: 20,),
+        ),
+        SizedBox(width: 20,),
+        GestureDetector(
+          onTap: (){
+            toBuy();
+          },
+          child: FunctionButtonLabel(labelText: "立即购买",borderRadius: 20,),
+        ),
+      ],
+    );
+  }
+
 
   //进入购物车
   goToShoppingCart() async {

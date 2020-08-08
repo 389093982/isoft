@@ -187,7 +187,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
     super.initState();
   }
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -197,7 +197,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Column(

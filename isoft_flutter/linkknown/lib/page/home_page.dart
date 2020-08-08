@@ -108,7 +108,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
 
   String loginUserName;
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -153,7 +153,7 @@ class _HomeHeaderWidgetState extends State<_HomeHeaderWidget> with TickerProvide
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Row(

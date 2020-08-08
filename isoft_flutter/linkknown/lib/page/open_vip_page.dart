@@ -40,7 +40,7 @@ class _OpenVipPageState extends State<OpenVipPage> {
     super.initState();
   }
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -51,7 +51,7 @@ class _OpenVipPageState extends State<OpenVipPage> {
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Scaffold(

@@ -21,7 +21,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
   @override
   bool get wantKeepAlive => true;
 
-  queryLoginUserName() async {
+  queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     setState(() {
       //刷新
@@ -78,7 +78,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
   @override
   Widget build(BuildContext context) {
     if(this.loginUserName==null){
-      queryLoginUserName();
+      queryLoginUserInfo();
       return Text("");
     }
     return Scaffold(
