@@ -108,7 +108,7 @@ class VideoPlayState extends State<VideoPlayPage> {
       if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
         toPlay(index);
       }else{
-        UIUtil.showToast2("付费课程,前去购买？");
+        UIUtil.showToast2("付费课程,请先购买");
       }
     }
   }
