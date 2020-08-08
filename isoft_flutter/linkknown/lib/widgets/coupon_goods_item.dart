@@ -8,7 +8,7 @@ import 'package:linkknown/response/query_general_coupon_targets_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 import 'button_label.dart';
 
@@ -48,7 +48,7 @@ class _CouponGoodsItemState extends State<CouponGoodsItemWidget> with TickerProv
             child:Container(
               padding: EdgeInsets.all(10),
               child: Image.network(
-                UIUtils.replaceMediaUrl(widget.course.smallImage),
+                UIUtil.replaceMediaUrl(widget.course.smallImage),
                 width: 130,
                 height: 100,
                 fit: BoxFit.cover,
@@ -106,7 +106,7 @@ class _CouponGoodsItemState extends State<CouponGoodsItemWidget> with TickerProv
                       // offstage 组件控制组件是否隐藏
                       // 通过offsatge字段控制child是否显示,比较常用的控件
                       Offstage(
-                        offstage: !UIUtils.isValidPrice(widget.course.price),
+                        offstage: !UIUtil.isValidPrice(widget.course.price),
                         child: Padding(
                           padding: EdgeInsets.only(right: 5),
                           child: Text(

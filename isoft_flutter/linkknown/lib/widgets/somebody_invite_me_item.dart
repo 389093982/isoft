@@ -13,7 +13,7 @@ import 'package:linkknown/response/user_link_agent_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/header_icon.dart';
@@ -122,12 +122,12 @@ class _SomeBodyInviteMeItemState extends State<SomeBodyInviteMeItemWidget>
   AgreeUserLinkAgent(String agent_user_name){
     LinkKnownApi.AgreeUserLinkAgent(agent_user_name).then((value) {
       if(value.status=="SUCCESS"){
-        UIUtils.showToast("关联成功！");
+        UIUtil.showToast("关联成功！");
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

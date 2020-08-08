@@ -11,7 +11,7 @@ import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/response/query_coupon_center_list_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -148,12 +148,12 @@ class _ReceiveCouponCenterItemState extends State<ReceiveCouponCenterItemWidget>
   receiveCoupon(String activity_id){
     LinkKnownApi.receiveCoupon(activity_id).then((BaseResponse) {
       if(BaseResponse.status=="SUCCESS"){
-        UIUtils.showToast("领取成功");
+        UIUtil.showToast("领取成功");
       }else{
-        UIUtils.showToast(BaseResponse.errorMsg);
+        UIUtil.showToast(BaseResponse.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast("领取失败..");
+      UIUtil.showToast("领取失败..");
     });
   }
 

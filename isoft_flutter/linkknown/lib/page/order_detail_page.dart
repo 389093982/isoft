@@ -4,7 +4,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/response/pay_order_response.dart';
 import 'package:linkknown/response/query_coupon_by_id_response.dart';
 import 'package:linkknown/utils/date_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/selected_coupon_item.dart';
 
@@ -49,7 +49,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 //刷新
               });
             } else {
-              UIUtils.showToast(QueryCouponByIdResponse.errorMsg);
+              UIUtil.showToast(QueryCouponByIdResponse.errorMsg);
             }
           }).catchError((err) {});
 
@@ -60,7 +60,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           });
         }
       } else {
-        UIUtils.showToast(PayOrderResponse.errorMsg);
+        UIUtil.showToast(PayOrderResponse.errorMsg);
       }
     }).catchError((err) {});
   }

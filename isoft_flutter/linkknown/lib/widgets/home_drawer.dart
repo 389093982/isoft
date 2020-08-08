@@ -6,7 +6,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 import 'package:linkknown/widgets/ming_yan.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
@@ -211,7 +211,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
           ),
           onTap: () {
             if(StringUtil.checkEmpty(this.loginUserName)){
-              UIUtils.showToast("未登录..");
+              UIUtil.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, "${Routes.personalCenter}?userName=${loginUserName}");
             }
@@ -226,7 +226,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
           ),
           onTap: () {
             if(StringUtil.checkEmpty(this.loginUserName)){
-              UIUtils.showToast("未登录..");
+              UIUtil.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, Routes.payOrder);
             }
@@ -241,7 +241,7 @@ class _HomeContentHeaderWidgetState extends State<HomeContentHeaderWidget> with 
           ),
           onTap: () {
             if(StringUtil.checkEmpty(this.loginUserName)){
-              UIUtils.showToast("未登录..");
+              UIUtil.showToast("未登录..");
             }else{
               NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
             }

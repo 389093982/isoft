@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 
 class ImageSelectWidget extends StatefulWidget{
@@ -108,7 +108,7 @@ class ImageSelectWidgetState extends State<ImageSelectWidget> {
         });
       }
     } catch (e) {
-      UIUtils.showToast(widget.source == ImageSelectWidget.SOURCE_GALLERY ? '没有权限，无法打开相册！' : '没有权限，无法打开照相机！');
+      UIUtil.showToast(widget.source == ImageSelectWidget.SOURCE_GALLERY ? '没有权限，无法打开相册！' : '没有权限，无法打开照相机！');
     }
   }
 

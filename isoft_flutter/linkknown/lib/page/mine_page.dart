@@ -8,7 +8,7 @@ import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/clickable_textimage.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/header_icon.dart';
@@ -174,7 +174,7 @@ class _MineHeaderState extends State<MineHeaderWidget> with TickerProviderStateM
           child: GestureDetector(
             onTap: () {
               if(this.loginUserName==null || this.loginUserName==""){
-                UIUtils.showToast("未登录..");
+                UIUtil.showToast("未登录..");
               }else{
                 NavigatorUtil.goRouterPage(context, Routes.message);
               }
@@ -359,7 +359,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 text: "优惠券",
                 onTap: () {
                   if(StringUtil.checkEmpty(this.loginUserName)){
-                    UIUtils.showToast("未登录..");
+                    UIUtil.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.myCoupon);
                   }
@@ -375,7 +375,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 text: "购物车",
                 onTap: () {
                   if(StringUtil.checkEmpty(this.loginUserName)){
-                    UIUtils.showToast("未登录..");
+                    UIUtil.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
                   }
@@ -391,7 +391,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 text: "订单",
                 onTap: () {
                   if(StringUtil.checkEmpty(this.loginUserName)){
-                    UIUtils.showToast("未登录..");
+                    UIUtil.showToast("未登录..");
                   }else{
                     NavigatorUtil.goRouterPage(context, Routes.payOrder);
                   }
@@ -407,7 +407,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 text: "活动中心",
                 onTap: () {
 //                  if(StringUtil.checkEmpty(this.loginUserName)){
-//                    UIUtils.showToast("未登录..");
+//                    UIUtil.showToast("未登录..");
 //                  }else{
                     NavigatorUtil.goRouterPage(context, Routes.comingSoon);
 //                  }
@@ -423,7 +423,7 @@ class _MineCenterState extends State<MineCenterWidget> with TickerProviderStateM
                 text: "考试",
                 onTap: () {
 //                  if(StringUtil.checkEmpty(this.loginUserName)){
-//                    UIUtils.showToast("未登录..");
+//                    UIUtil.showToast("未登录..");
 //                  }else{
                     NavigatorUtil.goRouterPage(context, Routes.comingSoon);
 //                  }
@@ -504,14 +504,14 @@ class _MineFooterState extends State<MineFooterWidget> with TickerProviderStateM
       child: InkWell(
         onTap: () {
           if(requireLogin && (this.loginUserName==null || this.loginUserName == "")){
-            UIUtils.showToast("未登录..");
+            UIUtil.showToast("未登录..");
           }else{
             NavigatorUtil.goRouterPage(context, item.router);
           }
         },
         child: ListTile(
           leading: Image.asset(
-            UIUtils.replaceMediaUrl(item.icon),
+            UIUtil.replaceMediaUrl(item.icon),
             width: 22,
             height: 22,
           ),

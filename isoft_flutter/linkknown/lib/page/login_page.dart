@@ -6,7 +6,7 @@ import 'package:linkknown/event/event_bus.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
@@ -113,11 +113,11 @@ class __LoginWidgetState extends State<_LoginWidget> {
 
   postLogin() {
     if (_userName == null || _userName.isEmpty) {
-      UIUtils.showToast('请输入账号');
+      UIUtil.showToast('请输入账号');
       return;
     }
     if (_password.isEmpty || _password.isEmpty) {
-      UIUtils.showToast('请输入密码');
+      UIUtil.showToast('请输入密码');
       return;
     }
 
@@ -128,7 +128,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
 
           LinkKnownApi.updateTokenString();
 
-          UIUtils.showToast("登录成功！");
+          UIUtil.showToast("登录成功！");
           NavigatorUtil.goRouterPage(context, "${Routes.main}");
 
           eventBus.fire(LoginStateChangeEvent());
@@ -136,11 +136,11 @@ class __LoginWidgetState extends State<_LoginWidget> {
           //查询用户基本信息
           getUserDetail(_userName);
         } else {
-          UIUtils.showToast("登录失败！" + value.errorMsg);
+          UIUtil.showToast("登录失败！" + value.errorMsg);
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -153,7 +153,7 @@ class __LoginWidgetState extends State<_LoginWidget> {
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

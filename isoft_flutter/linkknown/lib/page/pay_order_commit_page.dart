@@ -16,7 +16,7 @@ import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/goods_item.dart';
@@ -65,10 +65,10 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
           //刷新界面
         });
       } else {
-        UIUtils.showToast(SearchCouponForPayResponse.errorMsg);
+        UIUtil.showToast(SearchCouponForPayResponse.errorMsg);
       }
     }).catchError((err) {
-      //UIUtils.showToast("查询可用优惠券失败..");
+      //UIUtil.showToast("查询可用优惠券失败..");
     });
   }
 
@@ -82,7 +82,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
           //刷新
         });
       } else {
-        UIUtils.showToast(QueryCouponByIdResponse.errorMsg);
+        UIUtil.showToast(QueryCouponByIdResponse.errorMsg);
       }
     }).catchError((err) {});
   }
@@ -130,7 +130,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
               children: <Widget>[
                 Container(
                   child: Image.network(
-                    UIUtils.replaceMediaUrl(widget.goodsImg),
+                    UIUtil.replaceMediaUrl(widget.goodsImg),
                     height: 160,
                     width: 280,
                     fit: BoxFit.fill,
@@ -225,7 +225,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
   //选择可用优惠券
   toSelectAvailableCouponPage() async {
     if(couponsForPay.length==0){
-      UIUtils.showToast("无可用优惠券");
+      UIUtil.showToast("无可用优惠券");
       return;
     }
     String userName = await LoginUtil.getLoginUserName();
@@ -243,7 +243,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
       );
       queryCouponById(map["couponId"]);
     }else{
-      UIUtils.showToast("非课程,待定..");
+      UIUtil.showToast("非课程,待定..");
     }
   }
 
@@ -256,7 +256,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
   nowToPay() async {
     bool checkHasLogin = await LoginUtil.checkHasLogin();
     if(!checkHasLogin){
-      UIUtils.showToast("会话过期,请重新登录..");
+      UIUtil.showToast("会话过期,请重新登录..");
       return;
     }
     //1.先查看课程是否已经买过
@@ -269,7 +269,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
     LinkKnownApi.queryPayOrderListIsPaid(current_page, pageSize, goods_type, goods_id, user_name, pay_result).then((PayOrderResponse) async {
       if (PayOrderResponse.status == "SUCCESS") {
         if(PayOrderResponse.orders.length>0){
-          UIUtils.showToast("该课程您已购买过，无需再次购买^_^");
+          UIUtil.showToast("该课程您已购买过，无需再次购买^_^");
           return;
         }else{
 
@@ -279,7 +279,7 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
           LinkKnownApi.queryPayOrderList(current_page,pageSize,user_name,scope).then((PayOrderResponse) async {
             if (PayOrderResponse?.status == "SUCCESS") {
               if(PayOrderResponse.orders.length>0){
-                UIUtils.showToast("您有待付款的订单，请先去处理！");
+                UIUtil.showToast("您有待付款的订单，请先去处理！");
                 return;
               }else{
 
@@ -290,17 +290,17 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
                   LinkKnownApi.queryCouponById(couponId).then((QueryCouponByIdResponse) async {
                     if (QueryCouponByIdResponse?.status == "SUCCESS") {
                       if("used"==QueryCouponByIdResponse.coupon.couponState){
-                        UIUtils.showToast("当前券已被使用，请重新选择！");
+                        UIUtil.showToast("当前券已被使用，请重新选择！");
                         return;
                       }else{
                         //4.微信支付
                         weChatPay();
                       }
                     } else {
-                      UIUtils.showToast(QueryCouponByIdResponse.errorMsg);
+                      UIUtil.showToast(QueryCouponByIdResponse.errorMsg);
                     }
                   }).catchError((err) {
-                    UIUtils.showToast("3.查看券是否可使用--查询失败");
+                    UIUtil.showToast("3.查看券是否可使用--查询失败");
                   });
                 }else{
                   //微信支付
@@ -310,19 +310,19 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
 
               }
             } else {
-              UIUtils.showToast(PayOrderResponse.errorMsg);
+              UIUtil.showToast(PayOrderResponse.errorMsg);
             }
           }).catchError((err) {
-            UIUtils.showToast("2.查看是否有未付款订单--查询失败");
+            UIUtil.showToast("2.查看是否有未付款订单--查询失败");
           });
 
 
         }
       } else {
-        UIUtils.showToast(PayOrderResponse.errorMsg);
+        UIUtil.showToast(PayOrderResponse.errorMsg);
       }
     }).catchError((err) {
-      UIUtils.showToast("1.查看课程是否已经买过--查询失败");
+      UIUtil.showToast("1.查看课程是否已经买过--查询失败");
     });
 
 
@@ -362,23 +362,23 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
     LinkKnownApi.addPayOrder(order_id, user_name, goods_type, goods_id, goods_desc, paid_amount,
          goods_original_price, activity_type, activity_type_bind_id, goods_img, pay_result, code_url).then((BaseResponse) async {
       if (BaseResponse?.status == "SUCCESS") {
-        UIUtils.showToast("订单添加成功");
+        UIUtil.showToast("订单添加成功");
 
 
         //2.更新优惠券,这里是下单的时候需要更新一次。
         if(selectedCoupon!=null){
           LinkKnownApi.UpdateCouponIsUsed(user_name,selectedCoupon.couponId).then((BaseResponse) async {
             if (BaseResponse?.status == "SUCCESS") {
-              UIUtils.showToast("下单更新券为已使用！");
+              UIUtil.showToast("下单更新券为已使用！");
             } else {
-              UIUtils.showToast(BaseResponse.errorMsg);
+              UIUtil.showToast(BaseResponse.errorMsg);
             }
           }).catchError((err) {});
         }
 
 
         //3.调微信支付接口
-        UIUtils.showToast("微信支付成功..");
+        UIUtil.showToast("微信支付成功..");
 
 
         //4.再次更新优惠券状态为已使用
@@ -386,19 +386,19 @@ class _PayOrderCommitPageState extends State<PayOrderCommitPage> {
         if(selectedCoupon!=null){
           LinkKnownApi.UpdateCouponIsUsed(user_name,selectedCoupon.couponId).then((BaseResponse) async {
             if (BaseResponse?.status == "SUCCESS") {
-              UIUtils.showToast("下单更新券为已使用！");
+              UIUtil.showToast("下单更新券为已使用！");
             } else {
-              UIUtils.showToast(BaseResponse.errorMsg);
+              UIUtil.showToast(BaseResponse.errorMsg);
             }
           }).catchError((err) {});
         }
 
 
       } else {
-        UIUtils.showToast("添加订单失败!");
+        UIUtil.showToast("添加订单失败!");
       }
     }).catchError((err) {
-      UIUtils.showToast("添加订单失败");
+      UIUtil.showToast("添加订单失败");
     });
 
   }

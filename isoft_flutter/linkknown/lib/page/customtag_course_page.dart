@@ -6,7 +6,7 @@ import 'package:linkknown/constants.dart';
 import 'package:linkknown/response/custom_tag_course_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 
 class CustomTagCoursePage extends StatefulWidget {
@@ -225,7 +225,7 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
                     child:Container(
                       padding: EdgeInsets.all(10),
                       child: Image.network(
-                        UIUtils.replaceMediaUrl(customTagCourses[position].smallImage),
+                        UIUtil.replaceMediaUrl(customTagCourses[position].smallImage),
                         width: 130,
                         height: 100,
                         fit: BoxFit.cover,
@@ -283,7 +283,7 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
                               // offstage 组件控制组件是否隐藏
                               // 通过offsatge字段控制child是否显示,比较常用的控件
                               Offstage(
-                                offstage: !UIUtils.isValidPrice(customTagCourses[position].price),
+                                offstage: !UIUtil.isValidPrice(customTagCourses[position].price),
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 5),
                                   child: Text(
@@ -329,7 +329,7 @@ class _CustomTagCoursePageState extends State<CustomTagCoursePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: Image.network(
-              UIUtils.replaceMediaUrl(customTagCourse.smallImage),
+              UIUtil.replaceMediaUrl(customTagCourse.smallImage),
               height: 100,
               width: double.infinity,
               fit: BoxFit.fill,

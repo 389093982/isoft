@@ -6,7 +6,7 @@ import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/response/my_coupon_response.dart';
 import 'package:linkknown/response/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';
 import 'package:linkknown/widgets/divider_line.dart';
@@ -72,7 +72,7 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
         showMore = false;
       });
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
 
       setState(() {
         isLoading = false;
@@ -196,28 +196,28 @@ class _InvitationState extends State<InvitationWidget> with AutomaticKeepAliveCl
 
   AddUserLinkAgent(String userName) async {
     if(""==userName){
-      UIUtils.showToast("请输入受邀者账号！");
+      UIUtil.showToast("请输入受邀者账号！");
       return;
     }
     String user_name = await LoginUtil.getUserName();
     if (userName == user_name){
-      UIUtils.showToast("不能邀请自己^_^");
+      UIUtil.showToast("不能邀请自己^_^");
       return;
     }
 
     LinkKnownApi.AddUserLinkAgent(userName).then((value) {
       if(value.status=="SUCCESS"){
-        UIUtils.showToast("邀请成功！请尽快通知对方接受邀请");
+        UIUtil.showToast("邀请成功！请尽快通知对方接受邀请");
       }else{
         if(value.errorMsg.contains("今日已邀请")){
-          UIUtils.showToast(value.errorMsg+"请尽快通知对方接受邀请");
+          UIUtil.showToast(value.errorMsg+"请尽快通知对方接受邀请");
         }else{
-          UIUtils.showToast(value.errorMsg);
+          UIUtil.showToast(value.errorMsg);
 
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
 
   }

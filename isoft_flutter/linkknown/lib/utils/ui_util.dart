@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linkknown/config/env_config.dart';
 
-class UIUtils {
+class UIUtil {
   static void showToast(String msg) {
     Fluttertoast.showToast(msg: msg, gravity: ToastGravity.CENTER);
   }

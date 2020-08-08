@@ -9,7 +9,7 @@ import 'package:linkknown/page/course_introduce_widget.dart';
 import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:share/share.dart';
 
 class CourseDetailPage extends StatefulWidget {
@@ -121,7 +121,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                           },
                         ),
                         background: Image.network(
-                          UIUtils.replaceMediaUrl(
+                          UIUtil.replaceMediaUrl(
                               course != null ? course.smallImage : ""),
                           fit: BoxFit.fill,
                         ),

@@ -5,7 +5,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 
 class AdviseEditPage extends StatefulWidget {
@@ -76,24 +76,24 @@ class _AdviseEditPageState extends State<AdviseEditPage> {
 
   _submit () {
     if (adviseType.isEmpty) {
-      UIUtils.showToast2("请选择反馈类型");
+      UIUtil.showToast2("请选择反馈类型");
       return;
     }
     if (_adviseController.text.isEmpty) {
-      UIUtils.showToast2("请输入您的反馈内容");
+      UIUtil.showToast2("请输入您的反馈内容");
       return;
     }
-    UIUtils.showToast2("提交成功");
+    UIUtil.showToast2("提交成功");
     LinkKnownApi.insertAdvise(_adviseController.text, "advise").then((value) {
       if (value.status == "SUCCESS") {
-        UIUtils.showToast2("提交成功");
+        UIUtil.showToast2("提交成功");
         // 延迟 1s 跳往列表页面
         Future.delayed(Duration(seconds: 1)).then((value) => NavigatorUtil.goRouterPage(context, Routes.advise));
     } else {
-        UIUtils.showToast2("提交失败");
+        UIUtil.showToast2("提交失败");
       }
     }).catchError((e) {
-      UIUtils.showToast2((e as LinkKnownError).errorMsg);
+      UIUtil.showToast2((e as LinkKnownError).errorMsg);
     });
   }
 

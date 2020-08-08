@@ -5,7 +5,7 @@ import 'package:infinite_cards/infinite_cards.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/click_item.dart';
 import 'package:linkknown/widgets/copy_right.dart';
 import 'package:package_info/package_info.dart';

@@ -8,7 +8,7 @@ import 'package:linkknown/response/first_level_comment_response.dart';
 import 'package:linkknown/response/user_favorite_list_response.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/course_card.dart';
 import 'package:linkknown/widgets/first_level_comment_item.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +71,7 @@ class _FirstLevelCommentState extends State<FirstLevelCommentWidget> with Automa
         showMore = false;
       });
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
       setState(() {
         isLoading = false;
         showMore = false;

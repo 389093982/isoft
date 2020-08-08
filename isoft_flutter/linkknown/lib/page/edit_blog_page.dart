@@ -6,7 +6,7 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
@@ -45,10 +45,10 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
             //刷新一下
           });
         } else {
-          UIUtils.showToast(value.errorMsg);
+          UIUtil.showToast(value.errorMsg);
         }
       }).catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
+        UIUtil.showToast((e as LinkKnownError).errorMsg);
       });
     }else{
       //新增博客
@@ -75,10 +75,10 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
           catalogNameList.add(catalog.catalogName);
         }
       } else {
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -234,62 +234,62 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
   //添加分类
   void addBlogCatalogName(BuildContext context){
     if (StringUtil.checkEmpty(catalog_name)) {
-      UIUtils.showToast("博客分类不能为空");
+      UIUtil.showToast("博客分类不能为空");
       return;
     }
     if (catalog_name.contains('官方')) {
-      UIUtils.showToast("分类名称不能含有 ‘官方’");
+      UIUtil.showToast("分类名称不能含有 ‘官方’");
       return;
     }
     if (catalog_name.contains('热门博客')) {
-      UIUtils.showToast("分类名称不能含有‘热门博客’");
+      UIUtil.showToast("分类名称不能含有‘热门博客’");
       return;
     }
 
     if (StringUtil.checkEmpty(catalog_desc)) {
-      UIUtils.showToast("分类描述不能为空");
+      UIUtil.showToast("分类描述不能为空");
       return;
     }
 
     LinkKnownApi.BlogCatalogEdit(catalog_name, catalog_desc).then((value) {
       if (value.status == "SUCCESS") {
         Navigator.of(context).pop();
-        UIUtils.showToast("添加成功");
+        UIUtil.showToast("添加成功");
         queryCatalogNames();
       } else {
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
   //发布博客
   void publishBlog(BuildContext context) {
     if (StringUtil.checkEmpty(blogTitleController.text)) {
-      UIUtils.showToast("文章标题不能为空");
+      UIUtil.showToast("文章标题不能为空");
       return;
     }
     if (blogTitleController.text.length > 40) {
-      UIUtils.showToast("文章标题不能超过40个字符");
+      UIUtil.showToast("文章标题不能超过40个字符");
       return;
     }
 
     if (StringUtil.checkEmpty(catalogNameController.text)) {
-      UIUtils.showToast("文章分类不能为空");
+      UIUtil.showToast("文章分类不能为空");
       return;
     }
     if (catalogNameList.indexOf(catalogNameController.text) < 0) {
-      UIUtils.showToast("文章分类有误");
+      UIUtil.showToast("文章分类有误");
       return;
     }
 
     if (StringUtil.checkEmpty(blogContentController.text)) {
-      UIUtils.showToast("文章内容不能为空");
+      UIUtil.showToast("文章内容不能为空");
       return;
     }
     if (blogContentController.text.length > 20000) {
-      UIUtils.showToast("文章内容不能超过20000个字符");
+      UIUtil.showToast("文章内容不能超过20000个字符");
       return;
     }
 
@@ -306,18 +306,18 @@ class _EditBlogPage extends State<EditBlogPage> with TickerProviderStateMixin {
         .then((value) {
       if (value.status == "SUCCESS") {
         if(int.parse(widget.blog_id)>0){
-          UIUtils.showToast("更新成功");
+          UIUtil.showToast("更新成功");
         }else{
-          UIUtils.showToast("发布成功");
+          UIUtil.showToast("发布成功");
         }
 
         Provider.of<CloudBlogRefreshNotifer>(context).update(true);
         NavigatorUtil.goBack(context);
       } else {
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

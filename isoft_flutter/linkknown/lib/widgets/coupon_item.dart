@@ -9,7 +9,7 @@ import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/response/my_coupon_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -203,7 +203,7 @@ class _CouponItemState extends State<CouponItemWidget>
       if(widget.coupon.targetType=="course"){
         NavigatorUtil.goRouterPage(context, "${Routes.courseDetail}?course_id=${widget.coupon.targetId}");
       }else{
-        UIUtils.showToast("非课程");
+        UIUtil.showToast("非课程");
       }
     }else if(widget.coupon.couponType=="general"){
       NavigatorUtil.goRouterPage(context, "${Routes.couponGoods}?youhui_type=${widget.coupon.youhuiType}&goods_min_amount=${widget.coupon.goodsMinAmount}");

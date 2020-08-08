@@ -3,7 +3,7 @@ import 'package:linkknown/constants.dart';
 import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -46,7 +46,7 @@ class _CourseCardState extends State<CourseCardWidget>
                 // AspectRatio的作用是调整 child 到设置的宽高比
                 AspectRatio(
                   child: CachedImageWidget(
-                      UIUtils.replaceMediaUrl(widget.course.smallImage)),
+                      UIUtil.replaceMediaUrl(widget.course.smallImage)),
                   aspectRatio: 100 / 68,
                 ),
                 Align(
@@ -113,7 +113,7 @@ class _CourseCardState extends State<CourseCardWidget>
                       // offstage 组件控制组件是否隐藏
                       // 通过offsatge字段控制child是否显示,比较常用的控件
                       Offstage(
-                        offstage: !UIUtils.isValidPrice(widget.course.price),
+                        offstage: !UIUtil.isValidPrice(widget.course.price),
                         child: Padding(
                           padding: EdgeInsets.only(right: 5),
                           child: Text(

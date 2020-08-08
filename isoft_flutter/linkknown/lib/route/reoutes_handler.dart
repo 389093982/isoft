@@ -41,7 +41,7 @@ import 'package:linkknown/page/user_signature_page.dart';
 import 'package:linkknown/page/video_play_page.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 // 临时存储复杂的参数
 var routerParamMap = Map();

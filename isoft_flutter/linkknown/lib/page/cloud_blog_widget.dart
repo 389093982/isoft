@@ -10,7 +10,7 @@ import 'package:linkknown/response/user_favorite_list_response.dart';
 import 'package:linkknown/provider/cloud_blog_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/blog_item.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';
@@ -120,7 +120,7 @@ class CloudBlogState extends State<CloudBlogWidget>
           setState(() {
             loadingStatus = LoadingStatus.LOADED_EMPTY;
           });
-          UIUtils.showToast("未匹配到相应数据..");
+          UIUtil.showToast("未匹配到相应数据..");
         }
       }).catchError((e) {
         setState(() {

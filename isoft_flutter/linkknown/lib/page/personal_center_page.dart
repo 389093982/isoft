@@ -8,7 +8,7 @@ import 'package:linkknown/page/user_course_widget.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/accept_invite_button_label.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
@@ -98,7 +98,7 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
           }
           setState(() {});
         }).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+          UIUtil.showToast((e as LinkKnownError).errorMsg);
         });
       }else{
         //自己，则不展示按钮
@@ -236,25 +236,25 @@ class _PersonalCenterPageState extends State<PersonalCenterPage> with TickerProv
   doAttention(String attention_object_type,String attention_object_id,String state) async {
     bool isLogin = await LoginUtil.checkHasLogin();
     if(!isLogin){
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
       return;
     }
     LinkKnownApi.DoAttention(attention_object_type,attention_object_id,state).then((value) {
       if(value.status=="SUCCESS"){
         if(state=="on"){
-          UIUtils.showToast("关注成功");
+          UIUtil.showToast("关注成功");
           isAttention = true;
         }else if(state=="off"){
-          UIUtils.showToast("取消成功");
+          UIUtil.showToast("取消成功");
           isAttention = false;
         }
         showAttentionButton = true;
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
       setState(() {});
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

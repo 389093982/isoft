@@ -8,7 +8,7 @@ import 'package:linkknown/response/get_user_info_by_names_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/divider_line.dart';
 import 'package:linkknown/widgets/header_icon.dart';
@@ -93,7 +93,7 @@ class _AdvisePageState extends State<AdvisePage> {
           });
         }
       }).catchError((e) {
-//      UIUtils.showToast((e as LinkKnownError).errorMsg);
+//      UIUtil.showToast((e as LinkKnownError).errorMsg);
 
         setState(() {
           loadingStatus = LoadingStatus.LOADED_FAILED;
@@ -158,7 +158,7 @@ class _AdvisePageState extends State<AdvisePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             HeaderIconWidget(
-                              UIUtils.replaceMediaUrl(users
+                              UIUtil.replaceMediaUrl(users
                                   .firstWhere((element) =>
                                       element.userName ==
                                       adviseList[position].createdBy)

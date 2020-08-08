@@ -11,7 +11,7 @@ import 'package:linkknown/response/my_coupon_response.dart';
 import 'package:linkknown/response/query_coupon_by_id_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -52,7 +52,7 @@ class _SelectedCouponItemState extends State<SelectedCouponItemWidget>
           //刷新优惠券-- 里的日期
         });
       } else {
-        UIUtils.showToast(QueryPagePayActivityResponse.errorMsg);
+        UIUtil.showToast(QueryPagePayActivityResponse.errorMsg);
       }
     }).catchError((err) {});
   }

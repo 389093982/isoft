@@ -6,7 +6,7 @@ import 'package:linkknown/response/course_history_response.dart';
 import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/response/user_favorite_list_response.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';
 

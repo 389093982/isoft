@@ -4,7 +4,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 class FindPage extends StatefulWidget {
   @override
@@ -53,7 +53,7 @@ class _FindPageState extends State<FindPage> with TickerProviderStateMixin, Auto
           if(StringUtil.checkNotEmpty(this.loginUserName)){
             NavigatorUtil.goRouterPage(context, item.redirectUrl);
           }else{
-            UIUtils.showToast(("未登录.."));
+            UIUtil.showToast(("未登录.."));
           }
         }else{
           NavigatorUtil.goRouterPage(context, item.redirectUrl);

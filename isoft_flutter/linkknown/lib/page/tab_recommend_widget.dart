@@ -5,7 +5,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/response/custom_tag_course_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_header_footer.dart';
 import 'package:linkknown/widgets/swiper_info.dart';
 
@@ -196,7 +196,7 @@ class _CustomCourseState extends State<CustomCourseWidget> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: Image.network(
-              UIUtils.replaceMediaUrl(customTagCourse.smallImage), height: 100,
+              UIUtil.replaceMediaUrl(customTagCourse.smallImage), height: 100,
               width: double.infinity,
               fit: BoxFit.fill,),
           ),

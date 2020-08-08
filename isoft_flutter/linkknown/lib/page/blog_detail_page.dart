@@ -11,7 +11,7 @@ import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:share/share.dart';
 
 class BlogDetailgPage extends StatefulWidget {
@@ -46,17 +46,17 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
             //做个判断是否展示编辑按钮
             showEditIcon();
           } else {
-            UIUtils.showToast(value.errorMsg);
+            UIUtil.showToast(value.errorMsg);
           }
         }).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+          UIUtil.showToast((e as LinkKnownError).errorMsg);
         });
 
       } else {
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -283,13 +283,13 @@ class _BlogDetailPage extends State<BlogDetailgPage> with TickerProviderStateMix
   deleteBlog(int blog_id){
     LinkKnownApi.ArticleDelete(blog_id.toString()).then((value) {
       if (value.status == "SUCCESS") {
-        UIUtils.showToast("删除成功");
+        UIUtil.showToast("删除成功");
         NavigatorUtil.goBack(context);
       } else {
-        UIUtils.showToast("删除失败");
+        UIUtil.showToast("删除失败");
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

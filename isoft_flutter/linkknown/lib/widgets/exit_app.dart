@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 /// 双击返回退出
 class DoubleTapBackExitApp extends StatefulWidget {
@@ -38,11 +38,11 @@ class _DoubleTapBackExitAppState extends State<DoubleTapBackExitApp> {
   Future<bool> _isExit() async {
     if (_lastTime == null || DateTime.now().difference(_lastTime) > widget.duration) {
       _lastTime = DateTime.now();
-      UIUtils.showToast3('再次点击退出应用');
+      UIUtil.showToast3('再次点击退出应用');
       return Future.value(false);
     }
     // 退出应用钱取消其它弹框
-    UIUtils.cancelToast();
+    UIUtil.cancelToast();
     // 退出应用
     await SystemNavigator.pop();
     return Future.value(true);

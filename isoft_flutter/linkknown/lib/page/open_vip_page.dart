@@ -17,7 +17,7 @@ import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/function_button_label.dart';
 import 'package:linkknown/widgets/goods_item.dart';

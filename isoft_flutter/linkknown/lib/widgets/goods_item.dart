@@ -13,7 +13,7 @@ import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -58,7 +58,7 @@ class _GoodsItemState extends State<GoodsItemWidget>
             child:Container(
               padding: EdgeInsets.all(10),
               child: Image.network(
-                UIUtils.replaceMediaUrl(widget.goods.smallImage),
+                UIUtil.replaceMediaUrl(widget.goods.smallImage),
                 width: 130,
                 height: 100,
                 fit: BoxFit.cover,
@@ -128,7 +128,7 @@ class _GoodsItemState extends State<GoodsItemWidget>
               + "&price=${widget.goods.price}"
       );
     }else{
-      UIUtils.showToast("非课程,待定..");
+      UIUtil.showToast("非课程,待定..");
     }
   }
 
@@ -137,13 +137,13 @@ class _GoodsItemState extends State<GoodsItemWidget>
   deleteFromShoppingCart(String goods_type, String goods_id){
     LinkKnownApi.deleteFromShoppingCart(goods_type, goods_id).then((value) {
       if(value.status=="SUCCESS"){
-        UIUtils.showToast("删除成功");
+        UIUtil.showToast("删除成功");
         widget.callback();
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

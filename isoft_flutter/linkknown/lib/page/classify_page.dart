@@ -8,7 +8,7 @@ import 'package:linkknown/response/element_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/swiper_info.dart';
 
 class ClassifyPage extends StatefulWidget {
@@ -298,7 +298,7 @@ class _RightClassifyState extends State<RightClassifyWidget> {
       },
       child: Column(
         children: <Widget>[
-          Image.network(UIUtils.replaceMediaUrl(item.imgPath)),
+          Image.network(UIUtil.replaceMediaUrl(item.imgPath)),
           Text(
             item.elementLabel,
             style: TextStyle(color: Colors.grey[800]),

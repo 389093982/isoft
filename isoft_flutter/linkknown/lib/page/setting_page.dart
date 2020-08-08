@@ -6,7 +6,7 @@ import 'package:linkknown/utils/cache_util.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/update_dialog.dart';
 import 'package:package_info/package_info.dart';
 
@@ -57,21 +57,21 @@ class _SettingState extends State<SettingPage> {
           children: <Widget>[
             SettingItemWidget("头像", "设置我的头像", clickCallBack: (){
               if(loginUserName==null || loginUserName==""){
-                UIUtils.showToast("未登录..");
+                UIUtil.showToast("未登录..");
               }else{
                 NavigatorUtil.goRouterPage(context, Routes.modifyHeader);
               }
             },),
             SettingItemWidget("用户信息", "编辑用户基本信息",clickCallBack:(){
               if(loginUserName==null || loginUserName==""){
-                UIUtils.showToast("未登录..");
+                UIUtil.showToast("未登录..");
               }else{
                 NavigatorUtil.goRouterPage(context, Routes.userInfo);
               }
             }),
             SettingItemWidget("个性签名", "编辑个性签名",clickCallBack:(){
               if(loginUserName==null || loginUserName==""){
-                UIUtils.showToast("未登录..");
+                UIUtil.showToast("未登录..");
               }else{
                 NavigatorUtil.goRouterPage(context, Routes.userSignature);
               }
@@ -129,7 +129,7 @@ class _SettingState extends State<SettingPage> {
       if (getAppNewVersionResponse.newAppVersion != null){
         _showUpdateDialog(getAppNewVersionResponse.newAppVersion.androidDownloadUrl, getAppNewVersionResponse.newAppVersion.forceUpdate == "Y");
       }else {
-        UIUtils.showToast2("当前版本已经是最新版本！");
+        UIUtil.showToast2("当前版本已经是最新版本！");
       }
 
     }

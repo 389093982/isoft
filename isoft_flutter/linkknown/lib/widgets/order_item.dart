@@ -15,7 +15,7 @@ import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -64,7 +64,7 @@ class _OrderItemState extends State<OrderItemWidget>
                     child:Container(
                       padding: EdgeInsets.all(10),
                       child: Image.network(
-                        UIUtils.replaceMediaUrl(widget.order.goodsImg),
+                        UIUtil.replaceMediaUrl(widget.order.goodsImg),
                         width: 130,
                         height: 100,
                         fit: BoxFit.cover,
@@ -184,13 +184,13 @@ class _OrderItemState extends State<OrderItemWidget>
   toCancelOrder(){
     LinkKnownApi.OrderCancelledById(widget.order.orderId).then((BaseResponse) {
       if(BaseResponse.status=="SUCCESS"){
-        UIUtils.showToast("取消成功");
+        UIUtil.showToast("取消成功");
         widget.callback();
       }else{
-        UIUtils.showToast("取消失败");
+        UIUtil.showToast("取消失败");
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

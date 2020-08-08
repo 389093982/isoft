@@ -19,7 +19,7 @@ import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/common_label.dart';
@@ -167,7 +167,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
     if(StringUtil.checkNotEmpty(loginUserName)){
       NavigatorUtil.goRouterPage(context, Routes.shoppingCart);
     }else{
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
     }
   }
 
@@ -178,18 +178,18 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
       if(loginUserName!=widget.course.courseAuthor){
         LinkKnownApi.addToShoppingCart(goods_type, goods_id,goods_price_on_add).then((value) {
           if(value.status=="SUCCESS"){
-            UIUtils.showToast("添加成功");
+            UIUtil.showToast("添加成功");
           }else{
-            UIUtils.showToast(value.errorMsg);
+            UIUtil.showToast(value.errorMsg);
           }
         }).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+          UIUtil.showToast((e as LinkKnownError).errorMsg);
         });
       }else{
-        UIUtils.showToast("您无需购买自己的课程^_^");
+        UIUtil.showToast("您无需购买自己的课程^_^");
       }
     }else{
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
     }
   }
 
@@ -208,10 +208,10 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
                 + "&price=${widget.course.price}"
         );
       }else{
-        UIUtils.showToast("您无需购买自己的课程^_^");
+        UIUtil.showToast("您无需购买自己的课程^_^");
       }
     }else{
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
     }
   }
 
@@ -227,13 +227,13 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
       if((int.parse(vipLevel)>0 && compare) || widget.course.courseAuthor==loginUserName){
         toPlay(index);
       }else{
-        UIUtils.showToast2("会员专享课程!");
+        UIUtil.showToast2("会员专享课程!");
       }
     }else{
       if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
         toPlay(index);
       }else{
-        UIUtils.showToast2("付费课程,前去购买？");
+        UIUtil.showToast2("付费课程,前去购买？");
       }
     }
   }
@@ -296,7 +296,7 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
           }
           setState(() {});
         }).catchError((e) {
-          UIUtils.showToast((e as LinkKnownError).errorMsg);
+          UIUtil.showToast((e as LinkKnownError).errorMsg);
         });
       }else{
         //自己，则不展示按钮
@@ -383,25 +383,25 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
   doAttention(String attention_object_type,String attention_object_id,String state) async {
     bool isLogin = await LoginUtil.checkHasLogin();
     if(!isLogin){
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
       return;
     }
     LinkKnownApi.DoAttention(attention_object_type,attention_object_id,state).then((value) {
       if(value.status=="SUCCESS"){
         if(state=="on"){
-          UIUtils.showToast("关注成功");
+          UIUtil.showToast("关注成功");
           isAttention = true;
         }else if(state=="off"){
-          UIUtils.showToast("取消成功");
+          UIUtil.showToast("取消成功");
           isAttention = false;
         }
         showAttentionButton = true;
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
       setState(() {});
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -550,7 +550,7 @@ class _CourseOperateState extends State<CourseOperateWidget> {
               number: widget.course.watchNumber,
               clickCallback: () {
                 if (widget.course.courseNumber == 0) {
-                  UIUtils.showToast2("暂无剧情，敬请期待！");
+                  UIUtil.showToast2("暂无剧情，敬请期待！");
                 } else {
                   // 默认前去播放第 0 集
                   goToVideoPlay(0);

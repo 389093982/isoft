@@ -7,7 +7,7 @@ import 'package:linkknown/response/file_upload_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/image_select.dart';
 
@@ -40,7 +40,7 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
           });
         }
       }).catchError((e) {
-        UIUtils.showToast((e as LinkKnownError).errorMsg);
+        UIUtil.showToast((e as LinkKnownError).errorMsg);
       });
     }
   }
@@ -83,7 +83,7 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
 
   modifyHeader () async {
     if(StringUtil.checkEmpty(filePath)){
-      UIUtils.showToast("没有更新头像..");
+      UIUtil.showToast("没有更新头像..");
       return;
     }
     FileUploadResponse fileUploadResponse = await LinkKnownApi.fileUpload("user", "small_icon", filePath);
@@ -91,13 +91,13 @@ class ModifyHeaderPageState extends State<ModifyHeaderPage> {
       String userName = await LoginUtil.getUserName();
       BaseResponse baseResponse = await LinkKnownApi.updateUserIcon(userName, fileUploadResponse.fileServerPath);
       if (baseResponse.status == "SUCCESS") {
-        UIUtils.showToast2("设置成功！");
+        UIUtil.showToast2("设置成功！");
         NavigatorUtil.goBack(context);
       } else {
-        UIUtils.showToast2("设置失败！");
+        UIUtil.showToast2("设置失败！");
       }
     } else {
-      UIUtils.showToast2("文件上传失败！");
+      UIUtil.showToast2("文件上传失败！");
     }
   }
 }

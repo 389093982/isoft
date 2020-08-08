@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 enum HeaderIconSize {
   SIZE_BIG_80,                //用与设置大头像：登录、‘我的’、...
@@ -43,7 +43,7 @@ class _HeaderIconWidgetState extends State<HeaderIconWidget> {
     }
     return ClipOval(
       child: CachedNetworkImage(
-        imageUrl:  UIUtils.replaceMediaUrl(widget.headerIcon),
+        imageUrl:  UIUtil.replaceMediaUrl(widget.headerIcon),
         fit: BoxFit.fill,
         width: widget.width,
         height: widget.height,

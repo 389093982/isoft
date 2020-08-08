@@ -9,7 +9,7 @@ import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/response/search_coupon_for_pay_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 

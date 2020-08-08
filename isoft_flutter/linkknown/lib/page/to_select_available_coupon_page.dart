@@ -14,7 +14,7 @@ import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/available_coupon_item.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
@@ -65,10 +65,10 @@ class _ToSelectAvailableCouponPageState extends State<ToSelectAvailableCouponPag
           //刷新界面
         });
       } else {
-        UIUtils.showToast(SearchCouponForPayResponse.errorMsg);
+        UIUtil.showToast(SearchCouponForPayResponse.errorMsg);
       }
     }).catchError((err) {
-      //UIUtils.showToast("查询可用优惠券失败..");
+      //UIUtil.showToast("查询可用优惠券失败..");
     });
   }
 

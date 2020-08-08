@@ -11,7 +11,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/check_param_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 
@@ -234,11 +234,11 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
 
     //userName
     if(StringUtil.checkEmpty(userName)){
-      UIUtils.showToast("请填写账号");
+      UIUtil.showToast("请填写账号");
       return;
     }
     if (!CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_EMAIL) && !CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_PHONE)) {
-      UIUtils.showToast("请使用手机号或邮箱注册");
+      UIUtil.showToast("请使用手机号或邮箱注册");
       return;
     }
 
@@ -255,12 +255,12 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
     LinkKnownApi.createVerifyCode(userName).then((value){
       if(value.status=="SUCCESS"){
         verifyCodeTime();
-        UIUtils.showToast("发送成功");
+        UIUtil.showToast("发送成功");
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -309,66 +309,66 @@ class _RegistPageState extends State<RegistPage> with TickerProviderStateMixin {
 
     //nickName
     if(StringUtil.checkEmpty(nickName)){
-      UIUtils.showToast("昵称不能为空");
+      UIUtil.showToast("昵称不能为空");
       return;
     }
     if(nickName.length>10){
-      UIUtils.showToast("昵称长度不能超过10个字符");
+      UIUtil.showToast("昵称长度不能超过10个字符");
       return;
     }
 
     //userName
     if(StringUtil.checkEmpty(userName)){
-      UIUtils.showToast("请填写账号");
+      UIUtil.showToast("请填写账号");
       return;
     }
     if (!CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_EMAIL) && !CheckParamUtil.checkRegex(userName, CheckParamUtil.REGEX_PHONE)) {
-      UIUtils.showToast("请使用手机号或邮箱注册");
+      UIUtil.showToast("请使用手机号或邮箱注册");
       return;
     }
 
     //verifyCode
     if(StringUtil.checkEmpty(verifyCode) || verifyCode.length!=6){
-      UIUtils.showToast("请填写6位验证码");
+      UIUtil.showToast("请填写6位验证码");
       return;
     }
 
     //passwd
     if(StringUtil.checkEmpty(passwd)){
-      UIUtils.showToast("请填写密码");
+      UIUtil.showToast("请填写密码");
       return;
     }
     if (!CheckParamUtil.checkRegex(passwd, CheckParamUtil.REGEX_PASSWD)) {
-      UIUtils.showToast("密码必须由数字或字母组合，长度 6-20");
+      UIUtil.showToast("密码必须由数字或字母组合，长度 6-20");
       return;
     }
 
     //comfirmPasswd
     if(StringUtil.checkEmpty(comfirmPasswd)){
-      UIUtils.showToast("请填写确认密码");
+      UIUtil.showToast("请填写确认密码");
       return;
     }
     if (comfirmPasswd!=passwd) {
-      UIUtils.showToast("两次密码输入不一致");
+      UIUtil.showToast("两次密码输入不一致");
       return;
     }
 
     //gender
     if(StringUtil.checkEmpty(gender)){
-      UIUtils.showToast("请选择性别");
+      UIUtil.showToast("请选择性别");
       return;
     }
 
 
     LinkKnownApi.regist(userName, passwd, nickName, gender, verifyCode, "linkknown").then((value){
         if(value.status=="SUCCESS"){
-          UIUtils.showToast("注册成功");
+          UIUtil.showToast("注册成功");
           NavigatorUtil.goRouterPage(context, Routes.login);
         }else{
-          UIUtils.showToast(value.errorMsg);
+          UIUtil.showToast(value.errorMsg);
         }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

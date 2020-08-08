@@ -6,7 +6,7 @@ import 'package:linkknown/response/refresh_token_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 import 'package:provider/provider.dart';
 

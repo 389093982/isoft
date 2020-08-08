@@ -8,7 +8,7 @@ import 'package:linkknown/response/my_coupon_response.dart';
 import 'package:linkknown/response/pay_order_response.dart';
 import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/bought_course_item.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 import 'package:linkknown/widgets/course_card.dart';

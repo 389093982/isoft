@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/response/course_meta_response.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';

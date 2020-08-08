@@ -10,7 +10,7 @@ import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 
 class UserInfoPage extends StatefulWidget {
@@ -48,7 +48,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -183,7 +183,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     );
 
     setState(() {
-      //UIUtils.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
+      //UIUtil.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
       currentResidenceController = new TextEditingController(text: temp.provinceName +"-"+ temp.cityName +"-"+ temp.areaName);
     });
   }
@@ -204,7 +204,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
     );
 
     setState(() {
-      //UIUtils.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
+      //UIUtil.showToast(temp.provinceName + temp.cityName + temp.areaName); //temp.areaId 不需要id
       hometownController = new TextEditingController(text: temp.provinceName +"-"+ temp.cityName +"-"+ temp.areaName);
     });
   }
@@ -213,27 +213,27 @@ class _UserInfoPageState extends State<UserInfoPage> {
   //编辑基本信息
   editUserInfo() async {
     if(StringUtil.checkEmpty(nickNameController.text)){
-      UIUtils.showToast("昵称不能为空..");
+      UIUtil.showToast("昵称不能为空..");
       return;
     }
 
     if(StringUtil.checkEmpty(birthDayController.text)){
-      UIUtils.showToast("生日不能为空..");
+      UIUtil.showToast("生日不能为空..");
       return;
     }
 
     if(StringUtil.checkEmpty(currentResidenceController.text)){
-      UIUtils.showToast("现居住地址不能为空..");
+      UIUtil.showToast("现居住地址不能为空..");
       return;
     }
 
     if(StringUtil.checkEmpty(hometownController.text)){
-      UIUtils.showToast("家乡不能为空..");
+      UIUtil.showToast("家乡不能为空..");
       return;
     }
 
     if(StringUtil.checkEmpty(_gender)){
-      UIUtils.showToast("性别不能为空..");
+      UIUtil.showToast("性别不能为空..");
       return;
     }
 
@@ -254,12 +254,12 @@ class _UserInfoPageState extends State<UserInfoPage> {
     LinkKnownApi.UpdateUserDetail(user_name,nick_name,gender,birthday,current_residence,hometown,hat,hat_in_use).then((value) {
       if (value != null) {
         if (value.status == "SUCCESS") {
-          UIUtils.showToast("更新成功");
+          UIUtil.showToast("更新成功");
           NavigatorUtil.goBack(context);
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
 
   }

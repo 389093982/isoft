@@ -6,7 +6,7 @@ import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 class VideoPlayPage extends StatefulWidget {
 
@@ -54,7 +54,7 @@ class VideoPlayState extends State<VideoPlayPage> {
     });
 
     // 设置播放器播放源
-    await player.setDataSource(UIUtils.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true, showCover: true);
+    await player.setDataSource(UIUtil.replaceMediaUrl(widget.cVideos[widget.index].firstPlay), autoPlay: true, showCover: true);
   }
 
   @override
@@ -102,13 +102,13 @@ class VideoPlayState extends State<VideoPlayPage> {
       if((int.parse(vipLevel)>0 && compare) || widget.course.courseAuthor==loginUserName){
         toPlay(index);
       }else{
-        UIUtils.showToast2("会员专享课程!");
+        UIUtil.showToast2("会员专享课程!");
       }
     }else{
       if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
         toPlay(index);
       }else{
-        UIUtils.showToast2("付费课程,前去购买？");
+        UIUtil.showToast2("付费课程,前去购买？");
       }
     }
   }

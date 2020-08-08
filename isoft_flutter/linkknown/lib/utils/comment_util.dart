@@ -7,7 +7,7 @@ import 'package:linkknown/page/first_level_comment_widget.dart';
 import 'package:linkknown/page/second_level_comment_widget.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/utils/login_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/v_empty_view.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +113,7 @@ class CommentUtil {
        print(val);
      });
    }else{
-     UIUtils.showToast("未登录..");
+     UIUtil.showToast("未登录..");
    }
  }
 
@@ -126,14 +126,14 @@ class CommentUtil {
 
    LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).then((value) {
      if(value.status=="SUCCESS"){
-       UIUtils.showToast("评论成功");
+       UIUtil.showToast("评论成功");
        Navigator.of(context).pop();
        Provider.of<FirstLevelCommentRefreshNotifer>(context).update(true);
      }else{
-       UIUtils.showToast(value.errorMsg);
+       UIUtil.showToast(value.errorMsg);
      }
    }).catchError((e) {
-     UIUtils.showToast((e as LinkKnownError).errorMsg);
+     UIUtil.showToast((e as LinkKnownError).errorMsg);
    });
  }
 

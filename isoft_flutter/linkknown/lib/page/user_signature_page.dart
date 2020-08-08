@@ -9,7 +9,7 @@ import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/common_button.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/goods_item.dart';
@@ -41,7 +41,7 @@ class _UserSignaturePageState extends State<UserSignaturePage> {
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -83,18 +83,18 @@ class _UserSignaturePageState extends State<UserSignaturePage> {
   //编辑个性签名
   editUserSignature(){
     if(StringUtil.checkEmpty(signatureController.text)){
-      UIUtils.showToast("个性签名不能为空..");
+      UIUtil.showToast("个性签名不能为空..");
       return;
     }
     LinkKnownApi.EditUserSignature(signatureController.text).then((value) {
       if (value != null) {
         if (value.status == "SUCCESS") {
-          UIUtils.showToast("更新成功");
+          UIUtil.showToast("更新成功");
           NavigatorUtil.goBack(context);
         }
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
 
   }

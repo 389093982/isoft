@@ -11,7 +11,7 @@ import 'package:linkknown/response/pay_order_response.dart';
 import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 
@@ -57,7 +57,7 @@ class _BoughtCourseItemState extends State<BoughtCourseItemWidget>
                 child:Container(
                   padding: EdgeInsets.all(10),
                   child: Image.network(
-                    UIUtils.replaceMediaUrl(widget.order.goodsImg),
+                    UIUtil.replaceMediaUrl(widget.order.goodsImg),
                     width: 130,
                     height: 100,
                     fit: BoxFit.cover,

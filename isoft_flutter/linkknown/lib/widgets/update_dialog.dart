@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:install_apk_plugin/install_apk_plugin.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:package_info/package_info.dart';
 
 class UpdateDialog extends StatefulWidget {
@@ -182,7 +182,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
         },
       );
     } catch (e) {
-      UIUtils.showToast('下载失败!');
+      UIUtil.showToast('下载失败!');
       print(e);
       setState(() {
         _isDownload = false;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:linkknown/route/routes.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 
 class SwiperData {
   String imagePath;
@@ -62,7 +62,7 @@ class _SwiperDataState extends State<SwiperDataWidget> {
           ),
           scrollDirection: Axis.horizontal,
           autoplay: true,
-          onTap: (index) => UIUtils.showToast('点击了第$index个,需要调往xxx页面'),
+          onTap: (index) => UIUtil.showToast('点击了第$index个,需要调往xxx页面'),
         ),
       ),
     );

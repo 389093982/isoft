@@ -14,7 +14,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/cached_image.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/header_icon.dart';
@@ -138,13 +138,13 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
     String themeType = comment.themeType;
     LinkKnownApi.deleteComment(level,id,themePk,themeType,orgParentId).then((value) {
       if(value.status=="SUCCESS"){
-        UIUtils.showToast("删除成功");
+        UIUtil.showToast("删除成功");
         Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 
@@ -200,7 +200,7 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
         print(val);
       });
     }else{
-      UIUtils.showToast("未登录..");
+      UIUtil.showToast("未登录..");
     }
   }
 
@@ -214,14 +214,14 @@ class _SecondLevelCommentItemState extends State<SecondLevelCommentItem> with Ti
 
     LinkKnownApi.AddComment(theme_pk, theme_type, comment_type, content, org_parent_id, parent_id, refer_user_name).then((value) {
       if(value.status=="SUCCESS"){
-        UIUtils.showToast("评论成功");
+        UIUtil.showToast("评论成功");
         Navigator.of(context).pop();
         Provider.of<SecondLevelCommentRefreshNotifer>(context).update(true);
       }else{
-        UIUtils.showToast(value.errorMsg);
+        UIUtil.showToast(value.errorMsg);
       }
     }).catchError((e) {
-      UIUtils.showToast((e as LinkKnownError).errorMsg);
+      UIUtil.showToast((e as LinkKnownError).errorMsg);
     });
   }
 

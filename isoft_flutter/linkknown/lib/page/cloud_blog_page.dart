@@ -9,7 +9,7 @@ import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';
-import 'package:linkknown/utils/utils.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/accept_invite_button_label.dart';
 import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
@@ -208,7 +208,7 @@ class _CloudBlogPageState extends State<CloudBlogPage> with TickerProviderStateM
       scope_all_key.currentState.onRefresh(searchData:searchData);
       myself_key.currentState.onRefresh(searchData:searchData);
     }else{
-      UIUtils.showToast("请输入搜索内容..");
+      UIUtil.showToast("请输入搜索内容..");
     }
   }
 
