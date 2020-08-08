@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
-import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_label.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/course_card.dart';
-import 'package:linkknown/model/paginator.dart' as common_paginator;
+import 'package:linkknown/response/paginator.dart' as common_paginator;
 
 class CourseFilterWidget extends StatefulWidget {
   String search;

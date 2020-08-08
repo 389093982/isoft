@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/pay_order_response.dart';
+import 'package:linkknown/response/pay_order_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/order_item.dart';

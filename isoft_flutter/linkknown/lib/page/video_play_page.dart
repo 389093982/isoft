@@ -1,7 +1,7 @@
 
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
-import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/date_util.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
-import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/string_util.dart';

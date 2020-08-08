@@ -5,7 +5,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/pay_shopping_cart_response.dart';
+import 'package:linkknown/response/pay_shopping_cart_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';

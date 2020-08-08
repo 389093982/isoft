@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/model/get_user_detail_response.dart';
-import 'package:linkknown/model/login_user_response.dart';
+import 'package:linkknown/response/get_user_detail_response.dart';
+import 'package:linkknown/response/login_user_response.dart';
 import 'package:linkknown/utils/shared_preference_util.dart';
 import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/string_util.dart';

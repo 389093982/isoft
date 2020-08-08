@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/model/course_detail.dart';
+import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/page/course_introduce_widget.dart';
 import 'package:linkknown/page/user_course_widget.dart';
 import 'package:linkknown/route/routes.dart';

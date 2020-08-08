@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/my_coupon_response.dart';
+import 'package:linkknown/response/my_coupon_response.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_item.dart';
 

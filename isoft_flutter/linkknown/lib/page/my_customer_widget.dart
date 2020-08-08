@@ -4,7 +4,7 @@ import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/user_link_agent_response.dart';
+import 'package:linkknown/response/user_link_agent_response.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/user_link_agent_item.dart';

@@ -1,4 +1,4 @@
-import 'package:linkknown/model/base.dart';
+import 'package:linkknown/response/base_response.dart';
 
 class LoginUserResponse extends BaseResponse {
   String domain;

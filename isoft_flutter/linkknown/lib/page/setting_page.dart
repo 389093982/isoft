@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/model/app_version.dart';
+import 'package:linkknown/response/get_app_new_version_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/cache_util.dart';
 import 'package:linkknown/utils/common_util.dart';

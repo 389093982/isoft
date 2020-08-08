@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/event/event_bus.dart';
-import 'package:linkknown/model/refresh_token_response.dart';
+import 'package:linkknown/response/refresh_token_response.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/string_util.dart';

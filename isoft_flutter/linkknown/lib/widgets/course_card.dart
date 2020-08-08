@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkknown/constants.dart';
-import 'package:linkknown/model/course_meta.dart';
+import 'package:linkknown/response/course_meta_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/utils/utils.dart';

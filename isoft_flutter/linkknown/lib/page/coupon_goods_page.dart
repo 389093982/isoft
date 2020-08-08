@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/query_general_coupon_targets_response.dart';
+import 'package:linkknown/response/query_general_coupon_targets_response.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/coupon_goods_item.dart';
 import 'package:linkknown/widgets/goods_item.dart';

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
-import 'package:linkknown/model/paginator.dart' as common_paginator;
-import 'package:linkknown/model/query_coupon_center_list_response.dart';
+import 'package:linkknown/response/paginator.dart' as common_paginator;
+import 'package:linkknown/response/query_coupon_center_list_response.dart';
 import 'package:linkknown/widgets/common_loading.dart';
 import 'package:linkknown/widgets/receive_coupon_center_item.dart';
 

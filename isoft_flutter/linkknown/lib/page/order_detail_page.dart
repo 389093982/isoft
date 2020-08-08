@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
-import 'package:linkknown/model/pay_order_response.dart';
-import 'package:linkknown/model/query_coupon_by_id_response.dart';
+import 'package:linkknown/response/pay_order_response.dart';
+import 'package:linkknown/response/query_coupon_by_id_response.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/utils.dart';
 import 'package:linkknown/widgets/coupon_item.dart';

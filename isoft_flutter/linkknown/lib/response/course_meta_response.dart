@@ -1,4 +1,4 @@
-import 'package:linkknown/model/paginator.dart';
+import 'package:linkknown/response/paginator.dart';
 
 class CourseMetaResponse {
   String sTrackingId;

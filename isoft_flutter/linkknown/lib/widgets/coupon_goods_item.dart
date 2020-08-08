@@ -4,7 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
 import 'package:linkknown/constants.dart';
-import 'package:linkknown/model/query_general_coupon_targets_response.dart';
+import 'package:linkknown/response/query_general_coupon_targets_response.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/fluro_convert_utils.dart';
 import 'package:linkknown/utils/navigator_util.dart';
