@@ -32,7 +32,8 @@ class OpenVipPage extends StatefulWidget {
 class _OpenVipPageState extends State<OpenVipPage> {
 
   String loginUserName;
-  String openingTime = "1个月 / ¥12";
+  String openingTime = "1个月";
+  String payAmount = "12";
 
   @override
   void initState() {
@@ -104,13 +105,13 @@ class _OpenVipPageState extends State<OpenVipPage> {
             SizedBox(height: 20,),
             Row(
               children: <Widget>[
-                Container(child: Text("会员价格:"),),
+                Container(child: Text("开通时长:"),),
                 Expanded(
                   child: Container(
                     alignment: Alignment.topRight,
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
-                          items: <String>['1个月 / ¥12', '3个月 / ¥30', '6个月 / ¥50', '12个月 / ¥80'].map<DropdownMenuItem<String>>((String value) {
+                          items: <String>['1个月', '3个月', '6个月', '12个月', '24个月'].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -120,10 +121,23 @@ class _OpenVipPageState extends State<OpenVipPage> {
                           onChanged:(String selectedValue){
                             setState(() {
                               this.openingTime = selectedValue;
+                              getPayAmountByOpeningTime(this.openingTime);
                             });
                           }
                       ),
                     ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
+            Row(
+              children: <Widget>[
+                Container(child: Text("支付金额:"),),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: Text(Constants.RMB+payAmount,style: TextStyle(fontSize: 20,color: Colors.red),),
                   ),
                 ),
               ],
@@ -137,7 +151,7 @@ class _OpenVipPageState extends State<OpenVipPage> {
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
-//                      nowToPay();
+                      nowToPay();
                     },
                     child: Container(
                       alignment: Alignment.topCenter,
@@ -152,6 +166,29 @@ class _OpenVipPageState extends State<OpenVipPage> {
         ),
       ),
     );
+  }
+
+
+  //根据开通时长获取支付金额
+  getPayAmountByOpeningTime(String openingTime){
+    if(openingTime.contains("1个月")){
+      this.payAmount = "12";
+    }else if(openingTime.contains("3个月")){
+      this.payAmount = "30";
+    }else if(openingTime.contains("6个月")){
+      this.payAmount = "50";
+    }else if(openingTime.contains("12个月")){
+      this.payAmount = "80";
+    }else if(openingTime.contains("24个月")){
+      this.payAmount = "150";
+    }
+  }
+
+
+  //立即付款
+  nowToPay(){
+    //1.微信支付
+    //2.支付成功 添加订单到pay_order 表
   }
 
 

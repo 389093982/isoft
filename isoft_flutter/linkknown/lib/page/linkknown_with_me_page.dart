@@ -27,8 +27,8 @@ class LinkknownWithMePage extends StatefulWidget {
   class _LinkknownWithMePage extends State<LinkknownWithMePage> with TickerProviderStateMixin {
 
   List<TabViewModel> viewModels = [
-    TabViewModel(title: '我的客户', widget: MyCustomerWidget()),
-    TabViewModel(title: '邀请', widget: InvitationWidget()),
+    TabViewModel(title: '          我的客户          ', widget: MyCustomerWidget()),
+    TabViewModel(title: '          邀请          ', widget: InvitationWidget()),
   ].map((item) => TabViewModel(
     title: item.title,
     widget: item.widget,

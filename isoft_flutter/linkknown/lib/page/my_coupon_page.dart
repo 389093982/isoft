@@ -27,9 +27,9 @@ class MyCouponPage extends StatefulWidget {
 
 class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
   List<TabViewModel> viewModels = [
-    TabViewModel(title: '已领取', widget: MyCouponWidget("false", "false")),
-    TabViewModel(title: '已使用', widget: MyCouponWidget("", "true")),
-    TabViewModel(title: '已过期', widget: MyCouponWidget("true", "false")),
+    TabViewModel(title: '      已领取      ', widget: MyCouponWidget("false", "false")),
+    TabViewModel(title: '      已使用      ', widget: MyCouponWidget("", "true")),
+    TabViewModel(title: '      已过期      ', widget: MyCouponWidget("true", "false")),
   ]
       .map((item) => TabViewModel(
             title: item.title,
