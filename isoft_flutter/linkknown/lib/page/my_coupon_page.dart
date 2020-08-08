@@ -6,6 +6,7 @@ import 'package:linkknown/page/course_filter_widget.dart';
 import 'package:linkknown/page/tab_recommend_widget.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
+import 'package:linkknown/utils/ui_util.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 
 import 'my_coupon_widget.dart';
@@ -21,23 +22,27 @@ class TabViewModel {
 }
 
 class MyCouponPage extends StatefulWidget {
+
   @override
   _MyCouponPage createState() => _MyCouponPage();
 }
 
 class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
-  List<TabViewModel> viewModels = [
-    TabViewModel(title: '      已领取      ', widget: MyCouponWidget("false", "false")),
-    TabViewModel(title: '      已使用      ', widget: MyCouponWidget("", "true")),
-    TabViewModel(title: '      已过期      ', widget: MyCouponWidget("true", "false")),
-  ]
-      .map((item) => TabViewModel(
-            title: item.title,
-            widget: item.widget,
-          ))
-      .toList();
+
+  GlobalKey<MyCouponState> globalKey_received = new GlobalKey();
+  GlobalKey<MyCouponState> globalKey_used = new GlobalKey();
+  GlobalKey<MyCouponState> globalKey_expired = new GlobalKey();
+
+  List<TabViewModel> viewModels;
 
   TabController tabController;
+
+  //刷新数据
+  refreshData(){
+    globalKey_received.currentState?.initData();
+    globalKey_used.currentState?.initData();
+    globalKey_expired.currentState?.initData();
+  }
 
   // 抖动动画
   AnimationController rotationAnimationController;
@@ -46,6 +51,12 @@ class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    viewModels = [
+      TabViewModel(title: '      已领取      ', widget: MyCouponWidget("false", "false", key: globalKey_received,)),
+      TabViewModel(title: '      已使用      ', widget: MyCouponWidget("", "true", key: globalKey_used,)),
+      TabViewModel(title: '      已过期      ', widget: MyCouponWidget("true", "false", key: globalKey_expired,)),
+    ].map((item) => TabViewModel(title: item.title, widget: item.widget,)).toList();
+
     this.tabController =
         new TabController(length: viewModels.length, vsync: this);
 
@@ -90,8 +101,9 @@ class _MyCouponPage extends State<MyCouponPage> with TickerProviderStateMixin {
         ),
         backgroundColor: Colors.orange,
         label: Text("领券中心"),
-        onPressed: () {
-          NavigatorUtil.goRouterPage(context, Routes.receiveCouponCenter);
+        onPressed: () async {
+          await NavigatorUtil.goRouterPage(context, Routes.receiveCouponCenter);
+          refreshData();
         },
       ),
     );

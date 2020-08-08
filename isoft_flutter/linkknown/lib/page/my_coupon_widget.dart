@@ -11,13 +11,13 @@ class MyCouponWidget extends StatefulWidget {
   String isExpired;
   String isUsed;
 
-  MyCouponWidget(this.isExpired, this.isUsed);
+  MyCouponWidget(this.isExpired, this.isUsed, {Key key,}) : super(key: key);
 
   @override
-  _MyCouponState createState() => _MyCouponState();
+  MyCouponState createState() => MyCouponState();
 }
 
-class _MyCouponState extends State<MyCouponWidget>
+class MyCouponState extends State<MyCouponWidget>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
