@@ -187,24 +187,8 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.all(0),
-                  child: isShowFreeChargeAndVipButton==false?Text(""):
-                            (
-                                widget.course.isCharge=="vip"?
-                                FunctionButtonLabel(labelText: "Vip",labelTextColor: Colors.red,
-                                  borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                                  borderColor: Colors.red,paddingHorizontal: 3,paddingVertical: 3,)
-                                    :
-                                (
-                                    widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
-                                    FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
-                                      borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                                      borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
-                                        :
-                                    FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
-                                      borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                                      borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
-                                )
-                            )
+                    //获取免、付、vip标识
+                  child: getFreeChargeVipIcon(index),
                 ),
               ),
             ],
@@ -239,24 +223,8 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
                       SvgPicture.asset("images/ic_clock.svg", width: 15, height: 15, fit: BoxFit.fill, color: renderColor(widget.cVideos[index].id),),
                       Text("${CommonUtil.formateDuration(widget.cVideos[index].duration)}", style: TextStyle(color: renderColor(widget.cVideos[index].id), fontSize: 12),),
                       SizedBox(width: 10,),
-                      isShowFreeChargeAndVipButton==false?Text(""):
-                      (
-                          widget.course.isCharge=="vip"?
-                          FunctionButtonLabel(labelText: "Vip",labelTextColor: Colors.red,
-                            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                            borderColor: Colors.red,paddingHorizontal: 3,paddingVertical: 3,)
-                              :
-                          (
-                              widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)?
-                              FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
-                                borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                                borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,)
-                                  :
-                              FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
-                                borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
-                                borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,)
-                          )
-                      )
+                      //获取免、付、vip标识
+                      getFreeChargeVipIcon(index),
                     ],
                   ),
                 ),
@@ -266,6 +234,32 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
           );
         });
   }
+
+
+  //获取免、付、vip标识
+  Widget getFreeChargeVipIcon(int index){
+    if(this.isShowFreeChargeAndVipButton){
+      if(widget.course.isCharge=="vip"){
+        return FunctionButtonLabel(labelText: "Vip",labelTextColor: Colors.red,
+          borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+          borderColor: Colors.red,paddingHorizontal: 3,paddingVertical: 3,);
+      }else{
+        if(widget.course.isCharge=="charge" && (index+1>widget.course.preListFree)){
+          return FunctionButtonLabel(labelText: "付",labelTextColor: Colors.red,
+            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+            borderColor: Colors.red,paddingHorizontal: 6,paddingVertical: 3,);
+        }else{
+          return FunctionButtonLabel(labelText: "免",labelTextColor: Colors.green,
+            borderHeight: 18,labelSize: 12,borderRadius: 20,bgColor: Colors.white,
+            borderColor: Colors.green,paddingHorizontal: 6,paddingVertical: 3,);
+        }
+      }
+    }else{
+      return Text("");
+    }
+  }
+
+
 
   Color renderColor (int videoId) {
     if (currentVideoId == videoId) {
