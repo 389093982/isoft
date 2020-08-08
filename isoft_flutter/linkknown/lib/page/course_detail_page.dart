@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/model/course_detail.dart';
-import 'package:linkknown/page/course_introduce.dart';
+import 'package:linkknown/page/course_introduce_widget.dart';
 import 'package:linkknown/utils/comment_util.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';

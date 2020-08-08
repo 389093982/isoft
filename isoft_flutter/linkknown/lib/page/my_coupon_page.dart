@@ -2,13 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:linkknown/page/course_filter.dart';
-import 'package:linkknown/page/home_tab_recommend.dart';
+import 'package:linkknown/page/course_filter_widget.dart';
+import 'package:linkknown/page/tab_recommend_widget.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/navigator_util.dart';
 import 'package:linkknown/widgets/home_drawer.dart';
 
-import 'my_coupon.dart';
+import 'my_coupon_widget.dart';
 
 class TabViewModel {
   final String title;

@@ -7,7 +7,7 @@ import 'package:linkknown/common/error.dart';
 import 'package:linkknown/constants.dart';
 import 'package:linkknown/model/course_meta.dart';
 import 'package:linkknown/model/first_level_comment_response.dart';
-import 'package:linkknown/page/second_level_comment.dart';
+import 'package:linkknown/page/second_level_comment_widget.dart';
 import 'package:linkknown/provider/first_level_comment_refresh_notifer.dart';
 import 'package:linkknown/provider/second_level_comment_refresh_notifer.dart';
 import 'package:linkknown/route/routes.dart';

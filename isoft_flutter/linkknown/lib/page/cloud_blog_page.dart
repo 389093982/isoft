@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/model/course_detail.dart';
-import 'package:linkknown/page/course_introduce.dart';
-import 'package:linkknown/page/user_course.dart';
+import 'package:linkknown/page/course_introduce_widget.dart';
+import 'package:linkknown/page/user_course_widget.dart';
 import 'package:linkknown/route/routes.dart';
 import 'package:linkknown/utils/login_util.dart';
 import 'package:linkknown/utils/navigator_util.dart';
@@ -15,8 +15,8 @@ import 'package:linkknown/widgets/attention_off_button_label.dart';
 import 'package:linkknown/widgets/attention_on_button_label.dart';
 import 'package:linkknown/widgets/header_icon.dart';
 
-import 'cloud_blog.dart';
-import 'my_customer.dart';
+import 'cloud_blog_widget.dart';
+import 'my_customer_widget.dart';
 
 class CloudBlogPage extends StatefulWidget {
   CloudBlogPage();

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'bought_course.dart';
+import 'bought_course_widget.dart';
 
 class TabViewModel {
   final Widget widget;
