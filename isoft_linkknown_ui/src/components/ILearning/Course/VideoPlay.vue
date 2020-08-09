@@ -281,7 +281,7 @@
       },
       toPay:function () {
         this.$refs.comfirmModal.hideModal();
-        this.$router.push({path:'/payment/pay',query:{type:'course',id:this.course.id}});
+        this.$router.push({path:'/payment/pay',name:'pay',params:{type:'course_theme_type',id:this.course.id}});
       }
     },
     computed:{
