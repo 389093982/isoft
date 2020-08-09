@@ -32,7 +32,7 @@
                         <span class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}" @click="clickVideoName(index)">
                           第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
                         </span>
-                        <span v-if="isShowFreeChargeVipIcon()">
+                        <span v-if="isShowFreeChargeVipIcon">
                           <sup v-if="course.isCharge==='free' || index+1<=course.preListFree" style="color: #1bcc0b;margin: 0 0 0 2px">免费</sup>
                           <sup v-else-if="course.isCharge==='charge' && index+1>course.preListFree" style="color: #ff2525;margin: 0 0 0 2px">付费</sup>
                           <sup v-else-if="course.isCharge==='vip'" style="color: #ff2525;margin: 0 0 0 2px">vip</sup>
@@ -144,6 +144,7 @@
             'goods_id':this.$route.query.course_id,
             'currentPage':1,
             'offset':10,
+            'pay_result':'SUCCESS',
           });
           if (result.status === 'SUCCESS') {
             if (result.orders.length === 1 && result.orders[0].pay_result === 'SUCCESS') {
@@ -173,40 +174,32 @@
           }
         }
       },
-      isShowFreeChargeVipIcon:function(){
-        if (this.course.course_author===getLoginUserName()) {
-          return false;
-        }else{
-          return true;
-        }
-      },
       //播放视频
       playVideo: function (curVideo) {
         //1.收费判断
-        if (!this.hasPaid) {
-          if (this.course.isCharge==='charge' && this.cVideos.indexOf(curVideo) + 1 > this.course.preListFree) {
-            this.comfirmTips = "付费视频，前去购买?";
-            this.$refs.comfirmModal.showModal();
-            return;
-          }
+        if (this.hasPaid || this.course.course_author===getLoginUserName()
+          || this.cVideos.indexOf(curVideo) + 1 <= this.course.preListFree || this.course.isCharge==='free') {
+          //2.右侧选中播放指示
+          this.currentClickIndex = this.cVideos.indexOf(curVideo);
+          //3.设置当前curVideo
+          this.curVideo = curVideo;
+          //4.播放curVideo
+          let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
+          xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
+          xhr.responseType = 'blob';                                                            //设置结果类型为blob;
+          xhr.onload = function (e) {
+            if (this.status === 200) {
+              // 获取blob对象
+              let blob = this.response;
+              // 获取blob对象地址，并把值赋给容器
+              document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
+            }
+          };
+          xhr.send();
+        }else{
+          this.comfirmTips = "付费视频，前去购买?";
+          this.$refs.comfirmModal.showModal();
         }
-        //2.右侧选中播放指示
-        this.currentClickIndex = this.cVideos.indexOf(curVideo);
-        //3.设置当前curVideo
-        this.curVideo = curVideo;
-        //4.播放curVideo
-        let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
-        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
-        xhr.responseType = 'blob';                                                            //设置结果类型为blob;
-        xhr.onload = function (e) {
-          if (this.status === 200) {
-            // 获取blob对象
-            let blob = this.response;
-            // 获取blob对象地址，并把值赋给容器
-            document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
-          }
-        };
-        xhr.send();
       },
       addPlayNextEventListener: function () {
         let _this = this;
@@ -263,6 +256,13 @@
     computed:{
       loginUserName: function () {
         return getLoginUserName();
+      },
+      isShowFreeChargeVipIcon:function(){
+        if (this.course.course_author===getLoginUserName() || this.hasPaid) {
+          return false;
+        }else{
+          return true;
+        }
       },
     },
     mounted: function () {

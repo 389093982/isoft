@@ -87,7 +87,7 @@
               <span style="color: #9b9896">
                 <span class="isoft_font" :style="{color:index===clickIndex?'#00c806':''}">
                   第{{index + 1 | modification}}集: {{cVideo.video_name | filterSuffix}}
-                  <span v-if="isShowFreeChargeVipIcon()">
+                  <span v-if="isShowFreeChargeVipIcon">
                     <sup v-if="course.isCharge==='free' || index+1<=course.preListFree" style="color: #1bcc0b;margin: 0 0 0 2px">免费</sup>
                     <sup v-else-if="course.isCharge==='charge' && index+1>course.preListFree" style="color: #ff2525;margin: 0 0 0 2px">付费</sup>
                     <sup v-else-if="course.isCharge==='vip'" style="color: #ff2525;margin: 0 0 0 2px">vip</sup>
@@ -208,6 +208,7 @@
             'goods_id':this.$route.query.course_id,
             'currentPage':1,
             'offset':10,
+            'pay_result':'SUCCESS',
           });
           if (result.status === 'SUCCESS') {
             if (result.orders.length === 1 && result.orders[0].pay_result === 'SUCCESS') {
@@ -286,24 +287,15 @@
           CheckHasLoginConfirmDialog(this, {path: "/ilearning/courseDetail?course_id="+this.$route.query.course_id});
         }
       },
-      isShowFreeChargeVipIcon:function(){
-        if (this.course.course_author===getLoginUserName()) {
-          return false;
-        }else{
-          return true;
-        }
-      },
       clickVideoName:function (index) {
         this.clickIndex = index;
       },
       playSelectedVideo:function(course_id,video_id,index,preListFree){
-        if (!this.hasPaid) {
-          if (this.course.isCharge === 'charge' && index + 1 > preListFree) {
-            this.$Message.warning("付费视频！");
-            return;
-          }
+        if (this.hasPaid || this.course.course_author===getLoginUserName() || index + 1 <= preListFree || this.course.isCharge==='free') {
+          this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
+        }else{
+          this.$Message.warning("付费视频！");
         }
-        this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
       },
       changeShowMore:function (showMore) {
         showMore ? this.filter_cVideos = this.cVideos : this.filter_cVideos = this.cVideos.slice(0,this.minLen);
@@ -396,6 +388,15 @@
     mounted: function () {
       this.refreshPaidAndCourse();
       this.refreshCoupon();
+    },
+    computed:{
+      isShowFreeChargeVipIcon:function () {
+        if(this.course.course_author===getLoginUserName() || this.hasPaid){
+          return false;
+        }else{
+          return true;
+        }
+      }
     },
     watch: {
       "$route.params": function () {
