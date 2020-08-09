@@ -425,13 +425,7 @@ class LinkKnownApi {
   }
 
   // 查询商品（课程）是否被购买
-  static Future<PayOrderResponse> queryPayOrderListIsPaid(
-      int currentPage,
-      int pageSize,
-      String goods_type,
-      String goods_id,
-      String user_name,
-      String pay_result) async {
+  static Future<PayOrderResponse> queryPayOrderListIsPaid(int currentPage, int pageSize, String goods_type, String goods_id, String user_name, String pay_result) async {
     var response = await doPost(
         '/api/iwork/httpservice/isoft_linkknown_api/QueryPayOrderList',
         params: {

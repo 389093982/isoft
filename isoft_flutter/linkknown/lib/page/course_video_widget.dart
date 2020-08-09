@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/utils/common_util.dart';
@@ -70,12 +72,26 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
   //是否展示免费、付费、vip按钮
   showFreeAndChargeButton() async {
     String loginUserName = await LoginUtil.getLoginUserName();
-    if(loginUserName==widget.course.courseAuthor){
-      isShowFreeChargeAndVipButton = false;
-      setState(() {
-        //刷新
-      });
-    }
+    //查看课程是否已经买过
+    String user_name = loginUserName;
+    String goods_type = "course_theme_type";
+    String goods_id = widget.course.id.toString();
+    String pay_result = "SUCCESS";
+    int current_page = 1;
+    int pageSize = 10;
+    LinkKnownApi.queryPayOrderListIsPaid(current_page, pageSize, goods_type, goods_id, user_name, pay_result).then((PayOrderResponse) async {
+      if (PayOrderResponse.status == "SUCCESS") {
+        //如果课程已购买, 或者自己就是作者，那么不用展示按钮
+        if(loginUserName==widget.course.courseAuthor || PayOrderResponse.orders.length>0){
+          isShowFreeChargeAndVipButton = false;
+          setState(() {
+            //刷新
+          });
+        }
+      }
+    }).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });
   }
 
   @override
