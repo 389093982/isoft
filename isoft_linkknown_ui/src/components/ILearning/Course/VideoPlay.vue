@@ -32,9 +32,12 @@
                         <span class="video_item" :style="{color:index===currentClickIndex?'#00c806':''}" @click="clickVideoName(index)">
                           第{{index + 1 | modification}}集:&nbsp;{{video.video_name | filterSuffix | filterLimitFunc(12)}}
                         </span>
-                        <sup v-if="course.isCharge==='free'" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
-                        <sup v-else-if="course.isCharge==='charge' && index+1<=course.preListFree" style="color: #ff6900;margin: 0 0 0 2px">免费</sup>
-                        <sup v-else>&nbsp;</sup>
+                        <span v-if="isShowFreeChargeVipIcon()">
+                          <sup v-if="course.isCharge==='free' || index+1<=course.preListFree" style="color: #1bcc0b;margin: 0 0 0 2px">免费</sup>
+                          <sup v-else-if="course.isCharge==='charge' && index+1>course.preListFree" style="color: #ff2525;margin: 0 0 0 2px">付费</sup>
+                          <sup v-else-if="course.isCharge==='vip'" style="color: #ff2525;margin: 0 0 0 2px">vip</sup>
+                          <sup v-else>&nbsp;</sup>
+                        </span>
                     </div>
                   </vue-scroll>
                 </div>
@@ -168,6 +171,13 @@
           if (userInfo.status === "SUCCESS") {
             this.user = userInfo.user;
           }
+        }
+      },
+      isShowFreeChargeVipIcon:function(){
+        if (this.course.course_author===getLoginUserName()) {
+          return false;
+        }else{
+          return true;
         }
       },
       //播放视频
