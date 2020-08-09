@@ -91,7 +91,7 @@
 <script>
   import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetail, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
-  import {checkFastClick,checkEmpty} from "../../../tools/index"
+  import {checkFastClick,checkEmpty,GetTodayTime_yyyyMMddhhmmss,formatUTCtime} from "../../../tools/index"
   import {getLoginUserName} from "../../../tools/sso"
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal";
 
@@ -100,6 +100,7 @@
     components: {ISimpleConfirmModal, HotRecommend},
     data() {
       return {
+        loginUser:null,
         user:'',                   //作者信息
         recommendCourses: [],
         cVideos: [],               //课程的Videos
@@ -174,32 +175,62 @@
           }
         }
       },
+      SearchLoginUserDetail: async function () {
+        //加载用户信息
+        let params = {
+          'userName':getLoginUserName(),
+        };
+        const result = await GetUserDetail(params);
+        if (result.status === "SUCCESS") {
+          this.loginUser = result.user;
+        }
+      },
       //播放视频
       playVideo: function (curVideo) {
-        //1.收费判断
-        if (this.hasPaid || this.course.course_author===getLoginUserName()
-          || this.cVideos.indexOf(curVideo) + 1 <= this.course.preListFree || this.course.isCharge==='free') {
-          //2.右侧选中播放指示
-          this.currentClickIndex = this.cVideos.indexOf(curVideo);
-          //3.设置当前curVideo
-          this.curVideo = curVideo;
-          //4.播放curVideo
-          let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
-          xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
-          xhr.responseType = 'blob';                                                            //设置结果类型为blob;
-          xhr.onload = function (e) {
-            if (this.status === 200) {
-              // 获取blob对象
-              let blob = this.response;
-              // 获取blob对象地址，并把值赋给容器
-              document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
-            }
-          };
-          xhr.send();
+        let vipLevel = this.loginUser==null?'0':this.loginUser.vip_level;
+        let vipExpiredTime = this.loginUser==null?'19700101000000':formatUTCtime(this.loginUser.vip_expired_time,'yyyyMMddHHmmss');
+        let nowTime = GetTodayTime_yyyyMMddhhmmss();
+        let compare = parseInt(vipExpiredTime) > parseInt(nowTime);
+
+        if(this.course.isCharge==='vip'){
+          if((parseInt(vipLevel)>0 && compare) || this.course.course_author===getLoginUserName()){
+            //2.右侧选中播放指示
+            this.currentClickIndex = this.cVideos.indexOf(curVideo);
+            //3.设置当前curVideo
+            this.curVideo = curVideo;
+            //4.播放curVideo
+            this.play(curVideo);
+          }else{
+            this.$Message.warning("会员专享课程!");
+          }
         }else{
-          this.comfirmTips = "付费视频，前去购买?";
-          this.$refs.comfirmModal.showModal();
+          //1.收费判断
+          if (this.hasPaid || this.course.course_author===getLoginUserName() || this.cVideos.indexOf(curVideo) + 1 <= this.course.preListFree || this.course.isCharge==='free') {
+            //2.右侧选中播放指示
+            this.currentClickIndex = this.cVideos.indexOf(curVideo);
+            //3.设置当前curVideo
+            this.curVideo = curVideo;
+            //4.播放curVideo
+            this.play(curVideo);
+          }else{
+            this.comfirmTips = "付费视频，前去购买?";
+            this.$refs.comfirmModal.showModal();
+          }
         }
+      },
+      play:function (curVideo) {
+        let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
+        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
+        xhr.responseType = 'blob';                                                            //设置结果类型为blob;
+        xhr.onload = function (e) {
+          if (this.status === 200) {
+            // 获取blob对象
+            let blob = this.response;
+            // 获取blob对象地址，并把值赋给容器
+            document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
+          }
+        };
+        xhr.send();
       },
       addPlayNextEventListener: function () {
         let _this = this;
@@ -274,6 +305,8 @@
       this.catchPlayError();
       // 加载热门推荐课程列表
       this.refreshCustomTagCourse('recommand');
+      //获取登录用户信息
+      this.SearchLoginUserDetail();
     },
     filters: {
       filterSuffix: function (value) {

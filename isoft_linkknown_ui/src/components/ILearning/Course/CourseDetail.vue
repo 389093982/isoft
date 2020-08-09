@@ -154,13 +154,15 @@
 </template>
 
 <script>
-  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,QueryDesignatedCoupon,ReceiveCoupon,addToShoppingCart} from "../../../api"
+  import {GetHotCourseRecommend, IsFavorite, ShowCourseDetail, queryPayOrderList,ToggleFavorite,
+    GetUserDetail,QueryDesignatedCoupon,ReceiveCoupon,addToShoppingCart} from "../../../api"
   import IEasyComment from "../../Comment/IEasyComment"
   import HotRecommend from "./HotRecommend"
   import HotUser from "../../User/HotUser"
   import CourseMeta from "./CourseMeta";
   import {checkHasLogin, getLoginUserName} from "../../../tools/sso";
-  import {checkFastClick, CheckHasLoginConfirmDialog, GetToday_yyyyMMdd,CheckHasLoginConfirmDialog2} from "../../../tools/index"
+  import {checkFastClick, CheckHasLoginConfirmDialog, GetToday_yyyyMMdd,GetTodayTime_yyyyMMddhhmmss,formatUTCtime,
+    CheckHasLoginConfirmDialog2} from "../../../tools/index"
   import VoteTags from "../../Decorate/VoteTags";
   import ShowMore from "../../Elementviewers/showMore";
   import SepLine from "../../Common/SepLine";
@@ -184,6 +186,7 @@
         clickIndex:0,
         minLen:5,
         recommendCourses:[],    // 推荐课程
+        loginUser:null,
       }
     },
     methods: {
@@ -290,11 +293,34 @@
       clickVideoName:function (index) {
         this.clickIndex = index;
       },
+      SearchLoginUserDetail: async function () {
+        //加载用户信息
+        let params = {
+          'userName':getLoginUserName(),
+        };
+        const result = await GetUserDetail(params);
+        if (result.status === "SUCCESS") {
+          this.loginUser = result.user;
+        }
+      },
       playSelectedVideo:function(course_id,video_id,index,preListFree){
-        if (this.hasPaid || this.course.course_author===getLoginUserName() || index + 1 <= preListFree || this.course.isCharge==='free') {
-          this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
+        let vipLevel = this.loginUser==null?'0':this.loginUser.vip_level;
+        let vipExpiredTime = this.loginUser==null?'19700101000000':formatUTCtime(this.loginUser.vip_expired_time,'yyyyMMddHHmmss');
+        let nowTime = GetTodayTime_yyyyMMddhhmmss();
+        let compare = parseInt(vipExpiredTime) > parseInt(nowTime);
+
+        if(this.course.isCharge==='vip'){
+          if((parseInt(vipLevel)>0 && compare) || this.course.course_author===getLoginUserName()){
+            this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
+          }else{
+            this.$Message.warning("会员专享课程!");
+          }
         }else{
-          this.$Message.warning("付费视频！");
+          if (this.hasPaid || this.course.course_author===getLoginUserName() || index + 1 <= preListFree || this.course.isCharge==='free') {
+            this.$router.push({path:'/ilearning/videoPlay',query:{course_id:course_id,video_id:video_id}});
+          }else{
+            this.$Message.warning("付费视频！");
+          }
         }
       },
       changeShowMore:function (showMore) {
@@ -388,6 +414,7 @@
     mounted: function () {
       this.refreshPaidAndCourse();
       this.refreshCoupon();
+      this.SearchLoginUserDetail();
     },
     computed:{
       isShowFreeChargeVipIcon:function () {
