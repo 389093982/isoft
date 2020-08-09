@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/scroll_helper.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/constants.dart';
@@ -376,7 +377,7 @@ class _CourseAuthorState extends State<CourseAuthorWidget> {
           }
           setState(() {});
         }).catchError((e) {
-          UIUtil.showToast((e as LinkKnownError).errorMsg);
+          AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, e);
         });
       }else{
         //自己，则不展示按钮
@@ -544,32 +545,19 @@ class _CourseOperateState extends State<CourseOperateWidget> {
   }
 
   initCourseOperateData() async {
-    bool isLogin = await LoginUtil.checkHasLogin();
-    if(!isLogin){
-      return;
-    }
-
     FavoriteCountResponse collectFavoriteCountResponse =
-    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
-    });
+    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
 
     FavoriteCountResponse priaseFavoriteCountResponse =
-    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
-    });
+    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
 
     String userName = await LoginUtil.getUserName();
 
     IsFavoriteResponse collectIsFavoriteResponse =
-    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
-    });;
+    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
 
     IsFavoriteResponse priaseIsFavoriteResponse =
-    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
-    });;
+    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
 
     setState(() {
       if (collectFavoriteCountResponse.status == "SUCCESS") {

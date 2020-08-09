@@ -3,6 +3,7 @@ import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
@@ -64,7 +65,7 @@ class VideoPlayState extends State<VideoPlayPage> {
         }
       }
     }).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
+      AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
     });
   }
 

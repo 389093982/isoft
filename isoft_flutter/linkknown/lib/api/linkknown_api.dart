@@ -37,21 +37,11 @@ import 'package:linkknown/response/second_level_comment_response.dart';
 import 'package:linkknown/response/user_favorite_list_response.dart';
 import 'package:linkknown/response/user_link_agent_response.dart';
 import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 
 class LinkKnownApi {
   static Dio _dio;
   static final String baseUrl = LinkKnownConfig.config.apiBaseUrl;
-  static String tokenString = "";
-
-  // 登录成功后调用此方法更新全局的 tokenString
-  static void updateTokenString({disalbe: false}) async {
-    // disable 为 true 时表示注销 tokenString,如登出操作
-    if (disalbe) {
-      tokenString = "";
-    } else {
-      tokenString = await LoginUtil.getTokenString();
-    }
-  }
 
   static void init() async {
     _dio = Dio(BaseOptions(
@@ -71,9 +61,10 @@ class LinkKnownApi {
     Map<String, dynamic> params,
     FormData formData,
   }) async {
+    String tokenString = await LoginUtil.getTokenString();
     try {
       _dio.options.headers
-          .addAll(new Map<String, String>.from({"tokenString": tokenString}));
+          .addAll(new Map<String, String>.from({"tokenString": tokenString??""}));
       return await _dio.post(url, queryParameters: params, data: formData);
     } on DioError catch (e) {
       if (e != null && e.response != null && e.response.statusCode == 401) {

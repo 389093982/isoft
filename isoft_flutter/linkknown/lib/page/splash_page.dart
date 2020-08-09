@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   void goPage() async {
     // 进行自动登录
-    autoLogin();
+    await autoLogin();
 
     // 销毁当前页面,并跳往主页
     Navigator.pop(context);
@@ -77,15 +77,11 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     String passwd = await LoginUtil.getPasswd();
     bool hasLogin = await LoginUtil.checkHasLogin();
 
-    if (StringUtil.checkNotEmpty(userName) &&
-        StringUtil.checkNotEmpty(passwd) &&
-        !hasLogin) {
+    if (StringUtil.checkNotEmpty(userName) && StringUtil.checkNotEmpty(passwd) && !hasLogin) {
       LinkKnownApi.postLogin(userName, passwd, 'http://www.linkknown.com').then((value) {
         if (value != null) {
           if (value.status == "SUCCESS") {
             LoginUtil.memoryAccount(userName, passwd, value);
-
-            LinkKnownApi.updateTokenString();
 
             eventBus.fire(LoginStateChangeEvent());
           }

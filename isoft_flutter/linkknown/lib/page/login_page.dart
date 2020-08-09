@@ -125,9 +125,6 @@ class __LoginWidgetState extends State<_LoginWidget> {
       if (value != null) {
         if (value.status == "SUCCESS") {
           LoginUtil.memoryAccount(_userName, _password, value);
-
-          LinkKnownApi.updateTokenString();
-
           UIUtil.showToast("登录成功！");
           NavigatorUtil.goRouterPage(context, "${Routes.main}");
 

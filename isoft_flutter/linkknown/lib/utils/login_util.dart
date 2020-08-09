@@ -86,8 +86,6 @@ class LoginUtil {
 
   // 注出时只清除 tokenString,而不清除账号和密码
   static Future<bool> logout () async {
-    // 注销 tokenString
-    LinkKnownApi.updateTokenString(disalbe: true);
     return await SharedPreferenceUtil.remove(USER_TOKEN_STRING);
   }
 
@@ -180,7 +178,5 @@ class LoginUtil {
     int _expireSecond = new DateTime.now().millisecondsSinceEpoch + (expireSecond * 1000);
     SharedPreferenceUtil.save(USER_EXPIRE_SECOND, _expireSecond.toString());
     SharedPreferenceUtil.save(USER_TOKEN_STRING, tokenString);
-
-    LinkKnownApi.updateTokenString();
   }
 }

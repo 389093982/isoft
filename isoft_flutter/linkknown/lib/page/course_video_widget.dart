@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkknown/api/linkknown_api.dart';
 import 'package:linkknown/common/error.dart';
+import 'package:linkknown/common/login_dialog.dart';
 import 'package:linkknown/common/styles/textstyles.dart';
 import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/utils/common_util.dart';
@@ -100,7 +101,7 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
       }
 
     }).catchError((err) {
-      UIUtil.showToast((err as LinkKnownError).errorMsg);
+      AutoLoginDialogHelper.checkCanShowUnLoginDialog(context, err);
     });
   }
 
