@@ -1,11 +1,14 @@
 
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
+import 'package:linkknown/api/linkknown_api.dart';
+import 'package:linkknown/common/error.dart';
 import 'package:linkknown/response/course_detail_response.dart';
 import 'package:linkknown/page/course_video_widget.dart';
 import 'package:linkknown/utils/common_util.dart';
 import 'package:linkknown/utils/date_util.dart';
 import 'package:linkknown/utils/login_util.dart';
+import 'package:linkknown/utils/string_util.dart';
 import 'package:linkknown/utils/ui_util.dart';
 
 class VideoPlayPage extends StatefulWidget {
@@ -23,11 +26,15 @@ class VideoPlayPage extends StatefulWidget {
 
 class VideoPlayState extends State<VideoPlayPage> {
 
+  bool hasPaid = false;
+
   FijkPlayer player = FijkPlayer();
   GlobalKey<CourseVideosWidgetState> courseVideosWidgetKey = new GlobalKey();
 
   @override
   void initState() {
+    //查询课程是否已经购买过
+    queryHasPaid();
     super.initState();
 
     player.addListener(() {
@@ -37,6 +44,28 @@ class VideoPlayState extends State<VideoPlayPage> {
       }
     });
     initVideoData();
+  }
+
+  //查询课程是否已经购买
+  queryHasPaid() async {
+    String user_name = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkEmpty(user_name)){
+      return;
+    }
+    String goods_type = "course_theme_type";
+    String goods_id = widget.course.id.toString();
+    String pay_result = "SUCCESS";
+    int current_page = 1;
+    int pageSize = 10;
+    LinkKnownApi.queryPayOrderListIsPaid(current_page, pageSize, goods_type, goods_id, user_name, pay_result).then((PayOrderResponse) async {
+      if (PayOrderResponse.status == "SUCCESS") {
+        if(PayOrderResponse.orders.length>0){
+          this.hasPaid = true;
+        }
+      }
+    }).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });
   }
 
   void initVideoData() async {
@@ -105,7 +134,7 @@ class VideoPlayState extends State<VideoPlayPage> {
         UIUtil.showToast2("会员专享课程!");
       }
     }else{
-      if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
+      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || hasPaid){
         toPlay(index);
       }else{
         UIUtil.showToast2("付费课程,请先购买");

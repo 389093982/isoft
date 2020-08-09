@@ -51,6 +51,8 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   String vipExpiredTime;
   bool compare;
 
+  bool hasPaid = false;
+
   queryLoginUserInfo() async {
     this.loginUserName = await LoginUtil.getLoginUserName();
     this.vipLevel = await LoginUtil.getVipLevel()??"0";
@@ -64,7 +66,31 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   @override
   void initState() {
+    //查询课程是否已经购买过
+//    queryHasPaid();
     super.initState();
+  }
+
+  //查询课程是否已经购买
+  queryHasPaid() async {
+    String user_name = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkEmpty(user_name)){
+      return;
+    }
+    String goods_type = "course_theme_type";
+    String goods_id = widget.course.id.toString();
+    String pay_result = "SUCCESS";
+    int current_page = 1;
+    int pageSize = 10;
+    LinkKnownApi.queryPayOrderListIsPaid(current_page, pageSize, goods_type, goods_id, user_name, pay_result).then((PayOrderResponse) async {
+      if (PayOrderResponse.status == "SUCCESS") {
+        if(PayOrderResponse.orders.length>0){
+          this.hasPaid = true;
+        }
+      }
+    }).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });
   }
 
   @override
@@ -284,7 +310,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
         UIUtil.showToast2("会员专享课程!");
       }
     }else{
-      if(index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || widget.course.isCharge=="free"){
+      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || hasPaid){
         toPlay(index);
       }else{
         UIUtil.showToast2("付费课程,请先购买");
@@ -518,20 +544,32 @@ class _CourseOperateState extends State<CourseOperateWidget> {
   }
 
   initCourseOperateData() async {
+    bool isLogin = await LoginUtil.checkHasLogin();
+    if(!isLogin){
+      return;
+    }
+
     FavoriteCountResponse collectFavoriteCountResponse =
-        await LinkKnownApi.queryFavoriteCount(
-            widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
+    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });
+
     FavoriteCountResponse priaseFavoriteCountResponse =
-        await LinkKnownApi.queryFavoriteCount(
-            widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
+    await LinkKnownApi.queryFavoriteCount(widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });
 
     String userName = await LoginUtil.getUserName();
 
     IsFavoriteResponse collectIsFavoriteResponse =
-        await LinkKnownApi.isFavorite(
-            userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT);
-    IsFavoriteResponse priaseIsFavoriteResponse = await LinkKnownApi.isFavorite(
-        userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE);
+    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_COLLECT).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });;
+
+    IsFavoriteResponse priaseIsFavoriteResponse =
+    await LinkKnownApi.isFavorite(userName, widget.course.id, Constants.FAVORITE_TYPE_COURSE_PRIASE).catchError((err) {
+      UIUtil.showToast((err as LinkKnownError).errorMsg);
+    });;
 
     setState(() {
       if (collectFavoriteCountResponse.status == "SUCCESS") {

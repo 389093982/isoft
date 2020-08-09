@@ -72,6 +72,9 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
   //是否展示免费、付费、vip按钮
   showFreeAndChargeButton() async {
     String loginUserName = await LoginUtil.getLoginUserName();
+    if(StringUtil.checkEmpty(loginUserName)){
+      return;
+    }
     //查看课程是否已经买过
     String user_name = loginUserName;
     String goods_type = "course_theme_type";
