@@ -16,7 +16,10 @@
                 <div class="ico_play"></div>
               </div>
               <div class="showPriceAndBuy" style="margin: 10px 0 0 0">
-                <div v-if="course.isCharge==='charge'" style="color: #ff6900">
+                <div v-if="course.isCharge==='vip'" style="color: #1bcc0b;font-size: 15px;margin-left: 50px">
+                  会员专享
+                </div>
+                <div v-else-if="course.isCharge==='charge'" style="color: #ff6900">
                   <Row>
                     <Col span="14">
                         <span class="showPrice">
