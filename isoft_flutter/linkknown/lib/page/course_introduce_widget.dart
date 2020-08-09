@@ -37,12 +37,12 @@ class CourseIntroduceWidget extends StatefulWidget {
   CourseIntroduceWidget(this.course, this.cVideos);
 
   @override
-  _CourseIntroduceState createState() => _CourseIntroduceState();
+  CourseIntroduceState createState() => CourseIntroduceState();
 }
 
 // State 构造函数传参的话，只会执行一次，所以不使用 State 传参
 // 改用 widget.xxx 参数，widget 的构造器会重复执行
-class _CourseIntroduceState extends State<CourseIntroduceWidget> {
+class CourseIntroduceState extends State<CourseIntroduceWidget> {
 
   GlobalKey<CourseVideosWidgetState> courseVideosWidgetState = new GlobalKey();
 
@@ -67,7 +67,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
   @override
   void initState() {
     //查询课程是否已经购买过
-//    queryHasPaid();
+    queryHasPaid();
     super.initState();
   }
 
@@ -310,7 +310,7 @@ class _CourseIntroduceState extends State<CourseIntroduceWidget> {
         UIUtil.showToast2("会员专享课程!");
       }
     }else{
-      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || hasPaid){
+      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || this.hasPaid){
         toPlay(index);
       }else{
         UIUtil.showToast2("付费课程,请先购买");

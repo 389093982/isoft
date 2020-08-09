@@ -134,7 +134,7 @@ class VideoPlayState extends State<VideoPlayPage> {
         UIUtil.showToast2("会员专享课程!");
       }
     }else{
-      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || hasPaid){
+      if(widget.course.isCharge=="free" || index+1<=widget.course.preListFree || widget.course.courseAuthor==loginUserName || this.hasPaid){
         toPlay(index);
       }else{
         UIUtil.showToast2("付费课程,请先购买");

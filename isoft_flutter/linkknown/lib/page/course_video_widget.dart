@@ -38,6 +38,8 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
   // 当前正在播放的视频 id
   int currentVideoId = -1;
 
+  bool hasPaid = false;
+
   //是否展示免费、付费、vip按钮
   bool isShowFreeChargeAndVipButton = true;
 
@@ -84,14 +86,19 @@ class CourseVideosWidgetState extends State<CourseVideosWidget> {
     int pageSize = 10;
     LinkKnownApi.queryPayOrderListIsPaid(current_page, pageSize, goods_type, goods_id, user_name, pay_result).then((PayOrderResponse) async {
       if (PayOrderResponse.status == "SUCCESS") {
-        //如果课程已购买, 或者自己就是作者，那么不用展示按钮
-        if(loginUserName==widget.course.courseAuthor || PayOrderResponse.orders.length>0){
-          isShowFreeChargeAndVipButton = false;
-          setState(() {
-            //刷新
-          });
+        if(PayOrderResponse.orders.length>0){
+          this.hasPaid = true;
         }
       }
+
+      //如果课程已购买, 或者自己就是作者，那么不用展示按钮
+      if(loginUserName==widget.course.courseAuthor || this.hasPaid){
+        isShowFreeChargeAndVipButton = false;
+        setState(() {
+          //刷新
+        });
+      }
+
     }).catchError((err) {
       UIUtil.showToast((err as LinkKnownError).errorMsg);
     });

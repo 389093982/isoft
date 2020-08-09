@@ -65,7 +65,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return this.course==null?Text(""):
+      Scaffold(
       body: Column(
         children: <Widget>[
           Expanded(
