@@ -89,7 +89,7 @@
 </template>
 
 <script>
-  import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetail, videoPlayUrl} from "../../../api"
+  import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetailForApp, videoPlayUrl} from "../../../api"
   import HotRecommend from "./HotRecommend";
   import {checkFastClick,checkEmpty,GetTodayTime_yyyyMMddhhmmss,formatUTCtime} from "../../../tools/index"
   import {getLoginUserName} from "../../../tools/sso"
@@ -161,7 +161,7 @@
       refreshCorsedetail: async function () {
         //刷新课程
         const course_id = this.$route.query.course_id;
-        const result = await ShowCourseDetail({course_id:course_id});
+        const result = await ShowCourseDetailForApp({course_id:course_id});
         if (result.status === "SUCCESS") {
           this.course = result.course;
           this.cVideos = result.cVideos.sort((video1, video2) => video1.id > video2.id);// 根据id来排序的
@@ -219,18 +219,23 @@
         }
       },
       play:function (curVideo) {
-        let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
-        xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
-        xhr.responseType = 'blob';                                                            //设置结果类型为blob;
-        xhr.onload = function (e) {
-          if (this.status === 200) {
-            // 获取blob对象
-            let blob = this.response;
-            // 获取blob对象地址，并把值赋给容器
-            document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
-          }
-        };
-        xhr.send();
+        // 使用对象流方式获取
+
+        // let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
+        // xhr.open('GET', videoPlayUrl + "?video_id=" + curVideo.id, true);                   //配置请求方式、请求地址以及是否同步
+        // xhr.responseType = 'blob';                                                            //设置结果类型为blob;
+        // xhr.onload = function (e) {
+        //   if (this.status === 200) {
+        //     // 获取blob对象
+        //     let blob = this.response;
+        //     // 获取blob对象地址，并把值赋给容器
+        //     document.getElementById("videoPath").setAttribute("src", URL.createObjectURL(blob));
+        //   }
+        // };
+        // xhr.send();
+
+        // 使用链接地址访问
+        document.getElementById("videoPath").setAttribute("src", curVideo.first_play);
       },
       addPlayNextEventListener: function () {
         let _this = this;
