@@ -306,7 +306,6 @@
   import HotUser from "../User/HotUser"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
   import IBeautifulLink from "../Common/link/IBeautifulLink";
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {
     CheckHasLoginConfirmDialog2,
     GetLoginUserName,
@@ -330,7 +329,7 @@
     components: {
       LearningDiary,
       WaitYourAnswer,
-      HatAndFacePicture, MoveLine, RandomAdmt, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
+      HatAndFacePicture, MoveLine, IBeautifulLink, HorizontalLinks, CatalogList, HotCatalogItems, HotUser,ISearch},
     data() {
       return {
         // 当前页

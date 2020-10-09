@@ -116,16 +116,6 @@ export const InsertAdvise = (params) => ajax(BASE_URL + "/iwork/httpservice/isof
 export const queryPageAdvise = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryPageAdvise', params, 'GET');//查询意见或吐槽
 
 
-//【Advertisement模块】***************************************************************************************************
-export const EditAdvertisement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditAdvertisement', params, 'GET');
-export const GetPersonalAdvertisement = () => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetPersonalAdvertisement', {}, 'GET');
-export const QueryAdvertisementById = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryAdvertisementById', params, 'GET');
-export const GetRandomAdvertisement = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetRandomAdvertisement', params, 'GET');
-export const RecordAdvstAccessLog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/RecordAdvstAccessLog', params, 'GET');
-export const GetAdvstAccessLog = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAdvstAccessLog', params, 'GET');
-// timer_clean_advertisement_log 未直接使用，被其他流程调用
-
-
 //【Job模块】***************************************************************************************************
 export const EditCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/EditCorporateDetail', params, 'POST');
 export const QueryCorporateDetail = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/QueryCorporateDetail', params, 'POST');

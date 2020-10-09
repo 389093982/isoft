@@ -80,8 +80,6 @@
         </div>
       </Col>
       <Col span="6" class="isoft_bg_white isoft_pd10">
-        <RandomAdmt/>
-        <RandomAdmt/>
       </Col>
     </Row>
 
@@ -91,13 +89,12 @@
 <script>
   import {BookCatalogList, IsFavorite, ToggleFavorite} from "../../api"
   import IEasyComment from "../Comment/IEasyComment"
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {checkEmpty, GetLoginUserName, RenderNickName, RenderUserInfoByName} from "../../tools"
   import VoteTags from "../Decorate/VoteTags";
 
   export default {
     name: "BookCatalogs",
-    components: {VoteTags, RandomAdmt, IEasyComment},
+    components: {VoteTags, IEasyComment},
     data() {
       return {
         bookInfo: null,

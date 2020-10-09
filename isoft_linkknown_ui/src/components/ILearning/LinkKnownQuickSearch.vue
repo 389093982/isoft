@@ -6,7 +6,7 @@
       <Icon :size="25" type="ios-shirt-outline" @click="handleChangeBg"/>
     </span>
 
-    <div class="animated faster bounceInRight" style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">以最快的速度获取最想要的资源</div>
+    <div class="animated faster bounceInRight" style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">一个专门学编程的网站</div>
 
     <div style="margin-top: 60px;">
       <div style="text-align: center;margin: 5px 0;">

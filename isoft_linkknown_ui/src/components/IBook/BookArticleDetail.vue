@@ -64,8 +64,6 @@
         </div>
 
         <div style="margin-top: 20px;">
-          <!-- 随机广告部分 -->
-          <RandomAdmt/>
         </div>
       </Col>
     </Row>
@@ -77,13 +75,12 @@
   import IBeautifulLink from "../Common/link/IBeautifulLink";
   import IShowMarkdown from "../Common/markdown/IShowMarkdown"
   import HorizontalLinks from "../Elementviewers/HorizontalLinks";
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {RenderNickName, RenderUserInfoByName} from "../../tools"
   import {scrollTop} from "iview/src/utils/assist"
 
   export default {
     name: "BookArticleDetail",
-    components: {RandomAdmt, HorizontalLinks, IBeautifulLink, IShowMarkdown},
+    components: {HorizontalLinks, IBeautifulLink, IShowMarkdown},
     data() {
       return {
         showTip: true,

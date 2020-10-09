@@ -87,8 +87,6 @@
           <img src="../../../static/images/common_img/linkknown_tip_share.jpg" height="480" width=100%/>
         </div>
         <ExpertWall style="margin-top: 5px"></ExpertWall>
-        <RandomAdmt/>
-        <RandomAdmt/>
       </div>
     </div>
 
@@ -98,14 +96,13 @@
 <script>
   import {FilterPageResourceList, RecommendResource} from "../../api"
   import {checkFastClick, CheckHasLoginConfirmDialog} from "../../tools";
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import ISearch from "../Common/search/ISearch"
   import WaitYourAnswer from "../Expert/WaitYourAnswer";
   import ExpertWall from "../Expert/ExpertWall";
 
   export default {
     name: "ResourceList",
-    components: {ExpertWall, WaitYourAnswer, RandomAdmt,ISearch},
+    components: {ExpertWall, WaitYourAnswer, ISearch},
     data() {
       return {
         search: '',

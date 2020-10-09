@@ -34,8 +34,6 @@
       </div>
       <div style="width: 32%;background-color: white;margin-left: 5px">
         <WaitYourAnswer></WaitYourAnswer>
-        <RandomAdmt/>
-        <RandomAdmt/>
         <img style="margin-top: 5px" src="../../../../static/images/common_img/linkknown_tip_message.jpg" height="700" width=100%/>
       </div>
     </div>
@@ -47,12 +45,11 @@
   import {SearchCourseList} from "../../../api"
   import CourseMeta from "./CourseMeta";
   import IBeautifulLink from "../../Common/link/IBeautifulLink";
-  import RandomAdmt from "../../Advertisement/RandomAdmt";
   import WaitYourAnswer from "../../Expert/WaitYourAnswer";
 
   export default {
     name: "CourseSearch",
-    components: {WaitYourAnswer, RandomAdmt, IBeautifulLink, CourseMeta},
+    components: {WaitYourAnswer, IBeautifulLink, CourseMeta},
     data() {
       return {
         courses: [],

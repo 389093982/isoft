@@ -25,8 +25,6 @@
       </div>
       <div style="width: 31%;margin-left: 5px;background-color: white">
         <WaitYourAnswer></WaitYourAnswer>
-        <RandomAdmt/>
-        <RandomAdmt/>
       </div>
   </div>
 </template>
@@ -34,12 +32,11 @@
 <script>
   import IFileUpload from "../Common/file/IFileUpload"
   import {EditResource, fileUploadUrl} from "../../api"
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "ResourceUpload",
-    components: {WaitYourAnswer, RandomAdmt, IFileUpload},
+    components: {WaitYourAnswer, IFileUpload},
     data() {
       const checkResourceCatalog = (rule, value, callback) => {
         if (value === '') {

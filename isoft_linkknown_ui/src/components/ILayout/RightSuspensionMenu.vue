@@ -21,13 +21,6 @@
     </div>
     <div class="item-line"></div>
 
-    <div class="toolItemBox" @click="$router.push({path:'/advertisement/advApply'})">
-      <Icon type="ios-cog-outline" :size="28"/>
-      <p>广告</p>
-      <span class="tipBox"><div class="tipInfo">可以推广您的产品奥</div></span>
-    </div>
-    <div class="item-line"></div>
-
     <div class="toolItemBox">
       <span @click="$router.push({path:'/contact/contactList'})">
         <Icon type="ios-people-outline" :size="28"/>

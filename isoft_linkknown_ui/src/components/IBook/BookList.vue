@@ -111,7 +111,6 @@
           <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
         </div>
         <div class="isoft_bg_white isoft_pd10 isoft_top10">
-          <RandomAdmt/>
         </div>
       </Col>
     </Row>
@@ -126,7 +125,6 @@
   import IFileUpload from "../Common/file/IFileUpload"
   import HotUser from "../User/HotUser";
   import IndexCarousel from "../ILearning/IndexCarousel";
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {
     checkEmpty,
     checkFastClick,
@@ -152,7 +150,6 @@
       LearningDiary,
       IsComfirmDelete,
       BookInfoEdit,
-      RandomAdmt,
       SepLine,
       IndexCarousel, HotUser, IBeautifulLink, IBeautifulCard, ISimpleConfirmModal, IFileUpload
     },

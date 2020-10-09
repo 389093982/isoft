@@ -8,8 +8,6 @@
             <CatalogList/>
           </div>
           <div class="isoft_bg_white isoft_pd10 isoft_top10">
-            <RandomAdmt/>
-            <RandomAdmt/>
           </div>
         </div>
       </div>
@@ -74,13 +72,12 @@
   import {BlogArticleEdit, fileUploadUrl, FilterElementByPlacement, GetMyCatalogs, ShowBlogArticleDetail} from "../../api"
   import axios from 'axios'
   import CatalogList from "./CatalogList";
-  import RandomAdmt from "../Advertisement/RandomAdmt";
   import {CheckAdminLogin} from "../../tools/index"
   import {checkEmpty, markdownAdapter} from "../../tools";
 
   export default {
     name: "BlogArticleEdit",
-    components: {RandomAdmt, CatalogList},
+    components: {CatalogList},
     props: {
       successEmit: {
         type: Boolean,

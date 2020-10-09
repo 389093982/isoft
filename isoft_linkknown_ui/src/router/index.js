@@ -46,8 +46,6 @@ const OrderDetail = () => import("@/components/Payment/OrderDetail");
 const MyCouponList = () => import("@/components/Payment/MyCouponList");
 const CouponCenter = () => import("@/components/Payment/CouponCenter");
 const ShoppingCart = () => import("@/components/Payment/ShoppingCart");
-const AdvApply = () => import("@/components/Advertisement/Apply");
-const AdvManage = () => import("@/components/Advertisement/Manage");
 const JobList = () => import("@/components/IJob/JobList");
 const ResumeManage = () => import("@/components/IJob/ResumeManage");
 const CorporateDetail = () => import("@/components/IJob/CorporateDetail");
@@ -210,14 +208,6 @@ const IJob = [{
     ]
 }];
 
-const IAdvertisement = [{
-  path: '/advertisement', component: ILayout,
-    children: [
-      {path: 'advApply', component: AdvApply},
-      {path: 'advManage', component: AdvManage},
-    ]
-}];
-
 const IFoundReouter = [{
   path: '/found', component: ILayout,
     children: [{
@@ -287,7 +277,6 @@ function getAllRouters() {
   let allRouters = [];
   allRouters = joinArray(allRouters, IExpert);
   allRouters = joinArray(allRouters, IJob);
-  allRouters = joinArray(allRouters, IAdvertisement);
   allRouters = joinArray(allRouters, IFoundReouter);
   allRouters = joinArray(allRouters, IUserReouter);
   allRouters = joinArray(allRouters, ILearningRouter);

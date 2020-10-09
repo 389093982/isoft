@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;">
+  <div style="display: flex;width: 100%;">
     <div style="width: 100%;">
       <Menu mode="horizontal" :theme="theme1" active-name="1">
         <div>
