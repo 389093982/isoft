@@ -1,32 +1,29 @@
 <template>
-  <div style="height: 45px;">
-    <div style="position: relative;float: right;">
-      <div v-click-outside="onClickOutside">
-        <!-- lazy 防止输入单个字符就触发 computed 计算 -->
-        <input class="search_input" :class="searchInputClass" title="请输入搜索内容" :placeholder="placeholder" v-model.lazy.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus">
-        <input class="submit" type="submit" title="提交" @click="submitFunc">
+  <div style="position: relative;height: 45px;">
+    <div v-click-outside="onClickOutside">
+      <!-- lazy 防止输入单个字符就触发 computed 计算 -->
+      <input class="search_input" :class="searchInputClass" title="请输入搜索内容" :placeholder="placeholder" v-model.lazy.trim="search_data" maxlength="25" @keyup.enter="submitFunc" @focus="handleFocus">
+      <input class="submit" type="submit" title="提交" @click="submitFunc">
 
-        <div v-if="showRecently" class="recentlySearchBox" style="position: relative; top: 44px;background-color: green;">
-          <div class="recentlySearch">
-            <div class="isoft_font12" style="border-bottom: 1px solid #ffa2b9;padding-bottom: 5px;">
-              <span class="isoft_point_cursor" @click="searchPattern = 1" style="font-weight: bold"
-                    :style="{color: searchPattern === 1 ? 'red' : ''}">最近搜索</span>
-              &nbsp;|&nbsp;
-              <span class="isoft_point_cursor" @click="searchPattern = 2" style="font-weight: bold"
-                    :style="{color: searchPattern === 2 ? 'red' : ''}">热搜榜</span>
-            </div>
-            <div>
-              <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
-                    v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1()" :key="index"
-                    @click="handleSearchItem(searchItem)">{{searchItem}}</span>
-              <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
-                    v-if="searchPattern === 2" v-for="(searchItem, index) in searchItems2" :key="index"
-                    @click="handleSearchItem(searchItem)">{{searchItem}}</span>
-            </div>
+      <div v-if="showRecently" class="recentlySearchBox">
+        <div class="recentlySearch">
+          <div class="isoft_font12" style="border-bottom: 1px solid #ffa2b9;padding-bottom: 5px;">
+            <span class="isoft_point_cursor" @click="searchPattern = 1" style="font-weight: bold"
+                  :style="{color: searchPattern === 1 ? 'red' : ''}">最近搜索</span>
+            &nbsp;|&nbsp;
+            <span class="isoft_point_cursor" @click="searchPattern = 2" style="font-weight: bold"
+                  :style="{color: searchPattern === 2 ? 'red' : ''}">热搜榜</span>
+          </div>
+          <div>
+            <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
+                  v-if="searchPattern === 1" v-for="(searchItem, index) in searchItems1()" :key="index"
+                  @click="handleSearchItem(searchItem)">{{searchItem}}</span>
+            <span class="searchTag isoft_point_cursor isoft_inline_ellipsis" :style="searchTagColor(index)"
+                  v-if="searchPattern === 2" v-for="(searchItem, index) in searchItems2" :key="index"
+                  @click="handleSearchItem(searchItem)">{{searchItem}}</span>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -52,7 +49,7 @@
         showRecently: false,
         searchPattern: 1,  // 默认 1、最近搜索 2、热搜榜
         searchItems2:['前端','mysql','java','python','golang','vue'],
-        placeholderArr: ["请输入搜索内容...", "予人玫瑰，手有余香", "书山有路勤为径，学海无涯苦作舟", "我的前途就该这么毁了？", "如果您有好的素材，也可以分享给我们哦~"],
+        placeholderArr: ["请输入搜索内容...", "予人玫瑰，手有余香", "书山有路勤为径，学海无涯苦作舟", "如果您有好的素材，也可以分享给我们哦~"],
         placeholder: "请输入搜索内容...",
         changePlaceholderTimer: null,
       }
@@ -136,7 +133,6 @@
 
   .search_input {
     padding-left: 16px;
-    float: left;
     width: 350px;
     background: #efefef;
     vertical-align: middle;
@@ -183,7 +179,6 @@
   }
 
   .recentlySearch {
-    position: absolute;
     width: 100%;
     min-height: 200px;
     max-height: 250px;
@@ -191,7 +186,13 @@
     padding: 12px;
     background: #FFFFFF;
     border-radius: 4px;
-    z-index: 2;
+  }
+  .recentlySearchBox {
+    width: 100%;
+    position: absolute;
+    bottom: -2px;
+    transform: translateY(100%);
+    z-index: 9999;
   }
 
   .searchTag {

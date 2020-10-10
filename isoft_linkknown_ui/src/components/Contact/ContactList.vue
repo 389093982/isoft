@@ -12,17 +12,24 @@
     </Row>
 
     <!--彩色分底线-->
-    <SepLine></SepLine>
+    <SepLine style="margin: 10px 0;"></SepLine>
 
     <div class="content" style="display: flex;">
       <!--左侧-->
-      <div style="width: 28%">
-        <div style="margin-top: 5px">
-          <LearningDiary></LearningDiary>
+      <div style="width: 30%">
+        <div style="border: 1px solid #eee;">
+          <!--最近联系-->
+          <div class="isoft_info_tip isoft_font12">最近联系</div>
+          <div class="selfContact isoft_pd20">
+            <p class="isoft_point_cursor isoft_hover_red"
+               v-for="(cUser, index) in contactUsers" @click="freeContact(cUser.contact_user_name, cUser._nick_name)">
+              {{cUser._nick_name}} - <span class="isoft_font12 isoft_color_grey">{{cUser.contact_user_name}}</span>
+            </p>
+          </div>
         </div>
       </div>
       <!--中间聊天区域-->
-      <div style="width: 39%;min-height: 500px;margin: 5px 0 0 5px;">
+      <div style="width: 40%;min-height: 500px;padding: 0 10px;">
         <!--上边聊天记录, 模仿微信聊天背景样式来-->
         <div id="messageDiv" style="border: 1px solid #d2d2d2;height: 370px;overflow-y:scroll;padding: 20px 5px 40px 5px ;background-color: rgba(160,160,160,0.18)">
           <div style="text-align: center;margin-bottom: 5px;">
@@ -60,18 +67,8 @@
           <span class="isoft_tag1 isoft_point_cursor hover_green" style="position: absolute;bottom: 8px;right: 20px;" @click="sendMsg">&nbsp;&nbsp;立刻发送&nbsp;&nbsp;</span>
         </div>
       </div>
-      <!--右侧最近联系+常见问题-->
-      <div style="width: 33%;">
-        <div style="border: 1px solid #eee;margin: 5px 60px 0 10px;">
-          <!--最近联系-->
-          <div class="isoft_info_tip isoft_font12">最近联系</div>
-          <div class="selfContact isoft_pd20">
-            <p class="isoft_point_cursor isoft_hover_red"
-               v-for="(cUser, index) in contactUsers" @click="freeContact(cUser.contact_user_name, cUser._nick_name)">
-              {{cUser._nick_name}} - <span class="isoft_font12 isoft_color_grey">{{cUser.contact_user_name}}</span>
-            </p>
-          </div>
-
+      <!-- 常见问题 -->
+      <div style="width: 30%;">
           <!--自助服务  常见问题-->
           <div class="isoft_info_tip isoft_font12">
             <span class="isoft_point_cursor" :class="showHelpPattern === 1 ? 'isoft_color_red': ''" @click="showHelpPattern = 1">自助服务</span>&nbsp;|&nbsp;
@@ -107,7 +104,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -123,12 +119,11 @@
   } from "../../tools";
   import {AddContactMessage, GetContactMessage, GetContactUserList} from "../../api"
   import {getNickName} from "../../tools/sso";
-  import LearningDiary from "../ILearning/LearningDiary";
   import SepLine from "../Common/SepLine";
 
   export default {
     name: "ContactList",
-    components: {SepLine, LearningDiary},
+    components: {SepLine},
     data() {
       return {
         sendMsgText: '',
@@ -267,7 +262,7 @@
 <style scoped>
   .content {
     min-height: 500px;
-    padding-bottom: 5px;
+    padding: 5px 60px;
   }
 
   .selfAssistent a {
