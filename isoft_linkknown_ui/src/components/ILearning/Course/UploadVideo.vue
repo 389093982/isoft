@@ -9,12 +9,12 @@
       <div>
         <p style="padding:10px;">课程名称：{{course.course_name}}</p>
         <p style="background-color: rgba(253,0,0,0.11);padding: 10px;">
-          上传规则：1、点击叉号可删除视频！2、视频格式仅支持 mp4 格式！
+          上传需知： ①视频格式为" 序号.名称.mp4 ",  例如： 1.数据库基础.mp4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;②点击叉号可删除视频！
         </p>
 
         <Scroll height="280" style="margin: 5px 0;">
           <Tag v-for="(cVideo, index) in cVideos" style="width:98%;height: 40px;line-height: 40px;">
-            <span>第{{index + 1}}集: {{cVideo.video_name}}</span>
+            <span>第{{index + 1}}集: {{cVideo.video_name | filterSuffix}}</span>
             <span style="float: right;">
               <Icon type="md-close" @click="handleDeleteVideo(cVideo.id)" :size="16"/>
               <Icon type="md-arrow-up" v-show="index + 1 > 1"
@@ -29,7 +29,7 @@
         </Scroll>
 
          <IFileUpload ref="fileUpload" size="small" :auto-hide-modal="true" :multiple="false" :format="['mp4']"
-                      @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传视频"/>
+                      @uploadComplete="uploadComplete" :action="fileUploadUrl" uploadLabel="上传视频" :prefix-validate-func="prefixValidateFunc" />
       </div>
     </Modal>
 
@@ -124,6 +124,20 @@
       },
       isAdmin: function () {
         return CheckAdminLogin();
+      },
+      prefixValidateFunc:function (value) {
+        let ele = value.split(".");
+        if (ele.length === 3 && !isNaN(ele[0]) && ele[2]==='mp4') {
+          return true;
+        }else {
+          return false;
+        }
+      }
+    },
+    filters: {
+      filterSuffix: function (value) {
+        // 去除视频文件后缀
+        return value.slice(value.indexOf(".")+1,value.lastIndexOf("."));
       },
     },
   }

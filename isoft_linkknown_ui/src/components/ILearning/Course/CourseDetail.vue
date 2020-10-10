@@ -437,7 +437,7 @@
     filters: {
       filterSuffix: function (value) {
         // 去除视频文件后缀
-        return value.slice(0, value.indexOf("."));
+        return value.slice(value.indexOf(".")+1,value.lastIndexOf("."));
       },
       modification:function (value) {
         return value < 10 ? '0'+value : value
