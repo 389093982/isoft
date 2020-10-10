@@ -6,7 +6,6 @@
         <div class="message1">查看我的学习日记</div>
         <div class="message2">链知网官方交流群</div>
       </div>
-      <img src="../../../static/images/common_img/holdon.png" style="width: 100%;height: 430px;"/>
     </div>
   </span>
 </template>

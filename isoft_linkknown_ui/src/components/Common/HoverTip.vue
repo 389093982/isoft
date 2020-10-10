@@ -174,9 +174,9 @@
     transform: rotateZ(360deg);
   }
 
-  .to_zixun {
+  .to_zixun{
     position: absolute;
-    bottom: 40px;
+    bottom: 100px;
     background-color: #dfd684;
     padding: 10px 20px;
     text-align: center;
@@ -186,12 +186,10 @@
     left: 10%;
     right: 10%;
     cursor: pointer;
-    transition: bottom 0.5s ease-in-out;
-    visibility: hidden;
+    display: none;
   }
-  .to_zixun_box:hover .to_zixun {
-    bottom: 100px;
-    visibility: visible;
+  .to_zixun_box:hover .to_zixun{
+    display: block;
   }
 
   .question_tip {

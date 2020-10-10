@@ -102,9 +102,6 @@
       </Col>
       <Col span="6">
         <HotUser/>
-        <div style="margin-top: 5px">
-          <LearningDiary/>
-        </div>
         <WaitYourAnswer></WaitYourAnswer>
         <ExpertWall style="margin-top: 5px"></ExpertWall>
         <div style="margin-top: 5px">
@@ -135,7 +132,6 @@
   } from "../../tools";
   import BookInfoEdit from "./BookInfoEdit";
   import IsComfirmDelete from "../IBlog/IsComfirmDelete";
-  import LearningDiary from "../ILearning/LearningDiary";
   import BookListCustomTags from "./BookListCustomTags";
   import SepLine from "../Common/SepLine";
   import WaitYourAnswer from "../Expert/WaitYourAnswer";
@@ -147,7 +143,6 @@
       ExpertWall,
       WaitYourAnswer,
       BookListCustomTags,
-      LearningDiary,
       IsComfirmDelete,
       BookInfoEdit,
       SepLine,

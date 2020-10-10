@@ -5,7 +5,7 @@
     </div>
 
     <!--课程、博客、书单-->
-    <SearchRecommend ref="searchRecommend" v-show="tabIndex === 1" @research="handleReSearch"/>
+    <SearchRecommend ref="searchRecommend" v-show="tabIndex === 1"/>
     <!--新闻公告-->
     <div v-show="tabIndex === 2" class="isoft_top5" style="display: flex;justify-content: center;">
       <div style="width: 33%;">
@@ -72,10 +72,6 @@
       }
     },
     methods:{
-      handleReSearch: function (){
-        // 滚动到指定位置
-        document.querySelector("#quickSearch").scrollIntoView({block: 'end', behavior: 'smooth'});
-      },
       handleShow: function (index) {
         this.tabIndex = index;
       },
