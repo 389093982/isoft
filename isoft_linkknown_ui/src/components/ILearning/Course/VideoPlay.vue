@@ -89,7 +89,7 @@
 </template>
 
 <script>
-  import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetailForApp, videoPlayUrl} from "../../../api"
+  import {GetUserDetail,QueryCustomTagCourse, queryPayOrderList, ShowCourseDetailForApp, videoPlayUrl,UpdateCourseWatchNum} from "../../../api"
   import HotRecommend from "./HotRecommend";
   import {checkFastClick,checkEmpty,GetTodayTime_yyyyMMddhhmmss,formatUTCtime} from "../../../tools/index"
   import {getLoginUserName} from "../../../tools/sso"
@@ -218,7 +218,7 @@
           }
         }
       },
-      play:function (curVideo) {
+      play:async function (curVideo) {
         // 使用对象流方式获取
 
         // let xhr = new XMLHttpRequest();                                                      //创建XMLHttpRequest对象
@@ -236,6 +236,11 @@
 
         // 使用链接地址访问
         document.getElementById("videoPath").setAttribute("src", curVideo.first_play);
+        //调接口增加播放次数
+        let params = {
+          'video_id':curVideo.id
+        };
+        const result = await UpdateCourseWatchNum(params);
       },
       addPlayNextEventListener: function () {
         let _this = this;

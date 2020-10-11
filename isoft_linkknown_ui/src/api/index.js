@@ -53,6 +53,7 @@ export const DeleteVideo = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft
 export const ChangeVideoOrder = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/ChangeVideoOrder", params, 'GET');
 export const QueryCustomTagCourse = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/QueryCustomTagCourse", params, 'GET');
 export const videoPlayUrl = BASE_URL + "/iwork/httpservice/isoft_linkknown_api/VideoPlay";
+export const UpdateCourseWatchNum = (params) => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/UpdateCourseWatchNum",params, 'GET');// 更新播放次数
 export const GetAllCourseType = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetAllCourseType", {}, 'GET');// 获取所有课程类型
 export const GetHotCourseRecommend = () => ajax(BASE_URL + "/iwork/httpservice/isoft_linkknown_api/GetHotCourseRecommend", {}, 'GET');// 获取热门推荐的课程
 export const GetAllCourseSubType = (params) => ajax(BASE_URL + '/iwork/httpservice/isoft_linkknown_api/GetAllCourseSubType', params, 'GET');// 根据课程名称获取所有子类型名称
