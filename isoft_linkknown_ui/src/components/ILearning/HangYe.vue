@@ -33,12 +33,13 @@
           <ul style="display: inline-block;">
             <li :class="{showIndex: r_index === 0}" @click="r_index = 0">行业现状</li>
             <li :class="{showIndex: r_index === 1}" @click="r_index = 1">薪资水平</li>
-            <li :class="{showIndex: r_index === 2}" @click="r_index = 2">热点城市</li>
+            <li :class="{showIndex: r_index === 2}" @click="r_index = 2">热门城市</li>
+            <li :class="{showIndex: r_index === 3}" @click="r_index = 3">热点新闻</li>
           </ul>
         </div>
         <div class="content">
           <ul>
-            <li v-for="(article, index) in articles[r_index]" @click="goToTargetLink(article.article_link)" :title="article.article_desc">
+            <li v-for="(article, index) in articles[r_index].reverse()" @click="goToTargetLink(article.article_link)" :title="article.article_desc">
               <span v-if="index < 4" class="new">新</span> {{article.article_desc}}
             </li>
           </ul>
@@ -61,122 +62,66 @@
 
           r_index: 0,
           articles: [
+            // 行业现状
             [
               {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
+                'article_desc': '为什么程序员都不愿意升级 Java 8？ ',
+                'article_link': 'https://www.sohu.com/a/312982064_115128',
               },
               {
                 'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
                 'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
               },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              }
             ],
-
+            // 薪资水平
             [
               {
-                'article_desc': '>>>甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
+                'article_desc': '2019年10月全国程序员工资统计，一半以上的职位5个月没招到人。',
+                'article_link': 'https://blog.csdn.net/juwikuang/article/details/102326317',
               },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              }
             ],
-
+            // 热门城市
             [
               {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
+                'article_desc': '实地探访：月薪 12K 的北京程序员是怎么工作生活的？',
+                'article_link': 'https://www.cnblogs.com/gdjk/p/10754597.html',
               },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              }
             ],
+            // 热点新闻
+            [
+              {
+                'article_desc': 'php是世界上最好的语言是什么梗',
+                'article_link': 'https://www.php.cn/php-weizijiaocheng-228061.html',
+              },
+              {
+                'article_desc': '动态语言和静态语言的区别',
+                'article_link': 'https://www.cnblogs.com/fishshadow/p/10920290.html',
+              },
+              {
+                'article_desc': 'Java的发展史',
+                'article_link': 'https://www.cnblogs.com/lukelook/p/13585062.html',
+              },
+              {
+                'article_desc': '高司令 老骥伏枥，志在千里的 Java 之父',
+                'article_link': 'https://www.cnblogs.com/lukelook/p/13584933.html',
+              },
+              {
+                'article_desc': 'Sun公司的发展史',
+                'article_link': 'https://blog.csdn.net/weixin_43392489/article/details/102366806',
+              },
+              {
+                'article_desc': '拉里·埃里森在他 32 岁创办甲骨文之前的时候是什么样的一个人？性格如何？',
+                'article_link': 'https://www.zhihu.com/question/20118236',
+              },
+              {
+                'article_desc': '巴基斯坦宣布禁用TikTok 巴铁正经历我们曾经的争议',
+                'article_link': 'http://news.zol.com.cn/753/7538039.html',
+              },
+              {
+                'article_desc': '为什么JAVA这么受欢迎？',
+                'article_link': 'https://zhuanlan.zhihu.com/p/98496029',
+              }
+            ]
           ]
         }
       },
