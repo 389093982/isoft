@@ -391,9 +391,9 @@ export function getWebIndex() {
   if ("development"===process.env.NODE_ENV) {
     return 'http://localhost:8002/ilearning/index';
   }else if ("testing"===process.env.NODE_ENV) {
-    return 'www.test.linkknown.com';
+    return 'http://www.test.linkknown.com';
   }else if ("production" === process.env.NODE_ENV) {
-    return 'www.linkknown.com';
+    return 'http://www.linkknown.com';
   }else {
     return 'http://localhost:8002/ilearning/index';
   }
