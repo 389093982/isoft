@@ -35,6 +35,9 @@
 
     <IHotRecommand v-show="tabIndex === 5" class="isoft_bg_white isoft_pd10" :placement_name="GLOBAL.placement_hot_project_recommod" :minHeight="608"/>
 
+    <!-- 行业简介 -->
+    <HangYe/>
+
     <!--发现-->
     <div class="isoft_bg_white" style="margin-top: 5px;padding: 10px 20px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
@@ -54,10 +57,12 @@
   const IHotRecommand = () => import("@/components/Common/recommend/IHotRecommand");
 
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
+  const HangYe = () => import("@/components/ILearning/HangYe");
 
   export default {
     name: "Index",
     components: {
+      HangYe,
       SearchRecommend,
       IHotRecommand,
       HorizontalLinks,
