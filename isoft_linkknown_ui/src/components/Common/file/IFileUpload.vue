@@ -27,6 +27,10 @@
   export default {
     name: "IFileUpload",
     props: {
+      prefixValidateFunc:{
+        type:Function,
+        default:null
+      },
       showButton: {
         type: Boolean,
         default: true
@@ -75,6 +79,12 @@
         this.$Message.error("文件格式不合法!");
       },
       uploadComplete(result, file) {
+        if (this.prefixValidateFunc != null) {
+          if(!this.prefixValidateFunc(file.name)){
+            this.$Message.error("文件格式不合法!");
+            return;
+          }
+        }
         if (result.status === "SUCCESS") {
           result.extraData = this.extraData;  // 返回 extraData
           // 父子组件通信
