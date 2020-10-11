@@ -25,10 +25,38 @@
           <MenuItem name="6">
             <IBeautifulLink @onclick="$router.push({path:'/resource/resourceList'})">热门资源</IBeautifulLink>
           </MenuItem>
-          <MenuItem name="7" v-if="showJobFlag">
-            <IBeautifulLink @onclick="$router.push({path:'/job/jobList'})">求职招聘</IBeautifulLink>
+          <MenuItem name="7">
+            <IBeautifulLink @onclick="$router.push({path:'/found/list'})">发现</IBeautifulLink>
           </MenuItem>
-          <Submenu name="8">
+          <MenuItem name="8" class="message_box">
+            <IBeautifulLink>消息
+              <Badge dot style="position: relative;top: -12px;"></Badge>
+            </IBeautifulLink>
+            <div class="message_detail">
+              <MessageList :show-detail="false"/>
+            </div>
+            <div>
+              <!-- 会员权益 -->
+              <RechargeRight/>
+            </div>
+          </MenuItem>
+          <MenuItem name="9" class="zhuanlan_box">
+            <IBeautifulLink>专栏</IBeautifulLink>
+            <div class="zhuanlan_detail">
+              <div>
+                <div class="zhuanlan_label">
+                  特色专栏
+                </div>
+                <div class="zhuanlan_items">
+                  <div @click="$router.push({path:'/business/businessList'})">我要赚钱</div>
+                  <div @click="$router.push({path:'/business/businessIntroduce'})">商业合作</div>
+                  <div @click="">链知自研</div>
+                  <div v-if="showJobFlag" @click="$router.push({path:'/job/jobList'})">求职招聘</div>
+                </div>
+              </div>
+            </div>
+          </MenuItem>
+          <Submenu name="10">
             <template slot="title">
               <span v-if="loginUserNickName">
                 <!--头像照片-->
@@ -41,38 +69,15 @@
               </span>
             </template>
             <MenuGroup title="账户管理">
-              <MenuItem name="8-1" @click.native="$router.push({path:'/user/userDetail'})" v-if="isLogin()">个人中心</MenuItem>
-              <MenuItem name="8-2" @click.native="cancelUser">
+              <MenuItem name="10-1" @click.native="$router.push({path:'/user/userDetail'})" v-if="isLogin()">个人中心</MenuItem>
+              <MenuItem name="10-2" @click.native="cancelUser">
                 <span v-if="isLogin()">重新</span><span>登录</span>
               </MenuItem>
-              <MenuItem name="8-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
-              <MenuItem name="8-4" @click.native="$router.push({path:'/sso/regist',query:{pattern:1}})" v-if="!isLogin()">注册</MenuItem>
-              <MenuItem name="8-5" @click.native="$router.push({path:'/background/adviseList'})" v-if="isAdmin()">控制台</MenuItem>
+              <MenuItem name="10-3" @click.native="cancelUser" v-if="isLogin()">退出</MenuItem>
+              <MenuItem name="10-4" @click.native="$router.push({path:'/sso/regist',query:{pattern:1}})" v-if="!isLogin()">注册</MenuItem>
+              <MenuItem name="10-5" @click.native="$router.push({path:'/background/adviseList'})" v-if="isAdmin()">控制台</MenuItem>
             </MenuGroup>
           </Submenu>
-          <MenuItem name="9">
-            <div class="message">
-              <IBeautifulLink>消息
-                <Badge dot style="position: relative;top: -12px;"></Badge>
-              </IBeautifulLink>
-              <div class="message_detail">
-                <MessageList :show-detail="false"/>
-              </div>
-              <div>
-                <!-- 会员权益 -->
-                <RechargeRight/>
-              </div>
-            </div>
-          </MenuItem>
-          <MenuItem name="10">
-            <IBeautifulLink @onclick="$router.push({path:'/found/list'})">发现</IBeautifulLink>
-          </MenuItem>
-          <MenuItem name="11">
-            <IBeautifulLink @onclick="$router.push({path:'/business/businessList'})">我要赚钱</IBeautifulLink>
-          </MenuItem>
-          <MenuItem name="12">
-            <IBeautifulLink @onclick="$router.push({path:'/business/businessIntroduce'})">商业合作</IBeautifulLink>
-          </MenuItem>
         </div>
       </Menu>
     </div>
@@ -147,19 +152,67 @@
 </script>
 
 <style scoped>
-  .message_detail {
-    display: none;
+  .message_box {
+    position: relative;
   }
-
-  .message:hover > .message_detail {
+  .message_detail {
     padding: 5px 15px;
     position: absolute;
-    left: -130px;
+    bottom: 0;
     display: block;
     max-height: 300px;
     width: 360px;
     background-color: white;
     box-shadow: 0 0 5px red;
+
+    transition: transform 0.1s linear;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(102%);
+  }
+  .message_box:hover > .message_detail {
+    visibility: visible;
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  .zhuanlan_box {
+    position: relative;
+    transition: transform 0.2s linear;
+  }
+  .zhuanlan_detail {
+    position: absolute;
+    bottom: 0;
+    height: 300px;
+    width: 360px;
+    background-color: white;
+    box-shadow: 0 0 0 1px lightgray;
+
+    transition: transform 0.1s linear;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(102%);
+  }
+  .zhuanlan_box:hover .zhuanlan_detail {
+    visibility: visible;
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  .zhuanlan_label {
+    height: 30px;
+    line-height:30px;
+    background-color: #e8e8e8;
+    padding-left: 10px;
+    font-size: 12px;
+    color: green;
+  }
+  .zhuanlan_items > div {
+    display: inline-block;
+    font-size: 12px;
+    color: #999;
+    padding: 0 5px;
+    line-height: 30px;
+
+  }
+  .zhuanlan_items > div:hover {
+    color: green;
   }
 </style>
 

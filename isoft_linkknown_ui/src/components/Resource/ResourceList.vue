@@ -29,15 +29,15 @@
         </div>
       </div>
 
-      <div style="padding: 10px 0 0 30px ">
+      <div style="padding: 10px 30px;">
         <Row>
           <Col span="10">
             <span class="tip_hover">
               大家都在寻找适合自己的资源，我们为您<span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>以下资源
             </span>
           </Col>
-          <Col span="14">
-            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: relative;left: -330px;top:-8px"></ISearch>
+          <Col span="14" style="position: relative;">
+            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: absolute;top: -15px;right: 140px;"></ISearch>
           </Col>
         </Row>
       </div>
