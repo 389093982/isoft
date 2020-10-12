@@ -1,7 +1,9 @@
 <template>
   <div class="hangye_box">
     <div class="header">
+      <img class="icon_border" src="../../../static/images/index/icon_border.png"/>
       <a href="https://www.tiobe.com/tiobe-index/">TIOBE</a>
+      <img class="icon_border" src="../../../static/images/index/icon_border.png"/>
     </div>
     <div class="content">
       <div class="left">
@@ -39,7 +41,7 @@
         </div>
         <div class="content">
           <ul>
-            <li v-for="(article, index) in articles[r_index].reverse()" @click="goToTargetLink(article.article_link)" :title="article.article_desc">
+            <li v-for="(article, index) in Array.prototype.reverse.call(articles[r_index])" @click="goToTargetLink(article.article_link)" :title="article.article_desc">
               <span v-if="index < 4" class="new">新</span> {{article.article_desc}}
             </li>
           </ul>
@@ -156,6 +158,22 @@
     height: 100px;
     line-height: 100px;
   }
+  .hangye_box > .header .icon_border:first-child {
+    width: 20px;
+    height: 60px;
+    position: relative;
+    top: 15px;
+    margin-right: 10px;
+  }
+  .hangye_box > .header .icon_border:last-child {
+    width: 20px;
+    height: 60px;
+    position: relative;
+    top: 15px;
+    margin-left: 10px;
+    transform: rotateY(180deg);
+  }
+
   .hangye_box > .header > a {
     font-size: 40px;
     color: green;

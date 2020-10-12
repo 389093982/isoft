@@ -1,12 +1,12 @@
 <template>
-  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 400px;overflow-x: hidden;">
+  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 640px;overflow-x: hidden;">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
       <Icon :size="25" type="ios-shirt-outline" @click="handleChangeBg"/>
     </span>
 
-    <div class="animated faster bounceInRight" style="color: white;font-size: 32px;text-align: center;padding-top: 100px;">一个专门学习编程的网站</div>
+    <div class="animated faster bounceInRight" style="color: white;font-size: 32px;text-align: center;padding-top: 200px;">一个专门学习编程的网站</div>
 
     <div style="margin-top: 60px;">
       <div style="text-align: center;margin: 5px 0;">
@@ -165,7 +165,7 @@
   }
   @keyframes glint{
     0%{transform:translateX(-50px) skewX(-15deg);opacity:.6}
-    100%{transform:translateX(1100px) skewX(-15deg);opacity:1}
+    100%{transform:translateX(1500px) skewX(-15deg);opacity:1}
   }
 
   /*.quickSearchBg {*/

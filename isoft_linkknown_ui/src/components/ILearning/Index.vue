@@ -37,6 +37,8 @@
 
     <!-- 行业简介 -->
     <HangYe/>
+    <!-- 宣传 -->
+    <XuanChuan/>
 
     <!--发现-->
     <div class="isoft_bg_white" style="margin-top: 5px;padding: 10px 20px;">
@@ -58,10 +60,12 @@
 
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
   const HangYe = () => import("@/components/ILearning/HangYe");
+  const XuanChuan = () => import("@/components/ILearning/XuanChuan");
 
   export default {
     name: "Index",
     components: {
+      XuanChuan,
       HangYe,
       SearchRecommend,
       IHotRecommand,
