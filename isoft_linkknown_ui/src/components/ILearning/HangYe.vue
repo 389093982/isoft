@@ -213,7 +213,7 @@
 
   .hangye_box > .content .right .header .label {
     line-height: 40px;
-    width: 150px;
+    width: 100px;
     display: inline-block;
     vertical-align: top;
     padding-left: 20px;
@@ -222,7 +222,7 @@
   .hangye_box > .content .right .header ul li {
     float: left;
     list-style: none;
-    width: 100px;
+    width: 80px;
     text-align: center;
     cursor: pointer;
     font-size: 14px;
