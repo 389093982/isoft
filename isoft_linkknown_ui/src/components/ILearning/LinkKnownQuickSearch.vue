@@ -1,5 +1,5 @@
 <template>
-  <div class="isoft_glint" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }" style="position: relative;height: 640px;overflow-x: hidden;">
+  <div class="isoft_glint bgDiv" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div style="position:absolute;left:0;right:0;bottom:10px;text-align: center;">
+    <div style="position:absolute;left:0;right:0;bottom:30px;text-align: center;">
       <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(1)">热门推荐</span>
       <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(2)">新闻公告</span>
       <span class="animated faster flash isoft_font12 tagColor isoft_point_cursor" @click="handleShow(3)">热门应用</span>
@@ -106,20 +106,22 @@
 </script>
 
 <style scoped>
+  .bgDiv {
+    position: relative;
+    height: calc(100vh - 65px);
+    overflow-x: hidden;
+  }
   .bgImg1{
     background-image: url("../../../static/images/indexBg/bg1.jpg");
     background-size: 100% 100%;
-    height: 400px;
   }
   .bgImg2{
     background-image: url("../../../static/images/indexBg/bg2.jpg");
     background-size: 100% 100%;
-    height: 400px;
   }
   .bgImg3{
     background-image: url("../../../static/images/indexBg/bg3.jpg");
     background-size: 100% 100%;
-    height: 400px;
   }
   .tagColor {
     margin: 0 10px;
