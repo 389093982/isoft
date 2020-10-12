@@ -37,6 +37,10 @@
 
     <!-- 行业简介 -->
     <HangYe/>
+
+    <!-- Java 学习线路图 -->
+    <XianLu/>
+
     <!-- 宣传 -->
     <XuanChuan/>
 
@@ -61,10 +65,12 @@
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
   const HangYe = () => import("@/components/ILearning/HangYe");
   const XuanChuan = () => import("@/components/ILearning/XuanChuan");
+  const XianLu = () => import("@/components/ILearning/XianLu");
 
   export default {
     name: "Index",
     components: {
+      XianLu,
       XuanChuan,
       HangYe,
       SearchRecommend,
