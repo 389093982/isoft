@@ -46,11 +46,33 @@
         <ShowBigImg ref="showBigImg"/>
       </div>
       <div class="right">
-        <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+        <ul class="rightUl clear">
+          <li>
+            周锐讲师：
+            华为商城设计、开发负责人
+          </li>
+          <li>
+            二月讲师：
+            原东北收单行，
+            外卡收单技术总监
+          </li>
+          <li>
+            官网试听，线下授课
+            ‘助力职场第一棒’
+          </li>
+          <li>
+            <!-- QQ 群 -->
+            <ul class="qqUl">
+              <li style="text-align: center;padding-top: 25px;">
+                链知网 Java 培训
+                <div>
+                  <img src="../../../static/images/index/qq_qun1.png" style="width: 50%;height: 50%;"/>
+                </div>
+
+                QQ 咨询群
+              </li>
+            </ul>
+          </li>
         </ul>
      </div>
     </div>
@@ -164,17 +186,23 @@
   .xianlu_box > .content > .right {
     background-color: white;
   }
-  .xianlu_box > .content > .right ul li {
+  .rightUl {
+    box-shadow: 0 0 0 1px darkorange;
+  }
+  .rightUl > li {
     list-style: none;
     float: left;
     width: 50%;
     height: 250px;
   }
-  .xianlu_box > .content > .right ul li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(3) {
+  .rightUl > li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(3) {
     border-right: 1px dashed green;
   }
-  .xianlu_box > .content > .right ul li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(2) {
+  .rightUl > li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(2) {
     border-bottom: 1px dashed green;
+  }
+  .qqUl > li {
+    list-style: none;
   }
 
   .jiuye_car img {
