@@ -1,5 +1,5 @@
 <template>
-  <div class="isoft_glint bgDiv" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show,bgImg3: bgImg3Show, }">
+  <div class="isoft_glint bgDiv" :class="{bgImg1: bgImg1Show,bgImg2: bgImg2Show }">
     <HeavyRecommend v-if="showRecommend" :class="{showRecommendClass: showRecommend}" style="position: absolute;top: 0;z-index: 1;"/>
     <span class="isoft_point_cursor"
           style="position: absolute;right: 10px;top: 10px;padding: 5px;background-color: #ededed;">
@@ -55,10 +55,9 @@
         activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
         recommend2: ["前端教程", "java", "数据库", "中间件", "素材", "linux", "docker"],
         changeBgTimer: null,
-        bgImgShowArray: ['bgImg1Show', 'bgImg2Show', 'bgImg3Show'],
+        bgImgShowArray: ['bgImg1Show', 'bgImg2Show'],
         bgImg1Show:true,
         bgImg2Show:false,
-        bgImg3Show:false,
       }
     },
     methods:{
@@ -99,7 +98,6 @@
         let imgShow = GenerateRandom(_this.bgImgShowArray)+"";
         _this.bgImg1Show = imgShow === 'bgImg1Show';
         _this.bgImg2Show = imgShow === 'bgImg2Show';
-        _this.bgImg3Show = imgShow === 'bgImg3Show';
       }, 5000);
     }
   }
@@ -117,10 +115,6 @@
   }
   .bgImg2{
     background-image: url("../../../static/images/indexBg/bg2.jpg");
-    background-size: 100% 100%;
-  }
-  .bgImg3{
-    background-image: url("../../../static/images/indexBg/bg3.jpg");
     background-size: 100% 100%;
   }
   .tagColor {
