@@ -9,9 +9,6 @@
 
           <div class="banji">
             其它补习班学习编程费用基本上 1.5w ~ 2.8w 元，链知网开班在即：只需 6800 元即可
-
-            boss 直聘
-
             <div style="border: 1px dashed lightgray;">
               <div class="banjiDiv">
                 <ul class="clear">
@@ -34,6 +31,13 @@
                 </ul>
               </div>
               <span class="isoft_button_red3" style="width: 50%;margin: 10px auto;">我要咨询</span>
+              <div class="jiuye_car" style="text-align: right;margin: 20px 40px 10px 0;">
+                <span style="position:relative;top:-8px;color: grey;font-size: 14px;">就业直通车：</span>
+                <a href="https://www.zhipin.com/shanghai/" title="boss 直聘"><img src="../../../static/images/index/jiuye_boss.png"/></a>
+                <a href="https://login.51job.com/login.php" title="前程无忧"><img src="../../../static/images/index/jiuye_51.png"/></a>
+                <a href="https://landing.zhaopin.com/" title="智联招聘"><img src="../../../static/images/index/jiuye_zhilian.png"/></a>
+                <a href="https://www.liepin.com/" title="猎聘网"><img src="../../../static/images/index/jiuye_lieping.png"/></a>
+              </div>
             </div>
           </div>
         </div>
@@ -88,19 +92,18 @@
   .xianlu_box > .content > .left .title > .banji {
     position: absolute;
     width: 100%;
-    /*height: 0;*/
-    height: 500px;
+    height: 0;
     padding: 10px 40px;
     bottom: -5px;
     left: 0;
     transform: translateY(100%);
     background-color: white;
-    /*visibility: hidden;*/
-    transition: height 1s linear;
+    visibility: hidden;
   }
   .xianlu_box > .content > .left .title:hover > .banji {
     visibility: visible;
     height: 500px;
+    box-shadow:  0 0 0 1px darkorange;
   }
   .xianlu_box > .content > .left .title > .banji .banjiDiv li {
     list-style: none;
@@ -134,7 +137,7 @@
     color: darkorange;
     transform: rotateZ(180deg);
   }
-  .xianlu_box > .content > .left img {
+  .xianlu_box > .content > .left > img {
     width: 100%;
     height: 500px;
   }
@@ -157,5 +160,10 @@
   }
   .xianlu_box > .content > .right ul li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(2) {
     border-bottom: 1px dashed green;
+  }
+
+  .jiuye_car img {
+    width: 25px;
+    height: 25px;
   }
 </style>
