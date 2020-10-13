@@ -75,7 +75,7 @@
     font-size: 40px;
   }
   .xianlu_box > .content > .left {
-    width: 60%;
+    width: 65%;
     display: inline-block;
     min-height: 400px;
     padding: 10px;
@@ -142,7 +142,7 @@
     height: 500px;
   }
   .xianlu_box > .content > .right {
-    width: 38%;
+    width: 33%;
     display: inline-block;
     min-height: 400px;
   }
