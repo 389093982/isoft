@@ -4,6 +4,15 @@
   clear: both;
   display: block;
 }
+/* 和上面功能一样 */
+.clearfix:after {
+  content:".";
+  display:block;
+  height:0;
+  visibility:hidden;
+  clear:both;
+}
+
 
 .isoft_bordertop_red {
   border-top: 3px solid rgba(255, 0, 0, 0.2);

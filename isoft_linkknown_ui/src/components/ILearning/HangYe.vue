@@ -33,10 +33,11 @@
         <div class="header">
           <div class="label">精选文章</div>
           <ul style="display: inline-block;">
-            <li :class="{showIndex: r_index === 0}" @click="r_index = 0">行业现状</li>
-            <li :class="{showIndex: r_index === 1}" @click="r_index = 1">薪资水平</li>
-            <li :class="{showIndex: r_index === 2}" @click="r_index = 2">热门城市</li>
-            <li :class="{showIndex: r_index === 3}" @click="r_index = 3">热点新闻</li>
+            <li :class="{showIndex: r_index === 0}" @click="r_index = 0">热点新闻</li>
+            <li :class="{showIndex: r_index === 1}" @click="r_index = 1">行业现状</li>
+            <li :class="{showIndex: r_index === 2}" @click="r_index = 2">薪资水平</li>
+            <li :class="{showIndex: r_index === 3}" @click="r_index = 3">热门城市</li>
+
           </ul>
         </div>
         <div class="content">
@@ -64,31 +65,6 @@
 
           r_index: 0,
           articles: [
-            // 行业现状
-            [
-              {
-                'article_desc': '为什么程序员都不愿意升级 Java 8？ ',
-                'article_link': 'https://www.sohu.com/a/312982064_115128',
-              },
-              {
-                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
-                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
-              },
-            ],
-            // 薪资水平
-            [
-              {
-                'article_desc': '2019年10月全国程序员工资统计，一半以上的职位5个月没招到人。',
-                'article_link': 'https://blog.csdn.net/juwikuang/article/details/102326317',
-              },
-            ],
-            // 热门城市
-            [
-              {
-                'article_desc': '实地探访：月薪 12K 的北京程序员是怎么工作生活的？',
-                'article_link': 'https://www.cnblogs.com/gdjk/p/10754597.html',
-              },
-            ],
             // 热点新闻
             [
               {
@@ -120,10 +96,55 @@
                 'article_link': 'http://news.zol.com.cn/753/7538039.html',
               },
               {
+                'article_desc': '搜索引擎选择： Elasticsearch与Solr',
+                'article_link': 'https://www.cnblogs.com/fosilzhou/articles/4629220.html',
+              },
+              {
                 'article_desc': '为什么JAVA这么受欢迎？',
                 'article_link': 'https://zhuanlan.zhihu.com/p/98496029',
+              },
+              {
+                'article_desc': '容器和 VM 之间的差异',
+                'article_link': 'https://www.cnblogs.com/leoshi/p/13549033.html',
+              },
+              {
+                'article_desc': '2020年预测：为“数据时代的下一个十年”铺平道路',
+                'article_link': 'https://tech.huanqiu.com/article/3wE48icGfaI',
               }
-            ]
+            ],
+            // 行业现状
+            [
+              {
+                'article_desc': '为什么程序员都不愿意升级 Java 8？ ',
+                'article_link': 'https://www.sohu.com/a/312982064_115128',
+              },
+              {
+                'article_desc': '甲骨文要改变 Java 发布频率，将每半年发布一个版本',
+                'article_link': 'https://blog.csdn.net/redditnote/article/details/102590340',
+              },
+              {
+                'article_desc': 'Java 技术论坛 | Java 中文开发者社区',
+                'article_link': 'https://learnku.com/java',
+              }
+            ],
+            // 薪资水平
+            [
+              {
+                'article_desc': '2019年10月全国程序员工资统计，一半以上的职位5个月没招到人。',
+                'article_link': 'https://blog.csdn.net/juwikuang/article/details/102326317',
+              },
+              {
+                'article_desc': '2020 年 9 月程序员工资统计，工资中位数16500元！',
+                'article_link': 'https://blog.csdn.net/weixin_35681869/article/details/108989040',
+              },
+            ],
+            // 热门城市
+            [
+              {
+                'article_desc': '实地探访：月薪 12K 的北京程序员是怎么工作生活的？',
+                'article_link': 'https://www.cnblogs.com/gdjk/p/10754597.html',
+              },
+            ],
           ]
         }
       },
