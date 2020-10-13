@@ -41,7 +41,9 @@
             </div>
           </div>
         </div>
-        <img src="../../../static/images/index/xianlu.png"/>
+        <img src="../../../static/images/index/xianlu.png" @click="showBig($event)"/>
+
+        <ShowBigImg ref="showBigImg"/>
       </div>
       <div class="right">
         <ul>
@@ -56,8 +58,21 @@
 </template>
 
 <script>
+  import ShowBigImg from "../Common/img/ShowBigImg";
   export default {
-    name: "XianLu"
+    name: "XianLu",
+    components: {ShowBigImg},
+    data () {
+      return {
+
+      }
+    },
+    methods: {
+      // 显示和隐藏放大图
+      showBig: function (event) {
+        this.$refs.showBigImg.showBig(event.currentTarget.src);
+      },
+    }
   }
 </script>
 
