@@ -6,9 +6,9 @@
           <div class="layout-iwork">
             <span style="position: relative;">
                <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown"
-                    title="链知网低代码开发框架，详情请访问 www.linkknown.com 或咨询 QQ 1875112921、389093982"/>
+                    title="API Market 低代码开发平台"/>
             </span>
-            <span style="margin-left: 10px;">IWork {{version}}</span>
+            <span style="margin-left: 10px;">IWork {{version}} 【API Market 低代码开发平台】</span>
           </div>
           <div class="layout-nav">
             <MenuItem name="1">
@@ -174,7 +174,7 @@
   }
 
   .layout-iwork {
-    width: 100px;
+    width: 350px;
     height: 30px;
     color: white;
     cursor: pointer;
