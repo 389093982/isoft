@@ -130,7 +130,6 @@
           {
             title: 'migrate_hash',
             key: 'migrate_hash',
-            width: 400,
           },
           {
             title: '操作',
