@@ -8,7 +8,8 @@
           <Icon type="ios-arrow-down" class="arrow"/>
 
           <div class="banji">
-            其它补习班学习编程费用基本上 1.5w ~ 2.8w 元，链知网开班在即：只需 6800 元即可
+            其它补习班学习编程费用基本上 1.5w ~ 2.8w 元，<br>
+            链知网开班在即：只需 6800 元即可
             <div style="border: 1px dashed lightgray;">
               <div class="banjiDiv">
                 <ul class="clear">
@@ -48,17 +49,34 @@
       <div class="right">
         <ul class="rightUl clear">
           <li>
-            周锐讲师：
-            华为商城设计、开发负责人
+            <div style="margin:10px 0 0 5px">
+              <h3>周锐讲师</h3>
+            </div>
+            <div style="margin:5px 5px 0 5px;font-size: 12px;line-height: 20px;height: 100px;">
+              华为商城设计、开发负责人。
+              有着丰富的开发和教学经验，曾参与大型电商项目、网页和微信移动小程序开发工作，负责前端开发工作。
+              精通html，css，js等编程语言和数据库系统，对前端主流框架Vue及原生js有着深入的研究。
+              热衷于教学，激情派讲师，痴迷于新技术的推广与教学
+            </div>
           </li>
           <li>
-            二月讲师：
-            原东北收单行，
-            外卡收单技术总监
+            <div style="margin:10px 0 0 5px">
+              <h3>二月讲师</h3>
+            </div>
+            <div style="margin:5px 5px 0 5px;font-size: 12px;line-height: 20px;height: 100px;">
+              原东北收单行，外卡收单技术总监。
+              从事JavaEE技术多年，一直致力于Java技术培训，热爱教育。
+              深入掌握Spring、SpringMVC、MyBatis、SpringBoot,通过分析源码，讲解框架设计原理。
+              曾参与开发了九台农商行外卡收单系统；某国企卡管、网关系统等。
+            </div>
           </li>
           <li>
-            官网试听，线下授课
-            ‘助力职场第一棒’
+            <div style="text-align: center;margin-top: 50px;color: blue">
+              <h3>官网试听，线下授课</h3>
+            </div>
+            <div style="text-align: center;margin-top: 20px">
+              "助力职场第一棒 ^_^ "
+            </div>
           </li>
           <li>
             <!-- QQ 群 -->
@@ -139,7 +157,7 @@
   }
   .xianlu_box > .content > .left .title:hover > .banji {
     visibility: visible;
-    height: 500px;
+    height: 450px;
     box-shadow:  0 0 0 1px darkorange;
   }
   .xianlu_box > .content > .left .title > .banji .banjiDiv li {
@@ -176,7 +194,7 @@
   }
   .xianlu_box > .content > .left > img {
     width: 100%;
-    height: 500px;
+    height: 450px;
   }
   .xianlu_box > .content > .right {
     width: 33%;
