@@ -1,0 +1,14 @@
+<Resource>
+	<Id>5</Id>
+	<AppId>6</AppId>
+	<ResourceName>iwork_demo_test</ResourceName>
+	<ResourceType>db</ResourceType>
+	<ResourceUrl>iwork_demo_test</ResourceUrl>
+	<ResourceDsn>root:123456@tcp(127.0.0.1:3306)/iwork_demo_test?allowNativePasswords=true&amp;charset=utf8&amp;loc=Asia%2FShanghai&amp;parseTime=True</ResourceDsn>
+	<ResourceUsername>root</ResourceUsername>
+	<ResourcePassword>123456</ResourcePassword>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-10-14T21:02:07+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-10-14T21:02:07+08:00</LastUpdatedTime>
+</Resource>

@@ -42,6 +42,12 @@ func (this *ForeachNode) Execute(trackingId string) {
 
 // 准备每一次迭代的数据
 func (this *ForeachNode) PrepareIterParam(index int, v reflect.Value) {
+	var (
+		foreachDataAttr         string
+		foreachDataAttrNotEmpty bool
+	)
+	foreachDataAttr, foreachDataAttrNotEmpty = this.TmpDataMap[iworkconst.COMPLEX_PREFIX+"foreach_data_attr?"].(string)
+
 	paramMap := make(map[string]interface{})
 	// 迭代索引
 	paramMap[iworkconst.NUMBER_PREFIX+"foreach_index"] = index
@@ -51,6 +57,8 @@ func (this *ForeachNode) PrepareIterParam(index int, v reflect.Value) {
 		for i := 0; i < len(keys); i++ {
 			paramMap["item.attr_"+keys[i].String()] = values[i].Interface()
 		}
+	} else if foreachDataAttrNotEmpty {
+		paramMap["item.attr_"+foreachDataAttr] = v.Interface()
 	} else {
 		paramMap["item.attr_value"] = v.Interface()
 	}
