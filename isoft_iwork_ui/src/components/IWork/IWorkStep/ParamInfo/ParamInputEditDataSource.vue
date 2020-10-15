@@ -104,7 +104,8 @@
             width: '100%'
           },
           attrs: {
-            draggable:'true'
+            draggable:'true',
+            title: data.desc,
           },
           on:{
             dragstart: () => this.handleDragStart(root, node, data),
@@ -183,7 +184,7 @@
         groups.forEach(group => {
           // tree 对应的 arr
           let treeArr = this.funcs.filter(fc => fc.group === group).map(fc => {
-            return {title: fc.funcDemo}
+            return {title: fc.funcDemo, desc: fc.funcDesc}
           });
           arr.push({group, treeArr});
         });
