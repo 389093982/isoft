@@ -84,22 +84,10 @@
             <a>
               <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/><p>商业合作</p>
             </a>
-            <a>
-              <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/><p>商业合作</p>
-            </a>
-            <a>
-              <img src="../../../static/images/common_img/default.png" style="width: 30px;height: 30px;"/><p>商业合作</p>
-            </a>
           </div>
           <div class="selfAssistent isoft_pd20" v-if="showHelpPattern === 2">
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
-            <p>如何找回链知王账号密码？</p>
+            <p>如何找回链知网账号密码？</p>
+            <p>链知网有 Java 课程吗？</p>
           </div>
         </div>
       </div>

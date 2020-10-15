@@ -6,7 +6,7 @@
         <!--<img style="width: 120px;height: 150px;position: absolute;top: -90px;left: -20px;" src="../../../static/images/logo02.gif"/>-->
       </span>
       <div style="margin: 15px 5px 5px 50px;color: white;text-align: center;" class="isoft_font16">
-        <p>创业必备</p>
+        <p>问卷调查</p>
         <p>点击我了解</p>
         <div style="position: relative;">
           <img style="position: absolute;right: 10px;top: -33px;width: 10px;height: 17px;" src="../../../static/images/common_img/right.png"/>
@@ -24,10 +24,10 @@
       </div>
       <div style="width: 100%;padding: 10px 0 10px 20px;display: flex;">
         <div style="width: 60%;padding: 15px 10px;">
-          <p class="question_tip">创业太难怎么办？</p>
-          <p class="question_tip">创业成本太高怎么办？</p>
-          <p class="question_tip">创业没有途径怎么办？</p>
-          <p class="question_tip">离职没工资怎么办？</p>
+          <p class="question_tip">自学编程需要多久？</p>
+          <p class="question_tip">自学编程成本高不高？</p>
+          <p class="question_tip">自学编程企业认不认可？</p>
+          <p class="question_tip">自学编程适合选择哪门编程语言？</p>
           <p class="answer_tip">在链知网总有&nbsp;“薪”&nbsp;发现</p>
 
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
@@ -57,8 +57,8 @@
           <div class="isoft_button_blue" style="width: 60%;margin-left: 10%;margin-top: 20px;" @click="handleSubmit('formValidate')">了解一下</div>
         </div>
         <div style="width: 40%;border-left: 1px dashed #c5c5c5;padding: 15px 10px;">
-          <p style="color: #f60;font-size: 18px;">90%的合作用户</p>
-          <p style="font-size: 18px;">通过链知网获得了兼职收入</p>
+          <p style="color: #f60;font-size: 18px;">温馨提示</p>
+          <p style="font-size: 18px;">在链知网发布课程可以获得兼职收入奥</p>
 
           <div v-for="(icon, index) in icons" style="margin: 15px 0;display: flex;">
             <div>
