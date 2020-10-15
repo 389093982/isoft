@@ -10,7 +10,7 @@
         <div v-if="showAllNodeGroup">
           <span v-for="default_work_step_type in nodeMetas"
                 draggable="true" @dragstart="dragstart($event, 'work_type__' + default_work_step_type.name)">
-           <Tag v-if="showComponent(default_work_step_type.name)">{{default_work_step_type.name}}</Tag>
+           <Tag v-if="showComponent(default_work_step_type.name)" title="描述信息待完善">{{default_work_step_type.name}}</Tag>
           </span>
         </div>
         <Collapse v-else>
@@ -19,7 +19,7 @@
             <div slot="content">
               <div v-if="default_work_step_type.group === nodeGroup" v-for="default_work_step_type in nodeMetas"
                    draggable="true" @dragstart="dragstart($event, 'work_type__' + default_work_step_type.name)">
-                <Tag v-if="showComponent(default_work_step_type.name)">{{default_work_step_type.name}}</Tag>
+                <Tag v-if="showComponent(default_work_step_type.name)" title="描述信息待完善">{{default_work_step_type.name}}</Tag>
               </div>
             </div>
           </Panel>

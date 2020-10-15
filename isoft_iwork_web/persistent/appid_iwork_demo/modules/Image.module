@@ -1,0 +1,10 @@
+<Module>
+	<Id>30</Id>
+	<AppId>6</AppId>
+	<ModuleName>Image</ModuleName>
+	<ModuleDesc>图片操作相关模块</ModuleDesc>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-10-15T11:29:22+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-10-15T11:29:22+08:00</LastUpdatedTime>
+</Module>
