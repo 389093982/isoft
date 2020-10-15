@@ -9,12 +9,19 @@ import (
 type Module struct {
 	Id              int64     `json:"id"`
 	AppId           int64     `json:"app_id"`
-	ModuleName      string    `json:"module_name" orm:"unique"`
+	ModuleName      string    `json:"module_name"`
 	ModuleDesc      string    `json:"module_desc" orm:"type(text)"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
 	LastUpdatedTime time.Time `json:"last_updated_time"`
+}
+
+// 多字段唯一键
+func (u *Module) TableUnique() [][]string {
+	return [][]string{
+		{"AppId", "ModuleName"},
+	}
 }
 
 func QueryAllModules(app_id int64) (modules []Module, err error) {
