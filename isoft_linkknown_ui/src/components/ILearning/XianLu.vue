@@ -47,8 +47,8 @@
         <ShowBigImg ref="showBigImg"/>
       </div>
       <div class="right">
-        <ul class="rightUl clear">
-          <li>
+        <ul class="rightUl clear" :style="rightUlStyles">
+          <li @mouseenter="hoverIndex = 0">
             <div style="margin:10px 0 0 5px">
               <h3>周锐讲师</h3>
             </div>
@@ -59,7 +59,7 @@
               热衷于教学，激情派讲师，痴迷于新技术的推广与教学
             </div>
           </li>
-          <li>
+          <li @mouseenter="hoverIndex = 1">
             <div style="margin:10px 0 0 5px">
               <h3>二月讲师</h3>
             </div>
@@ -70,7 +70,7 @@
               曾参与开发了九台农商行外卡收单系统；某国企卡管、网关系统等。
             </div>
           </li>
-          <li>
+          <li @mouseenter="hoverIndex = 2">
             <div style="text-align: center;margin-top: 50px;color: blue">
               <h3>官网试听，线下授课</h3>
             </div>
@@ -78,7 +78,7 @@
               "助力职场第一棒 ^_^ "
             </div>
           </li>
-          <li>
+          <li @mouseenter="hoverIndex = 3">
             <!-- QQ 群 -->
             <ul class="qqUl">
               <li style="text-align: center;padding-top: 25px;">
@@ -104,7 +104,7 @@
     components: {ShowBigImg},
     data () {
       return {
-
+        hoverIndex: 0,    // 四宫格默认选中索引
       }
     },
     methods: {
@@ -112,6 +112,14 @@
       showBig: function (event) {
         this.$refs.showBigImg.showBig(event.currentTarget.src);
       },
+    },
+    computed:{
+      rightUlStyles () {
+        let style = {};
+        let color = ['#006c54', '#726930', '#5e7c85', '#6f6d85'][this.hoverIndex];
+        style.borderTop = '4px solid ' + color;
+        return style;
+      }
     }
   }
 </script>
@@ -205,13 +213,15 @@
     background-color: white;
   }
   .rightUl {
-    box-shadow: 0 0 0 1px darkorange;
+    border: 1px solid lightgray;
+    padding: 10px;
   }
   .rightUl > li {
     list-style: none;
     float: left;
     width: 50%;
-    height: 250px;
+    height: 240px;
+    cursor: pointer;
   }
   .rightUl > li:nth-child(1),.xianlu_box > .content > .right ul li:nth-child(3) {
     border-right: 1px dashed green;

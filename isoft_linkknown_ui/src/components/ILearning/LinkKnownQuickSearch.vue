@@ -65,7 +65,9 @@
         this.$emit('handleShow', index);
       },
       handleSubmitFunc: function (search_data) {
-        this.$emit('submitFunc', search_data);
+        // this.$emit('submitFunc', search_data);
+
+        this.$router.push({path: '/ilearning/courseSearch', query: {search: search_data}});
       },
       handleChangeBg: function () {
 
