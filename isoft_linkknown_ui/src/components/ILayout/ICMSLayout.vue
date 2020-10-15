@@ -40,9 +40,12 @@
                 <router-link to="/background/userSearch">用户查询</router-link>
               </MenuItem>
               <MenuItem name="5-2">
+                <router-link to="/background/visitSearch">访问查询</router-link>
+              </MenuItem>
+              <MenuItem name="5-3">
                 <router-link to="/background/sso/loginRecord">登录记录</router-link>
               </MenuItem>
-              <MenuItem name="5-3">权限管理</MenuItem>
+              <MenuItem name="5-4">权限管理</MenuItem>
             </Submenu>
             <Submenu name="6">
               <template slot="title">
