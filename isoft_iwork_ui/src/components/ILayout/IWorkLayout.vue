@@ -4,11 +4,16 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-iwork">
-            <span style="position: relative;">
-               <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown"
-                    title="API Market 低代码开发平台"/>
-            </span>
-            <span style="margin-left: 10px;">IWork {{version}} 【API Market 低代码开发平台】</span>
+            <Row>
+              <Col>
+                <div>
+                   <img src="../../assets/images/linkknown.jpg" class="linkknownlogo" @click="tolinkknown" title="API Market 低代码开发平台"/>
+                </div>
+              </Col>
+              <Col>
+                <div style="margin-left: 10px;">IWork {{version}}</div>
+              </Col>
+            </Row>
           </div>
           <div class="layout-nav">
             <MenuItem name="1">
@@ -174,7 +179,7 @@
   }
 
   .layout-iwork {
-    width: 350px;
+    width: 100px;
     height: 30px;
     color: white;
     cursor: pointer;
@@ -192,6 +197,6 @@
     width: 40px;
     height: 40px;
     left: -40px;
-    top: -10px;
+    top: 10px;
   }
 </style>
