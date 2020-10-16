@@ -1,0 +1,12 @@
+<SqlMigrate>
+	<Id>143</Id>
+	<AppId>6</AppId>
+	<MigrateName>20201015155920_CREATE_user.sql</MigrateName>
+	<MigrateSql>create table user&#xA;(&#xA;  id                int auto_increment&#xA;    primary key,&#xA;  user_name         varchar(255) default &#39;&#39;            not null,&#xA;  pass_wd           varchar(255) default &#39;&#39;            not null,&#xA;  created_by        varchar(255) default &#39;&#39;            not null,&#xA;  created_time      datetime                           not null,&#xA;  last_updated_by   varchar(255) default &#39;&#39;            not null,&#xA;  last_updated_time datetime                           not null,&#xA;  small_icon        varchar(255) default &#39;&#39;            not null,&#xA;  user_points       int default &#39;0&#39;                    not null,&#xA;  nick_name         varchar(255) default &#39;&#39;            not null,&#xA;  role_name         varchar(255) default &#39;common&#39;      not null&#xA;  comment &#39;用户角色名称&#39;,&#xA;  vip_level         int default &#39;0&#39;                    not null&#xA;  comment &#39;会员等级&#39;,&#xA;  vip_expired_time  datetime default CURRENT_TIMESTAMP null&#xA;  comment &#39;会员过期时间&#39;,&#xA;  user_signature    varchar(255) default &#39;&#39;            not null&#xA;  comment &#39;个性签名&#39;,&#xA;  current_residence varchar(255) default &#39;&#39;            not null,&#xA;  hometown          varchar(255) default &#39;&#39;            not null,&#xA;  gender            varchar(255) default &#39;&#39;            not null,&#xA;  birthday          date                               null,&#xA;  hat               varchar(255) default &#39;&#39;            not null,&#xA;  hat_in_use        varchar(255) default &#39;N&#39;           not null,&#xA;  third_user_type   varchar(50) default &#39;lk&#39;           not null&#xA;  comment &#39;第三方登录类型&#39;,&#xA;  fensi_counts      int default &#39;0&#39;                    not null,&#xA;  attention_counts  int default &#39;0&#39;                    not null&#xA;  comment &#39;关注的数量&#39;&#xA;)&#xA;  collate = utf8_bin;</MigrateSql>
+	<MigrateHash>ICoGeJKF9nwFpbWddKiD4WCajtGfEV9c1POU3an1fpg=</MigrateHash>
+	<Effective>true</Effective>
+	<CreatedBy>SYSTEM</CreatedBy>
+	<CreatedTime>2020-10-15T15:59:20+08:00</CreatedTime>
+	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
+	<LastUpdatedTime>2020-10-15T15:59:20+08:00</LastUpdatedTime>
+</SqlMigrate>
