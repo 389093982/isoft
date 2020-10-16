@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"strings"
 )
@@ -100,23 +99,15 @@ func checkMethod(method string) string {
 	return "GET"
 }
 
-// ClientIP 尽最大努力实现获取客户端 IP 的算法
-// 解析 X-Real-IP 和 X-Forwarded-For 以便于反向代理 (nginx 或 haproxy) 可以正常工作
 func GetClientIP(r *http.Request) string {
-	xForwardedFor := r.Header.Get("X-Forwarded-For")
-	ip := strings.TrimSpace(strings.Split(xForwardedFor, ",")[0])
-	if ip != "" {
-		return ip
+	ip := r.Header.Get("X-Forwarded-For")
+	if strings.Contains(ip, "127.0.0.1") || ip == "" {
+		ip = r.Header.Get("X-real-ip")
 	}
 
-	ip = strings.TrimSpace(r.Header.Get("X-Real-Ip"))
-	if ip != "" {
-		return ip
+	if ip == "" {
+		return "127.0.0.1"
 	}
 
-	if ip, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr)); err == nil {
-		return ip
-	}
-
-	return ""
+	return ip
 }
