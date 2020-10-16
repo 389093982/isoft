@@ -25,5 +25,12 @@
 ②给isoft_iwork_web 增加可执行权限，使用命令是：chmod +x isoft_iwork_web
 ③将前端静态资源static放到当前目录下：/home/linker/isoft_iwork_web (如果已存在static目录，可以整体替换)
 ④将前端index.html放入目录：/home/linker/isoft_iwork_web/views/ （如果已存在，则替换）
-⑤执行启动命令：nohup ./isoft_iwork_web &
+⑤修改 nginx 配置文件，设置 proxy_set_header，如下，方便程序获取真是 ip 地址
+        location /api {
+                proxy_pass http://localhost:6001/api;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Forward-For $remote_addr;
+                proxy_set_header X-real-ip $remote_addr;
+        }
+⑥执行启动命令：nohup ./isoft_iwork_web &
 
