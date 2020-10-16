@@ -60,12 +60,12 @@
     },
     methods: {
       pageChange(page) {
-        this.page.current_page = page;
-        this.refreshUsersList();
+        this.page.currentPage = page;
+        this.refreshUserSiteRecords();
       },
       pageSizeChange(pageSize) {
         this.page.offset = pageSize;
-        this.refreshUsersList();
+        this.refreshUserSiteRecords();
       },
       refreshUserSiteRecords: async function () {
         let params = {
