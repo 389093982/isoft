@@ -1,5 +1,5 @@
 <template>
-  <div style="width:1300px;min-height: 500px;padding: 50px;margin: 0 auto;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;">
+  <div style="width:auto;min-height: 500px;padding: 50px;margin: 0 auto;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;">
 
     <Row>
       <Col span="12">
