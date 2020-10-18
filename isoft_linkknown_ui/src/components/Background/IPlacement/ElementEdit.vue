@@ -98,7 +98,7 @@
         }
       };
       return {
-        fileUploadUrl: '/api/iwork/httpservice/isoft_linkknown_api/fileUpload' + "?table_name=element&table_field=img_path",
+        fileUploadUrl: '/api/iwork/httpservice/isoft_linkknown_api/FileUpload' + "?table_name=element&table_field=img_path",
         placement_types: {
           'all': ['placement_name', 'element_name', 'element_label', 'navigation_level', 'navigation_parent_id', 'content', 'imgpath', 'linked_refer', 'md_content'],
           'text_link': ['placement_name', 'element_name', 'element_label', 'linked_refer'],

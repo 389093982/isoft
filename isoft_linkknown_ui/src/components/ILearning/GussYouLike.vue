@@ -1,23 +1,7 @@
 <template>
   <div>
-    <h3 style="text-align: center;">猜你喜欢</h3>
     <div v-show="showContent">
-      <Row>
-        <Col span="12">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </Col>
-        <Col span="12">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </Col>
-      </Row>
-      <Row>
-        <Col span="12">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </Col>
-        <Col span="12">
-          <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
-        </Col>
-      </Row>
+      <ToolBox :placement_name="GLOBAL.placement_host_app_recommand"/>
     </div>
   </div>
 </template>

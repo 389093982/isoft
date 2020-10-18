@@ -2,10 +2,10 @@
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
     <div class="isoft_font_header">{{placement_label}}</div>
     <ul v-if="elements.length > 0">
-      <li v-for="element in elements" class="li">
+      <li v-for="element in elements" class="li" :title="element.element_label">
         <a :href="element.linked_refer" target="_blank">
           <img :src="element.img_path" width="30px" height="30px" @error="defImg()"/>
-          <p style="font-size: 12px;">{{element.element_label}}</p>
+          <p style="font-size: 12px;" class="isoft_inline_ellipsis">{{element.element_label}}</p>
         </a>
       </li>
     </ul>
