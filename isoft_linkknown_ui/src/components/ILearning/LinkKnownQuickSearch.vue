@@ -53,7 +53,7 @@
         recommend1: ["编程基础", "编程规范", "项目实践", "源码分析", "专家讲坛"],     // 一级分类
         activeBottomTranslateX: 7,                                                 // 一级分类 bottom 初始偏移量
         activeBottomTranslateXArr: [7, 77, 147, 217, 287, 357],                    // 一级分类 bottom 偏移量
-        recommend2: ["前端", "java", "spring", "springboot", "mybatis", "linux", "docker"],
+        recommend2: [ "java", "Spring","SpringMVC", "SpringBoot", "Mybatis", "linux", "docker"],
         changeBgTimer: null,
         bgImgShowArray: ['bgImg1Show', 'bgImg2Show'],
         bgImg1Show:true,
