@@ -4,11 +4,11 @@
 	<ResourceName>iwork_demo_test</ResourceName>
 	<ResourceType>db</ResourceType>
 	<ResourceUrl>iwork_demo_test</ResourceUrl>
-	<ResourceDsn>linker:Linker2020@tcp(127.0.0.1:3306)/iwork_demo_test?allowNativePasswords=true&amp;charset=utf8&amp;loc=Asia%2FShanghai&amp;parseTime=True</ResourceDsn>
-	<ResourceUsername>linker</ResourceUsername>
-	<ResourcePassword>Linker2020</ResourcePassword>
+	<ResourceDsn>iwork:iwork_demo@tcp(127.0.0.1:3306)/iwork_demo_test?allowNativePasswords=true&amp;charset=utf8&amp;loc=Asia%2FShanghai&amp;parseTime=True</ResourceDsn>
+	<ResourceUsername>iwork</ResourceUsername>
+	<ResourcePassword>iwork_demo</ResourcePassword>
 	<CreatedBy>SYSTEM</CreatedBy>
 	<CreatedTime>2020-10-15T16:03:51+08:00</CreatedTime>
 	<LastUpdatedBy>SYSTEM</LastUpdatedBy>
-	<LastUpdatedTime>2020-10-15T16:03:51+08:00</LastUpdatedTime>
+	<LastUpdatedTime>2020-10-18T10:36:20+08:00</LastUpdatedTime>
 </Resource>

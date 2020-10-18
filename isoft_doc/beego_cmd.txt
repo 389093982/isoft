@@ -5,6 +5,9 @@
 bee pack -be GOOS=linux
 bee pack -be GOOS=windows
 ..\bin\bee.exe pack -be GOOS=linux
+..\..\bin\bee.exe pack -be GOOS=linux
+..\bin\bee.exe pack -be GOOS=windows
+..\..\bin\bee.exe pack -be GOOS=windows
 
 3、Linux编译go程序步骤
 a) 升级 golang 并更新 GOROOT 和 GOPATH 环境变量
