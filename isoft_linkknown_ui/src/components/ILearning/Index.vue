@@ -41,6 +41,9 @@
     <!-- Java 学习线路图 -->
     <XianLu/>
 
+    <!-- 宣传 -->
+    <!--<XuanChuan/>-->
+
     <!--发现-->
     <div class="isoft_bg_white" style="margin-top: 5px;padding: 10px 20px;">
       <HorizontalLinks :placement_name="GLOBAL.placement_want_to_find"/>
@@ -62,10 +65,12 @@
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
   const HangYe = () => import("@/components/ILearning/HangYe");
   const XianLu = () => import("@/components/ILearning/XianLu");
+  const XuanChuan = () => import("@/components/ILearning/XuanChuan");
 
   export default {
     name: "Index",
     components: {
+      XuanChuan,
       XianLu,
       HangYe,
       SearchRecommend,

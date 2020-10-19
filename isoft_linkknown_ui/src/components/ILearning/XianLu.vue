@@ -4,7 +4,7 @@
     <div class="content">
       <div class="left">
         <div class="title">
-          精品课程体系 2.0 落地
+          精品课程体系 2.0 落地【每季度定期更新，热门课程享不停】
           <Icon type="ios-arrow-down" class="arrow"/>
 
           <div class="banji">
@@ -56,7 +56,7 @@
               华为商城设计、开发负责人。
               有着丰富的开发和教学经验，曾参与大型电商项目、网页和微信移动小程序开发工作，负责前端开发工作。
               精通html，css，js等编程语言和数据库系统，对前端主流框架Vue及原生js有着深入的研究。
-              热衷于教学，激情派讲师，痴迷于新技术的推广与教学
+              热衷于教学，激情派讲师，痴迷于新技术的推广与教学。
             </div>
           </li>
           <li @mouseenter="hoverIndex = 1">
@@ -151,6 +151,7 @@
     font-size: 18px;
     padding: 0 20px;
     position: relative;
+    color: green;
   }
   .xianlu_box > .content > .left .title > .banji {
     position: absolute;

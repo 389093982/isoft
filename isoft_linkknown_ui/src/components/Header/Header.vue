@@ -51,6 +51,13 @@
                   <div @click="$router.push({path:'/business/businessList'})">我要赚钱</div>
                   <div @click="$router.push({path:'/business/businessIntroduce'})">商业合作</div>
                   <div @click="">链知自研</div>
+
+                  <br/>
+
+                  <div @click="">链知网合肥教育基地</div>
+                  <div @click="">链知网武汉教育基地</div>
+                  <div @click="">链知网上海教育基地</div>
+
                   <div v-if="showJobFlag" @click="$router.push({path:'/job/jobList'})">求职招聘</div>
                 </div>
               </div>
@@ -203,13 +210,14 @@
     font-size: 12px;
     color: green;
   }
+  .zhuanlan_items {
+    line-height: 30px;
+  }
   .zhuanlan_items > div {
     display: inline-block;
     font-size: 12px;
     color: #999;
     padding: 0 5px;
-    line-height: 30px;
-
   }
   .zhuanlan_items > div:hover {
     color: green;
