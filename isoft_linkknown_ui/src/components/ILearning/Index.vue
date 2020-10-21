@@ -41,8 +41,13 @@
     <!-- Java 学习线路图 -->
     <XianLu/>
 
+
+    <!-- 课程体系 -->
+    <CourseSystem/>
+
     <!-- 宣传 -->
     <!--<XuanChuan/>-->
+
 
     <!--发现-->
     <div class="isoft_bg_white" style="margin-top: 5px;padding: 10px 20px;">
@@ -65,11 +70,13 @@
   const NewsNotice = () => import("@/components/ILearning/Course/NewsNotice");
   const HangYe = () => import("@/components/ILearning/HangYe");
   const XianLu = () => import("@/components/ILearning/XianLu");
+  const CourseSystem = () => import("@/components/ILearning/CourseSystem");
   const XuanChuan = () => import("@/components/ILearning/XuanChuan");
 
   export default {
     name: "Index",
     components: {
+      CourseSystem,
       XuanChuan,
       XianLu,
       HangYe,
