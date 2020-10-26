@@ -23,17 +23,17 @@
               <Option value="ssh">ssh</Option>
             </Select>
           </FormItem>
-          <FormItem label="resource_url" prop="resource_url">
+          <FormItem label="resource_url" prop="resource_url" v-if="checkShow(formValidate.resource_type)">
             <Input v-model.trim="formValidate.resource_url" placeholder="请输入 resource_url"></Input>
           </FormItem>
           <FormItem label="resource_dsn" prop="resource_dsn">
             <Input type="textarea" :rows="3" v-model.trim="formValidate.resource_dsn" placeholder="请输入 resource_dsn"
                    @drop="drop($event, 'resource_dsn')" @dragover="allowDrop($event)"></Input>
           </FormItem>
-          <FormItem label="resource_username" prop="resource_username">
+          <FormItem label="resource_username" prop="resource_username" v-if="checkShow(formValidate.resource_type)">
             <Input v-model.trim="formValidate.resource_username" placeholder="请输入 resource_username"></Input>
           </FormItem>
-          <FormItem label="resource_password" prop="resource_password">
+          <FormItem label="resource_password" prop="resource_password" v-if="checkShow(formValidate.resource_type)">
             <Input v-model.trim="formValidate.resource_password" placeholder="请输入 resource_password"></Input>
           </FormItem>
           <FormItem>
@@ -90,6 +90,9 @@
       }
     },
     methods:{
+      checkShow: function (resource_type) {
+        return resource_type !== 'db';
+      },
       dragstart: function (event, transferData) {
         event.dataTransfer.setData("Text", transferData);
       },
