@@ -147,7 +147,7 @@
     line-height: 100px;
     font-size: 20px;
 
-    background: rgba(153, 233, 156, 0.15);
+    background: rgba(153, 233, 156, 0.3);
     border: 1px solid #99e99c;
   }
   .item:nth-child(3) {
@@ -159,7 +159,7 @@
     line-height: 100px;
     font-size: 20px;
 
-    background: rgba(134, 143, 233, 0.19);
+    background: rgba(134, 143, 233, 0.3);
     border: 1px solid #c6c4e9;
   }
   .item:nth-child(4) {
@@ -171,7 +171,7 @@
     line-height: 92px;
     font-size: 14px;
 
-    background: rgba(227, 227, 227, 0.22);
+    background: rgba(227, 227, 227, 0.3);
     border: 1px solid #e3e3e3;
   }
   .item:nth-child(5) {
@@ -183,7 +183,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(250,244,255,0.8);
+    background: rgba(250,244,255,0.3);
     border: 1px solid #dac8e9;
   }
 
@@ -196,7 +196,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(250, 255, 172, 0.37);
+    background: rgba(250, 255, 172, 0.3);
     border: 1px solid #f7ff79;
   }
   .item:nth-child(7) {
@@ -208,7 +208,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(255, 164, 66, 0.36);
+    background: rgba(255, 164, 66, 0.3);
     border: 1px solid #ffa442;
   }
   .item:nth-child(8) {
@@ -220,7 +220,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(255, 116, 119, 0.19);
+    background: rgba(255, 116, 119, 0.3);
     border: 1px solid #ff7477;
   }
   .item:nth-child(9) {
@@ -232,7 +232,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(233, 94, 219, 0.22);
+    background: rgba(233, 94, 219, 0.3);
     border: 1px solid #e95edb;
   }
   .item:nth-child(10) {
@@ -244,7 +244,7 @@
     line-height: 40px;
     font-size: 12px;
 
-    background: rgba(153, 213, 233, 0.24);
+    background: rgba(153, 213, 233, 0.3);
     border: 1px solid #99d5e9;
   }
 
