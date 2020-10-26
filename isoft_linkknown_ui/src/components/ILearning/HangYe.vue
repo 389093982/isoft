@@ -120,6 +120,10 @@
               {
                 'article_desc': 'Java 技术论坛 | Java 中文开发者社区',
                 'article_link': 'https://learnku.com/java',
+              },
+              {
+                'article_desc': '最新 Java 开发面试题',
+                'article_link': 'http://www.100mian.com/category/java/',
               }
             ],
             // 薪资水平

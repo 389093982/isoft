@@ -3,7 +3,7 @@
     <div style="width: 1200px;margin: 0 auto;" class="clear">
       <div class="left">
 
-        <div class="bg_box" @click="$router.push({path:'/ilearning/jingpinCourse'})">
+        <div class="bg_box" @click="$router.push({path:'/ilearning/jingpinCourse'})" title="点击查看全部课程">
           <div class="item"><a>Java</a></div>
           <div class="item"><a>HTML</a></div>
           <div class="item"><a>CSS</a></div>

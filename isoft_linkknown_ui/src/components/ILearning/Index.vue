@@ -41,9 +41,11 @@
     <!-- Java 学习线路图 -->
     <XianLu/>
 
-
     <!-- 课程体系 -->
     <CourseSystem/>
+
+    <!-- 大厂面试 -->
+    <MianShi/>
 
     <!-- 宣传 -->
     <!--<XuanChuan/>-->
@@ -72,10 +74,12 @@
   const XianLu = () => import("@/components/ILearning/XianLu");
   const CourseSystem = () => import("@/components/ILearning/CourseSystem");
   const XuanChuan = () => import("@/components/ILearning/XuanChuan");
+  const MianShi = () => import("@/components/ILearning/MianShi");
 
   export default {
     name: "Index",
     components: {
+      MianShi,
       CourseSystem,
       XuanChuan,
       XianLu,
