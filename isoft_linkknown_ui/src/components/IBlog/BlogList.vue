@@ -280,9 +280,6 @@
             <HotUser style="margin-top: 40px"></HotUser>
             <!--等你来答-->
             <WaitYourAnswer style="margin-top: 40px"></WaitYourAnswer>
-            <div style="margin-top: 5px">
-              <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
-            </div>
           </div>
         </Col>
       </Row>

@@ -104,11 +104,6 @@
         <HotUser/>
         <WaitYourAnswer></WaitYourAnswer>
         <ExpertWall style="margin-top: 5px"></ExpertWall>
-        <div style="margin-top: 5px">
-          <img src="../../../static/images/common_img/linkknown_to_lovely_you.jpg" height="590" width=100%/>
-        </div>
-        <div class="isoft_bg_white isoft_pd10 isoft_top10">
-        </div>
       </Col>
     </Row>
   </div>
