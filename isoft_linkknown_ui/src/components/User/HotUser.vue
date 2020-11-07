@@ -2,13 +2,10 @@
   <div class="isoft_bg_white isoft_pd5">
     <h2 class="user_rank" style="border-bottom: 2px solid #eee;">
       用户排行榜
-      <span class="hvr-grow isoft_hover_red" style="font-size: 12px; margin-left: 100px; cursor: pointer" @click="$router.push({path:'/user/userDetail'})">
+      <span class="userCenter" @click="$router.push({path:'/user/userDetail'})" title="积极活跃，让自己榜上有名吧~">
         我的个人中心
       </span>
     </h2>
-    <div style="position: relative;">
-      <div style="text-align: center;" class="isoft_color_grey2 isoft_font12">奉献自己的力量，让自己榜上有名吧~ </div>
-    </div>
     <div style="position: relative;">
       <div v-for="(user,index) in users" style="display: flex;">
         <div style="width: 12%;">
@@ -92,5 +89,19 @@
   }
   .nickName:hover > .nickNameTip {
     display: inline-block;
+  }
+
+  .userCenter {
+    font-size: 12px;
+    margin-top: 10px;
+    line-height: 20px;
+    padding: 2px 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgba(255, 138, 0, 0.67);
+    float: right;
+  }
+  .userCenter:hover {
+    background-color: darkorange;
   }
 </style>

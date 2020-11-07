@@ -1,5 +1,5 @@
 <template>
-  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement">
+  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" class="isoft_container">
     <div style="padding: 10px;">
       <div style="float: left;width: 92%">
         <span style="font-size: 20px;margin-right: 15px"><B><Icon type="md-search" style="font-size: 30px" />{{placement_label}}</B></span>

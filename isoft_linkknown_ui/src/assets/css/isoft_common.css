@@ -13,6 +13,10 @@
   clear:both;
 }
 
+.isoft_container {
+  width: 1200px;
+  margin: 0 auto;
+}
 
 .isoft_bordertop_red {
   border-top: 3px solid rgba(255, 0, 0, 0.2);

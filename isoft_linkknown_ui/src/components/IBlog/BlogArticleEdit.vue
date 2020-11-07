@@ -1,19 +1,9 @@
 <template>
-  <div>
 
-    <div style="display: flex;min-height: 550px">
-      <div style="width: 25%;background-color: white">
-        <div>
-          <div class="isoft_bg_white isoft_pd10" style="min-height: 200px;">
-            <CatalogList/>
-          </div>
-          <div class="isoft_bg_white isoft_pd10 isoft_top10">
-          </div>
-        </div>
-      </div>
-      <div style="width: 75%;background-color: white">
+  <div class="isoft_container" style="display: flex;min-height: 550px">
+      <div style="width: 74%;margin-right:1%;background-color: white">
         <div style="background-color: white;">
-          <Row style="width: 95%;">
+          <Row>
             <div class="isoft_pd10">
               <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
                 <Row>
@@ -63,9 +53,18 @@
           </Row>
         </div>
       </div>
+
+      <div style="width: 25%;background-color: white">
+        <div>
+          <div class="isoft_bg_white isoft_pd10" style="min-height: 200px;">
+            <CatalogList/>
+          </div>
+          <div class="isoft_bg_white isoft_pd10 isoft_top10">
+          </div>
+        </div>
+      </div>
     </div>
 
-  </div>
 </template>
 
 <script>

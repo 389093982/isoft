@@ -1,5 +1,5 @@
 <template>
-  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" style="margin-left: 60px;margin-right: 60px;">
+  <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" class="isoft_container">
     <Row>
       <Col span="4" v-for="(element,index) in elements">
         <a href="javascript:;" style="color: #999;" @click="chooseItem(index,element.linked_refer)">
@@ -43,7 +43,8 @@
         this.$emit('chooseItem', share_name);
       },
       onLoadElement: function (placement_label, elements) {
-        this.elements = elements;
+        // 最多显示 6 个
+        this.elements = elements.slice(0,6);
       }
     },
   }
