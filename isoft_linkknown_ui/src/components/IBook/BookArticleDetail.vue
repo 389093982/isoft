@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="isoft_container">
     <div v-if="showTip" style="text-align: center;padding: 5px 10px;" class="isoft_font12 isoft_color_grey">
       温馨提示：点击键盘左右箭头可切换上一篇和下一篇文章
       <Icon type="md-close" style="float: right;margin: 5px;cursor: pointer;" @click="showTip = false"/>
     </div>
 
     <Row style="min-height: 500px;background-color: white">
-      <Col span="5" style="padding-right: 5px;">
+      <Col span="6" style="padding-right: 5px;">
         <div style="background-color: #fff;padding: 20px;">
           <div style="text-align: right;">
             <span class="isoft_tag1 isoft_point_cursor" @click="$router.push({path:'/ibook/bookList'})">全部书单</span>
@@ -24,7 +24,7 @@
           </div>
         </div>
       </Col>
-      <Col span="16" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;">
+      <Col span="18" style="background-color: #fff;border: 1px solid #e6e6e6;padding: 20px;">
         <div style="height: 125px;border-bottom: 1px solid #eee;">
           <h1 class="isoft_inline_ellipsis" style="font-size: 28px;word-wrap: break-word;color: #000;line-height: 80px;">{{viewCatalogName}}</h1>
           <span style="background-color: rgb(249, 236, 236);color: rgb(202, 12, 22);padding: 3px 5px;">原创</span>

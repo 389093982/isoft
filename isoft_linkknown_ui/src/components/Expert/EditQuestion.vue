@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;min-height: 550px">
+  <div class="isoft_container" style="display: flex;min-height: 550px">
     <div style="width: 65%" class="isoft_bg_white isoft_pd10">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
         <FormItem label="问题简述" prop="short_desc">
@@ -15,7 +15,7 @@
         </FormItem>
       </Form>
     </div>
-    <div style="width: 30.5%;margin-left: 5px;">
+    <div style="width: 35%;margin-left: 5px;">
       <ExpertWall></ExpertWall>
     </div>
   </div>

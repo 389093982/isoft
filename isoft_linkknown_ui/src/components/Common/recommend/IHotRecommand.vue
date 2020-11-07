@@ -1,8 +1,7 @@
 <template>
   <ElementsLoader :placement_name="placement_name" @onLoadElement="onLoadElement" :style="{'min-height':minHeight+'px'}">
     <div>
-      <div style="width: 92%">
-        <div style="clear: both;"></div>
+      <div>
         <div class="isoft_title" :title="placement_label">{{placement_label}}</div>
         <div style="padding: 10px;border-top: 2px solid #edeff0;">
           <IBeautifulLink v-for="element in filter_elements" @onclick="toTarget(element.linked_refer)" style="margin: 2px 20px 2px 0;font-size: 14px;">{{element.element_label}}</IBeautifulLink>

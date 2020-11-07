@@ -2,7 +2,7 @@
   <div>
     <div v-if="hasLogin">
       <!-- 显示详细消息 -->
-      <div v-if="showDetail" class="isoft_bg_white isoft_pd20;" style="min-height: 550px">
+      <div v-if="showDetail" class="isoft_container isoft_bg_white isoft_pd20" style="min-height: 550px;">
         <div style="padding: 20px 0 0 0 ;text-align: center">
           <h4 v-if="isVip">尊贵的 vip 用户，您享有本站所有的 <a @click="$router.push({path:'/vipcenter/vipIntroduction'})">权益！</a></h4>
         </div>

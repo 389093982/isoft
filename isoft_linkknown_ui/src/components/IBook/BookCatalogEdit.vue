@@ -1,56 +1,59 @@
 <template>
-  <div style="overflow-x: hidden;">
-    <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
+  <div class="isoft_container" style="overflow-x: hidden;">
+    <Alert closable type="error" style="cursor: pointer;color: red;text-align: center;">
+      提示：编辑文章可以获得用户积分，还有概率赠送免费会员资格！
     </Alert>
-    <Row :gutter="10" style="min-height: 500px;background-color: white">
-      <Col span="5">
-        <div style="background-color: #fff;padding: 20px;border: 1px rgba(140,137,135,0.29) solid;">
-          <Button @click="addBookCatalog" long>新建文章</Button>
-          <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 文章标题" :modal-width="600" :footer-hide="true">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-              <FormItem v-if="modalTarget==='edit'" label="序号" prop="catalogOrder">
-                <Input type="number" v-model.trim="formValidate.catalogOrder" placeholder="请输入序号"></Input>
-              </FormItem>
-              <FormItem label="文章名称" prop="catalogName">
-                <Input v-model.trim="formValidate.catalogName" placeholder="文章名称"></Input>
-                <span hidden="hidden"><Input placeholder="test input"></Input></span>
-              </FormItem>
-              <FormItem>
-                <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
-                <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
-              </FormItem>
-            </Form>
-          </ISimpleConfirmModal>
+    <div class="isoft_pd10 isoft_bg_white">
+      <Row :gutter="10" style="min-height: 500px;">
+        <Col span="6">
+          <div style="background-color: #fff;padding: 20px;border: 1px rgba(140,137,135,0.29) solid;">
+            <Button @click="addBookCatalog" long>新建文章</Button>
+            <ISimpleConfirmModal ref="bookCatalogEditModal" modal-title="新增/编辑 文章标题" :modal-width="600" :footer-hide="true">
+              <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+                <FormItem v-if="modalTarget==='edit'" label="序号" prop="catalogOrder">
+                  <Input type="number" v-model.trim="formValidate.catalogOrder" placeholder="请输入序号"></Input>
+                </FormItem>
+                <FormItem label="文章名称" prop="catalogName">
+                  <Input v-model.trim="formValidate.catalogName" placeholder="文章名称"></Input>
+                  <span hidden="hidden"><Input placeholder="test input"></Input></span>
+                </FormItem>
+                <FormItem>
+                  <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">提交</Button>
+                  <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">重置</Button>
+                </FormItem>
+              </Form>
+            </ISimpleConfirmModal>
 
-          <div style="margin-top: 5px;min-height: 480px;">
-            <div v-if="bookCatalogs && bookCatalogs.length > 0">
-              <dl>
-                <dt><span class="bookName">{{$route.query.book_name}}</span></dt>
-                <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="(bookCatalog, index) in bookCatalogs">
+            <div style="margin-top: 5px;min-height: 480px;">
+              <div v-if="bookCatalogs && bookCatalogs.length > 0">
+                <dl>
+                  <dt><span class="bookName">{{$route.query.book_name}}</span></dt>
+                  <dd class="bookCatalogs isoft_font isoft_inline_ellipsis" style="color: #333333;" v-for="(bookCatalog, index) in bookCatalogs">
                   <span class="isoft_hover_red isoft_inline_ellipsis" @click="editBookArticle(bookCatalog.id)" style="padding-left: 10px;">
                     <span style="color: rgba(115,179,137,0.91);">{{bookCatalog.catalog_order}} -</span>
                     <span :style="{color: curEditCatalogId === bookCatalog.id ? 'red': ''}">{{bookCatalog.catalog_name}}</span>
                   </span>
-                  <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
+                    <span class="bookCatalogIcon" style="position: absolute;right: -60px;z-index: 999;
                         padding: 3px 10px;background-color: #eee;border-radius: 5px;">
                     <Icon type="md-close" style="cursor: pointer" @click="deleteBookCatalog(bookCatalog)"/>
                     <Icon type="md-arrow-down" style="cursor: pointer" @click="toggleLocation(bookCatalog, 'down')"/>
                     <Icon type="md-arrow-up" style="cursor: pointer" @click="toggleLocation(bookCatalog, 'up')"/>
                     <Icon type="ios-brush-outline" style="cursor: pointer" @click="editBookCatalog(bookCatalog)"/>
                   </span>
-                </dd>
-              </dl>
-            </div>
-            <div v-else class="isoft_hover_desc">
-              暂未创建文章,点击上面按钮创建
+                  </dd>
+                </dl>
+              </div>
+              <div v-else class="isoft_hover_desc">
+                暂未创建文章,点击上面按钮创建
+              </div>
             </div>
           </div>
-        </div>
-      </Col>
-      <Col span="18">
-        <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogListWithRefresh"/>
-      </Col>
-    </Row>
+        </Col>
+        <Col span="18">
+          <BookArticleEdit ref="bookArticleEdit" :success-emit="true" @successEmitFunc="refreshBookCatalogListWithRefresh"/>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 

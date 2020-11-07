@@ -2,49 +2,53 @@
   <div style="overflow-x: hidden;">
     <div class="isoft_bg_white">
       <div class="bg01" style="width: 100%;height: 80px;overflow: hidden;padding: 20px;">
-        <Row>
-          <Col span="16" class="animated faster bounceInRight">
-            <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
-            <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
-          </Col>
-          <Col span="8">
-            <Button type="default" ghost style="cursor:pointer;margin-top: 5px" @click="uploadResource">
-              <Icon type="md-cloud-upload" style="font-size: 20px" />上传资源赚钱
-            </Button>
-          </Col>
-        </Row>
+        <div class="isoft_container">
+          <Row>
+            <Col span="16" class="animated faster bounceInRight">
+              <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">热门资源</p>
+              <p class="isoft_font_white" style="margin-top: 5px;">许多精品资源文件汇集，涵盖it、科技、办公等全部资源，为互联网、行政、设计等领域从业者打造。</p>
+            </Col>
+            <Col span="8">
+              <Button type="default" ghost style="cursor:pointer;margin-top: 5px;float: right;" @click="uploadResource">
+                <Icon type="md-cloud-upload" style="font-size: 20px" />上传资源赚钱
+              </Button>
+            </Col>
+          </Row>
+        </div>
       </div>
 
-      <div style="padding: 10px 0 10px 30px ">
-        <div class="isoft_top10">
-          热门分类：
-          <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
-          <div class="isoft_tag2 mr5" v-for="(fl, index) in resource_fl" @click="searchResource(fl)"  style="cursor: pointer">{{fl}}</div>
-        </div>
-        <div class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
-          文件格式：
-          <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
-          <div v-for="(filetype, index) in resource_filetypes" class="isoft_tag2 mr5" @click="searchResource(filetype)"  style="cursor: pointer">{{filetype}}
+      <div class="isoft_container">
+        <div style="padding: 10px 0">
+          <div class="isoft_top10">
+            热门分类：
+            <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
+            <div class="isoft_tag2 mr5" v-for="(fl, index) in resource_fl" @click="searchResource(fl)"  style="cursor: pointer">{{fl}}</div>
+          </div>
+          <div class="isoft_border_bottom isoft_top10" style="padding-bottom: 10px;">
+            文件格式：
+            <div class="isoft_tag2 mr5" @click="searchResource('')"  style="cursor: pointer">全部</div>
+            <div v-for="(filetype, index) in resource_filetypes" class="isoft_tag2 mr5" @click="searchResource(filetype)"  style="cursor: pointer">{{filetype}}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div style="padding: 10px 30px;">
-        <Row>
-          <Col span="10">
+        <div style="padding: 10px 0;">
+          <Row>
+            <Col span="10">
             <span class="tip_hover">
               大家都在寻找适合自己的资源，我们为您<span style="color: red;">&nbsp;&nbsp;"精选"&nbsp;&nbsp;"推荐"&nbsp;&nbsp;</span>以下资源
             </span>
-          </Col>
-          <Col span="14" style="position: relative;">
-            <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: absolute;top: -15px;right: 140px;"></ISearch>
-          </Col>
-        </Row>
+            </Col>
+            <Col span="14">
+              <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="float: right;"></ISearch>
+            </Col>
+          </Row>
+        </div>
       </div>
 
     </div>
 
-    <div style="display: flex;">
+    <div class="isoft_container" style="display: flex;">
       <div style="width: 65%;background-color: white;margin-top: 5px">
         <div class="isoft_bg_white isoft_pd20">
           <div v-for="(resource,index) in resources" style="padding: 15px 0 0 20px ;border-bottom: 1px solid #eee;">
@@ -81,11 +85,8 @@
           <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}" @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
         </div>
       </div>
-      <div style="width: 30.5%;margin: 5px 0 0 5px ;background-color: white">
+      <div style="width: 35%;margin: 5px 0 0 5px ;background-color: white">
         <WaitYourAnswer></WaitYourAnswer>
-        <div style="margin-top: 5px">
-          <img src="../../../static/images/common_img/linkknown_tip_share.jpg" height="480" width=100%/>
-        </div>
         <ExpertWall style="margin-top: 5px"></ExpertWall>
       </div>
     </div>

@@ -1,30 +1,30 @@
 <template>
   <div style="overflow-x: hidden;">
     <div class="blog_title_bg" style="height: 80px;padding: 0 30px;display: flex">
-      <span style="color: white;font-size: 15px;margin-left: 128px;width: 50%;position: relative">
-        <Card class="blog_title_card_bg" style="width:380px;height: 40px;position: absolute;top: 20px">
-            <div class="title_search" style="text-align:center;position: relative;top: -8px;">
-              <span @click="chooseItem(1)" :style="{color: pattern === 1 ? 'orange':''}">
-                全部分类
-              </span>
-              <span @click="chooseItem(2)" style="margin-left: 10px" :style="{color: pattern === 2 ? 'orange':''}">
-                <Icon type="md-flame" />热门博客
-              </span>
-              <span @click="chooseItem(3)" style="margin-left: 10px" :style="{color: pattern === 3 ? 'orange':''}">
-                <Icon type="ios-list-box-outline" />我的博客
-              </span>
-              <span @click="blogEdit" style="margin-left: 10px">
-                <Icon type="ios-create-outline" size="16" />发布博客
-              </span>
-            </div>
-        </Card>
-      </span>
-      <!--搜索框-->
-      <span style="width: 50%;position: relative;">
+      <div class="isoft_container" style="position: relative;">
+        <span style="color: white;font-size: 15px;margin-left: 128px;width: 50%;position: relative">
+          <Card class="blog_title_card_bg" style="width:380px;height: 40px;position: absolute;top: 20px">
+              <div class="title_search" style="text-align:center;position: relative;top: -8px;">
+                <span @click="chooseItem(1)" :style="{color: pattern === 1 ? 'orange':''}">
+                  全部分类
+                </span>
+                <span @click="chooseItem(2)" style="margin-left: 10px" :style="{color: pattern === 2 ? 'orange':''}">
+                  <Icon type="md-flame" />热门博客
+                </span>
+                <span @click="chooseItem(3)" style="margin-left: 10px" :style="{color: pattern === 3 ? 'orange':''}">
+                  <Icon type="ios-list-box-outline" />我的博客
+                </span>
+                <span @click="blogEdit" style="margin-left: 10px">
+                  <Icon type="ios-create-outline" size="16" />发布博客
+                </span>
+              </div>
+          </Card>
+        </span>
+        <!--搜索框-->
         <Affix :offset-top="38">
-          <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: absolute;top: 20px;right: 140px"></ISearch>
+          <ISearch @submitFunc="submitFunc" @searchDataHasChange="searchDataHasChange" style="position: absolute;top: 20px;right: 10px;"></ISearch>
         </Affix>
-      </span>
+      </div>
     </div>
 
     <div class="isoft_bg_white" style="padding: 5px 0;box-shadow: 0 1px 2px 0 rgba(0,87,255,0.24);border-radius: 4px;">
@@ -42,7 +42,7 @@
     </div>
 
     <!--三列：左、中、右-->
-    <div class="isoft_bg_white">
+    <div class="isoft_container isoft_bg_white isoft_top10" style="padding-top: 20px;">
       <Row>
         <!--左侧分类-->
         <Col span="6">

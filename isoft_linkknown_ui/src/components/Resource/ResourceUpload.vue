@@ -1,6 +1,6 @@
 <template>
-  <div style="display: flex">
-      <div style="width: 64%;background-color: white;min-height: 550px">
+  <div class="isoft_container" style="display: flex">
+      <div style="width: 70%;background-color: white;min-height: 550px;margin-right: 5px;">
         <div class="isoft_bg_white isoft_pd20 isoft_mr10">
           <div class="isoft_info_tip" style="margin: 5px 0 40px 0;">每个用户每日可上传资料文件三次，请不要频繁的上传呢，^_^，在此感谢您无私的奉献！</div>
           <Form ref="formInline" :model="formInline" :rules="ruleValidate" :label-width="100">
@@ -23,7 +23,7 @@
           </Form>
         </div>
       </div>
-      <div style="width: 31%;margin-left: 5px;background-color: white">
+      <div style="width: 30%;background-color: white;">
         <WaitYourAnswer></WaitYourAnswer>
       </div>
   </div>

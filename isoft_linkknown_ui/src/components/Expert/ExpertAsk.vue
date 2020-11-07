@@ -1,7 +1,5 @@
 <template>
-  <div style="overflow-x: hidden;">
-    <div>
-      <div style="display: flex">
+  <div class="isoft_container" style="overflow-x: hidden;display: flex">
         <div style="width: 65%;background-color: white;min-height: 1000px">
           <div class="isoft_bg_white isoft_pd10">
             <Row class="search" style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
@@ -74,14 +72,11 @@
                   @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
           </div>
         </div>
-        <div style="width: 30.5%;margin-left: 5px">
+        <div style="width: 35%;margin-left: 5px">
           <WaitYourAnswer></WaitYourAnswer>
           <ExpertWall class="isoft_top5"></ExpertWall>
         </div>
       </div>
-    </div>
-
-  </div>
 </template>
 
 <script>

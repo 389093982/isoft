@@ -2,22 +2,24 @@
   <div>
     <div class="isoft_bg_white">
       <div class="bg01" style="width: 100%;height: 80px;overflow: hidden;padding: 20px;">
-        <Row>
-          <Col span="16">
-            <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">温馨提示：</p>
-            <p class="isoft_font_white" style="margin-top: 5px;">开通会员，全站资源免费下载</p>
-          </Col>
-          <Col span="8">
-            <Button type="default" ghost style="cursor:pointer;margin-top: 5px" @click="openVip">
-              <Icon type="md-arrow-round-forward" />立即开通vip
-            </Button>
-          </Col>
-        </Row>
+        <div class="isoft_container">
+          <Row>
+            <Col span="16">
+              <p class="isoft_font_white" style="font-size: 24px;font-weight: 300;">温馨提示：</p>
+              <p class="isoft_font_white" style="margin-top: 5px;">开通会员，全站资源免费下载</p>
+            </Col>
+            <Col span="8">
+              <Button type="default" ghost style="cursor:pointer;margin-top: 5px;float: right;" @click="openVip">
+                <Icon type="md-arrow-round-forward" />立即开通vip
+              </Button>
+            </Col>
+          </Row>
+        </div>
       </div>
     </div>
 
-    <div style="display: flex">
-      <div style="width: 70%;background-color: white;min-height: 500px">
+    <div class="isoft_container isoft_top10" style="display: flex;">
+      <div style="width: 70%;background-color: white;min-height: 500px;margin-right: 5px;">
         <div v-if="resource" class="isoft_bg_white isoft_pd20" style="margin: 20px 0 0 40px ">
           <Row>
             <Col span="4">
@@ -47,8 +49,8 @@
           </Row>
         </div>
       </div>
-      <div style="width: 25%;margin-left: 5px;margin-top: 5px;background-color: white">
-        <img src="../../../static/images/common_img/linkknown_tip_share.jpg" height="480" width=100%/>
+      <div style="width: 30%;">
+        <WaitYourAnswer/>
       </div>
     </div>
 
@@ -58,9 +60,11 @@
 <script>
   import {IsEnoughPoints,DownloadResourceFile, GetResourceInfo} from "../../api"
   import {CheckHasLoginConfirmDialog} from "../../tools/index"
+  import WaitYourAnswer from "../Expert/WaitYourAnswer";
 
   export default {
     name: "ResourceDownload",
+    components: {WaitYourAnswer},
     data() {
       return {
         resource: null,

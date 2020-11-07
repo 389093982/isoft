@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 20px;">
+  <div class="isoft_container" style="padding: 10px 0;">
     <IHotRecommand :placement_name="GLOBAL.placement_frind_link"/>
   </div>
 </template>
